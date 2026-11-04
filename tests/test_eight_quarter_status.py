@@ -34,3 +34,16 @@ class EightQuarterStatusTests(unittest.TestCase):
     def test_period_proposal_does_not_pass_on_equal_amount(self):
         rows = self.rows(); rows[0]['period_reviewed'] = False
         self.assertEqual(assess(rows, list(map(str, range(8))), 'stockanalysis')['status'], 'Fail')
+
+    def test_old_eight_quarters_do_not_hide_missing_target_quarter(self):
+        result = assess(self.rows(), list(map(str, range(1, 9))), 'stockanalysis')
+        self.assertEqual(result['status'], 'Fail')
+        self.assertEqual(result['reference_quarters_present'], 8)
+        self.assertEqual(result['target_quarters_present'], 7)
+        self.assertEqual(result['missing_target_periods'], ['8'])
+        self.assertEqual(result['reference_periods_outside_target'], ['0'])
+
+    def test_missing_historical_period_is_not_relabelled_latest(self):
+        result = assess(self.rows()[1:], list(map(str, range(8))), 'stockanalysis')
+        self.assertEqual(result['missing_target_periods'], ['0'])
+        self.assertEqual(result['reference_periods_outside_target'], [])
