@@ -1,0 +1,52 @@
+{
+  "verification_date_utc": "2026-11-04",
+  "execution": "cloud_offline_source_and_synthetic_tests_only",
+  "recovered_from_commit": "4113daa",
+  "python": "3.12.14",
+  "lxml": "6.1.1",
+  "manifest_source_files_sha256_verified": [
+    "research/recovered-sec/extract.py",
+    "research/recovered-sec/validate.py",
+    "research/recovered-sec/test_extract.py",
+    "research/recovered-sec/requirements.txt",
+    "research/recovered-sec/README.md",
+    "research/recovered-sec/eight_quarter_eval/run.py",
+    "research/recovered-sec/eight_quarter_eval/test_run.py",
+    "research/recovered-sec/eight_quarter_eval/summarize.py",
+    "research/recovered-sec/eight_quarter_eval/roster.json",
+    "research/recovered-sec/eight_quarter_eval/README.md"
+  ],
+  "roster_companies": 30,
+  "baseline_as_of_from_recovered_runner": "2026-11-03",
+  "test_suites": [
+    {
+      "name": "archive_safety",
+      "tests_run": 26,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "recovered_pilot",
+      "tests_run": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "recovered_quarter_audit",
+      "tests_run": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "tests_run": 38,
+  "network_connections_disabled_in_test_processes": true,
+  "original_archive_hashes_verified_in_cloud": false,
+  "sec_source_snapshots_reparsed_in_cloud": false,
+  "stored_234_quarters_recomputed_in_cloud": false,
+  "curated_26_reconciliations_rerun_in_cloud": false,
+  "vendor_comparison_performed": false,
+  "local_data_verification_reference": "docs/vendor/offline-verification.json"
+}
