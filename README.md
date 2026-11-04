@@ -4,7 +4,7 @@
 程式、公開 SEC 結果及查核文件保存在 repo；第三方原始參考資料留在本機忽略目錄。
 
 **擷取與計算的數字來源只用 SEC 申報（含 8-K 附件）；公司 IR 與 vendor 只作參考。**
-目前經來源檢查為 **23 / 30 OK**，見 [逐公司結論](docs/vendor/historical-rule-study.md) 與 [SEC 來源規則](docs/vendor/sec-primary-source-policy.md)。
+目前經來源檢查為 **24 / 30 OK**，見 [逐公司結論](docs/vendor/historical-rule-study.md) 與 [SEC 來源規則](docs/vendor/sec-primary-source-policy.md)。
 
 2026-11-04 雲端已執行三十家公司候選基準，兩個 SEC 主機均可存取，234 個可得季度零下載錯誤，
 來源快照雜湊及離線重播已驗證。XOM successor CIK 只有兩個截止日，因此缺六個要求季度。
