@@ -1,0 +1,41 @@
+{
+  "execution": "local_SEC_primary_source_gate_and_30_company_replay",
+  "tests_run": 125,
+  "test_suites": [
+    {
+      "name": "archive_safety",
+      "tests_run": 113,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "recovered_pilot",
+      "tests_run": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "recovered_quarter_audit",
+      "tests_run": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "network_disabled_in_test_processes": true,
+  "companies_reviewed": 30,
+  "ok_count": 21,
+  "total": 30,
+  "OK_numeric_cells_all_with_SEC_operands": 680,
+  "all_result_hashes_verified": true,
+  "original_reference_values_and_dates_preserved": true,
+  "SEC_url_and_nested_operand_checks": true,
+  "source_snapshot_sha256_verified": true,
+  "UPS_primary_source": "SEC 8-K Exhibit 99.1, normal web-tool page text snapshot, not IR PDF or raw HTML bytes",
+  "PGR_IR_PDF_results_counted_as_SEC_output": false,
+  "blind_tests": 0,
+  "status_sha256": "270246ec8dd78a023cb0a973e89c606f28790fc09da365b9724584a2431ee208",
+  "limits": "沿用已驗證且具 SEC 出處的原始 facts，非本輪重新下載／重剖所有 SEC HTML；缺原始運算元不計完成。"
+}

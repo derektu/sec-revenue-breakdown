@@ -1,3 +1,5 @@
+> 數字擷取與計算來源必須是 SEC；本文使用公司 IR 作原始數字的舊實驗已被 [SEC 來源檢查](sec-primary-source-policy.md) 取代，僅保留研究歷程。
+
 > 本文為前批 20 / 30 紀錄；最新為 **21 / 30 OK**，見 [剩餘公司原表續查](remaining-company-resolution.md)。HD 已裁決完成，PGR 的原表／Q4 亦已修復，仍缺最新季參考。
 
 # 八季 parser：20 / 30 OK，10 / 30 Fail

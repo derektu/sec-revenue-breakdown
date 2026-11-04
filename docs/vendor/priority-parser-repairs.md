@@ -1,3 +1,5 @@
+> 本文為前輪紀錄；GOOGL 的公司 PDF 輸出已改回 SEC 推算，見 [最新 SEC 來源規則](sec-primary-source-policy.md)。
+
 # 第二批五家公司：14 / 30 OK
 
 ORCL、GOOGL、MSFT、PG、JPM 已完成八季重播；原九家不變，現共 **14 家 OK、16 家 Fail**。每家公司固定使用 Stock Analysis，同一家公司未按欄位切換參考來源。全為已接觸期間的回溯，未見測試為零。
