@@ -1,115 +1,51 @@
-# Thirty-company vendor reference study
+# 三十家公司第一輪參考來源實驗
 
-Executed locally on 2026-11-04 against the frozen 30-company roster and the
-SEC candidate baseline in `research/sec-30-baseline-2026-11-04/`.
-The complete roster is accounted for, including failed acquisition attempts.
-This is a coverage study and numeric candidate diagnostic, not a certified
-revenue-composition dataset or a cross-company accuracy score.
+2026-11-04 依凍結的三十家公司名單與 SEC 基準執行。這份文件保留第一輪計數；
+目前逐公司狀態以 [第二輪查核](evidence-review.md) 與 [日期稽核](company-audit.md) 為準。
+**第一輪將四個載入中的空白判為缺資料，已更正；不是五家公司都沒有參考資料。**
 
-## Coverage actually observed
-
-| Source | Issuers with captured values | Period observations | Numeric observations |
+| 第一輪來源 | 有數值公司數 | 期間觀察數 | 數值觀察數 |
 | --- | ---: | ---: | ---: |
-| Stock Analysis Quarterly DOM, including the prior Apple capture | 22 | 176 | 728 |
-| Futu supplementation: MCD, CVX, PGR | 3 | 19 | 90 |
-| Prior Apple Futu sample, documented separately | 1 | 5 | 25 |
+| Stock Analysis Quarterly DOM（含 Apple） | 22 | 176 | 728 |
+| 富途補充 MCD、CVX、PGR | 3 | 19 | 90 |
+| 另記的 Apple 富途樣本 | 1 | 5 | 25 |
 
-Apple overlaps the two sources. There are 25 distinct issuers with vendor
-observations. Eight displayed vendor periods do not necessarily cover the SEC
-baseline's latest eight fiscal periods: vendor lag and calendar labels must be
-checked. No count in this table implies complete latest-eight-quarter coverage.
+Apple 重複於兩來源，第一輪有參考值的是 25 家。八個顯示期間不等於 SEC 最新八個財季。
+Stock Analysis 的 MCD、WMT、PGR、XOM、CVX、NEE、PLD 標準 metrics 路徑回傳 404；
+BRK-B 經站內搜尋解析為 BRK.B，公司頁未顯示 Metrics 導覽，不能據此認定沒有營收揭露。
+富途第一輪取得 MCD 七季、CVX 五季、PGR 七季；第二輪新增 WMT、NEE、BRK-B、XOM。
+PLD 的富途公司頁存在，但沒有財務導覽，earnings／revenue 路徑回傳 404；公司 IR 可作替代參考。
 
-Stock Analysis captures cover AAPL, MSFT, NVDA, ORCL, GOOGL, META, DIS, CMCSA,
-AMZN, TSLA, HD, COST, PG, KO, JNJ, UNH, LLY, JPM, BAC, CAT, UPS and LIN.
-Its standard revenue-by-segment route returned 404 for MCD, WMT, PGR, XOM, CVX,
-NEE and PLD. Each failed route was rechecked. BRK-B required symbol resolution:
-the site's search returns BRK.B; its canonical company page did not expose a
-Metrics navigation link. The failed dash-symbol route is not evidence that
-Berkshire has no revenue disclosure.
+## 數字候選與已驗證限制
 
-Futu supplied seven target-range quarters for MCD, five for CVX and seven for PGR.
-It shows Business “暫無內容” for WMT, XOM and NEE, and also for Berkshire after
-resolving BRK.B through onsite search and following its financial navigation.
-The PLD revenue and earnings routes returned 404. These five companies lack
-vendor observations in this study; their revenue is not zero. Futu has only
-been checked for Apple and these eight supplementation targets, not all 30.
+`scripts/compare_vendor_cohort.py` 只離線搜尋已存 SEC 季度 facts；
+[cohort-diagnostics.json](cohort-diagnostics.json) 為不含原始數值的第一輪摘要。
+Stock Analysis 728 筆中，642 筆有數字候選、68 筆沒有、18 筆期間無法對照。
+富途補充三家 90 筆中，51 筆有候選、39 筆沒有。**這些不是語意通過數，也不是準確率。**
 
-The PGR revenue page was readable after following the site's earnings navigation;
-its first direct-page snapshot lacked the Business section. Therefore missing
-initial DOM content alone is not treated as proof that a source has no data.
-Its Business list was expanded with the visible 查看全部 control before capture.
+完整私人結果保留所有命中的 concept、完整 dimensions、unit、context、期間、來源與推算方式；
+不任選一個相同數字當答案。名稱提示另列，不能認證語意。缺候選可能來自 parser 涵蓋、
+階層、Q4 推算、重編、日期或真實差異，不能直接指控供應商錯誤。
 
-## Comparison and interpretation
+日期完全相同、七日內近日期建議、45 日內財季標籤位移建議各自區分；建議不是核准對照。
+超出範圍或距離相同則拒絕選期，不為了命中金額移動期間。逐家公司見日期稽核。
 
-The script `scripts/compare_vendor_cohort.py` compares locally captured values
-against the actual saved SEC quarter facts. The source-specific diagnostics are
-in [cohort-diagnostics.json](cohort-diagnostics.json). Its counts contain no
-original vendor amounts, category rows, percentages or source tables.
+- **缺值與零：** 表格破折號即使在圖表顯示零仍保留缺值；共抑制 112 個這類圖表零。
+- **分類變動：** MSFT、ORCL、KO、CAT 的有效分類集合改變，不自動把新舊名稱接成一列。
+- **CMCSA：** 只針對明確 OperatingSegments 範圍，將住宅與商業 connectivity 相加；八期中五期相同、三期不同。
+  另一大類仍未判定，不能宣布整家公司通過。
+- **CVX：** 同一範圍的上／下游美國與非美國 gross sales 相加，十次運算八次相同；兩筆 Q4 缺明確運算元而棄權。
+  保留負的分部間抵銷，不能將 gross/net 混用。
+- **AMZN：** 兩年 Q4 廣告的年度成員為 `us-gaap:AdvertisingMember`，九個月為
+  `amzn:AdvertisingServicesMember`，基準的精確成員推算拒絕合併；這是已證實的連續性缺口，不是零營收。
+- **PGR：** 保險服務、投資收益與證券損益不能只依 revenue/sales 名稱過濾；實現與持有損益可能重疊，須查定義。
 
-Across Stock Analysis's 728 numeric observations, 642 have a numeric SEC
-candidate within the captured precision, 68 lack such a candidate, and 18 lack
-a usable period alignment. Across the three supplementary Futu samples, 51 of
-90 observations have a numeric candidate and 39 do not. **These are candidate
-search results, not accepted semantic matches or accuracy percentages.** A
-coincidentally equal value can belong to the wrong concept, dimension or scope.
+## 本機證據與重現
 
-For each numeric hit, the private report retains all matching facts, concepts,
-dimensions, units, periods, contexts, derivation and source references. Multiple
-matches are not silently reduced to a preferred answer. A lexical member-name
-hint is separately recorded and explicitly does not certify meaning. A missing
-candidate can reflect parser coverage, hierarchy, annual/Q4 derivation, recasts,
-period alignment or an actual disagreement; it is not automatically a vendor error.
-
-Exact dates are distinguished from proposed nearby dates. A unique nearest SEC
-endpoint within seven days is a nearby-date proposal; a shift of up to 45 days
-is separately marked as a fiscal-label proposal. Neither proposal is a reviewed
-calendar mapping. More distant or equally near endpoints cause abstention.
-Oracle and Home Depot need fiscal-label review; two Costco observations cannot
-be aligned by this rule. The script never moves a period to make values match.
-
-## Verified failure modes and scoped arithmetic checks
-
-- **Missing versus zero:** Microsoft's table can show a dash where its chart
-  accessibility label exposes zero. The collector preserves the table's missing
-  value. Across the captured Stock Analysis cohort, 112 such chart-zero labels
-  were suppressed. They are empty category/period cells, not zero revenue and
-  not necessarily missing quarters.
-- **Category availability changes:** MSFT, ORCL, KO and CAT have changing active
-  category sets within the eight displayed periods. The report flags these for
-  definition/continuity review; names are not automatically stitched together.
-- **Comcast aggregation:** Connectivity and Platforms is broader than one SEC
-  segment. An explicitly scoped sum of Residential Connectivity and Platforms
-  plus Business Services Connectivity, on the OperatingSegments basis, matches
-  five of eight captured periods. Three differ and remain open. The latest
-  captured period matches. The Content and Experiences category remains unresolved.
-- **Chevron geography and gross/net scope:** Upstream and Downstream can be
-  reconstructed from the US and Non-US dimensions of gross sales on the exact
-  OperatingSegments basis. Eight of ten attempted category/period reconstructions
-  match; two Q4 reconstructions lack unambiguous operands and abstain. Intersegment
-  eliminations remain negative. These scoped sums are reported separately from
-  single-fact numeric candidates.
-- **Amazon advertising Q4:** The baseline's annual facts use
-  `us-gaap:AdvertisingMember`, while the preceding nine-month facts use
-  `amzn:AdvertisingServicesMember` in both reviewed years. The exact-member Q4
-  derivation therefore abstains. The two absent Q4 advertising candidates are a
-  demonstrated continuity gap, not evidence that advertising revenue is zero.
-- **Insurance coverage:** PGR's visible categories include underwriting revenue,
-  service revenue, investment income and securities gains/losses. The baseline's
-  revenue/sales-name filter is not a complete insurer income extractor. Unmatched
-  rows require concept/scope review, and overlapping realized/holding-gain labels
-  must not be summed without checking their definition.
-
-## Local evidence and reproduction
-
-Original observations and detailed matches stay under ignored
-`data/vendor/local/cohort-20261104/`. The JSON inputs preserve the visible category
-labels, missing cells, signed amounts, capture times, source URLs and units.
-Numeric chart labels are normalized to USD millions with an explicit scale;
-when chart labels were unavailable, abbreviated table strings are retained.
-P&G uses these rounded table strings, so half of their display step is used as
-tolerance. Futu's trimmed trailing zeroes do not create a coarse tolerance:
-億 uses a reviewed 0.01-億 display step, and 萬 uses a one-萬 step.
-Downloaded-file precision remains unverified.
+原始 DOM、缺值、正負號、時間、分類及倍率留在 `data/vendor/local/cohort-20261104/`。
+數字圖表標籤明確以百萬美元倍率正規化；PG 使用縮寫表格值與半個顯示步階容差。
+富途 `億` 使用經檢查的 0.01 億步階，`萬` 使用一萬步階，不以省略尾零放大容差。
+原生下載精度尚未驗證。
 
 ```sh
 data/vendor/local/.venv/bin/python scripts/compare_vendor_cohort.py \
@@ -118,25 +54,6 @@ data/vendor/local/.venv/bin/python scripts/compare_vendor_cohort.py \
   --summary data/vendor/local/cohort-20261104/shareable-summary-new.json
 ```
 
-The command makes no network requests, checks that all roster issuers are
-accounted for and refuses to overwrite output files. The detailed output is
-restricted to ignored `data/vendor/local/`; the shareable output uses a separate
-schema containing only counters and statuses. Input hashes stay with the private
-report. Twenty-four tests pass: 12 recovered SEC tests, six archive safety tests
-and six vendor-diagnostic tests covering missing values, units, currency, period
-abstention, FY rejection and aggregation scope.
-
-## Remaining acquisition limits
-
-The previous Apple CSV download permission still has no verifiable affirmative
-reaction or completed file result. No duplicate download is triggered. All new
-vendor observations are explicitly DOM captures, not native CSV exports. No
-login changes, credential extraction, hidden endpoints, CAPTCHA handling or
-access-limit bypasses were used. No original third-party observations are pushed
-to the repository. The study uses the user's stated private research scope;
-it does not establish a general vendor license for other uses.
-
-Further work is to resolve the native-export outcome, review fiscal/date mappings,
-add evidence-backed category hierarchies and investigate each unresolved comparison.
-The five unavailable vendor cases require another permitted reference source or
-explicitly supplied evidence. They must remain marked as gaps until acquired.
+程式不連網，要求完整交代三十家公司（含失敗），不覆寫既有輸出，詳細結果只能寫入忽略的本機目錄。
+`futu-gaps.json` 保留第一輪歷史，不能單獨用作最新缺漏清單；新增結果見第二輪摘要。
+CSV 未確認成功，沒有重複下載、變更登入、提取憑證或繞過存取限制。所有來源均為參考，不能指定單一供應商為標準答案。

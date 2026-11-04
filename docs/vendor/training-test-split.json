@@ -1,0 +1,519 @@
+{
+  "study_mode": "retrospective_with_known_leakage",
+  "frozen_rule_sha256": {
+    "research/recovered-sec/extract.py": "1253782f4fabcf86dc6242bbff5054a091c533ba4f639be15da2b7165be99049",
+    "research/recovered-sec/eight_quarter_eval/run.py": "7593482ab11aea89564875ba88a26e635b6e4b84dd56d50c2061abd9495a084a",
+    "scripts/compare_vendor_cohort.py": "7ca3f58a8f3430aa5c05cbf0370c62d744953d478512686ce4399704f3403251",
+    "scripts/review_vendor_evidence.py": "bef3a82fbe090a6934df6a26be562e8d24356cbfdd077df441c5720e325327af"
+  },
+  "frozen_at_utc": "2026-11-04T02:40:56.470949+00:00",
+  "latest_quarter_used_for_independent_generalization_claim": false,
+  "annual_and_quarterly_formats_require_separate_checks": true,
+  "q4_annual_minus_nine_months_requires_same_scope_and_recast_review": true,
+  "companies": [
+    {
+      "ticker": "AAPL",
+      "historical_training_dates_proposed": [
+        "2026-06-27",
+        "2026-03-28",
+        "2025-12-27",
+        "2025-09-27",
+        "2025-06-28",
+        "2025-03-29",
+        "2024-12-28"
+      ],
+      "latest_quarter_retrospective_test_date": "2026-09-26",
+      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "strict_blind_test": false,
+      "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "unseen_period_test_status": "not_run_no_unseen_period_selected"
+    },
+    {
+      "ticker": "MSFT",
+      "historical_training_dates_proposed": [
+        "2026-06-30",
+        "2026-03-31",
+        "2025-12-31",
+        "2025-09-30",
+        "2025-06-30",
+        "2025-03-31",
+        "2024-12-31"
+      ],
+      "latest_quarter_retrospective_test_date": "2026-09-30",
+      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "strict_blind_test": false,
+      "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "unseen_period_test_status": "not_run_no_unseen_period_selected"
+    },
+    {
+      "ticker": "NVDA",
+      "historical_training_dates_proposed": [
+        "2026-04-26",
+        "2026-01-25",
+        "2025-10-26",
+        "2025-07-27",
+        "2025-04-27",
+        "2025-01-26",
+        "2024-10-27"
+      ],
+      "latest_quarter_retrospective_test_date": "2026-07-26",
+      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "strict_blind_test": false,
+      "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "unseen_period_test_status": "not_run_no_unseen_period_selected"
+    },
+    {
+      "ticker": "ORCL",
+      "historical_training_dates_proposed": [
+        "2026-05-31",
+        "2026-02-28",
+        "2025-11-30",
+        "2025-08-31",
+        "2025-05-31",
+        "2025-02-28",
+        "2024-11-30"
+      ],
+      "latest_quarter_retrospective_test_date": "2026-08-31",
+      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "strict_blind_test": false,
+      "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "unseen_period_test_status": "not_run_no_unseen_period_selected"
+    },
+    {
+      "ticker": "GOOGL",
+      "historical_training_dates_proposed": [
+        "2026-06-30",
+        "2026-03-31",
+        "2025-12-31",
+        "2025-09-30",
+        "2025-06-30",
+        "2025-03-31",
+        "2024-12-31"
+      ],
+      "latest_quarter_retrospective_test_date": "2026-09-30",
+      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "strict_blind_test": false,
+      "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "unseen_period_test_status": "not_run_no_unseen_period_selected"
+    },
+    {
+      "ticker": "META",
+      "historical_training_dates_proposed": [
+        "2026-06-30",
+        "2026-03-31",
+        "2025-12-31",
+        "2025-09-30",
+        "2025-06-30",
+        "2025-03-31",
+        "2024-12-31"
+      ],
+      "latest_quarter_retrospective_test_date": "2026-09-30",
+      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "strict_blind_test": false,
+      "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "unseen_period_test_status": "not_run_no_unseen_period_selected"
+    },
+    {
+      "ticker": "DIS",
+      "historical_training_dates_proposed": [
+        "2026-03-28",
+        "2025-12-27",
+        "2025-09-27",
+        "2025-06-28",
+        "2025-03-29",
+        "2024-12-28",
+        "2024-09-28"
+      ],
+      "latest_quarter_retrospective_test_date": "2026-06-27",
+      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "strict_blind_test": false,
+      "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "unseen_period_test_status": "not_run_no_unseen_period_selected"
+    },
+    {
+      "ticker": "CMCSA",
+      "historical_training_dates_proposed": [
+        "2026-06-30",
+        "2026-03-31",
+        "2025-12-31",
+        "2025-09-30",
+        "2025-06-30",
+        "2025-03-31",
+        "2024-12-31"
+      ],
+      "latest_quarter_retrospective_test_date": "2026-09-30",
+      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "strict_blind_test": false,
+      "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "unseen_period_test_status": "not_run_no_unseen_period_selected"
+    },
+    {
+      "ticker": "AMZN",
+      "historical_training_dates_proposed": [
+        "2026-06-30",
+        "2026-03-31",
+        "2025-12-31",
+        "2025-09-30",
+        "2025-06-30",
+        "2025-03-31",
+        "2024-12-31"
+      ],
+      "latest_quarter_retrospective_test_date": "2026-09-30",
+      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "strict_blind_test": false,
+      "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "unseen_period_test_status": "not_run_no_unseen_period_selected"
+    },
+    {
+      "ticker": "TSLA",
+      "historical_training_dates_proposed": [
+        "2026-06-30",
+        "2026-03-31",
+        "2025-12-31",
+        "2025-09-30",
+        "2025-06-30",
+        "2025-03-31",
+        "2024-12-31"
+      ],
+      "latest_quarter_retrospective_test_date": "2026-09-30",
+      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "strict_blind_test": false,
+      "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "unseen_period_test_status": "not_run_no_unseen_period_selected"
+    },
+    {
+      "ticker": "HD",
+      "historical_training_dates_proposed": [
+        "2026-05-03",
+        "2026-02-01",
+        "2025-11-02",
+        "2025-08-03",
+        "2025-05-04",
+        "2025-02-02",
+        "2024-10-27"
+      ],
+      "latest_quarter_retrospective_test_date": "2026-08-02",
+      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "strict_blind_test": false,
+      "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "unseen_period_test_status": "not_run_no_unseen_period_selected"
+    },
+    {
+      "ticker": "MCD",
+      "historical_training_dates_proposed": [
+        "2026-03-31",
+        "2025-12-31",
+        "2025-09-30",
+        "2025-06-30",
+        "2025-03-31",
+        "2024-12-31",
+        "2024-09-30"
+      ],
+      "latest_quarter_retrospective_test_date": "2026-06-30",
+      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "strict_blind_test": false,
+      "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "unseen_period_test_status": "not_run_no_unseen_period_selected"
+    },
+    {
+      "ticker": "WMT",
+      "historical_training_dates_proposed": [
+        "2026-04-30",
+        "2026-01-31",
+        "2025-10-31",
+        "2025-07-31",
+        "2025-04-30",
+        "2025-01-31",
+        "2024-10-31"
+      ],
+      "latest_quarter_retrospective_test_date": "2026-07-31",
+      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "strict_blind_test": false,
+      "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "unseen_period_test_status": "not_run_no_unseen_period_selected"
+    },
+    {
+      "ticker": "COST",
+      "historical_training_dates_proposed": [
+        "2026-05-10",
+        "2026-02-15",
+        "2025-11-23",
+        "2025-08-31",
+        "2025-05-11",
+        "2025-02-16",
+        "2024-11-24"
+      ],
+      "latest_quarter_retrospective_test_date": "2026-08-30",
+      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "strict_blind_test": false,
+      "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "unseen_period_test_status": "not_run_no_unseen_period_selected"
+    },
+    {
+      "ticker": "PG",
+      "historical_training_dates_proposed": [
+        "2026-06-30",
+        "2026-03-31",
+        "2025-12-31",
+        "2025-09-30",
+        "2025-06-30",
+        "2025-03-31",
+        "2024-12-31"
+      ],
+      "latest_quarter_retrospective_test_date": "2026-09-30",
+      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "strict_blind_test": false,
+      "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "unseen_period_test_status": "not_run_no_unseen_period_selected"
+    },
+    {
+      "ticker": "KO",
+      "historical_training_dates_proposed": [
+        "2026-07-03",
+        "2026-04-03",
+        "2025-12-31",
+        "2025-09-26",
+        "2025-06-27",
+        "2025-03-28",
+        "2024-12-31"
+      ],
+      "latest_quarter_retrospective_test_date": "2026-10-02",
+      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "strict_blind_test": false,
+      "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "unseen_period_test_status": "not_run_no_unseen_period_selected"
+    },
+    {
+      "ticker": "JNJ",
+      "historical_training_dates_proposed": [
+        "2026-06-28",
+        "2026-03-29",
+        "2025-12-28",
+        "2025-09-28",
+        "2025-06-29",
+        "2025-03-30",
+        "2024-12-29"
+      ],
+      "latest_quarter_retrospective_test_date": "2026-09-27",
+      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "strict_blind_test": false,
+      "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "unseen_period_test_status": "not_run_no_unseen_period_selected"
+    },
+    {
+      "ticker": "UNH",
+      "historical_training_dates_proposed": [
+        "2026-06-30",
+        "2026-03-31",
+        "2025-12-31",
+        "2025-09-30",
+        "2025-06-30",
+        "2025-03-31",
+        "2024-12-31"
+      ],
+      "latest_quarter_retrospective_test_date": "2026-09-30",
+      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "strict_blind_test": false,
+      "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "unseen_period_test_status": "not_run_no_unseen_period_selected"
+    },
+    {
+      "ticker": "LLY",
+      "historical_training_dates_proposed": [
+        "2026-06-30",
+        "2026-03-31",
+        "2025-12-31",
+        "2025-09-30",
+        "2025-06-30",
+        "2025-03-31",
+        "2024-12-31"
+      ],
+      "latest_quarter_retrospective_test_date": "2026-09-30",
+      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "strict_blind_test": false,
+      "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "unseen_period_test_status": "not_run_no_unseen_period_selected"
+    },
+    {
+      "ticker": "JPM",
+      "historical_training_dates_proposed": [
+        "2026-06-30",
+        "2026-03-31",
+        "2025-12-31",
+        "2025-09-30",
+        "2025-06-30",
+        "2025-03-31",
+        "2024-12-31"
+      ],
+      "latest_quarter_retrospective_test_date": "2026-09-30",
+      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "strict_blind_test": false,
+      "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "unseen_period_test_status": "not_run_no_unseen_period_selected"
+    },
+    {
+      "ticker": "BAC",
+      "historical_training_dates_proposed": [
+        "2026-06-30",
+        "2026-03-31",
+        "2025-12-31",
+        "2025-09-30",
+        "2025-06-30",
+        "2025-03-31",
+        "2024-12-31"
+      ],
+      "latest_quarter_retrospective_test_date": "2026-09-30",
+      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "strict_blind_test": false,
+      "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "unseen_period_test_status": "not_run_no_unseen_period_selected"
+    },
+    {
+      "ticker": "BRK-B",
+      "historical_training_dates_proposed": [
+        "2026-03-31",
+        "2025-12-31",
+        "2025-09-30",
+        "2025-06-30",
+        "2025-03-31",
+        "2024-12-31",
+        "2024-09-30"
+      ],
+      "latest_quarter_retrospective_test_date": "2026-06-30",
+      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "strict_blind_test": false,
+      "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "unseen_period_test_status": "not_run_no_unseen_period_selected"
+    },
+    {
+      "ticker": "PGR",
+      "historical_training_dates_proposed": [
+        "2026-06-30",
+        "2026-03-31",
+        "2025-12-31",
+        "2025-09-30",
+        "2025-06-30",
+        "2025-03-31",
+        "2024-12-31"
+      ],
+      "latest_quarter_retrospective_test_date": "2026-09-30",
+      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "strict_blind_test": false,
+      "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "unseen_period_test_status": "not_run_no_unseen_period_selected"
+    },
+    {
+      "ticker": "XOM",
+      "historical_training_dates_proposed": [
+        "2026-06-30"
+      ],
+      "latest_quarter_retrospective_test_date": "2026-09-30",
+      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "strict_blind_test": false,
+      "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "unseen_period_test_status": "not_run_no_unseen_period_selected"
+    },
+    {
+      "ticker": "CVX",
+      "historical_training_dates_proposed": [
+        "2026-03-31",
+        "2025-12-31",
+        "2025-09-30",
+        "2025-06-30",
+        "2025-03-31",
+        "2024-12-31",
+        "2024-09-30"
+      ],
+      "latest_quarter_retrospective_test_date": "2026-06-30",
+      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "strict_blind_test": false,
+      "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "unseen_period_test_status": "not_run_no_unseen_period_selected"
+    },
+    {
+      "ticker": "CAT",
+      "historical_training_dates_proposed": [
+        "2026-03-31",
+        "2025-12-31",
+        "2025-09-30",
+        "2025-06-30",
+        "2025-03-31",
+        "2024-12-31",
+        "2024-09-30"
+      ],
+      "latest_quarter_retrospective_test_date": "2026-06-30",
+      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "strict_blind_test": false,
+      "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "unseen_period_test_status": "not_run_no_unseen_period_selected"
+    },
+    {
+      "ticker": "UPS",
+      "historical_training_dates_proposed": [
+        "2026-03-31",
+        "2025-12-31",
+        "2025-09-30",
+        "2025-06-30",
+        "2025-03-31",
+        "2024-12-31",
+        "2024-09-30"
+      ],
+      "latest_quarter_retrospective_test_date": "2026-06-30",
+      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "strict_blind_test": false,
+      "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "unseen_period_test_status": "not_run_no_unseen_period_selected"
+    },
+    {
+      "ticker": "NEE",
+      "historical_training_dates_proposed": [
+        "2026-06-30",
+        "2026-03-31",
+        "2025-12-31",
+        "2025-09-30",
+        "2025-06-30",
+        "2025-03-31",
+        "2024-12-31"
+      ],
+      "latest_quarter_retrospective_test_date": "2026-09-30",
+      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "strict_blind_test": false,
+      "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "unseen_period_test_status": "not_run_no_unseen_period_selected"
+    },
+    {
+      "ticker": "LIN",
+      "historical_training_dates_proposed": [
+        "2026-06-30",
+        "2026-03-31",
+        "2025-12-31",
+        "2025-09-30",
+        "2025-06-30",
+        "2025-03-31",
+        "2024-12-31"
+      ],
+      "latest_quarter_retrospective_test_date": "2026-09-30",
+      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "strict_blind_test": false,
+      "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "unseen_period_test_status": "not_run_no_unseen_period_selected"
+    },
+    {
+      "ticker": "PLD",
+      "historical_training_dates_proposed": [
+        "2026-06-30",
+        "2026-03-31",
+        "2025-12-31",
+        "2025-09-30",
+        "2025-06-30",
+        "2025-03-31",
+        "2024-12-31"
+      ],
+      "latest_quarter_retrospective_test_date": "2026-09-30",
+      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "strict_blind_test": false,
+      "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "unseen_period_test_status": "not_run_no_unseen_period_selected"
+    }
+  ]
+}

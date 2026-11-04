@@ -158,14 +158,14 @@ def summarize(ticker, source, quarters, rows):
 
 
 def check_futu(capture, sec):
-    # These three issuers have calendar fiscal years, checked against SEC quarter endpoints.
-    if capture['ticker'] not in ('MCD', 'CVX', 'PGR') or capture['currency'] != 'USD':
+    # Reviewed calendar issuers; WMT's fiscal year ends in January of its named year.
+    if capture['ticker'] not in ('MCD', 'CVX', 'PGR', 'NEE', 'BRK-B', 'XOM', 'WMT') or capture['currency'] != 'USD':
         raise ValueError('Futu issuer fiscal mapping has not been reviewed')
     quarters = {q['report_date']: q for q in sec['quarter_results']}
     rows = []
     matched_periods = set()
     for period in capture['captures']:
-        date = calendar_fiscal_date(period['period'])
+        date = futu_fiscal_date(capture['ticker'], period['period'])
         quarter = quarters.get(date)
         if quarter:
             matched_periods.add(date)
@@ -180,6 +180,18 @@ def check_futu(capture, sec):
     summary = summarize(capture['ticker'], 'futu', len(capture['captures']), rows)
     summary['sec_target_quarters_without_futu_capture'] = len(quarters.keys() - matched_periods)
     return summary, rows
+
+
+def futu_fiscal_date(ticker, label):
+    if ticker != 'WMT':
+        return calendar_fiscal_date(label)
+    match = re.fullmatch(r'(\d{4})/Q([1-4])', label)
+    if not match:
+        raise ValueError('Annual/FY or unknown period cannot enter a quarter comparison')
+    year, quarter = map(int, match.groups())
+    month = (4, 7, 10, 1)[quarter - 1]
+    year -= quarter != 4
+    return dt.date(year, month, calendar.monthrange(year, month)[1]).isoformat()
 
 
 def main():
