@@ -8,7 +8,11 @@ executed as of 2026-11-04 on `research/sec-30-baseline`, based on `3eaba53`.
 See [SEC_30_BASELINE.md](SEC_30_BASELINE.md) for results and reproduction.
 There were 234 processed quarters, six successor-issuer history gaps, zero
 download errors, and successful offline replay of every processed quarter.
-Original archives and vendor reference imports remain separate unresolved work.
+Original archives remain separate unresolved work. Local vendor research from
+PR #3 is also retained: see [Apple comparison](vendor/apple-comparison.md) and
+[live browser check](vendor/live-browser-check.md). That local Apple-only sample
+reports 40 Stock Analysis and 25 Futu values matching saved SEC candidates; raw
+captures remain on the Mac and were not used in this cloud baseline.
 The historical sections below describe earlier environments and blockers, not
 the currently verified SEC network policy.
 

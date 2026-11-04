@@ -9,7 +9,13 @@ were processed with zero download errors; six requested quarters are missing
 because ExxonMobil's successor CIK has only two reporting endpoints. All 18
 tests passed, source snapshot hashes were verified, and all 234 quarters replayed
 offline. Public SEC-derived results and provenance are committed; large raw HTML
-caches remain ignored. No third-party reference comparison has been performed.
+caches remain ignored.
+
+Separately, the local Apple DOM comparison reports 40 Stock Analysis values
+across eight quarters and 25 Futu values across five quarters matching saved SEC
+evidence. Those vendor captures remain on the Mac in ignored paths; native CSV
+export and broader vendor accuracy remain unverified. The generic cloud baseline
+does not use vendor inputs.
 
 - [Executed 30-company cloud baseline and reproduction](docs/SEC_30_BASELINE.md)
 - [Per-company results](research/sec-30-baseline-2026-11-04/company_summary.csv)
@@ -21,6 +27,7 @@ caches remain ignored. No third-party reference comparison has been performed.
 - [Recovered SEC source entry point](research/recovered-sec/HANDOFF.md)
 - [Cloud integration review](docs/RECOVERED_INTEGRATION.md)
 - [Cloud verification evidence](research/cloud-verification.json)
+- [Local Apple reference comparison and limitations](docs/vendor/apple-comparison.md)
 
 For all cloud source-integrity checks and synthetic tests, use Python 3.12 with
 the recovered `lxml==6.1.1` dependency:
