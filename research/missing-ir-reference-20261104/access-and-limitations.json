@@ -1,0 +1,73 @@
+{
+  "recorded_at_utc": "2026-11-04T07:10:52.999491+00:00",
+  "fixed_vendor_completion_count_unchanged": 23,
+  "blind_test": false,
+  "XOM_excluded": true,
+  "attempts": [
+    {
+      "ticker": "MCD",
+      "period_end": "2024-09-30",
+      "source_url": "https://d18rn0p25nwr6d.cloudfront.net/CIK-0000063908/8564664b-2af9-4960-b5d2-e8f8b30dc99f.pdf",
+      "capture_path": "data/vendor/local/cloud-ir-reference-20261104/MCD-2025Q3-comparative.txt",
+      "capture_sha256": "f8ad1d86e59e0d2671be8731ca51e730089327b54c4dd9a9103d84a8b857c324",
+      "capture_format": "web_tool_response_text_not_original_page_or_PDF_bytes",
+      "status": "three_segment_values_parsed_and_compared",
+      "note": "後期申報比較欄；公司申報內容的 CDN 副本。不是獨立資料商。"
+    },
+    {
+      "ticker": "BRK-B",
+      "period_end": "2024-09-30",
+      "source_url": "https://www.berkshirehathaway.com/qtrly/3rdqtr24.pdf",
+      "capture_path": "data/vendor/local/cloud-ir-reference-20261104/BRK-B-2024Q3.txt",
+      "capture_sha256": "64fe8112135d99f99ebebd0c486bf6fee2aca226ff2781a487962b234f21c399",
+      "capture_format": "web_tool_response_text_not_original_page_or_PDF_bytes",
+      "status": "eight_segment_values_parsed_and_compared",
+      "note": "當期公司網站申報副本；不作獨立第三方驗證。"
+    },
+    {
+      "ticker": "BRK-B",
+      "period_end": "2025-09-30",
+      "source_url": "https://www.berkshirehathaway.com/qtrly/3rdqtr25.pdf",
+      "capture_path": "data/vendor/local/cloud-ir-reference-20261104/BRK-B-2025Q3.txt",
+      "capture_sha256": "1f3bd46f1d2b428117d3e2f1971d9a1ffc371ffe2a39a163cb4939c94e32458a",
+      "capture_format": "web_tool_response_text_not_original_page_or_PDF_bytes",
+      "status": "eight_segment_values_parsed_and_compared",
+      "note": "當期公司網站申報副本；不作獨立第三方驗證。"
+    },
+    {
+      "ticker": "CVX",
+      "period_end": null,
+      "source_url": "https://www.chevron.com/investors/reports-and-filings",
+      "capture_path": "data/vendor/local/cloud-ir-reference-20261104/initial-retrieval.txt",
+      "capture_sha256": "b4166f4332e547586c38880a409aa402181d3bc420b028c7ed07ffcdf4123f21",
+      "capture_format": "web_tool_response_text_not_original_page_or_PDF_bytes",
+      "status": "HTTP_403_stopped",
+      "note": "報告入口回 403；未重試、未繞過，三個缺季均未新增參考比對。"
+    },
+    {
+      "ticker": "LLY",
+      "period_end": "2026-09-30",
+      "source_url": "https://investor.lilly.com/news-releases/news-release-details/lilly-reports-third-quarter-2026-financial-results-raises-full",
+      "capture_path": "data/vendor/local/cloud-ir-reference-20261104/LLY-access.txt",
+      "capture_sha256": "c7cee498195778ddc7adb71d28d2b870378f7c3269760183d9561b6f65776680",
+      "capture_format": "web_tool_response_text_not_original_page_or_PDF_bytes",
+      "status": "accessible_but_requested_category_coverage_not_confirmed",
+      "note": "已讀公司新聞稿，未確認五個研究分類完整數值；不以總收入或個別藥品推填。"
+    },
+    {
+      "ticker": "PGR",
+      "period_end": "2026-09-30",
+      "source_url": "https://investors.progressive.com/financials/shareholder-reports/default.aspx",
+      "capture_path": "data/vendor/local/cloud-ir-reference-20261104/PGR-access.txt",
+      "capture_sha256": "4ca6b245d22a110bb3c7dec9219bcbdbd98d219a41d5b2f4afc4288104ff13db",
+      "capture_format": "web_tool_response_text_not_original_page_or_PDF_bytes",
+      "status": "accessible_but_required_reference_values_not_captured",
+      "note": "公司報告頁可讀，但目前文字擷取未含所需完整七分類；未拿空白當零。"
+    }
+  ],
+  "PLD": "前輪公司 IR 八季已完整，本輪未重抓；仍缺原三家之一完整八季。",
+  "test_results": {
+    "tests_directory": 143,
+    "new_reference_tests": 7
+  }
+}
