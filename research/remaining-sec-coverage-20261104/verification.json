@@ -1,0 +1,49 @@
+{
+  "execution": "local_six_company_SEC_only_replay_no_private_reference_input",
+  "tests_run": 167,
+  "test_suites": [
+    {
+      "name": "archive_safety",
+      "tests_run": 155,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "recovered_pilot",
+      "tests_run": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "recovered_quarter_audit",
+      "tests_run": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "network_disabled_in_test_processes": true,
+  "source_completion_OK_count_unchanged": 24,
+  "companies": 6,
+  "quarters": 48,
+  "SEC_defined_primary_output_fields": 344,
+  "source_coverage_is_not_reference_accuracy": true,
+  "all_primary_and_alternative_fields_have_SEC_operands": true,
+  "all_output_parent_facts_match_quarter_end": true,
+  "baselines_and_frozen_plans_verified": true,
+  "PGR_gzip_and_raw_HTML_SHA256_verified_during_reparse": true,
+  "XOM_latest_has_two_explicit_bases": true,
+  "XOM_gross_sales_unallocated_difference_usd": 7000000,
+  "all_code_hashes_verified": {
+    "scripts/audit_remaining_sec_coverage.py": "d9c900e1b9b6b620df88d86a49d6a7dbff2a2a7c2ca202e7d128e852604443bd",
+    "scripts/evaluate_xom_sec.py": "d55ce67443920fdd3529b071ca58606868400712eb7df08e00b927b5e01ba89f",
+    "scripts/evaluate_progressive_sec.py": "75cb93135ea2373cb2bf364c454dc1a5c76d80b91e51b3cc2cf097c331d75182",
+    "scripts/extend_issuer_repairs.py": "6bcf2e2de729a1a094a6395b72a3d5a3b6a798c812d5cbee4ca5f4c40d7ea055",
+    "scripts/repair_chevron_q4.py": "f87965131d725cd90f20e4a5784b347652adf28da905ccfd1ec6725dc3ca045a"
+  },
+  "coverage_sha256": "a42a985508ec55b8186052328b9b8b948ed739fbc769e6a140c00f2835db80a1",
+  "blind_tests": 0,
+  "limits": "未新增第三方參考，未改24/30完成判定；欄位包含總額及組成，不能全部相加或視為獨立驗證命中。"
+}
