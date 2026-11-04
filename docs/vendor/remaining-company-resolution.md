@@ -1,3 +1,5 @@
+> 本文為公司原表續查紀錄。最新規則要求數字原始來源只用 SEC；PGR 公司 PDF 結果僅作參考，不算 SEC parser 修復完成。最新仍為 **21 / 30 OK**，見 [SEC 來源規則與逐項修正](sec-primary-source-policy.md)。
+
 # 剩餘公司續查：21 / 30 OK，9 / 30 Fail
 
 本輪完成 **HD** 的兩筆差異裁決，從 20 家增加為 **21 家 OK**。PGR 的年度漏欄、投資與證券收益、Q4 計算也已實作：保存的七季 43 項相同、六項差異有公司原表支持，但仍缺目標最新季參考，所以維持 Fail。判定與完整證據索引在 [completion-status.json](../../research/remaining-company-resolution-20261104/completion-status.json)；三十家公司白話結論在 [historical-rule-study.md](historical-rule-study.md)。
