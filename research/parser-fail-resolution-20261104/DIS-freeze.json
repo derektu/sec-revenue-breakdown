@@ -1,0 +1,252 @@
+{
+  "schema_version": 1,
+  "frozen_at": "2026-11-04T04:10:32.935715+00:00",
+  "rule_version": "dis-explicit-candidate-catalog-v1",
+  "plan": {
+    "schema_version": 1,
+    "ticker": "DIS",
+    "cik": "0001744489",
+    "rule_version": null,
+    "baseline_file": "research/sec-30-baseline-2026-11-04/DIS.json.gz",
+    "baseline_sha256": "9ffd344bb0ea9fc6614e01dcafe08b3652138a7738612cafc967935a05b011da",
+    "cutoff": {
+      "filing_date": "2026-05-06",
+      "period_end": "2026-03-28"
+    },
+    "training": [
+      {
+        "accession": "0001744489-24-000232",
+        "period_end": "2024-06-29",
+        "filing_date": "2024-08-07",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/1744489/000174448924000232/dis-20240629.htm",
+        "sha256": "e363e8082d7ae1afcc9a2106457c2a7aebaa9e83cab3fbbcdc342ac8be5de90e"
+      },
+      {
+        "accession": "0001744489-24-000276",
+        "period_end": "2024-09-28",
+        "filing_date": "2024-11-14",
+        "form": "10-K",
+        "url": "https://www.sec.gov/Archives/edgar/data/1744489/000174448924000276/dis-20240928.htm",
+        "sha256": "a9cce03b2738f02040a4e9747a62c0a00ad67cda9c3d769589d9fecb76e83534"
+      },
+      {
+        "accession": "0001744489-25-000067",
+        "period_end": "2024-12-28",
+        "filing_date": "2025-02-05",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/1744489/000174448925000067/dis-20241228.htm",
+        "sha256": "c55eca5777a8edf790d6970a035839e120422314f8c2c7c1d17649d2993e6c95"
+      },
+      {
+        "accession": "0001744489-25-000098",
+        "period_end": "2025-03-29",
+        "filing_date": "2025-05-07",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/1744489/000174448925000098/dis-20250329.htm",
+        "sha256": "a9750a94d6ad1fb2f628992fc6139fec519841619e0dbaf4d987627c0944c35b"
+      },
+      {
+        "accession": "0001744489-25-000136",
+        "period_end": "2025-06-28",
+        "filing_date": "2025-08-06",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/1744489/000174448925000136/dis-20250628.htm",
+        "sha256": "57b7bf040b871515c8fc5bab0d569da91e1a3a7cc8d03287d9431afcd037e853"
+      },
+      {
+        "accession": "0001744489-25-000155",
+        "period_end": "2025-09-27",
+        "filing_date": "2025-11-13",
+        "form": "10-K",
+        "url": "https://www.sec.gov/Archives/edgar/data/1744489/000174448925000155/dis-20250927.htm",
+        "sha256": "32c3018079a4a9a6e899e0920d3415ada9b8e54db2ca9d6d549542755f755b5c"
+      },
+      {
+        "accession": "0001744489-26-000019",
+        "period_end": "2025-12-27",
+        "filing_date": "2026-02-02",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/1744489/000174448926000019/dis-20251227.htm",
+        "sha256": "c68a62302d2ac446ee7878d691601a647bf1fb113e9c5f3bec5430e92e38b382"
+      },
+      {
+        "accession": "0001744489-26-000037",
+        "period_end": "2026-03-28",
+        "filing_date": "2026-05-06",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/1744489/000174448926000037/dis-20260328.htm",
+        "sha256": "3e6885c79923a418ba272ade36cbc24bccb7c95da391ebc0d3700538bdda2905"
+      }
+    ],
+    "holdout": [
+      {
+        "accession": "0001744489-26-000057",
+        "period_end": "2026-06-27",
+        "filing_date": "2026-08-05",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/1744489/000174448926000057/dis-20260627.htm",
+        "sha256": "8130fce860ceb2356be8f02f929a988bd98c21b179fd9661e04c1006f5d586d8"
+      }
+    ],
+    "exposure": {
+      "seen_during_development": "yes",
+      "evidence": [
+        "docs/vendor/training-test-split.json"
+      ],
+      "note": "Retrospective split; historical development exposure is not fully recorded."
+    },
+    "references": [
+      {
+        "source": "tradingview",
+        "availability": "not_loaded_by_this_workflow",
+        "seen_during_development": "unknown",
+        "evidence": []
+      },
+      {
+        "source": "futu",
+        "availability": "not_loaded_by_this_workflow",
+        "seen_during_development": "unknown",
+        "evidence": []
+      },
+      {
+        "source": "stockanalysis",
+        "availability": "not_loaded_by_this_workflow",
+        "seen_during_development": "unknown",
+        "evidence": []
+      }
+    ],
+    "adjudication": {
+      "preferred_reference": null,
+      "status": "unresolved",
+      "rationale": null,
+      "evidence": [],
+      "uncertainty": "No company-specific adjudication added."
+    }
+  },
+  "plan_sha256": "a0ba2890fdfbc9c3aea4311223bfc70810d1369488dd7c6a3d4d569cccd979aa",
+  "rules": {
+    "version": "dis-explicit-candidate-catalog-v1",
+    "category_catalog": {
+      "stockanalysis": {
+        "Entertainment": {
+          "alternatives": [
+            [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "dis:EntertainmentSegmentMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "scope_candidate"
+        },
+        "Parks and Experiences": {
+          "alternatives": [
+            [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "dis:ExperiencesSegmentMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "scope_candidate"
+        },
+        "Sports": {
+          "alternatives": [
+            [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "dis:SportsSegmentMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "scope_candidate"
+        }
+      },
+      "futu": {}
+    },
+    "selectors": [
+      {
+        "id": "Q:0",
+        "period_kind": "Q",
+        "semantic_basis": "DIS:explicit-scope-candidate-0",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "dis:EntertainmentSegmentMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:1",
+        "period_kind": "Q",
+        "semantic_basis": "DIS:explicit-scope-candidate-1",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "dis:ExperiencesSegmentMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:2",
+        "period_kind": "Q",
+        "semantic_basis": "DIS:explicit-scope-candidate-2",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "dis:SportsSegmentMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:0",
+        "period_kind": "FY",
+        "semantic_basis": "DIS:explicit-scope-candidate-0",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "dis:EntertainmentSegmentMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:1",
+        "period_kind": "FY",
+        "semantic_basis": "DIS:explicit-scope-candidate-1",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "dis:ExperiencesSegmentMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:2",
+        "period_kind": "FY",
+        "semantic_basis": "DIS:explicit-scope-candidate-2",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "dis:SportsSegmentMember"
+        },
+        "unit": "iso4217:USD"
+      }
+    ],
+    "independent_human_review": false
+  },
+  "rules_sha256": "a93917e0bd8c701031ee70bc669b1ad0ad8ad11a6734edbcc6ca10a35d7c4886",
+  "code_sha256": {
+    "scripts/temporal_eval.py": "fe0231704faad744332c44d201b8869c0623a71e0093ca7a0362b957e39c9575",
+    "research/recovered-sec/extract.py": "1253782f4fabcf86dc6242bbff5054a091c533ba4f639be15da2b7165be99049",
+    "research/recovered-sec/eight_quarter_eval/run.py": "7593482ab11aea89564875ba88a26e635b6e4b84dd56d50c2061abd9495a084a"
+  },
+  "training_pack_sha256": "972ae7527bcc24730084e51e0021bb850dbb339f5bb2c7f631a25fbebcf38527",
+  "note": "A freeze is a reproducibility receipt, not proof of unseen data."
+}
