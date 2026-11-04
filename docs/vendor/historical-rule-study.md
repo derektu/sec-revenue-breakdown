@@ -4,6 +4,8 @@
 
 **原始數字的擷取與計算只用 SEC 申報文件（含 8-K 附件）；公司 IR 與其他網站只作參考。** 最新 [SEC 來源檢查](../../research/reference-gap-completion-20261104/completion-status.json) 及 [來源規則與修正](sec-primary-source-policy.md) 已涵蓋全部三十家。
 
+[剩餘六家 SEC 八季重播](remaining-sec-coverage.md) 已完成：48 個目標季度的指定欄位均可產生有 SEC 出處的輸出；固定參考仍缺，因此正式完成數維持 24 / 30。這區分了擷取能力與參考驗證，沒有將缺參考算成 parser 缺值。
+
 這裡的 OK 表示：每家公司固定選 Stock Analysis、富途或 TradingView 其中一家，八個目標季度的所有參考分類都由現有程式擷取結果加計算產生，期間已確認，而且逐項相同，或有公司原表支持的具體差異解釋。不要求三家網站互相一致，也不要求三十家公司選同一家。新季度能否泛化不影響本次判定。
 
 最新 [XOM 歷史八季](xom-sec-history.md) 已完成舊 CIK 解析與差異裁決；另已 [補回 MCD 與 CVX 參考缺季](reference-gap-completion.md)，MCD 新增 OK，總數為 24 家。CAT、Comcast、PGR 修復見 [本批 SEC 修復](sec-remaining-company-repairs.md)。現行來源規則、實際修正與重跑方式見 [SEC 原始來源檢查](sec-primary-source-policy.md)。修復歷程另保留於 [前批修復](remaining-parser-repairs.md)、[五家優先修復](priority-parser-repairs.md) 與 [剩餘公司續查](remaining-company-resolution.md)；舊收據與公司 IR 實驗不代表目前完成標準。
