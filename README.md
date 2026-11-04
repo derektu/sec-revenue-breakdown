@@ -9,7 +9,10 @@ Cloud verification passed all 18 tests (12 recovered + 6 archive safety) and
 matched all 10 recovered file hashes to the local recovery manifest. Original
 archives, cached SEC HTML and saved candidate datasets remain outside this
 cloud checkout; the local data-reproduction report is preserved separately.
-No third-party reference comparison has been performed.
+Local Apple DOM comparison matches 40 Stock Analysis observations across eight
+quarters and 25 Futu observations across five available quarters to saved SEC
+candidate evidence. The raw vendor data remains on the Mac in ignored paths;
+native CSV export and broader vendor accuracy remain unverified.
 
 - [Cloud status, validation and blockers](docs/CLOUD_HANDOFF.md)
 - [Research requirements, known issues and next steps](docs/RESEARCH_PLAN.md)
@@ -17,6 +20,7 @@ No third-party reference comparison has been performed.
 - [Recovered SEC source entry point](research/recovered-sec/HANDOFF.md)
 - [Cloud integration review](docs/RECOVERED_INTEGRATION.md)
 - [Cloud verification evidence](research/cloud-verification.json)
+- [Local Apple reference comparison and limitations](docs/vendor/apple-comparison.md)
 
 For all cloud source-integrity checks and synthetic tests, use Python 3.12 with
 the recovered `lxml==6.1.1` dependency:
