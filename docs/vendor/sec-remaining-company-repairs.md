@@ -1,5 +1,7 @@
 # CAT、Comcast、PGR 的 SEC 原表修復：23 / 30 OK
 
+後續 XOM 舊 CIK 八季已完成解析與差異裁決，正式完成數仍是 23 家；最新狀態見 [XOM 接續報告](xom-sec-history.md)。
+
 本批完成 **CAT OK、Comcast（CMCSA）OK**，總數由 21 增為 **23 / 30**。PGR 的 SEC 擷取與計算已補好，但參考仍少最新一季，因此仍為 Fail。最新 [三十家公司結論](../../research/comcast-sec-repair-20261104/completion-status.json) 保留固定參考來源、目標日期、逐項結果計數及本機完整比較檔雜湊。
 
 這是已看過期間的八季回溯驗證，不是盲測或下季準確率。23 家共 744 個數字輸出都有 SEC 運算元；停用分類的 N/A 不算數字，也沒有補零。第三方原始參考資料不發布。
