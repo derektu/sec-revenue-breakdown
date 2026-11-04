@@ -1,0 +1,1093 @@
+{
+  "schema_version": 1,
+  "frozen_at": "2026-11-04T05:12:36.455561+00:00",
+  "rule_version": "ko-explicit-candidate-catalog-v1",
+  "plan": {
+    "schema_version": 1,
+    "ticker": "KO",
+    "cik": "0000021344",
+    "rule_version": null,
+    "baseline_file": "research/sec-30-baseline-2026-11-04/KO.json.gz",
+    "baseline_sha256": "a719aff08a214deed47aa68d95dddbe763a92b43302e360fb6f04a2e01ca39fa",
+    "cutoff": {
+      "filing_date": "2026-07-29",
+      "period_end": "2026-07-03"
+    },
+    "training": [
+      {
+        "accession": "0000021344-24-000060",
+        "period_end": "2024-09-27",
+        "filing_date": "2024-10-24",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/21344/000002134424000060/ko-20240927.htm",
+        "sha256": "c9a11c8a623fd2b3c20a996d3481f2b52c7e462d959bfeac58e779abceafecfc"
+      },
+      {
+        "accession": "0000021344-25-000011",
+        "period_end": "2024-12-31",
+        "filing_date": "2025-02-20",
+        "form": "10-K",
+        "url": "https://www.sec.gov/Archives/edgar/data/21344/000002134425000011/ko-20241231.htm",
+        "sha256": "515bedd0473f986f3c9ee08f09eb94cf81f424a7e07995ceea3b28454a389a06"
+      },
+      {
+        "accession": "0000021344-25-000029",
+        "period_end": "2025-03-28",
+        "filing_date": "2025-05-01",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/21344/000002134425000029/ko-20250328.htm",
+        "sha256": "6188e0f558e4c5fdf7ef8df9900d226d2803b00ddbb5902bd7a7deb2cda5da10"
+      },
+      {
+        "accession": "0000021344-25-000061",
+        "period_end": "2025-06-27",
+        "filing_date": "2025-07-24",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/21344/000002134425000061/ko-20250627.htm",
+        "sha256": "39bd52fffbb5286d68566acce10c128419c0dd2203ba2af69868445b7410ca6a"
+      },
+      {
+        "accession": "0001628280-25-046054",
+        "period_end": "2025-09-26",
+        "filing_date": "2025-10-23",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/21344/000162828025046054/ko-20250926.htm",
+        "sha256": "f88a032f3f4146779b102c9160b3fadcf46b595148157330447261e79a1564fa"
+      },
+      {
+        "accession": "0001628280-26-010047",
+        "period_end": "2025-12-31",
+        "filing_date": "2026-02-20",
+        "form": "10-K",
+        "url": "https://www.sec.gov/Archives/edgar/data/21344/000162828026010047/ko-20251231.htm",
+        "sha256": "675d13c8dff637a9b4230b684ded8f15c679f31de5423096a125678c8fb8c0bc"
+      },
+      {
+        "accession": "0001628280-26-028802",
+        "period_end": "2026-04-03",
+        "filing_date": "2026-04-30",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/21344/000162828026028802/ko-20260403.htm",
+        "sha256": "ef0df9151202e9c4181b0d5b5f8b4dda4409b104e0aff5267290d0752fe60110"
+      },
+      {
+        "accession": "0001628280-26-050503",
+        "period_end": "2026-07-03",
+        "filing_date": "2026-07-29",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/21344/000162828026050503/ko-20260703.htm",
+        "sha256": "6d32e4e07c35f7de088358807a66bc6bfefba3270dd940d509da8c23c2884412"
+      }
+    ],
+    "holdout": [
+      {
+        "accession": "0001628280-26-067844",
+        "period_end": "2026-10-02",
+        "filing_date": "2026-10-28",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/21344/000162828026067844/ko-20261002.htm",
+        "sha256": "b952453639d7c71aef27018114bd196c46facd61a76450b4083a3caa4c81529e"
+      }
+    ],
+    "exposure": {
+      "seen_during_development": "yes",
+      "evidence": [
+        "docs/vendor/training-test-split.json"
+      ],
+      "note": "Retrospective split; historical development exposure is not fully recorded."
+    },
+    "references": [
+      {
+        "source": "tradingview",
+        "availability": "not_loaded_by_this_workflow",
+        "seen_during_development": "unknown",
+        "evidence": []
+      },
+      {
+        "source": "futu",
+        "availability": "not_loaded_by_this_workflow",
+        "seen_during_development": "unknown",
+        "evidence": []
+      },
+      {
+        "source": "stockanalysis",
+        "availability": "not_loaded_by_this_workflow",
+        "seen_during_development": "unknown",
+        "evidence": []
+      }
+    ],
+    "adjudication": {
+      "preferred_reference": null,
+      "status": "unresolved",
+      "rationale": null,
+      "evidence": [],
+      "uncertainty": "No company-specific adjudication added."
+    }
+  },
+  "plan_sha256": "3d074a658ecf4d9c54536cec975800a80babc6d6596fbfaa74c11da06df2e19b",
+  "rules": {
+    "version": "ko-explicit-candidate-catalog-v1",
+    "category_catalog": {
+      "stockanalysis": {
+        "North America": {
+          "alternatives": [
+            [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "ko:NorthAmericaSegmentMember",
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ],
+            [
+              {
+                "concept": "ko:RevenueForReportableSegments",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "ko:NorthAmericaSegmentMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ],
+            [
+              {
+                "concept": "ko:RevenueForReportableSegments",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "ko:NorthAmericaSegmentMember",
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ],
+            [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "ko:NorthAmericaSegmentMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "scope_candidate"
+        },
+        "Europe, Middle East, and Africa": {
+          "alternatives": [
+            [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "ko:EuropeMiddleEastAfricaMember",
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ],
+            [
+              {
+                "concept": "ko:RevenueForReportableSegments",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "ko:EuropeMiddleEastAfricaMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ],
+            [
+              {
+                "concept": "ko:RevenueForReportableSegments",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "ko:EuropeMiddleEastAfricaMember",
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ],
+            [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "ko:EuropeMiddleEastAfricaMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "scope_candidate"
+        },
+        "Latin America": {
+          "alternatives": [
+            [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "ko:LatinAmericaSegmentMember",
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ],
+            [
+              {
+                "concept": "ko:RevenueForReportableSegments",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "ko:LatinAmericaSegmentMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ],
+            [
+              {
+                "concept": "ko:RevenueForReportableSegments",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "ko:LatinAmericaSegmentMember",
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ],
+            [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "ko:LatinAmericaSegmentMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "scope_candidate"
+        },
+        "Asia Pacific": {
+          "alternatives": [
+            [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "ko:A.PacificMember",
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ],
+            [
+              {
+                "concept": "ko:RevenueForReportableSegments",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "ko:A.PacificMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ],
+            [
+              {
+                "concept": "ko:RevenueForReportableSegments",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "ko:A.PacificMember",
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ],
+            [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "ko:A.PacificMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "scope_candidate"
+        },
+        "Bottling Investments": {
+          "alternatives": [
+            [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "ko:BottlingInvestmentsMember",
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ],
+            [
+              {
+                "concept": "ko:RevenueForReportableSegments",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "ko:BottlingInvestmentsMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ],
+            [
+              {
+                "concept": "ko:RevenueForReportableSegments",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "ko:BottlingInvestmentsMember",
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ],
+            [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "ko:BottlingInvestmentsMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "scope_candidate"
+        },
+        "Global Ventures": {
+          "alternatives": [
+            [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "ko:GlobalVenturesMember",
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ],
+            [
+              {
+                "concept": "ko:RevenueForReportableSegments",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "ko:GlobalVenturesMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ],
+            [
+              {
+                "concept": "ko:RevenueForReportableSegments",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "ko:GlobalVenturesMember",
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ],
+            [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "ko:GlobalVenturesMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "scope_candidate"
+        },
+        "Corporate": {
+          "alternatives": [
+            [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:CorporateNonSegmentMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ],
+            [
+              {
+                "concept": "ko:RevenueForReportableSegments",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:CorporateNonSegmentMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "scope_candidate"
+        },
+        "Eliminations": {
+          "alternatives": [
+            [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "srt:ConsolidationEliminationsMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ],
+            [
+              {
+                "concept": "ko:IntersegmentRevenue",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "srt:ConsolidationEliminationsMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ],
+            [
+              {
+                "concept": "ko:RevenueForReportableSegments",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "srt:ConsolidationEliminationsMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "scope_candidate"
+        }
+      },
+      "futu": {}
+    },
+    "selectors": [
+      {
+        "id": "Q:0",
+        "period_kind": "Q",
+        "semantic_basis": "KO:explicit-scope-candidate-0",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "ko:NorthAmericaSegmentMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:1",
+        "period_kind": "Q",
+        "semantic_basis": "KO:explicit-scope-candidate-1",
+        "concept": "ko:RevenueForReportableSegments",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "ko:NorthAmericaSegmentMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:2",
+        "period_kind": "Q",
+        "semantic_basis": "KO:explicit-scope-candidate-2",
+        "concept": "ko:RevenueForReportableSegments",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "ko:NorthAmericaSegmentMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:3",
+        "period_kind": "Q",
+        "semantic_basis": "KO:explicit-scope-candidate-3",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "ko:NorthAmericaSegmentMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:4",
+        "period_kind": "Q",
+        "semantic_basis": "KO:explicit-scope-candidate-4",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "ko:EuropeMiddleEastAfricaMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:5",
+        "period_kind": "Q",
+        "semantic_basis": "KO:explicit-scope-candidate-5",
+        "concept": "ko:RevenueForReportableSegments",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "ko:EuropeMiddleEastAfricaMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:6",
+        "period_kind": "Q",
+        "semantic_basis": "KO:explicit-scope-candidate-6",
+        "concept": "ko:RevenueForReportableSegments",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "ko:EuropeMiddleEastAfricaMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:7",
+        "period_kind": "Q",
+        "semantic_basis": "KO:explicit-scope-candidate-7",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "ko:EuropeMiddleEastAfricaMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:8",
+        "period_kind": "Q",
+        "semantic_basis": "KO:explicit-scope-candidate-8",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "ko:LatinAmericaSegmentMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:9",
+        "period_kind": "Q",
+        "semantic_basis": "KO:explicit-scope-candidate-9",
+        "concept": "ko:RevenueForReportableSegments",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "ko:LatinAmericaSegmentMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:10",
+        "period_kind": "Q",
+        "semantic_basis": "KO:explicit-scope-candidate-10",
+        "concept": "ko:RevenueForReportableSegments",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "ko:LatinAmericaSegmentMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:11",
+        "period_kind": "Q",
+        "semantic_basis": "KO:explicit-scope-candidate-11",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "ko:LatinAmericaSegmentMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:12",
+        "period_kind": "Q",
+        "semantic_basis": "KO:explicit-scope-candidate-12",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "ko:A.PacificMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:13",
+        "period_kind": "Q",
+        "semantic_basis": "KO:explicit-scope-candidate-13",
+        "concept": "ko:RevenueForReportableSegments",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "ko:A.PacificMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:14",
+        "period_kind": "Q",
+        "semantic_basis": "KO:explicit-scope-candidate-14",
+        "concept": "ko:RevenueForReportableSegments",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "ko:A.PacificMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:15",
+        "period_kind": "Q",
+        "semantic_basis": "KO:explicit-scope-candidate-15",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "ko:A.PacificMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:16",
+        "period_kind": "Q",
+        "semantic_basis": "KO:explicit-scope-candidate-16",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "ko:BottlingInvestmentsMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:17",
+        "period_kind": "Q",
+        "semantic_basis": "KO:explicit-scope-candidate-17",
+        "concept": "ko:RevenueForReportableSegments",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "ko:BottlingInvestmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:18",
+        "period_kind": "Q",
+        "semantic_basis": "KO:explicit-scope-candidate-18",
+        "concept": "ko:RevenueForReportableSegments",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "ko:BottlingInvestmentsMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:19",
+        "period_kind": "Q",
+        "semantic_basis": "KO:explicit-scope-candidate-19",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "ko:BottlingInvestmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:20",
+        "period_kind": "Q",
+        "semantic_basis": "KO:explicit-scope-candidate-20",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "ko:GlobalVenturesMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:21",
+        "period_kind": "Q",
+        "semantic_basis": "KO:explicit-scope-candidate-21",
+        "concept": "ko:RevenueForReportableSegments",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "ko:GlobalVenturesMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:22",
+        "period_kind": "Q",
+        "semantic_basis": "KO:explicit-scope-candidate-22",
+        "concept": "ko:RevenueForReportableSegments",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "ko:GlobalVenturesMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:23",
+        "period_kind": "Q",
+        "semantic_basis": "KO:explicit-scope-candidate-23",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "ko:GlobalVenturesMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:24",
+        "period_kind": "Q",
+        "semantic_basis": "KO:explicit-scope-candidate-24",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "srt:ConsolidationItemsAxis": "us-gaap:CorporateNonSegmentMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:25",
+        "period_kind": "Q",
+        "semantic_basis": "KO:explicit-scope-candidate-25",
+        "concept": "ko:RevenueForReportableSegments",
+        "dimensions": {
+          "srt:ConsolidationItemsAxis": "us-gaap:CorporateNonSegmentMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:26",
+        "period_kind": "Q",
+        "semantic_basis": "KO:explicit-scope-candidate-26",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "srt:ConsolidationItemsAxis": "srt:ConsolidationEliminationsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:27",
+        "period_kind": "Q",
+        "semantic_basis": "KO:explicit-scope-candidate-27",
+        "concept": "ko:IntersegmentRevenue",
+        "dimensions": {
+          "srt:ConsolidationItemsAxis": "srt:ConsolidationEliminationsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:28",
+        "period_kind": "Q",
+        "semantic_basis": "KO:explicit-scope-candidate-28",
+        "concept": "ko:RevenueForReportableSegments",
+        "dimensions": {
+          "srt:ConsolidationItemsAxis": "srt:ConsolidationEliminationsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:0",
+        "period_kind": "FY",
+        "semantic_basis": "KO:explicit-scope-candidate-0",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "ko:NorthAmericaSegmentMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:1",
+        "period_kind": "FY",
+        "semantic_basis": "KO:explicit-scope-candidate-1",
+        "concept": "ko:RevenueForReportableSegments",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "ko:NorthAmericaSegmentMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:2",
+        "period_kind": "FY",
+        "semantic_basis": "KO:explicit-scope-candidate-2",
+        "concept": "ko:RevenueForReportableSegments",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "ko:NorthAmericaSegmentMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:3",
+        "period_kind": "FY",
+        "semantic_basis": "KO:explicit-scope-candidate-3",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "ko:NorthAmericaSegmentMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:4",
+        "period_kind": "FY",
+        "semantic_basis": "KO:explicit-scope-candidate-4",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "ko:EuropeMiddleEastAfricaMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:5",
+        "period_kind": "FY",
+        "semantic_basis": "KO:explicit-scope-candidate-5",
+        "concept": "ko:RevenueForReportableSegments",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "ko:EuropeMiddleEastAfricaMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:6",
+        "period_kind": "FY",
+        "semantic_basis": "KO:explicit-scope-candidate-6",
+        "concept": "ko:RevenueForReportableSegments",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "ko:EuropeMiddleEastAfricaMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:7",
+        "period_kind": "FY",
+        "semantic_basis": "KO:explicit-scope-candidate-7",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "ko:EuropeMiddleEastAfricaMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:8",
+        "period_kind": "FY",
+        "semantic_basis": "KO:explicit-scope-candidate-8",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "ko:LatinAmericaSegmentMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:9",
+        "period_kind": "FY",
+        "semantic_basis": "KO:explicit-scope-candidate-9",
+        "concept": "ko:RevenueForReportableSegments",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "ko:LatinAmericaSegmentMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:10",
+        "period_kind": "FY",
+        "semantic_basis": "KO:explicit-scope-candidate-10",
+        "concept": "ko:RevenueForReportableSegments",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "ko:LatinAmericaSegmentMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:11",
+        "period_kind": "FY",
+        "semantic_basis": "KO:explicit-scope-candidate-11",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "ko:LatinAmericaSegmentMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:12",
+        "period_kind": "FY",
+        "semantic_basis": "KO:explicit-scope-candidate-12",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "ko:A.PacificMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:13",
+        "period_kind": "FY",
+        "semantic_basis": "KO:explicit-scope-candidate-13",
+        "concept": "ko:RevenueForReportableSegments",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "ko:A.PacificMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:14",
+        "period_kind": "FY",
+        "semantic_basis": "KO:explicit-scope-candidate-14",
+        "concept": "ko:RevenueForReportableSegments",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "ko:A.PacificMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:15",
+        "period_kind": "FY",
+        "semantic_basis": "KO:explicit-scope-candidate-15",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "ko:A.PacificMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:16",
+        "period_kind": "FY",
+        "semantic_basis": "KO:explicit-scope-candidate-16",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "ko:BottlingInvestmentsMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:17",
+        "period_kind": "FY",
+        "semantic_basis": "KO:explicit-scope-candidate-17",
+        "concept": "ko:RevenueForReportableSegments",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "ko:BottlingInvestmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:18",
+        "period_kind": "FY",
+        "semantic_basis": "KO:explicit-scope-candidate-18",
+        "concept": "ko:RevenueForReportableSegments",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "ko:BottlingInvestmentsMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:19",
+        "period_kind": "FY",
+        "semantic_basis": "KO:explicit-scope-candidate-19",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "ko:BottlingInvestmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:20",
+        "period_kind": "FY",
+        "semantic_basis": "KO:explicit-scope-candidate-20",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "ko:GlobalVenturesMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:21",
+        "period_kind": "FY",
+        "semantic_basis": "KO:explicit-scope-candidate-21",
+        "concept": "ko:RevenueForReportableSegments",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "ko:GlobalVenturesMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:22",
+        "period_kind": "FY",
+        "semantic_basis": "KO:explicit-scope-candidate-22",
+        "concept": "ko:RevenueForReportableSegments",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "ko:GlobalVenturesMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:23",
+        "period_kind": "FY",
+        "semantic_basis": "KO:explicit-scope-candidate-23",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "ko:GlobalVenturesMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:24",
+        "period_kind": "FY",
+        "semantic_basis": "KO:explicit-scope-candidate-24",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "srt:ConsolidationItemsAxis": "us-gaap:CorporateNonSegmentMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:25",
+        "period_kind": "FY",
+        "semantic_basis": "KO:explicit-scope-candidate-25",
+        "concept": "ko:RevenueForReportableSegments",
+        "dimensions": {
+          "srt:ConsolidationItemsAxis": "us-gaap:CorporateNonSegmentMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:26",
+        "period_kind": "FY",
+        "semantic_basis": "KO:explicit-scope-candidate-26",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "srt:ConsolidationItemsAxis": "srt:ConsolidationEliminationsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:27",
+        "period_kind": "FY",
+        "semantic_basis": "KO:explicit-scope-candidate-27",
+        "concept": "ko:IntersegmentRevenue",
+        "dimensions": {
+          "srt:ConsolidationItemsAxis": "srt:ConsolidationEliminationsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:28",
+        "period_kind": "FY",
+        "semantic_basis": "KO:explicit-scope-candidate-28",
+        "concept": "ko:RevenueForReportableSegments",
+        "dimensions": {
+          "srt:ConsolidationItemsAxis": "srt:ConsolidationEliminationsMember"
+        },
+        "unit": "iso4217:USD"
+      }
+    ],
+    "independent_human_review": false
+  },
+  "rules_sha256": "512a355cb5aa4cd808c1a3f9b78b3677b5fbd60b000d8ac059dcdb976a6f1a3e",
+  "code_sha256": {
+    "scripts/temporal_eval.py": "fe0231704faad744332c44d201b8869c0623a71e0093ca7a0362b957e39c9575",
+    "research/recovered-sec/extract.py": "1253782f4fabcf86dc6242bbff5054a091c533ba4f639be15da2b7165be99049",
+    "research/recovered-sec/eight_quarter_eval/run.py": "7593482ab11aea89564875ba88a26e635b6e4b84dd56d50c2061abd9495a084a"
+  },
+  "training_pack_sha256": "eabdc0ec8756d088551ca401ed092df25a7cf73441686df506b0b4d510d8865a",
+  "note": "A freeze is a reproducibility receipt, not proof of unseen data."
+}

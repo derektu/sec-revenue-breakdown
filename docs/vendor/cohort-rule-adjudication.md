@@ -1,3 +1,5 @@
+> 最新完成狀態為 **20 / 30 OK**，見 [目前逐公司 OK／Fail](historical-rule-study.md) 與 [本批修復](remaining-parser-repairs.md)。下列內容保留當時的研究紀錄，舊計數不是目前總數。
+
 # 三十家公司分類規則與來源裁決實驗
 
 **完成狀態：14 / 30 OK。** 請先看 [八季 parser 的逐公司 OK／Fail](historical-rule-study.md)。本文件保留細節計數；數值候選相同不等於 parser 已完成。

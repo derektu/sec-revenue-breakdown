@@ -1,3 +1,5 @@
+> 最新完成狀態為 **20 / 30 OK**，見 [目前逐公司 OK／Fail](historical-rule-study.md) 與 [本批修復](remaining-parser-repairs.md)。下列內容保留當時的研究紀錄，舊計數不是目前總數。
+
 > 後續：第二批五家已修復，現為 **14 / 30 OK**，見 [第二批結果](priority-parser-repairs.md)。下文保留第一批完成時的問題與修法盤點；不代表這五家仍 Fail。
 
 # Fail 修復與剩餘處理方式
