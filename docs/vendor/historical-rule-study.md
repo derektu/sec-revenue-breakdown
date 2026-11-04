@@ -1,10 +1,12 @@
-# 八季 parser 完成狀態：6 / 30 OK
+# 八季 parser 完成狀態：9 / 30 OK
 
-截至 2026-11-04，依目前已保存資料與程式結果，**OK：AAPL、NVDA、AMZN、TSLA、NEE、LIN，共 6 家；其餘 24 家 Fail。**
+截至 2026-11-04，依目前已保存資料與程式結果，**OK：AAPL、NVDA、AMZN、TSLA、NEE、LIN、DIS、JNJ、META，共 9 家；其餘 21 家 Fail。**
 
 這裡的 OK 表示：每家公司固定選 Stock Analysis、富途或 TradingView 其中一家，八個目標季度的所有參考分類都由現有程式擷取結果加計算產生，期間已確認，而且逐項相同。不要求三家網站互相一致，也不要求三十家公司選同一家。新季度能否泛化不影響本次判定。
 
-若程式與參考不同，可以用公司財報證明差異原因，再明列為可接受例外。目前尚未把任何例外計入這 6 家：精度相容而未完成裁決、人工讀表補值、缺季、缺分類、日期未確認，都先算 Fail。**Fail 代表未達完成標準，可能是缺資料或工作尚未完成，不等於完全無法解析。**
+第一批 Fail 修復已完成 DIS、JNJ、META；[修法、證據及剩餘 21 家處理方式](parser-fail-remediation.md)，[最新 9 / 30 判定結果](../../research/parser-fail-resolution-20261104/eight-quarter-status.json)。
+
+若程式與參考不同，可以用公司財報證明差異原因，再明列為可接受例外。目前沒有未解釋的數值差異計入這 9 家；已確認不適用的舊分類空欄保留為 N/A，不補零。精度相容而未完成裁決、人工讀表補值、缺季、缺分類、日期未確認，都先算 Fail。**Fail 代表未達完成標準，可能是缺資料或工作尚未完成，不等於完全無法解析。**
 
 | 公司 | 結論 | 固定參考來源 | 原因 |
 |---|---|---|---|
@@ -13,8 +15,8 @@
 | NVDA | **OK** | Stock Analysis | 八季兩分類，16 個結果全部相同；歷史名稱差異已有程式規則。 |
 | ORCL | **Fail** | Stock Analysis | 數值候選相同，但八季日期對應尚未確認，另有新舊分類空值，不能判 OK。 |
 | GOOGL | **Fail** | Stock Analysis | 兩個歷史避險收入結果取不出來，另有一筆僅精度相容及空值。 |
-| META | **Fail** | Stock Analysis | 2025 Q4 廣告與其他收入各差 100 萬美元；可能是全年減九個月的四捨五入，但尚未完成裁決，先不算 OK。 |
-| DIS | **Fail** | Stock Analysis | 八季數值候選相同，但網站日期與實際財季的對應尚未確認，另有分類空值。 |
+| META | **OK** | Stock Analysis | 八季三分類，24 個結果全部相同；Q4 改用程式擷取公司直接披露的單季表，取代有四捨五入差額的全年減九個月。 |
+| DIS | **OK** | Stock Analysis | 八季三分類，24 個結果全部相同；日期確認為曆季標籤對週六財季，已停用的舊分部空欄有改組依據，保留 N/A。 |
 | CMCSA | **Fail** | Stock Analysis | 已證實 SA 四筆季度標籤錯置，可以解釋來源錯誤；但其餘業務群金額仍靠人工讀表補入，尚不是完整 parser。 |
 | AMZN | **OK** | Stock Analysis | 八季七分類，56 個結果全部相同；Q4 廣告名稱差異已有程式規則。 |
 | TSLA | **OK** | Stock Analysis | 八季三分類，24 個結果全部相同。 |
@@ -24,7 +26,7 @@
 | COST | **Fail** | Stock Analysis | 只有六個期間能提出對應，且四筆數值不同；財年日期規則未完成。 |
 | PG | **Fail** | Stock Analysis | 一筆數值不同尚未裁決，其餘多筆也僅精度相容。 |
 | KO | **Fail** | Stock Analysis | 28 筆有多種不同收入口徑、19 筆取不出指定分類，日期也未全部確認。 |
-| JNJ | **Fail** | Stock Analysis | 16 個數值候選相同，但八季日期對應尚未確認，另有分類空值。 |
+| JNJ | **OK** | Stock Analysis | 八季兩分類，16 個結果全部相同；日期確認為曆季標籤對週日財季，分拆後 Consumer Health 空欄保留 N/A。 |
 | UNH | **Fail** | Stock Analysis | 三筆 Optum／抵銷收入不同，尚未完成差異解釋。 |
 | LLY | **Fail** | Stock Analysis | 13 筆分類結果取不出來；最新季未重播，目前只有七季參與比較。 |
 | JPM | **Fail** | Stock Analysis | 2024 Q4 的 Commercial and Investment Bank 收入取不出來，另有參考空值。 |
@@ -45,17 +47,20 @@
 
 ## 程式與驗證位置
 
-- 三十家公司分類規則：[cohort_rule_catalog.py](../../scripts/cohort_rule_catalog.py)。共同抽取／季度計算基礎在 [recovered-sec](../../research/recovered-sec/)，本輪重播入口為 [cohort_rule_audit.py](../../scripts/cohort_rule_audit.py)。目前六家共用引擎及各自規則，沒有為每家複製一份引擎。
-- OK／Fail 判定程式：[evaluate_eight_quarter_status.py](../../scripts/evaluate_eight_quarter_status.py)；[完整判定結果](../../research/cohort-rule-replay-20261104/eight-quarter-status.json) 含逐公司八季日期、欄位結果計數、固定來源及本機完整結果檔雜湊。
+- 三十家公司分類規則：[cohort_rule_catalog.py](../../scripts/cohort_rule_catalog.py)。共同抽取／季度計算基礎在 [recovered-sec](../../research/recovered-sec/)，本輪重播入口為 [cohort_rule_audit.py](../../scripts/cohort_rule_audit.py)。目前九家共用引擎及各自規則，沒有為每家複製一份引擎。
+- 第一版 6 / 30 的 OK／Fail 判定程式：[evaluate_eight_quarter_status.py](../../scripts/evaluate_eight_quarter_status.py)；[完整判定結果](../../research/cohort-rule-replay-20261104/eight-quarter-status.json) 含逐公司八季日期、欄位結果計數、固定來源及本機完整結果檔雜湊。
 - 完整逐筆金額、原始 SEC facts、Q4 運算元和參考差額仍在本機 `data/vendor/local/cohort-adjudication-20261104/cohort-rule-replay-20261104/{TICKER}-detailed.json`，未發布第三方原始資料。
-- 本次重新判定使用已保存的抽取結果，沒有重新下載／重剖所有原始 HTML；這個限制不以八季數值一致掩蓋。
+- 第一批修復入口：[resolve_parser_failures.py](../../scripts/resolve_parser_failures.py)。它重跑全部三十家公司，再套用有依據的日期／停用分類規則；META 另實際下載並解析公司公開 Q4 發行稿。原有 SEC HTML 未全部重新下載或重剖。
+- 最新逐筆結果位於本機 `data/vendor/local/cohort-adjudication-20261104/parser-fail-resolution-20261104/{TICKER}-resolved.json`；原始比較列、舊 Q4 推算與新結果均保留，沒有覆寫舊研究。
 
-重做判定：
+重做第一批修復與判定（須已有本機來源）：
 
 ```sh
-data/vendor/local/.venv/bin/python scripts/evaluate_eight_quarter_status.py --out /tmp/新的判定結果.json
+data/vendor/local/.venv/bin/python scripts/resolve_parser_failures.py \
+  --out /tmp/新的修復實驗 \
+  --meta-release data/vendor/local/parser-fixes-20261104/meta-q4-2025-release.html
 ```
 
-輸出路徑必須不存在。此步只讀既有結果並核對訓練收據，不新增網路請求。
+輸出目錄及對應本機結果目錄必須不存在。此步用已下載來源重播並核對訓練收據，不新增網路請求。
 
 更深入的來源裁決見 [三十家公司裁決](cohort-rule-adjudication.md)；前輪四家公司實驗與舊計數保留於 [歷史細節](historical-rule-study-details.md)，不作為目前 OK／Fail 的結論。
