@@ -1,0 +1,37 @@
+{
+  "status": "Fail",
+  "reference": "futu",
+  "reference_quarters_present": 5,
+  "target_periods": [
+    "2024-09-30",
+    "2024-12-31",
+    "2025-03-31",
+    "2025-06-30",
+    "2025-09-30",
+    "2025-12-31",
+    "2026-03-31",
+    "2026-06-30"
+  ],
+  "reference_periods": [
+    "2024-12-31",
+    "2025-03-31",
+    "2025-06-30",
+    "2026-03-31",
+    "2026-06-30"
+  ],
+  "quarterly_cells": 20,
+  "cell_statuses": {
+    "exact_scope_candidate_match": 20
+  },
+  "fail_reasons": [
+    "eight_target_quarters_not_complete"
+  ],
+  "ticker": "CVX",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341024000059/cvx-20240930.htm",
+  "annual_source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341025000009/cvx-20241231.htm",
+  "code_sha256": "f87965131d725cd90f20e4a5784b347652adf28da905ccfd1ec6725dc3ca045a",
+  "local_detail_path": "data/vendor/local/cohort-adjudication-20261104/chevron-q4-repair-20261104/CVX-repaired.json",
+  "local_detail_sha256": "800d8c41d7d0929cdb092584e99055295f719c7bbca0cdc78c1844713662d24a",
+  "base_status_sha256": "9ac1392fb81aa031481ade0b8aba368ded0edf9e57fb0d00dd40f7e805fc17fe",
+  "note": "保存的五季二十項已可程式產出並相同；仍缺三季固定參考，總數維持二十／三十。"
+}
