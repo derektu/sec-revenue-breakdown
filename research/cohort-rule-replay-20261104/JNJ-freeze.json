@@ -1,0 +1,283 @@
+{
+  "schema_version": 1,
+  "frozen_at": "2026-11-04T03:42:54.074523+00:00",
+  "rule_version": "jnj-explicit-candidate-catalog-v1",
+  "plan": {
+    "schema_version": 1,
+    "ticker": "JNJ",
+    "cik": "0000200406",
+    "rule_version": null,
+    "baseline_file": "research/sec-30-baseline-2026-11-04/JNJ.json.gz",
+    "baseline_sha256": "84e2ed013a2b459bd2e7b13b70302dac0423e8854c7a776d5a7bff5ffdd3ad55",
+    "cutoff": {
+      "filing_date": "2026-07-23",
+      "period_end": "2026-06-28"
+    },
+    "training": [
+      {
+        "accession": "0000200406-24-000096",
+        "period_end": "2024-09-29",
+        "filing_date": "2024-10-23",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/200406/000020040624000096/jnj-20240929.htm",
+        "sha256": "04a1d80903d9947db27c2a5b94ff5a32315a4d6c3ca18958b4364ca5378d325e"
+      },
+      {
+        "accession": "0000200406-25-000038",
+        "period_end": "2024-12-29",
+        "filing_date": "2025-02-13",
+        "form": "10-K",
+        "url": "https://www.sec.gov/Archives/edgar/data/200406/000020040625000038/jnj-20241229.htm",
+        "sha256": "2902db7c24f9a7b061c1b304c1a197b08273b0b08f179b83b249a6bd34a45798"
+      },
+      {
+        "accession": "0000200406-25-000119",
+        "period_end": "2025-03-30",
+        "filing_date": "2025-04-23",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/200406/000020040625000119/jnj-20250330.htm",
+        "sha256": "5581ef3ca0daa18dd9acda960e5bf18d9fb0843e1536487f579ae33a5663b63c"
+      },
+      {
+        "accession": "0000200406-25-000178",
+        "period_end": "2025-06-29",
+        "filing_date": "2025-07-24",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/200406/000020040625000178/jnj-20250629.htm",
+        "sha256": "6a49449bb76472cd001eee9589e64d1306354131f17ad0df7bf2978f446ddd24"
+      },
+      {
+        "accession": "0000200406-25-000209",
+        "period_end": "2025-09-28",
+        "filing_date": "2025-10-22",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/200406/000020040625000209/jnj-20250928.htm",
+        "sha256": "a827dbd793712b30cd0fb99f471d452a2ef741bdd07216b2ad24efa175f81a47"
+      },
+      {
+        "accession": "0000200406-26-000016",
+        "period_end": "2025-12-28",
+        "filing_date": "2026-02-11",
+        "form": "10-K",
+        "url": "https://www.sec.gov/Archives/edgar/data/200406/000020040626000016/jnj-20251228.htm",
+        "sha256": "17d1b59e5f0ad0d01942d0a2a89034384ade7d496688e40adc7b74c1c2bbaeb9"
+      },
+      {
+        "accession": "0000200406-26-000087",
+        "period_end": "2026-03-29",
+        "filing_date": "2026-04-22",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/200406/000020040626000087/jnj-20260329.htm",
+        "sha256": "6a04c7aee17ee23bf4c081b7f4a53b7a5dbc9947498aea1ce5d218edb19cae0d"
+      },
+      {
+        "accession": "0000200406-26-000153",
+        "period_end": "2026-06-28",
+        "filing_date": "2026-07-23",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/200406/000020040626000153/jnj-20260628.htm",
+        "sha256": "5e0e7e138174b1fc01e91c8b7555e3399b0def7660d8ee8ebaba2556f3597cae"
+      }
+    ],
+    "holdout": [
+      {
+        "accession": "0000200406-26-000197",
+        "period_end": "2026-09-27",
+        "filing_date": "2026-10-21",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/200406/000020040626000197/jnj-20260927.htm",
+        "sha256": "460b458b50004791bde82e180e465ac89c5bc6f7cd219bda3703a9ee19af9f8f"
+      }
+    ],
+    "exposure": {
+      "seen_during_development": "yes",
+      "evidence": [
+        "docs/vendor/training-test-split.json"
+      ],
+      "note": "Retrospective split; historical development exposure is not fully recorded."
+    },
+    "references": [
+      {
+        "source": "tradingview",
+        "availability": "not_loaded_by_this_workflow",
+        "seen_during_development": "unknown",
+        "evidence": []
+      },
+      {
+        "source": "futu",
+        "availability": "not_loaded_by_this_workflow",
+        "seen_during_development": "unknown",
+        "evidence": []
+      },
+      {
+        "source": "stockanalysis",
+        "availability": "not_loaded_by_this_workflow",
+        "seen_during_development": "unknown",
+        "evidence": []
+      }
+    ],
+    "adjudication": {
+      "preferred_reference": null,
+      "status": "unresolved",
+      "rationale": null,
+      "evidence": [],
+      "uncertainty": "No company-specific adjudication added."
+    }
+  },
+  "plan_sha256": "dc0ad34a504bbe073c26d650b061a6ca5c286bde447a0932b4d7d2b06d6a2719",
+  "rules": {
+    "version": "jnj-explicit-candidate-catalog-v1",
+    "category_catalog": {
+      "stockanalysis": {
+        "Pharmaceutical": {
+          "alternatives": [
+            [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "jnj:InnovativeMedicineMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ],
+            [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "jnj:InnovativeMedicineMember",
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "scope_candidate"
+        },
+        "Medtech": {
+          "alternatives": [
+            [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "jnj:MedTechMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ],
+            [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "jnj:MedTechMember",
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "scope_candidate"
+        }
+      },
+      "futu": {}
+    },
+    "selectors": [
+      {
+        "id": "Q:0",
+        "period_kind": "Q",
+        "semantic_basis": "JNJ:explicit-scope-candidate-0",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "jnj:InnovativeMedicineMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:1",
+        "period_kind": "Q",
+        "semantic_basis": "JNJ:explicit-scope-candidate-1",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "jnj:InnovativeMedicineMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:2",
+        "period_kind": "Q",
+        "semantic_basis": "JNJ:explicit-scope-candidate-2",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "jnj:MedTechMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:3",
+        "period_kind": "Q",
+        "semantic_basis": "JNJ:explicit-scope-candidate-3",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "jnj:MedTechMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:0",
+        "period_kind": "FY",
+        "semantic_basis": "JNJ:explicit-scope-candidate-0",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "jnj:InnovativeMedicineMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:1",
+        "period_kind": "FY",
+        "semantic_basis": "JNJ:explicit-scope-candidate-1",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "jnj:InnovativeMedicineMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:2",
+        "period_kind": "FY",
+        "semantic_basis": "JNJ:explicit-scope-candidate-2",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "jnj:MedTechMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:3",
+        "period_kind": "FY",
+        "semantic_basis": "JNJ:explicit-scope-candidate-3",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "jnj:MedTechMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      }
+    ],
+    "independent_human_review": false
+  },
+  "rules_sha256": "2f21cd4bebb25039a4868d1ab235e75299fdf2453c72a2a17b6c8433114d120e",
+  "code_sha256": {
+    "scripts/temporal_eval.py": "fe0231704faad744332c44d201b8869c0623a71e0093ca7a0362b957e39c9575",
+    "research/recovered-sec/extract.py": "1253782f4fabcf86dc6242bbff5054a091c533ba4f639be15da2b7165be99049",
+    "research/recovered-sec/eight_quarter_eval/run.py": "7593482ab11aea89564875ba88a26e635b6e4b84dd56d50c2061abd9495a084a"
+  },
+  "training_pack_sha256": "5b7658e1c4c3177f688828a6a600100922ef5e38dc08538061c7d8b41bc9c931",
+  "note": "A freeze is a reproducibility receipt, not proof of unseen data."
+}

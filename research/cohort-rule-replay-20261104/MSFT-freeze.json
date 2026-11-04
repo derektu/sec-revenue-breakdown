@@ -1,0 +1,357 @@
+{
+  "schema_version": 1,
+  "frozen_at": "2026-11-04T03:42:53.851333+00:00",
+  "rule_version": "msft-explicit-candidate-catalog-v1",
+  "plan": {
+    "schema_version": 1,
+    "ticker": "MSFT",
+    "cik": "0000789019",
+    "rule_version": null,
+    "baseline_file": "research/sec-30-baseline-2026-11-04/MSFT.json.gz",
+    "baseline_sha256": "a77398340c5fa0da73e176f3d9458fa2b21a4f757310bcd64b20e39a1c04e013",
+    "cutoff": {
+      "filing_date": "2026-07-29",
+      "period_end": "2026-06-30"
+    },
+    "training": [
+      {
+        "accession": "0000950170-24-118967",
+        "period_end": "2024-09-30",
+        "filing_date": "2024-10-30",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024118967/msft-20240930.htm",
+        "sha256": "a46d5ab23997579a70f4597f60af0d1752a4857d0c2ac7c03a898d882c83c67e"
+      },
+      {
+        "accession": "0000950170-25-010491",
+        "period_end": "2024-12-31",
+        "filing_date": "2025-01-29",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/789019/000095017025010491/msft-20241231.htm",
+        "sha256": "ce5c8dcdab64502b9c5f2f537eb13532bba547cb673ba0a36ed84a8b5f9eb570"
+      },
+      {
+        "accession": "0000950170-25-061046",
+        "period_end": "2025-03-31",
+        "filing_date": "2025-04-30",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/789019/000095017025061046/msft-20250331.htm",
+        "sha256": "4bf78ccc6b32a5bc3c7c568634ed257520a01c71166530ca414b125afedcad0d"
+      },
+      {
+        "accession": "0000950170-25-100235",
+        "period_end": "2025-06-30",
+        "filing_date": "2025-07-30",
+        "form": "10-K",
+        "url": "https://www.sec.gov/Archives/edgar/data/789019/000095017025100235/msft-20250630.htm",
+        "sha256": "e698b490a3fcc0ceb5111ae59435556755b79f804a533880b048fa8b2430d669"
+      },
+      {
+        "accession": "0001193125-25-256321",
+        "period_end": "2025-09-30",
+        "filing_date": "2025-10-29",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312525256321/msft-20250930.htm",
+        "sha256": "f253b5b79c6c3cdd7bde517b4b5bb433b3a8b977665e0b1465622a5a20fb1b11"
+      },
+      {
+        "accession": "0001193125-26-027207",
+        "period_end": "2025-12-31",
+        "filing_date": "2026-01-28",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526027207/msft-20251231.htm",
+        "sha256": "cfb77925ae84a7f8387ccffd1799843862acb8f060c5e087c55d1967d4788b97"
+      },
+      {
+        "accession": "0001193125-26-191507",
+        "period_end": "2026-03-31",
+        "filing_date": "2026-04-29",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526191507/msft-20260331.htm",
+        "sha256": "4d022d409440356ab1f61681e16aad21215faf6c8687f8386928628a17114564"
+      },
+      {
+        "accession": "0001193125-26-323660",
+        "period_end": "2026-06-30",
+        "filing_date": "2026-07-29",
+        "form": "10-K",
+        "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm",
+        "sha256": "cfb3932da43a491e4876c12be13c2770c1b0108464ab6c1f0741ec194910084d"
+      }
+    ],
+    "holdout": [
+      {
+        "accession": "0001193125-26-436133",
+        "period_end": "2026-09-30",
+        "filing_date": "2026-10-28",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526436133/msft-20260930.htm",
+        "sha256": "657e6c0d17344317d48982b88c943fc43a4f9ad02c680a15bc45af1fd812711f"
+      }
+    ],
+    "exposure": {
+      "seen_during_development": "yes",
+      "evidence": [
+        "docs/vendor/training-test-split.json"
+      ],
+      "note": "Retrospective split; historical development exposure is not fully recorded."
+    },
+    "references": [
+      {
+        "source": "tradingview",
+        "availability": "not_loaded_by_this_workflow",
+        "seen_during_development": "unknown",
+        "evidence": []
+      },
+      {
+        "source": "futu",
+        "availability": "not_loaded_by_this_workflow",
+        "seen_during_development": "unknown",
+        "evidence": []
+      },
+      {
+        "source": "stockanalysis",
+        "availability": "not_loaded_by_this_workflow",
+        "seen_during_development": "unknown",
+        "evidence": []
+      }
+    ],
+    "adjudication": {
+      "preferred_reference": null,
+      "status": "unresolved",
+      "rationale": null,
+      "evidence": [],
+      "uncertainty": "No company-specific adjudication added."
+    }
+  },
+  "plan_sha256": "76402ae8e483a20456dfc3298ec1527e42dc7b53d97390bab73421eeffd60d85",
+  "rules": {
+    "version": "msft-explicit-candidate-catalog-v1",
+    "category_catalog": {
+      "stockanalysis": {
+        "Agents and Infra": {
+          "alternatives": [
+            [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "msft:AgentsAndInfraMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "scope_candidate"
+        },
+        "Devices and Consumer": {
+          "alternatives": [
+            [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "msft:DevicesAndConsumerMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "scope_candidate"
+        },
+        "Intelligent Cloud": {
+          "alternatives": [
+            [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "msft:IntelligentCloudMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "scope_candidate"
+        },
+        "More Personal Computing": {
+          "alternatives": [
+            [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "msft:MorePersonalComputingMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "scope_candidate"
+        },
+        "Productivity and Business Processes": {
+          "alternatives": [
+            [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "msft:ProductivityAndBusinessProcessesMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "scope_candidate"
+        },
+        "Corporate and Other": {
+          "alternatives": [
+            [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:CorporateNonSegmentMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "definition_pending"
+        }
+      },
+      "futu": {}
+    },
+    "selectors": [
+      {
+        "id": "Q:0",
+        "period_kind": "Q",
+        "semantic_basis": "MSFT:explicit-scope-candidate-0",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "msft:AgentsAndInfraMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:1",
+        "period_kind": "Q",
+        "semantic_basis": "MSFT:explicit-scope-candidate-1",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "msft:DevicesAndConsumerMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:2",
+        "period_kind": "Q",
+        "semantic_basis": "MSFT:explicit-scope-candidate-2",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "msft:IntelligentCloudMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:3",
+        "period_kind": "Q",
+        "semantic_basis": "MSFT:explicit-scope-candidate-3",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "msft:MorePersonalComputingMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:4",
+        "period_kind": "Q",
+        "semantic_basis": "MSFT:explicit-scope-candidate-4",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "msft:ProductivityAndBusinessProcessesMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:5",
+        "period_kind": "Q",
+        "semantic_basis": "MSFT:explicit-scope-candidate-5",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "srt:ConsolidationItemsAxis": "us-gaap:CorporateNonSegmentMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:0",
+        "period_kind": "FY",
+        "semantic_basis": "MSFT:explicit-scope-candidate-0",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "msft:AgentsAndInfraMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:1",
+        "period_kind": "FY",
+        "semantic_basis": "MSFT:explicit-scope-candidate-1",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "msft:DevicesAndConsumerMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:2",
+        "period_kind": "FY",
+        "semantic_basis": "MSFT:explicit-scope-candidate-2",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "msft:IntelligentCloudMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:3",
+        "period_kind": "FY",
+        "semantic_basis": "MSFT:explicit-scope-candidate-3",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "msft:MorePersonalComputingMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:4",
+        "period_kind": "FY",
+        "semantic_basis": "MSFT:explicit-scope-candidate-4",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "msft:ProductivityAndBusinessProcessesMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:5",
+        "period_kind": "FY",
+        "semantic_basis": "MSFT:explicit-scope-candidate-5",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "srt:ConsolidationItemsAxis": "us-gaap:CorporateNonSegmentMember"
+        },
+        "unit": "iso4217:USD"
+      }
+    ],
+    "independent_human_review": false
+  },
+  "rules_sha256": "4795ae1facffe5fc6ee25f239362f0e5d309d5f073c84ee955c965a58bafdad3",
+  "code_sha256": {
+    "scripts/temporal_eval.py": "fe0231704faad744332c44d201b8869c0623a71e0093ca7a0362b957e39c9575",
+    "research/recovered-sec/extract.py": "1253782f4fabcf86dc6242bbff5054a091c533ba4f639be15da2b7165be99049",
+    "research/recovered-sec/eight_quarter_eval/run.py": "7593482ab11aea89564875ba88a26e635b6e4b84dd56d50c2061abd9495a084a"
+  },
+  "training_pack_sha256": "6c9b4741de99c307283bd57308d125a551e657a4ecdde2b14cd25b70c5e5b468",
+  "note": "A freeze is a reproducibility receipt, not proof of unseen data."
+}

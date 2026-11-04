@@ -1,0 +1,326 @@
+{
+  "schema_version": 1,
+  "frozen_at": "2026-11-04T03:42:54.271108+00:00",
+  "rule_version": "pgr-explicit-candidate-catalog-v1",
+  "plan": {
+    "schema_version": 1,
+    "ticker": "PGR",
+    "cik": "0000080661",
+    "rule_version": null,
+    "baseline_file": "research/sec-30-baseline-2026-11-04/PGR.json.gz",
+    "baseline_sha256": "96ccc3067e403f30c32c541df37408e47e9c223db77e897c578e341f5144a1cb",
+    "cutoff": {
+      "filing_date": "2026-08-03",
+      "period_end": "2026-06-30"
+    },
+    "training": [
+      {
+        "accession": "0000080661-24-000045",
+        "period_end": "2024-09-30",
+        "filing_date": "2024-11-04",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/80661/000008066124000045/pgr-20240930.htm",
+        "sha256": "0b44cedf994a29726ca3ad10ccb354fdc5000fbb4b54deadf9c26ab4b53a0fe7"
+      },
+      {
+        "accession": "0000080661-25-000007",
+        "period_end": "2024-12-31",
+        "filing_date": "2025-03-03",
+        "form": "10-K",
+        "url": "https://www.sec.gov/Archives/edgar/data/80661/000008066125000007/pgr-20241231.htm",
+        "sha256": "9a68bb6754a92660a082c93cededf53ea1ea25a4c2d6ff5b38ad90bcedb6da04"
+      },
+      {
+        "accession": "0000080661-25-000023",
+        "period_end": "2025-03-31",
+        "filing_date": "2025-05-05",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/80661/000008066125000023/pgr-20250331.htm",
+        "sha256": "3f7bae7930b1f4982999d1983bdb315fba76b873488dfc2ded18415f31b2d051"
+      },
+      {
+        "accession": "0000080661-25-000051",
+        "period_end": "2025-06-30",
+        "filing_date": "2025-08-04",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/80661/000008066125000051/pgr-20250630.htm",
+        "sha256": "19aa276a264a6258a9015b72f820c7845c714fbacd2c661ee59fa94327d115f9"
+      },
+      {
+        "accession": "0000080661-25-000129",
+        "period_end": "2025-09-30",
+        "filing_date": "2025-11-03",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/80661/000008066125000129/pgr-20250930.htm",
+        "sha256": "359b695c041c7b5fb155707ffc222097b98995f3d0b5c4f551aa567b2524a8c7"
+      },
+      {
+        "accession": "0000080661-26-000086",
+        "period_end": "2025-12-31",
+        "filing_date": "2026-03-02",
+        "form": "10-K",
+        "url": "https://www.sec.gov/Archives/edgar/data/80661/000008066126000086/pgr-20251231.htm",
+        "sha256": "0deeedbfe69822b8bc8f3581878dd044633ef57a9540ce4401b523b1a0959cf5"
+      },
+      {
+        "accession": "0000080661-26-000177",
+        "period_end": "2026-03-31",
+        "filing_date": "2026-05-04",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/80661/000008066126000177/pgr-20260331.htm",
+        "sha256": "9b87009d35f4583b74a0407d4acc1bd4592bb77caf28bd7ed16b67bbe7a9b09d"
+      },
+      {
+        "accession": "0000080661-26-000308",
+        "period_end": "2026-06-30",
+        "filing_date": "2026-08-03",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/80661/000008066126000308/pgr-20260630.htm",
+        "sha256": "06f45885a87b989875005c49091b817f9638ed456364203d8d811a31bd24b669"
+      }
+    ],
+    "holdout": [
+      {
+        "accession": "0000080661-26-000379",
+        "period_end": "2026-09-30",
+        "filing_date": "2026-11-02",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/80661/000008066126000379/pgr-20260930.htm",
+        "sha256": "491d2604c2060294b47cae849cd7883e9425beb53e3063c40e80792a03d58ec0"
+      }
+    ],
+    "exposure": {
+      "seen_during_development": "unknown",
+      "evidence": [],
+      "note": "Retrospective split; historical development exposure is not fully recorded."
+    },
+    "references": [
+      {
+        "source": "tradingview",
+        "availability": "not_loaded_by_this_workflow",
+        "seen_during_development": "unknown",
+        "evidence": []
+      },
+      {
+        "source": "futu",
+        "availability": "not_loaded_by_this_workflow",
+        "seen_during_development": "unknown",
+        "evidence": []
+      },
+      {
+        "source": "stockanalysis",
+        "availability": "not_loaded_by_this_workflow",
+        "seen_during_development": "unknown",
+        "evidence": []
+      }
+    ],
+    "adjudication": {
+      "preferred_reference": null,
+      "status": "unresolved",
+      "rationale": null,
+      "evidence": [],
+      "uncertainty": "No company-specific adjudication added."
+    }
+  },
+  "plan_sha256": "00a322ba122f23f2241b591a2dcad821807f0a228e7ee138bb5c141d3906b9fb",
+  "rules": {
+    "version": "pgr-explicit-candidate-catalog-v1",
+    "category_catalog": {
+      "stockanalysis": {},
+      "futu": {
+        "個人保險": {
+          "alternatives": [
+            [
+              {
+                "concept": "pgr:PremiumsEarnedFeesAndOtherRevenue",
+                "dimensions": {
+                  "srt:ProductOrServiceAxis": "pgr:UnderwritingOperationsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "pgr:PersonalLinesSegmentMember",
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "scope_candidate"
+        },
+        "商業保險": {
+          "alternatives": [
+            [
+              {
+                "concept": "pgr:PremiumsEarnedFeesAndOtherRevenue",
+                "dimensions": {
+                  "srt:ProductOrServiceAxis": "pgr:UnderwritingOperationsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "pgr:CommercialLinesSegmentMember",
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "scope_candidate"
+        },
+        "其他": {
+          "alternatives": [
+            [
+              {
+                "concept": "pgr:PremiumsEarnedFeesAndOtherRevenue",
+                "dimensions": {
+                  "srt:ProductOrServiceAxis": "pgr:UnderwritingOperationsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "pgr:OtherIndemnitySegmentMember",
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "scope_candidate"
+        },
+        "Service revenues": {
+          "alternatives": [
+            [
+              {
+                "concept": "pgr:NonInsuranceServiceRevenues",
+                "dimensions": {},
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "scope_candidate"
+        },
+        "Net realized gains (losses) on security sales": {
+          "alternatives": [
+            [
+              {
+                "concept": "pgr:DebtAndEquitySecuritiesRealizedGainsLossesOnSecuritySales",
+                "dimensions": {},
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "overlap_review_required"
+        }
+      }
+    },
+    "selectors": [
+      {
+        "id": "Q:0",
+        "period_kind": "Q",
+        "semantic_basis": "PGR:explicit-scope-candidate-0",
+        "concept": "pgr:PremiumsEarnedFeesAndOtherRevenue",
+        "dimensions": {
+          "srt:ProductOrServiceAxis": "pgr:UnderwritingOperationsMember",
+          "us-gaap:StatementBusinessSegmentsAxis": "pgr:PersonalLinesSegmentMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:1",
+        "period_kind": "Q",
+        "semantic_basis": "PGR:explicit-scope-candidate-1",
+        "concept": "pgr:PremiumsEarnedFeesAndOtherRevenue",
+        "dimensions": {
+          "srt:ProductOrServiceAxis": "pgr:UnderwritingOperationsMember",
+          "us-gaap:StatementBusinessSegmentsAxis": "pgr:CommercialLinesSegmentMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:2",
+        "period_kind": "Q",
+        "semantic_basis": "PGR:explicit-scope-candidate-2",
+        "concept": "pgr:PremiumsEarnedFeesAndOtherRevenue",
+        "dimensions": {
+          "srt:ProductOrServiceAxis": "pgr:UnderwritingOperationsMember",
+          "us-gaap:StatementBusinessSegmentsAxis": "pgr:OtherIndemnitySegmentMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:3",
+        "period_kind": "Q",
+        "semantic_basis": "PGR:explicit-scope-candidate-3",
+        "concept": "pgr:NonInsuranceServiceRevenues",
+        "dimensions": {},
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:4",
+        "period_kind": "Q",
+        "semantic_basis": "PGR:explicit-scope-candidate-4",
+        "concept": "pgr:DebtAndEquitySecuritiesRealizedGainsLossesOnSecuritySales",
+        "dimensions": {},
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:0",
+        "period_kind": "FY",
+        "semantic_basis": "PGR:explicit-scope-candidate-0",
+        "concept": "pgr:PremiumsEarnedFeesAndOtherRevenue",
+        "dimensions": {
+          "srt:ProductOrServiceAxis": "pgr:UnderwritingOperationsMember",
+          "us-gaap:StatementBusinessSegmentsAxis": "pgr:PersonalLinesSegmentMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:1",
+        "period_kind": "FY",
+        "semantic_basis": "PGR:explicit-scope-candidate-1",
+        "concept": "pgr:PremiumsEarnedFeesAndOtherRevenue",
+        "dimensions": {
+          "srt:ProductOrServiceAxis": "pgr:UnderwritingOperationsMember",
+          "us-gaap:StatementBusinessSegmentsAxis": "pgr:CommercialLinesSegmentMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:2",
+        "period_kind": "FY",
+        "semantic_basis": "PGR:explicit-scope-candidate-2",
+        "concept": "pgr:PremiumsEarnedFeesAndOtherRevenue",
+        "dimensions": {
+          "srt:ProductOrServiceAxis": "pgr:UnderwritingOperationsMember",
+          "us-gaap:StatementBusinessSegmentsAxis": "pgr:OtherIndemnitySegmentMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:3",
+        "period_kind": "FY",
+        "semantic_basis": "PGR:explicit-scope-candidate-3",
+        "concept": "pgr:NonInsuranceServiceRevenues",
+        "dimensions": {},
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:4",
+        "period_kind": "FY",
+        "semantic_basis": "PGR:explicit-scope-candidate-4",
+        "concept": "pgr:DebtAndEquitySecuritiesRealizedGainsLossesOnSecuritySales",
+        "dimensions": {},
+        "unit": "iso4217:USD"
+      }
+    ],
+    "independent_human_review": false
+  },
+  "rules_sha256": "511f4377e93e26fbe4d54725106bbda494591ea9b77812608774362646c52a84",
+  "code_sha256": {
+    "scripts/temporal_eval.py": "fe0231704faad744332c44d201b8869c0623a71e0093ca7a0362b957e39c9575",
+    "research/recovered-sec/extract.py": "1253782f4fabcf86dc6242bbff5054a091c533ba4f639be15da2b7165be99049",
+    "research/recovered-sec/eight_quarter_eval/run.py": "7593482ab11aea89564875ba88a26e635b6e4b84dd56d50c2061abd9495a084a"
+  },
+  "training_pack_sha256": "ec7dda990cb4acb38665d8ca014c7a84bcc2afc605eb6f524468d697ed0f4a3b",
+  "note": "A freeze is a reproducibility receipt, not proof of unseen data."
+}
