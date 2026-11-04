@@ -49,6 +49,8 @@
 
 後續已用正常 Edge 核實三家參考入口，仍未補齊兩季收入；SEC 八季 32 項重播成功，六季參考 24 項再次相同，完成數維持 29 / 30。各網站的具體結果及公開副本限制見 [CVX 最後缺口核查](cvx-reference-followup.md)。
 
+另外已完成 [CVX net 共源核對](cvx-net-scope-check.md)：Q3／Q4 八個抵銷後地區收入與雲端回報相同，年度副本六欄也相同。這與原 gross 四分類不同，且不是獨立季度驗證，CVX 仍保留 Fail。
+
 ## 程式與驗證位置
 
 - 三十家公司分類規則：[cohort_rule_catalog.py](../../scripts/cohort_rule_catalog.py)。共同抽取／季度計算基礎在 [recovered-sec](../../research/recovered-sec/)，本輪重播入口為 [cohort_rule_audit.py](../../scripts/cohort_rule_audit.py)。已完成公司共用引擎及各自規則，沒有為每家複製一份引擎。
