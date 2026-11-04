@@ -1,0 +1,1411 @@
+{
+  "ticker": "CVX",
+  "cohort_OK_count_unchanged": 29,
+  "completion_status_unchanged": "Fail",
+  "scope": "抵銷後 Sales and Other Operating Revenues，分上游／下游與美國／國際；另列 All Other net 與合併營業收入。",
+  "SEC_net_outputs": {
+    "2025-09-30": {
+      "upstream_us": {
+        "status": "observed",
+        "value": 5623000000,
+        "error": "500000",
+        "facts": [
+          {
+            "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+            "context_id": "c-118",
+            "unit": "iso4217:USD",
+            "value": 5623000000,
+            "raw": "5,623",
+            "scale": "6",
+            "decimals": "-6",
+            "fact_id": "f-789",
+            "source_line": 8,
+            "table_index": 19,
+            "row_text": "Sales and Other Operating Revenues 5,623 9,542 16,587 16,393 48,145 24 48,169",
+            "dimensions": {
+              "srt:StatementGeographicalAxis": "country:US",
+              "us-gaap:StatementBusinessSegmentsAxis": "cvx:UpstreamSegmentMember"
+            },
+            "startdate": "2025-07-01",
+            "enddate": "2025-09-30",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341025000108/cvx-20250930.htm",
+            "accession": "0000093410-25-000108",
+            "form": "10-Q",
+            "filing_date": "2025-11-06",
+            "derivation": "reported_quarter",
+            "duplicate_count": 1
+          }
+        ],
+        "role": "scope_candidate"
+      },
+      "upstream_international": {
+        "status": "observed",
+        "value": 9542000000,
+        "error": "500000",
+        "facts": [
+          {
+            "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+            "context_id": "c-119",
+            "unit": "iso4217:USD",
+            "value": 9542000000,
+            "raw": "9,542",
+            "scale": "6",
+            "decimals": "-6",
+            "fact_id": "f-790",
+            "source_line": 8,
+            "table_index": 19,
+            "row_text": "Sales and Other Operating Revenues 5,623 9,542 16,587 16,393 48,145 24 48,169",
+            "dimensions": {
+              "srt:StatementGeographicalAxis": "us-gaap:NonUsMember",
+              "us-gaap:StatementBusinessSegmentsAxis": "cvx:UpstreamSegmentMember"
+            },
+            "startdate": "2025-07-01",
+            "enddate": "2025-09-30",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341025000108/cvx-20250930.htm",
+            "accession": "0000093410-25-000108",
+            "form": "10-Q",
+            "filing_date": "2025-11-06",
+            "derivation": "reported_quarter",
+            "duplicate_count": 1
+          }
+        ],
+        "role": "scope_candidate"
+      },
+      "downstream_us": {
+        "status": "observed",
+        "value": 16587000000,
+        "error": "500000",
+        "facts": [
+          {
+            "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+            "context_id": "c-120",
+            "unit": "iso4217:USD",
+            "value": 16587000000,
+            "raw": "16,587",
+            "scale": "6",
+            "decimals": "-6",
+            "fact_id": "f-791",
+            "source_line": 8,
+            "table_index": 19,
+            "row_text": "Sales and Other Operating Revenues 5,623 9,542 16,587 16,393 48,145 24 48,169",
+            "dimensions": {
+              "srt:StatementGeographicalAxis": "country:US",
+              "us-gaap:StatementBusinessSegmentsAxis": "cvx:DownstreamSegmentMember"
+            },
+            "startdate": "2025-07-01",
+            "enddate": "2025-09-30",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341025000108/cvx-20250930.htm",
+            "accession": "0000093410-25-000108",
+            "form": "10-Q",
+            "filing_date": "2025-11-06",
+            "derivation": "reported_quarter",
+            "duplicate_count": 1
+          }
+        ],
+        "role": "scope_candidate"
+      },
+      "downstream_international": {
+        "status": "observed",
+        "value": 16393000000,
+        "error": "500000",
+        "facts": [
+          {
+            "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+            "context_id": "c-121",
+            "unit": "iso4217:USD",
+            "value": 16393000000,
+            "raw": "16,393",
+            "scale": "6",
+            "decimals": "-6",
+            "fact_id": "f-792",
+            "source_line": 8,
+            "table_index": 19,
+            "row_text": "Sales and Other Operating Revenues 5,623 9,542 16,587 16,393 48,145 24 48,169",
+            "dimensions": {
+              "srt:StatementGeographicalAxis": "us-gaap:NonUsMember",
+              "us-gaap:StatementBusinessSegmentsAxis": "cvx:DownstreamSegmentMember"
+            },
+            "startdate": "2025-07-01",
+            "enddate": "2025-09-30",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341025000108/cvx-20250930.htm",
+            "accession": "0000093410-25-000108",
+            "form": "10-Q",
+            "filing_date": "2025-11-06",
+            "derivation": "reported_quarter",
+            "duplicate_count": 1
+          }
+        ],
+        "role": "scope_candidate"
+      },
+      "all_other_net": {
+        "status": "observed",
+        "value": 24000000,
+        "error": "500000",
+        "facts": [
+          {
+            "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+            "context_id": "c-123",
+            "unit": "iso4217:USD",
+            "value": 24000000,
+            "raw": "24",
+            "scale": "6",
+            "decimals": "-6",
+            "fact_id": "f-794",
+            "source_line": 8,
+            "table_index": 19,
+            "row_text": "Sales and Other Operating Revenues 5,623 9,542 16,587 16,393 48,145 24 48,169",
+            "dimensions": {
+              "us-gaap:StatementBusinessSegmentsAxis": "us-gaap:AllOtherSegmentsMember"
+            },
+            "startdate": "2025-07-01",
+            "enddate": "2025-09-30",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341025000108/cvx-20250930.htm",
+            "accession": "0000093410-25-000108",
+            "form": "10-Q",
+            "filing_date": "2025-11-06",
+            "derivation": "reported_quarter",
+            "duplicate_count": 1
+          }
+        ],
+        "role": "scope_candidate"
+      },
+      "consolidated_sales": {
+        "status": "observed",
+        "value": 48169000000,
+        "error": "500000",
+        "facts": [
+          {
+            "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+            "context_id": "c-3",
+            "unit": "iso4217:USD",
+            "value": 48169000000,
+            "raw": "48,169",
+            "scale": "6",
+            "decimals": "-6",
+            "fact_id": "f-30",
+            "source_line": 8,
+            "table_index": 7,
+            "row_text": "Sales and other operating revenues $ 48,169 $ 48,926 $ 138,645 $ 145,080",
+            "dimensions": {},
+            "startdate": "2025-07-01",
+            "enddate": "2025-09-30",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341025000108/cvx-20250930.htm",
+            "accession": "0000093410-25-000108",
+            "form": "10-Q",
+            "filing_date": "2025-11-06",
+            "derivation": "reported_quarter",
+            "duplicate_count": 2
+          }
+        ],
+        "role": "scope_candidate"
+      }
+    },
+    "2025-12-31": {
+      "upstream_us": {
+        "status": "observed",
+        "value": 5518000000,
+        "error": "1000000",
+        "facts": [
+          {
+            "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+            "context_id": "c-180",
+            "unit": "iso4217:USD",
+            "value": 5518000000,
+            "raw": "19,608",
+            "scale": "6",
+            "decimals": "-6",
+            "fact_id": "f-1173",
+            "source_line": 8,
+            "table_index": 193,
+            "row_text": "Sales and Other Operating Revenues 19,608 33,844 65,331 65,545 184,328 104 184,432",
+            "dimensions": {
+              "srt:StatementGeographicalAxis": "country:US",
+              "us-gaap:StatementBusinessSegmentsAxis": "cvx:UpstreamSegmentMember"
+            },
+            "startdate": "2025-10-01",
+            "enddate": "2025-12-31",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341026000078/cvx-20251231.htm",
+            "accession": "0000093410-26-000078",
+            "form": "10-K",
+            "filing_date": "2026-02-24",
+            "derivation": "annual_minus_nine_months",
+            "annual_evidence": {
+              "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "context_id": "c-180",
+              "unit": "iso4217:USD",
+              "value": 19608000000,
+              "raw": "19,608",
+              "scale": "6",
+              "decimals": "-6",
+              "fact_id": "f-1173",
+              "source_line": 8,
+              "table_index": 193,
+              "row_text": "Sales and Other Operating Revenues 19,608 33,844 65,331 65,545 184,328 104 184,432",
+              "dimensions": {
+                "srt:StatementGeographicalAxis": "country:US",
+                "us-gaap:StatementBusinessSegmentsAxis": "cvx:UpstreamSegmentMember"
+              },
+              "startdate": "2025-01-01",
+              "enddate": "2025-12-31",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341026000078/cvx-20251231.htm",
+              "accession": "0000093410-26-000078",
+              "form": "10-K",
+              "filing_date": "2026-02-24"
+            },
+            "nine_month_evidence": {
+              "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "context_id": "c-158",
+              "unit": "iso4217:USD",
+              "value": 14090000000,
+              "raw": "14,090",
+              "scale": "6",
+              "decimals": "-6",
+              "fact_id": "f-1003",
+              "source_line": 8,
+              "table_index": 21,
+              "row_text": "Sales and Other Operating Revenues 14,090 24,564 50,211 49,707 138,572 73 138,645",
+              "dimensions": {
+                "srt:StatementGeographicalAxis": "country:US",
+                "us-gaap:StatementBusinessSegmentsAxis": "cvx:UpstreamSegmentMember"
+              },
+              "startdate": "2025-01-01",
+              "enddate": "2025-09-30",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341025000108/cvx-20250930.htm",
+              "accession": "0000093410-25-000108",
+              "form": "10-Q",
+              "filing_date": "2025-11-06"
+            },
+            "duplicate_count": 1
+          }
+        ],
+        "role": "scope_candidate"
+      },
+      "upstream_international": {
+        "status": "observed",
+        "value": 9280000000,
+        "error": "1000000",
+        "facts": [
+          {
+            "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+            "context_id": "c-181",
+            "unit": "iso4217:USD",
+            "value": 9280000000,
+            "raw": "33,844",
+            "scale": "6",
+            "decimals": "-6",
+            "fact_id": "f-1174",
+            "source_line": 8,
+            "table_index": 193,
+            "row_text": "Sales and Other Operating Revenues 19,608 33,844 65,331 65,545 184,328 104 184,432",
+            "dimensions": {
+              "srt:StatementGeographicalAxis": "us-gaap:NonUsMember",
+              "us-gaap:StatementBusinessSegmentsAxis": "cvx:UpstreamSegmentMember"
+            },
+            "startdate": "2025-10-01",
+            "enddate": "2025-12-31",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341026000078/cvx-20251231.htm",
+            "accession": "0000093410-26-000078",
+            "form": "10-K",
+            "filing_date": "2026-02-24",
+            "derivation": "annual_minus_nine_months",
+            "annual_evidence": {
+              "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "context_id": "c-181",
+              "unit": "iso4217:USD",
+              "value": 33844000000,
+              "raw": "33,844",
+              "scale": "6",
+              "decimals": "-6",
+              "fact_id": "f-1174",
+              "source_line": 8,
+              "table_index": 193,
+              "row_text": "Sales and Other Operating Revenues 19,608 33,844 65,331 65,545 184,328 104 184,432",
+              "dimensions": {
+                "srt:StatementGeographicalAxis": "us-gaap:NonUsMember",
+                "us-gaap:StatementBusinessSegmentsAxis": "cvx:UpstreamSegmentMember"
+              },
+              "startdate": "2025-01-01",
+              "enddate": "2025-12-31",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341026000078/cvx-20251231.htm",
+              "accession": "0000093410-26-000078",
+              "form": "10-K",
+              "filing_date": "2026-02-24"
+            },
+            "nine_month_evidence": {
+              "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "context_id": "c-159",
+              "unit": "iso4217:USD",
+              "value": 24564000000,
+              "raw": "24,564",
+              "scale": "6",
+              "decimals": "-6",
+              "fact_id": "f-1004",
+              "source_line": 8,
+              "table_index": 21,
+              "row_text": "Sales and Other Operating Revenues 14,090 24,564 50,211 49,707 138,572 73 138,645",
+              "dimensions": {
+                "srt:StatementGeographicalAxis": "us-gaap:NonUsMember",
+                "us-gaap:StatementBusinessSegmentsAxis": "cvx:UpstreamSegmentMember"
+              },
+              "startdate": "2025-01-01",
+              "enddate": "2025-09-30",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341025000108/cvx-20250930.htm",
+              "accession": "0000093410-25-000108",
+              "form": "10-Q",
+              "filing_date": "2025-11-06"
+            },
+            "duplicate_count": 1
+          }
+        ],
+        "role": "scope_candidate"
+      },
+      "downstream_us": {
+        "status": "observed",
+        "value": 15120000000,
+        "error": "1000000",
+        "facts": [
+          {
+            "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+            "context_id": "c-182",
+            "unit": "iso4217:USD",
+            "value": 15120000000,
+            "raw": "65,331",
+            "scale": "6",
+            "decimals": "-6",
+            "fact_id": "f-1175",
+            "source_line": 8,
+            "table_index": 193,
+            "row_text": "Sales and Other Operating Revenues 19,608 33,844 65,331 65,545 184,328 104 184,432",
+            "dimensions": {
+              "srt:StatementGeographicalAxis": "country:US",
+              "us-gaap:StatementBusinessSegmentsAxis": "cvx:DownstreamSegmentMember"
+            },
+            "startdate": "2025-10-01",
+            "enddate": "2025-12-31",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341026000078/cvx-20251231.htm",
+            "accession": "0000093410-26-000078",
+            "form": "10-K",
+            "filing_date": "2026-02-24",
+            "derivation": "annual_minus_nine_months",
+            "annual_evidence": {
+              "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "context_id": "c-182",
+              "unit": "iso4217:USD",
+              "value": 65331000000,
+              "raw": "65,331",
+              "scale": "6",
+              "decimals": "-6",
+              "fact_id": "f-1175",
+              "source_line": 8,
+              "table_index": 193,
+              "row_text": "Sales and Other Operating Revenues 19,608 33,844 65,331 65,545 184,328 104 184,432",
+              "dimensions": {
+                "srt:StatementGeographicalAxis": "country:US",
+                "us-gaap:StatementBusinessSegmentsAxis": "cvx:DownstreamSegmentMember"
+              },
+              "startdate": "2025-01-01",
+              "enddate": "2025-12-31",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341026000078/cvx-20251231.htm",
+              "accession": "0000093410-26-000078",
+              "form": "10-K",
+              "filing_date": "2026-02-24"
+            },
+            "nine_month_evidence": {
+              "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "context_id": "c-160",
+              "unit": "iso4217:USD",
+              "value": 50211000000,
+              "raw": "50,211",
+              "scale": "6",
+              "decimals": "-6",
+              "fact_id": "f-1005",
+              "source_line": 8,
+              "table_index": 21,
+              "row_text": "Sales and Other Operating Revenues 14,090 24,564 50,211 49,707 138,572 73 138,645",
+              "dimensions": {
+                "srt:StatementGeographicalAxis": "country:US",
+                "us-gaap:StatementBusinessSegmentsAxis": "cvx:DownstreamSegmentMember"
+              },
+              "startdate": "2025-01-01",
+              "enddate": "2025-09-30",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341025000108/cvx-20250930.htm",
+              "accession": "0000093410-25-000108",
+              "form": "10-Q",
+              "filing_date": "2025-11-06"
+            },
+            "duplicate_count": 1
+          }
+        ],
+        "role": "scope_candidate"
+      },
+      "downstream_international": {
+        "status": "observed",
+        "value": 15838000000,
+        "error": "1000000",
+        "facts": [
+          {
+            "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+            "context_id": "c-183",
+            "unit": "iso4217:USD",
+            "value": 15838000000,
+            "raw": "65,545",
+            "scale": "6",
+            "decimals": "-6",
+            "fact_id": "f-1176",
+            "source_line": 8,
+            "table_index": 193,
+            "row_text": "Sales and Other Operating Revenues 19,608 33,844 65,331 65,545 184,328 104 184,432",
+            "dimensions": {
+              "srt:StatementGeographicalAxis": "us-gaap:NonUsMember",
+              "us-gaap:StatementBusinessSegmentsAxis": "cvx:DownstreamSegmentMember"
+            },
+            "startdate": "2025-10-01",
+            "enddate": "2025-12-31",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341026000078/cvx-20251231.htm",
+            "accession": "0000093410-26-000078",
+            "form": "10-K",
+            "filing_date": "2026-02-24",
+            "derivation": "annual_minus_nine_months",
+            "annual_evidence": {
+              "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "context_id": "c-183",
+              "unit": "iso4217:USD",
+              "value": 65545000000,
+              "raw": "65,545",
+              "scale": "6",
+              "decimals": "-6",
+              "fact_id": "f-1176",
+              "source_line": 8,
+              "table_index": 193,
+              "row_text": "Sales and Other Operating Revenues 19,608 33,844 65,331 65,545 184,328 104 184,432",
+              "dimensions": {
+                "srt:StatementGeographicalAxis": "us-gaap:NonUsMember",
+                "us-gaap:StatementBusinessSegmentsAxis": "cvx:DownstreamSegmentMember"
+              },
+              "startdate": "2025-01-01",
+              "enddate": "2025-12-31",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341026000078/cvx-20251231.htm",
+              "accession": "0000093410-26-000078",
+              "form": "10-K",
+              "filing_date": "2026-02-24"
+            },
+            "nine_month_evidence": {
+              "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "context_id": "c-161",
+              "unit": "iso4217:USD",
+              "value": 49707000000,
+              "raw": "49,707",
+              "scale": "6",
+              "decimals": "-6",
+              "fact_id": "f-1006",
+              "source_line": 8,
+              "table_index": 21,
+              "row_text": "Sales and Other Operating Revenues 14,090 24,564 50,211 49,707 138,572 73 138,645",
+              "dimensions": {
+                "srt:StatementGeographicalAxis": "us-gaap:NonUsMember",
+                "us-gaap:StatementBusinessSegmentsAxis": "cvx:DownstreamSegmentMember"
+              },
+              "startdate": "2025-01-01",
+              "enddate": "2025-09-30",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341025000108/cvx-20250930.htm",
+              "accession": "0000093410-25-000108",
+              "form": "10-Q",
+              "filing_date": "2025-11-06"
+            },
+            "duplicate_count": 1
+          }
+        ],
+        "role": "scope_candidate"
+      },
+      "all_other_net": {
+        "status": "observed",
+        "value": 31000000,
+        "error": "1000000",
+        "facts": [
+          {
+            "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+            "context_id": "c-185",
+            "unit": "iso4217:USD",
+            "value": 31000000,
+            "raw": "104",
+            "scale": "6",
+            "decimals": "-6",
+            "fact_id": "f-1178",
+            "source_line": 8,
+            "table_index": 193,
+            "row_text": "Sales and Other Operating Revenues 19,608 33,844 65,331 65,545 184,328 104 184,432",
+            "dimensions": {
+              "us-gaap:StatementBusinessSegmentsAxis": "us-gaap:AllOtherSegmentsMember"
+            },
+            "startdate": "2025-10-01",
+            "enddate": "2025-12-31",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341026000078/cvx-20251231.htm",
+            "accession": "0000093410-26-000078",
+            "form": "10-K",
+            "filing_date": "2026-02-24",
+            "derivation": "annual_minus_nine_months",
+            "annual_evidence": {
+              "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "context_id": "c-185",
+              "unit": "iso4217:USD",
+              "value": 104000000,
+              "raw": "104",
+              "scale": "6",
+              "decimals": "-6",
+              "fact_id": "f-1178",
+              "source_line": 8,
+              "table_index": 193,
+              "row_text": "Sales and Other Operating Revenues 19,608 33,844 65,331 65,545 184,328 104 184,432",
+              "dimensions": {
+                "us-gaap:StatementBusinessSegmentsAxis": "us-gaap:AllOtherSegmentsMember"
+              },
+              "startdate": "2025-01-01",
+              "enddate": "2025-12-31",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341026000078/cvx-20251231.htm",
+              "accession": "0000093410-26-000078",
+              "form": "10-K",
+              "filing_date": "2026-02-24"
+            },
+            "nine_month_evidence": {
+              "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "context_id": "c-163",
+              "unit": "iso4217:USD",
+              "value": 73000000,
+              "raw": "73",
+              "scale": "6",
+              "decimals": "-6",
+              "fact_id": "f-1008",
+              "source_line": 8,
+              "table_index": 21,
+              "row_text": "Sales and Other Operating Revenues 14,090 24,564 50,211 49,707 138,572 73 138,645",
+              "dimensions": {
+                "us-gaap:StatementBusinessSegmentsAxis": "us-gaap:AllOtherSegmentsMember"
+              },
+              "startdate": "2025-01-01",
+              "enddate": "2025-09-30",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341025000108/cvx-20250930.htm",
+              "accession": "0000093410-25-000108",
+              "form": "10-Q",
+              "filing_date": "2025-11-06"
+            },
+            "duplicate_count": 1
+          }
+        ],
+        "role": "scope_candidate"
+      },
+      "consolidated_sales": {
+        "status": "observed",
+        "value": 45787000000,
+        "error": "1000000",
+        "facts": [
+          {
+            "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+            "context_id": "c-1",
+            "unit": "iso4217:USD",
+            "value": 45787000000,
+            "raw": "184,432",
+            "scale": "6",
+            "decimals": "-6",
+            "fact_id": "f-81",
+            "source_line": 8,
+            "table_index": 152,
+            "row_text": "Sales and other operating revenues $ 184,432 $ 193,414 $ 196,913",
+            "dimensions": {},
+            "startdate": "2025-10-01",
+            "enddate": "2025-12-31",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341026000078/cvx-20251231.htm",
+            "accession": "0000093410-26-000078",
+            "form": "10-K",
+            "filing_date": "2026-02-24",
+            "derivation": "annual_minus_nine_months",
+            "annual_evidence": {
+              "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "context_id": "c-1",
+              "unit": "iso4217:USD",
+              "value": 184432000000,
+              "raw": "184,432",
+              "scale": "6",
+              "decimals": "-6",
+              "fact_id": "f-81",
+              "source_line": 8,
+              "table_index": 152,
+              "row_text": "Sales and other operating revenues $ 184,432 $ 193,414 $ 196,913",
+              "dimensions": {},
+              "startdate": "2025-01-01",
+              "enddate": "2025-12-31",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341026000078/cvx-20251231.htm",
+              "accession": "0000093410-26-000078",
+              "form": "10-K",
+              "filing_date": "2026-02-24"
+            },
+            "nine_month_evidence": {
+              "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "context_id": "c-1",
+              "unit": "iso4217:USD",
+              "value": 138645000000,
+              "raw": "138,645",
+              "scale": "6",
+              "decimals": "-6",
+              "fact_id": "f-32",
+              "source_line": 8,
+              "table_index": 7,
+              "row_text": "Sales and other operating revenues $ 48,169 $ 48,926 $ 138,645 $ 145,080",
+              "dimensions": {},
+              "startdate": "2025-01-01",
+              "enddate": "2025-09-30",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341025000108/cvx-20250930.htm",
+              "accession": "0000093410-25-000108",
+              "form": "10-Q",
+              "filing_date": "2025-11-06"
+            },
+            "duplicate_count": 2
+          }
+        ],
+        "role": "scope_candidate"
+      }
+    }
+  },
+  "existing_gross_outputs_unchanged": [
+    {
+      "period_end": "2025-09-30",
+      "SEC_defined_fields": 4,
+      "fields_with_SEC_operands": 4,
+      "status": "SEC_output_available",
+      "reference_period_present_in_saved_fixed_source": false,
+      "outputs": {
+        "上游": {
+          "status": "observed",
+          "value": 24279000000,
+          "error": "1000000",
+          "facts": [
+            {
+              "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "context_id": "c-104",
+              "unit": "iso4217:USD",
+              "value": 12161000000,
+              "raw": "12,161",
+              "scale": "6",
+              "decimals": "-6",
+              "fact_id": "f-775",
+              "source_line": 8,
+              "table_index": 19,
+              "row_text": "Sales and other operating revenues before elimination $ 12,161 $ 12,118 $ 18,234 $ 17,483 $ 59,996 $ 136 $ 60,132",
+              "dimensions": {
+                "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                "srt:StatementGeographicalAxis": "country:US",
+                "us-gaap:StatementBusinessSegmentsAxis": "cvx:UpstreamSegmentMember"
+              },
+              "startdate": "2025-07-01",
+              "enddate": "2025-09-30",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341025000108/cvx-20250930.htm",
+              "accession": "0000093410-25-000108",
+              "form": "10-Q",
+              "filing_date": "2025-11-06",
+              "derivation": "reported_quarter",
+              "duplicate_count": 1
+            },
+            {
+              "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "context_id": "c-105",
+              "unit": "iso4217:USD",
+              "value": 12118000000,
+              "raw": "12,118",
+              "scale": "6",
+              "decimals": "-6",
+              "fact_id": "f-776",
+              "source_line": 8,
+              "table_index": 19,
+              "row_text": "Sales and other operating revenues before elimination $ 12,161 $ 12,118 $ 18,234 $ 17,483 $ 59,996 $ 136 $ 60,132",
+              "dimensions": {
+                "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                "srt:StatementGeographicalAxis": "us-gaap:NonUsMember",
+                "us-gaap:StatementBusinessSegmentsAxis": "cvx:UpstreamSegmentMember"
+              },
+              "startdate": "2025-07-01",
+              "enddate": "2025-09-30",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341025000108/cvx-20250930.htm",
+              "accession": "0000093410-25-000108",
+              "form": "10-Q",
+              "filing_date": "2025-11-06",
+              "derivation": "reported_quarter",
+              "duplicate_count": 1
+            }
+          ],
+          "role": "scope_candidate"
+        },
+        "下游": {
+          "status": "observed",
+          "value": 35717000000,
+          "error": "1000000",
+          "facts": [
+            {
+              "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "context_id": "c-106",
+              "unit": "iso4217:USD",
+              "value": 18234000000,
+              "raw": "18,234",
+              "scale": "6",
+              "decimals": "-6",
+              "fact_id": "f-777",
+              "source_line": 8,
+              "table_index": 19,
+              "row_text": "Sales and other operating revenues before elimination $ 12,161 $ 12,118 $ 18,234 $ 17,483 $ 59,996 $ 136 $ 60,132",
+              "dimensions": {
+                "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                "srt:StatementGeographicalAxis": "country:US",
+                "us-gaap:StatementBusinessSegmentsAxis": "cvx:DownstreamSegmentMember"
+              },
+              "startdate": "2025-07-01",
+              "enddate": "2025-09-30",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341025000108/cvx-20250930.htm",
+              "accession": "0000093410-25-000108",
+              "form": "10-Q",
+              "filing_date": "2025-11-06",
+              "derivation": "reported_quarter",
+              "duplicate_count": 1
+            },
+            {
+              "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "context_id": "c-107",
+              "unit": "iso4217:USD",
+              "value": 17483000000,
+              "raw": "17,483",
+              "scale": "6",
+              "decimals": "-6",
+              "fact_id": "f-778",
+              "source_line": 8,
+              "table_index": 19,
+              "row_text": "Sales and other operating revenues before elimination $ 12,161 $ 12,118 $ 18,234 $ 17,483 $ 59,996 $ 136 $ 60,132",
+              "dimensions": {
+                "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                "srt:StatementGeographicalAxis": "us-gaap:NonUsMember",
+                "us-gaap:StatementBusinessSegmentsAxis": "cvx:DownstreamSegmentMember"
+              },
+              "startdate": "2025-07-01",
+              "enddate": "2025-09-30",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341025000108/cvx-20250930.htm",
+              "accession": "0000093410-25-000108",
+              "form": "10-Q",
+              "filing_date": "2025-11-06",
+              "derivation": "reported_quarter",
+              "duplicate_count": 1
+            }
+          ],
+          "role": "scope_candidate"
+        },
+        "所有其他": {
+          "status": "observed",
+          "value": 136000000,
+          "error": "500000",
+          "facts": [
+            {
+              "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "context_id": "c-109",
+              "unit": "iso4217:USD",
+              "value": 136000000,
+              "raw": "136",
+              "scale": "6",
+              "decimals": "-6",
+              "fact_id": "f-780",
+              "source_line": 8,
+              "table_index": 19,
+              "row_text": "Sales and other operating revenues before elimination $ 12,161 $ 12,118 $ 18,234 $ 17,483 $ 59,996 $ 136 $ 60,132",
+              "dimensions": {
+                "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                "us-gaap:StatementBusinessSegmentsAxis": "us-gaap:AllOtherSegmentsMember"
+              },
+              "startdate": "2025-07-01",
+              "enddate": "2025-09-30",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341025000108/cvx-20250930.htm",
+              "accession": "0000093410-25-000108",
+              "form": "10-Q",
+              "filing_date": "2025-11-06",
+              "derivation": "reported_quarter",
+              "duplicate_count": 1
+            }
+          ],
+          "role": "scope_candidate"
+        },
+        "部門間收入抵銷": {
+          "status": "observed",
+          "value": -11963000000,
+          "error": "500000",
+          "facts": [
+            {
+              "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "context_id": "c-117",
+              "unit": "iso4217:USD",
+              "value": -11963000000,
+              "raw": "11,963",
+              "scale": "6",
+              "decimals": "-6",
+              "fact_id": "f-788",
+              "source_line": 8,
+              "table_index": 19,
+              "row_text": "Intersegment revenue elimination ( 6,538 ) ( 2,576 ) ( 1,647 ) ( 1,090 ) ( 11,851 ) ( 112 ) ( 11,963 )",
+              "dimensions": {
+                "srt:ConsolidationItemsAxis": "us-gaap:IntersegmentEliminationMember"
+              },
+              "startdate": "2025-07-01",
+              "enddate": "2025-09-30",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341025000108/cvx-20250930.htm",
+              "accession": "0000093410-25-000108",
+              "form": "10-Q",
+              "filing_date": "2025-11-06",
+              "derivation": "reported_quarter",
+              "duplicate_count": 1
+            }
+          ],
+          "role": "scope_candidate"
+        }
+      },
+      "alternative_definitions": {},
+      "reconciliation": {}
+    },
+    {
+      "period_end": "2025-12-31",
+      "SEC_defined_fields": 4,
+      "fields_with_SEC_operands": 4,
+      "status": "SEC_output_available",
+      "reference_period_present_in_saved_fixed_source": false,
+      "outputs": {
+        "上游": {
+          "status": "observed",
+          "value": 23047000000,
+          "error": "2000000",
+          "facts": [
+            {
+              "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "context_id": "c-166",
+              "unit": "iso4217:USD",
+              "value": 11457000000,
+              "raw": "45,518",
+              "scale": "6",
+              "decimals": "-6",
+              "fact_id": "f-1159",
+              "source_line": 8,
+              "table_index": 193,
+              "row_text": "Sales and other operating revenues before elimination $ 45,518 $ 42,861 $ 72,485 $ 69,925 $ 230,789 $ 581 $ 231,370",
+              "dimensions": {
+                "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                "srt:StatementGeographicalAxis": "country:US",
+                "us-gaap:StatementBusinessSegmentsAxis": "cvx:UpstreamSegmentMember"
+              },
+              "startdate": "2025-10-01",
+              "enddate": "2025-12-31",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341026000078/cvx-20251231.htm",
+              "accession": "0000093410-26-000078",
+              "form": "10-K",
+              "filing_date": "2026-02-24",
+              "derivation": "annual_minus_nine_months",
+              "annual_evidence": {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "context_id": "c-166",
+                "unit": "iso4217:USD",
+                "value": 45518000000,
+                "raw": "45,518",
+                "scale": "6",
+                "decimals": "-6",
+                "fact_id": "f-1159",
+                "source_line": 8,
+                "table_index": 193,
+                "row_text": "Sales and other operating revenues before elimination $ 45,518 $ 42,861 $ 72,485 $ 69,925 $ 230,789 $ 581 $ 231,370",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "srt:StatementGeographicalAxis": "country:US",
+                  "us-gaap:StatementBusinessSegmentsAxis": "cvx:UpstreamSegmentMember"
+                },
+                "startdate": "2025-01-01",
+                "enddate": "2025-12-31",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341026000078/cvx-20251231.htm",
+                "accession": "0000093410-26-000078",
+                "form": "10-K",
+                "filing_date": "2026-02-24"
+              },
+              "nine_month_evidence": {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "context_id": "c-144",
+                "unit": "iso4217:USD",
+                "value": 34061000000,
+                "raw": "34,061",
+                "scale": "6",
+                "decimals": "-6",
+                "fact_id": "f-989",
+                "source_line": 8,
+                "table_index": 21,
+                "row_text": "Sales and other operating revenues before elimination $ 34,061 $ 31,271 $ 55,647 $ 53,023 $ 174,002 $ 405 $ 174,407",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "srt:StatementGeographicalAxis": "country:US",
+                  "us-gaap:StatementBusinessSegmentsAxis": "cvx:UpstreamSegmentMember"
+                },
+                "startdate": "2025-01-01",
+                "enddate": "2025-09-30",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341025000108/cvx-20250930.htm",
+                "accession": "0000093410-25-000108",
+                "form": "10-Q",
+                "filing_date": "2025-11-06"
+              },
+              "duplicate_count": 1
+            },
+            {
+              "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "context_id": "c-167",
+              "unit": "iso4217:USD",
+              "value": 11590000000,
+              "raw": "42,861",
+              "scale": "6",
+              "decimals": "-6",
+              "fact_id": "f-1160",
+              "source_line": 8,
+              "table_index": 193,
+              "row_text": "Sales and other operating revenues before elimination $ 45,518 $ 42,861 $ 72,485 $ 69,925 $ 230,789 $ 581 $ 231,370",
+              "dimensions": {
+                "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                "srt:StatementGeographicalAxis": "us-gaap:NonUsMember",
+                "us-gaap:StatementBusinessSegmentsAxis": "cvx:UpstreamSegmentMember"
+              },
+              "startdate": "2025-10-01",
+              "enddate": "2025-12-31",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341026000078/cvx-20251231.htm",
+              "accession": "0000093410-26-000078",
+              "form": "10-K",
+              "filing_date": "2026-02-24",
+              "derivation": "annual_minus_nine_months",
+              "annual_evidence": {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "context_id": "c-167",
+                "unit": "iso4217:USD",
+                "value": 42861000000,
+                "raw": "42,861",
+                "scale": "6",
+                "decimals": "-6",
+                "fact_id": "f-1160",
+                "source_line": 8,
+                "table_index": 193,
+                "row_text": "Sales and other operating revenues before elimination $ 45,518 $ 42,861 $ 72,485 $ 69,925 $ 230,789 $ 581 $ 231,370",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "srt:StatementGeographicalAxis": "us-gaap:NonUsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "cvx:UpstreamSegmentMember"
+                },
+                "startdate": "2025-01-01",
+                "enddate": "2025-12-31",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341026000078/cvx-20251231.htm",
+                "accession": "0000093410-26-000078",
+                "form": "10-K",
+                "filing_date": "2026-02-24"
+              },
+              "nine_month_evidence": {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "context_id": "c-145",
+                "unit": "iso4217:USD",
+                "value": 31271000000,
+                "raw": "31,271",
+                "scale": "6",
+                "decimals": "-6",
+                "fact_id": "f-990",
+                "source_line": 8,
+                "table_index": 21,
+                "row_text": "Sales and other operating revenues before elimination $ 34,061 $ 31,271 $ 55,647 $ 53,023 $ 174,002 $ 405 $ 174,407",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "srt:StatementGeographicalAxis": "us-gaap:NonUsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "cvx:UpstreamSegmentMember"
+                },
+                "startdate": "2025-01-01",
+                "enddate": "2025-09-30",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341025000108/cvx-20250930.htm",
+                "accession": "0000093410-25-000108",
+                "form": "10-Q",
+                "filing_date": "2025-11-06"
+              },
+              "duplicate_count": 1
+            }
+          ],
+          "role": "scope_candidate"
+        },
+        "下游": {
+          "status": "observed",
+          "value": 33740000000,
+          "error": "2000000",
+          "facts": [
+            {
+              "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "context_id": "c-168",
+              "unit": "iso4217:USD",
+              "value": 16838000000,
+              "raw": "72,485",
+              "scale": "6",
+              "decimals": "-6",
+              "fact_id": "f-1161",
+              "source_line": 8,
+              "table_index": 193,
+              "row_text": "Sales and other operating revenues before elimination $ 45,518 $ 42,861 $ 72,485 $ 69,925 $ 230,789 $ 581 $ 231,370",
+              "dimensions": {
+                "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                "srt:StatementGeographicalAxis": "country:US",
+                "us-gaap:StatementBusinessSegmentsAxis": "cvx:DownstreamSegmentMember"
+              },
+              "startdate": "2025-10-01",
+              "enddate": "2025-12-31",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341026000078/cvx-20251231.htm",
+              "accession": "0000093410-26-000078",
+              "form": "10-K",
+              "filing_date": "2026-02-24",
+              "derivation": "annual_minus_nine_months",
+              "annual_evidence": {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "context_id": "c-168",
+                "unit": "iso4217:USD",
+                "value": 72485000000,
+                "raw": "72,485",
+                "scale": "6",
+                "decimals": "-6",
+                "fact_id": "f-1161",
+                "source_line": 8,
+                "table_index": 193,
+                "row_text": "Sales and other operating revenues before elimination $ 45,518 $ 42,861 $ 72,485 $ 69,925 $ 230,789 $ 581 $ 231,370",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "srt:StatementGeographicalAxis": "country:US",
+                  "us-gaap:StatementBusinessSegmentsAxis": "cvx:DownstreamSegmentMember"
+                },
+                "startdate": "2025-01-01",
+                "enddate": "2025-12-31",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341026000078/cvx-20251231.htm",
+                "accession": "0000093410-26-000078",
+                "form": "10-K",
+                "filing_date": "2026-02-24"
+              },
+              "nine_month_evidence": {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "context_id": "c-146",
+                "unit": "iso4217:USD",
+                "value": 55647000000,
+                "raw": "55,647",
+                "scale": "6",
+                "decimals": "-6",
+                "fact_id": "f-991",
+                "source_line": 8,
+                "table_index": 21,
+                "row_text": "Sales and other operating revenues before elimination $ 34,061 $ 31,271 $ 55,647 $ 53,023 $ 174,002 $ 405 $ 174,407",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "srt:StatementGeographicalAxis": "country:US",
+                  "us-gaap:StatementBusinessSegmentsAxis": "cvx:DownstreamSegmentMember"
+                },
+                "startdate": "2025-01-01",
+                "enddate": "2025-09-30",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341025000108/cvx-20250930.htm",
+                "accession": "0000093410-25-000108",
+                "form": "10-Q",
+                "filing_date": "2025-11-06"
+              },
+              "duplicate_count": 1
+            },
+            {
+              "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "context_id": "c-169",
+              "unit": "iso4217:USD",
+              "value": 16902000000,
+              "raw": "69,925",
+              "scale": "6",
+              "decimals": "-6",
+              "fact_id": "f-1162",
+              "source_line": 8,
+              "table_index": 193,
+              "row_text": "Sales and other operating revenues before elimination $ 45,518 $ 42,861 $ 72,485 $ 69,925 $ 230,789 $ 581 $ 231,370",
+              "dimensions": {
+                "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                "srt:StatementGeographicalAxis": "us-gaap:NonUsMember",
+                "us-gaap:StatementBusinessSegmentsAxis": "cvx:DownstreamSegmentMember"
+              },
+              "startdate": "2025-10-01",
+              "enddate": "2025-12-31",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341026000078/cvx-20251231.htm",
+              "accession": "0000093410-26-000078",
+              "form": "10-K",
+              "filing_date": "2026-02-24",
+              "derivation": "annual_minus_nine_months",
+              "annual_evidence": {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "context_id": "c-169",
+                "unit": "iso4217:USD",
+                "value": 69925000000,
+                "raw": "69,925",
+                "scale": "6",
+                "decimals": "-6",
+                "fact_id": "f-1162",
+                "source_line": 8,
+                "table_index": 193,
+                "row_text": "Sales and other operating revenues before elimination $ 45,518 $ 42,861 $ 72,485 $ 69,925 $ 230,789 $ 581 $ 231,370",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "srt:StatementGeographicalAxis": "us-gaap:NonUsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "cvx:DownstreamSegmentMember"
+                },
+                "startdate": "2025-01-01",
+                "enddate": "2025-12-31",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341026000078/cvx-20251231.htm",
+                "accession": "0000093410-26-000078",
+                "form": "10-K",
+                "filing_date": "2026-02-24"
+              },
+              "nine_month_evidence": {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "context_id": "c-147",
+                "unit": "iso4217:USD",
+                "value": 53023000000,
+                "raw": "53,023",
+                "scale": "6",
+                "decimals": "-6",
+                "fact_id": "f-992",
+                "source_line": 8,
+                "table_index": 21,
+                "row_text": "Sales and other operating revenues before elimination $ 34,061 $ 31,271 $ 55,647 $ 53,023 $ 174,002 $ 405 $ 174,407",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "srt:StatementGeographicalAxis": "us-gaap:NonUsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "cvx:DownstreamSegmentMember"
+                },
+                "startdate": "2025-01-01",
+                "enddate": "2025-09-30",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341025000108/cvx-20250930.htm",
+                "accession": "0000093410-25-000108",
+                "form": "10-Q",
+                "filing_date": "2025-11-06"
+              },
+              "duplicate_count": 1
+            }
+          ],
+          "role": "scope_candidate"
+        },
+        "所有其他": {
+          "status": "observed",
+          "value": 176000000,
+          "error": "1000000",
+          "facts": [
+            {
+              "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "context_id": "c-171",
+              "unit": "iso4217:USD",
+              "value": 176000000,
+              "raw": "581",
+              "scale": "6",
+              "decimals": "-6",
+              "fact_id": "f-1164",
+              "source_line": 8,
+              "table_index": 193,
+              "row_text": "Sales and other operating revenues before elimination $ 45,518 $ 42,861 $ 72,485 $ 69,925 $ 230,789 $ 581 $ 231,370",
+              "dimensions": {
+                "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                "us-gaap:StatementBusinessSegmentsAxis": "us-gaap:AllOtherSegmentsMember"
+              },
+              "startdate": "2025-10-01",
+              "enddate": "2025-12-31",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341026000078/cvx-20251231.htm",
+              "accession": "0000093410-26-000078",
+              "form": "10-K",
+              "filing_date": "2026-02-24",
+              "derivation": "annual_minus_nine_months",
+              "annual_evidence": {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "context_id": "c-171",
+                "unit": "iso4217:USD",
+                "value": 581000000,
+                "raw": "581",
+                "scale": "6",
+                "decimals": "-6",
+                "fact_id": "f-1164",
+                "source_line": 8,
+                "table_index": 193,
+                "row_text": "Sales and other operating revenues before elimination $ 45,518 $ 42,861 $ 72,485 $ 69,925 $ 230,789 $ 581 $ 231,370",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "us-gaap:AllOtherSegmentsMember"
+                },
+                "startdate": "2025-01-01",
+                "enddate": "2025-12-31",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341026000078/cvx-20251231.htm",
+                "accession": "0000093410-26-000078",
+                "form": "10-K",
+                "filing_date": "2026-02-24"
+              },
+              "nine_month_evidence": {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "context_id": "c-149",
+                "unit": "iso4217:USD",
+                "value": 405000000,
+                "raw": "405",
+                "scale": "6",
+                "decimals": "-6",
+                "fact_id": "f-994",
+                "source_line": 8,
+                "table_index": 21,
+                "row_text": "Sales and other operating revenues before elimination $ 34,061 $ 31,271 $ 55,647 $ 53,023 $ 174,002 $ 405 $ 174,407",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "us-gaap:AllOtherSegmentsMember"
+                },
+                "startdate": "2025-01-01",
+                "enddate": "2025-09-30",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341025000108/cvx-20250930.htm",
+                "accession": "0000093410-25-000108",
+                "form": "10-Q",
+                "filing_date": "2025-11-06"
+              },
+              "duplicate_count": 1
+            }
+          ],
+          "role": "scope_candidate"
+        },
+        "部門間收入抵銷": {
+          "status": "observed",
+          "value": -11176000000,
+          "error": "1000000",
+          "facts": [
+            {
+              "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "context_id": "c-179",
+              "unit": "iso4217:USD",
+              "value": -11176000000,
+              "raw": "46,938",
+              "scale": "6",
+              "decimals": "-6",
+              "fact_id": "f-1172",
+              "source_line": 8,
+              "table_index": 193,
+              "row_text": "Intersegment revenue elimination ( 25,910 ) ( 9,017 ) ( 7,154 ) ( 4,380 ) ( 46,461 ) ( 477 ) ( 46,938 )",
+              "dimensions": {
+                "srt:ConsolidationItemsAxis": "us-gaap:IntersegmentEliminationMember"
+              },
+              "startdate": "2025-10-01",
+              "enddate": "2025-12-31",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341026000078/cvx-20251231.htm",
+              "accession": "0000093410-26-000078",
+              "form": "10-K",
+              "filing_date": "2026-02-24",
+              "derivation": "annual_minus_nine_months",
+              "annual_evidence": {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "context_id": "c-179",
+                "unit": "iso4217:USD",
+                "value": -46938000000,
+                "raw": "46,938",
+                "scale": "6",
+                "decimals": "-6",
+                "fact_id": "f-1172",
+                "source_line": 8,
+                "table_index": 193,
+                "row_text": "Intersegment revenue elimination ( 25,910 ) ( 9,017 ) ( 7,154 ) ( 4,380 ) ( 46,461 ) ( 477 ) ( 46,938 )",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:IntersegmentEliminationMember"
+                },
+                "startdate": "2025-01-01",
+                "enddate": "2025-12-31",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341026000078/cvx-20251231.htm",
+                "accession": "0000093410-26-000078",
+                "form": "10-K",
+                "filing_date": "2026-02-24"
+              },
+              "nine_month_evidence": {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "context_id": "c-157",
+                "unit": "iso4217:USD",
+                "value": -35762000000,
+                "raw": "35,762",
+                "scale": "6",
+                "decimals": "-6",
+                "fact_id": "f-1002",
+                "source_line": 8,
+                "table_index": 21,
+                "row_text": "Intersegment revenue elimination ( 19,971 ) ( 6,707 ) ( 5,436 ) ( 3,316 ) ( 35,430 ) ( 332 ) ( 35,762 )",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:IntersegmentEliminationMember"
+                },
+                "startdate": "2025-01-01",
+                "enddate": "2025-09-30",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341025000108/cvx-20250930.htm",
+                "accession": "0000093410-25-000108",
+                "form": "10-Q",
+                "filing_date": "2025-11-06"
+              },
+              "duplicate_count": 1
+            }
+          ],
+          "role": "scope_candidate"
+        }
+      },
+      "alternative_definitions": {},
+      "reconciliation": {}
+    }
+  ],
+  "cloud_reported_comparisons": [
+    {
+      "period_end": "2025-09-30",
+      "category": "upstream_us",
+      "matches_cloud_reported_common_source_value": true,
+      "locally_reparsed_company_Q3_reference": false,
+      "independent_quarter_validation": false
+    },
+    {
+      "period_end": "2025-09-30",
+      "category": "upstream_international",
+      "matches_cloud_reported_common_source_value": true,
+      "locally_reparsed_company_Q3_reference": false,
+      "independent_quarter_validation": false
+    },
+    {
+      "period_end": "2025-09-30",
+      "category": "downstream_us",
+      "matches_cloud_reported_common_source_value": true,
+      "locally_reparsed_company_Q3_reference": false,
+      "independent_quarter_validation": false
+    },
+    {
+      "period_end": "2025-09-30",
+      "category": "downstream_international",
+      "matches_cloud_reported_common_source_value": true,
+      "locally_reparsed_company_Q3_reference": false,
+      "independent_quarter_validation": false
+    },
+    {
+      "period_end": "2025-12-31",
+      "category": "upstream_us",
+      "matches_cloud_reported_common_source_value": true,
+      "locally_reparsed_company_Q3_reference": false,
+      "independent_quarter_validation": false
+    },
+    {
+      "period_end": "2025-12-31",
+      "category": "upstream_international",
+      "matches_cloud_reported_common_source_value": true,
+      "locally_reparsed_company_Q3_reference": false,
+      "independent_quarter_validation": false
+    },
+    {
+      "period_end": "2025-12-31",
+      "category": "downstream_us",
+      "matches_cloud_reported_common_source_value": true,
+      "locally_reparsed_company_Q3_reference": false,
+      "independent_quarter_validation": false
+    },
+    {
+      "period_end": "2025-12-31",
+      "category": "downstream_international",
+      "matches_cloud_reported_common_source_value": true,
+      "locally_reparsed_company_Q3_reference": false,
+      "independent_quarter_validation": false
+    }
+  ],
+  "independent_quarter_validations_added": 0,
+  "same_issuer_filing_upstream": true,
+  "blind_tests": 0,
+  "baseline_path": "research/sec-30-baseline-2026-11-04/CVX.json.gz",
+  "baseline_sha256": "8e1162a17e47febc94928e463d7644e9f768715027bd337f8f26012d8a297c3a",
+  "freeze_receipt_sha256": "bf52c4239e5d48aff531d42ec4bfd6fe42a8323df16ed495506831d4cff5623e",
+  "gross_coverage_sha256": "a42a985508ec55b8186052328b9b8b948ed739fbc769e6a140c00f2835db80a1",
+  "reported_reference_sha256": "38f6f2088ec8dbafa773fef116062bddb34ff743f4e326eb1ccdc3f3d7b506bf",
+  "code_sha256": "6ce65703192b0452cfb1713de6d4f35b83a2adc02cced480fa96d7512cdf11da"
+}
