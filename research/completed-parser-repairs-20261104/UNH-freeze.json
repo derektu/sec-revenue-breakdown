@@ -1,0 +1,288 @@
+{
+  "schema_version": 1,
+  "frozen_at": "2026-11-04T05:12:36.560689+00:00",
+  "rule_version": "unh-explicit-candidate-catalog-v1",
+  "plan": {
+    "schema_version": 1,
+    "ticker": "UNH",
+    "cik": "0000731766",
+    "rule_version": null,
+    "baseline_file": "research/sec-30-baseline-2026-11-04/UNH.json.gz",
+    "baseline_sha256": "59188c0a6dbcdb7c5d2cc5c4491c9da1ed23bccd22307fb5f14c6f52fb1294a1",
+    "cutoff": {
+      "filing_date": "2026-08-10",
+      "period_end": "2026-06-30"
+    },
+    "training": [
+      {
+        "accession": "0000731766-24-000323",
+        "period_end": "2024-09-30",
+        "filing_date": "2024-11-04",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/731766/000073176624000323/unh-20240930.htm",
+        "sha256": "41f0e35792cc61a4ddd9712e73a4a211b33c12eb720c05d53f9e124425c2e89f"
+      },
+      {
+        "accession": "0000731766-25-000063",
+        "period_end": "2024-12-31",
+        "filing_date": "2025-02-27",
+        "form": "10-K",
+        "url": "https://www.sec.gov/Archives/edgar/data/731766/000073176625000063/unh-20241231.htm",
+        "sha256": "1d3aa7b077233cb58f1fb2164252c53122ceca4d28accef7e376ae4458dd3de8"
+      },
+      {
+        "accession": "0000731766-25-000131",
+        "period_end": "2025-03-31",
+        "filing_date": "2025-05-07",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/731766/000073176625000131/unh-20250331.htm",
+        "sha256": "7ccdbf71444704f32c07c4e78ab85602ed91b411f7b9aea7ece29bf4d55760f7"
+      },
+      {
+        "accession": "0000731766-25-000236",
+        "period_end": "2025-06-30",
+        "filing_date": "2025-08-11",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/731766/000073176625000236/unh-20250630.htm",
+        "sha256": "9dd1a426e3e99143e2c7ae178624803b7c0d562148be04c81cf917a4e1c89160"
+      },
+      {
+        "accession": "0000731766-25-000305",
+        "period_end": "2025-09-30",
+        "filing_date": "2025-10-28",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/731766/000073176625000305/unh-20250930.htm",
+        "sha256": "3e47276739243c7cf146a35483333084d02bdf314c2884e1d1e3f97f88aafeb5"
+      },
+      {
+        "accession": "0000731766-26-000062",
+        "period_end": "2025-12-31",
+        "filing_date": "2026-03-02",
+        "form": "10-K",
+        "url": "https://www.sec.gov/Archives/edgar/data/731766/000073176626000062/unh-20251231.htm",
+        "sha256": "e2d355488b6b8c4f9ca93046502c9bb9c0e25679ef162c503d4c900c4de88ca8"
+      },
+      {
+        "accession": "0000731766-26-000127",
+        "period_end": "2026-03-31",
+        "filing_date": "2026-05-05",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/731766/000073176626000127/unh-20260331.htm",
+        "sha256": "6579b52451fe3ba98e56d3870e009b45ad265904c5ebcc36585f03075b0cccc3"
+      },
+      {
+        "accession": "0000731766-26-000197",
+        "period_end": "2026-06-30",
+        "filing_date": "2026-08-10",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/731766/000073176626000197/unh-20260630.htm",
+        "sha256": "529b7a1724cb2696b1e92f8637ca1fe39fc91fad73c042112172855cf9eb8434"
+      }
+    ],
+    "holdout": [
+      {
+        "accession": "0000731766-26-000266",
+        "period_end": "2026-09-30",
+        "filing_date": "2026-11-03",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/731766/000073176626000266/unh-20260930.htm",
+        "sha256": "b0930657ef6dfd46165e55750e5f78e85f6bf6acb477a7c655b3edb898b935f4"
+      }
+    ],
+    "exposure": {
+      "seen_during_development": "yes",
+      "evidence": [
+        "docs/vendor/training-test-split.json"
+      ],
+      "note": "Retrospective split; historical development exposure is not fully recorded."
+    },
+    "references": [
+      {
+        "source": "tradingview",
+        "availability": "not_loaded_by_this_workflow",
+        "seen_during_development": "unknown",
+        "evidence": []
+      },
+      {
+        "source": "futu",
+        "availability": "not_loaded_by_this_workflow",
+        "seen_during_development": "unknown",
+        "evidence": []
+      },
+      {
+        "source": "stockanalysis",
+        "availability": "not_loaded_by_this_workflow",
+        "seen_during_development": "unknown",
+        "evidence": []
+      }
+    ],
+    "adjudication": {
+      "preferred_reference": null,
+      "status": "unresolved",
+      "rationale": null,
+      "evidence": [],
+      "uncertainty": "No company-specific adjudication added."
+    }
+  },
+  "plan_sha256": "662fe44fb71540dbdb78fd0d22c73ed94de7c0f2bbeb10c9ef8fa0bb3c2b3a52",
+  "rules": {
+    "version": "unh-explicit-candidate-catalog-v1",
+    "category_catalog": {
+      "stockanalysis": {
+        "UnitedHealthcare": {
+          "alternatives": [
+            [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "unh:UnitedhealthcareMember",
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "scope_candidate"
+        },
+        "Optum": {
+          "alternatives": [
+            [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "unh:TotalOptumMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "scope_candidate"
+        },
+        "Eliminations": {
+          "alternatives": [
+            [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:CorporateNonSegmentMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ],
+            [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:CorporateNonSegmentMember",
+                  "srt:MajorCustomersAxis": "unh:IntersegmentMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "definition_pending"
+        }
+      },
+      "futu": {}
+    },
+    "selectors": [
+      {
+        "id": "Q:0",
+        "period_kind": "Q",
+        "semantic_basis": "UNH:explicit-scope-candidate-0",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "unh:UnitedhealthcareMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:1",
+        "period_kind": "Q",
+        "semantic_basis": "UNH:explicit-scope-candidate-1",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "unh:TotalOptumMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:2",
+        "period_kind": "Q",
+        "semantic_basis": "UNH:explicit-scope-candidate-2",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "srt:ConsolidationItemsAxis": "us-gaap:CorporateNonSegmentMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:3",
+        "period_kind": "Q",
+        "semantic_basis": "UNH:explicit-scope-candidate-3",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "srt:ConsolidationItemsAxis": "us-gaap:CorporateNonSegmentMember",
+          "srt:MajorCustomersAxis": "unh:IntersegmentMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:0",
+        "period_kind": "FY",
+        "semantic_basis": "UNH:explicit-scope-candidate-0",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "unh:UnitedhealthcareMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:1",
+        "period_kind": "FY",
+        "semantic_basis": "UNH:explicit-scope-candidate-1",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "unh:TotalOptumMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:2",
+        "period_kind": "FY",
+        "semantic_basis": "UNH:explicit-scope-candidate-2",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "srt:ConsolidationItemsAxis": "us-gaap:CorporateNonSegmentMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:3",
+        "period_kind": "FY",
+        "semantic_basis": "UNH:explicit-scope-candidate-3",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "srt:ConsolidationItemsAxis": "us-gaap:CorporateNonSegmentMember",
+          "srt:MajorCustomersAxis": "unh:IntersegmentMember"
+        },
+        "unit": "iso4217:USD"
+      }
+    ],
+    "independent_human_review": false
+  },
+  "rules_sha256": "bcbd0c7a3dcafcf1dcff96810775d7b4a8db9786a12bbddd0244f0b880897d89",
+  "code_sha256": {
+    "scripts/temporal_eval.py": "fe0231704faad744332c44d201b8869c0623a71e0093ca7a0362b957e39c9575",
+    "research/recovered-sec/extract.py": "1253782f4fabcf86dc6242bbff5054a091c533ba4f639be15da2b7165be99049",
+    "research/recovered-sec/eight_quarter_eval/run.py": "7593482ab11aea89564875ba88a26e635b6e4b84dd56d50c2061abd9495a084a"
+  },
+  "training_pack_sha256": "2c3d0cab0cbe9bdcd02393242d32d0beea49b48db57b6d0ca812bd28dcb37eaa",
+  "note": "A freeze is a reproducibility receipt, not proof of unseen data."
+}

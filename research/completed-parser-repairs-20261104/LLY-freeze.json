@@ -1,0 +1,320 @@
+{
+  "schema_version": 1,
+  "frozen_at": "2026-11-04T05:12:36.584969+00:00",
+  "rule_version": "lly-explicit-candidate-catalog-v1",
+  "plan": {
+    "schema_version": 1,
+    "ticker": "LLY",
+    "cik": "0000059478",
+    "rule_version": null,
+    "baseline_file": "research/sec-30-baseline-2026-11-04/LLY.json.gz",
+    "baseline_sha256": "618fe56bc23f2e62cc4208ea40842bcf9f38b7ca9d936bc6d371febcfedbcb2a",
+    "cutoff": {
+      "filing_date": "2026-08-05",
+      "period_end": "2026-06-30"
+    },
+    "training": [
+      {
+        "accession": "0000059478-24-000245",
+        "period_end": "2024-09-30",
+        "filing_date": "2024-10-30",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/59478/000005947824000245/lly-20240930.htm",
+        "sha256": "80ba5b4ce8aee0ddbf6640d9038cb0c6e9ddbf86e6f04d04a324fb5baf226db5"
+      },
+      {
+        "accession": "0000059478-25-000067",
+        "period_end": "2024-12-31",
+        "filing_date": "2025-02-19",
+        "form": "10-K",
+        "url": "https://www.sec.gov/Archives/edgar/data/59478/000005947825000067/lly-20241231.htm",
+        "sha256": "1a2f8bf68fe789eb69742fbaec0a64c3ff38684d70f4ba05e557b02ab3a6fb69"
+      },
+      {
+        "accession": "0000059478-25-000132",
+        "period_end": "2025-03-31",
+        "filing_date": "2025-05-01",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/59478/000005947825000132/lly-20250331.htm",
+        "sha256": "288a436d46f9dc82a8d87753c2e66ac39f408bd39870f64e814b85d4b49540ea"
+      },
+      {
+        "accession": "0000059478-25-000204",
+        "period_end": "2025-06-30",
+        "filing_date": "2025-08-07",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/59478/000005947825000204/lly-20250630.htm",
+        "sha256": "a695527e2ed9bdcc76599fb3217eb4bff691b165ccb55a37077951e3102919e8"
+      },
+      {
+        "accession": "0000059478-25-000254",
+        "period_end": "2025-09-30",
+        "filing_date": "2025-10-30",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/59478/000005947825000254/lly-20250930.htm",
+        "sha256": "d436c12d37fb75ad9f212ce5e34ca7a235322e6e883dcf0b69ec92bb2cb3f3f6"
+      },
+      {
+        "accession": "0000059478-26-000013",
+        "period_end": "2025-12-31",
+        "filing_date": "2026-02-12",
+        "form": "10-K",
+        "url": "https://www.sec.gov/Archives/edgar/data/59478/000005947826000013/lly-20251231.htm",
+        "sha256": "e0c86ed89a50f85b3438d341181a92dc8d1f18740d37e9e9479b4563ce8acc49"
+      },
+      {
+        "accession": "0000059478-26-000045",
+        "period_end": "2026-03-31",
+        "filing_date": "2026-04-30",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/59478/000005947826000045/lly-20260331.htm",
+        "sha256": "927aa50f994c09f6f9110e40347a74702d2c950733c0837c46d78155be0a3901"
+      },
+      {
+        "accession": "0000059478-26-000081",
+        "period_end": "2026-06-30",
+        "filing_date": "2026-08-05",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm",
+        "sha256": "db1de1ea505bc50a8f4ac4bf2fef451efc4968f480640e54eabcd6f003838083"
+      }
+    ],
+    "holdout": [
+      {
+        "accession": "0000059478-26-000108",
+        "period_end": "2026-09-30",
+        "filing_date": "2026-10-29",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/59478/000005947826000108/lly-20260930.htm",
+        "sha256": "b93f3a289b85852437ab85bdb14f441c8b85306913df159e05dac500708486d0"
+      }
+    ],
+    "exposure": {
+      "seen_during_development": "unknown",
+      "evidence": [],
+      "note": "Retrospective split; historical development exposure is not fully recorded."
+    },
+    "references": [
+      {
+        "source": "tradingview",
+        "availability": "not_loaded_by_this_workflow",
+        "seen_during_development": "unknown",
+        "evidence": []
+      },
+      {
+        "source": "futu",
+        "availability": "not_loaded_by_this_workflow",
+        "seen_during_development": "unknown",
+        "evidence": []
+      },
+      {
+        "source": "stockanalysis",
+        "availability": "not_loaded_by_this_workflow",
+        "seen_during_development": "unknown",
+        "evidence": []
+      }
+    ],
+    "adjudication": {
+      "preferred_reference": null,
+      "status": "unresolved",
+      "rationale": null,
+      "evidence": [],
+      "uncertainty": "No company-specific adjudication added."
+    }
+  },
+  "plan_sha256": "a6b5a5b0a3dcb8e05ab1db17663df8dacd1a01962eb08c115d3ce91dd34187b9",
+  "rules": {
+    "version": "lly-explicit-candidate-catalog-v1",
+    "category_catalog": {
+      "stockanalysis": {
+        "Cardiometabolic": {
+          "alternatives": [
+            [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "srt:ProductOrServiceAxis": "lly:CardiometabolicHealthMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "scope_candidate"
+        },
+        "Oncology": {
+          "alternatives": [
+            [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "srt:ProductOrServiceAxis": "lly:OncologyMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "scope_candidate"
+        },
+        "Immunology": {
+          "alternatives": [
+            [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "srt:ProductOrServiceAxis": "lly:ImmunologyMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "scope_candidate"
+        },
+        "Neuroscience": {
+          "alternatives": [
+            [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "srt:ProductOrServiceAxis": "lly:NeuroscienceMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "scope_candidate"
+        },
+        "Other": {
+          "alternatives": [
+            [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "srt:ProductOrServiceAxis": "us-gaap:ProductAndServiceOtherMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "scope_candidate"
+        }
+      },
+      "futu": {}
+    },
+    "selectors": [
+      {
+        "id": "Q:0",
+        "period_kind": "Q",
+        "semantic_basis": "LLY:explicit-scope-candidate-0",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "srt:ProductOrServiceAxis": "lly:CardiometabolicHealthMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:1",
+        "period_kind": "Q",
+        "semantic_basis": "LLY:explicit-scope-candidate-1",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "srt:ProductOrServiceAxis": "lly:OncologyMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:2",
+        "period_kind": "Q",
+        "semantic_basis": "LLY:explicit-scope-candidate-2",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "srt:ProductOrServiceAxis": "lly:ImmunologyMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:3",
+        "period_kind": "Q",
+        "semantic_basis": "LLY:explicit-scope-candidate-3",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "srt:ProductOrServiceAxis": "lly:NeuroscienceMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:4",
+        "period_kind": "Q",
+        "semantic_basis": "LLY:explicit-scope-candidate-4",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "srt:ProductOrServiceAxis": "us-gaap:ProductAndServiceOtherMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:0",
+        "period_kind": "FY",
+        "semantic_basis": "LLY:explicit-scope-candidate-0",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "srt:ProductOrServiceAxis": "lly:CardiometabolicHealthMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:1",
+        "period_kind": "FY",
+        "semantic_basis": "LLY:explicit-scope-candidate-1",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "srt:ProductOrServiceAxis": "lly:OncologyMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:2",
+        "period_kind": "FY",
+        "semantic_basis": "LLY:explicit-scope-candidate-2",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "srt:ProductOrServiceAxis": "lly:ImmunologyMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:3",
+        "period_kind": "FY",
+        "semantic_basis": "LLY:explicit-scope-candidate-3",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "srt:ProductOrServiceAxis": "lly:NeuroscienceMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:4",
+        "period_kind": "FY",
+        "semantic_basis": "LLY:explicit-scope-candidate-4",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "srt:ProductOrServiceAxis": "us-gaap:ProductAndServiceOtherMember"
+        },
+        "unit": "iso4217:USD"
+      }
+    ],
+    "independent_human_review": false
+  },
+  "rules_sha256": "8a4824593f48c2f0b65e86a72c461a12c34c5e9ac868f721dce6abfbafb4374a",
+  "code_sha256": {
+    "scripts/temporal_eval.py": "fe0231704faad744332c44d201b8869c0623a71e0093ca7a0362b957e39c9575",
+    "research/recovered-sec/extract.py": "1253782f4fabcf86dc6242bbff5054a091c533ba4f639be15da2b7165be99049",
+    "research/recovered-sec/eight_quarter_eval/run.py": "7593482ab11aea89564875ba88a26e635b6e4b84dd56d50c2061abd9495a084a"
+  },
+  "training_pack_sha256": "b23ad228c3ccd6eb767112002b3b876c7ec70839a8bdf7ae7148e79c4de2c582",
+  "note": "A freeze is a reproducibility receipt, not proof of unseen data."
+}

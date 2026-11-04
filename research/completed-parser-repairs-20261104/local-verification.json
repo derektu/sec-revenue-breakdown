@@ -1,0 +1,39 @@
+{
+  "execution": "local_mac_offline_tests_and_30_company_replay",
+  "tests_run": 111,
+  "test_suites": [
+    {
+      "name": "archive_safety",
+      "tests_run": 99,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "recovered_pilot",
+      "tests_run": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "recovered_quarter_audit",
+      "tests_run": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "network_disabled_in_test_processes": true,
+  "source_hashes_verified": 10,
+  "baseline_and_original_freezes_verified": 30,
+  "local_detail_hashes_verified": 30,
+  "original_reference_values_and_dates_preserved": true,
+  "code_and_additional_evidence_hashes_verified": true,
+  "status_file": "extended-completion-status.json",
+  "status_sha256": "9ac1392fb81aa031481ade0b8aba368ded0edf9e57fb0d00dd40f7e805fc17fe",
+  "ok_count": 20,
+  "total": 30,
+  "blind_tests": 0,
+  "limits": "凍結收據只覆蓋原規則；後續規則依獨立程式雜湊固定。未將原始 SEC HTML 全部重新下載或重剖。"
+}
