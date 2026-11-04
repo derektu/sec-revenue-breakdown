@@ -1,4 +1,4 @@
-> 最新完成狀態為 **20 / 30 OK**，見 [目前逐公司 OK／Fail](historical-rule-study.md) 與 [本批修復](remaining-parser-repairs.md)。下列內容保留當時的研究紀錄，舊計數不是目前總數。
+> 最新完成狀態為 **21 / 30 OK**，見 [目前逐公司 OK／Fail](historical-rule-study.md) 與 [本輪續查](remaining-company-resolution.md)。下列內容保留當時的研究紀錄，舊計數不是目前總數。
 
 # 三十家公司分類規則與來源裁決實驗
 
