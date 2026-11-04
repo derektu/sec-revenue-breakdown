@@ -1,0 +1,298 @@
+{
+  "schema_version": 1,
+  "frozen_at": "2026-11-04T04:24:33.654774+00:00",
+  "rule_version": "nvda-explicit-candidate-catalog-v1",
+  "plan": {
+    "schema_version": 1,
+    "ticker": "NVDA",
+    "cik": "0001045810",
+    "rule_version": null,
+    "baseline_file": "research/sec-30-baseline-2026-11-04/NVDA.json.gz",
+    "baseline_sha256": "f3ecdfd4e0ead42318d30ed908880b7e7466b12f175b16307553e99809e0e3ea",
+    "cutoff": {
+      "filing_date": "2026-05-20",
+      "period_end": "2026-04-26"
+    },
+    "training": [
+      {
+        "accession": "0001045810-24-000264",
+        "period_end": "2024-07-28",
+        "filing_date": "2024-08-28",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000264/nvda-20240728.htm",
+        "sha256": "106d9a6f7ff46a1b1ac9d398181e5b6f33450c8ae75ec1b302d3bba46aa56acf"
+      },
+      {
+        "accession": "0001045810-24-000316",
+        "period_end": "2024-10-27",
+        "filing_date": "2024-11-20",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000316/nvda-20241027.htm",
+        "sha256": "0d9b13ab5f14eba1f29e17ff2dcd9bba3a9eaf2e1625622709a6e51f198cf490"
+      },
+      {
+        "accession": "0001045810-25-000023",
+        "period_end": "2025-01-26",
+        "filing_date": "2025-02-26",
+        "form": "10-K",
+        "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000023/nvda-20250126.htm",
+        "sha256": "70ba4f99df6dfb30ae99fb775c6a72b974ab9c9e7d1ed4cf9c80172237d863b3"
+      },
+      {
+        "accession": "0001045810-25-000116",
+        "period_end": "2025-04-27",
+        "filing_date": "2025-05-28",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000116/nvda-20250427.htm",
+        "sha256": "d36283644114ec31baf860587630230d44fcd6e950f3fd75833fdf587ac78e75"
+      },
+      {
+        "accession": "0001045810-25-000209",
+        "period_end": "2025-07-27",
+        "filing_date": "2025-08-27",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000209/nvda-20250727.htm",
+        "sha256": "393d40848978da720e11f90a757175d55d6f3e72b4392fd23a1ded4b15815cd7"
+      },
+      {
+        "accession": "0001045810-25-000230",
+        "period_end": "2025-10-26",
+        "filing_date": "2025-11-19",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000230/nvda-20251026.htm",
+        "sha256": "c86fb482f7ae603e95a39b95b9ca7adcc77647c4be6448e2a313d4c16d64c89b"
+      },
+      {
+        "accession": "0001045810-26-000021",
+        "period_end": "2026-01-25",
+        "filing_date": "2026-02-25",
+        "form": "10-K",
+        "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+        "sha256": "4e9eab5228a1c23e0f0164e289f0e702ef2c0cfc3cf9f33017e5d05a5611ac01"
+      },
+      {
+        "accession": "0001045810-26-000052",
+        "period_end": "2026-04-26",
+        "filing_date": "2026-05-20",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000052/nvda-20260426.htm",
+        "sha256": "7a812975834c1cb260b8e03da8b67084e0f65b339ec034b7247beff1c77ce020"
+      }
+    ],
+    "holdout": [
+      {
+        "accession": "0001045810-26-000075",
+        "period_end": "2026-07-26",
+        "filing_date": "2026-08-26",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
+        "sha256": "911224999eb82340aa4c1187271e670e6800b31703614b348399af9190e50732"
+      }
+    ],
+    "exposure": {
+      "seen_during_development": "yes",
+      "evidence": [
+        "docs/vendor/training-test-split.json"
+      ],
+      "note": "Retrospective split; historical development exposure is not fully recorded."
+    },
+    "references": [
+      {
+        "source": "tradingview",
+        "availability": "not_loaded_by_this_workflow",
+        "seen_during_development": "unknown",
+        "evidence": []
+      },
+      {
+        "source": "futu",
+        "availability": "not_loaded_by_this_workflow",
+        "seen_during_development": "unknown",
+        "evidence": []
+      },
+      {
+        "source": "stockanalysis",
+        "availability": "not_loaded_by_this_workflow",
+        "seen_during_development": "unknown",
+        "evidence": []
+      }
+    ],
+    "adjudication": {
+      "preferred_reference": null,
+      "status": "unresolved",
+      "rationale": null,
+      "evidence": [],
+      "uncertainty": "No company-specific adjudication added."
+    }
+  },
+  "plan_sha256": "794e5c8f0054dd92befc668306f7f33e5be1a9396fcc80e94d8621ec419d52ce",
+  "rules": {
+    "version": "nvda-explicit-candidate-catalog-v1",
+    "category_catalog": {
+      "stockanalysis": {
+        "Compute and Networking": {
+          "alternatives": [
+            [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "nvda:ComputeAndNetworkingSegmentMember",
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "scope_candidate"
+        },
+        "Graphics": {
+          "alternatives": [
+            [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "nvda:GraphicsSegmentMember",
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "scope_candidate"
+        }
+      },
+      "futu": {
+        "計算與網絡": {
+          "alternatives": [
+            [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "nvda:ComputeAndNetworkingSegmentMember",
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "scope_candidate"
+        },
+        "繪圖": {
+          "alternatives": [
+            [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "nvda:GraphicsSegmentMember",
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "scope_candidate"
+        }
+      }
+    },
+    "selectors": [
+      {
+        "id": "Q:0",
+        "period_kind": "Q",
+        "semantic_basis": "NVDA:explicit-scope-candidate-0",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "nvda:ComputeAndNetworkingSegmentMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:1",
+        "period_kind": "Q",
+        "semantic_basis": "NVDA:explicit-scope-candidate-1",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "nvda:GraphicsSegmentMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:0",
+        "period_kind": "FY",
+        "semantic_basis": "NVDA:explicit-scope-candidate-0",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "nvda:ComputeAndNetworkingSegmentMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:1",
+        "period_kind": "FY",
+        "semantic_basis": "NVDA:explicit-scope-candidate-1",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "nvda:GraphicsSegmentMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      }
+    ],
+    "independent_human_review": false,
+    "member_aliases": [
+      {
+        "id": "nvda-fy2025-compute",
+        "concept": "us-gaap:Revenues",
+        "original_dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "nvda:ComputeAndNetworkingMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "nvda:ComputeAndNetworkingSegmentMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "report_dates": [
+          "2024-10-27"
+        ],
+        "evidence_urls": [
+          "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000316/nvda-20241027.htm",
+          "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000023/nvda-20250126.htm"
+        ],
+        "review_basis": "兩份歷史申報均列同名兩營運分部；只在指定舊申報與完整維度接合，並非通用名稱模糊匹配。"
+      },
+      {
+        "id": "nvda-fy2025-graphics",
+        "concept": "us-gaap:Revenues",
+        "original_dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "nvda:GraphicsMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "nvda:GraphicsSegmentMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "report_dates": [
+          "2024-10-27"
+        ],
+        "evidence_urls": [
+          "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000316/nvda-20241027.htm",
+          "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000023/nvda-20250126.htm"
+        ],
+        "review_basis": "兩份歷史申報均列同名兩營運分部；只在指定舊申報與完整維度接合，並非通用名稱模糊匹配。"
+      }
+    ]
+  },
+  "rules_sha256": "74667d2c02dc998b5e2f3c43b5d2a17f4d5f1dd2e3c04964936d8e81bcbed523",
+  "code_sha256": {
+    "scripts/temporal_eval.py": "fe0231704faad744332c44d201b8869c0623a71e0093ca7a0362b957e39c9575",
+    "research/recovered-sec/extract.py": "1253782f4fabcf86dc6242bbff5054a091c533ba4f639be15da2b7165be99049",
+    "research/recovered-sec/eight_quarter_eval/run.py": "7593482ab11aea89564875ba88a26e635b6e4b84dd56d50c2061abd9495a084a"
+  },
+  "training_pack_sha256": "a5d93755ca33392fcf67e10a0b215acb2395ee933e47bb31d411926e1f09505d",
+  "note": "A freeze is a reproducibility receipt, not proof of unseen data."
+}

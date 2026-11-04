@@ -1,0 +1,21 @@
+{
+  "MSFT": {
+    "kind": "reference_revenue_field_contains_other_segment_operating_income",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526191507/msft-20260331.htm",
+    "period_end": "2026-03-31",
+    "reported_revenue_usd": 13192000000,
+    "other_segment_operating_income_usd": 13753000000,
+    "section": "Note 18 / Segment Information; More Personal Computing Revenue; Intelligent Cloud Operating income",
+    "basis": "公司原表將 MPC 收入列為 13,192 百萬，SA 的同欄數字等於 Intelligent Cloud 營業利益 13,753 百萬；新正常單季頁支持已保存的參考值。parser 保留正確收入，不改填營業利益。",
+    "independent_human_review": false
+  },
+  "PG": {
+    "kind": "reference_display_differs_from_primary_segment_sales",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/80424/000008042426000256/pg-20260930.htm",
+    "period_end": "2026-09-30",
+    "reported_revenue_usd": 8204000000,
+    "section": "Note 3 / reportable segment results / Net sales / Fabric & Home Care",
+    "basis": "公司原表直接列示 8,204 百萬。新正常 SA 單季頁的同項顯示與公司原表不符；採公司原值，未判定網站內部成因。此單格單期裁決不擴大其他欄位的精度界限。",
+    "independent_human_review": false
+  }
+}

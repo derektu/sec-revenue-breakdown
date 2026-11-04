@@ -1,0 +1,370 @@
+{
+  "schema_version": 1,
+  "frozen_at": "2026-11-04T04:24:34.062138+00:00",
+  "rule_version": "cvx-explicit-candidate-catalog-v1",
+  "plan": {
+    "schema_version": 1,
+    "ticker": "CVX",
+    "cik": "0000093410",
+    "rule_version": null,
+    "baseline_file": "research/sec-30-baseline-2026-11-04/CVX.json.gz",
+    "baseline_sha256": "8e1162a17e47febc94928e463d7644e9f768715027bd337f8f26012d8a297c3a",
+    "cutoff": {
+      "filing_date": "2026-05-07",
+      "period_end": "2026-03-31"
+    },
+    "training": [
+      {
+        "accession": "0000093410-24-000040",
+        "period_end": "2024-06-30",
+        "filing_date": "2024-08-07",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/93410/000009341024000040/cvx-20240630.htm",
+        "sha256": "71b1e14f6c1dd5d5c9857a1dbfb94739d03323fa0bd4d32b4562c32d09a049a8"
+      },
+      {
+        "accession": "0000093410-24-000059",
+        "period_end": "2024-09-30",
+        "filing_date": "2024-11-07",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/93410/000009341024000059/cvx-20240930.htm",
+        "sha256": "9848120f8472ca03dba31379ec993634ff021ad1ec9b69258f785b0e700e664e"
+      },
+      {
+        "accession": "0000093410-25-000009",
+        "period_end": "2024-12-31",
+        "filing_date": "2025-02-21",
+        "form": "10-K",
+        "url": "https://www.sec.gov/Archives/edgar/data/93410/000009341025000009/cvx-20241231.htm",
+        "sha256": "cb40d21b5c32affde1a0b8d70e49e62edc788badd5b169bd5625193eaab25906"
+      },
+      {
+        "accession": "0000093410-25-000019",
+        "period_end": "2025-03-31",
+        "filing_date": "2025-05-08",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/93410/000009341025000019/cvx-20250331.htm",
+        "sha256": "fd2c276dd056553a827057b3471abc4868689534cbc53b9ff6d4152a8faab098"
+      },
+      {
+        "accession": "0000093410-25-000062",
+        "period_end": "2025-06-30",
+        "filing_date": "2025-08-07",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/93410/000009341025000062/cvx-20250630.htm",
+        "sha256": "fbd407133aaa96161c02de1b71dc6a8c068ce789ac9a654ede1835c0845e03d9"
+      },
+      {
+        "accession": "0000093410-25-000108",
+        "period_end": "2025-09-30",
+        "filing_date": "2025-11-06",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/93410/000009341025000108/cvx-20250930.htm",
+        "sha256": "05100097978899c774606d36bf0f813c97108560b3a8baf2d1b41db04351c39a"
+      },
+      {
+        "accession": "0000093410-26-000078",
+        "period_end": "2025-12-31",
+        "filing_date": "2026-02-24",
+        "form": "10-K",
+        "url": "https://www.sec.gov/Archives/edgar/data/93410/000009341026000078/cvx-20251231.htm",
+        "sha256": "122ee1b69254f2adbbcca69e329413d1daf1a8009e806bd45d1eca9e7d570653"
+      },
+      {
+        "accession": "0000093410-26-000113",
+        "period_end": "2026-03-31",
+        "filing_date": "2026-05-07",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/93410/000009341026000113/cvx-20260331.htm",
+        "sha256": "59f265e39fc24a5370521122037d044cbf1f45ea0ab1f9140b21f1deb98b3030"
+      }
+    ],
+    "holdout": [
+      {
+        "accession": "0000093410-26-000167",
+        "period_end": "2026-06-30",
+        "filing_date": "2026-08-06",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/93410/000009341026000167/cvx-20260630.htm",
+        "sha256": "0732d0c3e19e8bd4e82d546924dcb0348c04d29b51aa3f7c84b104fb9537bec4"
+      }
+    ],
+    "exposure": {
+      "seen_during_development": "yes",
+      "evidence": [
+        "docs/vendor/training-test-split.json"
+      ],
+      "note": "Retrospective split; historical development exposure is not fully recorded."
+    },
+    "references": [
+      {
+        "source": "tradingview",
+        "availability": "not_loaded_by_this_workflow",
+        "seen_during_development": "unknown",
+        "evidence": []
+      },
+      {
+        "source": "futu",
+        "availability": "not_loaded_by_this_workflow",
+        "seen_during_development": "unknown",
+        "evidence": []
+      },
+      {
+        "source": "stockanalysis",
+        "availability": "not_loaded_by_this_workflow",
+        "seen_during_development": "unknown",
+        "evidence": []
+      }
+    ],
+    "adjudication": {
+      "preferred_reference": null,
+      "status": "unresolved",
+      "rationale": null,
+      "evidence": [],
+      "uncertainty": "No company-specific adjudication added."
+    }
+  },
+  "plan_sha256": "55057c577f21191ff26e6c44556c14e1d23204a4a241baa17b5ad12372093cd8",
+  "rules": {
+    "version": "cvx-explicit-candidate-catalog-v1",
+    "category_catalog": {
+      "stockanalysis": {},
+      "futu": {
+        "上游": {
+          "alternatives": [
+            [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "cvx:UpstreamSegmentMember",
+                  "srt:StatementGeographicalAxis": "country:US",
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              },
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "cvx:UpstreamSegmentMember",
+                  "srt:StatementGeographicalAxis": "us-gaap:NonUsMember",
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "scope_candidate"
+        },
+        "下游": {
+          "alternatives": [
+            [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "cvx:DownstreamSegmentMember",
+                  "srt:StatementGeographicalAxis": "country:US",
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              },
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "cvx:DownstreamSegmentMember",
+                  "srt:StatementGeographicalAxis": "us-gaap:NonUsMember",
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "scope_candidate"
+        },
+        "所有其他": {
+          "alternatives": [
+            [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "us-gaap:AllOtherSegmentsMember",
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "scope_candidate"
+        },
+        "部門間收入抵銷": {
+          "alternatives": [
+            [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:IntersegmentEliminationMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "scope_candidate"
+        }
+      }
+    },
+    "selectors": [
+      {
+        "id": "Q:0",
+        "period_kind": "Q",
+        "semantic_basis": "CVX:explicit-scope-candidate-0",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "cvx:UpstreamSegmentMember",
+          "srt:StatementGeographicalAxis": "country:US",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:1",
+        "period_kind": "Q",
+        "semantic_basis": "CVX:explicit-scope-candidate-1",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "cvx:UpstreamSegmentMember",
+          "srt:StatementGeographicalAxis": "us-gaap:NonUsMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:2",
+        "period_kind": "Q",
+        "semantic_basis": "CVX:explicit-scope-candidate-2",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "cvx:DownstreamSegmentMember",
+          "srt:StatementGeographicalAxis": "country:US",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:3",
+        "period_kind": "Q",
+        "semantic_basis": "CVX:explicit-scope-candidate-3",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "cvx:DownstreamSegmentMember",
+          "srt:StatementGeographicalAxis": "us-gaap:NonUsMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:4",
+        "period_kind": "Q",
+        "semantic_basis": "CVX:explicit-scope-candidate-4",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "us-gaap:AllOtherSegmentsMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:5",
+        "period_kind": "Q",
+        "semantic_basis": "CVX:explicit-scope-candidate-5",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "srt:ConsolidationItemsAxis": "us-gaap:IntersegmentEliminationMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:0",
+        "period_kind": "FY",
+        "semantic_basis": "CVX:explicit-scope-candidate-0",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "cvx:UpstreamSegmentMember",
+          "srt:StatementGeographicalAxis": "country:US",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:1",
+        "period_kind": "FY",
+        "semantic_basis": "CVX:explicit-scope-candidate-1",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "cvx:UpstreamSegmentMember",
+          "srt:StatementGeographicalAxis": "us-gaap:NonUsMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:2",
+        "period_kind": "FY",
+        "semantic_basis": "CVX:explicit-scope-candidate-2",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "cvx:DownstreamSegmentMember",
+          "srt:StatementGeographicalAxis": "country:US",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:3",
+        "period_kind": "FY",
+        "semantic_basis": "CVX:explicit-scope-candidate-3",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "cvx:DownstreamSegmentMember",
+          "srt:StatementGeographicalAxis": "us-gaap:NonUsMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:4",
+        "period_kind": "FY",
+        "semantic_basis": "CVX:explicit-scope-candidate-4",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "us-gaap:AllOtherSegmentsMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:5",
+        "period_kind": "FY",
+        "semantic_basis": "CVX:explicit-scope-candidate-5",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "srt:ConsolidationItemsAxis": "us-gaap:IntersegmentEliminationMember"
+        },
+        "unit": "iso4217:USD"
+      }
+    ],
+    "independent_human_review": false
+  },
+  "rules_sha256": "375d456af2cfe079b05f5a5ef62d1bed3540ca63514da7477bc4e58be0d4a702",
+  "code_sha256": {
+    "scripts/temporal_eval.py": "fe0231704faad744332c44d201b8869c0623a71e0093ca7a0362b957e39c9575",
+    "research/recovered-sec/extract.py": "1253782f4fabcf86dc6242bbff5054a091c533ba4f639be15da2b7165be99049",
+    "research/recovered-sec/eight_quarter_eval/run.py": "7593482ab11aea89564875ba88a26e635b6e4b84dd56d50c2061abd9495a084a"
+  },
+  "training_pack_sha256": "2d3b126fb0475cb622fb740a3549678ff4a1496b0319e579c3688b64c1db9566",
+  "note": "A freeze is a reproducibility receipt, not proof of unseen data."
+}
