@@ -1,0 +1,22 @@
+# Never commit credentials, browser state, restricted reference data or caches.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*credentials*
+*cookies*
+*token*
+*browser*profile*
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.DS_Store
+node_modules/
+data/cache/
+data/restricted/
+data/staging/
+data/archives/
+research/imports/
+scratch/

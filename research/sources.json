@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "library_archives": [
+    {
+      "name": "eight_quarter_reproducible_results.zip",
+      "library_file_id": "libfile_0948aab5453c81918e8043d0ab79f380",
+      "file_id": "file_000000007f0881f482aa82c9760781db",
+      "expected_size_bytes": 3179073,
+      "role": "Primary prior 30-company, eight-quarter SEC baseline",
+      "status": "resolved_download_blocked",
+      "sha256": null
+    },
+    {
+      "name": "sec-filing-review.zip",
+      "library_file_id": "libfile_c8a463d342608191bcd079b9434756cd",
+      "file_id": "file_00000000ecf881f98663c8e03f7ef832",
+      "expected_size_bytes": 9412,
+      "role": "Prior sec-filing-agent code review and tests",
+      "status": "resolved_download_blocked",
+      "sha256": null
+    },
+    {
+      "name": "sec_revenue_experiment.zip",
+      "library_file_id": "libfile_5cacda8c22408191a7182d7c0d8858e1",
+      "file_id": "file_0000000007c881f9bcd5b8be46329af1",
+      "expected_size_bytes": 401372,
+      "role": "Earlier foundational experiment; retain separately from baseline",
+      "status": "resolved_download_blocked",
+      "sha256": null
+    }
+  ],
+  "external_sources": [
+    {"name": "SEC EDGAR", "role": "Primary filing and XBRL evidence", "urls": ["https://www.sec.gov/Archives/edgar/data/", "https://data.sec.gov/submissions/", "https://data.sec.gov/api/xbrl/companyfacts/"], "status": "not_fetched_in_this_environment"},
+    {"name": "Stock Analysis", "role": "Future user-authorized comparison", "url": "https://stockanalysis.com/", "status": "not_imported_not_compared", "storage": "data/restricted/; ignored by git"},
+    {"name": "Futu", "role": "Future user-authorized comparison", "url": "https://www.futunn.com/", "status": "not_imported_not_compared", "storage": "data/restricted/; ignored by git"},
+    {"name": "TradingView", "role": "Secondary annual reference only", "url": "https://www.tradingview.com/", "status": "not_imported_not_compared"}
+  ]
+}
