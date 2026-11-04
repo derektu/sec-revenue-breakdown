@@ -1,0 +1,2809 @@
+{
+  "verified_on": "2026-11-04",
+  "timezone": "Asia/Taipei",
+  "companies": [
+    {
+      "ticker": "AAPL",
+      "target_periods": 8,
+      "baseline_numeric_outputs": 40,
+      "regression_differences": 0,
+      "source_formats": {
+        "facts_cache": 9
+      },
+      "facts_filings_without_original_html": 9,
+      "primary_basis": "reported",
+      "risk": {
+        "comparisons": [
+          {
+            "changed_fields": 0,
+            "from": "2024-12-28",
+            "to": "2025-03-29"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-03-29",
+            "to": "2025-06-28"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-06-28",
+            "to": "2025-09-27"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-09-27",
+            "to": "2025-12-27"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-12-27",
+            "to": "2026-03-28"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2026-03-28",
+            "to": "2026-06-27"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2026-06-27",
+            "to": "2026-09-26"
+          }
+        ],
+        "level": "medium",
+        "meaning": "parser 維護風險，非投資風險或準確率",
+        "reasons": [
+          "實際使用特殊處理：annual_minus_nine_months",
+          "8 個使用的 SEC 文件缺原始 HTML bytes；以 facts／DOM／文字格式誠實重播"
+        ],
+        "schemas": [
+          {
+            "period": "2024-12-28",
+            "sha256": "6e69f7fc52eea90bd1374cf8ca09e282d516eefc7a24f033373948700c3cbf13"
+          },
+          {
+            "period": "2025-03-29",
+            "sha256": "6e69f7fc52eea90bd1374cf8ca09e282d516eefc7a24f033373948700c3cbf13"
+          },
+          {
+            "period": "2025-06-28",
+            "sha256": "6e69f7fc52eea90bd1374cf8ca09e282d516eefc7a24f033373948700c3cbf13"
+          },
+          {
+            "period": "2025-09-27",
+            "sha256": "6e69f7fc52eea90bd1374cf8ca09e282d516eefc7a24f033373948700c3cbf13"
+          },
+          {
+            "period": "2025-12-27",
+            "sha256": "6e69f7fc52eea90bd1374cf8ca09e282d516eefc7a24f033373948700c3cbf13"
+          },
+          {
+            "period": "2026-03-28",
+            "sha256": "6e69f7fc52eea90bd1374cf8ca09e282d516eefc7a24f033373948700c3cbf13"
+          },
+          {
+            "period": "2026-06-27",
+            "sha256": "6e69f7fc52eea90bd1374cf8ca09e282d516eefc7a24f033373948700c3cbf13"
+          },
+          {
+            "period": "2026-09-26",
+            "sha256": "6e69f7fc52eea90bd1374cf8ca09e282d516eefc7a24f033373948700c3cbf13"
+          }
+        ],
+        "score": 20
+      },
+      "unimplemented_target_periods": []
+    },
+    {
+      "ticker": "MSFT",
+      "target_periods": 8,
+      "baseline_numeric_outputs": 23,
+      "regression_differences": 0,
+      "source_formats": {
+        "facts_cache": 9
+      },
+      "facts_filings_without_original_html": 9,
+      "primary_basis": "reported",
+      "risk": {
+        "comparisons": [
+          {
+            "changed_fields": 0,
+            "from": "2024-12-31",
+            "to": "2025-03-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-03-31",
+            "to": "2025-06-30"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-06-30",
+            "to": "2025-09-30"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-09-30",
+            "to": "2025-12-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-12-31",
+            "to": "2026-03-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2026-03-31",
+            "to": "2026-06-30"
+          },
+          {
+            "changed_fields": 5,
+            "from": "2026-06-30",
+            "to": "2026-09-30"
+          }
+        ],
+        "level": "medium",
+        "meaning": "parser 維護風險，非投資風險或準確率",
+        "reasons": [
+          "最近兩次比較有 5 個 scope／分類變動",
+          "實際使用特殊處理：annual_minus_nine_months",
+          "8 個使用的 SEC 文件缺原始 HTML bytes；以 facts／DOM／文字格式誠實重播"
+        ],
+        "schemas": [
+          {
+            "period": "2024-12-31",
+            "sha256": "19566611b88ea346d94775eeaa7999c1a40380f4c6c49890f9b08041250bc9cc"
+          },
+          {
+            "period": "2025-03-31",
+            "sha256": "19566611b88ea346d94775eeaa7999c1a40380f4c6c49890f9b08041250bc9cc"
+          },
+          {
+            "period": "2025-06-30",
+            "sha256": "19566611b88ea346d94775eeaa7999c1a40380f4c6c49890f9b08041250bc9cc"
+          },
+          {
+            "period": "2025-09-30",
+            "sha256": "19566611b88ea346d94775eeaa7999c1a40380f4c6c49890f9b08041250bc9cc"
+          },
+          {
+            "period": "2025-12-31",
+            "sha256": "19566611b88ea346d94775eeaa7999c1a40380f4c6c49890f9b08041250bc9cc"
+          },
+          {
+            "period": "2026-03-31",
+            "sha256": "19566611b88ea346d94775eeaa7999c1a40380f4c6c49890f9b08041250bc9cc"
+          },
+          {
+            "period": "2026-06-30",
+            "sha256": "19566611b88ea346d94775eeaa7999c1a40380f4c6c49890f9b08041250bc9cc"
+          },
+          {
+            "period": "2026-09-30",
+            "sha256": "e67c14fd3c8cbd6b7f963c31982e119e6becdffba6296f1513e4f4f4dd64e7da"
+          }
+        ],
+        "score": 45
+      },
+      "unimplemented_target_periods": []
+    },
+    {
+      "ticker": "NVDA",
+      "target_periods": 8,
+      "baseline_numeric_outputs": 16,
+      "regression_differences": 0,
+      "source_formats": {
+        "facts_cache": 9
+      },
+      "facts_filings_without_original_html": 9,
+      "primary_basis": "reported",
+      "risk": {
+        "comparisons": [
+          {
+            "changed_fields": 2,
+            "from": "2024-10-27",
+            "to": "2025-01-26"
+          },
+          {
+            "changed_fields": 2,
+            "from": "2025-01-26",
+            "to": "2025-04-27"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-04-27",
+            "to": "2025-07-27"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-07-27",
+            "to": "2025-10-26"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-10-26",
+            "to": "2026-01-25"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2026-01-25",
+            "to": "2026-04-26"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2026-04-26",
+            "to": "2026-07-26"
+          }
+        ],
+        "level": "medium",
+        "meaning": "parser 維護風險，非投資風險或準確率",
+        "reasons": [
+          "實際使用特殊處理：annual_minus_nine_months, nvda-fy2025-compute, nvda-fy2025-graphics",
+          "8 個使用的 SEC 文件缺原始 HTML bytes；以 facts／DOM／文字格式誠實重播"
+        ],
+        "schemas": [
+          {
+            "period": "2024-10-27",
+            "sha256": "896776413b20d57dc8debba2229285fa3dce419d9f7c91daeed108d4049ffc0b"
+          },
+          {
+            "period": "2025-01-26",
+            "sha256": "76c365f7f04c07cc8386827a66a206fd08d36e479e1d85aaba632e18c4e2ff34"
+          },
+          {
+            "period": "2025-04-27",
+            "sha256": "c20b3e7acffac232c5a98fc0438557afc29d9b66e5982fdcc7aa3f1ec88e28dc"
+          },
+          {
+            "period": "2025-07-27",
+            "sha256": "c20b3e7acffac232c5a98fc0438557afc29d9b66e5982fdcc7aa3f1ec88e28dc"
+          },
+          {
+            "period": "2025-10-26",
+            "sha256": "c20b3e7acffac232c5a98fc0438557afc29d9b66e5982fdcc7aa3f1ec88e28dc"
+          },
+          {
+            "period": "2026-01-25",
+            "sha256": "c20b3e7acffac232c5a98fc0438557afc29d9b66e5982fdcc7aa3f1ec88e28dc"
+          },
+          {
+            "period": "2026-04-26",
+            "sha256": "c20b3e7acffac232c5a98fc0438557afc29d9b66e5982fdcc7aa3f1ec88e28dc"
+          },
+          {
+            "period": "2026-07-26",
+            "sha256": "c20b3e7acffac232c5a98fc0438557afc29d9b66e5982fdcc7aa3f1ec88e28dc"
+          }
+        ],
+        "score": 30
+      },
+      "unimplemented_target_periods": []
+    },
+    {
+      "ticker": "ORCL",
+      "target_periods": 8,
+      "baseline_numeric_outputs": 32,
+      "regression_differences": 0,
+      "source_formats": {
+        "facts_cache": 9
+      },
+      "facts_filings_without_original_html": 9,
+      "primary_basis": "reported",
+      "risk": {
+        "comparisons": [
+          {
+            "changed_fields": 0,
+            "from": "2024-11-30",
+            "to": "2025-02-28"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-02-28",
+            "to": "2025-05-31"
+          },
+          {
+            "changed_fields": 7,
+            "from": "2025-05-31",
+            "to": "2025-08-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-08-31",
+            "to": "2025-11-30"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-11-30",
+            "to": "2026-02-28"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2026-02-28",
+            "to": "2026-05-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2026-05-31",
+            "to": "2026-08-31"
+          }
+        ],
+        "level": "medium",
+        "meaning": "parser 維護風險，非投資風險或準確率",
+        "reasons": [
+          "實際使用特殊處理：annual_minus_nine_months",
+          "8 個使用的 SEC 文件缺原始 HTML bytes；以 facts／DOM／文字格式誠實重播"
+        ],
+        "schemas": [
+          {
+            "period": "2024-11-30",
+            "sha256": "29fc08a0ffc25977375dc83d9f3694e360c4df6c522f5ef0994defde23a5a725"
+          },
+          {
+            "period": "2025-02-28",
+            "sha256": "29fc08a0ffc25977375dc83d9f3694e360c4df6c522f5ef0994defde23a5a725"
+          },
+          {
+            "period": "2025-05-31",
+            "sha256": "29fc08a0ffc25977375dc83d9f3694e360c4df6c522f5ef0994defde23a5a725"
+          },
+          {
+            "period": "2025-08-31",
+            "sha256": "b5983afb9735ea1eb40dcf061770d26f859be94c442e188d0e0c4e2c600972a2"
+          },
+          {
+            "period": "2025-11-30",
+            "sha256": "b5983afb9735ea1eb40dcf061770d26f859be94c442e188d0e0c4e2c600972a2"
+          },
+          {
+            "period": "2026-02-28",
+            "sha256": "b5983afb9735ea1eb40dcf061770d26f859be94c442e188d0e0c4e2c600972a2"
+          },
+          {
+            "period": "2026-05-31",
+            "sha256": "b5983afb9735ea1eb40dcf061770d26f859be94c442e188d0e0c4e2c600972a2"
+          },
+          {
+            "period": "2026-08-31",
+            "sha256": "b5983afb9735ea1eb40dcf061770d26f859be94c442e188d0e0c4e2c600972a2"
+          }
+        ],
+        "score": 20
+      },
+      "unimplemented_target_periods": []
+    },
+    {
+      "ticker": "GOOGL",
+      "target_periods": 8,
+      "baseline_numeric_outputs": 56,
+      "regression_differences": 0,
+      "source_formats": {
+        "facts_cache": 9
+      },
+      "facts_filings_without_original_html": 9,
+      "primary_basis": "reported",
+      "risk": {
+        "comparisons": [
+          {
+            "changed_fields": 0,
+            "from": "2024-12-31",
+            "to": "2025-03-31"
+          },
+          {
+            "changed_fields": 2,
+            "from": "2025-03-31",
+            "to": "2025-06-30"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-06-30",
+            "to": "2025-09-30"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-09-30",
+            "to": "2025-12-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-12-31",
+            "to": "2026-03-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2026-03-31",
+            "to": "2026-06-30"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2026-06-30",
+            "to": "2026-09-30"
+          }
+        ],
+        "level": "medium",
+        "meaning": "parser 維護風險，非投資風險或準確率",
+        "reasons": [
+          "實際使用特殊處理：annual_minus_nine_months",
+          "9 個使用的 SEC 文件缺原始 HTML bytes；以 facts／DOM／文字格式誠實重播"
+        ],
+        "schemas": [
+          {
+            "period": "2024-12-31",
+            "sha256": "60b92030808a3e6c3e1237409af0dbe0b09919353e8d711eead17df1e4989b21"
+          },
+          {
+            "period": "2025-03-31",
+            "sha256": "60b92030808a3e6c3e1237409af0dbe0b09919353e8d711eead17df1e4989b21"
+          },
+          {
+            "period": "2025-06-30",
+            "sha256": "eb4746019262eae948a186fddada16b676ed8ab68de62229aa51501bcd3cb846"
+          },
+          {
+            "period": "2025-09-30",
+            "sha256": "eb4746019262eae948a186fddada16b676ed8ab68de62229aa51501bcd3cb846"
+          },
+          {
+            "period": "2025-12-31",
+            "sha256": "eb4746019262eae948a186fddada16b676ed8ab68de62229aa51501bcd3cb846"
+          },
+          {
+            "period": "2026-03-31",
+            "sha256": "eb4746019262eae948a186fddada16b676ed8ab68de62229aa51501bcd3cb846"
+          },
+          {
+            "period": "2026-06-30",
+            "sha256": "eb4746019262eae948a186fddada16b676ed8ab68de62229aa51501bcd3cb846"
+          },
+          {
+            "period": "2026-09-30",
+            "sha256": "eb4746019262eae948a186fddada16b676ed8ab68de62229aa51501bcd3cb846"
+          }
+        ],
+        "score": 20
+      },
+      "unimplemented_target_periods": []
+    },
+    {
+      "ticker": "META",
+      "target_periods": 8,
+      "baseline_numeric_outputs": 24,
+      "regression_differences": 0,
+      "source_formats": {
+        "facts_cache": 9
+      },
+      "facts_filings_without_original_html": 9,
+      "primary_basis": "reported",
+      "risk": {
+        "comparisons": [
+          {
+            "changed_fields": 0,
+            "from": "2024-12-31",
+            "to": "2025-03-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-03-31",
+            "to": "2025-06-30"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-06-30",
+            "to": "2025-09-30"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-09-30",
+            "to": "2025-12-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-12-31",
+            "to": "2026-03-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2026-03-31",
+            "to": "2026-06-30"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2026-06-30",
+            "to": "2026-09-30"
+          }
+        ],
+        "level": "medium",
+        "meaning": "parser 維護風險，非投資風險或準確率",
+        "reasons": [
+          "實際使用特殊處理：annual_minus_nine_months",
+          "9 個使用的 SEC 文件缺原始 HTML bytes；以 facts／DOM／文字格式誠實重播"
+        ],
+        "schemas": [
+          {
+            "period": "2024-12-31",
+            "sha256": "2861b55ad942b8076ceba95ca2a8b6c65b86b755d89dc6037f6372a128f4a562"
+          },
+          {
+            "period": "2025-03-31",
+            "sha256": "2861b55ad942b8076ceba95ca2a8b6c65b86b755d89dc6037f6372a128f4a562"
+          },
+          {
+            "period": "2025-06-30",
+            "sha256": "2861b55ad942b8076ceba95ca2a8b6c65b86b755d89dc6037f6372a128f4a562"
+          },
+          {
+            "period": "2025-09-30",
+            "sha256": "2861b55ad942b8076ceba95ca2a8b6c65b86b755d89dc6037f6372a128f4a562"
+          },
+          {
+            "period": "2025-12-31",
+            "sha256": "2861b55ad942b8076ceba95ca2a8b6c65b86b755d89dc6037f6372a128f4a562"
+          },
+          {
+            "period": "2026-03-31",
+            "sha256": "2861b55ad942b8076ceba95ca2a8b6c65b86b755d89dc6037f6372a128f4a562"
+          },
+          {
+            "period": "2026-06-30",
+            "sha256": "2861b55ad942b8076ceba95ca2a8b6c65b86b755d89dc6037f6372a128f4a562"
+          },
+          {
+            "period": "2026-09-30",
+            "sha256": "2861b55ad942b8076ceba95ca2a8b6c65b86b755d89dc6037f6372a128f4a562"
+          }
+        ],
+        "score": 20
+      },
+      "unimplemented_target_periods": []
+    },
+    {
+      "ticker": "DIS",
+      "target_periods": 8,
+      "baseline_numeric_outputs": 24,
+      "regression_differences": 0,
+      "source_formats": {
+        "facts_cache": 9
+      },
+      "facts_filings_without_original_html": 9,
+      "primary_basis": "reported",
+      "risk": {
+        "comparisons": [
+          {
+            "changed_fields": 0,
+            "from": "2024-09-28",
+            "to": "2024-12-28"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2024-12-28",
+            "to": "2025-03-29"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-03-29",
+            "to": "2025-06-28"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-06-28",
+            "to": "2025-09-27"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-09-27",
+            "to": "2025-12-27"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-12-27",
+            "to": "2026-03-28"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2026-03-28",
+            "to": "2026-06-27"
+          }
+        ],
+        "level": "medium",
+        "meaning": "parser 維護風險，非投資風險或準確率",
+        "reasons": [
+          "實際使用特殊處理：annual_minus_nine_months",
+          "9 個使用的 SEC 文件缺原始 HTML bytes；以 facts／DOM／文字格式誠實重播"
+        ],
+        "schemas": [
+          {
+            "period": "2024-09-28",
+            "sha256": "e61e8d4c9e5a84eecba30e1bbec1e1f8782223ed3003b6439244cf2507f64bd1"
+          },
+          {
+            "period": "2024-12-28",
+            "sha256": "e61e8d4c9e5a84eecba30e1bbec1e1f8782223ed3003b6439244cf2507f64bd1"
+          },
+          {
+            "period": "2025-03-29",
+            "sha256": "e61e8d4c9e5a84eecba30e1bbec1e1f8782223ed3003b6439244cf2507f64bd1"
+          },
+          {
+            "period": "2025-06-28",
+            "sha256": "e61e8d4c9e5a84eecba30e1bbec1e1f8782223ed3003b6439244cf2507f64bd1"
+          },
+          {
+            "period": "2025-09-27",
+            "sha256": "e61e8d4c9e5a84eecba30e1bbec1e1f8782223ed3003b6439244cf2507f64bd1"
+          },
+          {
+            "period": "2025-12-27",
+            "sha256": "e61e8d4c9e5a84eecba30e1bbec1e1f8782223ed3003b6439244cf2507f64bd1"
+          },
+          {
+            "period": "2026-03-28",
+            "sha256": "e61e8d4c9e5a84eecba30e1bbec1e1f8782223ed3003b6439244cf2507f64bd1"
+          },
+          {
+            "period": "2026-06-27",
+            "sha256": "e61e8d4c9e5a84eecba30e1bbec1e1f8782223ed3003b6439244cf2507f64bd1"
+          }
+        ],
+        "score": 20
+      },
+      "unimplemented_target_periods": []
+    },
+    {
+      "ticker": "CMCSA",
+      "target_periods": 8,
+      "baseline_numeric_outputs": 16,
+      "regression_differences": 0,
+      "source_formats": {
+        "facts_cache": 9,
+        "dom_snapshot": 5,
+        "original_html": 2
+      },
+      "facts_filings_without_original_html": 7,
+      "primary_basis": "reported",
+      "risk": {
+        "comparisons": [
+          {
+            "changed_fields": 0,
+            "from": "2024-12-31",
+            "to": "2025-03-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-03-31",
+            "to": "2025-06-30"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-06-30",
+            "to": "2025-09-30"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-09-30",
+            "to": "2025-12-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-12-31",
+            "to": "2026-03-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2026-03-31",
+            "to": "2026-06-30"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2026-06-30",
+            "to": "2026-09-30"
+          }
+        ],
+        "level": "medium",
+        "meaning": "parser 維護風險，非投資風險或準確率",
+        "reasons": [
+          "實際使用特殊處理：annual_minus_nine_months",
+          "5 個使用的 SEC 文件缺原始 HTML bytes；以 facts／DOM／文字格式誠實重播"
+        ],
+        "schemas": [
+          {
+            "period": "2024-12-31",
+            "sha256": "28517b7f5fdcb025ed818ba5deaee66e912a9441ca10fe71762f2c6ad9f9dbc5"
+          },
+          {
+            "period": "2025-03-31",
+            "sha256": "28517b7f5fdcb025ed818ba5deaee66e912a9441ca10fe71762f2c6ad9f9dbc5"
+          },
+          {
+            "period": "2025-06-30",
+            "sha256": "28517b7f5fdcb025ed818ba5deaee66e912a9441ca10fe71762f2c6ad9f9dbc5"
+          },
+          {
+            "period": "2025-09-30",
+            "sha256": "28517b7f5fdcb025ed818ba5deaee66e912a9441ca10fe71762f2c6ad9f9dbc5"
+          },
+          {
+            "period": "2025-12-31",
+            "sha256": "28517b7f5fdcb025ed818ba5deaee66e912a9441ca10fe71762f2c6ad9f9dbc5"
+          },
+          {
+            "period": "2026-03-31",
+            "sha256": "28517b7f5fdcb025ed818ba5deaee66e912a9441ca10fe71762f2c6ad9f9dbc5"
+          },
+          {
+            "period": "2026-06-30",
+            "sha256": "28517b7f5fdcb025ed818ba5deaee66e912a9441ca10fe71762f2c6ad9f9dbc5"
+          },
+          {
+            "period": "2026-09-30",
+            "sha256": "28517b7f5fdcb025ed818ba5deaee66e912a9441ca10fe71762f2c6ad9f9dbc5"
+          }
+        ],
+        "score": 20
+      },
+      "unimplemented_target_periods": []
+    },
+    {
+      "ticker": "AMZN",
+      "target_periods": 8,
+      "baseline_numeric_outputs": 56,
+      "regression_differences": 0,
+      "source_formats": {
+        "facts_cache": 9
+      },
+      "facts_filings_without_original_html": 9,
+      "primary_basis": "reported",
+      "risk": {
+        "comparisons": [
+          {
+            "changed_fields": 1,
+            "from": "2024-12-31",
+            "to": "2025-03-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-03-31",
+            "to": "2025-06-30"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-06-30",
+            "to": "2025-09-30"
+          },
+          {
+            "changed_fields": 1,
+            "from": "2025-09-30",
+            "to": "2025-12-31"
+          },
+          {
+            "changed_fields": 1,
+            "from": "2025-12-31",
+            "to": "2026-03-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2026-03-31",
+            "to": "2026-06-30"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2026-06-30",
+            "to": "2026-09-30"
+          }
+        ],
+        "level": "medium",
+        "meaning": "parser 維護風險，非投資風險或準確率",
+        "reasons": [
+          "實際使用特殊處理：amzn-historical-annual-advertising, annual_minus_nine_months",
+          "9 個使用的 SEC 文件缺原始 HTML bytes；以 facts／DOM／文字格式誠實重播"
+        ],
+        "schemas": [
+          {
+            "period": "2024-12-31",
+            "sha256": "260697df81143d7abd79bf92b58abdd666995f50a99d2e7c7b54eb3250128233"
+          },
+          {
+            "period": "2025-03-31",
+            "sha256": "b3a264f68e263d6ec26f5de4c0e8efe27f9025bcf2f42ba8e1e658793917239d"
+          },
+          {
+            "period": "2025-06-30",
+            "sha256": "b3a264f68e263d6ec26f5de4c0e8efe27f9025bcf2f42ba8e1e658793917239d"
+          },
+          {
+            "period": "2025-09-30",
+            "sha256": "b3a264f68e263d6ec26f5de4c0e8efe27f9025bcf2f42ba8e1e658793917239d"
+          },
+          {
+            "period": "2025-12-31",
+            "sha256": "260697df81143d7abd79bf92b58abdd666995f50a99d2e7c7b54eb3250128233"
+          },
+          {
+            "period": "2026-03-31",
+            "sha256": "b3a264f68e263d6ec26f5de4c0e8efe27f9025bcf2f42ba8e1e658793917239d"
+          },
+          {
+            "period": "2026-06-30",
+            "sha256": "b3a264f68e263d6ec26f5de4c0e8efe27f9025bcf2f42ba8e1e658793917239d"
+          },
+          {
+            "period": "2026-09-30",
+            "sha256": "b3a264f68e263d6ec26f5de4c0e8efe27f9025bcf2f42ba8e1e658793917239d"
+          }
+        ],
+        "score": 25
+      },
+      "unimplemented_target_periods": []
+    },
+    {
+      "ticker": "TSLA",
+      "target_periods": 8,
+      "baseline_numeric_outputs": 24,
+      "regression_differences": 0,
+      "source_formats": {
+        "facts_cache": 9,
+        "original_html": 2
+      },
+      "facts_filings_without_original_html": 7,
+      "primary_basis": "reported",
+      "risk": {
+        "comparisons": [
+          {
+            "changed_fields": 0,
+            "from": "2024-12-31",
+            "to": "2025-03-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-03-31",
+            "to": "2025-06-30"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-06-30",
+            "to": "2025-09-30"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-09-30",
+            "to": "2025-12-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-12-31",
+            "to": "2026-03-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2026-03-31",
+            "to": "2026-06-30"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2026-06-30",
+            "to": "2026-09-30"
+          }
+        ],
+        "level": "medium",
+        "meaning": "parser 維護風險，非投資風險或準確率",
+        "reasons": [
+          "實際使用特殊處理：annual_minus_nine_months",
+          "7 個使用的 SEC 文件缺原始 HTML bytes；以 facts／DOM／文字格式誠實重播"
+        ],
+        "schemas": [
+          {
+            "period": "2024-12-31",
+            "sha256": "0f4d1683afa1432490bbb0ee2d4a4338d1f3ca364cf97fa1d6ab2e114c47a1ba"
+          },
+          {
+            "period": "2025-03-31",
+            "sha256": "0f4d1683afa1432490bbb0ee2d4a4338d1f3ca364cf97fa1d6ab2e114c47a1ba"
+          },
+          {
+            "period": "2025-06-30",
+            "sha256": "0f4d1683afa1432490bbb0ee2d4a4338d1f3ca364cf97fa1d6ab2e114c47a1ba"
+          },
+          {
+            "period": "2025-09-30",
+            "sha256": "0f4d1683afa1432490bbb0ee2d4a4338d1f3ca364cf97fa1d6ab2e114c47a1ba"
+          },
+          {
+            "period": "2025-12-31",
+            "sha256": "0f4d1683afa1432490bbb0ee2d4a4338d1f3ca364cf97fa1d6ab2e114c47a1ba"
+          },
+          {
+            "period": "2026-03-31",
+            "sha256": "0f4d1683afa1432490bbb0ee2d4a4338d1f3ca364cf97fa1d6ab2e114c47a1ba"
+          },
+          {
+            "period": "2026-06-30",
+            "sha256": "0f4d1683afa1432490bbb0ee2d4a4338d1f3ca364cf97fa1d6ab2e114c47a1ba"
+          },
+          {
+            "period": "2026-09-30",
+            "sha256": "0f4d1683afa1432490bbb0ee2d4a4338d1f3ca364cf97fa1d6ab2e114c47a1ba"
+          }
+        ],
+        "score": 20
+      },
+      "unimplemented_target_periods": []
+    },
+    {
+      "ticker": "HD",
+      "target_periods": 8,
+      "baseline_numeric_outputs": 32,
+      "regression_differences": 0,
+      "source_formats": {
+        "facts_cache": 9
+      },
+      "facts_filings_without_original_html": 9,
+      "primary_basis": "reported",
+      "risk": {
+        "comparisons": [
+          {
+            "changed_fields": 4,
+            "from": "2024-10-27",
+            "to": "2025-02-02"
+          },
+          {
+            "changed_fields": 10,
+            "from": "2025-02-02",
+            "to": "2025-05-04"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-05-04",
+            "to": "2025-08-03"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-08-03",
+            "to": "2025-11-02"
+          },
+          {
+            "changed_fields": 3,
+            "from": "2025-11-02",
+            "to": "2026-02-01"
+          },
+          {
+            "changed_fields": 3,
+            "from": "2026-02-01",
+            "to": "2026-05-03"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2026-05-03",
+            "to": "2026-08-02"
+          }
+        ],
+        "level": "medium",
+        "meaning": "parser 維護風險，非投資風險或準確率",
+        "reasons": [
+          "最近兩次比較有 3 個 scope／分類變動",
+          "實際使用特殊處理：annual_minus_nine_months, hd-explicit-reported-row-scope",
+          "8 個使用的 SEC 文件缺原始 HTML bytes；以 facts／DOM／文字格式誠實重播"
+        ],
+        "schemas": [
+          {
+            "period": "2024-10-27",
+            "sha256": "092f4faec564b8c729d13ad6c5a3d919f73a27d2819afd1eeae4daff90f22599"
+          },
+          {
+            "period": "2025-02-02",
+            "sha256": "70ff0e39073013b23b36588b05474e5aed3f43e4d149f833a0b2cefaad2a9581"
+          },
+          {
+            "period": "2025-05-04",
+            "sha256": "03fbe6ce67da616d600c1ee05e7975b94c69d3a4d098a2923d1d882eb4f14986"
+          },
+          {
+            "period": "2025-08-03",
+            "sha256": "03fbe6ce67da616d600c1ee05e7975b94c69d3a4d098a2923d1d882eb4f14986"
+          },
+          {
+            "period": "2025-11-02",
+            "sha256": "03fbe6ce67da616d600c1ee05e7975b94c69d3a4d098a2923d1d882eb4f14986"
+          },
+          {
+            "period": "2026-02-01",
+            "sha256": "077dce8832e863d9f693cb85da3245891aba90f8bf15288e2b284e02c6a4cf48"
+          },
+          {
+            "period": "2026-05-03",
+            "sha256": "c3f73a123326edec0862b673b9e5c11638e18118aaea27511d16fae50cccaaea"
+          },
+          {
+            "period": "2026-08-02",
+            "sha256": "c3f73a123326edec0862b673b9e5c11638e18118aaea27511d16fae50cccaaea"
+          }
+        ],
+        "score": 40
+      },
+      "unimplemented_target_periods": []
+    },
+    {
+      "ticker": "MCD",
+      "target_periods": 8,
+      "baseline_numeric_outputs": 24,
+      "regression_differences": 0,
+      "source_formats": {
+        "facts_cache": 9
+      },
+      "facts_filings_without_original_html": 9,
+      "primary_basis": "segments",
+      "risk": {
+        "comparisons": [
+          {
+            "changed_fields": 1,
+            "from": "2024-09-30",
+            "to": "2024-12-31"
+          },
+          {
+            "changed_fields": 1,
+            "from": "2024-12-31",
+            "to": "2025-03-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-03-31",
+            "to": "2025-06-30"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-06-30",
+            "to": "2025-09-30"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-09-30",
+            "to": "2025-12-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-12-31",
+            "to": "2026-03-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2026-03-31",
+            "to": "2026-06-30"
+          }
+        ],
+        "level": "medium",
+        "meaning": "parser 維護風險，非投資風險或準確率",
+        "reasons": [
+          "實際使用特殊處理：annual_minus_nine_months, mcd-explicit-reported-row-scope",
+          "8 個使用的 SEC 文件缺原始 HTML bytes；以 facts／DOM／文字格式誠實重播"
+        ],
+        "schemas": [
+          {
+            "period": "2024-09-30",
+            "sha256": "bd7847448e2fe610adc123334fbbf42fcf0fe60d5c1c40c93c3bef242707b354"
+          },
+          {
+            "period": "2024-12-31",
+            "sha256": "7c56291a43ddb38cc52766352dedad9c9dfb7f5b1ee24093b36cf0c4c853b9ed"
+          },
+          {
+            "period": "2025-03-31",
+            "sha256": "c3f5d9da86ca130c0187b5d6bacf22258c82f84c98a59dbb1b1be6d8a1cb12b4"
+          },
+          {
+            "period": "2025-06-30",
+            "sha256": "c3f5d9da86ca130c0187b5d6bacf22258c82f84c98a59dbb1b1be6d8a1cb12b4"
+          },
+          {
+            "period": "2025-09-30",
+            "sha256": "c3f5d9da86ca130c0187b5d6bacf22258c82f84c98a59dbb1b1be6d8a1cb12b4"
+          },
+          {
+            "period": "2025-12-31",
+            "sha256": "c3f5d9da86ca130c0187b5d6bacf22258c82f84c98a59dbb1b1be6d8a1cb12b4"
+          },
+          {
+            "period": "2026-03-31",
+            "sha256": "c3f5d9da86ca130c0187b5d6bacf22258c82f84c98a59dbb1b1be6d8a1cb12b4"
+          },
+          {
+            "period": "2026-06-30",
+            "sha256": "c3f5d9da86ca130c0187b5d6bacf22258c82f84c98a59dbb1b1be6d8a1cb12b4"
+          }
+        ],
+        "score": 25
+      },
+      "unimplemented_target_periods": []
+    },
+    {
+      "ticker": "WMT",
+      "target_periods": 8,
+      "baseline_numeric_outputs": 32,
+      "regression_differences": 0,
+      "source_formats": {
+        "facts_cache": 9
+      },
+      "facts_filings_without_original_html": 9,
+      "primary_basis": "segments",
+      "risk": {
+        "comparisons": [
+          {
+            "changed_fields": 0,
+            "from": "2024-10-31",
+            "to": "2025-01-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-01-31",
+            "to": "2025-04-30"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-04-30",
+            "to": "2025-07-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-07-31",
+            "to": "2025-10-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-10-31",
+            "to": "2026-01-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2026-01-31",
+            "to": "2026-04-30"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2026-04-30",
+            "to": "2026-07-31"
+          }
+        ],
+        "level": "medium",
+        "meaning": "parser 維護風險，非投資風險或準確率",
+        "reasons": [
+          "實際使用特殊處理：annual_minus_nine_months",
+          "6 個使用的 SEC 文件缺原始 HTML bytes；以 facts／DOM／文字格式誠實重播"
+        ],
+        "schemas": [
+          {
+            "period": "2024-10-31",
+            "sha256": "3af76976a6a51d995c5ea60648b5abb497f8b83e3a2258e03b45abe8756da3ea"
+          },
+          {
+            "period": "2025-01-31",
+            "sha256": "3af76976a6a51d995c5ea60648b5abb497f8b83e3a2258e03b45abe8756da3ea"
+          },
+          {
+            "period": "2025-04-30",
+            "sha256": "3af76976a6a51d995c5ea60648b5abb497f8b83e3a2258e03b45abe8756da3ea"
+          },
+          {
+            "period": "2025-07-31",
+            "sha256": "3af76976a6a51d995c5ea60648b5abb497f8b83e3a2258e03b45abe8756da3ea"
+          },
+          {
+            "period": "2025-10-31",
+            "sha256": "3af76976a6a51d995c5ea60648b5abb497f8b83e3a2258e03b45abe8756da3ea"
+          },
+          {
+            "period": "2026-01-31",
+            "sha256": "3af76976a6a51d995c5ea60648b5abb497f8b83e3a2258e03b45abe8756da3ea"
+          },
+          {
+            "period": "2026-04-30",
+            "sha256": "3af76976a6a51d995c5ea60648b5abb497f8b83e3a2258e03b45abe8756da3ea"
+          },
+          {
+            "period": "2026-07-31",
+            "sha256": "3af76976a6a51d995c5ea60648b5abb497f8b83e3a2258e03b45abe8756da3ea"
+          }
+        ],
+        "score": 20
+      },
+      "unimplemented_target_periods": []
+    },
+    {
+      "ticker": "COST",
+      "target_periods": 8,
+      "baseline_numeric_outputs": 16,
+      "regression_differences": 0,
+      "source_formats": {
+        "facts_cache": 9
+      },
+      "facts_filings_without_original_html": 9,
+      "primary_basis": "reported",
+      "risk": {
+        "comparisons": [
+          {
+            "changed_fields": 0,
+            "from": "2024-11-24",
+            "to": "2025-02-16"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-02-16",
+            "to": "2025-05-11"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-05-11",
+            "to": "2025-08-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-08-31",
+            "to": "2025-11-23"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-11-23",
+            "to": "2026-02-15"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2026-02-15",
+            "to": "2026-05-10"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2026-05-10",
+            "to": "2026-08-30"
+          }
+        ],
+        "level": "medium",
+        "meaning": "parser 維護風險，非投資風險或準確率",
+        "reasons": [
+          "實際使用特殊處理：annual_minus_nine_months",
+          "8 個使用的 SEC 文件缺原始 HTML bytes；以 facts／DOM／文字格式誠實重播"
+        ],
+        "schemas": [
+          {
+            "period": "2024-11-24",
+            "sha256": "9844a9bfd313b0b09db8d8db07f5f1ea424ab2449a0f767b7686da94360d70b6"
+          },
+          {
+            "period": "2025-02-16",
+            "sha256": "9844a9bfd313b0b09db8d8db07f5f1ea424ab2449a0f767b7686da94360d70b6"
+          },
+          {
+            "period": "2025-05-11",
+            "sha256": "9844a9bfd313b0b09db8d8db07f5f1ea424ab2449a0f767b7686da94360d70b6"
+          },
+          {
+            "period": "2025-08-31",
+            "sha256": "9844a9bfd313b0b09db8d8db07f5f1ea424ab2449a0f767b7686da94360d70b6"
+          },
+          {
+            "period": "2025-11-23",
+            "sha256": "9844a9bfd313b0b09db8d8db07f5f1ea424ab2449a0f767b7686da94360d70b6"
+          },
+          {
+            "period": "2026-02-15",
+            "sha256": "9844a9bfd313b0b09db8d8db07f5f1ea424ab2449a0f767b7686da94360d70b6"
+          },
+          {
+            "period": "2026-05-10",
+            "sha256": "9844a9bfd313b0b09db8d8db07f5f1ea424ab2449a0f767b7686da94360d70b6"
+          },
+          {
+            "period": "2026-08-30",
+            "sha256": "9844a9bfd313b0b09db8d8db07f5f1ea424ab2449a0f767b7686da94360d70b6"
+          }
+        ],
+        "score": 20
+      },
+      "unimplemented_target_periods": []
+    },
+    {
+      "ticker": "PG",
+      "target_periods": 8,
+      "baseline_numeric_outputs": 48,
+      "regression_differences": 0,
+      "source_formats": {
+        "facts_cache": 9
+      },
+      "facts_filings_without_original_html": 9,
+      "primary_basis": "reported",
+      "risk": {
+        "comparisons": [
+          {
+            "changed_fields": 0,
+            "from": "2024-12-31",
+            "to": "2025-03-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-03-31",
+            "to": "2025-06-30"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-06-30",
+            "to": "2025-09-30"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-09-30",
+            "to": "2025-12-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-12-31",
+            "to": "2026-03-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2026-03-31",
+            "to": "2026-06-30"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2026-06-30",
+            "to": "2026-09-30"
+          }
+        ],
+        "level": "medium",
+        "meaning": "parser 維護風險，非投資風險或準確率",
+        "reasons": [
+          "實際使用特殊處理：annual_minus_nine_months",
+          "8 個使用的 SEC 文件缺原始 HTML bytes；以 facts／DOM／文字格式誠實重播"
+        ],
+        "schemas": [
+          {
+            "period": "2024-12-31",
+            "sha256": "23d2f6572dfb09c517e53ed6f1c670cd9e1a4bc2c7b0604961c40935c67fd507"
+          },
+          {
+            "period": "2025-03-31",
+            "sha256": "23d2f6572dfb09c517e53ed6f1c670cd9e1a4bc2c7b0604961c40935c67fd507"
+          },
+          {
+            "period": "2025-06-30",
+            "sha256": "23d2f6572dfb09c517e53ed6f1c670cd9e1a4bc2c7b0604961c40935c67fd507"
+          },
+          {
+            "period": "2025-09-30",
+            "sha256": "23d2f6572dfb09c517e53ed6f1c670cd9e1a4bc2c7b0604961c40935c67fd507"
+          },
+          {
+            "period": "2025-12-31",
+            "sha256": "23d2f6572dfb09c517e53ed6f1c670cd9e1a4bc2c7b0604961c40935c67fd507"
+          },
+          {
+            "period": "2026-03-31",
+            "sha256": "23d2f6572dfb09c517e53ed6f1c670cd9e1a4bc2c7b0604961c40935c67fd507"
+          },
+          {
+            "period": "2026-06-30",
+            "sha256": "23d2f6572dfb09c517e53ed6f1c670cd9e1a4bc2c7b0604961c40935c67fd507"
+          },
+          {
+            "period": "2026-09-30",
+            "sha256": "23d2f6572dfb09c517e53ed6f1c670cd9e1a4bc2c7b0604961c40935c67fd507"
+          }
+        ],
+        "score": 20
+      },
+      "unimplemented_target_periods": []
+    },
+    {
+      "ticker": "KO",
+      "target_periods": 8,
+      "baseline_numeric_outputs": 57,
+      "regression_differences": 0,
+      "source_formats": {
+        "facts_cache": 9
+      },
+      "facts_filings_without_original_html": 9,
+      "primary_basis": "reported",
+      "risk": {
+        "comparisons": [
+          {
+            "changed_fields": 2,
+            "from": "2024-12-31",
+            "to": "2025-03-28"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-03-28",
+            "to": "2025-06-27"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-06-27",
+            "to": "2025-09-26"
+          },
+          {
+            "changed_fields": 7,
+            "from": "2025-09-26",
+            "to": "2025-12-31"
+          },
+          {
+            "changed_fields": 7,
+            "from": "2025-12-31",
+            "to": "2026-04-03"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2026-04-03",
+            "to": "2026-07-03"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2026-07-03",
+            "to": "2026-10-02"
+          }
+        ],
+        "level": "medium",
+        "meaning": "parser 維護風險，非投資風險或準確率",
+        "reasons": [
+          "實際使用特殊處理：annual_minus_nine_months, ko-explicit-reported-row-scope",
+          "9 個使用的 SEC 文件缺原始 HTML bytes；以 facts／DOM／文字格式誠實重播"
+        ],
+        "schemas": [
+          {
+            "period": "2024-12-31",
+            "sha256": "276c80a84d7f2613a6851df5bf68c7725d418c8f6a0638f88d43359e2c682b49"
+          },
+          {
+            "period": "2025-03-28",
+            "sha256": "bb6204bf5331101378d3bf3f0e7a5b45d9cf63c1166e71f97e53be950e4fa382"
+          },
+          {
+            "period": "2025-06-27",
+            "sha256": "bb6204bf5331101378d3bf3f0e7a5b45d9cf63c1166e71f97e53be950e4fa382"
+          },
+          {
+            "period": "2025-09-26",
+            "sha256": "bb6204bf5331101378d3bf3f0e7a5b45d9cf63c1166e71f97e53be950e4fa382"
+          },
+          {
+            "period": "2025-12-31",
+            "sha256": "9772fefeaa2e70ba171a02c0633e6681156523d4a7cd9a72e1e5243537a7b591"
+          },
+          {
+            "period": "2026-04-03",
+            "sha256": "7ebc06cface9cbf404f8df73e4a9f1a14713e63ecbd17b5aebb29efa1e589413"
+          },
+          {
+            "period": "2026-07-03",
+            "sha256": "7ebc06cface9cbf404f8df73e4a9f1a14713e63ecbd17b5aebb29efa1e589413"
+          },
+          {
+            "period": "2026-10-02",
+            "sha256": "7ebc06cface9cbf404f8df73e4a9f1a14713e63ecbd17b5aebb29efa1e589413"
+          }
+        ],
+        "score": 25
+      },
+      "unimplemented_target_periods": []
+    },
+    {
+      "ticker": "JNJ",
+      "target_periods": 8,
+      "baseline_numeric_outputs": 16,
+      "regression_differences": 0,
+      "source_formats": {
+        "facts_cache": 9
+      },
+      "facts_filings_without_original_html": 9,
+      "primary_basis": "reported",
+      "risk": {
+        "comparisons": [
+          {
+            "changed_fields": 2,
+            "from": "2024-12-29",
+            "to": "2025-03-30"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-03-30",
+            "to": "2025-06-29"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-06-29",
+            "to": "2025-09-28"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-09-28",
+            "to": "2025-12-28"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-12-28",
+            "to": "2026-03-29"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2026-03-29",
+            "to": "2026-06-28"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2026-06-28",
+            "to": "2026-09-27"
+          }
+        ],
+        "level": "medium",
+        "meaning": "parser 維護風險，非投資風險或準確率",
+        "reasons": [
+          "實際使用特殊處理：annual_minus_nine_months",
+          "9 個使用的 SEC 文件缺原始 HTML bytes；以 facts／DOM／文字格式誠實重播"
+        ],
+        "schemas": [
+          {
+            "period": "2024-12-29",
+            "sha256": "7c82b916230b414b4befd61d5a6e9c0ac1b2383785fb082b63fffab24c1152ab"
+          },
+          {
+            "period": "2025-03-30",
+            "sha256": "e0f26fc0245df8903dfbf47a50d632ae354e22f7b933f60b7d53e9914a240430"
+          },
+          {
+            "period": "2025-06-29",
+            "sha256": "e0f26fc0245df8903dfbf47a50d632ae354e22f7b933f60b7d53e9914a240430"
+          },
+          {
+            "period": "2025-09-28",
+            "sha256": "e0f26fc0245df8903dfbf47a50d632ae354e22f7b933f60b7d53e9914a240430"
+          },
+          {
+            "period": "2025-12-28",
+            "sha256": "e0f26fc0245df8903dfbf47a50d632ae354e22f7b933f60b7d53e9914a240430"
+          },
+          {
+            "period": "2026-03-29",
+            "sha256": "e0f26fc0245df8903dfbf47a50d632ae354e22f7b933f60b7d53e9914a240430"
+          },
+          {
+            "period": "2026-06-28",
+            "sha256": "e0f26fc0245df8903dfbf47a50d632ae354e22f7b933f60b7d53e9914a240430"
+          },
+          {
+            "period": "2026-09-27",
+            "sha256": "e0f26fc0245df8903dfbf47a50d632ae354e22f7b933f60b7d53e9914a240430"
+          }
+        ],
+        "score": 20
+      },
+      "unimplemented_target_periods": []
+    },
+    {
+      "ticker": "UNH",
+      "target_periods": 8,
+      "baseline_numeric_outputs": 24,
+      "regression_differences": 0,
+      "source_formats": {
+        "facts_cache": 9,
+        "original_html": 2
+      },
+      "facts_filings_without_original_html": 7,
+      "primary_basis": "reported",
+      "risk": {
+        "comparisons": [
+          {
+            "changed_fields": 0,
+            "from": "2024-12-31",
+            "to": "2025-03-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-03-31",
+            "to": "2025-06-30"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-06-30",
+            "to": "2025-09-30"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-09-30",
+            "to": "2025-12-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-12-31",
+            "to": "2026-03-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2026-03-31",
+            "to": "2026-06-30"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2026-06-30",
+            "to": "2026-09-30"
+          }
+        ],
+        "level": "medium",
+        "meaning": "parser 維護風險，非投資風險或準確率",
+        "reasons": [
+          "實際使用特殊處理：annual_minus_nine_months",
+          "7 個使用的 SEC 文件缺原始 HTML bytes；以 facts／DOM／文字格式誠實重播"
+        ],
+        "schemas": [
+          {
+            "period": "2024-12-31",
+            "sha256": "7e6fdc7938d6ec1b99539bbb01a250f59eae9743677b58f757b2c28faa3eccde"
+          },
+          {
+            "period": "2025-03-31",
+            "sha256": "7e6fdc7938d6ec1b99539bbb01a250f59eae9743677b58f757b2c28faa3eccde"
+          },
+          {
+            "period": "2025-06-30",
+            "sha256": "7e6fdc7938d6ec1b99539bbb01a250f59eae9743677b58f757b2c28faa3eccde"
+          },
+          {
+            "period": "2025-09-30",
+            "sha256": "7e6fdc7938d6ec1b99539bbb01a250f59eae9743677b58f757b2c28faa3eccde"
+          },
+          {
+            "period": "2025-12-31",
+            "sha256": "7e6fdc7938d6ec1b99539bbb01a250f59eae9743677b58f757b2c28faa3eccde"
+          },
+          {
+            "period": "2026-03-31",
+            "sha256": "7e6fdc7938d6ec1b99539bbb01a250f59eae9743677b58f757b2c28faa3eccde"
+          },
+          {
+            "period": "2026-06-30",
+            "sha256": "7e6fdc7938d6ec1b99539bbb01a250f59eae9743677b58f757b2c28faa3eccde"
+          },
+          {
+            "period": "2026-09-30",
+            "sha256": "7e6fdc7938d6ec1b99539bbb01a250f59eae9743677b58f757b2c28faa3eccde"
+          }
+        ],
+        "score": 20
+      },
+      "unimplemented_target_periods": []
+    },
+    {
+      "ticker": "LLY",
+      "target_periods": 8,
+      "baseline_numeric_outputs": 40,
+      "regression_differences": 0,
+      "source_formats": {
+        "facts_cache": 9
+      },
+      "facts_filings_without_original_html": 9,
+      "primary_basis": "reported",
+      "risk": {
+        "comparisons": [
+          {
+            "changed_fields": 11,
+            "from": "2024-12-31",
+            "to": "2025-03-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-03-31",
+            "to": "2025-06-30"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-06-30",
+            "to": "2025-09-30"
+          },
+          {
+            "changed_fields": 11,
+            "from": "2025-09-30",
+            "to": "2025-12-31"
+          },
+          {
+            "changed_fields": 13,
+            "from": "2025-12-31",
+            "to": "2026-03-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2026-03-31",
+            "to": "2026-06-30"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2026-06-30",
+            "to": "2026-09-30"
+          }
+        ],
+        "level": "medium",
+        "meaning": "parser 維護風險，非投資風險或準確率",
+        "reasons": [
+          "實際使用特殊處理：annual_minus_nine_months, lly-explicit-reported-row-scope, lly-us-plus-non-us-product",
+          "9 個使用的 SEC 文件缺原始 HTML bytes；以 facts／DOM／文字格式誠實重播"
+        ],
+        "schemas": [
+          {
+            "period": "2024-12-31",
+            "sha256": "53c48a6b95b8766a29b2f31062470a3ae1f2c1a1a659393fe819805ca0fd5cde"
+          },
+          {
+            "period": "2025-03-31",
+            "sha256": "300bb54000c7d766eb3bcdedbb1166137b18e01f7a4a24a1f9ee7f76e3eb8b4a"
+          },
+          {
+            "period": "2025-06-30",
+            "sha256": "300bb54000c7d766eb3bcdedbb1166137b18e01f7a4a24a1f9ee7f76e3eb8b4a"
+          },
+          {
+            "period": "2025-09-30",
+            "sha256": "300bb54000c7d766eb3bcdedbb1166137b18e01f7a4a24a1f9ee7f76e3eb8b4a"
+          },
+          {
+            "period": "2025-12-31",
+            "sha256": "53c48a6b95b8766a29b2f31062470a3ae1f2c1a1a659393fe819805ca0fd5cde"
+          },
+          {
+            "period": "2026-03-31",
+            "sha256": "c1876fd2a0cafffbd1b6d285cd738faade2c0afcd739defde0db66de43b8bd4d"
+          },
+          {
+            "period": "2026-06-30",
+            "sha256": "c1876fd2a0cafffbd1b6d285cd738faade2c0afcd739defde0db66de43b8bd4d"
+          },
+          {
+            "period": "2026-09-30",
+            "sha256": "c1876fd2a0cafffbd1b6d285cd738faade2c0afcd739defde0db66de43b8bd4d"
+          }
+        ],
+        "score": 30
+      },
+      "unimplemented_target_periods": []
+    },
+    {
+      "ticker": "JPM",
+      "target_periods": 8,
+      "baseline_numeric_outputs": 32,
+      "regression_differences": 0,
+      "source_formats": {
+        "facts_cache": 9
+      },
+      "facts_filings_without_original_html": 9,
+      "primary_basis": "reported",
+      "risk": {
+        "comparisons": [
+          {
+            "changed_fields": 1,
+            "from": "2024-12-31",
+            "to": "2025-03-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-03-31",
+            "to": "2025-06-30"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-06-30",
+            "to": "2025-09-30"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-09-30",
+            "to": "2025-12-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-12-31",
+            "to": "2026-03-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2026-03-31",
+            "to": "2026-06-30"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2026-06-30",
+            "to": "2026-09-30"
+          }
+        ],
+        "level": "medium",
+        "meaning": "parser 維護風險，非投資風險或準確率",
+        "reasons": [
+          "實際使用特殊處理：annual_minus_nine_months, jpm-2024q3-cib-reorganization-member",
+          "9 個使用的 SEC 文件缺原始 HTML bytes；以 facts／DOM／文字格式誠實重播"
+        ],
+        "schemas": [
+          {
+            "period": "2024-12-31",
+            "sha256": "7bc4e86232fbc76b8fc96226eb7ef69f866e399f96a7a58700c09de3ccb601eb"
+          },
+          {
+            "period": "2025-03-31",
+            "sha256": "beb302634c5209005d3251dbe4eac346b8eb541e1f44de0f3f636f7a4bc775b2"
+          },
+          {
+            "period": "2025-06-30",
+            "sha256": "beb302634c5209005d3251dbe4eac346b8eb541e1f44de0f3f636f7a4bc775b2"
+          },
+          {
+            "period": "2025-09-30",
+            "sha256": "beb302634c5209005d3251dbe4eac346b8eb541e1f44de0f3f636f7a4bc775b2"
+          },
+          {
+            "period": "2025-12-31",
+            "sha256": "beb302634c5209005d3251dbe4eac346b8eb541e1f44de0f3f636f7a4bc775b2"
+          },
+          {
+            "period": "2026-03-31",
+            "sha256": "beb302634c5209005d3251dbe4eac346b8eb541e1f44de0f3f636f7a4bc775b2"
+          },
+          {
+            "period": "2026-06-30",
+            "sha256": "beb302634c5209005d3251dbe4eac346b8eb541e1f44de0f3f636f7a4bc775b2"
+          },
+          {
+            "period": "2026-09-30",
+            "sha256": "beb302634c5209005d3251dbe4eac346b8eb541e1f44de0f3f636f7a4bc775b2"
+          }
+        ],
+        "score": 25
+      },
+      "unimplemented_target_periods": []
+    },
+    {
+      "ticker": "BAC",
+      "target_periods": 8,
+      "baseline_numeric_outputs": 40,
+      "regression_differences": 0,
+      "source_formats": {
+        "facts_cache": 9
+      },
+      "facts_filings_without_original_html": 9,
+      "primary_basis": "reported",
+      "risk": {
+        "comparisons": [
+          {
+            "changed_fields": 0,
+            "from": "2024-12-31",
+            "to": "2025-03-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-03-31",
+            "to": "2025-06-30"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-06-30",
+            "to": "2025-09-30"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-09-30",
+            "to": "2025-12-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-12-31",
+            "to": "2026-03-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2026-03-31",
+            "to": "2026-06-30"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2026-06-30",
+            "to": "2026-09-30"
+          }
+        ],
+        "level": "medium",
+        "meaning": "parser 維護風險，非投資風險或準確率",
+        "reasons": [
+          "實際使用特殊處理：annual_minus_nine_months, bac-fy2025-retrospective-tax-equity-accounting",
+          "9 個使用的 SEC 文件缺原始 HTML bytes；以 facts／DOM／文字格式誠實重播"
+        ],
+        "schemas": [
+          {
+            "period": "2024-12-31",
+            "sha256": "dd1556dc1f4ff8058e51541c6a8fd489bcd219d62973b59a3f4844a07ee0fddc"
+          },
+          {
+            "period": "2025-03-31",
+            "sha256": "dd1556dc1f4ff8058e51541c6a8fd489bcd219d62973b59a3f4844a07ee0fddc"
+          },
+          {
+            "period": "2025-06-30",
+            "sha256": "dd1556dc1f4ff8058e51541c6a8fd489bcd219d62973b59a3f4844a07ee0fddc"
+          },
+          {
+            "period": "2025-09-30",
+            "sha256": "dd1556dc1f4ff8058e51541c6a8fd489bcd219d62973b59a3f4844a07ee0fddc"
+          },
+          {
+            "period": "2025-12-31",
+            "sha256": "dd1556dc1f4ff8058e51541c6a8fd489bcd219d62973b59a3f4844a07ee0fddc"
+          },
+          {
+            "period": "2026-03-31",
+            "sha256": "dd1556dc1f4ff8058e51541c6a8fd489bcd219d62973b59a3f4844a07ee0fddc"
+          },
+          {
+            "period": "2026-06-30",
+            "sha256": "dd1556dc1f4ff8058e51541c6a8fd489bcd219d62973b59a3f4844a07ee0fddc"
+          },
+          {
+            "period": "2026-09-30",
+            "sha256": "dd1556dc1f4ff8058e51541c6a8fd489bcd219d62973b59a3f4844a07ee0fddc"
+          }
+        ],
+        "score": 25
+      },
+      "unimplemented_target_periods": []
+    },
+    {
+      "ticker": "BRK-B",
+      "target_periods": 8,
+      "baseline_numeric_outputs": 64,
+      "regression_differences": 0,
+      "source_formats": {
+        "facts_cache": 9
+      },
+      "facts_filings_without_original_html": 9,
+      "primary_basis": "segments",
+      "risk": {
+        "comparisons": [
+          {
+            "changed_fields": 0,
+            "from": "2024-09-30",
+            "to": "2024-12-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2024-12-31",
+            "to": "2025-03-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-03-31",
+            "to": "2025-06-30"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-06-30",
+            "to": "2025-09-30"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-09-30",
+            "to": "2025-12-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-12-31",
+            "to": "2026-03-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2026-03-31",
+            "to": "2026-06-30"
+          }
+        ],
+        "level": "medium",
+        "meaning": "parser 維護風險，非投資風險或準確率",
+        "reasons": [
+          "實際使用特殊處理：annual_minus_nine_months",
+          "8 個使用的 SEC 文件缺原始 HTML bytes；以 facts／DOM／文字格式誠實重播"
+        ],
+        "schemas": [
+          {
+            "period": "2024-09-30",
+            "sha256": "c7a2b90d30d77da20cc406bb2d67d04b4e009b6c054333496fbb458f6c9627da"
+          },
+          {
+            "period": "2024-12-31",
+            "sha256": "c7a2b90d30d77da20cc406bb2d67d04b4e009b6c054333496fbb458f6c9627da"
+          },
+          {
+            "period": "2025-03-31",
+            "sha256": "c7a2b90d30d77da20cc406bb2d67d04b4e009b6c054333496fbb458f6c9627da"
+          },
+          {
+            "period": "2025-06-30",
+            "sha256": "c7a2b90d30d77da20cc406bb2d67d04b4e009b6c054333496fbb458f6c9627da"
+          },
+          {
+            "period": "2025-09-30",
+            "sha256": "c7a2b90d30d77da20cc406bb2d67d04b4e009b6c054333496fbb458f6c9627da"
+          },
+          {
+            "period": "2025-12-31",
+            "sha256": "c7a2b90d30d77da20cc406bb2d67d04b4e009b6c054333496fbb458f6c9627da"
+          },
+          {
+            "period": "2026-03-31",
+            "sha256": "c7a2b90d30d77da20cc406bb2d67d04b4e009b6c054333496fbb458f6c9627da"
+          },
+          {
+            "period": "2026-06-30",
+            "sha256": "c7a2b90d30d77da20cc406bb2d67d04b4e009b6c054333496fbb458f6c9627da"
+          }
+        ],
+        "score": 20
+      },
+      "unimplemented_target_periods": []
+    },
+    {
+      "ticker": "PGR",
+      "target_periods": 8,
+      "baseline_numeric_outputs": 96,
+      "regression_differences": 0,
+      "source_formats": {
+        "facts_cache": 9,
+        "original_html": 5
+      },
+      "facts_filings_without_original_html": 4,
+      "primary_basis": "reported",
+      "risk": {
+        "comparisons": [
+          {
+            "changed_fields": 0,
+            "from": "2024-12-31",
+            "to": "2025-03-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-03-31",
+            "to": "2025-06-30"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-06-30",
+            "to": "2025-09-30"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-09-30",
+            "to": "2025-12-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-12-31",
+            "to": "2026-03-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2026-03-31",
+            "to": "2026-06-30"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2026-06-30",
+            "to": "2026-09-30"
+          }
+        ],
+        "level": "low",
+        "meaning": "parser 維護風險，非投資風險或準確率",
+        "reasons": [
+          "實際使用特殊處理：annual_minus_nine_months"
+        ],
+        "schemas": [
+          {
+            "period": "2024-12-31",
+            "sha256": "f2ccb760489342a14456b940410679987032976aaa49a26bed545b728cef0b60"
+          },
+          {
+            "period": "2025-03-31",
+            "sha256": "f2ccb760489342a14456b940410679987032976aaa49a26bed545b728cef0b60"
+          },
+          {
+            "period": "2025-06-30",
+            "sha256": "f2ccb760489342a14456b940410679987032976aaa49a26bed545b728cef0b60"
+          },
+          {
+            "period": "2025-09-30",
+            "sha256": "f2ccb760489342a14456b940410679987032976aaa49a26bed545b728cef0b60"
+          },
+          {
+            "period": "2025-12-31",
+            "sha256": "f2ccb760489342a14456b940410679987032976aaa49a26bed545b728cef0b60"
+          },
+          {
+            "period": "2026-03-31",
+            "sha256": "f2ccb760489342a14456b940410679987032976aaa49a26bed545b728cef0b60"
+          },
+          {
+            "period": "2026-06-30",
+            "sha256": "f2ccb760489342a14456b940410679987032976aaa49a26bed545b728cef0b60"
+          },
+          {
+            "period": "2026-09-30",
+            "sha256": "f2ccb760489342a14456b940410679987032976aaa49a26bed545b728cef0b60"
+          }
+        ],
+        "score": 5
+      },
+      "unimplemented_target_periods": []
+    },
+    {
+      "ticker": "XOM",
+      "target_periods": 8,
+      "baseline_numeric_outputs": 60,
+      "regression_differences": 0,
+      "source_formats": {
+        "facts_cache": 2,
+        "dom_snapshot": 4,
+        "web_text": 2
+      },
+      "facts_filings_without_original_html": 2,
+      "primary_basis": "segments",
+      "risk": {
+        "comparisons": [
+          {
+            "changed_fields": 0,
+            "from": "2024-12-31",
+            "to": "2025-03-31"
+          },
+          {
+            "changed_fields": 11,
+            "from": "2025-03-31",
+            "to": "2025-06-30"
+          },
+          {
+            "changed_fields": 11,
+            "from": "2025-06-30",
+            "to": "2025-09-30"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-09-30",
+            "to": "2025-12-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-12-31",
+            "to": "2026-03-31"
+          },
+          {
+            "changed_fields": 11,
+            "from": "2026-03-31",
+            "to": "2026-06-30"
+          },
+          {
+            "changed_fields": 19,
+            "from": "2026-06-30",
+            "to": "2026-09-30"
+          }
+        ],
+        "level": "high",
+        "meaning": "parser 維護風險，非投資風險或準確率",
+        "reasons": [
+          "最近兩次比較有 30 個 scope／分類變動",
+          "實際使用特殊處理：annual_minus_nine_months, xom-reviewed-q2-gross-sales-basis",
+          "5 個使用的 SEC 文件缺原始 HTML bytes；以 facts／DOM／文字格式誠實重播"
+        ],
+        "schemas": [
+          {
+            "period": "2024-12-31",
+            "sha256": "8d070ce9da2f19ca801844039ef5c6dc8f245e4aeb4123aaa566483ffdde8df9"
+          },
+          {
+            "period": "2025-03-31",
+            "sha256": "8d070ce9da2f19ca801844039ef5c6dc8f245e4aeb4123aaa566483ffdde8df9"
+          },
+          {
+            "period": "2025-06-30",
+            "sha256": "c818cb9438484e31bf8d8e9f84d572d428938643ec885c513c4afd00c1c4bc44"
+          },
+          {
+            "period": "2025-09-30",
+            "sha256": "8d070ce9da2f19ca801844039ef5c6dc8f245e4aeb4123aaa566483ffdde8df9"
+          },
+          {
+            "period": "2025-12-31",
+            "sha256": "8d070ce9da2f19ca801844039ef5c6dc8f245e4aeb4123aaa566483ffdde8df9"
+          },
+          {
+            "period": "2026-03-31",
+            "sha256": "8d070ce9da2f19ca801844039ef5c6dc8f245e4aeb4123aaa566483ffdde8df9"
+          },
+          {
+            "period": "2026-06-30",
+            "sha256": "c818cb9438484e31bf8d8e9f84d572d428938643ec885c513c4afd00c1c4bc44"
+          },
+          {
+            "period": "2026-09-30",
+            "sha256": "0cc64b2c8758c098f45f00ad43a63f498b23f0647d9c0cbf063b2d52149f3344"
+          }
+        ],
+        "score": 65
+      },
+      "unimplemented_target_periods": []
+    },
+    {
+      "ticker": "CVX",
+      "target_periods": 8,
+      "baseline_numeric_outputs": 32,
+      "regression_differences": 0,
+      "source_formats": {
+        "facts_cache": 9
+      },
+      "facts_filings_without_original_html": 9,
+      "primary_basis": "net",
+      "risk": {
+        "comparisons": [
+          {
+            "changed_fields": 5,
+            "from": "2024-09-30",
+            "to": "2024-12-31"
+          },
+          {
+            "changed_fields": 13,
+            "from": "2024-12-31",
+            "to": "2025-03-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-03-31",
+            "to": "2025-06-30"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-06-30",
+            "to": "2025-09-30"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-09-30",
+            "to": "2025-12-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-12-31",
+            "to": "2026-03-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2026-03-31",
+            "to": "2026-06-30"
+          }
+        ],
+        "level": "medium",
+        "meaning": "parser 維護風險，非投資風險或準確率",
+        "reasons": [
+          "實際使用特殊處理：annual_minus_nine_months, cvx-2024-gross-sales-reported-rows, cvx-2024-net-gross-plus-intersegment, cvx-2024-reported-corporate-net",
+          "8 個使用的 SEC 文件缺原始 HTML bytes；以 facts／DOM／文字格式誠實重播"
+        ],
+        "schemas": [
+          {
+            "period": "2024-09-30",
+            "sha256": "63463f9178fb6f310a2c175c5d3427e4d5e9ccf7ff36341452bcfe987057c6f4"
+          },
+          {
+            "period": "2024-12-31",
+            "sha256": "a612fa1b6e2fb51085db7b0aee9d3a0c3208416badfc804100957efbf8c1442d"
+          },
+          {
+            "period": "2025-03-31",
+            "sha256": "ccb8b1e84ecf82f52172b8a06b2beae3f48b3b8a8c990e98fcd3d70523ebde9d"
+          },
+          {
+            "period": "2025-06-30",
+            "sha256": "ccb8b1e84ecf82f52172b8a06b2beae3f48b3b8a8c990e98fcd3d70523ebde9d"
+          },
+          {
+            "period": "2025-09-30",
+            "sha256": "ccb8b1e84ecf82f52172b8a06b2beae3f48b3b8a8c990e98fcd3d70523ebde9d"
+          },
+          {
+            "period": "2025-12-31",
+            "sha256": "ccb8b1e84ecf82f52172b8a06b2beae3f48b3b8a8c990e98fcd3d70523ebde9d"
+          },
+          {
+            "period": "2026-03-31",
+            "sha256": "ccb8b1e84ecf82f52172b8a06b2beae3f48b3b8a8c990e98fcd3d70523ebde9d"
+          },
+          {
+            "period": "2026-06-30",
+            "sha256": "ccb8b1e84ecf82f52172b8a06b2beae3f48b3b8a8c990e98fcd3d70523ebde9d"
+          }
+        ],
+        "score": 35
+      },
+      "unimplemented_target_periods": []
+    },
+    {
+      "ticker": "CAT",
+      "target_periods": 8,
+      "baseline_numeric_outputs": 48,
+      "regression_differences": 0,
+      "source_formats": {
+        "facts_cache": 9,
+        "dom_snapshot": 1
+      },
+      "facts_filings_without_original_html": 9,
+      "primary_basis": "reported",
+      "risk": {
+        "comparisons": [
+          {
+            "changed_fields": 1,
+            "from": "2024-12-31",
+            "to": "2025-03-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-03-31",
+            "to": "2025-06-30"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-06-30",
+            "to": "2025-09-30"
+          },
+          {
+            "changed_fields": 1,
+            "from": "2025-09-30",
+            "to": "2025-12-31"
+          },
+          {
+            "changed_fields": 3,
+            "from": "2025-12-31",
+            "to": "2026-03-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2026-03-31",
+            "to": "2026-06-30"
+          },
+          {
+            "changed_fields": 14,
+            "from": "2026-06-30",
+            "to": "2026-09-30"
+          }
+        ],
+        "level": "high",
+        "meaning": "parser 維護風險，非投資風險或準確率",
+        "reasons": [
+          "最近兩次比較有 14 個 scope／分類變動",
+          "實際使用特殊處理：annual_minus_nine_months, cat-explicit-reported-row-scope",
+          "9 個使用的 SEC 文件缺原始 HTML bytes；以 facts／DOM／文字格式誠實重播"
+        ],
+        "schemas": [
+          {
+            "period": "2024-12-31",
+            "sha256": "7efbccc73798249fb293a59b5fab0b519f8eeaf78105eff13a887883914281e4"
+          },
+          {
+            "period": "2025-03-31",
+            "sha256": "2d97c59ea7a259af6054bb58175e6bf0c24b6a12db8d1a9d7beb464c97dd2aac"
+          },
+          {
+            "period": "2025-06-30",
+            "sha256": "2d97c59ea7a259af6054bb58175e6bf0c24b6a12db8d1a9d7beb464c97dd2aac"
+          },
+          {
+            "period": "2025-09-30",
+            "sha256": "2d97c59ea7a259af6054bb58175e6bf0c24b6a12db8d1a9d7beb464c97dd2aac"
+          },
+          {
+            "period": "2025-12-31",
+            "sha256": "5b8dfddf4d264c69019b42ed1dbf609094cb01038d4ed2db257da11d909385c5"
+          },
+          {
+            "period": "2026-03-31",
+            "sha256": "14fd48c19edda1fbb628a3666436b20283908fdbe2ec56e98975bc964bec1b2d"
+          },
+          {
+            "period": "2026-06-30",
+            "sha256": "14fd48c19edda1fbb628a3666436b20283908fdbe2ec56e98975bc964bec1b2d"
+          },
+          {
+            "period": "2026-09-30",
+            "sha256": "c1fc0cd76a5446718289cd86fd9139ae9458a3379be2902ecef1294bb36c1281"
+          }
+        ],
+        "score": 65
+      },
+      "unimplemented_target_periods": []
+    },
+    {
+      "ticker": "UPS",
+      "target_periods": 8,
+      "baseline_numeric_outputs": 24,
+      "regression_differences": 0,
+      "source_formats": {
+        "facts_cache": 9,
+        "web_text": 1
+      },
+      "facts_filings_without_original_html": 9,
+      "primary_basis": "reported",
+      "risk": {
+        "comparisons": [
+          {
+            "changed_fields": 2,
+            "from": "2024-12-31",
+            "to": "2025-03-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-03-31",
+            "to": "2025-06-30"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-06-30",
+            "to": "2025-09-30"
+          },
+          {
+            "changed_fields": 5,
+            "from": "2025-09-30",
+            "to": "2025-12-31"
+          },
+          {
+            "changed_fields": 5,
+            "from": "2025-12-31",
+            "to": "2026-03-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2026-03-31",
+            "to": "2026-06-30"
+          },
+          {
+            "changed_fields": 6,
+            "from": "2026-06-30",
+            "to": "2026-09-30"
+          }
+        ],
+        "level": "high",
+        "meaning": "parser 維護風險，非投資風險或準確率",
+        "reasons": [
+          "最近兩次比較有 6 個 scope／分類變動",
+          "實際使用特殊處理：annual_minus_nine_months, ups-explicit-reported-row-scope, ups-nonreportable-scs-products",
+          "8 個使用的 SEC 文件缺原始 HTML bytes；以 facts／DOM／文字格式誠實重播"
+        ],
+        "schemas": [
+          {
+            "period": "2024-12-31",
+            "sha256": "a416a1990c1f7c22da20ca85752823dd9d71ca2004f7e027e1988c002d681013"
+          },
+          {
+            "period": "2025-03-31",
+            "sha256": "7ca502f1c64b7e96158a1014667c60e648a4e7fec6b195a52bd0b64a3c7c4d3d"
+          },
+          {
+            "period": "2025-06-30",
+            "sha256": "7ca502f1c64b7e96158a1014667c60e648a4e7fec6b195a52bd0b64a3c7c4d3d"
+          },
+          {
+            "period": "2025-09-30",
+            "sha256": "7ca502f1c64b7e96158a1014667c60e648a4e7fec6b195a52bd0b64a3c7c4d3d"
+          },
+          {
+            "period": "2025-12-31",
+            "sha256": "1eba5b33891951bc568efd6c654872e4563b275170b798996020f3e6e8d9742c"
+          },
+          {
+            "period": "2026-03-31",
+            "sha256": "7ca502f1c64b7e96158a1014667c60e648a4e7fec6b195a52bd0b64a3c7c4d3d"
+          },
+          {
+            "period": "2026-06-30",
+            "sha256": "7ca502f1c64b7e96158a1014667c60e648a4e7fec6b195a52bd0b64a3c7c4d3d"
+          },
+          {
+            "period": "2026-09-30",
+            "sha256": "bd1d01cccb6e9e87d1691bfabd69c7224100d0f091e74cb5b609bbf790d0ab82"
+          }
+        ],
+        "score": 60
+      },
+      "unimplemented_target_periods": []
+    },
+    {
+      "ticker": "NEE",
+      "target_periods": 8,
+      "baseline_numeric_outputs": 24,
+      "regression_differences": 0,
+      "source_formats": {
+        "facts_cache": 9,
+        "original_html": 2
+      },
+      "facts_filings_without_original_html": 7,
+      "primary_basis": "segments",
+      "risk": {
+        "comparisons": [
+          {
+            "changed_fields": 1,
+            "from": "2024-12-31",
+            "to": "2025-03-31"
+          },
+          {
+            "changed_fields": 2,
+            "from": "2025-03-31",
+            "to": "2025-06-30"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-06-30",
+            "to": "2025-09-30"
+          },
+          {
+            "changed_fields": 2,
+            "from": "2025-09-30",
+            "to": "2025-12-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-12-31",
+            "to": "2026-03-31"
+          },
+          {
+            "changed_fields": 2,
+            "from": "2026-03-31",
+            "to": "2026-06-30"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2026-06-30",
+            "to": "2026-09-30"
+          }
+        ],
+        "level": "medium",
+        "meaning": "parser 維護風險，非投資風險或準確率",
+        "reasons": [
+          "最近兩次比較有 2 個 scope／分類變動",
+          "實際使用特殊處理：annual_minus_nine_months, nee-fpl-2024-reported-segment-to-entity-reviewed",
+          "7 個使用的 SEC 文件缺原始 HTML bytes；以 facts／DOM／文字格式誠實重播"
+        ],
+        "schemas": [
+          {
+            "period": "2024-12-31",
+            "sha256": "bfb0663b4d8bcc5020e66f203bafc667e26978249a1e7ae35f132e244e788035"
+          },
+          {
+            "period": "2025-03-31",
+            "sha256": "1bb6864ab5cc4c07b0c522bdbf9fba9093e83b994ed90f16692bab7572ec4bf2"
+          },
+          {
+            "period": "2025-06-30",
+            "sha256": "18fd674aa1b4b6322baf890acdb1012107158a3c3dd4ab96180b643d8275d348"
+          },
+          {
+            "period": "2025-09-30",
+            "sha256": "18fd674aa1b4b6322baf890acdb1012107158a3c3dd4ab96180b643d8275d348"
+          },
+          {
+            "period": "2025-12-31",
+            "sha256": "1bb6864ab5cc4c07b0c522bdbf9fba9093e83b994ed90f16692bab7572ec4bf2"
+          },
+          {
+            "period": "2026-03-31",
+            "sha256": "1bb6864ab5cc4c07b0c522bdbf9fba9093e83b994ed90f16692bab7572ec4bf2"
+          },
+          {
+            "period": "2026-06-30",
+            "sha256": "18fd674aa1b4b6322baf890acdb1012107158a3c3dd4ab96180b643d8275d348"
+          },
+          {
+            "period": "2026-09-30",
+            "sha256": "18fd674aa1b4b6322baf890acdb1012107158a3c3dd4ab96180b643d8275d348"
+          }
+        ],
+        "score": 35
+      },
+      "unimplemented_target_periods": []
+    },
+    {
+      "ticker": "LIN",
+      "target_periods": 8,
+      "baseline_numeric_outputs": 40,
+      "regression_differences": 0,
+      "source_formats": {
+        "facts_cache": 9
+      },
+      "facts_filings_without_original_html": 9,
+      "primary_basis": "reported",
+      "risk": {
+        "comparisons": [
+          {
+            "changed_fields": 0,
+            "from": "2024-12-31",
+            "to": "2025-03-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-03-31",
+            "to": "2025-06-30"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-06-30",
+            "to": "2025-09-30"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-09-30",
+            "to": "2025-12-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-12-31",
+            "to": "2026-03-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2026-03-31",
+            "to": "2026-06-30"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2026-06-30",
+            "to": "2026-09-30"
+          }
+        ],
+        "level": "medium",
+        "meaning": "parser 維護風險，非投資風險或準確率",
+        "reasons": [
+          "實際使用特殊處理：annual_minus_nine_months",
+          "9 個使用的 SEC 文件缺原始 HTML bytes；以 facts／DOM／文字格式誠實重播"
+        ],
+        "schemas": [
+          {
+            "period": "2024-12-31",
+            "sha256": "8a719e5ec8062e8208104dba36767f9896d77043b7eda86748803c6467f25fa6"
+          },
+          {
+            "period": "2025-03-31",
+            "sha256": "8a719e5ec8062e8208104dba36767f9896d77043b7eda86748803c6467f25fa6"
+          },
+          {
+            "period": "2025-06-30",
+            "sha256": "8a719e5ec8062e8208104dba36767f9896d77043b7eda86748803c6467f25fa6"
+          },
+          {
+            "period": "2025-09-30",
+            "sha256": "8a719e5ec8062e8208104dba36767f9896d77043b7eda86748803c6467f25fa6"
+          },
+          {
+            "period": "2025-12-31",
+            "sha256": "8a719e5ec8062e8208104dba36767f9896d77043b7eda86748803c6467f25fa6"
+          },
+          {
+            "period": "2026-03-31",
+            "sha256": "8a719e5ec8062e8208104dba36767f9896d77043b7eda86748803c6467f25fa6"
+          },
+          {
+            "period": "2026-06-30",
+            "sha256": "8a719e5ec8062e8208104dba36767f9896d77043b7eda86748803c6467f25fa6"
+          },
+          {
+            "period": "2026-09-30",
+            "sha256": "8a719e5ec8062e8208104dba36767f9896d77043b7eda86748803c6467f25fa6"
+          }
+        ],
+        "score": 20
+      },
+      "unimplemented_target_periods": []
+    },
+    {
+      "ticker": "PLD",
+      "target_periods": 8,
+      "baseline_numeric_outputs": 32,
+      "regression_differences": 0,
+      "source_formats": {
+        "facts_cache": 9
+      },
+      "facts_filings_without_original_html": 9,
+      "primary_basis": "reported",
+      "risk": {
+        "comparisons": [
+          {
+            "changed_fields": 0,
+            "from": "2024-12-31",
+            "to": "2025-03-31"
+          },
+          {
+            "changed_fields": 4,
+            "from": "2025-03-31",
+            "to": "2025-06-30"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-06-30",
+            "to": "2025-09-30"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-09-30",
+            "to": "2025-12-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2025-12-31",
+            "to": "2026-03-31"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2026-03-31",
+            "to": "2026-06-30"
+          },
+          {
+            "changed_fields": 0,
+            "from": "2026-06-30",
+            "to": "2026-09-30"
+          }
+        ],
+        "level": "medium",
+        "meaning": "parser 維護風險，非投資風險或準確率",
+        "reasons": [
+          "實際使用特殊處理：annual_minus_nine_months",
+          "9 個使用的 SEC 文件缺原始 HTML bytes；以 facts／DOM／文字格式誠實重播"
+        ],
+        "schemas": [
+          {
+            "period": "2024-12-31",
+            "sha256": "8c01a92a17207b4a96782f491057cb7a2b963a952a4efd45da56e352e42949b9"
+          },
+          {
+            "period": "2025-03-31",
+            "sha256": "8c01a92a17207b4a96782f491057cb7a2b963a952a4efd45da56e352e42949b9"
+          },
+          {
+            "period": "2025-06-30",
+            "sha256": "7af63b38d2d5eebc2f06fa8a63a5f441ac04883d6a7941c71da422a9b78c8270"
+          },
+          {
+            "period": "2025-09-30",
+            "sha256": "7af63b38d2d5eebc2f06fa8a63a5f441ac04883d6a7941c71da422a9b78c8270"
+          },
+          {
+            "period": "2025-12-31",
+            "sha256": "7af63b38d2d5eebc2f06fa8a63a5f441ac04883d6a7941c71da422a9b78c8270"
+          },
+          {
+            "period": "2026-03-31",
+            "sha256": "7af63b38d2d5eebc2f06fa8a63a5f441ac04883d6a7941c71da422a9b78c8270"
+          },
+          {
+            "period": "2026-06-30",
+            "sha256": "7af63b38d2d5eebc2f06fa8a63a5f441ac04883d6a7941c71da422a9b78c8270"
+          },
+          {
+            "period": "2026-09-30",
+            "sha256": "7af63b38d2d5eebc2f06fa8a63a5f441ac04883d6a7941c71da422a9b78c8270"
+          }
+        ],
+        "score": 20
+      },
+      "unimplemented_target_periods": []
+    }
+  ],
+  "company_count": 30,
+  "period_count": 240,
+  "baseline_numeric_outputs": 1092,
+  "value_and_recursive_operand_regression_differences": 0,
+  "two_run_deterministic_payload_companies": 30,
+  "source_format_counts": {
+    "facts_cache": 263,
+    "dom_snapshot": 10,
+    "original_html": 13,
+    "web_text": 3
+  },
+  "original_html_missing_for_facts_filings": 250,
+  "ui": {
+    "tickers": 30,
+    "ui_period_basis_switch": true,
+    "evidence_details": true,
+    "invalid_http_and_ui": true,
+    "page_errors": []
+  },
+  "unit_and_integration_tests": 184,
+  "historical_tests_discovered": 164,
+  "strict_blind_tests": 0,
+  "research_cross_source_unchanged": "29/30",
+  "historical_fixed_provider_unchanged": "24/30",
+  "unmigrated_companies": [],
+  "restricted_reference_values_present": false,
+  "live_sec_download_executed": false,
+  "live_download_reason": "離線回放不需聯絡設定；未猜測 SEC_USER_AGENT。拒絕行為由單次 HTTP 403 mock 測試。"
+}

@@ -54,3 +54,34 @@ python3 scripts/stage_archive.py /path/to/eight_quarter_reproducible_results.zip
 原始財報共用解析實驗：[四家 Q／FY、原始證據、拒絕判定與規模限制](docs/SHARED_RAW_SEMANTICS.md)。
 
 版本橋接接續：[64 組 Q／FY taxonomy 證據契約與覆核負擔](docs/TAXONOMY_BRIDGE.md)。
+
+## 雲端 SEC 重播引擎
+
+正式入口為 `libs/sec_revenue`，歷史 `scripts` 實驗及 research 不改寫。Python 3.11+：
+
+```bash
+python -m pip install -r requirements.txt
+python scripts/replay_sec.py AAPL
+python scripts/replay_sec.py ALL
+python scripts/check_engine_regression.py
+python -m unittest discover -s tests -v
+python scripts/serve_sec_viewer.py --data data --port 8765
+```
+
+Viewer：[雲端埠 8765](http://127.0.0.1:8765)。這個位址屬於執行服務的雲端機器；從外部瀏覽需使用環境的埠預覽／轉送功能，並非 Mac 上已啟動服務。可選的正常 UI 驗證：
+
+```bash
+python -m pip install playwright
+# 環境若沒有 Chromium，先執行 python -m playwright install chromium
+python scripts/check_sec_viewer_ui.py --url http://127.0.0.1:8765
+```
+
+重播完全離線，不需本機 vendor 資料或瀏覽器登入。`data/sec/TICKER/實際申報期/ACCESSION/HASH.FORMAT` 保存來源及收據；`.json` facts cache 是原擷取結構資料，`.txt` 是文字快照，只有真正原始 HTML 才用 `.html`。`data/sec/TICKER/index.json` 明列原始 HTML 是否實際存在。原始研究 gzip 與凍結 hash 均保留。
+
+固定輸出為 `data/outputs/TICKER/PERIOD/TICKER_PERIOD_BASIS_revenue.json`，每家公司 `index.json` 列出當次正式輸出，viewer 不混讀過時檔案。包含實際期間、會計年度／季度、USD、完整 scope、運算元、替代算式、申報精度及風險。後續尚無年報的季度以最後已知結帳日推估年度標籤，明標 `projected_from_last_annual_calendar`；實際數值期間不推估。CVX 預設 `net`，`gross` 與抵銷另存；其他 basis 為 `reported` 或 `segments`，表示不同財報分類，不是資料商名稱。
+
+參考來源設定在 `libs/sec_revenue/registry.json`，重播時輸出至 `data/references/TICKER/registry.json`。每期列來源與雲端缺原值狀態，檔名契約為 `TICKER_PERIOD_END_PROVIDER_BASIS_reference.json`。雲端沒有原始參考金額時不製造參考檔，也不阻止 SEC 重播。
+
+新增 ticker：新增 `libs/sec_revenue/parsers/newissuer.py` 的 `IssuerParser` 子類別，在 registry 登記 module、class、實際目標期別、主要 basis 和 reference metadata。公司規則在自己的 class：`rules` 精確 concept／完整 dimensions／unit；`aliases` 具日期限制；必要時覆寫 `normalize`、`pool`、`categories` 或 `parse`，保留規則 ID 與所有 SEC 運算元。加入 hash 可驗證的 SEC facts cache／原始來源與獨立回歸測試；新來源可在該 ticker 的 registry 設定 `facts_cache_path`、`facts_cache_sha256`，不修改既有凍結研究，不修改共用引擎或其他公司 parser。新下載可用 `python scripts/download_sec_source.py --ticker AAPL --period YYYY-MM-DD --accession ACCESSION --url SEC_URL` 或 `SecDownloadEngine(EvidenceStore(...), SEC_USER_AGENT)`；需真實聯絡資訊，單次 GET 拒絕即停止。主要離線路徑不需要此設定。
+
+新架構實測與限制見 [驗證紀錄](docs/architecture/cloud-engine-verification.md)，資料契約見 [引擎契約](docs/architecture/sec-engine.md)。風險是 parser 維護風險；依最近兩次 schema 變化、實際特殊規則、缺值與缺原始 bytes 計分。已見期間回溯，不是盲測，也不代表完整披露召回率；原跨來源 29/30 與固定供應商 24/30 成績不變。

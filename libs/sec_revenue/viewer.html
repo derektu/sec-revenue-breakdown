@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <meta charset="utf-8" /><meta
+    name="viewport"
+    content="width=device-width"
+  /><title>SEC 營收證據</title>
+  <style>
+    body {
+      font: 16px system-ui;
+      background: #f5f6fa;
+      color: #182332;
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 24px;
+    }
+    h1 {
+      font-size: 30px;
+    }
+    input,
+    select,
+    button {
+      padding: 10px;
+      margin: 6px;
+      border: 1px solid #abb8ca;
+      border-radius: 6px;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      background: white;
+    }
+    td,
+    th {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    td.amount {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+    .bar {
+      height: 14px;
+      background: #287cc0;
+    }
+    .negative {
+      background: #b94650;
+    }
+    pre {
+      white-space: pre-wrap;
+      font-size: 12px;
+      max-height: 350px;
+      overflow: auto;
+    }
+    #risk {
+      background: #fff1d9;
+      padding: 18px;
+      margin: 20px 0;
+    }
+    #error {
+      color: #a00;
+    }
+    small {
+      color: #516276;
+    }
+    a {
+      color: #176797;
+    }
+  </style>
+  <h1>SEC 營收與解析證據</h1>
+  <p>已見期間回溯 · parser 維護風險 · SEC 主要來源</p>
+  <form id="form">
+    <label
+      >Ticker
+      <input id="ticker" value="AAPL" list="tickers" maxlength="8" /></label
+    ><datalist id="tickers"></datalist><button>載入</button
+    ><label
+      >期間
+      <select id="period"></select></label
+    ><label
+      >口徑
+      <select id="basis"></select
+    ></label>
+  </form>
+  <p id="error" role="alert"></p>
+  <p id="context"></p>
+  <p id="reference"></p>
+  <section id="risk"></section>
+  <table>
+    <thead>
+      <tr>
+        <th>分類</th>
+        <th>美元</th>
+        <th>數值方向／規模</th>
+        <th>SEC 證據</th>
+      </tr>
+    </thead>
+    <tbody id="rows"></tbody>
+  </table>
+  <p>
+    <small
+      >圖條顯示正負數與相對規模；總額、子項及證券收入組成不可重複相加。參考原值未上傳雲端；原研究跨來源
+      29/30、固定供應商 24/30 不變。</small
+    >
+  </p>
+  <script>
+    let data = [];
+    const el = (id) => document.getElementById(id);
+    function options(node, values, selected) {
+      node.replaceChildren(
+        ...values.map((v) => {
+          const x = document.createElement("option");
+          x.value = v;
+          x.textContent = v;
+          return x;
+        }),
+      );
+      if (values.includes(selected)) node.value = selected;
+    }
+    function render() {
+      const matching = data.filter((r) => r.period_end === el("period").value);
+      options(
+        el("basis"),
+        [...new Set(matching.map((r) => r.basis))],
+        el("basis").value || matching[0]?.primary_basis,
+      );
+      const row = matching.find((r) => r.basis === el("basis").value);
+      if (!row) return;
+      el("context").textContent =
+        `${row.ticker} · FY${row.fiscal_year ?? "未知"} Q${row.fiscal_quarter ?? "未知"} · ${row.fiscal_period?.startdate || "起日缺失"} → ${row.period_end} · ${row.basis} · ${row.source_formats.join(", ")}`;
+      el("reference").textContent =
+        "參考來源：" +
+        (row.reference.reference_sources_by_period[row.period_end] || []).join(
+          ", ",
+        ) +
+        "；雲端無參考原值，SEC 重播可獨立完成。";
+      el("risk").textContent =
+        `維護風險 ${row.risk.level} (${row.risk.score}/100)：${row.risk.reasons.join("；")}`;
+      el("rows").replaceChildren();
+      const max = Math.max(
+        1,
+        ...Object.values(row.outputs).map((o) => Math.abs(o.value_usd || 0)),
+      );
+      for (const [label, output] of Object.entries(row.outputs)) {
+        const tr = document.createElement("tr");
+        for (const text of [
+          label,
+          output.value_usd === null
+            ? `缺值：${output.status}`
+            : output.value_usd.toLocaleString("en-US"),
+        ]) {
+          const td = document.createElement("td");
+          td.textContent = text;
+          tr.append(td);
+        }
+        tr.children[1].className = "amount";
+        const chart = document.createElement("td");
+        const bar = document.createElement("div");
+        bar.className = "bar" + (output.value_usd < 0 ? " negative" : "");
+        bar.style.width = (Math.abs(output.value_usd || 0) / max) * 100 + "%";
+        chart.append(bar);
+        tr.append(chart);
+        const evidence = document.createElement("td");
+        const detail = document.createElement("details");
+        const summary = document.createElement("summary");
+        summary.textContent = `${output.SEC_operands.length} 個運算元`;
+        detail.append(summary);
+        for (const fact of output.SEC_operands) {
+          const link = document.createElement("a");
+          if (/^https:\/\/www\.sec\.gov\/Archives\//.test(fact.source_url)) {
+            link.href = fact.source_url;
+            link.target = "_blank";
+            link.rel = "noopener";
+            link.textContent = "SEC 文件";
+            detail.append(link);
+          }
+          const pre = document.createElement("pre");
+          pre.textContent = JSON.stringify(fact, null, 2);
+          detail.append(pre);
+        }
+        evidence.append(detail);
+        tr.append(evidence);
+        el("rows").append(tr);
+      }
+    }
+    async function load(event) {
+      event?.preventDefault();
+      el("error").textContent = "";
+      try {
+        const response = await fetch(
+          "/api/revenue?ticker=" + encodeURIComponent(el("ticker").value),
+        );
+        if (!response.ok)
+          throw new Error(
+            response.status === 404 ? "尚無已重播資料" : "Ticker 或查詢無效",
+          );
+        data = await response.json();
+        options(
+          el("period"),
+          [...new Set(data.map((r) => r.period_end))].sort().reverse(),
+        );
+        el("basis").replaceChildren();
+        render();
+      } catch (error) {
+        el("error").textContent = error.message;
+        el("rows").replaceChildren();
+        el("context").textContent = "";
+        el("risk").textContent = "";
+        el("reference").textContent = "";
+      }
+    }
+    el("form").addEventListener("submit", load);
+    el("period").addEventListener("change", render);
+    el("basis").addEventListener("change", render);
+    fetch("/api/tickers")
+      .then((r) => r.json())
+      .then((values) => options(el("tickers"), values));
+    load();
+  </script>
+</html>
