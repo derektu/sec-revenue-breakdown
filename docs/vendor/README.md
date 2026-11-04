@@ -39,3 +39,5 @@
 避免兩個下載程序共用可寫快取。對話不視為自動共享的工作紀錄，交接依據是 repo 文件與 PR。
 
 最新進展：[多家公司歷史規則與回溯驗證](historical-rule-study.md)。
+
+接續研究：[WMT 與 NEE 範圍缺口查核](scope-gap-review.md)。
