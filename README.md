@@ -6,9 +6,9 @@
 **擷取與計算的數字來源只用 SEC 申報（含 8-K 附件）；公司 IR 與 vendor 只作參考。**
 目前跨來源逐期裁決為 **29 / 30 OK**，原固定供應商基準 **24 / 30** 另行保留，見 [逐公司結論](docs/vendor/historical-rule-study.md) 與 [SEC 來源規則](docs/vendor/sec-primary-source-policy.md)。
 
-2026-11-04 雲端已執行三十家公司候選基準，兩個 SEC 主機均可存取，234 個可得季度零下載錯誤，
-來源快照雜湊及離線重播已驗證。XOM successor CIK 只有兩個截止日，因此缺六個要求季度。
-這是候選基準，不是完整組成資料或跨公司準確率。
+[三十家公司可行性總結](docs/vendor/feasibility-conclusion.md) 說明 CVX net 與 gross 選擇、240 季 SEC 指定欄位、公司規則數、來源缺口及擴展至 1,500 家的限制。[逐公司盤點](docs/vendor/feasibility-inventory.md) 列出八季日期與參考覆蓋。
+
+最初雲端候選基準取得 234 個季度，當時 XOM successor CIK 缺六季。後續以舊 CIK、SEC 附件及個別規則補足，現在三十家公司各八季的指定欄位均有 SEC 輸出。原候選基準保留，不當作目前缺口或完整披露準確率。
 
 本機已取得 29 家的第三方 DOM 參考值；PLD 另以公司 IR 八季資料查核。
 Apple 有八季 40 筆 Stock Analysis、五季 25 筆富途觀察與指定 SEC 證據相同。

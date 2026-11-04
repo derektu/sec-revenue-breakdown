@@ -1,0 +1,2983 @@
+{
+  "company_count": 30,
+  "SEC_eight_quarter_companies": 30,
+  "SEC_company_quarter_slots": 240,
+  "SEC_numeric_output_cells": 1092,
+  "cross_source_OK": 29,
+  "historical_fixed_vendor_OK": 24,
+  "comparison_company_quarter_slots_present": 238,
+  "reference_source_quarter_slots_not_independent": {
+    "stockanalysis": 175,
+    "futu": 43,
+    "issuer_report_copy": 12,
+    "issuer_ir": 8
+  },
+  "reference_numeric_comparison_cells": 1084,
+  "reference_comparison_counts": {
+    "exact_scope_candidate_match": 1016,
+    "explained_reference_error": 27,
+    "explained_reported_precision": 41
+  },
+  "company_specific_active_output_definitions": 145,
+  "catalog_mapping_entries": 149,
+  "catalog_alternative_scope_sets": 191,
+  "catalog_operand_terms": 200,
+  "independent_vendor_eight_quarter_score": null,
+  "full_disclosure_recall": null,
+  "unseen_quarter_tests": 0,
+  "all_periods_seen_during_development": true,
+  "human_time_minutes": null,
+  "end_to_end_batch_throughput": null,
+  "SEC_raw_HTML_all_reparsed_in_this_inventory": false,
+  "source_summary_sha256": "1c3fe730414e8814dfdfc85349de679c69f61d028e043e9ea2d026fd9dde40a4",
+  "source_coverage_sha256": "a42a985508ec55b8186052328b9b8b948ed739fbc769e6a140c00f2835db80a1",
+  "catalog_code_sha256": "c8e267e204e5039c42c3824db2b0b40d0cf2196775e70d978acb2a37baf1d2e6",
+  "inventory_code_sha256": "9dbe3423b41fc5b76caaffc03c4887e41b2c999fb61f246afeedb4655511e88b",
+  "companies": [
+    {
+      "ticker": "AAPL",
+      "comparison_status": "OK",
+      "target_periods": [
+        "2024-12-28",
+        "2025-03-29",
+        "2025-06-28",
+        "2025-09-27",
+        "2025-12-27",
+        "2026-03-28",
+        "2026-06-27",
+        "2026-09-26"
+      ],
+      "SEC_periods_verified": [
+        "2024-12-28",
+        "2025-03-29",
+        "2025-06-28",
+        "2025-09-27",
+        "2025-12-27",
+        "2026-03-28",
+        "2026-06-27",
+        "2026-09-26"
+      ],
+      "SEC_numeric_output_cells": 40,
+      "primary_output_category_count": 5,
+      "primary_output_categories": [
+        "Mac",
+        "Services",
+        "Wearables, Home and Accessories",
+        "iPad",
+        "iPhone"
+      ],
+      "reference_periods": [
+        "2024-12-28",
+        "2025-03-29",
+        "2025-06-28",
+        "2025-09-27",
+        "2025-12-27",
+        "2026-03-28",
+        "2026-06-27",
+        "2026-09-26"
+      ],
+      "reference_sources_by_period": {
+        "2024-12-28": [
+          "stockanalysis"
+        ],
+        "2025-03-29": [
+          "stockanalysis"
+        ],
+        "2025-06-28": [
+          "stockanalysis"
+        ],
+        "2025-09-27": [
+          "stockanalysis"
+        ],
+        "2025-12-27": [
+          "stockanalysis"
+        ],
+        "2026-03-28": [
+          "stockanalysis"
+        ],
+        "2026-06-27": [
+          "stockanalysis"
+        ],
+        "2026-09-26": [
+          "stockanalysis"
+        ]
+      },
+      "reference_comparison_counts": {
+        "exact_scope_candidate_match": 40
+      },
+      "SEC_document_urls": [
+        "https://www.sec.gov/Archives/edgar/data/320193/000032019325000008/aapl-20241228.htm",
+        "https://www.sec.gov/Archives/edgar/data/320193/000032019325000057/aapl-20250329.htm",
+        "https://www.sec.gov/Archives/edgar/data/320193/000032019325000073/aapl-20250628.htm",
+        "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm",
+        "https://www.sec.gov/Archives/edgar/data/320193/000032019326000006/aapl-20251227.htm",
+        "https://www.sec.gov/Archives/edgar/data/320193/000032019326000013/aapl-20260328.htm",
+        "https://www.sec.gov/Archives/edgar/data/320193/000032019326000020/aapl-20260627.htm",
+        "https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/aapl-20260926.htm"
+      ],
+      "SEC_form_labels_on_operands": [
+        "10-K",
+        "10-Q"
+      ],
+      "catalog_mapping_entries_by_source": {
+        "stockanalysis": 5,
+        "futu": 0
+      },
+      "catalog_mapping_entries": 5,
+      "catalog_alternative_scope_sets": 5,
+      "catalog_operand_terms": 5,
+      "catalog_rules_exclude_procedural_repairs_and_non_catalog_parsers": true,
+      "detail_sha256_verified": "ad144e860ece5d01ac2958a3f77c7fc22723487ba10d80a112ef543260f6feb6",
+      "latest_period_seen_during_development": true,
+      "independent_human_second_review_recorded": false,
+      "human_minutes_measured": null
+    },
+    {
+      "ticker": "MSFT",
+      "comparison_status": "OK",
+      "target_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "SEC_periods_verified": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "SEC_numeric_output_cells": 23,
+      "primary_output_category_count": 5,
+      "primary_output_categories": [
+        "Agents and Infra",
+        "Devices and Consumer",
+        "Intelligent Cloud",
+        "More Personal Computing",
+        "Productivity and Business Processes"
+      ],
+      "reference_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "reference_sources_by_period": {
+        "2024-12-31": [
+          "stockanalysis"
+        ],
+        "2025-03-31": [
+          "stockanalysis"
+        ],
+        "2025-06-30": [
+          "stockanalysis"
+        ],
+        "2025-09-30": [
+          "stockanalysis"
+        ],
+        "2025-12-31": [
+          "stockanalysis"
+        ],
+        "2026-03-31": [
+          "stockanalysis"
+        ],
+        "2026-06-30": [
+          "stockanalysis"
+        ],
+        "2026-09-30": [
+          "stockanalysis"
+        ]
+      },
+      "reference_comparison_counts": {
+        "exact_scope_candidate_match": 22,
+        "explained_reference_error": 1
+      },
+      "SEC_document_urls": [
+        "https://www.sec.gov/Archives/edgar/data/789019/000095017025010491/msft-20241231.htm",
+        "https://www.sec.gov/Archives/edgar/data/789019/000095017025061046/msft-20250331.htm",
+        "https://www.sec.gov/Archives/edgar/data/789019/000095017025100235/msft-20250630.htm",
+        "https://www.sec.gov/Archives/edgar/data/789019/000119312525256321/msft-20250930.htm",
+        "https://www.sec.gov/Archives/edgar/data/789019/000119312526027207/msft-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/789019/000119312526191507/msft-20260331.htm",
+        "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm",
+        "https://www.sec.gov/Archives/edgar/data/789019/000119312526436133/msft-20260930.htm"
+      ],
+      "SEC_form_labels_on_operands": [
+        "10-K",
+        "10-Q"
+      ],
+      "catalog_mapping_entries_by_source": {
+        "stockanalysis": 6,
+        "futu": 0
+      },
+      "catalog_mapping_entries": 6,
+      "catalog_alternative_scope_sets": 6,
+      "catalog_operand_terms": 6,
+      "catalog_rules_exclude_procedural_repairs_and_non_catalog_parsers": true,
+      "detail_sha256_verified": "f82bb170d594eab852f781f4eb4e75d4c74efa1bae4362fd467e97fe239985e5",
+      "latest_period_seen_during_development": true,
+      "independent_human_second_review_recorded": false,
+      "human_minutes_measured": null
+    },
+    {
+      "ticker": "NVDA",
+      "comparison_status": "OK",
+      "target_periods": [
+        "2024-10-27",
+        "2025-01-26",
+        "2025-04-27",
+        "2025-07-27",
+        "2025-10-26",
+        "2026-01-25",
+        "2026-04-26",
+        "2026-07-26"
+      ],
+      "SEC_periods_verified": [
+        "2024-10-27",
+        "2025-01-26",
+        "2025-04-27",
+        "2025-07-27",
+        "2025-10-26",
+        "2026-01-25",
+        "2026-04-26",
+        "2026-07-26"
+      ],
+      "SEC_numeric_output_cells": 16,
+      "primary_output_category_count": 2,
+      "primary_output_categories": [
+        "Compute and Networking",
+        "Graphics"
+      ],
+      "reference_periods": [
+        "2024-10-27",
+        "2025-01-26",
+        "2025-04-27",
+        "2025-07-27",
+        "2025-10-26",
+        "2026-01-25",
+        "2026-04-26",
+        "2026-07-26"
+      ],
+      "reference_sources_by_period": {
+        "2024-10-27": [
+          "stockanalysis"
+        ],
+        "2025-01-26": [
+          "stockanalysis"
+        ],
+        "2025-04-27": [
+          "stockanalysis"
+        ],
+        "2025-07-27": [
+          "stockanalysis"
+        ],
+        "2025-10-26": [
+          "stockanalysis"
+        ],
+        "2026-01-25": [
+          "stockanalysis"
+        ],
+        "2026-04-26": [
+          "stockanalysis"
+        ],
+        "2026-07-26": [
+          "stockanalysis"
+        ]
+      },
+      "reference_comparison_counts": {
+        "exact_scope_candidate_match": 16
+      },
+      "SEC_document_urls": [
+        "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000316/nvda-20241027.htm",
+        "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000023/nvda-20250126.htm",
+        "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000116/nvda-20250427.htm",
+        "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000209/nvda-20250727.htm",
+        "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000230/nvda-20251026.htm",
+        "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+        "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000052/nvda-20260426.htm",
+        "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm"
+      ],
+      "SEC_form_labels_on_operands": [
+        "10-K",
+        "10-Q"
+      ],
+      "catalog_mapping_entries_by_source": {
+        "stockanalysis": 2,
+        "futu": 2
+      },
+      "catalog_mapping_entries": 4,
+      "catalog_alternative_scope_sets": 4,
+      "catalog_operand_terms": 4,
+      "catalog_rules_exclude_procedural_repairs_and_non_catalog_parsers": true,
+      "detail_sha256_verified": "b51787c9a804bd6801cc6645d2de28cae71e461aaa37667a45d84b6adbb575f6",
+      "latest_period_seen_during_development": true,
+      "independent_human_second_review_recorded": false,
+      "human_minutes_measured": null
+    },
+    {
+      "ticker": "ORCL",
+      "comparison_status": "OK",
+      "target_periods": [
+        "2024-11-30",
+        "2025-02-28",
+        "2025-05-31",
+        "2025-08-31",
+        "2025-11-30",
+        "2026-02-28",
+        "2026-05-31",
+        "2026-08-31"
+      ],
+      "SEC_periods_verified": [
+        "2024-11-30",
+        "2025-02-28",
+        "2025-05-31",
+        "2025-08-31",
+        "2025-11-30",
+        "2026-02-28",
+        "2026-05-31",
+        "2026-08-31"
+      ],
+      "SEC_numeric_output_cells": 32,
+      "primary_output_category_count": 6,
+      "primary_output_categories": [
+        "Cloud",
+        "Cloud License and On-Premise License",
+        "Cloud Services and License Support",
+        "Hardware",
+        "Services",
+        "Software"
+      ],
+      "reference_periods": [
+        "2024-11-30",
+        "2025-02-28",
+        "2025-05-31",
+        "2025-08-31",
+        "2025-11-30",
+        "2026-02-28",
+        "2026-05-31",
+        "2026-08-31"
+      ],
+      "reference_sources_by_period": {
+        "2024-11-30": [
+          "stockanalysis"
+        ],
+        "2025-02-28": [
+          "stockanalysis"
+        ],
+        "2025-05-31": [
+          "stockanalysis"
+        ],
+        "2025-08-31": [
+          "stockanalysis"
+        ],
+        "2025-11-30": [
+          "stockanalysis"
+        ],
+        "2026-02-28": [
+          "stockanalysis"
+        ],
+        "2026-05-31": [
+          "stockanalysis"
+        ],
+        "2026-08-31": [
+          "stockanalysis"
+        ]
+      },
+      "reference_comparison_counts": {
+        "exact_scope_candidate_match": 32
+      },
+      "SEC_document_urls": [
+        "https://www.sec.gov/Archives/edgar/data/1341439/000095017024134973/orcl-20241130.htm",
+        "https://www.sec.gov/Archives/edgar/data/1341439/000095017025037143/orcl-20250228.htm",
+        "https://www.sec.gov/Archives/edgar/data/1341439/000095017025087926/orcl-20250531.htm",
+        "https://www.sec.gov/Archives/edgar/data/1341439/000119312525200095/orcl-20250831.htm",
+        "https://www.sec.gov/Archives/edgar/data/1341439/000119312525315925/orcl-20251130.htm",
+        "https://www.sec.gov/Archives/edgar/data/1341439/000119312526101045/orcl-20260228.htm",
+        "https://www.sec.gov/Archives/edgar/data/1341439/000119312526277521/orcl-20260531.htm",
+        "https://www.sec.gov/Archives/edgar/data/1341439/000119312526389274/orcl-20260831.htm"
+      ],
+      "SEC_form_labels_on_operands": [
+        "10-K",
+        "10-Q"
+      ],
+      "catalog_mapping_entries_by_source": {
+        "stockanalysis": 6,
+        "futu": 0
+      },
+      "catalog_mapping_entries": 6,
+      "catalog_alternative_scope_sets": 11,
+      "catalog_operand_terms": 11,
+      "catalog_rules_exclude_procedural_repairs_and_non_catalog_parsers": true,
+      "detail_sha256_verified": "40981377ce046253f09b3582354a1ab57e23d5a66b3187fec5e5b0f3f0bbe68b",
+      "latest_period_seen_during_development": true,
+      "independent_human_second_review_recorded": false,
+      "human_minutes_measured": null
+    },
+    {
+      "ticker": "GOOGL",
+      "comparison_status": "OK",
+      "target_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "SEC_periods_verified": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "SEC_numeric_output_cells": 56,
+      "primary_output_category_count": 7,
+      "primary_output_categories": [
+        "Google Cloud",
+        "Google Network",
+        "Google Search & Other",
+        "Google Subscriptions, Platforms & Devices",
+        "Hedging Gains",
+        "Other Bets",
+        "YouTube Ads"
+      ],
+      "reference_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "reference_sources_by_period": {
+        "2024-12-31": [
+          "stockanalysis"
+        ],
+        "2025-03-31": [
+          "stockanalysis"
+        ],
+        "2025-06-30": [
+          "stockanalysis"
+        ],
+        "2025-09-30": [
+          "stockanalysis"
+        ],
+        "2025-12-31": [
+          "stockanalysis"
+        ],
+        "2026-03-31": [
+          "stockanalysis"
+        ],
+        "2026-06-30": [
+          "stockanalysis"
+        ],
+        "2026-09-30": [
+          "stockanalysis"
+        ]
+      },
+      "reference_comparison_counts": {
+        "exact_scope_candidate_match": 55,
+        "explained_reported_precision": 1
+      },
+      "SEC_document_urls": [
+        "https://www.sec.gov/Archives/edgar/data/1652044/000165204424000118/goog-20240930.htm",
+        "https://www.sec.gov/Archives/edgar/data/1652044/000165204425000014/goog-20241231.htm",
+        "https://www.sec.gov/Archives/edgar/data/1652044/000165204425000043/goog-20250331.htm",
+        "https://www.sec.gov/Archives/edgar/data/1652044/000165204425000062/goog-20250630.htm",
+        "https://www.sec.gov/Archives/edgar/data/1652044/000165204425000091/goog-20250930.htm",
+        "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000018/goog-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000048/goog-20260331.htm",
+        "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000071/goog-20260630.htm",
+        "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000084/goog-20260930.htm"
+      ],
+      "SEC_form_labels_on_operands": [
+        "10-K",
+        "10-Q"
+      ],
+      "catalog_mapping_entries_by_source": {
+        "stockanalysis": 7,
+        "futu": 0
+      },
+      "catalog_mapping_entries": 7,
+      "catalog_alternative_scope_sets": 7,
+      "catalog_operand_terms": 7,
+      "catalog_rules_exclude_procedural_repairs_and_non_catalog_parsers": true,
+      "detail_sha256_verified": "d858e6e04f5f0431ec732aee5c447bbe19e029b63f024b70b755c0778bceb961",
+      "latest_period_seen_during_development": true,
+      "independent_human_second_review_recorded": false,
+      "human_minutes_measured": null
+    },
+    {
+      "ticker": "META",
+      "comparison_status": "OK",
+      "target_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "SEC_periods_verified": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "SEC_numeric_output_cells": 24,
+      "primary_output_category_count": 3,
+      "primary_output_categories": [
+        "Advertising",
+        "Payments and Other",
+        "Reality Labs"
+      ],
+      "reference_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "reference_sources_by_period": {
+        "2024-12-31": [
+          "stockanalysis"
+        ],
+        "2025-03-31": [
+          "stockanalysis"
+        ],
+        "2025-06-30": [
+          "stockanalysis"
+        ],
+        "2025-09-30": [
+          "stockanalysis"
+        ],
+        "2025-12-31": [
+          "stockanalysis"
+        ],
+        "2026-03-31": [
+          "stockanalysis"
+        ],
+        "2026-06-30": [
+          "stockanalysis"
+        ],
+        "2026-09-30": [
+          "stockanalysis"
+        ]
+      },
+      "reference_comparison_counts": {
+        "exact_scope_candidate_match": 22,
+        "explained_reported_precision": 2
+      },
+      "SEC_document_urls": [
+        "https://www.sec.gov/Archives/edgar/data/1326801/000132680124000081/meta-20240930.htm",
+        "https://www.sec.gov/Archives/edgar/data/1326801/000132680125000017/meta-20241231.htm",
+        "https://www.sec.gov/Archives/edgar/data/1326801/000132680125000054/meta-20250331.htm",
+        "https://www.sec.gov/Archives/edgar/data/1326801/000162828025036791/meta-20250630.htm",
+        "https://www.sec.gov/Archives/edgar/data/1326801/000162828025047240/meta-20250930.htm",
+        "https://www.sec.gov/Archives/edgar/data/1326801/000162828026003942/meta-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/1326801/000162828026028526/meta-20260331.htm",
+        "https://www.sec.gov/Archives/edgar/data/1326801/000162828026050705/meta-20260630.htm",
+        "https://www.sec.gov/Archives/edgar/data/1326801/000162828026066773/meta-20260930.htm"
+      ],
+      "SEC_form_labels_on_operands": [
+        "10-K",
+        "10-Q"
+      ],
+      "catalog_mapping_entries_by_source": {
+        "stockanalysis": 3,
+        "futu": 0
+      },
+      "catalog_mapping_entries": 3,
+      "catalog_alternative_scope_sets": 3,
+      "catalog_operand_terms": 3,
+      "catalog_rules_exclude_procedural_repairs_and_non_catalog_parsers": true,
+      "detail_sha256_verified": "0991bdb67fcc4420f52215ccc9285c3b32153d95fe3a8a27c54afefd261516dd",
+      "latest_period_seen_during_development": true,
+      "independent_human_second_review_recorded": false,
+      "human_minutes_measured": null
+    },
+    {
+      "ticker": "DIS",
+      "comparison_status": "OK",
+      "target_periods": [
+        "2024-09-28",
+        "2024-12-28",
+        "2025-03-29",
+        "2025-06-28",
+        "2025-09-27",
+        "2025-12-27",
+        "2026-03-28",
+        "2026-06-27"
+      ],
+      "SEC_periods_verified": [
+        "2024-09-28",
+        "2024-12-28",
+        "2025-03-29",
+        "2025-06-28",
+        "2025-09-27",
+        "2025-12-27",
+        "2026-03-28",
+        "2026-06-27"
+      ],
+      "SEC_numeric_output_cells": 24,
+      "primary_output_category_count": 3,
+      "primary_output_categories": [
+        "Entertainment",
+        "Parks and Experiences",
+        "Sports"
+      ],
+      "reference_periods": [
+        "2024-09-28",
+        "2024-12-28",
+        "2025-03-29",
+        "2025-06-28",
+        "2025-09-27",
+        "2025-12-27",
+        "2026-03-28",
+        "2026-06-27"
+      ],
+      "reference_sources_by_period": {
+        "2024-09-28": [
+          "stockanalysis"
+        ],
+        "2024-12-28": [
+          "stockanalysis"
+        ],
+        "2025-03-29": [
+          "stockanalysis"
+        ],
+        "2025-06-28": [
+          "stockanalysis"
+        ],
+        "2025-09-27": [
+          "stockanalysis"
+        ],
+        "2025-12-27": [
+          "stockanalysis"
+        ],
+        "2026-03-28": [
+          "stockanalysis"
+        ],
+        "2026-06-27": [
+          "stockanalysis"
+        ]
+      },
+      "reference_comparison_counts": {
+        "exact_scope_candidate_match": 24
+      },
+      "SEC_document_urls": [
+        "https://www.sec.gov/Archives/edgar/data/1744489/000174448924000232/dis-20240629.htm",
+        "https://www.sec.gov/Archives/edgar/data/1744489/000174448924000276/dis-20240928.htm",
+        "https://www.sec.gov/Archives/edgar/data/1744489/000174448925000067/dis-20241228.htm",
+        "https://www.sec.gov/Archives/edgar/data/1744489/000174448925000098/dis-20250329.htm",
+        "https://www.sec.gov/Archives/edgar/data/1744489/000174448925000136/dis-20250628.htm",
+        "https://www.sec.gov/Archives/edgar/data/1744489/000174448925000155/dis-20250927.htm",
+        "https://www.sec.gov/Archives/edgar/data/1744489/000174448926000019/dis-20251227.htm",
+        "https://www.sec.gov/Archives/edgar/data/1744489/000174448926000037/dis-20260328.htm",
+        "https://www.sec.gov/Archives/edgar/data/1744489/000174448926000057/dis-20260627.htm"
+      ],
+      "SEC_form_labels_on_operands": [
+        "10-K",
+        "10-Q"
+      ],
+      "catalog_mapping_entries_by_source": {
+        "stockanalysis": 3,
+        "futu": 0
+      },
+      "catalog_mapping_entries": 3,
+      "catalog_alternative_scope_sets": 3,
+      "catalog_operand_terms": 3,
+      "catalog_rules_exclude_procedural_repairs_and_non_catalog_parsers": true,
+      "detail_sha256_verified": "10a580c36a957d1e820f7fd30fa8c2bae777ba87df262d00ea3159c69b15ded9",
+      "latest_period_seen_during_development": true,
+      "independent_human_second_review_recorded": false,
+      "human_minutes_measured": null
+    },
+    {
+      "ticker": "CMCSA",
+      "comparison_status": "OK",
+      "target_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "SEC_periods_verified": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "SEC_numeric_output_cells": 16,
+      "primary_output_category_count": 2,
+      "primary_output_categories": [
+        "Connectivity and Platforms",
+        "Content and Experiences"
+      ],
+      "reference_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "reference_sources_by_period": {
+        "2024-12-31": [
+          "stockanalysis"
+        ],
+        "2025-03-31": [
+          "stockanalysis"
+        ],
+        "2025-06-30": [
+          "stockanalysis"
+        ],
+        "2025-09-30": [
+          "stockanalysis"
+        ],
+        "2025-12-31": [
+          "stockanalysis"
+        ],
+        "2026-03-31": [
+          "stockanalysis"
+        ],
+        "2026-06-30": [
+          "stockanalysis"
+        ],
+        "2026-09-30": [
+          "stockanalysis"
+        ]
+      },
+      "reference_comparison_counts": {
+        "exact_scope_candidate_match": 10,
+        "explained_reference_error": 4,
+        "explained_reported_precision": 2
+      },
+      "SEC_document_urls": [
+        "https://www.sec.gov/Archives/edgar/data/1166691/000116669125000021/cmcsa-20250331.htm",
+        "https://www.sec.gov/Archives/edgar/data/1166691/000116669125000036/cmcsa-20250630.htm",
+        "https://www.sec.gov/Archives/edgar/data/1166691/000116669125000054/cmcsa-20250930.htm",
+        "https://www.sec.gov/Archives/edgar/data/1166691/000162828026004994/cmcsa-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/1166691/000162828026026805/cmcsa-20260331.htm",
+        "https://www.sec.gov/Archives/edgar/data/1166691/000162828026049360/cmcsa-20260630.htm",
+        "https://www.sec.gov/Archives/edgar/data/1166691/000162828026066863/cmcsa-20260930.htm"
+      ],
+      "SEC_form_labels_on_operands": [
+        "not_recorded_on_selected_operand"
+      ],
+      "catalog_mapping_entries_by_source": {
+        "stockanalysis": 2,
+        "futu": 7
+      },
+      "catalog_mapping_entries": 9,
+      "catalog_alternative_scope_sets": 9,
+      "catalog_operand_terms": 12,
+      "catalog_rules_exclude_procedural_repairs_and_non_catalog_parsers": true,
+      "detail_sha256_verified": "74b963ae44d864f693dbf9a7c698521855475912ded66fe01c141af2876bfbe8",
+      "latest_period_seen_during_development": true,
+      "independent_human_second_review_recorded": false,
+      "human_minutes_measured": null
+    },
+    {
+      "ticker": "AMZN",
+      "comparison_status": "OK",
+      "target_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "SEC_periods_verified": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "SEC_numeric_output_cells": 56,
+      "primary_output_category_count": 7,
+      "primary_output_categories": [
+        "AWS",
+        "Advertising",
+        "Online Stores",
+        "Other",
+        "Physical Stores",
+        "Subscription",
+        "Third Party Seller Services"
+      ],
+      "reference_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "reference_sources_by_period": {
+        "2024-12-31": [
+          "stockanalysis"
+        ],
+        "2025-03-31": [
+          "stockanalysis"
+        ],
+        "2025-06-30": [
+          "stockanalysis"
+        ],
+        "2025-09-30": [
+          "stockanalysis"
+        ],
+        "2025-12-31": [
+          "stockanalysis"
+        ],
+        "2026-03-31": [
+          "stockanalysis"
+        ],
+        "2026-06-30": [
+          "stockanalysis"
+        ],
+        "2026-09-30": [
+          "stockanalysis"
+        ]
+      },
+      "reference_comparison_counts": {
+        "exact_scope_candidate_match": 56
+      },
+      "SEC_document_urls": [
+        "https://www.sec.gov/Archives/edgar/data/1018724/000101872424000161/amzn-20240930.htm",
+        "https://www.sec.gov/Archives/edgar/data/1018724/000101872425000004/amzn-20241231.htm",
+        "https://www.sec.gov/Archives/edgar/data/1018724/000101872425000036/amzn-20250331.htm",
+        "https://www.sec.gov/Archives/edgar/data/1018724/000101872425000086/amzn-20250630.htm",
+        "https://www.sec.gov/Archives/edgar/data/1018724/000101872425000123/amzn-20250930.htm",
+        "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000004/amzn-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000014/amzn-20260331.htm",
+        "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000026/amzn-20260630.htm",
+        "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000040/amzn-20260930.htm"
+      ],
+      "SEC_form_labels_on_operands": [
+        "10-K",
+        "10-Q"
+      ],
+      "catalog_mapping_entries_by_source": {
+        "stockanalysis": 7,
+        "futu": 0
+      },
+      "catalog_mapping_entries": 7,
+      "catalog_alternative_scope_sets": 7,
+      "catalog_operand_terms": 7,
+      "catalog_rules_exclude_procedural_repairs_and_non_catalog_parsers": true,
+      "detail_sha256_verified": "dcbc209992c6c2b0541f7485c7f5c50d1e901f41bcb5b03b760c25456e28da35",
+      "latest_period_seen_during_development": true,
+      "independent_human_second_review_recorded": false,
+      "human_minutes_measured": null
+    },
+    {
+      "ticker": "TSLA",
+      "comparison_status": "OK",
+      "target_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "SEC_periods_verified": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "SEC_numeric_output_cells": 24,
+      "primary_output_category_count": 3,
+      "primary_output_categories": [
+        "Auto",
+        "Energy and Storage",
+        "Services and Other"
+      ],
+      "reference_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "reference_sources_by_period": {
+        "2024-12-31": [
+          "stockanalysis"
+        ],
+        "2025-03-31": [
+          "stockanalysis"
+        ],
+        "2025-06-30": [
+          "stockanalysis"
+        ],
+        "2025-09-30": [
+          "stockanalysis"
+        ],
+        "2025-12-31": [
+          "stockanalysis"
+        ],
+        "2026-03-31": [
+          "stockanalysis"
+        ],
+        "2026-06-30": [
+          "stockanalysis"
+        ],
+        "2026-09-30": [
+          "stockanalysis"
+        ]
+      },
+      "reference_comparison_counts": {
+        "exact_scope_candidate_match": 24
+      },
+      "SEC_document_urls": [
+        "https://www.sec.gov/Archives/edgar/data/1318605/000162828024043486/tsla-20240930.htm",
+        "https://www.sec.gov/Archives/edgar/data/1318605/000162828025003063/tsla-20241231.htm",
+        "https://www.sec.gov/Archives/edgar/data/1318605/000162828025018911/tsla-20250331.htm",
+        "https://www.sec.gov/Archives/edgar/data/1318605/000162828025035806/tsla-20250630.htm",
+        "https://www.sec.gov/Archives/edgar/data/1318605/000162828025045968/tsla-20250930.htm",
+        "https://www.sec.gov/Archives/edgar/data/1318605/000162828026003952/tsla-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/1318605/000162828026026673/tsla-20260331.htm",
+        "https://www.sec.gov/Archives/edgar/data/1318605/000162828026049270/tsla-20260630.htm",
+        "https://www.sec.gov/Archives/edgar/data/1318605/000162828026066775/tsla-20260930.htm"
+      ],
+      "SEC_form_labels_on_operands": [
+        "10-K",
+        "10-Q"
+      ],
+      "catalog_mapping_entries_by_source": {
+        "stockanalysis": 3,
+        "futu": 2
+      },
+      "catalog_mapping_entries": 5,
+      "catalog_alternative_scope_sets": 5,
+      "catalog_operand_terms": 5,
+      "catalog_rules_exclude_procedural_repairs_and_non_catalog_parsers": true,
+      "detail_sha256_verified": "3dec6b3b88b9a8d50b39957bb7df06e5c755d3bdcdb81a97d92169ed5593a725",
+      "latest_period_seen_during_development": true,
+      "independent_human_second_review_recorded": false,
+      "human_minutes_measured": null
+    },
+    {
+      "ticker": "HD",
+      "comparison_status": "OK",
+      "target_periods": [
+        "2024-10-27",
+        "2025-02-02",
+        "2025-05-04",
+        "2025-08-03",
+        "2025-11-02",
+        "2026-02-01",
+        "2026-05-03",
+        "2026-08-02"
+      ],
+      "SEC_periods_verified": [
+        "2024-10-27",
+        "2025-02-02",
+        "2025-05-04",
+        "2025-08-03",
+        "2025-11-02",
+        "2026-02-01",
+        "2026-05-03",
+        "2026-08-02"
+      ],
+      "SEC_numeric_output_cells": 32,
+      "primary_output_category_count": 4,
+      "primary_output_categories": [
+        "Building Materials",
+        "Decor",
+        "Hardlines",
+        "Other"
+      ],
+      "reference_periods": [
+        "2024-10-27",
+        "2025-02-02",
+        "2025-05-04",
+        "2025-08-03",
+        "2025-11-02",
+        "2026-02-01",
+        "2026-05-03",
+        "2026-08-02"
+      ],
+      "reference_sources_by_period": {
+        "2024-10-27": [
+          "stockanalysis"
+        ],
+        "2025-02-02": [
+          "stockanalysis"
+        ],
+        "2025-05-04": [
+          "stockanalysis"
+        ],
+        "2025-08-03": [
+          "stockanalysis"
+        ],
+        "2025-11-02": [
+          "stockanalysis"
+        ],
+        "2026-02-01": [
+          "stockanalysis"
+        ],
+        "2026-05-03": [
+          "stockanalysis"
+        ],
+        "2026-08-02": [
+          "stockanalysis"
+        ]
+      },
+      "reference_comparison_counts": {
+        "exact_scope_candidate_match": 30,
+        "explained_reference_error": 2
+      },
+      "SEC_document_urls": [
+        "https://www.sec.gov/Archives/edgar/data/354950/000035495024000240/hd-20241027.htm",
+        "https://www.sec.gov/Archives/edgar/data/354950/000035495025000085/hd-20250202.htm",
+        "https://www.sec.gov/Archives/edgar/data/354950/000035495025000165/hd-20250504.htm",
+        "https://www.sec.gov/Archives/edgar/data/354950/000035495025000217/hd-20250803.htm",
+        "https://www.sec.gov/Archives/edgar/data/354950/000162828025053868/hd-20251102.htm",
+        "https://www.sec.gov/Archives/edgar/data/354950/000162828026019436/hd-20260201.htm",
+        "https://www.sec.gov/Archives/edgar/data/354950/000162828026038247/hd-20260503.htm",
+        "https://www.sec.gov/Archives/edgar/data/354950/000162828026058715/hd-20260802.htm"
+      ],
+      "SEC_form_labels_on_operands": [
+        "10-K",
+        "10-Q"
+      ],
+      "catalog_mapping_entries_by_source": {
+        "stockanalysis": 4,
+        "futu": 0
+      },
+      "catalog_mapping_entries": 4,
+      "catalog_alternative_scope_sets": 10,
+      "catalog_operand_terms": 10,
+      "catalog_rules_exclude_procedural_repairs_and_non_catalog_parsers": true,
+      "detail_sha256_verified": "0717a9b22792ab27590112fa3ea9af6f8650d41f8b12c7f31f0c54e01c211634",
+      "latest_period_seen_during_development": true,
+      "independent_human_second_review_recorded": false,
+      "human_minutes_measured": null
+    },
+    {
+      "ticker": "MCD",
+      "comparison_status": "OK",
+      "target_periods": [
+        "2024-09-30",
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30"
+      ],
+      "SEC_periods_verified": [
+        "2024-09-30",
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30"
+      ],
+      "SEC_numeric_output_cells": 24,
+      "primary_output_category_count": 3,
+      "primary_output_categories": [
+        "United States (US)",
+        "國際運營的市場",
+        "國際開發許可市場和公司"
+      ],
+      "reference_periods": [
+        "2024-09-30",
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30"
+      ],
+      "reference_sources_by_period": {
+        "2024-09-30": [
+          "futu"
+        ],
+        "2024-12-31": [
+          "futu"
+        ],
+        "2025-03-31": [
+          "futu"
+        ],
+        "2025-06-30": [
+          "futu"
+        ],
+        "2025-09-30": [
+          "futu"
+        ],
+        "2025-12-31": [
+          "futu"
+        ],
+        "2026-03-31": [
+          "futu"
+        ],
+        "2026-06-30": [
+          "futu"
+        ]
+      },
+      "reference_comparison_counts": {
+        "exact_scope_candidate_match": 24
+      },
+      "SEC_document_urls": [
+        "https://www.sec.gov/Archives/edgar/data/63908/000006390824000156/mcd-20240930.htm",
+        "https://www.sec.gov/Archives/edgar/data/63908/000006390825000012/mcd-20241231.htm",
+        "https://www.sec.gov/Archives/edgar/data/63908/000006390825000025/mcd-20250331.htm",
+        "https://www.sec.gov/Archives/edgar/data/63908/000006390825000039/mcd-20250630.htm",
+        "https://www.sec.gov/Archives/edgar/data/63908/000006390825000059/mcd-20250930.htm",
+        "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/63908/000006390826000051/mcd-20260331.htm",
+        "https://www.sec.gov/Archives/edgar/data/63908/000006390826000073/mcd-20260630.htm"
+      ],
+      "SEC_form_labels_on_operands": [
+        "10-K",
+        "10-Q"
+      ],
+      "catalog_mapping_entries_by_source": {
+        "stockanalysis": 0,
+        "futu": 3
+      },
+      "catalog_mapping_entries": 3,
+      "catalog_alternative_scope_sets": 3,
+      "catalog_operand_terms": 3,
+      "catalog_rules_exclude_procedural_repairs_and_non_catalog_parsers": true,
+      "detail_sha256_verified": "0212dd05d6b2f9faabb7651aa7eb73c4eb78136967a8a11476216d84fe8c743b",
+      "latest_period_seen_during_development": true,
+      "independent_human_second_review_recorded": false,
+      "human_minutes_measured": null
+    },
+    {
+      "ticker": "WMT",
+      "comparison_status": "OK",
+      "target_periods": [
+        "2024-10-31",
+        "2025-01-31",
+        "2025-04-30",
+        "2025-07-31",
+        "2025-10-31",
+        "2026-01-31",
+        "2026-04-30",
+        "2026-07-31"
+      ],
+      "SEC_periods_verified": [
+        "2024-10-31",
+        "2025-01-31",
+        "2025-04-30",
+        "2025-07-31",
+        "2025-10-31",
+        "2026-01-31",
+        "2026-04-30",
+        "2026-07-31"
+      ],
+      "SEC_numeric_output_cells": 32,
+      "primary_output_category_count": 4,
+      "primary_output_categories": [
+        "Sam's Club United States (U.S.)",
+        "Walmart United States (U.S.)",
+        "企業和支持",
+        "沃爾瑪國際"
+      ],
+      "reference_periods": [
+        "2024-10-31",
+        "2025-01-31",
+        "2025-04-30",
+        "2025-07-31",
+        "2025-10-31",
+        "2026-01-31",
+        "2026-04-30",
+        "2026-07-31"
+      ],
+      "reference_sources_by_period": {
+        "2024-10-31": [
+          "futu"
+        ],
+        "2025-01-31": [
+          "futu"
+        ],
+        "2025-04-30": [
+          "futu"
+        ],
+        "2025-07-31": [
+          "futu"
+        ],
+        "2025-10-31": [
+          "futu"
+        ],
+        "2026-01-31": [
+          "futu"
+        ],
+        "2026-04-30": [
+          "futu"
+        ],
+        "2026-07-31": [
+          "futu"
+        ]
+      },
+      "reference_comparison_counts": {
+        "exact_scope_candidate_match": 32
+      },
+      "SEC_document_urls": [
+        "https://www.sec.gov/Archives/edgar/data/104169/000010416924000178/wmt-20241031.htm",
+        "https://www.sec.gov/Archives/edgar/data/104169/000010416925000137/wmt-20250731.htm",
+        "https://www.sec.gov/Archives/edgar/data/104169/000010416925000191/wmt-20251031.htm",
+        "https://www.sec.gov/Archives/edgar/data/104169/000010416926000055/wmt-20260131.htm",
+        "https://www.sec.gov/Archives/edgar/data/104169/000010416926000102/wmt-20260430.htm",
+        "https://www.sec.gov/Archives/edgar/data/104169/000010416926000154/wmt-20260731.htm"
+      ],
+      "SEC_form_labels_on_operands": [
+        "10-K",
+        "10-Q"
+      ],
+      "catalog_mapping_entries_by_source": {
+        "stockanalysis": 0,
+        "futu": 3
+      },
+      "catalog_mapping_entries": 3,
+      "catalog_alternative_scope_sets": 3,
+      "catalog_operand_terms": 3,
+      "catalog_rules_exclude_procedural_repairs_and_non_catalog_parsers": true,
+      "detail_sha256_verified": "6090538fa43a6ebd43d72955b7c869d6393a3d991de7f636b33b37b7f8495070",
+      "latest_period_seen_during_development": true,
+      "independent_human_second_review_recorded": false,
+      "human_minutes_measured": null
+    },
+    {
+      "ticker": "COST",
+      "comparison_status": "OK",
+      "target_periods": [
+        "2024-11-24",
+        "2025-02-16",
+        "2025-05-11",
+        "2025-08-31",
+        "2025-11-23",
+        "2026-02-15",
+        "2026-05-10",
+        "2026-08-30"
+      ],
+      "SEC_periods_verified": [
+        "2024-11-24",
+        "2025-02-16",
+        "2025-05-11",
+        "2025-08-31",
+        "2025-11-23",
+        "2026-02-15",
+        "2026-05-10",
+        "2026-08-30"
+      ],
+      "SEC_numeric_output_cells": 16,
+      "primary_output_category_count": 2,
+      "primary_output_categories": [
+        "Membership Fees",
+        "Net Sales"
+      ],
+      "reference_periods": [
+        "2024-11-24",
+        "2025-02-16",
+        "2025-05-11",
+        "2025-08-31",
+        "2025-11-23",
+        "2026-02-15",
+        "2026-05-10",
+        "2026-08-30"
+      ],
+      "reference_sources_by_period": {
+        "2024-11-24": [
+          "stockanalysis"
+        ],
+        "2025-02-16": [
+          "stockanalysis"
+        ],
+        "2025-05-11": [
+          "stockanalysis"
+        ],
+        "2025-08-31": [
+          "stockanalysis"
+        ],
+        "2025-11-23": [
+          "stockanalysis"
+        ],
+        "2026-02-15": [
+          "stockanalysis"
+        ],
+        "2026-05-10": [
+          "stockanalysis"
+        ],
+        "2026-08-30": [
+          "stockanalysis"
+        ]
+      },
+      "reference_comparison_counts": {
+        "exact_scope_candidate_match": 16
+      },
+      "SEC_document_urls": [
+        "https://www.sec.gov/Archives/edgar/data/909832/000090983224000079/cost-20241124.htm",
+        "https://www.sec.gov/Archives/edgar/data/909832/000090983225000015/cost-20250216.htm",
+        "https://www.sec.gov/Archives/edgar/data/909832/000090983225000033/cost-20250511.htm",
+        "https://www.sec.gov/Archives/edgar/data/909832/000090983225000101/cost-20250831.htm",
+        "https://www.sec.gov/Archives/edgar/data/909832/000090983225000169/cost-20251123.htm",
+        "https://www.sec.gov/Archives/edgar/data/909832/000090983226000029/cost-20260215.htm",
+        "https://www.sec.gov/Archives/edgar/data/909832/000090983226000051/cost-20260510.htm",
+        "https://www.sec.gov/Archives/edgar/data/909832/000090983226000093/cost-20260830.htm"
+      ],
+      "SEC_form_labels_on_operands": [
+        "10-K",
+        "10-Q"
+      ],
+      "catalog_mapping_entries_by_source": {
+        "stockanalysis": 2,
+        "futu": 0
+      },
+      "catalog_mapping_entries": 2,
+      "catalog_alternative_scope_sets": 2,
+      "catalog_operand_terms": 2,
+      "catalog_rules_exclude_procedural_repairs_and_non_catalog_parsers": true,
+      "detail_sha256_verified": "30936b8cb970015d40cf5d7a7eccb9b43b4a6dc2d8ad01014695cd618c7a5067",
+      "latest_period_seen_during_development": true,
+      "independent_human_second_review_recorded": false,
+      "human_minutes_measured": null
+    },
+    {
+      "ticker": "PG",
+      "comparison_status": "OK",
+      "target_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "SEC_periods_verified": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "SEC_numeric_output_cells": 48,
+      "primary_output_category_count": 6,
+      "primary_output_categories": [
+        "Baby, Feminine, and Familycare",
+        "Beauty",
+        "Corporate",
+        "Fabric and Homecare",
+        "Grooming",
+        "Healthcare"
+      ],
+      "reference_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "reference_sources_by_period": {
+        "2024-12-31": [
+          "stockanalysis"
+        ],
+        "2025-03-31": [
+          "stockanalysis"
+        ],
+        "2025-06-30": [
+          "stockanalysis"
+        ],
+        "2025-09-30": [
+          "stockanalysis"
+        ],
+        "2025-12-31": [
+          "stockanalysis"
+        ],
+        "2026-03-31": [
+          "stockanalysis"
+        ],
+        "2026-06-30": [
+          "stockanalysis"
+        ],
+        "2026-09-30": [
+          "stockanalysis"
+        ]
+      },
+      "reference_comparison_counts": {
+        "explained_reference_error": 1,
+        "explained_reported_precision": 35,
+        "exact_scope_candidate_match": 12
+      },
+      "SEC_document_urls": [
+        "https://www.sec.gov/Archives/edgar/data/80424/000008042425000013/pg-20241231.htm",
+        "https://www.sec.gov/Archives/edgar/data/80424/000008042425000037/pg-20250331.htm",
+        "https://www.sec.gov/Archives/edgar/data/80424/000008042425000076/pg-20250630.htm",
+        "https://www.sec.gov/Archives/edgar/data/80424/000008042425000245/pg-20250930.htm",
+        "https://www.sec.gov/Archives/edgar/data/80424/000008042426000011/pg-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/80424/000008042426000060/pg-20260331.htm",
+        "https://www.sec.gov/Archives/edgar/data/80424/000008042426000103/pg-20260630.htm",
+        "https://www.sec.gov/Archives/edgar/data/80424/000008042426000256/pg-20260930.htm"
+      ],
+      "SEC_form_labels_on_operands": [
+        "10-K",
+        "10-Q"
+      ],
+      "catalog_mapping_entries_by_source": {
+        "stockanalysis": 6,
+        "futu": 0
+      },
+      "catalog_mapping_entries": 6,
+      "catalog_alternative_scope_sets": 6,
+      "catalog_operand_terms": 6,
+      "catalog_rules_exclude_procedural_repairs_and_non_catalog_parsers": true,
+      "detail_sha256_verified": "3e2168dce22b67c5f3ac620edb9b89ce5e25730f34a465207b2abc4e00373d63",
+      "latest_period_seen_during_development": true,
+      "independent_human_second_review_recorded": false,
+      "human_minutes_measured": null
+    },
+    {
+      "ticker": "KO",
+      "comparison_status": "OK",
+      "target_periods": [
+        "2024-12-31",
+        "2025-03-28",
+        "2025-06-27",
+        "2025-09-26",
+        "2025-12-31",
+        "2026-04-03",
+        "2026-07-03",
+        "2026-10-02"
+      ],
+      "SEC_periods_verified": [
+        "2024-12-31",
+        "2025-03-28",
+        "2025-06-27",
+        "2025-09-26",
+        "2025-12-31",
+        "2026-04-03",
+        "2026-07-03",
+        "2026-10-02"
+      ],
+      "SEC_numeric_output_cells": 57,
+      "primary_output_category_count": 8,
+      "primary_output_categories": [
+        "Asia Pacific",
+        "Bottling Investments",
+        "Corporate",
+        "Eliminations",
+        "Europe, Middle East, and Africa",
+        "Global Ventures",
+        "Latin America",
+        "North America"
+      ],
+      "reference_periods": [
+        "2024-12-31",
+        "2025-03-28",
+        "2025-06-27",
+        "2025-09-26",
+        "2025-12-31",
+        "2026-04-03",
+        "2026-07-03",
+        "2026-10-02"
+      ],
+      "reference_sources_by_period": {
+        "2024-12-31": [
+          "stockanalysis"
+        ],
+        "2025-03-28": [
+          "stockanalysis"
+        ],
+        "2025-06-27": [
+          "stockanalysis"
+        ],
+        "2025-09-26": [
+          "stockanalysis"
+        ],
+        "2025-12-31": [
+          "stockanalysis"
+        ],
+        "2026-04-03": [
+          "stockanalysis"
+        ],
+        "2026-07-03": [
+          "stockanalysis"
+        ],
+        "2026-10-02": [
+          "stockanalysis"
+        ]
+      },
+      "reference_comparison_counts": {
+        "exact_scope_candidate_match": 57
+      },
+      "SEC_document_urls": [
+        "https://www.sec.gov/Archives/edgar/data/21344/000002134424000060/ko-20240927.htm",
+        "https://www.sec.gov/Archives/edgar/data/21344/000002134425000011/ko-20241231.htm",
+        "https://www.sec.gov/Archives/edgar/data/21344/000002134425000029/ko-20250328.htm",
+        "https://www.sec.gov/Archives/edgar/data/21344/000002134425000061/ko-20250627.htm",
+        "https://www.sec.gov/Archives/edgar/data/21344/000162828025046054/ko-20250926.htm",
+        "https://www.sec.gov/Archives/edgar/data/21344/000162828026010047/ko-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/21344/000162828026028802/ko-20260403.htm",
+        "https://www.sec.gov/Archives/edgar/data/21344/000162828026050503/ko-20260703.htm",
+        "https://www.sec.gov/Archives/edgar/data/21344/000162828026067844/ko-20261002.htm"
+      ],
+      "SEC_form_labels_on_operands": [
+        "10-K",
+        "10-Q"
+      ],
+      "catalog_mapping_entries_by_source": {
+        "stockanalysis": 8,
+        "futu": 0
+      },
+      "catalog_mapping_entries": 8,
+      "catalog_alternative_scope_sets": 29,
+      "catalog_operand_terms": 29,
+      "catalog_rules_exclude_procedural_repairs_and_non_catalog_parsers": true,
+      "detail_sha256_verified": "cead60728af45ea082847b878c440f9265a53e196273dd21bad0a4cf7d9f08f9",
+      "latest_period_seen_during_development": true,
+      "independent_human_second_review_recorded": false,
+      "human_minutes_measured": null
+    },
+    {
+      "ticker": "JNJ",
+      "comparison_status": "OK",
+      "target_periods": [
+        "2024-12-29",
+        "2025-03-30",
+        "2025-06-29",
+        "2025-09-28",
+        "2025-12-28",
+        "2026-03-29",
+        "2026-06-28",
+        "2026-09-27"
+      ],
+      "SEC_periods_verified": [
+        "2024-12-29",
+        "2025-03-30",
+        "2025-06-29",
+        "2025-09-28",
+        "2025-12-28",
+        "2026-03-29",
+        "2026-06-28",
+        "2026-09-27"
+      ],
+      "SEC_numeric_output_cells": 16,
+      "primary_output_category_count": 2,
+      "primary_output_categories": [
+        "Medtech",
+        "Pharmaceutical"
+      ],
+      "reference_periods": [
+        "2024-12-29",
+        "2025-03-30",
+        "2025-06-29",
+        "2025-09-28",
+        "2025-12-28",
+        "2026-03-29",
+        "2026-06-28",
+        "2026-09-27"
+      ],
+      "reference_sources_by_period": {
+        "2024-12-29": [
+          "stockanalysis"
+        ],
+        "2025-03-30": [
+          "stockanalysis"
+        ],
+        "2025-06-29": [
+          "stockanalysis"
+        ],
+        "2025-09-28": [
+          "stockanalysis"
+        ],
+        "2025-12-28": [
+          "stockanalysis"
+        ],
+        "2026-03-29": [
+          "stockanalysis"
+        ],
+        "2026-06-28": [
+          "stockanalysis"
+        ],
+        "2026-09-27": [
+          "stockanalysis"
+        ]
+      },
+      "reference_comparison_counts": {
+        "exact_scope_candidate_match": 16
+      },
+      "SEC_document_urls": [
+        "https://www.sec.gov/Archives/edgar/data/200406/000020040624000096/jnj-20240929.htm",
+        "https://www.sec.gov/Archives/edgar/data/200406/000020040625000038/jnj-20241229.htm",
+        "https://www.sec.gov/Archives/edgar/data/200406/000020040625000119/jnj-20250330.htm",
+        "https://www.sec.gov/Archives/edgar/data/200406/000020040625000178/jnj-20250629.htm",
+        "https://www.sec.gov/Archives/edgar/data/200406/000020040625000209/jnj-20250928.htm",
+        "https://www.sec.gov/Archives/edgar/data/200406/000020040626000016/jnj-20251228.htm",
+        "https://www.sec.gov/Archives/edgar/data/200406/000020040626000087/jnj-20260329.htm",
+        "https://www.sec.gov/Archives/edgar/data/200406/000020040626000153/jnj-20260628.htm",
+        "https://www.sec.gov/Archives/edgar/data/200406/000020040626000197/jnj-20260927.htm"
+      ],
+      "SEC_form_labels_on_operands": [
+        "10-K",
+        "10-Q"
+      ],
+      "catalog_mapping_entries_by_source": {
+        "stockanalysis": 2,
+        "futu": 0
+      },
+      "catalog_mapping_entries": 2,
+      "catalog_alternative_scope_sets": 4,
+      "catalog_operand_terms": 4,
+      "catalog_rules_exclude_procedural_repairs_and_non_catalog_parsers": true,
+      "detail_sha256_verified": "5f3d767909f622fad08e618c054f7169a6dc111fb2f195d38ca6caf43b996187",
+      "latest_period_seen_during_development": true,
+      "independent_human_second_review_recorded": false,
+      "human_minutes_measured": null
+    },
+    {
+      "ticker": "UNH",
+      "comparison_status": "OK",
+      "target_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "SEC_periods_verified": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "SEC_numeric_output_cells": 24,
+      "primary_output_category_count": 3,
+      "primary_output_categories": [
+        "Eliminations",
+        "Optum",
+        "UnitedHealthcare"
+      ],
+      "reference_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "reference_sources_by_period": {
+        "2024-12-31": [
+          "stockanalysis"
+        ],
+        "2025-03-31": [
+          "stockanalysis"
+        ],
+        "2025-06-30": [
+          "stockanalysis"
+        ],
+        "2025-09-30": [
+          "stockanalysis"
+        ],
+        "2025-12-31": [
+          "stockanalysis"
+        ],
+        "2026-03-31": [
+          "stockanalysis"
+        ],
+        "2026-06-30": [
+          "stockanalysis"
+        ],
+        "2026-09-30": [
+          "stockanalysis"
+        ]
+      },
+      "reference_comparison_counts": {
+        "exact_scope_candidate_match": 21,
+        "explained_reference_error": 3
+      },
+      "SEC_document_urls": [
+        "https://www.sec.gov/Archives/edgar/data/731766/000073176624000323/unh-20240930.htm",
+        "https://www.sec.gov/Archives/edgar/data/731766/000073176625000063/unh-20241231.htm",
+        "https://www.sec.gov/Archives/edgar/data/731766/000073176625000131/unh-20250331.htm",
+        "https://www.sec.gov/Archives/edgar/data/731766/000073176625000236/unh-20250630.htm",
+        "https://www.sec.gov/Archives/edgar/data/731766/000073176625000305/unh-20250930.htm",
+        "https://www.sec.gov/Archives/edgar/data/731766/000073176626000062/unh-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/731766/000073176626000127/unh-20260331.htm",
+        "https://www.sec.gov/Archives/edgar/data/731766/000073176626000197/unh-20260630.htm",
+        "https://www.sec.gov/Archives/edgar/data/731766/000073176626000266/unh-20260930.htm"
+      ],
+      "SEC_form_labels_on_operands": [
+        "10-K",
+        "10-Q"
+      ],
+      "catalog_mapping_entries_by_source": {
+        "stockanalysis": 3,
+        "futu": 0
+      },
+      "catalog_mapping_entries": 3,
+      "catalog_alternative_scope_sets": 4,
+      "catalog_operand_terms": 4,
+      "catalog_rules_exclude_procedural_repairs_and_non_catalog_parsers": true,
+      "detail_sha256_verified": "6a1f4d051eeee1f946c9bf0c759518576bf6b6bd16242c04f0f87759b863dfa3",
+      "latest_period_seen_during_development": true,
+      "independent_human_second_review_recorded": false,
+      "human_minutes_measured": null
+    },
+    {
+      "ticker": "LLY",
+      "comparison_status": "OK",
+      "target_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "SEC_periods_verified": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "SEC_numeric_output_cells": 40,
+      "primary_output_category_count": 5,
+      "primary_output_categories": [
+        "Cardiometabolic",
+        "Immunology",
+        "Neuroscience",
+        "Oncology",
+        "Other"
+      ],
+      "reference_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "reference_sources_by_period": {
+        "2024-12-31": [
+          "stockanalysis"
+        ],
+        "2025-03-31": [
+          "stockanalysis"
+        ],
+        "2025-06-30": [
+          "stockanalysis"
+        ],
+        "2025-09-30": [
+          "stockanalysis"
+        ],
+        "2025-12-31": [
+          "stockanalysis"
+        ],
+        "2026-03-31": [
+          "stockanalysis"
+        ],
+        "2026-06-30": [
+          "stockanalysis"
+        ],
+        "2026-09-30": [
+          "issuer_report_copy"
+        ]
+      },
+      "reference_comparison_counts": {
+        "exact_scope_candidate_match": 39,
+        "explained_reported_precision": 1
+      },
+      "SEC_document_urls": [
+        "https://www.sec.gov/Archives/edgar/data/59478/000005947824000245/lly-20240930.htm",
+        "https://www.sec.gov/Archives/edgar/data/59478/000005947825000067/lly-20241231.htm",
+        "https://www.sec.gov/Archives/edgar/data/59478/000005947825000132/lly-20250331.htm",
+        "https://www.sec.gov/Archives/edgar/data/59478/000005947825000204/lly-20250630.htm",
+        "https://www.sec.gov/Archives/edgar/data/59478/000005947825000254/lly-20250930.htm",
+        "https://www.sec.gov/Archives/edgar/data/59478/000005947826000013/lly-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/59478/000005947826000045/lly-20260331.htm",
+        "https://www.sec.gov/Archives/edgar/data/59478/000005947826000081/lly-20260630.htm",
+        "https://www.sec.gov/Archives/edgar/data/59478/000005947826000108/lly-20260930.htm"
+      ],
+      "SEC_form_labels_on_operands": [
+        "10-K",
+        "10-Q"
+      ],
+      "catalog_mapping_entries_by_source": {
+        "stockanalysis": 5,
+        "futu": 0
+      },
+      "catalog_mapping_entries": 5,
+      "catalog_alternative_scope_sets": 5,
+      "catalog_operand_terms": 5,
+      "catalog_rules_exclude_procedural_repairs_and_non_catalog_parsers": true,
+      "detail_sha256_verified": "0d06dc4536b91baa5231bcd1234bb63458d1a3e0b845fc9e38c04e3e76fc9d7a",
+      "latest_period_seen_during_development": true,
+      "independent_human_second_review_recorded": false,
+      "human_minutes_measured": null
+    },
+    {
+      "ticker": "JPM",
+      "comparison_status": "OK",
+      "target_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "SEC_periods_verified": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "SEC_numeric_output_cells": 32,
+      "primary_output_category_count": 4,
+      "primary_output_categories": [
+        "Commercial and Investment Bank",
+        "Consumer and Community Banking",
+        "Corporate",
+        "Wealth Management"
+      ],
+      "reference_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "reference_sources_by_period": {
+        "2024-12-31": [
+          "stockanalysis"
+        ],
+        "2025-03-31": [
+          "stockanalysis"
+        ],
+        "2025-06-30": [
+          "stockanalysis"
+        ],
+        "2025-09-30": [
+          "stockanalysis"
+        ],
+        "2025-12-31": [
+          "stockanalysis"
+        ],
+        "2026-03-31": [
+          "stockanalysis"
+        ],
+        "2026-06-30": [
+          "stockanalysis"
+        ],
+        "2026-09-30": [
+          "stockanalysis"
+        ]
+      },
+      "reference_comparison_counts": {
+        "exact_scope_candidate_match": 32
+      },
+      "SEC_document_urls": [
+        "https://www.sec.gov/Archives/edgar/data/19617/000001961724000611/jpm-20240930.htm",
+        "https://www.sec.gov/Archives/edgar/data/19617/000001961725000270/jpm-20241231.htm",
+        "https://www.sec.gov/Archives/edgar/data/19617/000001961725000421/jpm-20250331.htm",
+        "https://www.sec.gov/Archives/edgar/data/19617/000001961725000615/jpm-20250630.htm",
+        "https://www.sec.gov/Archives/edgar/data/19617/000162828025048859/jpm-20250930.htm",
+        "https://www.sec.gov/Archives/edgar/data/19617/000162828026008131/jpm-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/19617/000162828026029344/jpm-20260331.htm",
+        "https://www.sec.gov/Archives/edgar/data/19617/000162828026054343/jpm-20260630.htm",
+        "https://www.sec.gov/Archives/edgar/data/19617/000162828026069523/jpm-20260930.htm"
+      ],
+      "SEC_form_labels_on_operands": [
+        "10-K",
+        "10-Q"
+      ],
+      "catalog_mapping_entries_by_source": {
+        "stockanalysis": 4,
+        "futu": 0
+      },
+      "catalog_mapping_entries": 4,
+      "catalog_alternative_scope_sets": 4,
+      "catalog_operand_terms": 4,
+      "catalog_rules_exclude_procedural_repairs_and_non_catalog_parsers": true,
+      "detail_sha256_verified": "c6aa84b3610dedf69fededcb30042d7ae4784982a4088aa4deed948f7675a53a",
+      "latest_period_seen_during_development": true,
+      "independent_human_second_review_recorded": false,
+      "human_minutes_measured": null
+    },
+    {
+      "ticker": "BAC",
+      "comparison_status": "OK",
+      "target_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "SEC_periods_verified": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "SEC_numeric_output_cells": 40,
+      "primary_output_category_count": 5,
+      "primary_output_categories": [
+        "Consumer Banking",
+        "Global Banking",
+        "Global Markets",
+        "Global Wealth and Investment Management",
+        "Other"
+      ],
+      "reference_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "reference_sources_by_period": {
+        "2024-12-31": [
+          "stockanalysis"
+        ],
+        "2025-03-31": [
+          "stockanalysis"
+        ],
+        "2025-06-30": [
+          "stockanalysis"
+        ],
+        "2025-09-30": [
+          "stockanalysis"
+        ],
+        "2025-12-31": [
+          "stockanalysis"
+        ],
+        "2026-03-31": [
+          "stockanalysis"
+        ],
+        "2026-06-30": [
+          "stockanalysis"
+        ],
+        "2026-09-30": [
+          "stockanalysis"
+        ]
+      },
+      "reference_comparison_counts": {
+        "exact_scope_candidate_match": 40
+      },
+      "SEC_document_urls": [
+        "https://www.sec.gov/Archives/edgar/data/70858/000007085824000280/bac-20240930.htm",
+        "https://www.sec.gov/Archives/edgar/data/70858/000007085825000139/bac-20241231.htm",
+        "https://www.sec.gov/Archives/edgar/data/70858/000007085825000200/bac-20250331.htm",
+        "https://www.sec.gov/Archives/edgar/data/70858/000007085825000268/bac-20250630.htm",
+        "https://www.sec.gov/Archives/edgar/data/70858/000007085825000405/bac-20250930.htm",
+        "https://www.sec.gov/Archives/edgar/data/70858/000007085826000157/bac-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/70858/000007085826000249/bac-20260331.htm",
+        "https://www.sec.gov/Archives/edgar/data/70858/000007085826000394/bac-20260630.htm",
+        "https://www.sec.gov/Archives/edgar/data/70858/000007085826000548/bac-20260930.htm"
+      ],
+      "SEC_form_labels_on_operands": [
+        "10-K",
+        "10-Q"
+      ],
+      "catalog_mapping_entries_by_source": {
+        "stockanalysis": 5,
+        "futu": 0
+      },
+      "catalog_mapping_entries": 5,
+      "catalog_alternative_scope_sets": 5,
+      "catalog_operand_terms": 5,
+      "catalog_rules_exclude_procedural_repairs_and_non_catalog_parsers": true,
+      "detail_sha256_verified": "d22fa18319887af3d01f287d91e16df5157961ba27894a48f8693954269bf668",
+      "latest_period_seen_during_development": true,
+      "independent_human_second_review_recorded": false,
+      "human_minutes_measured": null
+    },
+    {
+      "ticker": "BRK-B",
+      "comparison_status": "OK",
+      "target_periods": [
+        "2024-09-30",
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30"
+      ],
+      "SEC_periods_verified": [
+        "2024-09-30",
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30"
+      ],
+      "SEC_numeric_output_cells": 64,
+      "primary_output_category_count": 8,
+      "primary_output_categories": [
+        "Berkshire Hathaway Energy (BHE)",
+        "Burlington Northern Santa Fe, LLC (BNSF)",
+        "McLane",
+        "Pilot",
+        "保險",
+        "公司、抵銷和其他",
+        "服務和零售",
+        "製造業"
+      ],
+      "reference_periods": [
+        "2024-09-30",
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30"
+      ],
+      "reference_sources_by_period": {
+        "2024-09-30": [
+          "issuer_report_copy"
+        ],
+        "2024-12-31": [
+          "futu"
+        ],
+        "2025-03-31": [
+          "futu"
+        ],
+        "2025-06-30": [
+          "futu"
+        ],
+        "2025-09-30": [
+          "issuer_report_copy"
+        ],
+        "2025-12-31": [
+          "futu"
+        ],
+        "2026-03-31": [
+          "futu"
+        ],
+        "2026-06-30": [
+          "futu"
+        ]
+      },
+      "reference_comparison_counts": {
+        "exact_scope_candidate_match": 64
+      },
+      "SEC_document_urls": [
+        "https://www.sec.gov/Archives/edgar/data/1067983/000095017024120241/brka-20240930.htm",
+        "https://www.sec.gov/Archives/edgar/data/1067983/000095017025025210/brka-20241231.htm",
+        "https://www.sec.gov/Archives/edgar/data/1067983/000095017025063112/brka-20250331.htm",
+        "https://www.sec.gov/Archives/edgar/data/1067983/000095017025101578/brka-20250630.htm",
+        "https://www.sec.gov/Archives/edgar/data/1067983/000119312525261548/brka-20250930.htm",
+        "https://www.sec.gov/Archives/edgar/data/1067983/000119312526083899/brka-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/1067983/000119312526202243/brka-20260331.htm",
+        "https://www.sec.gov/Archives/edgar/data/1067983/000119312526341032/brka-20260630.htm"
+      ],
+      "SEC_form_labels_on_operands": [
+        "10-K",
+        "10-Q"
+      ],
+      "catalog_mapping_entries_by_source": {
+        "stockanalysis": 0,
+        "futu": 8
+      },
+      "catalog_mapping_entries": 8,
+      "catalog_alternative_scope_sets": 8,
+      "catalog_operand_terms": 8,
+      "catalog_rules_exclude_procedural_repairs_and_non_catalog_parsers": true,
+      "detail_sha256_verified": "d652042dff5c5008f4bc631ac28254bf0bfe6b202dd2a70b3a5200e4212cd0ce",
+      "latest_period_seen_during_development": true,
+      "independent_human_second_review_recorded": false,
+      "human_minutes_measured": null
+    },
+    {
+      "ticker": "PGR",
+      "comparison_status": "OK",
+      "target_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "SEC_periods_verified": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "SEC_numeric_output_cells": 96,
+      "primary_output_category_count": 12,
+      "primary_output_categories": [
+        "Fees and other revenues",
+        "Investment income",
+        "Net holding period gains (losses) on securities",
+        "Net premiums earned",
+        "Net realized gains (losses) on security sales",
+        "Service revenues",
+        "Total net realized gains (losses) on securities",
+        "Total revenues",
+        "Total underwriting revenue",
+        "個人保險",
+        "其他",
+        "商業保險"
+      ],
+      "reference_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "reference_sources_by_period": {
+        "2024-12-31": [
+          "issuer_report_copy"
+        ],
+        "2025-03-31": [
+          "issuer_report_copy"
+        ],
+        "2025-06-30": [
+          "issuer_report_copy"
+        ],
+        "2025-09-30": [
+          "issuer_report_copy"
+        ],
+        "2025-12-31": [
+          "issuer_report_copy"
+        ],
+        "2026-03-31": [
+          "issuer_report_copy"
+        ],
+        "2026-06-30": [
+          "issuer_report_copy"
+        ],
+        "2026-09-30": [
+          "issuer_report_copy"
+        ]
+      },
+      "reference_comparison_counts": {
+        "exact_scope_candidate_match": 96
+      },
+      "SEC_document_urls": [
+        "https://www.sec.gov/Archives/edgar/data/80661/000008066125000129/pgr-20250930.htm",
+        "https://www.sec.gov/Archives/edgar/data/80661/000008066126000086/pgr-20251231_d2.htm",
+        "https://www.sec.gov/Archives/edgar/data/80661/000008066126000177/pgr-20260331.htm",
+        "https://www.sec.gov/Archives/edgar/data/80661/000008066126000308/pgr-20260630.htm",
+        "https://www.sec.gov/Archives/edgar/data/80661/000008066126000379/pgr-20260930.htm"
+      ],
+      "SEC_form_labels_on_operands": [
+        "not_recorded_on_selected_operand"
+      ],
+      "catalog_mapping_entries_by_source": {
+        "stockanalysis": 0,
+        "futu": 5
+      },
+      "catalog_mapping_entries": 5,
+      "catalog_alternative_scope_sets": 5,
+      "catalog_operand_terms": 5,
+      "catalog_rules_exclude_procedural_repairs_and_non_catalog_parsers": true,
+      "detail_sha256_verified": "e3679bd7c8fb97bc78b374b389cf5a7559a3996f37b20f6631f067c3dfe8fa55",
+      "latest_period_seen_during_development": true,
+      "independent_human_second_review_recorded": false,
+      "human_minutes_measured": null
+    },
+    {
+      "ticker": "XOM",
+      "comparison_status": "OK",
+      "target_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "SEC_periods_verified": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "SEC_numeric_output_cells": 60,
+      "primary_output_category_count": 10,
+      "primary_output_categories": [
+        "Income from equity affiliates",
+        "Other revenues",
+        "Sales and other operating revenue",
+        "Total revenues and other income",
+        "上游",
+        "其他收入",
+        "分部間收入",
+        "化工產品",
+        "特種產品",
+        "能源產品"
+      ],
+      "reference_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "reference_sources_by_period": {
+        "2024-12-31": [
+          "futu"
+        ],
+        "2025-03-31": [
+          "futu"
+        ],
+        "2025-06-30": [
+          "futu"
+        ],
+        "2025-09-30": [
+          "futu"
+        ],
+        "2025-12-31": [
+          "futu"
+        ],
+        "2026-03-31": [
+          "futu"
+        ],
+        "2026-06-30": [
+          "futu"
+        ],
+        "2026-09-30": [
+          "issuer_report_copy"
+        ]
+      },
+      "reference_comparison_counts": {
+        "exact_scope_candidate_match": 44,
+        "explained_reference_error": 16
+      },
+      "SEC_document_urls": [
+        "https://www.sec.gov/Archives/edgar/data/2115436/000211543626000020/xom-20260930.htm",
+        "https://www.sec.gov/Archives/edgar/data/34088/000003408825000061/xom-20250930.htm",
+        "https://www.sec.gov/Archives/edgar/data/34088/000003408826000045/xom-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/34088/000003408826000067/xom-20260331.htm",
+        "https://www.sec.gov/Archives/edgar/data/34088/000003408826000093/xom-20260630.htm"
+      ],
+      "SEC_form_labels_on_operands": [
+        "10-Q",
+        "not_recorded_on_selected_operand"
+      ],
+      "catalog_mapping_entries_by_source": {
+        "stockanalysis": 0,
+        "futu": 5
+      },
+      "catalog_mapping_entries": 5,
+      "catalog_alternative_scope_sets": 5,
+      "catalog_operand_terms": 9,
+      "catalog_rules_exclude_procedural_repairs_and_non_catalog_parsers": true,
+      "detail_sha256_verified": "0c94961f498c29ace4a765964e391e67e3571fe9de090f07c8bddd5449a539f1",
+      "latest_period_seen_during_development": true,
+      "independent_human_second_review_recorded": false,
+      "human_minutes_measured": null
+    },
+    {
+      "ticker": "CVX",
+      "comparison_status": "Fail",
+      "target_periods": [
+        "2024-09-30",
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30"
+      ],
+      "SEC_periods_verified": [
+        "2024-09-30",
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30"
+      ],
+      "SEC_numeric_output_cells": 32,
+      "primary_output_category_count": 4,
+      "primary_output_categories": [
+        "上游",
+        "下游",
+        "所有其他",
+        "部門間收入抵銷"
+      ],
+      "reference_periods": [
+        "2024-09-30",
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2026-03-31",
+        "2026-06-30"
+      ],
+      "reference_sources_by_period": {
+        "2024-09-30": [
+          "futu"
+        ],
+        "2024-12-31": [
+          "futu"
+        ],
+        "2025-03-31": [
+          "futu"
+        ],
+        "2025-06-30": [
+          "futu"
+        ],
+        "2026-03-31": [
+          "futu"
+        ],
+        "2026-06-30": [
+          "futu"
+        ]
+      },
+      "reference_comparison_counts": {
+        "exact_scope_candidate_match": 24
+      },
+      "SEC_document_urls": [
+        "https://www.sec.gov/Archives/edgar/data/93410/000009341024000059/cvx-20240930.htm",
+        "https://www.sec.gov/Archives/edgar/data/93410/000009341025000009/cvx-20241231.htm",
+        "https://www.sec.gov/Archives/edgar/data/93410/000009341025000019/cvx-20250331.htm",
+        "https://www.sec.gov/Archives/edgar/data/93410/000009341025000062/cvx-20250630.htm",
+        "https://www.sec.gov/Archives/edgar/data/93410/000009341025000108/cvx-20250930.htm",
+        "https://www.sec.gov/Archives/edgar/data/93410/000009341026000078/cvx-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/93410/000009341026000113/cvx-20260331.htm",
+        "https://www.sec.gov/Archives/edgar/data/93410/000009341026000167/cvx-20260630.htm"
+      ],
+      "SEC_form_labels_on_operands": [
+        "10-K",
+        "10-Q"
+      ],
+      "catalog_mapping_entries_by_source": {
+        "stockanalysis": 0,
+        "futu": 4
+      },
+      "catalog_mapping_entries": 4,
+      "catalog_alternative_scope_sets": 4,
+      "catalog_operand_terms": 6,
+      "catalog_rules_exclude_procedural_repairs_and_non_catalog_parsers": true,
+      "detail_sha256_verified": "2881191c34e2812ba266f916d437d515a9998f3ad95b1a5f83bc35c123ae32c6",
+      "latest_period_seen_during_development": true,
+      "independent_human_second_review_recorded": false,
+      "human_minutes_measured": null
+    },
+    {
+      "ticker": "CAT",
+      "comparison_status": "OK",
+      "target_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "SEC_periods_verified": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "SEC_numeric_output_cells": 48,
+      "primary_output_category_count": 7,
+      "primary_output_categories": [
+        "Construction",
+        "Eliminations",
+        "Energy and Transportation",
+        "Financial Products",
+        "Other",
+        "Power & Energy",
+        "Resource"
+      ],
+      "reference_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "reference_sources_by_period": {
+        "2024-12-31": [
+          "stockanalysis"
+        ],
+        "2025-03-31": [
+          "stockanalysis"
+        ],
+        "2025-06-30": [
+          "stockanalysis"
+        ],
+        "2025-09-30": [
+          "stockanalysis"
+        ],
+        "2025-12-31": [
+          "stockanalysis"
+        ],
+        "2026-03-31": [
+          "stockanalysis"
+        ],
+        "2026-06-30": [
+          "stockanalysis"
+        ],
+        "2026-09-30": [
+          "stockanalysis"
+        ]
+      },
+      "reference_comparison_counts": {
+        "exact_scope_candidate_match": 48
+      },
+      "SEC_document_urls": [
+        "https://www.sec.gov/Archives/edgar/data/18230/000001823024000053/cat-20240930.htm",
+        "https://www.sec.gov/Archives/edgar/data/18230/000001823025000008/cat-20241231.htm",
+        "https://www.sec.gov/Archives/edgar/data/18230/000001823025000016/cat-20250331.htm",
+        "https://www.sec.gov/Archives/edgar/data/18230/000001823025000040/cat-20250630.htm",
+        "https://www.sec.gov/Archives/edgar/data/18230/000001823025000048/cat-20250930.htm",
+        "https://www.sec.gov/Archives/edgar/data/18230/000001823026000008/cat-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/18230/000001823026000021/cat-20260331.htm",
+        "https://www.sec.gov/Archives/edgar/data/18230/000001823026000046/cat-20260630.htm",
+        "https://www.sec.gov/Archives/edgar/data/18230/000001823026000052/ex991toformcat3q2026earnin.htm"
+      ],
+      "SEC_form_labels_on_operands": [
+        "10-K",
+        "10-Q",
+        "not_recorded_on_selected_operand"
+      ],
+      "catalog_mapping_entries_by_source": {
+        "stockanalysis": 7,
+        "futu": 0
+      },
+      "catalog_mapping_entries": 7,
+      "catalog_alternative_scope_sets": 8,
+      "catalog_operand_terms": 8,
+      "catalog_rules_exclude_procedural_repairs_and_non_catalog_parsers": true,
+      "detail_sha256_verified": "3531270b8b2388fbe86ba060986ea81009d3242f67f81e310da0d0f6893607f3",
+      "latest_period_seen_during_development": true,
+      "independent_human_second_review_recorded": false,
+      "human_minutes_measured": null
+    },
+    {
+      "ticker": "UPS",
+      "comparison_status": "OK",
+      "target_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "SEC_periods_verified": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "SEC_numeric_output_cells": 24,
+      "primary_output_category_count": 3,
+      "primary_output_categories": [
+        "Domestic Package",
+        "International Package",
+        "Supply Chain and Freight"
+      ],
+      "reference_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "reference_sources_by_period": {
+        "2024-12-31": [
+          "stockanalysis"
+        ],
+        "2025-03-31": [
+          "stockanalysis"
+        ],
+        "2025-06-30": [
+          "stockanalysis"
+        ],
+        "2025-09-30": [
+          "stockanalysis"
+        ],
+        "2025-12-31": [
+          "stockanalysis"
+        ],
+        "2026-03-31": [
+          "stockanalysis"
+        ],
+        "2026-06-30": [
+          "stockanalysis"
+        ],
+        "2026-09-30": [
+          "stockanalysis"
+        ]
+      },
+      "reference_comparison_counts": {
+        "exact_scope_candidate_match": 24
+      },
+      "SEC_document_urls": [
+        "https://www.sec.gov/Archives/edgar/data/1090727/000109072725000019/ups-20241231.htm",
+        "https://www.sec.gov/Archives/edgar/data/1090727/000109072725000049/ups-20250331.htm",
+        "https://www.sec.gov/Archives/edgar/data/1090727/000109072725000064/ups-20250630.htm",
+        "https://www.sec.gov/Archives/edgar/data/1090727/000162828025049661/ups-20250930.htm",
+        "https://www.sec.gov/Archives/edgar/data/1090727/000162828026008432/ups-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/1090727/000162828026031154/ups-20260331.htm",
+        "https://www.sec.gov/Archives/edgar/data/1090727/000162828026053249/ups-20260630.htm",
+        "https://www.sec.gov/Archives/edgar/data/1090727/000162828026067381/exhibit991-earningspressre.htm"
+      ],
+      "SEC_form_labels_on_operands": [
+        "10-K",
+        "10-Q",
+        "not_recorded_on_selected_operand"
+      ],
+      "catalog_mapping_entries_by_source": {
+        "stockanalysis": 3,
+        "futu": 0
+      },
+      "catalog_mapping_entries": 3,
+      "catalog_alternative_scope_sets": 6,
+      "catalog_operand_terms": 6,
+      "catalog_rules_exclude_procedural_repairs_and_non_catalog_parsers": true,
+      "detail_sha256_verified": "b4c74143be569f31275022052dbe6f5d78deae337a9ce394d1b92f57f2403bd9",
+      "latest_period_seen_during_development": true,
+      "independent_human_second_review_recorded": false,
+      "human_minutes_measured": null
+    },
+    {
+      "ticker": "NEE",
+      "comparison_status": "OK",
+      "target_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "SEC_periods_verified": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "SEC_numeric_output_cells": 24,
+      "primary_output_category_count": 3,
+      "primary_output_categories": [
+        "Florida Power & Light Company (FPL)",
+        "NextEra Energy Resources (NEER)",
+        "公司和其他"
+      ],
+      "reference_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "reference_sources_by_period": {
+        "2024-12-31": [
+          "futu"
+        ],
+        "2025-03-31": [
+          "futu"
+        ],
+        "2025-06-30": [
+          "futu"
+        ],
+        "2025-09-30": [
+          "futu"
+        ],
+        "2025-12-31": [
+          "futu"
+        ],
+        "2026-03-31": [
+          "futu"
+        ],
+        "2026-06-30": [
+          "futu"
+        ],
+        "2026-09-30": [
+          "futu"
+        ]
+      },
+      "reference_comparison_counts": {
+        "exact_scope_candidate_match": 24
+      },
+      "SEC_document_urls": [
+        "https://www.sec.gov/Archives/edgar/data/753308/000075330824000057/nee-20240930.htm",
+        "https://www.sec.gov/Archives/edgar/data/753308/000075330825000011/nee-20241231.htm",
+        "https://www.sec.gov/Archives/edgar/data/753308/000075330825000024/nee-20250331.htm",
+        "https://www.sec.gov/Archives/edgar/data/753308/000075330825000040/nee-20250630.htm",
+        "https://www.sec.gov/Archives/edgar/data/753308/000075330825000056/nee-20250930.htm",
+        "https://www.sec.gov/Archives/edgar/data/753308/000075330826000015/nee-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/753308/000075330826000031/nee-20260331.htm",
+        "https://www.sec.gov/Archives/edgar/data/753308/000075330826000060/nee-20260630.htm",
+        "https://www.sec.gov/Archives/edgar/data/753308/000075330826000081/nee-20260930.htm"
+      ],
+      "SEC_form_labels_on_operands": [
+        "10-K",
+        "10-Q"
+      ],
+      "catalog_mapping_entries_by_source": {
+        "stockanalysis": 0,
+        "futu": 3
+      },
+      "catalog_mapping_entries": 3,
+      "catalog_alternative_scope_sets": 4,
+      "catalog_operand_terms": 4,
+      "catalog_rules_exclude_procedural_repairs_and_non_catalog_parsers": true,
+      "detail_sha256_verified": "c3ab754c25e84fe88b6d4ffa804c23cfb31f7d4267198f614c51a025deac24f2",
+      "latest_period_seen_during_development": true,
+      "independent_human_second_review_recorded": false,
+      "human_minutes_measured": null
+    },
+    {
+      "ticker": "LIN",
+      "comparison_status": "OK",
+      "target_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "SEC_periods_verified": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "SEC_numeric_output_cells": 40,
+      "primary_output_category_count": 5,
+      "primary_output_categories": [
+        "APAC",
+        "Americas",
+        "EMEA",
+        "Engineering",
+        "Other"
+      ],
+      "reference_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "reference_sources_by_period": {
+        "2024-12-31": [
+          "stockanalysis"
+        ],
+        "2025-03-31": [
+          "stockanalysis"
+        ],
+        "2025-06-30": [
+          "stockanalysis"
+        ],
+        "2025-09-30": [
+          "stockanalysis"
+        ],
+        "2025-12-31": [
+          "stockanalysis"
+        ],
+        "2026-03-31": [
+          "stockanalysis"
+        ],
+        "2026-06-30": [
+          "stockanalysis"
+        ],
+        "2026-09-30": [
+          "stockanalysis"
+        ]
+      },
+      "reference_comparison_counts": {
+        "exact_scope_candidate_match": 40
+      },
+      "SEC_document_urls": [
+        "https://www.sec.gov/Archives/edgar/data/1707925/000162828024044457/lin-20240930.htm",
+        "https://www.sec.gov/Archives/edgar/data/1707925/000162828025007990/lin-20241231.htm",
+        "https://www.sec.gov/Archives/edgar/data/1707925/000162828025021379/lin-20250331.htm",
+        "https://www.sec.gov/Archives/edgar/data/1707925/000162828025037164/lin-20250630.htm",
+        "https://www.sec.gov/Archives/edgar/data/1707925/000162828025047710/lin-20250930.htm",
+        "https://www.sec.gov/Archives/edgar/data/1707925/000162828026011430/lin-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/1707925/000162828026029165/lin-20260331.htm",
+        "https://www.sec.gov/Archives/edgar/data/1707925/000162828026051289/lin-20260630.htm",
+        "https://www.sec.gov/Archives/edgar/data/1707925/000162828026068079/lin-20260930.htm"
+      ],
+      "SEC_form_labels_on_operands": [
+        "10-K",
+        "10-Q"
+      ],
+      "catalog_mapping_entries_by_source": {
+        "stockanalysis": 5,
+        "futu": 5
+      },
+      "catalog_mapping_entries": 10,
+      "catalog_alternative_scope_sets": 10,
+      "catalog_operand_terms": 10,
+      "catalog_rules_exclude_procedural_repairs_and_non_catalog_parsers": true,
+      "detail_sha256_verified": "b4dd53604a19d67a33b6b38e36ee70b4e3a996172894d5c8df116a3d5ae4513a",
+      "latest_period_seen_during_development": true,
+      "independent_human_second_review_recorded": false,
+      "human_minutes_measured": null
+    },
+    {
+      "ticker": "PLD",
+      "comparison_status": "OK",
+      "target_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "SEC_periods_verified": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "SEC_numeric_output_cells": 32,
+      "primary_output_category_count": 4,
+      "primary_output_categories": [
+        "Development management and other",
+        "Rental",
+        "Strategic capital",
+        "Total revenues"
+      ],
+      "reference_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "reference_sources_by_period": {
+        "2024-12-31": [
+          "issuer_ir"
+        ],
+        "2025-03-31": [
+          "issuer_ir"
+        ],
+        "2025-06-30": [
+          "issuer_ir"
+        ],
+        "2025-09-30": [
+          "issuer_ir"
+        ],
+        "2025-12-31": [
+          "issuer_ir"
+        ],
+        "2026-03-31": [
+          "issuer_ir"
+        ],
+        "2026-06-30": [
+          "issuer_ir"
+        ],
+        "2026-09-30": [
+          "issuer_ir"
+        ]
+      },
+      "reference_comparison_counts": {
+        "exact_scope_candidate_match": 32
+      },
+      "SEC_document_urls": [
+        "https://www.sec.gov/Archives/edgar/data/1045609/000095017024117407/pld-20240930.htm",
+        "https://www.sec.gov/Archives/edgar/data/1045609/000095017025021272/pld-20241231.htm",
+        "https://www.sec.gov/Archives/edgar/data/1045609/000095017025060107/pld-20250331.htm",
+        "https://www.sec.gov/Archives/edgar/data/1045609/000095017025099770/pld-20250630.htm",
+        "https://www.sec.gov/Archives/edgar/data/1045609/000119312525253512/pld-20250930.htm",
+        "https://www.sec.gov/Archives/edgar/data/1045609/000119312526051453/pld-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/1045609/000119312526197850/pld-20260331.htm",
+        "https://www.sec.gov/Archives/edgar/data/1045609/000119312526323746/pld-20260630.htm",
+        "https://www.sec.gov/Archives/edgar/data/1045609/000119312526436160/pld-20260930.htm"
+      ],
+      "SEC_form_labels_on_operands": [
+        "10-K",
+        "10-Q"
+      ],
+      "catalog_mapping_entries_by_source": {
+        "stockanalysis": 0,
+        "futu": 0,
+        "issuer_ir": 4
+      },
+      "catalog_mapping_entries": 4,
+      "catalog_alternative_scope_sets": 6,
+      "catalog_operand_terms": 6,
+      "catalog_rules_exclude_procedural_repairs_and_non_catalog_parsers": true,
+      "detail_sha256_verified": "b4cf212bd781c2cab343dfb57b4776cae1225163722ef679d2dcaf4db20c276d",
+      "latest_period_seen_during_development": true,
+      "independent_human_second_review_recorded": false,
+      "human_minutes_measured": null
+    }
+  ]
+}

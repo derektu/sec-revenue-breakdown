@@ -1,5 +1,7 @@
 # CVX net 共源核對：八項相同，完成數維持 29 / 30
 
+後續 [可行性結論](feasibility-conclusion.md) 建議對外營收主系列採 net，gross 與抵銷另行保留。本文件記錄已完成的兩季 net 核對；net 其餘六季尚未完成比較，沒有要求為通過而固定 gross，亦不把獨立來源新增為完成門檻。
+
 雲端補充兩份公司申報 PDF 與 net 數字後，本機用既有凍結 SEC facts 實際擷取 2025 Q3、推算 Q4。**八個 net 數字均與雲端回報相同，但 CVX 仍是 Fail。** 它們與原富途 gross 四分類不同，且公司 PDF、年度研究頁明確共用 SEC 申報上游，不能稱獨立季度驗證。[SEC 輸出及全部運算元](../../research/cvx-net-scope-20261104/SEC-net-check.json) 與 [驗證收據](../../research/cvx-net-scope-20261104/verification.json) 分開保存，沒有修改前輪完成數。
 
 ## 本機實際擷取的 SEC net 數字
