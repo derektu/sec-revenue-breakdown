@@ -37,3 +37,5 @@
 還原套件的 ZIP 與原始檔雜湊在 `recovery-manifest.json`；歷史 README 描述的是原實驗，
 目前使用方式以 `research/recovered-sec/HANDOFF.md` 為準。整合時檢查重複程式與現有基準，
 避免兩個下載程序共用可寫快取。對話不視為自動共享的工作紀錄，交接依據是 repo 文件與 PR。
+
+最新進展：[多家公司歷史規則與回溯驗證](historical-rule-study.md)。

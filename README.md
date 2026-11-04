@@ -43,3 +43,5 @@ python3 scripts/stage_archive.py /path/to/eight_quarter_reproducible_results.zip
 
 第一個封存命令只稽核；`--extract` 在忽略的 `data/staging/` 建新目錄，不執行匯入程式或修改 Git。
 升級為追蹤檔案前先檢查內容。受限參考資料、登入狀態、憑證、大型快取及原始封存均排除於 Git。
+
+最新進展：[多家公司歷史規則與回溯驗證](docs/vendor/historical-rule-study.md)。

@@ -1,0 +1,335 @@
+{
+  "schema_version": 1,
+  "frozen_at": "2026-11-04T03:03:10.690497+00:00",
+  "rule_version": "cmcsa-historical-scope-v2",
+  "plan": {
+    "schema_version": 1,
+    "ticker": "CMCSA",
+    "cik": "0001166691",
+    "rule_version": null,
+    "baseline_file": "research/sec-30-baseline-2026-11-04/CMCSA.json.gz",
+    "baseline_sha256": "2c6e848dda408ff1e8ff4cdb6ad96de473b03db338c13d1087d353ee6eca3fae",
+    "cutoff": {
+      "filing_date": "2026-07-23",
+      "period_end": "2026-06-30"
+    },
+    "training": [
+      {
+        "accession": "0001166691-24-000056",
+        "period_end": "2024-09-30",
+        "filing_date": "2024-10-31",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/1166691/000116669124000056/cmcsa-20240930.htm",
+        "sha256": "20b874424edbca518c5437d8f3580e192e98b6d034c7f96d550723c0eaf57fdd"
+      },
+      {
+        "accession": "0001166691-25-000011",
+        "period_end": "2024-12-31",
+        "filing_date": "2025-01-31",
+        "form": "10-K",
+        "url": "https://www.sec.gov/Archives/edgar/data/1166691/000116669125000011/cmcsa-20241231.htm",
+        "sha256": "8067a5a0076b497013ab4173447e78be9570db4c02cc52ab67f432918e7115f9"
+      },
+      {
+        "accession": "0001166691-25-000021",
+        "period_end": "2025-03-31",
+        "filing_date": "2025-04-24",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/1166691/000116669125000021/cmcsa-20250331.htm",
+        "sha256": "7d7c2649a36ec56223bd5b0e2feb74d26a70a576765ccbf11f5cfac909ddd1f2"
+      },
+      {
+        "accession": "0001166691-25-000036",
+        "period_end": "2025-06-30",
+        "filing_date": "2025-07-31",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/1166691/000116669125000036/cmcsa-20250630.htm",
+        "sha256": "aa842d7a5de578e756e7e66a9c6ba298c3d13374b26029ffecdc4995538567d1"
+      },
+      {
+        "accession": "0001166691-25-000054",
+        "period_end": "2025-09-30",
+        "filing_date": "2025-10-30",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/1166691/000116669125000054/cmcsa-20250930.htm",
+        "sha256": "2d9960f8fc7141742d954f12a27cc7653182cc95c71192266a229a1f8f2f7bd6"
+      },
+      {
+        "accession": "0001628280-26-004994",
+        "period_end": "2025-12-31",
+        "filing_date": "2026-02-03",
+        "form": "10-K",
+        "url": "https://www.sec.gov/Archives/edgar/data/1166691/000162828026004994/cmcsa-20251231.htm",
+        "sha256": "8cafaeb9efe217e1e7cfc56ad80245ad3b92d6c75128e3b149d656651909e5af"
+      },
+      {
+        "accession": "0001628280-26-026805",
+        "period_end": "2026-03-31",
+        "filing_date": "2026-04-23",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/1166691/000162828026026805/cmcsa-20260331.htm",
+        "sha256": "9e3d3f8e38db713b47d49baad779efd1609f3807b2435a39d7356711fe9192b3"
+      },
+      {
+        "accession": "0001628280-26-049360",
+        "period_end": "2026-06-30",
+        "filing_date": "2026-07-23",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/1166691/000162828026049360/cmcsa-20260630.htm",
+        "sha256": "31f139cab89c601cb21357f80153a72eb9a4f760076b4f080f31bf1a24884f55"
+      }
+    ],
+    "holdout": [
+      {
+        "accession": "0001628280-26-066863",
+        "period_end": "2026-09-30",
+        "filing_date": "2026-10-22",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/1166691/000162828026066863/cmcsa-20260930.htm",
+        "sha256": "04a180fbbe791fcf60a5a86ebd8fef0bffc8a47731f1f232cef5c8669a4b9f6c"
+      }
+    ],
+    "exposure": {
+      "seen_during_development": "yes",
+      "evidence": [
+        "docs/vendor/training-test-split.json"
+      ],
+      "note": "最新基準期已用於本機診斷；這次規則分開使用歷史 accession，但不能消除既有洩漏。"
+    },
+    "references": [
+      {
+        "source": "tradingview",
+        "availability": "not_loaded_by_this_workflow",
+        "seen_during_development": "unknown",
+        "evidence": []
+      },
+      {
+        "source": "futu",
+        "availability": "not_loaded_by_this_workflow",
+        "seen_during_development": "yes",
+        "evidence": [
+          "data/vendor/local/historical-rules-20261104/futu-observations.json"
+        ]
+      },
+      {
+        "source": "stockanalysis",
+        "availability": "not_loaded_by_this_workflow",
+        "seen_during_development": "yes",
+        "evidence": [
+          "docs/vendor/training-test-split.json"
+        ]
+      }
+    ],
+    "adjudication": {
+      "preferred_reference": null,
+      "status": "unresolved",
+      "rationale": null,
+      "evidence": [],
+      "uncertainty": "No company-specific adjudication added."
+    }
+  },
+  "plan_sha256": "6e33c74c02d06d965ad752673726775a1bcd847c567ca54e2a248a017809e657",
+  "rules": {
+    "version": "cmcsa-historical-scope-v2",
+    "development_evidence": "歷史 training accession 的概念、完整維度及原列；最新期早已接觸，僅能回溯。",
+    "selectors": [
+      {
+        "id": "Q:residential",
+        "period_kind": "Q",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "cmcsa:ResidentialConnectivityAndPlatformsSegmentMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD",
+        "semantic_basis": "CMCSA:residential"
+      },
+      {
+        "id": "Q:business",
+        "period_kind": "Q",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "cmcsa:BusinessServicesConnectivitySegmentMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD",
+        "semantic_basis": "CMCSA:business"
+      },
+      {
+        "id": "Q:media",
+        "period_kind": "Q",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "cmcsa:MediaSegmentMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD",
+        "semantic_basis": "CMCSA:media"
+      },
+      {
+        "id": "Q:studios",
+        "period_kind": "Q",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "cmcsa:StudiosSegmentMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD",
+        "semantic_basis": "CMCSA:studios"
+      },
+      {
+        "id": "Q:parks",
+        "period_kind": "Q",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "cmcsa:ThemeParksSegmentMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD",
+        "semantic_basis": "CMCSA:parks"
+      },
+      {
+        "id": "Q:other",
+        "period_kind": "Q",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "srt:ConsolidationItemsAxis": "us-gaap:CorporateNonSegmentMember"
+        },
+        "unit": "iso4217:USD",
+        "semantic_basis": "CMCSA:other"
+      },
+      {
+        "id": "Q:eliminations",
+        "period_kind": "Q",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "srt:ConsolidationItemsAxis": "srt:ConsolidationEliminationsMember"
+        },
+        "unit": "iso4217:USD",
+        "semantic_basis": "CMCSA:eliminations"
+      },
+      {
+        "id": "Q:total",
+        "period_kind": "Q",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {},
+        "unit": "iso4217:USD",
+        "semantic_basis": "CMCSA:total"
+      },
+      {
+        "id": "FY:residential",
+        "period_kind": "FY",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "cmcsa:ResidentialConnectivityAndPlatformsSegmentMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD",
+        "semantic_basis": "CMCSA:residential"
+      },
+      {
+        "id": "FY:business",
+        "period_kind": "FY",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "cmcsa:BusinessServicesConnectivitySegmentMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD",
+        "semantic_basis": "CMCSA:business"
+      },
+      {
+        "id": "FY:media",
+        "period_kind": "FY",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "cmcsa:MediaSegmentMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD",
+        "semantic_basis": "CMCSA:media"
+      },
+      {
+        "id": "FY:studios",
+        "period_kind": "FY",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "cmcsa:StudiosSegmentMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD",
+        "semantic_basis": "CMCSA:studios"
+      },
+      {
+        "id": "FY:parks",
+        "period_kind": "FY",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "cmcsa:ThemeParksSegmentMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD",
+        "semantic_basis": "CMCSA:parks"
+      },
+      {
+        "id": "FY:other",
+        "period_kind": "FY",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "srt:ConsolidationItemsAxis": "us-gaap:CorporateNonSegmentMember"
+        },
+        "unit": "iso4217:USD",
+        "semantic_basis": "CMCSA:other"
+      },
+      {
+        "id": "FY:eliminations",
+        "period_kind": "FY",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "srt:ConsolidationItemsAxis": "srt:ConsolidationEliminationsMember"
+        },
+        "unit": "iso4217:USD",
+        "semantic_basis": "CMCSA:eliminations"
+      },
+      {
+        "id": "FY:total",
+        "period_kind": "FY",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {},
+        "unit": "iso4217:USD",
+        "semantic_basis": "CMCSA:total"
+      }
+    ],
+    "aggregates": {
+      "connectivity": [
+        "residential",
+        "business"
+      ],
+      "content": [
+        "media",
+        "studios",
+        "parks"
+      ],
+      "segments-net-total": [
+        "residential",
+        "business",
+        "media",
+        "studios",
+        "parks",
+        "other",
+        "eliminations"
+      ]
+    },
+    "reconciliations": {
+      "segments-net-total": "total"
+    }
+  },
+  "rules_sha256": "6952f8b949311d1bdc43b659e8c3c4ed421dd3857816eba26e7827b32005fbb4",
+  "code_sha256": {
+    "scripts/temporal_eval.py": "fe0231704faad744332c44d201b8869c0623a71e0093ca7a0362b957e39c9575",
+    "research/recovered-sec/extract.py": "1253782f4fabcf86dc6242bbff5054a091c533ba4f639be15da2b7165be99049",
+    "research/recovered-sec/eight_quarter_eval/run.py": "7593482ab11aea89564875ba88a26e635b6e4b84dd56d50c2061abd9495a084a"
+  },
+  "training_pack_sha256": "a8c01d7cc02f33366cbb21e68340175966bc4155b128f6cc055f2b27670510d2",
+  "note": "A freeze is a reproducibility receipt, not proof of unseen data."
+}
