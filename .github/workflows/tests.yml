@@ -1,0 +1,28 @@
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  unittest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: 安裝依賴
+        run: pip install -r requirements.txt
+
+      - name: Unit test
+        run: python -m unittest discover -s tests
+
+      # 以追蹤中的 research/sec-30-baseline-2026-11-04/ 凍結 facts 重播引擎，
+      # 比對 research/refactor-baseline-sec-20261104/ 的凍結答案。
+      - name: 引擎回歸檢查
+        run: python scripts/check_engine_regression.py
