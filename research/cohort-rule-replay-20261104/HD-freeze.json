@@ -1,0 +1,503 @@
+{
+  "schema_version": 1,
+  "frozen_at": "2026-11-04T03:42:53.965310+00:00",
+  "rule_version": "hd-explicit-candidate-catalog-v1",
+  "plan": {
+    "schema_version": 1,
+    "ticker": "HD",
+    "cik": "0000354950",
+    "rule_version": null,
+    "baseline_file": "research/sec-30-baseline-2026-11-04/HD.json.gz",
+    "baseline_sha256": "1c81ad56e769c9c63869ff7e1d5e549849c79e867b9088e5d5c8ec322809f76a",
+    "cutoff": {
+      "filing_date": "2026-05-27",
+      "period_end": "2026-05-03"
+    },
+    "training": [
+      {
+        "accession": "0000354950-24-000201",
+        "period_end": "2024-07-28",
+        "filing_date": "2024-08-20",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/354950/000035495024000201/hd-20240728.htm",
+        "sha256": "8246b7e38e3839152b9da5d4e214ac690a5b081ceae25a4282a6279ffd843c29"
+      },
+      {
+        "accession": "0000354950-24-000240",
+        "period_end": "2024-10-27",
+        "filing_date": "2024-11-19",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/354950/000035495024000240/hd-20241027.htm",
+        "sha256": "9d3c718b229a7cd1f26051985e038c44de097da6c831b192b1cf9825172d7728"
+      },
+      {
+        "accession": "0000354950-25-000085",
+        "period_end": "2025-02-02",
+        "filing_date": "2025-03-21",
+        "form": "10-K",
+        "url": "https://www.sec.gov/Archives/edgar/data/354950/000035495025000085/hd-20250202.htm",
+        "sha256": "0919c185c60685ca5fef69fe14b70b645b436894925ae884216aa32c4d94f2da"
+      },
+      {
+        "accession": "0000354950-25-000165",
+        "period_end": "2025-05-04",
+        "filing_date": "2025-05-28",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/354950/000035495025000165/hd-20250504.htm",
+        "sha256": "3b23c69439ee7b0126f39a3ca968358dcc78f7565f4a466e260e97fa499f1744"
+      },
+      {
+        "accession": "0000354950-25-000217",
+        "period_end": "2025-08-03",
+        "filing_date": "2025-08-26",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/354950/000035495025000217/hd-20250803.htm",
+        "sha256": "95461330867ba7b6428bbc6d7e390978f926b1c111ec32534212cced35c3933b"
+      },
+      {
+        "accession": "0001628280-25-053868",
+        "period_end": "2025-11-02",
+        "filing_date": "2025-11-25",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/354950/000162828025053868/hd-20251102.htm",
+        "sha256": "208fda01db32c4e186d4e0f2125b4cbffbe5762869b445497e6c80b21dd835d7"
+      },
+      {
+        "accession": "0001628280-26-019436",
+        "period_end": "2026-02-01",
+        "filing_date": "2026-03-18",
+        "form": "10-K",
+        "url": "https://www.sec.gov/Archives/edgar/data/354950/000162828026019436/hd-20260201.htm",
+        "sha256": "9ec725ed0549ef77466577afc3b2a8b5765ff5692b204bb8817d65fb72cdede5"
+      },
+      {
+        "accession": "0001628280-26-038247",
+        "period_end": "2026-05-03",
+        "filing_date": "2026-05-27",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/354950/000162828026038247/hd-20260503.htm",
+        "sha256": "8e8d633c0f954b9fb7806ed3e78c994230d57a58b048b59d65bb75deee985649"
+      }
+    ],
+    "holdout": [
+      {
+        "accession": "0001628280-26-058715",
+        "period_end": "2026-08-02",
+        "filing_date": "2026-08-25",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/354950/000162828026058715/hd-20260802.htm",
+        "sha256": "191993bb5c5e46fb2aafac57d8b299cb2c523b820b364d8f1033b8e6a32539ef"
+      }
+    ],
+    "exposure": {
+      "seen_during_development": "yes",
+      "evidence": [
+        "docs/vendor/training-test-split.json"
+      ],
+      "note": "Retrospective split; historical development exposure is not fully recorded."
+    },
+    "references": [
+      {
+        "source": "tradingview",
+        "availability": "not_loaded_by_this_workflow",
+        "seen_during_development": "unknown",
+        "evidence": []
+      },
+      {
+        "source": "futu",
+        "availability": "not_loaded_by_this_workflow",
+        "seen_during_development": "unknown",
+        "evidence": []
+      },
+      {
+        "source": "stockanalysis",
+        "availability": "not_loaded_by_this_workflow",
+        "seen_during_development": "unknown",
+        "evidence": []
+      }
+    ],
+    "adjudication": {
+      "preferred_reference": null,
+      "status": "unresolved",
+      "rationale": null,
+      "evidence": [],
+      "uncertainty": "No company-specific adjudication added."
+    }
+  },
+  "plan_sha256": "21cb3a629c38f485f2e4162a6fc7e5796b0e34e6452d58489526377c10f6b6c4",
+  "rules": {
+    "version": "hd-explicit-candidate-catalog-v1",
+    "category_catalog": {
+      "stockanalysis": {
+        "Hardlines": {
+          "alternatives": [
+            [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ProductOrServiceAxis": "hd:MajorProductLineHardlinesMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "hd:PrimarySegmentMember",
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ],
+            [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ProductOrServiceAxis": "hd:MajorProductLineHardlinesMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "hd:PrimarySegmentMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ],
+            [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ProductOrServiceAxis": "hd:MajorProductLineHardlinesMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "us-gaap:ReportableSegmentAggregationBeforeOtherOperatingSegmentMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "scope_candidate"
+        },
+        "Building Materials": {
+          "alternatives": [
+            [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ProductOrServiceAxis": "hd:MajorProductLineBuildingMaterialsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "hd:PrimarySegmentMember",
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ],
+            [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ProductOrServiceAxis": "hd:MajorProductLineBuildingMaterialsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "hd:PrimarySegmentMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ],
+            [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ProductOrServiceAxis": "hd:MajorProductLineBuildingMaterialsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "us-gaap:ReportableSegmentAggregationBeforeOtherOperatingSegmentMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "scope_candidate"
+        },
+        "Decor": {
+          "alternatives": [
+            [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ProductOrServiceAxis": "hd:MajorProductLineDcorMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "hd:PrimarySegmentMember",
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ],
+            [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ProductOrServiceAxis": "hd:MajorProductLineDcorMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "hd:PrimarySegmentMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ],
+            [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ProductOrServiceAxis": "hd:MajorProductLineDcorMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "us-gaap:ReportableSegmentAggregationBeforeOtherOperatingSegmentMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "scope_candidate"
+        },
+        "Other": {
+          "alternatives": [
+            [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "us-gaap:AllOtherSegmentsMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "definition_pending"
+        }
+      },
+      "futu": {}
+    },
+    "selectors": [
+      {
+        "id": "Q:0",
+        "period_kind": "Q",
+        "semantic_basis": "HD:explicit-scope-candidate-0",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "srt:ProductOrServiceAxis": "hd:MajorProductLineHardlinesMember",
+          "us-gaap:StatementBusinessSegmentsAxis": "hd:PrimarySegmentMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:1",
+        "period_kind": "Q",
+        "semantic_basis": "HD:explicit-scope-candidate-1",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "srt:ProductOrServiceAxis": "hd:MajorProductLineHardlinesMember",
+          "us-gaap:StatementBusinessSegmentsAxis": "hd:PrimarySegmentMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:2",
+        "period_kind": "Q",
+        "semantic_basis": "HD:explicit-scope-candidate-2",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "srt:ProductOrServiceAxis": "hd:MajorProductLineHardlinesMember",
+          "us-gaap:StatementBusinessSegmentsAxis": "us-gaap:ReportableSegmentAggregationBeforeOtherOperatingSegmentMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:3",
+        "period_kind": "Q",
+        "semantic_basis": "HD:explicit-scope-candidate-3",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "srt:ProductOrServiceAxis": "hd:MajorProductLineBuildingMaterialsMember",
+          "us-gaap:StatementBusinessSegmentsAxis": "hd:PrimarySegmentMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:4",
+        "period_kind": "Q",
+        "semantic_basis": "HD:explicit-scope-candidate-4",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "srt:ProductOrServiceAxis": "hd:MajorProductLineBuildingMaterialsMember",
+          "us-gaap:StatementBusinessSegmentsAxis": "hd:PrimarySegmentMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:5",
+        "period_kind": "Q",
+        "semantic_basis": "HD:explicit-scope-candidate-5",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "srt:ProductOrServiceAxis": "hd:MajorProductLineBuildingMaterialsMember",
+          "us-gaap:StatementBusinessSegmentsAxis": "us-gaap:ReportableSegmentAggregationBeforeOtherOperatingSegmentMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:6",
+        "period_kind": "Q",
+        "semantic_basis": "HD:explicit-scope-candidate-6",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "srt:ProductOrServiceAxis": "hd:MajorProductLineDcorMember",
+          "us-gaap:StatementBusinessSegmentsAxis": "hd:PrimarySegmentMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:7",
+        "period_kind": "Q",
+        "semantic_basis": "HD:explicit-scope-candidate-7",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "srt:ProductOrServiceAxis": "hd:MajorProductLineDcorMember",
+          "us-gaap:StatementBusinessSegmentsAxis": "hd:PrimarySegmentMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:8",
+        "period_kind": "Q",
+        "semantic_basis": "HD:explicit-scope-candidate-8",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "srt:ProductOrServiceAxis": "hd:MajorProductLineDcorMember",
+          "us-gaap:StatementBusinessSegmentsAxis": "us-gaap:ReportableSegmentAggregationBeforeOtherOperatingSegmentMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:9",
+        "period_kind": "Q",
+        "semantic_basis": "HD:explicit-scope-candidate-9",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "us-gaap:AllOtherSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:0",
+        "period_kind": "FY",
+        "semantic_basis": "HD:explicit-scope-candidate-0",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "srt:ProductOrServiceAxis": "hd:MajorProductLineHardlinesMember",
+          "us-gaap:StatementBusinessSegmentsAxis": "hd:PrimarySegmentMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:1",
+        "period_kind": "FY",
+        "semantic_basis": "HD:explicit-scope-candidate-1",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "srt:ProductOrServiceAxis": "hd:MajorProductLineHardlinesMember",
+          "us-gaap:StatementBusinessSegmentsAxis": "hd:PrimarySegmentMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:2",
+        "period_kind": "FY",
+        "semantic_basis": "HD:explicit-scope-candidate-2",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "srt:ProductOrServiceAxis": "hd:MajorProductLineHardlinesMember",
+          "us-gaap:StatementBusinessSegmentsAxis": "us-gaap:ReportableSegmentAggregationBeforeOtherOperatingSegmentMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:3",
+        "period_kind": "FY",
+        "semantic_basis": "HD:explicit-scope-candidate-3",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "srt:ProductOrServiceAxis": "hd:MajorProductLineBuildingMaterialsMember",
+          "us-gaap:StatementBusinessSegmentsAxis": "hd:PrimarySegmentMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:4",
+        "period_kind": "FY",
+        "semantic_basis": "HD:explicit-scope-candidate-4",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "srt:ProductOrServiceAxis": "hd:MajorProductLineBuildingMaterialsMember",
+          "us-gaap:StatementBusinessSegmentsAxis": "hd:PrimarySegmentMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:5",
+        "period_kind": "FY",
+        "semantic_basis": "HD:explicit-scope-candidate-5",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "srt:ProductOrServiceAxis": "hd:MajorProductLineBuildingMaterialsMember",
+          "us-gaap:StatementBusinessSegmentsAxis": "us-gaap:ReportableSegmentAggregationBeforeOtherOperatingSegmentMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:6",
+        "period_kind": "FY",
+        "semantic_basis": "HD:explicit-scope-candidate-6",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "srt:ProductOrServiceAxis": "hd:MajorProductLineDcorMember",
+          "us-gaap:StatementBusinessSegmentsAxis": "hd:PrimarySegmentMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:7",
+        "period_kind": "FY",
+        "semantic_basis": "HD:explicit-scope-candidate-7",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "srt:ProductOrServiceAxis": "hd:MajorProductLineDcorMember",
+          "us-gaap:StatementBusinessSegmentsAxis": "hd:PrimarySegmentMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:8",
+        "period_kind": "FY",
+        "semantic_basis": "HD:explicit-scope-candidate-8",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "srt:ProductOrServiceAxis": "hd:MajorProductLineDcorMember",
+          "us-gaap:StatementBusinessSegmentsAxis": "us-gaap:ReportableSegmentAggregationBeforeOtherOperatingSegmentMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:9",
+        "period_kind": "FY",
+        "semantic_basis": "HD:explicit-scope-candidate-9",
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "us-gaap:AllOtherSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      }
+    ],
+    "independent_human_review": false
+  },
+  "rules_sha256": "28c50809befc6b0cb04835dc854f5f03ac064803215c9a86e1d4ffcc369ee661",
+  "code_sha256": {
+    "scripts/temporal_eval.py": "fe0231704faad744332c44d201b8869c0623a71e0093ca7a0362b957e39c9575",
+    "research/recovered-sec/extract.py": "1253782f4fabcf86dc6242bbff5054a091c533ba4f639be15da2b7165be99049",
+    "research/recovered-sec/eight_quarter_eval/run.py": "7593482ab11aea89564875ba88a26e635b6e4b84dd56d50c2061abd9495a084a"
+  },
+  "training_pack_sha256": "31bd4429ed8c2807683e236181f97e4eb97309e6f356155e2a5c530008f8cb95",
+  "note": "A freeze is a reproducibility receipt, not proof of unseen data."
+}

@@ -1,0 +1,424 @@
+{
+  "schema_version": 1,
+  "frozen_at": "2026-11-04T03:42:54.282939+00:00",
+  "rule_version": "xom-explicit-candidate-catalog-v1",
+  "plan": {
+    "schema_version": 1,
+    "ticker": "XOM",
+    "cik": "0002115436",
+    "rule_version": null,
+    "baseline_file": "research/sec-30-baseline-2026-11-04/XOM.json.gz",
+    "baseline_sha256": "a0df3cc6f6263b1e6ae960c2b870f8e28cac140fbebb906fc741b4cc3251cbfb",
+    "cutoff": {
+      "filing_date": "2026-08-03",
+      "period_end": "2026-06-30"
+    },
+    "training": [
+      {
+        "accession": "0000034088-26-000093",
+        "period_end": "2026-06-30",
+        "filing_date": "2026-08-03",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/2115436/000003408826000093/xom-20260630.htm",
+        "sha256": "9887249551986fc7be773d09e744fa1fd451d238b7b24da6f7a36289587d9cb7"
+      }
+    ],
+    "holdout": [
+      {
+        "accession": "0002115436-26-000020",
+        "period_end": "2026-09-30",
+        "filing_date": "2026-11-02",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/2115436/000211543626000020/xom-20260930.htm",
+        "sha256": "4b4a60a03a9b519945c96c14a555f60892cd89945ea464b0bbe9f593c86347f3"
+      }
+    ],
+    "exposure": {
+      "seen_during_development": "unknown",
+      "evidence": [],
+      "note": "Retrospective split; historical development exposure is not fully recorded."
+    },
+    "references": [
+      {
+        "source": "tradingview",
+        "availability": "not_loaded_by_this_workflow",
+        "seen_during_development": "unknown",
+        "evidence": []
+      },
+      {
+        "source": "futu",
+        "availability": "not_loaded_by_this_workflow",
+        "seen_during_development": "unknown",
+        "evidence": []
+      },
+      {
+        "source": "stockanalysis",
+        "availability": "not_loaded_by_this_workflow",
+        "seen_during_development": "unknown",
+        "evidence": []
+      }
+    ],
+    "adjudication": {
+      "preferred_reference": null,
+      "status": "unresolved",
+      "rationale": null,
+      "evidence": [],
+      "uncertainty": "No company-specific adjudication added."
+    }
+  },
+  "plan_sha256": "f6c72182e306c9f1b0fe434221eb22d047493abfe1c2efd3023c17fbfd531724",
+  "rules": {
+    "version": "xom-explicit-candidate-catalog-v1",
+    "category_catalog": {
+      "stockanalysis": {},
+      "futu": {
+        "上游": {
+          "alternatives": [
+            [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "xom:UpstreamMember",
+                  "srt:StatementGeographicalAxis": "country:US",
+                  "srt:ProductOrServiceAxis": "xom:SalesAndOtherOperatingRevenueMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              },
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "xom:UpstreamMember",
+                  "srt:StatementGeographicalAxis": "us-gaap:NonUsMember",
+                  "srt:ProductOrServiceAxis": "xom:SalesAndOtherOperatingRevenueMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "gross_sales_scope_candidate"
+        },
+        "能源產品": {
+          "alternatives": [
+            [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "xom:EnergyProductsMember",
+                  "srt:StatementGeographicalAxis": "country:US",
+                  "srt:ProductOrServiceAxis": "xom:SalesAndOtherOperatingRevenueMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              },
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "xom:EnergyProductsMember",
+                  "srt:StatementGeographicalAxis": "us-gaap:NonUsMember",
+                  "srt:ProductOrServiceAxis": "xom:SalesAndOtherOperatingRevenueMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "gross_sales_scope_candidate"
+        },
+        "化工產品": {
+          "alternatives": [
+            [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "xom:ChemicalProductsMember",
+                  "srt:StatementGeographicalAxis": "country:US",
+                  "srt:ProductOrServiceAxis": "xom:SalesAndOtherOperatingRevenueMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              },
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "xom:ChemicalProductsMember",
+                  "srt:StatementGeographicalAxis": "us-gaap:NonUsMember",
+                  "srt:ProductOrServiceAxis": "xom:SalesAndOtherOperatingRevenueMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "gross_sales_scope_candidate"
+        },
+        "特種產品": {
+          "alternatives": [
+            [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "xom:SpecialtyProductsMember",
+                  "srt:StatementGeographicalAxis": "country:US",
+                  "srt:ProductOrServiceAxis": "xom:SalesAndOtherOperatingRevenueMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              },
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "xom:SpecialtyProductsMember",
+                  "srt:StatementGeographicalAxis": "us-gaap:NonUsMember",
+                  "srt:ProductOrServiceAxis": "xom:SalesAndOtherOperatingRevenueMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "gross_sales_scope_candidate"
+        },
+        "分部間收入": {
+          "alternatives": [
+            [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:IntersegmentEliminationMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "definition_pending"
+        }
+      }
+    },
+    "selectors": [
+      {
+        "id": "Q:0",
+        "period_kind": "Q",
+        "semantic_basis": "XOM:explicit-scope-candidate-0",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "xom:UpstreamMember",
+          "srt:StatementGeographicalAxis": "country:US",
+          "srt:ProductOrServiceAxis": "xom:SalesAndOtherOperatingRevenueMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:1",
+        "period_kind": "Q",
+        "semantic_basis": "XOM:explicit-scope-candidate-1",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "xom:UpstreamMember",
+          "srt:StatementGeographicalAxis": "us-gaap:NonUsMember",
+          "srt:ProductOrServiceAxis": "xom:SalesAndOtherOperatingRevenueMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:2",
+        "period_kind": "Q",
+        "semantic_basis": "XOM:explicit-scope-candidate-2",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "xom:EnergyProductsMember",
+          "srt:StatementGeographicalAxis": "country:US",
+          "srt:ProductOrServiceAxis": "xom:SalesAndOtherOperatingRevenueMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:3",
+        "period_kind": "Q",
+        "semantic_basis": "XOM:explicit-scope-candidate-3",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "xom:EnergyProductsMember",
+          "srt:StatementGeographicalAxis": "us-gaap:NonUsMember",
+          "srt:ProductOrServiceAxis": "xom:SalesAndOtherOperatingRevenueMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:4",
+        "period_kind": "Q",
+        "semantic_basis": "XOM:explicit-scope-candidate-4",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "xom:ChemicalProductsMember",
+          "srt:StatementGeographicalAxis": "country:US",
+          "srt:ProductOrServiceAxis": "xom:SalesAndOtherOperatingRevenueMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:5",
+        "period_kind": "Q",
+        "semantic_basis": "XOM:explicit-scope-candidate-5",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "xom:ChemicalProductsMember",
+          "srt:StatementGeographicalAxis": "us-gaap:NonUsMember",
+          "srt:ProductOrServiceAxis": "xom:SalesAndOtherOperatingRevenueMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:6",
+        "period_kind": "Q",
+        "semantic_basis": "XOM:explicit-scope-candidate-6",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "xom:SpecialtyProductsMember",
+          "srt:StatementGeographicalAxis": "country:US",
+          "srt:ProductOrServiceAxis": "xom:SalesAndOtherOperatingRevenueMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:7",
+        "period_kind": "Q",
+        "semantic_basis": "XOM:explicit-scope-candidate-7",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "xom:SpecialtyProductsMember",
+          "srt:StatementGeographicalAxis": "us-gaap:NonUsMember",
+          "srt:ProductOrServiceAxis": "xom:SalesAndOtherOperatingRevenueMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:8",
+        "period_kind": "Q",
+        "semantic_basis": "XOM:explicit-scope-candidate-8",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "srt:ConsolidationItemsAxis": "us-gaap:IntersegmentEliminationMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:0",
+        "period_kind": "FY",
+        "semantic_basis": "XOM:explicit-scope-candidate-0",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "xom:UpstreamMember",
+          "srt:StatementGeographicalAxis": "country:US",
+          "srt:ProductOrServiceAxis": "xom:SalesAndOtherOperatingRevenueMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:1",
+        "period_kind": "FY",
+        "semantic_basis": "XOM:explicit-scope-candidate-1",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "xom:UpstreamMember",
+          "srt:StatementGeographicalAxis": "us-gaap:NonUsMember",
+          "srt:ProductOrServiceAxis": "xom:SalesAndOtherOperatingRevenueMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:2",
+        "period_kind": "FY",
+        "semantic_basis": "XOM:explicit-scope-candidate-2",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "xom:EnergyProductsMember",
+          "srt:StatementGeographicalAxis": "country:US",
+          "srt:ProductOrServiceAxis": "xom:SalesAndOtherOperatingRevenueMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:3",
+        "period_kind": "FY",
+        "semantic_basis": "XOM:explicit-scope-candidate-3",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "xom:EnergyProductsMember",
+          "srt:StatementGeographicalAxis": "us-gaap:NonUsMember",
+          "srt:ProductOrServiceAxis": "xom:SalesAndOtherOperatingRevenueMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:4",
+        "period_kind": "FY",
+        "semantic_basis": "XOM:explicit-scope-candidate-4",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "xom:ChemicalProductsMember",
+          "srt:StatementGeographicalAxis": "country:US",
+          "srt:ProductOrServiceAxis": "xom:SalesAndOtherOperatingRevenueMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:5",
+        "period_kind": "FY",
+        "semantic_basis": "XOM:explicit-scope-candidate-5",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "xom:ChemicalProductsMember",
+          "srt:StatementGeographicalAxis": "us-gaap:NonUsMember",
+          "srt:ProductOrServiceAxis": "xom:SalesAndOtherOperatingRevenueMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:6",
+        "period_kind": "FY",
+        "semantic_basis": "XOM:explicit-scope-candidate-6",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "xom:SpecialtyProductsMember",
+          "srt:StatementGeographicalAxis": "country:US",
+          "srt:ProductOrServiceAxis": "xom:SalesAndOtherOperatingRevenueMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:7",
+        "period_kind": "FY",
+        "semantic_basis": "XOM:explicit-scope-candidate-7",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "xom:SpecialtyProductsMember",
+          "srt:StatementGeographicalAxis": "us-gaap:NonUsMember",
+          "srt:ProductOrServiceAxis": "xom:SalesAndOtherOperatingRevenueMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:8",
+        "period_kind": "FY",
+        "semantic_basis": "XOM:explicit-scope-candidate-8",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "srt:ConsolidationItemsAxis": "us-gaap:IntersegmentEliminationMember"
+        },
+        "unit": "iso4217:USD"
+      }
+    ],
+    "independent_human_review": false
+  },
+  "rules_sha256": "7d1c035d9d68342371df2a535b6528478f30d8b4fad7cb57382519650ab4c8db",
+  "code_sha256": {
+    "scripts/temporal_eval.py": "fe0231704faad744332c44d201b8869c0623a71e0093ca7a0362b957e39c9575",
+    "research/recovered-sec/extract.py": "1253782f4fabcf86dc6242bbff5054a091c533ba4f639be15da2b7165be99049",
+    "research/recovered-sec/eight_quarter_eval/run.py": "7593482ab11aea89564875ba88a26e635b6e4b84dd56d50c2061abd9495a084a"
+  },
+  "training_pack_sha256": "b60d1231ea6148a6eb7dd405ff9014d8d0705e66e18925ae164600ff43bfff0d",
+  "note": "A freeze is a reproducibility receipt, not proof of unseen data."
+}

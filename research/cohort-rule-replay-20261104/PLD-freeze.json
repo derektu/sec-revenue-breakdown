@@ -1,0 +1,312 @@
+{
+  "schema_version": 1,
+  "frozen_at": "2026-11-04T03:42:54.368360+00:00",
+  "rule_version": "pld-explicit-candidate-catalog-v1",
+  "plan": {
+    "schema_version": 1,
+    "ticker": "PLD",
+    "cik": "0001045609",
+    "rule_version": null,
+    "baseline_file": "research/sec-30-baseline-2026-11-04/PLD.json.gz",
+    "baseline_sha256": "76b329159fc2e4531c254f15b830d27f6c362fdbcc0b8f56bc76541ec30bfcd0",
+    "cutoff": {
+      "filing_date": "2026-07-29",
+      "period_end": "2026-06-30"
+    },
+    "training": [
+      {
+        "accession": "0000950170-24-117407",
+        "period_end": "2024-09-30",
+        "filing_date": "2024-10-25",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/1045609/000095017024117407/pld-20240930.htm",
+        "sha256": "0e5cfe2439e4281d51f5ca0e16d778d933f7e5df2056beccb57b47669b0a57e9"
+      },
+      {
+        "accession": "0000950170-25-021272",
+        "period_end": "2024-12-31",
+        "filing_date": "2025-02-14",
+        "form": "10-K",
+        "url": "https://www.sec.gov/Archives/edgar/data/1045609/000095017025021272/pld-20241231.htm",
+        "sha256": "4dbf0701c23bd7e3e6fb0632660a2595b7474da823927bcd94ccd3d7adc0a773"
+      },
+      {
+        "accession": "0000950170-25-060107",
+        "period_end": "2025-03-31",
+        "filing_date": "2025-04-29",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/1045609/000095017025060107/pld-20250331.htm",
+        "sha256": "80e16666c709de2d11e519956995dd6aa3a26b4989cbadaf4ff3f1752e1bd6cc"
+      },
+      {
+        "accession": "0000950170-25-099770",
+        "period_end": "2025-06-30",
+        "filing_date": "2025-07-30",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/1045609/000095017025099770/pld-20250630.htm",
+        "sha256": "c96154e6f7ea6126c2f5b938291bb35d1bd050a3eb8539c73a4028c83cef9789"
+      },
+      {
+        "accession": "0001193125-25-253512",
+        "period_end": "2025-09-30",
+        "filing_date": "2025-10-28",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/1045609/000119312525253512/pld-20250930.htm",
+        "sha256": "e79b98ff08c6456c9e5cf06766b4db8cd2703d3c44c2a1e8b1b908b19e92a6de"
+      },
+      {
+        "accession": "0001193125-26-051453",
+        "period_end": "2025-12-31",
+        "filing_date": "2026-02-13",
+        "form": "10-K",
+        "url": "https://www.sec.gov/Archives/edgar/data/1045609/000119312526051453/pld-20251231.htm",
+        "sha256": "93e299a1e533b8ed3312e795e3bcd267dab8f8430dd0f36c1df36e3b962cd6a1"
+      },
+      {
+        "accession": "0001193125-26-197850",
+        "period_end": "2026-03-31",
+        "filing_date": "2026-04-30",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/1045609/000119312526197850/pld-20260331.htm",
+        "sha256": "dc2c2826f4dfab94b85c58268257ec2df903fc909a9631e5649ec222c3080035"
+      },
+      {
+        "accession": "0001193125-26-323746",
+        "period_end": "2026-06-30",
+        "filing_date": "2026-07-29",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/1045609/000119312526323746/pld-20260630.htm",
+        "sha256": "9090cdfd419f8e3cbde3d2e08d1ab84dd5de3fa619419e0aab6fe5d541873a9f"
+      }
+    ],
+    "holdout": [
+      {
+        "accession": "0001193125-26-436160",
+        "period_end": "2026-09-30",
+        "filing_date": "2026-10-28",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/1045609/000119312526436160/pld-20260930.htm",
+        "sha256": "0402e4fa6e31f366948a8a5df495bb7b8323daf374fded53782e1143e88b2394"
+      }
+    ],
+    "exposure": {
+      "seen_during_development": "yes",
+      "evidence": [
+        "docs/vendor/training-test-split.json"
+      ],
+      "note": "Retrospective split; historical development exposure is not fully recorded."
+    },
+    "references": [
+      {
+        "source": "tradingview",
+        "availability": "not_loaded_by_this_workflow",
+        "seen_during_development": "unknown",
+        "evidence": []
+      },
+      {
+        "source": "futu",
+        "availability": "not_loaded_by_this_workflow",
+        "seen_during_development": "unknown",
+        "evidence": []
+      },
+      {
+        "source": "stockanalysis",
+        "availability": "not_loaded_by_this_workflow",
+        "seen_during_development": "unknown",
+        "evidence": []
+      }
+    ],
+    "adjudication": {
+      "preferred_reference": null,
+      "status": "unresolved",
+      "rationale": null,
+      "evidence": [],
+      "uncertainty": "No company-specific adjudication added."
+    }
+  },
+  "plan_sha256": "cee0053084ca9bf8b79dc01baaa63748fc514dc0f8406345a79aac39d7a587ab",
+  "rules": {
+    "version": "pld-explicit-candidate-catalog-v1",
+    "category_catalog": {
+      "stockanalysis": {},
+      "futu": {},
+      "issuer_ir": {
+        "Rental": {
+          "alternatives": [
+            [
+              {
+                "concept": "pld:RentalRevenue",
+                "dimensions": {},
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "scope_candidate"
+        },
+        "Strategic capital": {
+          "alternatives": [
+            [
+              {
+                "concept": "pld:ManagementFeesRevenue",
+                "dimensions": {},
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ],
+            [
+              {
+                "concept": "pld:ManagementFeesRevenue1",
+                "dimensions": {},
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "scope_candidate"
+        },
+        "Development management and other": {
+          "alternatives": [
+            [
+              {
+                "concept": "pld:OtherRealEstateRevenue",
+                "dimensions": {},
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ],
+            [
+              {
+                "concept": "pld:OtherRealEstateRevenue1",
+                "dimensions": {},
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "scope_candidate"
+        },
+        "Total revenues": {
+          "alternatives": [
+            [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {},
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "total_not_component"
+        }
+      }
+    },
+    "selectors": [
+      {
+        "id": "Q:0",
+        "period_kind": "Q",
+        "semantic_basis": "PLD:explicit-scope-candidate-0",
+        "concept": "pld:RentalRevenue",
+        "dimensions": {},
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:1",
+        "period_kind": "Q",
+        "semantic_basis": "PLD:explicit-scope-candidate-1",
+        "concept": "pld:ManagementFeesRevenue",
+        "dimensions": {},
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:2",
+        "period_kind": "Q",
+        "semantic_basis": "PLD:explicit-scope-candidate-2",
+        "concept": "pld:ManagementFeesRevenue1",
+        "dimensions": {},
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:3",
+        "period_kind": "Q",
+        "semantic_basis": "PLD:explicit-scope-candidate-3",
+        "concept": "pld:OtherRealEstateRevenue",
+        "dimensions": {},
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:4",
+        "period_kind": "Q",
+        "semantic_basis": "PLD:explicit-scope-candidate-4",
+        "concept": "pld:OtherRealEstateRevenue1",
+        "dimensions": {},
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:5",
+        "period_kind": "Q",
+        "semantic_basis": "PLD:explicit-scope-candidate-5",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {},
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:0",
+        "period_kind": "FY",
+        "semantic_basis": "PLD:explicit-scope-candidate-0",
+        "concept": "pld:RentalRevenue",
+        "dimensions": {},
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:1",
+        "period_kind": "FY",
+        "semantic_basis": "PLD:explicit-scope-candidate-1",
+        "concept": "pld:ManagementFeesRevenue",
+        "dimensions": {},
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:2",
+        "period_kind": "FY",
+        "semantic_basis": "PLD:explicit-scope-candidate-2",
+        "concept": "pld:ManagementFeesRevenue1",
+        "dimensions": {},
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:3",
+        "period_kind": "FY",
+        "semantic_basis": "PLD:explicit-scope-candidate-3",
+        "concept": "pld:OtherRealEstateRevenue",
+        "dimensions": {},
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:4",
+        "period_kind": "FY",
+        "semantic_basis": "PLD:explicit-scope-candidate-4",
+        "concept": "pld:OtherRealEstateRevenue1",
+        "dimensions": {},
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:5",
+        "period_kind": "FY",
+        "semantic_basis": "PLD:explicit-scope-candidate-5",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {},
+        "unit": "iso4217:USD"
+      }
+    ],
+    "independent_human_review": false
+  },
+  "rules_sha256": "6556dbe851ff68a46ef9e40d336f4c679dad26d410998752e772edc600592201",
+  "code_sha256": {
+    "scripts/temporal_eval.py": "fe0231704faad744332c44d201b8869c0623a71e0093ca7a0362b957e39c9575",
+    "research/recovered-sec/extract.py": "1253782f4fabcf86dc6242bbff5054a091c533ba4f639be15da2b7165be99049",
+    "research/recovered-sec/eight_quarter_eval/run.py": "7593482ab11aea89564875ba88a26e635b6e4b84dd56d50c2061abd9495a084a"
+  },
+  "training_pack_sha256": "488ac6dc61f75bba6a508cca833edd2241770e88152445f0817c1dcad44d66bf",
+  "note": "A freeze is a reproducibility receipt, not proof of unseen data."
+}
