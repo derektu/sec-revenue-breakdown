@@ -45,3 +45,5 @@ python3 scripts/stage_archive.py /path/to/eight_quarter_reproducible_results.zip
 升級為追蹤檔案前先檢查內容。受限參考資料、登入狀態、憑證、大型快取及原始封存均排除於 Git。
 
 最新進展：[多家公司歷史規則與回溯驗證](docs/vendor/historical-rule-study.md)。
+
+接續研究：[WMT 與 NEE 範圍缺口查核](docs/vendor/scope-gap-review.md)。

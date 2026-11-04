@@ -1,0 +1,257 @@
+{
+  "schema_version": 1,
+  "frozen_at": "2026-11-04T03:17:14.711842+00:00",
+  "rule_version": "nee-bounded-scope-v1",
+  "plan": {
+    "schema_version": 1,
+    "ticker": "NEE",
+    "cik": "0000753308",
+    "rule_version": null,
+    "baseline_file": "research/sec-30-baseline-2026-11-04/NEE.json.gz",
+    "baseline_sha256": "5d0134e0ce96b1ef1e1fca91aea0687f7bb6b724beadb0847d3b482eed3ae5af",
+    "cutoff": {
+      "filing_date": "2026-07-24",
+      "period_end": "2026-06-30"
+    },
+    "training": [
+      {
+        "accession": "0000753308-24-000057",
+        "period_end": "2024-09-30",
+        "filing_date": "2024-10-23",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/753308/000075330824000057/nee-20240930.htm",
+        "sha256": "267a546fe21f6d052eed6ca66e9c6bc706e8b3292e126a4b922aeb734235d042"
+      },
+      {
+        "accession": "0000753308-25-000011",
+        "period_end": "2024-12-31",
+        "filing_date": "2025-02-14",
+        "form": "10-K",
+        "url": "https://www.sec.gov/Archives/edgar/data/753308/000075330825000011/nee-20241231.htm",
+        "sha256": "b24bcdd9bbef86713e1acdd355dadc93dafd8dbc81733174cbb02531a75f0a6c"
+      },
+      {
+        "accession": "0000753308-25-000024",
+        "period_end": "2025-03-31",
+        "filing_date": "2025-04-23",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/753308/000075330825000024/nee-20250331.htm",
+        "sha256": "60d4defe9750adb4d6d5b9814c5b41943000caa13752e4bc8045c905616a8a4f"
+      },
+      {
+        "accession": "0000753308-25-000040",
+        "period_end": "2025-06-30",
+        "filing_date": "2025-07-23",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/753308/000075330825000040/nee-20250630.htm",
+        "sha256": "5fd98b3150c4e12935acb58f05164ea801dbfbd68df2f503379fcb4f3479fd6d"
+      },
+      {
+        "accession": "0000753308-25-000056",
+        "period_end": "2025-09-30",
+        "filing_date": "2025-10-28",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/753308/000075330825000056/nee-20250930.htm",
+        "sha256": "c12530f0ba0737fed59b07420d0418f87ac5f532a03a8dd0becfbbea4828acfc"
+      },
+      {
+        "accession": "0000753308-26-000015",
+        "period_end": "2025-12-31",
+        "filing_date": "2026-02-13",
+        "form": "10-K",
+        "url": "https://www.sec.gov/Archives/edgar/data/753308/000075330826000015/nee-20251231.htm",
+        "sha256": "4d075d1f46f895f06a79edbc3aeee7fce957c43f6f31f5bc5abbb1bfd7a16585"
+      },
+      {
+        "accession": "0000753308-26-000031",
+        "period_end": "2026-03-31",
+        "filing_date": "2026-04-23",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/753308/000075330826000031/nee-20260331.htm",
+        "sha256": "ef377f1f7915445b827acb6cf11c7e076d4e339b83ad177114eb270d6372eb38"
+      },
+      {
+        "accession": "0000753308-26-000060",
+        "period_end": "2026-06-30",
+        "filing_date": "2026-07-24",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/753308/000075330826000060/nee-20260630.htm",
+        "sha256": "b5dcb0f8a6e1198c5d3e17263afe856a85e32f975af7db47f38c79880f4d2639"
+      }
+    ],
+    "holdout": [
+      {
+        "accession": "0000753308-26-000081",
+        "period_end": "2026-09-30",
+        "filing_date": "2026-10-21",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/753308/000075330826000081/nee-20260930.htm",
+        "sha256": "8e89c0a6cc561a5fade68460b85affab15b68339ea0b99dfc15abd285bc4d9fd"
+      }
+    ],
+    "exposure": {
+      "seen_during_development": "yes",
+      "evidence": [
+        "docs/vendor/training-test-split.json"
+      ],
+      "note": "Retrospective split; historical development exposure is not fully recorded."
+    },
+    "references": [
+      {
+        "source": "tradingview",
+        "availability": "not_loaded_by_this_workflow",
+        "seen_during_development": "unknown",
+        "evidence": []
+      },
+      {
+        "source": "futu",
+        "availability": "not_loaded_by_this_workflow",
+        "seen_during_development": "yes",
+        "evidence": [
+          "data/vendor/local/evidence-review-20261104/futu-second-round.json"
+        ]
+      },
+      {
+        "source": "stockanalysis",
+        "availability": "not_loaded_by_this_workflow",
+        "seen_during_development": "unknown",
+        "evidence": []
+      }
+    ],
+    "adjudication": {
+      "preferred_reference": null,
+      "status": "unresolved",
+      "rationale": null,
+      "evidence": [],
+      "uncertainty": "No company-specific adjudication added."
+    }
+  },
+  "plan_sha256": "91d9cf97b6d49feb1f80e747d1b78241d7ef321fe1598e44daf3d1507c0ee73f",
+  "rules": {
+    "version": "nee-bounded-scope-v1",
+    "selectors": [
+      {
+        "id": "Q:0:0",
+        "period_kind": "Q",
+        "concept": "us-gaap:RegulatedAndUnregulatedOperatingRevenue",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "nee:FloridaPowerLightCompanyMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD",
+        "semantic_basis": "NEE:reviewed-scope-0"
+      },
+      {
+        "id": "Q:0:1",
+        "period_kind": "Q",
+        "concept": "us-gaap:RegulatedAndUnregulatedOperatingRevenue",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "nee:FloridaPowerLightCompanyMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+          "dei:LegalEntityAxis": "nee:FloridaPowerLightCompanyMember"
+        },
+        "unit": "iso4217:USD",
+        "semantic_basis": "NEE:reviewed-scope-0"
+      },
+      {
+        "id": "FY:0:0",
+        "period_kind": "FY",
+        "concept": "us-gaap:RegulatedAndUnregulatedOperatingRevenue",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "nee:FloridaPowerLightCompanyMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD",
+        "semantic_basis": "NEE:reviewed-scope-0"
+      },
+      {
+        "id": "FY:0:1",
+        "period_kind": "FY",
+        "concept": "us-gaap:RegulatedAndUnregulatedOperatingRevenue",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "nee:FloridaPowerLightCompanyMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+          "dei:LegalEntityAxis": "nee:FloridaPowerLightCompanyMember"
+        },
+        "unit": "iso4217:USD",
+        "semantic_basis": "NEE:reviewed-scope-0"
+      },
+      {
+        "id": "Q:1:0",
+        "period_kind": "Q",
+        "concept": "us-gaap:RegulatedAndUnregulatedOperatingRevenue",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "nee:NEERSegmentMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD",
+        "semantic_basis": "NEE:reviewed-scope-1"
+      },
+      {
+        "id": "FY:1:0",
+        "period_kind": "FY",
+        "concept": "us-gaap:RegulatedAndUnregulatedOperatingRevenue",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "nee:NEERSegmentMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD",
+        "semantic_basis": "NEE:reviewed-scope-1"
+      },
+      {
+        "id": "Q:2:0",
+        "period_kind": "Q",
+        "concept": "us-gaap:RegulatedAndUnregulatedOperatingRevenue",
+        "dimensions": {
+          "srt:ConsolidationItemsAxis": "nee:CorporateAndEliminationsMember"
+        },
+        "unit": "iso4217:USD",
+        "semantic_basis": "NEE:reviewed-scope-2"
+      },
+      {
+        "id": "FY:2:0",
+        "period_kind": "FY",
+        "concept": "us-gaap:RegulatedAndUnregulatedOperatingRevenue",
+        "dimensions": {
+          "srt:ConsolidationItemsAxis": "nee:CorporateAndEliminationsMember"
+        },
+        "unit": "iso4217:USD",
+        "semantic_basis": "NEE:reviewed-scope-2"
+      }
+    ],
+    "reviewer": "local_agent",
+    "independent_human_review": false,
+    "scope_bridge": {
+      "id": "nee-fpl-2024-reported-segment-to-entity-reviewed",
+      "annual_dimensions": {
+        "dei:LegalEntityAxis": "nee:FloridaPowerLightCompanyMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "nee:FloridaPowerLightCompanyMember",
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+      },
+      "nine_month_dimensions": {
+        "dei:LegalEntityAxis": "nee:FloridaPowerLightCompanyMember"
+      },
+      "annual_period": [
+        "2024-01-01",
+        "2024-12-31"
+      ],
+      "nine_month_period": [
+        "2024-01-01",
+        "2024-09-30"
+      ],
+      "evidence_urls": [
+        "https://www.sec.gov/Archives/edgar/data/753308/000075330825000011/nee-20241231.htm",
+        "https://www.sec.gov/Archives/edgar/data/753308/000075330824000057/nee-20240930.htm"
+      ]
+    },
+    "residual_is_not_certified_corporate_definition": false
+  },
+  "rules_sha256": "6d19352c78ccadb154e2481fd647519fb6901649ede2b3e8b31050a81a22fe43",
+  "code_sha256": {
+    "scripts/temporal_eval.py": "fe0231704faad744332c44d201b8869c0623a71e0093ca7a0362b957e39c9575",
+    "research/recovered-sec/extract.py": "1253782f4fabcf86dc6242bbff5054a091c533ba4f639be15da2b7165be99049",
+    "research/recovered-sec/eight_quarter_eval/run.py": "7593482ab11aea89564875ba88a26e635b6e4b84dd56d50c2061abd9495a084a"
+  },
+  "training_pack_sha256": "106d5437b2d9fb94f1ac6cc4d0fe405345fac0cd1786178a434da51dd1f5603f",
+  "note": "A freeze is a reproducibility receipt, not proof of unseen data."
+}

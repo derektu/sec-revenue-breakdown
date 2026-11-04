@@ -1,0 +1,77 @@
+{
+  "companies": [
+    {
+      "ticker": "NEE",
+      "strict_blind_test": false,
+      "exposure_status": "contaminated",
+      "before_scope_review": {
+        "exact_match": 18,
+        "needs_derivation": 5,
+        "undecided": 1
+      },
+      "after_scope_review": {
+        "exact_match": 18,
+        "needs_derivation": 6
+      },
+      "after_training_cutoff_comparative": {
+        "exact_match": 18,
+        "needs_derivation": 6
+      },
+      "matching_residual_candidates_not_certified": 0,
+      "residual_operand_coverage_before_comparatives": 0,
+      "residual_candidates_missing_operands": 0,
+      "phase_counts": {
+        "latest_retrospective": 3,
+        "historical_training": 21
+      },
+      "latest_scope_review": {
+        "exact_match": 3
+      },
+      "comparative_filing_dates_checked_before_cutoff": true,
+      "independent_human_review": false,
+      "full_disclosure_accuracy_measured": false
+    },
+    {
+      "ticker": "WMT",
+      "strict_blind_test": false,
+      "exposure_status": "contaminated",
+      "before_scope_review": {
+        "exact_match": 15,
+        "undecided": 14,
+        "needs_derivation": 3
+      },
+      "after_scope_review": {
+        "exact_match": 15,
+        "undecided": 14,
+        "needs_derivation": 3
+      },
+      "after_training_cutoff_comparative": {
+        "exact_match": 18,
+        "undecided": 8,
+        "needs_derivation": 6
+      },
+      "matching_residual_candidates_not_certified": 8,
+      "residual_operand_coverage_before_comparatives": 6,
+      "residual_candidates_missing_operands": 0,
+      "phase_counts": {
+        "latest_retrospective": 4,
+        "historical_training": 28
+      },
+      "latest_scope_review": {
+        "exact_match": 3,
+        "undecided": 1
+      },
+      "comparative_filing_dates_checked_before_cutoff": true,
+      "independent_human_review": false,
+      "full_disclosure_accuracy_measured": false
+    }
+  ],
+  "wrapper_sha256": "eee64c91aea84af679d367a3d15cd5319e3becc27c2a370b633c137d5b299d24",
+  "dependency_sha256": {
+    "scripts/review_vendor_evidence.py": "bef3a82fbe090a6934df6a26be562e8d24356cbfdd077df441c5720e325327af",
+    "scripts/compare_vendor_cohort.py": "7ca3f58a8f3430aa5c05cbf0370c62d744953d478512686ce4399704f3403251"
+  },
+  "input_sha256": "f091fe48a5229d568a9f30d7f35b77b885206f0c0b91a56d33086ea4eaac0001",
+  "sec_raw_download_status": "WMT latest single GET returned 403; no retry; later downloads not attempted",
+  "NEE_primary_text_review": "Normal public SEC text read separately for the two historical filings; not a raw HTML download or hash verification."
+}
