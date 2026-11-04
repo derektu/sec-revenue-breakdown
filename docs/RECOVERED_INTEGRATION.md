@@ -1,85 +1,37 @@
-# Recovered SEC source integration — 2026-11-04
+# 已復原 SEC 原始碼整合 — 2026-11-04
 
-## Provenance and boundaries
+## 來源與範圍界線
 
-Merged `local/vendor-reference` at `4113daa` into `research/cloud-baseline` after
-reading `research/recovered-sec/HANDOFF.md` and inspecting the code and documents.
-The source branch remains intact; main was not changed. Its only conflict was
-an independently added `.gitignore`, resolved by retaining both exclusion lists.
-The recovered modules remain isolated under `research/recovered-sec/`; there
-was no competing SEC parser in the cloud branch to overwrite.
+閱讀 `research/recovered-sec/HANDOFF.md` 並檢查程式碼與文件後，已將 `local/vendor-reference` 的 `4113daa` 合併至 `research/cloud-baseline`。來源分支保持完整；當時未變更 main。唯一衝突是各自新增的 `.gitignore`，已保留兩邊的排除清單。復原模組仍隔離在 `research/recovered-sec/`；雲端分支沒有其他 SEC 解析器會被覆寫。
 
-All 10 files listed in `docs/vendor/recovery-manifest.json` match their imported
-SHA-256 hashes in this cloud checkout. The manifest distinguishes the original
-archive hash from the imported runner's whitespace-normalized hash. Imported
-code and historical READMEs were not edited. The handoff-only `verify_local.py`
-is also retained as supplied. Original README commands mentioning `download.py`
-refer to a deliberately excluded historical file; use HANDOFF.md and this review
-for current entry points.
+此雲端 checkout 中，`docs/vendor/recovery-manifest.json` 所列的全部 10 個檔案均符合匯入時的 SHA-256 雜湊。清單分別記錄原始封存檔中的雜湊，以及匯入執行器經空白正規化後的雜湊。匯入的程式碼與歷史 README 均未編輯；僅供交接的 `verify_local.py` 也保留原樣。原始 README 命令中的 `download.py` 是刻意排除的歷史檔案；目前入口請參閱 HANDOFF.md 及本審查。
 
-No archive, full filing snapshot, vendor export, browser profile, credential,
-execution log, cache or external sec-filing-agent dependency is tracked in this
-handoff. The local task's coverage and acquisition notes are historical local
-observations, not checks performed by the cloud. Third-party collection or
-comparison has not been performed here.
+兩份歷史 README 的原檔與雜湊保持不變，另提供清楚標示的繁體中文譯文：[先導實驗譯文](../research/recovered-sec/README.zh-TW.md)、[八季候選稽核譯文](../research/recovered-sec/eight_quarter_eval/README.zh-TW.md)。譯文保留歷史命令與當時限制，不代表目前執行入口有所變更。
 
-## Compatibility and code review
+本次交接未追蹤任何封存檔、完整申報文件快照、供應商匯出資料、瀏覽器設定檔、憑證、執行紀錄、快取或外部 sec-filing-agent 相依程式。本機工作的覆蓋與取得方式說明是歷史本機觀察，並非雲端執行的檢查。此處未進行第三方資料蒐集或比對。
 
-- Python 3.12.14 and `lxml==6.1.1` are available and match the recovered setup.
-- Pilot tests import only the parser/curated validator; audit tests import the
-  quarter/group logic without executing the guarded downloader entry point.
-  Test processes explicitly reject socket connections during cloud verification.
-- `run.py` uses a frozen as-of date, exact duration/dimension matching, candidate
-  totals, conflict rejection and separate multi-axis facts. `summarize.py` runs
-  at module scope and writes output: do not import it for discovery. Downloader
-  execution has not been authorized by this integration or attempted.
-- Recovered network code retains a placeholder default User-Agent, multiple
-  workers and cached mutable file paths. Before any online use, require the
-  genuine operator identity, current SEC access rules, approved domains and one
-  downloader process. Review request-error handling and cache integrity first.
-- The parser is a small candidate extractor: it does not retain entity identifiers
-  or resolve taxonomy hierarchies, transformations, nil values and continuation
-  chains comprehensively. It converts displayed dash strings to zero. Thus it
-  does not yet meet the stricter research contract in RESEARCH_PLAN.md; preserve
-  this behavior for historical reproducibility, and fix it in a separately
-  versioned extraction stage with evidence before treating output as observations.
-- Single-axis groups compare to candidate totals; fallback cross-concept matches
-  and undimensioned scope are unvalidated. Q4 operands can span changed accounting
-  bases. A successful synthetic test or candidate sum does not certify these cases.
-- The frozen roster contains 30 issuers. Intel is an exploratory extra excluded
-  by the recovered summarizer. XOM's predecessor link, PG's multi-axis disclosure,
-  COST's periods, taxonomy changes, amendments and recasts remain review items.
+## 相容性與程式碼審查
 
-## Cloud validation actually performed
+- 可使用 Python 3.12.14 與 `lxml==6.1.1`，與復原環境一致。
+- 先導測試只匯入解析器與人工篩選驗證器；稽核測試匯入季度／分組邏輯，不會執行受入口條件保護的下載器。雲端驗證期間，測試程序會明確拒絕 socket 連線。
+- `run.py` 使用固定的資料截止日、精確期間長度／維度比對、候選總額、衝突拒絕與獨立多軸資料。`summarize.py` 在模組頂層執行並寫出檔案：不要為探索內容而匯入。此次整合未授權或嘗試執行下載器。
+- 復原的網路程式碼保留預設佔位 User-Agent、多個工作執行緒，以及會變動的快取檔案路徑。上線使用前，須有真實操作者身分、目前 SEC 存取規則、核准網域，且一次只啟動一個下載程序。先審查請求錯誤處理與快取完整性。
+- 解析器是小型候選擷取器：未保留實體識別碼，也未完整解析分類標準階層、轉換、nil 值與延續鏈；顯示為破折號的字串會轉為零。因此它尚未符合 RESEARCH_PLAN.md 中較嚴格的研究規範。應保留此行為以重現歷史結果；在將輸出視為觀察值前，另以獨立版本的擷取階段修正並提供證據。
+- 單軸分組與候選總額比對；跨概念的備援比對及無維度資料的範圍尚未驗證。Q4 運算元可能跨越變動的會計基礎。合成測試或候選加總通過，無法認證這些情況。
+- 固定名單包含 30 家發行公司。Intel 是復原彙整器排除的額外探索個案。XOM 前身關聯、PG 多軸揭露、COST 期間、分類標準變更、修正申報與重編仍待審查。
 
-Run `python3 scripts/verify_recovered.py` from the repository root. It checks the
-pinned lxml version, hashes for 10 recovered files and 30 unique tickers with
-positive integer CIKs; then runs the three test suites in separate processes.
-All **18 tests passed**, without skipped tests or failures:
+## 雲端實際完成的驗證
 
-- 6 archive safety tests.
-- 3 recovered pilot tests.
-- 9 recovered quarter/candidate audit tests.
+從儲存庫根目錄執行 `python3 scripts/verify_recovered.py`。它會檢查固定的 lxml 版本、10 個復原檔案的雜湊，以及 30 個不重複股票代號與正整數 CIK；接著在獨立程序執行三套測試。**18 項測試全部通過**，無略過或失敗：
 
-The generated report is `research/cloud-verification.json`. The script runs
-without the archives and performs no filing download or original-data replay.
-Use optional `--report NEW_PATH` to save a fresh report; it refuses to overwrite.
-Paths/IDs and pinned imported file hashes should stay paired with the recovery
-manifest. New algorithm changes must retain the original snapshot and identify
-their changed provenance rather than rewriting that manifest as if unchanged.
+- 6 項封存檔安全測試。
+- 3 項已復原先導測試。
+- 9 項已復原季度／候選稽核測試。
 
-## Data checks still pending in cloud
+產生的報告為 `research/cloud-verification.json`。腳本不需封存檔，也不會下載申報文件或重算原始資料。可選用 `--report NEW_PATH` 儲存新報告；它會拒絕覆寫。路徑／識別碼與固定的匯入檔案雜湊應維持與復原清單的對應。新演算法變更須保留原始快照，並標明變更後的來源追溯資訊，不可改寫清單而假裝原始內容未變。
 
-`docs/vendor/offline-verification.json` records the **local task's** 3 archive
-hash checks, 3 pilot HTML checks, 26 reconciliations and 234-quarter recomputation.
-Those input bytes are not in this checkout, so none of those data checks was
-rerun in cloud. The eight-quarter archive also lacked its raw 30-company HTML
-cache, so even local saved-fact reproduction was not a fresh HTML reparse.
+## 雲端仍待完成的資料檢查
 
-Next, obtain the original archives/saved evidence through an authorized supported
-transfer and run `research/recovered-sec/verify_local.py` with real cloud paths.
-Do not reuse the Mac's ignored directory path as if shared. Recompute the 138
-quarter arithmetic-match count and reconcile exact fiscal periods and missing
-quarters. SEC online refresh still requires user-reviewed environment changes
-and a new task; details are in CLOUD_HANDOFF.md. No vendor accuracy benchmark
-can be reported until suitable reference evidence has been supplied and compared.
+`docs/vendor/offline-verification.json` 記錄的是**本機工作**完成的 3 個封存檔雜湊檢查、3 個先導 HTML 檢查、26 次核對及 234 季重算。這些輸入位元組不在此 checkout，因此雲端未重新執行任何上述資料檢查。八季封存檔也缺少原始 30 家公司 HTML 快取，所以即使本機已重現儲存資料，也不等於重新解析 HTML。
+
+接著應透過獲授權且受支援的傳輸取得原始封存檔／已存證據，並以真實雲端路徑執行 `research/recovered-sec/verify_local.py`。不要將 Mac 上由 Git 忽略的目錄路徑當成共用路徑。重算 138 季算術相符的數量，並核對精確財報期間與缺漏季度。SEC 線上更新仍須使用者審閱環境變更並啟動新工作；詳見 CLOUD_HANDOFF.md。在提供並比對適當參考證據之前，不得回報供應商準確性基準。
