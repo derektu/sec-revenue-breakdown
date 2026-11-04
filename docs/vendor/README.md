@@ -29,6 +29,13 @@ archives, not a vendor reference dataset.
 
 ## Apple acquisition status, 2026-11-04
 
+The live-browser follow-up is recorded in [live-browser-check.md](live-browser-check.md).
+Both existing Edge pages have readable DOM. Stock Analysis offers native
+Excel/CSV/Google Sheets exports; its one CSV test is waiting on a download
+permission. Futu supports selecting a historical business quarter. The earlier
+public 403 below does not describe the existing Edge page's accessibility.
+The following paragraphs retain the initial public/isolated-page observations.
+
 Stock Analysis page:
 <https://stockanalysis.com/stocks/aapl/metrics/revenue-by-segment/>.
 The initial isolated-browser page displayed a Log In link. The default chart
