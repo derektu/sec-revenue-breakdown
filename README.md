@@ -28,6 +28,7 @@ does not use vendor inputs.
 - [Cloud integration review](docs/RECOVERED_INTEGRATION.md)
 - [Cloud verification evidence](research/cloud-verification.json)
 - [Local Apple reference comparison and limitations](docs/vendor/apple-comparison.md)
+- [Thirty-company vendor coverage and candidate diagnostics](docs/vendor/cohort-research.md)
 
 For all cloud source-integrity checks and synthetic tests, use Python 3.12 with
 the recovered `lxml==6.1.1` dependency:
