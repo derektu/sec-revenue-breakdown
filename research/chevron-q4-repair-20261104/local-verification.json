@@ -1,0 +1,40 @@
+{
+  "execution": "local_mac_offline_tests_and_cvx_five_quarter_replay",
+  "tests_run": 114,
+  "test_suites": [
+    {
+      "name": "archive_safety",
+      "tests_run": 102,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "recovered_pilot",
+      "tests_run": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "recovered_quarter_audit",
+      "tests_run": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "network_disabled_in_test_processes": true,
+  "status": "Fail",
+  "exact_quarterly_cells": 20,
+  "missing_reference_quarters": 3,
+  "overall_ok_count": 20,
+  "total": 30,
+  "code_and_detail_hashes_verified": true,
+  "cat_additional_access": {
+    "url": "https://www.sec.gov/Archives/edgar/data/18230/000001823026000052/ex991toformcat3q2026earnin.htm",
+    "result": "single normal network-enabled GET returned HTTP 403; stopped",
+    "local_log_sha256": "09743e7447bf9a7f96dd9f5a49cd20802ab53b0229cd87aaec7b36a7538595a1",
+    "browser_download_repeated": false
+  }
+}
