@@ -9,7 +9,7 @@
 - [taxonomy_bridge.py](../scripts/taxonomy_bridge.py)：原始 schema、標籤、定義、階層、scope 與來源檢查，通過後才做相減。
 - [逐組證據](../research/taxonomy-bridge/results/cases.json.gz)：每組 annual／YTD fact IDs、兩側 schema 屬性、各 label role 和語言、documentation、definition 路徑、直接父子鄰接、presentation 鄰接及 preferredLabel、鄰接自訂節點的 schema／定義、原表列名、來源 URL／SHA-256、拒絕原因與算術結果。
 - [摘要](../research/taxonomy-bridge/results/summary.json)、[七個代表案例](../research/taxonomy-bridge/review-cases.json)、[時間紀錄](../research/taxonomy-bridge/effort.json)。代表案例由 agent 檢視原始證據後建立，沒有獨立人類標記者。
-- [離線驗證收據](../research/taxonomy-bridge/verification.json)：禁止網路，重讀原始 SEC 檔後比對完整語意輸出，排除處理時間；全部 **87 項測試通過**，包括新增 15 項橋接測試及既有 72 項測試。
+- [離線驗證收據](../research/taxonomy-bridge/verification.json)：禁止網路，重讀原始 SEC 檔後比對完整語意輸出，排除處理時間；全部 **94 項測試通過**，包括新增 15 項橋接測試及既有 79 項測試。
 
 使用 Python 3.12、`lxml==6.1.1`，從 repo 根目錄執行；目的地必須不存在：
 
