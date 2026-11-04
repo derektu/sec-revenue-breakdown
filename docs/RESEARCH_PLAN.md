@@ -3,7 +3,9 @@
 The target universe is US companies in the S&P 500, 400 and 600. The first
 evaluation is the existing 30-company, cross-industry baseline, using the most
 recent eight fiscal quarters *at that baseline's recorded collection date*.
-The collection date and company list have not yet been recovered from the ZIP.
+The recovered runner freezes availability at **2026-11-03**. The exact cohort
+is now in `research/recovered-sec/eight_quarter_eval/roster.json`; raw filing
+snapshots and saved results have not been transferred into this cloud checkout.
 Do not treat those results as the latest eight quarters as of today, or infer
 index membership from company size. After import, preserve the baseline unchanged
 and record an explicit as-of date for a separate refresh.
@@ -39,15 +41,19 @@ prove semantic correctness, complete disclosure, or agreement with a vendor.
 
 The delegation reports 234 of 240 company-quarters processed, and 138 quarters
 with at least one candidate partition arithmetically matching total revenue.
-These numbers are **prior reported results, not locally verified**. Do not call
+The local recovery task reports successful recomputation of 234 saved quarters;
+the cloud has verified source integrity and synthetic tests only. These numbers
+are **not independently reproduced from data in this cloud checkout**. Do not call
 them accuracy or disclosure coverage. Recover the exact tolerance, counting
 method and denominators from the source code before reproducing them.
 
 - XOM: resolve historical company identity/CIK linkage before filling missing quarters.
 - Intel: inspect subtotals and elimination items before interpreting candidate sums.
 - PG and COST: inspect multi-axis observations; do not add across axes.
-- Verify the exact 30-company list, sectors, eight fiscal periods and six missing
-  company-quarters from imported evidence rather than guessing them.
+- The 30-company roster is recovered, but dated index membership, exact fiscal
+  periods and the six missing company-quarters still require the saved evidence.
+- Intel was an exploratory extra, outside the frozen 30-company roster. Preserve
+  that distinction when reporting its subtotal/elimination case.
 
 Stock Analysis and Futu user-authorized data are future reference sources.
 Neither has been imported or compared. TradingView annual data is secondary and
@@ -56,10 +62,11 @@ browser state stay out of git even though the repository is private.
 
 ## Resume sequence
 
-1. Restore supported Library transfer connectivity and obtain the three exact
-   registered archives using the current Library skill. Preserve Library identity
-   and current versions; do not substitute files from another executor's paths.
-2. Audit the archives with `scripts/stage_archive.py`, stage each separately,
+1. Source-only handoff is complete via reviewed private Git commit `4113daa`.
+   Full cloud data reproduction still needs the original archives and saved facts;
+   use a supported, authorized transfer. The cloud Library transfer failure remains
+   unresolved. Preserve source identities; do not assume local-machine paths exist.
+2. If the original archives are transferred, audit with `scripts/stage_archive.py`, stage each separately,
    review every file, and promote only code, documentation and public SEC-derived
    research data. A clean automated audit does not establish data ownership.
    Never run imported code before inspecting it and its dependencies.

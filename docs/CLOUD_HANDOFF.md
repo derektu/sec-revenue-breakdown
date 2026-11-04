@@ -1,5 +1,20 @@
 # Cloud continuation — 2026-11-04 UTC
 
+## Current status after recovered-source integration
+
+Integrated the reviewed `local/vendor-reference` branch at `4113daa`, preserving
+its Git history, original source bytes and local recovery evidence. The only
+merge conflict was `.gitignore`; both sets of exclusions were retained.
+Cloud checks verified 10 manifest file hashes, the 30-company roster and all
+18 synthetic/safety tests. See `docs/RECOVERED_INTEGRATION.md` and the executable
+`scripts/verify_recovered.py` for the current continuation path.
+
+The earlier records below describe the initial environment checks and failed
+Library transfer attempts. Source retrieval is now resolved through the explicit
+Git handoff; original archives, source snapshots and saved 234-quarter datasets
+remain unavailable here. Source-only recovery does not establish cloud data
+reproduction or vendor agreement. Network settings have not been changed.
+
 ## Repository and environment
 
 - Remote: `https://github.com/derektu/sec-revenue-breakdown.git`.

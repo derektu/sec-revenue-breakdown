@@ -3,17 +3,29 @@
 Cloud research workspace for SEC revenue composition across the S&P 500, 400
 and 600, starting with a prior 30-company, eight-quarter experiment.
 
-**Current status:** the private repository is accessible from the cloud. Prior
-research archives have been located in Library but their download is blocked
-by the cloud transfer runtime. Original experiment code/data and results are
-not yet imported or reverified. This branch supplies safe staging and explicit
-continuation instructions; it is not a replacement SEC extraction baseline.
+**Current status:** recovered SEC source, 12 original synthetic tests and the
+30-company roster are integrated from `local/vendor-reference` at `4113daa`.
+Cloud verification passed all 18 tests (12 recovered + 6 archive safety) and
+matched all 10 recovered file hashes to the local recovery manifest. Original
+archives, cached SEC HTML and saved candidate datasets remain outside this
+cloud checkout; the local data-reproduction report is preserved separately.
+No third-party reference comparison has been performed.
 
 - [Cloud status, validation and blockers](docs/CLOUD_HANDOFF.md)
 - [Research requirements, known issues and next steps](docs/RESEARCH_PLAN.md)
 - [Archive identities and source registry](research/sources.json)
+- [Recovered SEC source entry point](research/recovered-sec/HANDOFF.md)
+- [Cloud integration review](docs/RECOVERED_INTEGRATION.md)
+- [Cloud verification evidence](research/cloud-verification.json)
 
-Python 3.11+ is sufficient for the staging tool and its tests; no packages or
+For all cloud source-integrity checks and synthetic tests, use Python 3.12 with
+the recovered `lxml==6.1.1` dependency:
+
+```sh
+python3 scripts/verify_recovered.py
+```
+
+Python 3.11+ is sufficient for the staging tool alone and its tests; no packages or
 network access are required:
 
 ```sh
