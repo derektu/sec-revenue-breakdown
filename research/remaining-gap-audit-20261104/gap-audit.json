@@ -1,0 +1,322 @@
+{
+  "source_summary": "research/comcast-sec-repair-20261104/completion-status.json",
+  "source_summary_sha256": "603dfff870d97f18eccc056ea87735cdd0b000cb420d3d55bf99b42c4ae37952",
+  "source_ok_count": 23,
+  "completion_status_changed": false,
+  "excluded_company": {
+    "ticker": "XOM",
+    "reason": "Mac 未提交工作；不讀取、不重做。"
+  },
+  "blind_test": false,
+  "fresh_vendor_availability_checked": false,
+  "scope": "已保存收據與凍結基準的期間盤點；不重新解析原始財報，也不重新比對供應商金額。",
+  "code_sha256": {
+    "scripts/audit_remaining_company_gaps.py": "7bcc95a21a3f630d441d67099104bb62b9a5113622d87c192bce2356037e187f",
+    "scripts/evaluate_eight_quarter_status.py": "c95339653b8e8dc6fd1c0ab135af85440c622b25113dd6b226091cb09ffab373"
+  },
+  "companies": [
+    {
+      "ticker": "MCD",
+      "inherited_status": "Fail",
+      "reference": "futu",
+      "reference_is_original_vendor": true,
+      "target_periods": [
+        "2024-09-30",
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30"
+      ],
+      "reference_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30"
+      ],
+      "target_quarters_present": 7,
+      "missing_target_periods": [
+        "2024-09-30"
+      ],
+      "reference_periods_outside_target": [],
+      "inherited_fail_reasons": [
+        "eight_target_quarters_not_complete"
+      ],
+      "inherited_primary_source_checks": {
+        "SEC_operands_verified": 21
+      },
+      "private_detail_available_in_cloud": false,
+      "baseline_file": "research/sec-30-baseline-2026-11-04/MCD.json.gz",
+      "baseline_sha256": "df9c587e472f2a0c63040b8d32b5a1e31c1d3786e6e71f658a14d03f307a898a",
+      "freeze_receipt": "research/cohort-rule-replay-20261104/MCD-freeze.json",
+      "freeze_sha256": "c3f21fea97f43458bef1032cdbba7310d5dab9a030806d24f0deb74de42c1fa2",
+      "latest_saved_SEC_filing": {
+        "form": "10-Q",
+        "filingDate": "2026-08-07",
+        "reportDate": "2026-06-30",
+        "accessionNumber": "0000063908-26-000073",
+        "primaryDocument": "mcd-20260630.htm"
+      },
+      "fresh_SEC_download_performed": false,
+      "vendor_replay_performed": false
+    },
+    {
+      "ticker": "LLY",
+      "inherited_status": "Fail",
+      "reference": "stockanalysis",
+      "reference_is_original_vendor": true,
+      "target_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "reference_periods": [
+        "2024-09-30",
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30"
+      ],
+      "target_quarters_present": 7,
+      "missing_target_periods": [
+        "2026-09-30"
+      ],
+      "reference_periods_outside_target": [
+        "2024-09-30"
+      ],
+      "inherited_fail_reasons": [
+        "eight_target_quarters_not_complete"
+      ],
+      "inherited_primary_source_checks": {
+        "SEC_operands_verified": 40,
+        "not_applicable_no_numeric_output": 16
+      },
+      "private_detail_available_in_cloud": false,
+      "baseline_file": "research/sec-30-baseline-2026-11-04/LLY.json.gz",
+      "baseline_sha256": "618fe56bc23f2e62cc4208ea40842bcf9f38b7ca9d936bc6d371febcfedbcb2a",
+      "freeze_receipt": "research/cohort-rule-replay-20261104/LLY-freeze.json",
+      "freeze_sha256": "49d818e601593da0cbd6eb089701a527035f892abb4fef2b803cec656f19871f",
+      "latest_saved_SEC_filing": {
+        "form": "10-Q",
+        "filingDate": "2026-10-29",
+        "reportDate": "2026-09-30",
+        "accessionNumber": "0000059478-26-000108",
+        "primaryDocument": "lly-20260930.htm"
+      },
+      "fresh_SEC_download_performed": false,
+      "vendor_replay_performed": false
+    },
+    {
+      "ticker": "BRK-B",
+      "inherited_status": "Fail",
+      "reference": "futu",
+      "reference_is_original_vendor": true,
+      "target_periods": [
+        "2024-09-30",
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30"
+      ],
+      "reference_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30"
+      ],
+      "target_quarters_present": 6,
+      "missing_target_periods": [
+        "2024-09-30",
+        "2025-09-30"
+      ],
+      "reference_periods_outside_target": [],
+      "inherited_fail_reasons": [
+        "eight_target_quarters_not_complete"
+      ],
+      "inherited_primary_source_checks": {
+        "SEC_operands_verified": 48
+      },
+      "private_detail_available_in_cloud": false,
+      "baseline_file": "research/sec-30-baseline-2026-11-04/BRK-B.json.gz",
+      "baseline_sha256": "d8d3343215f39a290f441699f3ba96e653490c847d100d088e7aae34d693f18f",
+      "freeze_receipt": "research/cohort-rule-replay-20261104/BRK-B-freeze.json",
+      "freeze_sha256": "4a896a2597004c9f87d5c74d581d4e82a1de154ca634a983d1af44609cbd95ac",
+      "latest_saved_SEC_filing": {
+        "form": "10-Q",
+        "filingDate": "2026-08-10",
+        "reportDate": "2026-06-30",
+        "accessionNumber": "0001193125-26-341032",
+        "primaryDocument": "brka-20260630.htm"
+      },
+      "fresh_SEC_download_performed": false,
+      "vendor_replay_performed": false
+    },
+    {
+      "ticker": "PGR",
+      "inherited_status": "Fail",
+      "reference": "futu",
+      "reference_is_original_vendor": true,
+      "target_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "reference_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30"
+      ],
+      "target_quarters_present": 7,
+      "missing_target_periods": [
+        "2026-09-30"
+      ],
+      "reference_periods_outside_target": [],
+      "inherited_fail_reasons": [
+        "eight_target_quarters_not_complete"
+      ],
+      "inherited_primary_source_checks": {
+        "SEC_operands_verified": 49
+      },
+      "private_detail_available_in_cloud": false,
+      "baseline_file": "research/sec-30-baseline-2026-11-04/PGR.json.gz",
+      "baseline_sha256": "96ccc3067e403f30c32c541df37408e47e9c223db77e897c578e341f5144a1cb",
+      "freeze_receipt": "research/cohort-rule-replay-20261104/PGR-freeze.json",
+      "freeze_sha256": "50dcc4fc32c9656025a40d88622ef741bd22cefe19be5d536dc466b7a541a87f",
+      "latest_saved_SEC_filing": {
+        "form": "10-Q",
+        "filingDate": "2026-11-02",
+        "reportDate": "2026-09-30",
+        "accessionNumber": "0000080661-26-000379",
+        "primaryDocument": "pgr-20260930.htm"
+      },
+      "fresh_SEC_download_performed": false,
+      "vendor_replay_performed": false
+    },
+    {
+      "ticker": "CVX",
+      "inherited_status": "Fail",
+      "reference": "futu",
+      "reference_is_original_vendor": true,
+      "target_periods": [
+        "2024-09-30",
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30"
+      ],
+      "reference_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2026-03-31",
+        "2026-06-30"
+      ],
+      "target_quarters_present": 5,
+      "missing_target_periods": [
+        "2024-09-30",
+        "2025-09-30",
+        "2025-12-31"
+      ],
+      "reference_periods_outside_target": [],
+      "inherited_fail_reasons": [
+        "eight_target_quarters_not_complete"
+      ],
+      "inherited_primary_source_checks": {
+        "SEC_operands_verified": 20
+      },
+      "private_detail_available_in_cloud": false,
+      "baseline_file": "research/sec-30-baseline-2026-11-04/CVX.json.gz",
+      "baseline_sha256": "8e1162a17e47febc94928e463d7644e9f768715027bd337f8f26012d8a297c3a",
+      "freeze_receipt": "research/cohort-rule-replay-20261104/CVX-freeze.json",
+      "freeze_sha256": "bf52c4239e5d48aff531d42ec4bfd6fe42a8323df16ed495506831d4cff5623e",
+      "latest_saved_SEC_filing": {
+        "form": "10-Q",
+        "filingDate": "2026-08-06",
+        "reportDate": "2026-06-30",
+        "accessionNumber": "0000093410-26-000167",
+        "primaryDocument": "cvx-20260630.htm"
+      },
+      "fresh_SEC_download_performed": false,
+      "vendor_replay_performed": false
+    },
+    {
+      "ticker": "PLD",
+      "inherited_status": "Fail",
+      "reference": "issuer_ir",
+      "reference_is_original_vendor": false,
+      "target_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "reference_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "target_quarters_present": 8,
+      "missing_target_periods": [],
+      "reference_periods_outside_target": [],
+      "inherited_fail_reasons": [
+        "original_three_vendor_reference_missing"
+      ],
+      "inherited_primary_source_checks": {
+        "SEC_operands_verified": 32
+      },
+      "private_detail_available_in_cloud": false,
+      "baseline_file": "research/sec-30-baseline-2026-11-04/PLD.json.gz",
+      "baseline_sha256": "76b329159fc2e4531c254f15b830d27f6c362fdbcc0b8f56bc76541ec30bfcd0",
+      "freeze_receipt": "research/cohort-rule-replay-20261104/PLD-freeze.json",
+      "freeze_sha256": "b8684de87947840a2d82564467d5b8191f7de21c211a6149425d32bec9890149",
+      "latest_saved_SEC_filing": {
+        "form": "10-Q",
+        "filingDate": "2026-10-28",
+        "reportDate": "2026-09-30",
+        "accessionNumber": "0001193125-26-436160",
+        "primaryDocument": "pld-20260930.htm"
+      },
+      "fresh_SEC_download_performed": false,
+      "vendor_replay_performed": false
+    }
+  ]
+}

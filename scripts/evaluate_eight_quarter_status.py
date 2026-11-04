@@ -16,6 +16,14 @@ CHOSEN = {t: 'futu' for t in ['MCD', 'WMT', 'BRK-B', 'PGR', 'XOM', 'CVX', 'NEE']
 CHOSEN['PLD'] = 'issuer_ir'
 
 
+def period_coverage(expected_periods, reference_periods):
+    """分開列出目標窗口內覆蓋與窗口外參考，避免以舊八季冒充目標八季。"""
+    target, reference = set(expected_periods), set(reference_periods)
+    return {'target_quarters_present': len(target & reference),
+        'missing_target_periods': sorted(target - reference),
+        'reference_periods_outside_target': sorted(reference - target)}
+
+
 def assess(rows, expected_periods, source):
     selected = [r for r in rows if r['source'] == source and r['kind'] == 'Q']
     dates = {r['sec_period_end'] for r in selected if r.get('sec_period_end')}
@@ -34,6 +42,7 @@ def assess(rows, expected_periods, source):
         failures.append('unequal_or_unresolved_cells')
     return {'status': 'Fail' if failures else 'OK', 'reference': source,
         'reference_quarters_present': len(dates), 'target_periods': sorted(expected_periods),
+        **period_coverage(expected_periods, dates),
         'reference_periods': sorted(dates), 'quarterly_cells': len(selected),
         'cell_statuses': dict(Counter(r['status'] for r in selected)), 'fail_reasons': failures}
 

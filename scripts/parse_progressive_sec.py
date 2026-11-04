@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-"""解析正常 SEC DOM 表格快照；包含 10-K 引用的 Exhibit 13，不讀取公司 IR。"""
+"""解析 SEC 原始 HTML 或 DOM 表格快照；年報使用合併報表 Exhibit 13。"""
 import argparse
 from decimal import Decimal
+import gzip
 import hashlib
 import json
 from pathlib import Path
@@ -124,19 +125,44 @@ def parse_snapshot(data, artifact_sha256):
     return observations
 
 
+def load_sources(manifest, root=Path('.')):
+    """核對保存檔及來源身分；gzip 另外核對解壓後的原始 HTML 雜湊。"""
+    observations = []
+    for source in manifest['files']:
+        path = root / source['path']
+        raw = path.read_bytes()
+        digest = hashlib.sha256(raw).hexdigest()
+        if digest != source['sha256']:
+            raise ValueError('Capture hash mismatch')
+        if source.get('format') == 'SEC_raw_HTML_bytes':
+            from parse_progressive_sec_html import parse_html
+            compression = source.get('compression')
+            if compression not in (None, 'gzip'):
+                raise ValueError('Unsupported SEC artifact compression')
+            if compression == 'gzip':
+                raw = gzip.decompress(raw)
+            if hashlib.sha256(raw).hexdigest() != source['raw_sha256']:
+                raise ValueError('Raw HTML hash mismatch')
+            observations.extend(parse_html(raw, source['source_url']))
+        else:
+            data = json.loads(raw)
+            if data['source_url'] != source['source_url'] or data['format'] != source['format']:
+                raise ValueError('Manifest and SEC snapshot identity differ')
+            observations.extend(parse_snapshot(data, digest))
+    return observations
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__); parser.add_argument('--manifest', type=Path, required=True)
     parser.add_argument('--out', type=Path, required=True); args = parser.parse_args()
-    manifest = json.loads(args.manifest.read_text()); results = []
-    for source in manifest['files']:
-        path = Path(source['path']); raw = path.read_bytes(); digest = hashlib.sha256(raw).hexdigest()
-        if digest != source['sha256']:
-            raise ValueError('Capture hash mismatch')
-        results.extend(parse_snapshot(json.loads(raw), digest))
+    manifest = json.loads(args.manifest.read_text()); results = load_sources(manifest)
+    support = Path(__file__).with_name('parse_progressive_sec_html.py')
     args.out.parent.mkdir(parents=True, exist_ok=True)
     with args.out.open('x') as f:
-        json.dump({'observations': results, 'captures': manifest, 'parser_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest()}, f, ensure_ascii=False, indent=2); f.write('\n')
-    print(f'Parsed {len(manifest["files"])} SEC snapshots; {len(results)} facts')
+        json.dump({'observations': results, 'captures': manifest,
+            'parser_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+            'html_adapter_sha256': hashlib.sha256(support.read_bytes()).hexdigest()}, f, ensure_ascii=False, indent=2); f.write('\n')
+    print(f'Parsed {len(manifest["files"])} SEC artifacts; {len(results)} facts')
 
 
 if __name__ == '__main__':

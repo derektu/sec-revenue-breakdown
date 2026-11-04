@@ -1,0 +1,129 @@
+{
+  "baseline_main": "5af00b9",
+  "issuer": "PGR",
+  "source_documents": 5,
+  "source_formats": [
+    "SEC_raw_HTML_bytes"
+  ],
+  "direct_SEC_HTTP_success_count": 5,
+  "parsed_fact_count": 204,
+  "identical_fact_count_excluding_source_format_and_artifact_hash": 204,
+  "periods": [
+    {
+      "kind": "FY",
+      "year": 2023,
+      "month": 12,
+      "count": 12
+    },
+    {
+      "kind": "FY",
+      "year": 2024,
+      "month": 12,
+      "count": 12
+    },
+    {
+      "kind": "FY",
+      "year": 2025,
+      "month": 12,
+      "count": 12
+    },
+    {
+      "kind": "Q",
+      "year": 2024,
+      "month": 9,
+      "count": 12
+    },
+    {
+      "kind": "Q",
+      "year": 2025,
+      "month": 3,
+      "count": 12
+    },
+    {
+      "kind": "Q",
+      "year": 2025,
+      "month": 6,
+      "count": 12
+    },
+    {
+      "kind": "Q",
+      "year": 2025,
+      "month": 9,
+      "count": 24
+    },
+    {
+      "kind": "Q",
+      "year": 2026,
+      "month": 3,
+      "count": 12
+    },
+    {
+      "kind": "Q",
+      "year": 2026,
+      "month": 6,
+      "count": 12
+    },
+    {
+      "kind": "Q",
+      "year": 2026,
+      "month": 9,
+      "count": 12
+    },
+    {
+      "kind": "YTD6",
+      "year": 2025,
+      "month": 6,
+      "count": 12
+    },
+    {
+      "kind": "YTD6",
+      "year": 2026,
+      "month": 6,
+      "count": 12
+    },
+    {
+      "kind": "YTD9",
+      "year": 2024,
+      "month": 9,
+      "count": 12
+    },
+    {
+      "kind": "YTD9",
+      "year": 2025,
+      "month": 9,
+      "count": 24
+    },
+    {
+      "kind": "YTD9",
+      "year": 2026,
+      "month": 9,
+      "count": 12
+    }
+  ],
+  "Q4_derived_fact_count": {
+    "2024": 12,
+    "2025": 12
+  },
+  "latest_period_end": "2026-09-30",
+  "latest_reference_available": false,
+  "reference_replay_performed": false,
+  "reference_blocker": "雲端沒有被 Git 忽略的第三方逐筆明細；先前固定富途參考缺最新季，未重新查詢。",
+  "completion_status_changed": false,
+  "cohort_ok_count_from_baseline": 23,
+  "blind_test": false,
+  "test_results": {
+    "tests_directory": 133,
+    "recovered_sec": 3,
+    "eight_quarter_eval": 9,
+    "total": 145
+  },
+  "artifact_sha256": {
+    "research/progressive-sec-html-20261104/manifest.json": "9bfa53bb8b11f4b1d7ae6704629d968103182b6af7ca922addb0d897c125f3a4",
+    "research/progressive-sec-html-20261104/Q4-derived-SEC-facts.json": "b75795cd80472fee42cc5086d5b32237708493fc034fbde9266daa247562a951",
+    "scripts/parse_progressive_sec.py": "d6734073eda14ba8728ccbd51a8275de7868ffeef1bf626911e8083428c4265e",
+    "scripts/parse_progressive_sec_html.py": "9ea14d124662ea622537a641477e731a8ec0c4aa5a72e988d2ca783e4a367016",
+    "scripts/evaluate_progressive_sec.py": "75cb93135ea2373cb2bf364c454dc1a5c76d80b91e51b3cc2cf097c331d75182",
+    "tests/test_progressive_sec.py": "db042455d8c30acb5f9bbe12d5bca96f3f11b51939a06a21956183a9123e7e8c",
+    "tests/test_progressive_sec_html.py": "6e163a2e5693bcff3a8f179a63759d8f525ee83c064c6cea9ffe1637e4abc5c2"
+  }
+}
