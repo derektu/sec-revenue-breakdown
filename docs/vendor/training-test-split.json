@@ -6,7 +6,9 @@
     "scripts/compare_vendor_cohort.py": "7ca3f58a8f3430aa5c05cbf0370c62d744953d478512686ce4399704f3403251",
     "scripts/review_vendor_evidence.py": "bef3a82fbe090a6934df6a26be562e8d24356cbfdd077df441c5720e325327af"
   },
-  "frozen_at_utc": "2026-11-04T02:40:56.470949+00:00",
+  "official_evaluation_protocol": "docs/TEMPORAL_EVALUATION.md",
+  "this_snapshot_is_not_a_temporal_eval_freeze_receipt": true,
+  "frozen_at_utc": "2026-11-04T02:47:56.443604+00:00",
   "latest_quarter_used_for_independent_generalization_claim": false,
   "annual_and_quarterly_formats_require_separate_checks": true,
   "q4_annual_minus_nine_months_requires_same_scope_and_recast_review": true,
@@ -23,9 +25,15 @@
         "2024-12-28"
       ],
       "latest_quarter_retrospective_test_date": "2026-09-26",
-      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "latest_quarter_exposure": "latest_baseline_quarter_used_in_local_reference_diagnostics",
       "strict_blind_test": false,
       "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "local_exposure_evidence": {
+        "path": "data/vendor/local/cohort-20261104/batch0.json",
+        "sha256": "69fae49a27cc6da3a04bcb74bf57a418a3acaa8a17f03ea1d7719505ab5131b4",
+        "scope": "latest_baseline_period_used_in_diagnostics",
+        "latest_period_mapping_is_semantically_certified": false
+      },
       "unseen_period_test_status": "not_run_no_unseen_period_selected"
     },
     {
@@ -40,9 +48,15 @@
         "2024-12-31"
       ],
       "latest_quarter_retrospective_test_date": "2026-09-30",
-      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "latest_quarter_exposure": "latest_baseline_quarter_used_in_local_reference_diagnostics",
       "strict_blind_test": false,
       "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "local_exposure_evidence": {
+        "path": "data/vendor/local/cohort-20261104/batch1.json",
+        "sha256": "99b160b471d476f92b370aca811a5333c448ceedd118200e03724ce213d705c3",
+        "scope": "latest_baseline_period_used_in_diagnostics",
+        "latest_period_mapping_is_semantically_certified": false
+      },
       "unseen_period_test_status": "not_run_no_unseen_period_selected"
     },
     {
@@ -57,9 +71,15 @@
         "2024-10-27"
       ],
       "latest_quarter_retrospective_test_date": "2026-07-26",
-      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "latest_quarter_exposure": "latest_baseline_quarter_used_in_local_reference_diagnostics",
       "strict_blind_test": false,
       "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "local_exposure_evidence": {
+        "path": "data/vendor/local/cohort-20261104/batch1.json",
+        "sha256": "99b160b471d476f92b370aca811a5333c448ceedd118200e03724ce213d705c3",
+        "scope": "latest_baseline_period_used_in_diagnostics",
+        "latest_period_mapping_is_semantically_certified": false
+      },
       "unseen_period_test_status": "not_run_no_unseen_period_selected"
     },
     {
@@ -74,9 +94,15 @@
         "2024-11-30"
       ],
       "latest_quarter_retrospective_test_date": "2026-08-31",
-      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "latest_quarter_exposure": "latest_baseline_quarter_used_in_local_reference_diagnostics",
       "strict_blind_test": false,
       "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "local_exposure_evidence": {
+        "path": "data/vendor/local/cohort-20261104/batch1.json",
+        "sha256": "99b160b471d476f92b370aca811a5333c448ceedd118200e03724ce213d705c3",
+        "scope": "latest_baseline_period_used_in_diagnostics",
+        "latest_period_mapping_is_semantically_certified": false
+      },
       "unseen_period_test_status": "not_run_no_unseen_period_selected"
     },
     {
@@ -91,9 +117,15 @@
         "2024-12-31"
       ],
       "latest_quarter_retrospective_test_date": "2026-09-30",
-      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "latest_quarter_exposure": "latest_baseline_quarter_used_in_local_reference_diagnostics",
       "strict_blind_test": false,
       "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "local_exposure_evidence": {
+        "path": "data/vendor/local/cohort-20261104/batch1.json",
+        "sha256": "99b160b471d476f92b370aca811a5333c448ceedd118200e03724ce213d705c3",
+        "scope": "latest_baseline_period_used_in_diagnostics",
+        "latest_period_mapping_is_semantically_certified": false
+      },
       "unseen_period_test_status": "not_run_no_unseen_period_selected"
     },
     {
@@ -108,9 +140,15 @@
         "2024-12-31"
       ],
       "latest_quarter_retrospective_test_date": "2026-09-30",
-      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "latest_quarter_exposure": "latest_baseline_quarter_used_in_local_reference_diagnostics",
       "strict_blind_test": false,
       "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "local_exposure_evidence": {
+        "path": "data/vendor/local/cohort-20261104/batch1.json",
+        "sha256": "99b160b471d476f92b370aca811a5333c448ceedd118200e03724ce213d705c3",
+        "scope": "latest_baseline_period_used_in_diagnostics",
+        "latest_period_mapping_is_semantically_certified": false
+      },
       "unseen_period_test_status": "not_run_no_unseen_period_selected"
     },
     {
@@ -125,9 +163,15 @@
         "2024-09-28"
       ],
       "latest_quarter_retrospective_test_date": "2026-06-27",
-      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "latest_quarter_exposure": "latest_baseline_quarter_used_in_local_reference_diagnostics",
       "strict_blind_test": false,
       "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "local_exposure_evidence": {
+        "path": "data/vendor/local/cohort-20261104/batch1.json",
+        "sha256": "99b160b471d476f92b370aca811a5333c448ceedd118200e03724ce213d705c3",
+        "scope": "latest_baseline_period_used_in_diagnostics",
+        "latest_period_mapping_is_semantically_certified": false
+      },
       "unseen_period_test_status": "not_run_no_unseen_period_selected"
     },
     {
@@ -142,9 +186,15 @@
         "2024-12-31"
       ],
       "latest_quarter_retrospective_test_date": "2026-09-30",
-      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "latest_quarter_exposure": "latest_baseline_quarter_used_in_local_reference_diagnostics",
       "strict_blind_test": false,
       "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "local_exposure_evidence": {
+        "path": "data/vendor/local/cohort-20261104/batch1.json",
+        "sha256": "99b160b471d476f92b370aca811a5333c448ceedd118200e03724ce213d705c3",
+        "scope": "latest_baseline_period_used_in_diagnostics",
+        "latest_period_mapping_is_semantically_certified": false
+      },
       "unseen_period_test_status": "not_run_no_unseen_period_selected"
     },
     {
@@ -159,9 +209,15 @@
         "2024-12-31"
       ],
       "latest_quarter_retrospective_test_date": "2026-09-30",
-      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "latest_quarter_exposure": "latest_baseline_quarter_used_in_local_reference_diagnostics",
       "strict_blind_test": false,
       "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "local_exposure_evidence": {
+        "path": "data/vendor/local/cohort-20261104/batch1.json",
+        "sha256": "99b160b471d476f92b370aca811a5333c448ceedd118200e03724ce213d705c3",
+        "scope": "latest_baseline_period_used_in_diagnostics",
+        "latest_period_mapping_is_semantically_certified": false
+      },
       "unseen_period_test_status": "not_run_no_unseen_period_selected"
     },
     {
@@ -176,9 +232,15 @@
         "2024-12-31"
       ],
       "latest_quarter_retrospective_test_date": "2026-09-30",
-      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "latest_quarter_exposure": "latest_baseline_quarter_used_in_local_reference_diagnostics",
       "strict_blind_test": false,
       "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "local_exposure_evidence": {
+        "path": "data/vendor/local/cohort-20261104/batch2.json",
+        "sha256": "2ec960d3b2ef2a98c9fd28e6268c79af21bbfde3fed99f4fc65731c992167737",
+        "scope": "latest_baseline_period_used_in_diagnostics",
+        "latest_period_mapping_is_semantically_certified": false
+      },
       "unseen_period_test_status": "not_run_no_unseen_period_selected"
     },
     {
@@ -193,9 +255,15 @@
         "2024-10-27"
       ],
       "latest_quarter_retrospective_test_date": "2026-08-02",
-      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "latest_quarter_exposure": "latest_baseline_quarter_used_in_local_reference_diagnostics",
       "strict_blind_test": false,
       "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "local_exposure_evidence": {
+        "path": "data/vendor/local/cohort-20261104/batch2.json",
+        "sha256": "2ec960d3b2ef2a98c9fd28e6268c79af21bbfde3fed99f4fc65731c992167737",
+        "scope": "latest_baseline_period_used_in_diagnostics",
+        "latest_period_mapping_is_semantically_certified": false
+      },
       "unseen_period_test_status": "not_run_no_unseen_period_selected"
     },
     {
@@ -210,9 +278,15 @@
         "2024-09-30"
       ],
       "latest_quarter_retrospective_test_date": "2026-06-30",
-      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "latest_quarter_exposure": "latest_baseline_quarter_used_in_local_reference_diagnostics",
       "strict_blind_test": false,
       "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "local_exposure_evidence": {
+        "path": "data/vendor/local/cohort-20261104/futu-observations.json",
+        "sha256": "2af919ac0e0d78c1ca0d873a2a8661f19d40b74ffb0844b0832297cce1e1d755",
+        "scope": "latest_baseline_period_used_in_diagnostics",
+        "latest_period_mapping_is_semantically_certified": false
+      },
       "unseen_period_test_status": "not_run_no_unseen_period_selected"
     },
     {
@@ -227,9 +301,15 @@
         "2024-10-31"
       ],
       "latest_quarter_retrospective_test_date": "2026-07-31",
-      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "latest_quarter_exposure": "latest_baseline_quarter_used_in_local_reference_diagnostics",
       "strict_blind_test": false,
       "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "local_exposure_evidence": {
+        "path": "data/vendor/local/evidence-review-20261104/futu-second-round.json",
+        "sha256": "f091fe48a5229d568a9f30d7f35b77b885206f0c0b91a56d33086ea4eaac0001",
+        "scope": "latest_baseline_period_used_in_diagnostics",
+        "latest_period_mapping_is_semantically_certified": false
+      },
       "unseen_period_test_status": "not_run_no_unseen_period_selected"
     },
     {
@@ -244,9 +324,15 @@
         "2024-11-24"
       ],
       "latest_quarter_retrospective_test_date": "2026-08-30",
-      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "latest_quarter_exposure": "latest_baseline_quarter_used_in_local_reference_diagnostics",
       "strict_blind_test": false,
       "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "local_exposure_evidence": {
+        "path": "data/vendor/local/cohort-20261104/batch2.json",
+        "sha256": "2ec960d3b2ef2a98c9fd28e6268c79af21bbfde3fed99f4fc65731c992167737",
+        "scope": "latest_baseline_period_used_in_diagnostics",
+        "latest_period_mapping_is_semantically_certified": false
+      },
       "unseen_period_test_status": "not_run_no_unseen_period_selected"
     },
     {
@@ -261,9 +347,15 @@
         "2024-12-31"
       ],
       "latest_quarter_retrospective_test_date": "2026-09-30",
-      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "latest_quarter_exposure": "latest_baseline_quarter_used_in_local_reference_diagnostics",
       "strict_blind_test": false,
       "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "local_exposure_evidence": {
+        "path": "data/vendor/local/cohort-20261104/batch2.json",
+        "sha256": "2ec960d3b2ef2a98c9fd28e6268c79af21bbfde3fed99f4fc65731c992167737",
+        "scope": "latest_baseline_period_used_in_diagnostics",
+        "latest_period_mapping_is_semantically_certified": false
+      },
       "unseen_period_test_status": "not_run_no_unseen_period_selected"
     },
     {
@@ -278,9 +370,15 @@
         "2024-12-31"
       ],
       "latest_quarter_retrospective_test_date": "2026-10-02",
-      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "latest_quarter_exposure": "latest_baseline_quarter_used_in_local_reference_diagnostics",
       "strict_blind_test": false,
       "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "local_exposure_evidence": {
+        "path": "data/vendor/local/cohort-20261104/batch2.json",
+        "sha256": "2ec960d3b2ef2a98c9fd28e6268c79af21bbfde3fed99f4fc65731c992167737",
+        "scope": "latest_baseline_period_used_in_diagnostics",
+        "latest_period_mapping_is_semantically_certified": false
+      },
       "unseen_period_test_status": "not_run_no_unseen_period_selected"
     },
     {
@@ -295,9 +393,15 @@
         "2024-12-29"
       ],
       "latest_quarter_retrospective_test_date": "2026-09-27",
-      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "latest_quarter_exposure": "latest_baseline_quarter_used_in_local_reference_diagnostics",
       "strict_blind_test": false,
       "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "local_exposure_evidence": {
+        "path": "data/vendor/local/cohort-20261104/batch2.json",
+        "sha256": "2ec960d3b2ef2a98c9fd28e6268c79af21bbfde3fed99f4fc65731c992167737",
+        "scope": "latest_baseline_period_used_in_diagnostics",
+        "latest_period_mapping_is_semantically_certified": false
+      },
       "unseen_period_test_status": "not_run_no_unseen_period_selected"
     },
     {
@@ -312,9 +416,15 @@
         "2024-12-31"
       ],
       "latest_quarter_retrospective_test_date": "2026-09-30",
-      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "latest_quarter_exposure": "latest_baseline_quarter_used_in_local_reference_diagnostics",
       "strict_blind_test": false,
       "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "local_exposure_evidence": {
+        "path": "data/vendor/local/cohort-20261104/batch2.json",
+        "sha256": "2ec960d3b2ef2a98c9fd28e6268c79af21bbfde3fed99f4fc65731c992167737",
+        "scope": "latest_baseline_period_used_in_diagnostics",
+        "latest_period_mapping_is_semantically_certified": false
+      },
       "unseen_period_test_status": "not_run_no_unseen_period_selected"
     },
     {
@@ -329,9 +439,15 @@
         "2024-12-31"
       ],
       "latest_quarter_retrospective_test_date": "2026-09-30",
-      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "latest_quarter_exposure": "exposure_unknown",
       "strict_blind_test": false,
-      "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "leakage_status": "exposure_unknown_not_unseen",
+      "local_exposure_evidence": {
+        "path": "data/vendor/local/cohort-20261104/batch2.json",
+        "sha256": "2ec960d3b2ef2a98c9fd28e6268c79af21bbfde3fed99f4fc65731c992167737",
+        "scope": "historical_reference_only_latest_exposure_unknown",
+        "latest_period_mapping_is_semantically_certified": false
+      },
       "unseen_period_test_status": "not_run_no_unseen_period_selected"
     },
     {
@@ -346,9 +462,15 @@
         "2024-12-31"
       ],
       "latest_quarter_retrospective_test_date": "2026-09-30",
-      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "latest_quarter_exposure": "latest_baseline_quarter_used_in_local_reference_diagnostics",
       "strict_blind_test": false,
       "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "local_exposure_evidence": {
+        "path": "data/vendor/local/cohort-20261104/batch1.json",
+        "sha256": "99b160b471d476f92b370aca811a5333c448ceedd118200e03724ce213d705c3",
+        "scope": "latest_baseline_period_used_in_diagnostics",
+        "latest_period_mapping_is_semantically_certified": false
+      },
       "unseen_period_test_status": "not_run_no_unseen_period_selected"
     },
     {
@@ -363,9 +485,15 @@
         "2024-12-31"
       ],
       "latest_quarter_retrospective_test_date": "2026-09-30",
-      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "latest_quarter_exposure": "latest_baseline_quarter_used_in_local_reference_diagnostics",
       "strict_blind_test": false,
       "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "local_exposure_evidence": {
+        "path": "data/vendor/local/cohort-20261104/batch3.json",
+        "sha256": "6ea1b2074d89390d3d6e439b3cd71b72b34e42ea5971a0e585f702e49ba372e9",
+        "scope": "latest_baseline_period_used_in_diagnostics",
+        "latest_period_mapping_is_semantically_certified": false
+      },
       "unseen_period_test_status": "not_run_no_unseen_period_selected"
     },
     {
@@ -380,9 +508,15 @@
         "2024-09-30"
       ],
       "latest_quarter_retrospective_test_date": "2026-06-30",
-      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "latest_quarter_exposure": "latest_baseline_quarter_used_in_local_reference_diagnostics",
       "strict_blind_test": false,
       "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "local_exposure_evidence": {
+        "path": "data/vendor/local/evidence-review-20261104/futu-second-round.json",
+        "sha256": "f091fe48a5229d568a9f30d7f35b77b885206f0c0b91a56d33086ea4eaac0001",
+        "scope": "latest_baseline_period_used_in_diagnostics",
+        "latest_period_mapping_is_semantically_certified": false
+      },
       "unseen_period_test_status": "not_run_no_unseen_period_selected"
     },
     {
@@ -397,9 +531,15 @@
         "2024-12-31"
       ],
       "latest_quarter_retrospective_test_date": "2026-09-30",
-      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "latest_quarter_exposure": "exposure_unknown",
       "strict_blind_test": false,
-      "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "leakage_status": "exposure_unknown_not_unseen",
+      "local_exposure_evidence": {
+        "path": "data/vendor/local/cohort-20261104/futu-observations.json",
+        "sha256": "2af919ac0e0d78c1ca0d873a2a8661f19d40b74ffb0844b0832297cce1e1d755",
+        "scope": "historical_reference_only_latest_exposure_unknown",
+        "latest_period_mapping_is_semantically_certified": false
+      },
       "unseen_period_test_status": "not_run_no_unseen_period_selected"
     },
     {
@@ -408,9 +548,15 @@
         "2026-06-30"
       ],
       "latest_quarter_retrospective_test_date": "2026-09-30",
-      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "latest_quarter_exposure": "exposure_unknown",
       "strict_blind_test": false,
-      "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "leakage_status": "exposure_unknown_not_unseen",
+      "local_exposure_evidence": {
+        "path": "data/vendor/local/evidence-review-20261104/futu-second-round.json",
+        "sha256": "f091fe48a5229d568a9f30d7f35b77b885206f0c0b91a56d33086ea4eaac0001",
+        "scope": "historical_reference_only_latest_exposure_unknown",
+        "latest_period_mapping_is_semantically_certified": false
+      },
       "unseen_period_test_status": "not_run_no_unseen_period_selected"
     },
     {
@@ -425,9 +571,15 @@
         "2024-09-30"
       ],
       "latest_quarter_retrospective_test_date": "2026-06-30",
-      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "latest_quarter_exposure": "latest_baseline_quarter_used_in_local_reference_diagnostics",
       "strict_blind_test": false,
       "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "local_exposure_evidence": {
+        "path": "data/vendor/local/cohort-20261104/futu-observations.json",
+        "sha256": "2af919ac0e0d78c1ca0d873a2a8661f19d40b74ffb0844b0832297cce1e1d755",
+        "scope": "latest_baseline_period_used_in_diagnostics",
+        "latest_period_mapping_is_semantically_certified": false
+      },
       "unseen_period_test_status": "not_run_no_unseen_period_selected"
     },
     {
@@ -442,9 +594,15 @@
         "2024-09-30"
       ],
       "latest_quarter_retrospective_test_date": "2026-06-30",
-      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "latest_quarter_exposure": "latest_baseline_quarter_used_in_local_reference_diagnostics",
       "strict_blind_test": false,
       "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "local_exposure_evidence": {
+        "path": "data/vendor/local/cohort-20261104/batch3.json",
+        "sha256": "6ea1b2074d89390d3d6e439b3cd71b72b34e42ea5971a0e585f702e49ba372e9",
+        "scope": "latest_baseline_period_used_in_diagnostics",
+        "latest_period_mapping_is_semantically_certified": false
+      },
       "unseen_period_test_status": "not_run_no_unseen_period_selected"
     },
     {
@@ -459,9 +617,15 @@
         "2024-09-30"
       ],
       "latest_quarter_retrospective_test_date": "2026-06-30",
-      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "latest_quarter_exposure": "latest_baseline_quarter_used_in_local_reference_diagnostics",
       "strict_blind_test": false,
       "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "local_exposure_evidence": {
+        "path": "data/vendor/local/cohort-20261104/batch3.json",
+        "sha256": "6ea1b2074d89390d3d6e439b3cd71b72b34e42ea5971a0e585f702e49ba372e9",
+        "scope": "latest_baseline_period_used_in_diagnostics",
+        "latest_period_mapping_is_semantically_certified": false
+      },
       "unseen_period_test_status": "not_run_no_unseen_period_selected"
     },
     {
@@ -476,9 +640,15 @@
         "2024-12-31"
       ],
       "latest_quarter_retrospective_test_date": "2026-09-30",
-      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "latest_quarter_exposure": "latest_baseline_quarter_used_in_local_reference_diagnostics",
       "strict_blind_test": false,
       "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "local_exposure_evidence": {
+        "path": "data/vendor/local/evidence-review-20261104/futu-second-round.json",
+        "sha256": "f091fe48a5229d568a9f30d7f35b77b885206f0c0b91a56d33086ea4eaac0001",
+        "scope": "latest_baseline_period_used_in_diagnostics",
+        "latest_period_mapping_is_semantically_certified": false
+      },
       "unseen_period_test_status": "not_run_no_unseen_period_selected"
     },
     {
@@ -493,9 +663,15 @@
         "2024-12-31"
       ],
       "latest_quarter_retrospective_test_date": "2026-09-30",
-      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "latest_quarter_exposure": "latest_baseline_quarter_used_in_local_reference_diagnostics",
       "strict_blind_test": false,
       "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "local_exposure_evidence": {
+        "path": "data/vendor/local/cohort-20261104/batch3.json",
+        "sha256": "6ea1b2074d89390d3d6e439b3cd71b72b34e42ea5971a0e585f702e49ba372e9",
+        "scope": "latest_baseline_period_used_in_diagnostics",
+        "latest_period_mapping_is_semantically_certified": false
+      },
       "unseen_period_test_status": "not_run_no_unseen_period_selected"
     },
     {
@@ -510,9 +686,15 @@
         "2024-12-31"
       ],
       "latest_quarter_retrospective_test_date": "2026-09-30",
-      "latest_quarter_exposure": "already_accessed_in_prior_baseline_or_reference_work",
+      "latest_quarter_exposure": "latest_baseline_quarter_used_in_local_reference_diagnostics",
       "strict_blind_test": false,
       "leakage_status": "latest_quarter_seen_before_rule_freeze",
+      "local_exposure_evidence": {
+        "path": "data/vendor/local/evidence-review-20261104/pld-ir-review.json",
+        "sha256": "d321ba6c0913ccf3915bda23ad4667f475e05be81127f1ea374f2a225c68b2cc",
+        "scope": "latest_baseline_period_used_in_diagnostics",
+        "latest_period_mapping_is_semantically_certified": false
+      },
       "unseen_period_test_status": "not_run_no_unseen_period_selected"
     }
   ]

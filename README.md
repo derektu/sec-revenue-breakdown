@@ -22,6 +22,7 @@ Apple 有八季 40 筆 Stock Analysis、五季 25 筆富途觀察與指定 SEC �
 - [還原程式入口](research/recovered-sec/HANDOFF.md)
 - [雲端整合審查](docs/RECOVERED_INTEGRATION.md)
 - [雲端驗證證據](research/cloud-verification.json)
+- [歷史訓練、凍結與保留季度評估](docs/TEMPORAL_EVALUATION.md)
 - [本機參考來源入口](docs/vendor/README.md)
 - [第二輪來源裁決、測試切分與擴展評估](docs/vendor/evidence-review.md)
 - [三十家公司日期與分類稽核](docs/vendor/company-audit.md)

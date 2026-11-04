@@ -7,7 +7,7 @@ import hashlib
 import json
 from pathlib import Path
 
-from compare_vendor_cohort import ROOT
+from compare_vendor_cohort import ROOT, futu_fiscal_date
 
 NOTES = {
     'AAPL': '產品／服務五分類已覆核；Q4 為全年減九個月。採公司揭露口徑，兩家參考支持；不是盲測。',
@@ -48,6 +48,18 @@ def main():
     first = json.loads((private / 'cohort-20261104/private-report-verified.json').read_text())
     details = {c['ticker']: c['detail'] for c in first['private_details']
                if c['source'] == 'stockanalysis' and isinstance(c['detail'], dict)}
+    exposure_files = {}
+    for path in sorted((private / 'cohort-20261104').glob('batch*.json')):
+        for capture in json.loads(path.read_text()):
+            if capture.get('quarterly_confirmed'):
+                exposure_files[capture['ticker']] = (path, {p['sec_date'] for p in details[capture['ticker']]['periods']})
+    for relative in ('cohort-20261104/futu-observations.json', 'evidence-review-20261104/futu-second-round.json'):
+        path = private / relative
+        for capture in json.loads(path.read_text()):
+            dates = {futu_fiscal_date(capture['ticker'], p['period']) for p in capture['captures']}
+            exposure_files.setdefault(capture['ticker'], (path, dates))
+    pld_path = private / 'evidence-review-20261104/pld-ir-review.json'
+    exposure_files['PLD'] = (pld_path, {p['date'] for p in json.loads(pld_path.read_text())})
     roster = json.loads((ROOT / 'research/recovered-sec/eight_quarter_eval/roster.json').read_text())
     rows, splits = [], []
     frozen_paths = ['research/recovered-sec/extract.py', 'research/recovered-sec/eight_quarter_eval/run.py',
@@ -73,10 +85,22 @@ def main():
                'classification_review': NOTES[ticker], 'cross_company_accuracy_measured': False}
         rows.append(row)
         lines.append(f'| {ticker} | {len(dates)} | {period_summary} | {NOTES[ticker]} |')
+        exposure_unknown = ticker in ('LLY', 'PGR', 'XOM')
+        evidence_path, evidence_dates = exposure_files[ticker]
+        if not exposure_unknown and dates[0] not in evidence_dates:
+            raise ValueError(f'Latest-period exposure lacks local evidence: {ticker}')
+        exposure_evidence = {
+            'path': str(evidence_path.relative_to(ROOT)),
+            'sha256': hashlib.sha256(evidence_path.read_bytes()).hexdigest(),
+            'scope': 'historical_reference_only_latest_exposure_unknown' if exposure_unknown else 'latest_baseline_period_used_in_diagnostics',
+            'latest_period_mapping_is_semantically_certified': False,
+        }
         splits.append({'ticker': ticker, 'historical_training_dates_proposed': dates[1:],
                        'latest_quarter_retrospective_test_date': dates[0] if dates else None,
-                       'latest_quarter_exposure': 'already_accessed_in_prior_baseline_or_reference_work',
-                       'strict_blind_test': False, 'leakage_status': 'latest_quarter_seen_before_rule_freeze',
+                       'latest_quarter_exposure': 'exposure_unknown' if exposure_unknown else 'latest_baseline_quarter_used_in_local_reference_diagnostics',
+                       'strict_blind_test': False,
+                       'leakage_status': 'exposure_unknown_not_unseen' if exposure_unknown else 'latest_quarter_seen_before_rule_freeze',
+                       'local_exposure_evidence': exposure_evidence,
                        'unseen_period_test_status': 'not_run_no_unseen_period_selected'})
     lines += ['', '## 逐季日期與狀態', '',
               '下表列的是 SEC 日期；無配對不直接歸責來源。CAT／UPS 有參考期比凍結基準新，LLY 有較舊參考期。',
@@ -93,6 +117,8 @@ def main():
     (ROOT / 'docs/vendor/company-audit.json').write_text(json.dumps({'companies': rows}, ensure_ascii=False, indent=2) + '\n')
     (ROOT / 'docs/vendor/training-test-split.json').write_text(json.dumps({
         'study_mode': 'retrospective_with_known_leakage', 'frozen_rule_sha256': hashes,
+        'official_evaluation_protocol': 'docs/TEMPORAL_EVALUATION.md',
+        'this_snapshot_is_not_a_temporal_eval_freeze_receipt': True,
         'frozen_at_utc': dt.datetime.now(dt.timezone.utc).isoformat(),
         'latest_quarter_used_for_independent_generalization_claim': False,
         'annual_and_quarterly_formats_require_separate_checks': True,
