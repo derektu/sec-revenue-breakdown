@@ -2,7 +2,7 @@
 
 營收數字的擷取與計算輸入必須來自 **SEC 申報文件**，包括 10-K、10-Q 及 8-K 附件。Stock Analysis、富途、TradingView 與公司 IR 可以作參考或解釋差異，不能代替 SEC 原始數字。公司發行稿即使內容相同，也不能直接把其公司網站網址改標為 SEC。
 
-目前最新為 **24 / 30 OK、6 / 30 Fail**，見 [三十家公司結果](../../research/reference-gap-completion-20261104/completion-status.json) 與 [CAT、Comcast、PGR 最新修復](sec-remaining-company-repairs.md)。完成的 768 個數字輸出都有 SEC 運算元；N/A 不補零。最新 [MCD／CVX 參考補齊](reference-gap-completion.md) 與 [XOM 歷史八季](xom-sec-history.md) 已整合。以下保留前輪 21 家來源修正的實際過程。
+目前最新為 **跨來源 29 / 30 OK、1 / 30 Fail**，見 [三十家公司結果](../../research/cross-source-final-20261104/completion-status.json) 與 [CAT、Comcast、PGR 最新修復](sec-remaining-company-repairs.md)。完成公司的 1,060 個對照數字輸出（含總額與組成，非獨立樣本）都有 SEC 運算元；N/A 不補零。最新 [MCD／CVX 參考補齊](reference-gap-completion.md) 與 [XOM 歷史八季](xom-sec-history.md) 已整合。以下保留前輪 21 家來源修正的實際過程。
 
 ## 本輪實際修正
 
@@ -36,4 +36,4 @@ data/vendor/local/.venv/bin/python scripts/enforce_sec_primary_source.py \
 
 [前輪驗證收據](../../research/sec-only-completion-20261104/local-verification.json)：125 項離線測試通過、三十家結果及來源快照雜湊通過、原始參考值與日期未改，680 個完成輸出全數有 SEC 出處。沿用已保存並驗證的 SEC facts，沒有宣稱本輪重新下載或重剖全部 SEC 原始 HTML。所有季度仍為回溯驗證。
 
-最新三十家明細路徑及 SHA-256 以 [24 家收據](../../research/reference-gap-completion-20261104/completion-status.json) 為準。CAT／Comcast 的正常 SEC 瀏覽器讀取已成功，原先 CLI 403 與公司 PDF 逾時不再代表這兩家的 SEC 原表缺口。剩餘六家及具體處理方式見 [最新修復報告](reference-gap-completion.md)。
+最新三十家明細路徑及 SHA-256 以 [跨來源 29 家收據](../../research/cross-source-final-20261104/completion-status.json) 為準。CAT／Comcast 的正常 SEC 瀏覽器讀取已成功，原先 CLI 403 與公司 PDF 逾時不再代表這兩家的 SEC 原表缺口。最新裁決及 CVX 剩餘缺口見 [跨來源裁決](cross-source-adjudication.md)。
