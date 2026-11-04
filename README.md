@@ -47,3 +47,5 @@ python3 scripts/stage_archive.py /path/to/eight_quarter_reproducible_results.zip
 最新進展：[多家公司歷史規則與回溯驗證](docs/vendor/historical-rule-study.md)。
 
 接續研究：[WMT 與 NEE 範圍缺口查核](docs/vendor/scope-gap-review.md)。
+
+原始財報共用解析實驗：[四家 Q／FY、原始證據、拒絕判定與規模限制](docs/SHARED_RAW_SEMANTICS.md)。
