@@ -370,7 +370,7 @@ class WorkflowTests(WorkflowFixture):
             raw = original(path)
             return (
                 raw + b"\n# synthetic rule revision\n"
-                if path.name == "aapl.py"
+                if path.parent.name == "aapl"
                 else raw
             )
 
@@ -550,7 +550,7 @@ class WorkflowTests(WorkflowFixture):
         self.assertEqual(sum(url == main for url, _ in http.requests), before)
 
     def test_comcast_q1_q2_header_spans_from_explicit_dom_fixture(self):
-        from sec_revenue.parsers.cmcsa_tables import RevenueTables
+        from sec_revenue.issuers.c.cmcsa.tables import RevenueTables
 
         reader = RevenueTables(ROOT, self.data)
         for quarter, month in [("Q1", 3), ("Q2", 6)]:

@@ -531,12 +531,12 @@ class ExtractionWorkflow:
             "service.py",
             "parsers/base.py",
             "parsers/table_support.py",
-            f"parsers/{entry['module']}.py",
         ]
-        helper = f"parsers/{entry['module']}_tables.py"
-        if (package / helper).exists():
-            names.append(helper)
-        # 不納入其他公司的模組；改 AAPL 不使 MSFT 的萃取快取失效。
+        # 只納入這家公司資料夾內的程式；改 AAPL 不使 MSFT 的萃取快取失效。
+        names += sorted(
+            path.relative_to(package).as_posix()
+            for path in self.registry.issuer_dir(ticker).glob("*.py")
+        )
         code = {
             name: hashlib.sha256((package / name).read_bytes()).hexdigest()
             for name in names

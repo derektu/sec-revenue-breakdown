@@ -182,14 +182,16 @@ class EngineTests(unittest.TestCase):
             ROOT / "research/sec-30-baseline-2026-11-04/AAPL.json.gz"
         )
         original_output = registry.create("AAPL").parse(records)
-        module = types.ModuleType("sec_revenue.parsers.newissuer")
+        module = types.ModuleType("sec_revenue.issuers.n.newissuer.parser")
 
         class NewIssuer(IssuerParser):
             ticker = "NEW"
             rules = {"reported": {}}
 
         module.NewIssuer = NewIssuer
-        with patch.dict(sys.modules, {"sec_revenue.parsers.newissuer": module}):
+        with patch.dict(
+            sys.modules, {"sec_revenue.issuers.n.newissuer.parser": module}
+        ):
             registry.entries["NEW"] = {"module": "newissuer", "class": "NewIssuer"}
             self.assertEqual(registry.create("NEW").ticker, "NEW")
             NewIssuer.rules = {"reported": {"new-only": {"alternatives": []}}}

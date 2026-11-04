@@ -116,10 +116,23 @@ class ParserRegistry:
     def __init__(self):
         self.entries = JsonCodec.read(Path(__file__).with_name("registry.json"))
 
+    @staticmethod
+    def issuer_package(ticker_module: str) -> str:
+        """公司資料夾依 module 首字母分層：aapl → a.aapl。"""
+        return f"{ticker_module[0]}.{ticker_module}"
+
+    def issuer_dir(self, ticker: str) -> Path:
+        package = self.issuer_package(self.entries[ticker]["module"])
+        return Path(__file__).with_name("issuers").joinpath(*package.split("."))
+
     def create(self, ticker: str, repository=None, output=None):
         entry = self.entries[ticker]
         return getattr(
-            importlib.import_module("sec_revenue.parsers." + entry["module"]),
+            importlib.import_module(
+                "sec_revenue.issuers."
+                + self.issuer_package(entry["module"])
+                + ".parser"
+            ),
             entry["class"],
         )(repository, output)
 
@@ -292,11 +305,7 @@ class ReplayService:
                 "periods": self.registry.entries[ticker]["periods"],
                 "parser_class": type(parser).__name__,
                 "parser_sha256": hashlib.sha256(
-                    (
-                        Path(__file__).parent
-                        / "parsers"
-                        / (self.registry.entries[ticker]["module"] + ".py")
-                    ).read_bytes()
+                    (self.registry.issuer_dir(ticker) / "parser.py").read_bytes()
                 ).hexdigest(),
             },
         )
