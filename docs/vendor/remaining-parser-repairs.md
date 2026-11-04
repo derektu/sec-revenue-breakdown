@@ -1,3 +1,5 @@
+> 本文為前批 20 / 30 紀錄；最新為 **21 / 30 OK**，見 [剩餘公司原表續查](remaining-company-resolution.md)。HD 已裁決完成，PGR 的原表／Q4 亦已修復，仍缺最新季參考。
+
 # 八季 parser：20 / 30 OK，10 / 30 Fail
 
 截至 2026-11-04，本批新增 **COST、KO、WMT、BAC、UNH、UPS** 六家。完整三十家公司結論在 [historical-rule-study.md](historical-rule-study.md)；機器可讀結論在 [extended-completion-status.json](../../research/completed-parser-repairs-20261104/extended-completion-status.json)。同目錄的 `summary.json`、`eight-quarter-status.json`、`completion-status.json` 是依序重跑的前階段收據，不能當作最新總數。

@@ -1,0 +1,222 @@
+{
+  "original_fail_companies": 10,
+  "newly_resolved": [
+    "HD"
+  ],
+  "remaining_fail": 9,
+  "companies": [
+    {
+      "ticker": "CMCSA",
+      "status": "Fail",
+      "remaining_blocker_types": [
+        "原始申報／完整表格取得",
+        "parser 覆蓋"
+      ],
+      "period_mapping_remaining_blocker": false,
+      "reference_quarters_aligned": 8,
+      "target_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "note": "原表 parser 只有三個目標季度；其餘五季仍需可正常取得的完整表。",
+      "permanent_source_unavailability_claimed": false,
+      "source_of_evidence": "本輪結果；來源覆蓋其餘沿用已保存正常頁面檢查紀錄。PGR 另有本輪新鮮選單查驗。"
+    },
+    {
+      "ticker": "HD",
+      "status": "OK",
+      "remaining_blocker_types": [],
+      "period_mapping_remaining_blocker": false,
+      "reference_quarters_aligned": 8,
+      "target_periods": [
+        "2024-10-27",
+        "2025-02-02",
+        "2025-05-04",
+        "2025-08-03",
+        "2025-11-02",
+        "2026-02-01",
+        "2026-05-03",
+        "2026-08-02"
+      ],
+      "note": "本輪已完成同年度原表裁決：30 項相同、兩項有可重現差異解釋，改為 OK。",
+      "permanent_source_unavailability_claimed": false,
+      "source_of_evidence": "本輪結果；來源覆蓋其餘沿用已保存正常頁面檢查紀錄。PGR 另有本輪新鮮選單查驗。"
+    },
+    {
+      "ticker": "MCD",
+      "status": "Fail",
+      "remaining_blocker_types": [
+        "參考資料缺季"
+      ],
+      "period_mapping_remaining_blocker": false,
+      "reference_quarters_aligned": 7,
+      "target_periods": [
+        "2024-09-30",
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30"
+      ],
+      "note": "缺目標最新 2026 Q3 參考；現有七季 21 項相同。",
+      "permanent_source_unavailability_claimed": false,
+      "source_of_evidence": "本輪結果；來源覆蓋其餘沿用已保存正常頁面檢查紀錄。PGR 另有本輪新鮮選單查驗。"
+    },
+    {
+      "ticker": "LLY",
+      "status": "Fail",
+      "remaining_blocker_types": [
+        "參考資料缺季"
+      ],
+      "period_mapping_remaining_blocker": false,
+      "reference_quarters_aligned": 8,
+      "target_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "note": "已保存八季較舊，缺目標 2026 Q3；不能更換目標窗口來算通過。",
+      "permanent_source_unavailability_claimed": false,
+      "source_of_evidence": "本輪結果；來源覆蓋其餘沿用已保存正常頁面檢查紀錄。PGR 另有本輪新鮮選單查驗。"
+    },
+    {
+      "ticker": "BRK-B",
+      "status": "Fail",
+      "remaining_blocker_types": [
+        "參考資料缺季"
+      ],
+      "period_mapping_remaining_blocker": false,
+      "reference_quarters_aligned": 6,
+      "target_periods": [
+        "2024-09-30",
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30"
+      ],
+      "note": "缺 2024 Q3 與 2025 Q3；現有六季 48 項相同。",
+      "permanent_source_unavailability_claimed": false,
+      "source_of_evidence": "本輪結果；來源覆蓋其餘沿用已保存正常頁面檢查紀錄。PGR 另有本輪新鮮選單查驗。"
+    },
+    {
+      "ticker": "PGR",
+      "status": "Fail",
+      "remaining_blocker_types": [
+        "參考資料缺季"
+      ],
+      "period_mapping_remaining_blocker": false,
+      "reference_quarters_aligned": 7,
+      "target_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "note": "本輪已解決原表漏欄及 Q4：七季 43 項相同、六項有原表支持差異，仍缺目標 2026 Q3 參考。",
+      "permanent_source_unavailability_claimed": false,
+      "source_of_evidence": "本輪結果；來源覆蓋其餘沿用已保存正常頁面檢查紀錄。PGR 另有本輪新鮮選單查驗。"
+    },
+    {
+      "ticker": "XOM",
+      "status": "Fail",
+      "remaining_blocker_types": [
+        "歷史 SEC 取得／新舊 CIK"
+      ],
+      "period_mapping_remaining_blocker": false,
+      "reference_quarters_aligned": 1,
+      "target_periods": [
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "note": "舊 CIK 34088 歷史來源尚缺；正常請求回 403 後停止，只有一季可完整對照。",
+      "permanent_source_unavailability_claimed": false,
+      "source_of_evidence": "本輪結果；來源覆蓋其餘沿用已保存正常頁面檢查紀錄。PGR 另有本輪新鮮選單查驗。"
+    },
+    {
+      "ticker": "CVX",
+      "status": "Fail",
+      "remaining_blocker_types": [
+        "參考資料缺季"
+      ],
+      "period_mapping_remaining_blocker": false,
+      "reference_quarters_aligned": 5,
+      "target_periods": [
+        "2024-09-30",
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30"
+      ],
+      "note": "Q4 已修復，五季二十項相同；固定來源仍缺三季。",
+      "permanent_source_unavailability_claimed": false,
+      "source_of_evidence": "本輪結果；來源覆蓋其餘沿用已保存正常頁面檢查紀錄。PGR 另有本輪新鮮選單查驗。"
+    },
+    {
+      "ticker": "CAT",
+      "status": "Fail",
+      "remaining_blocker_types": [
+        "原始申報／完整表格取得"
+      ],
+      "period_mapping_remaining_blocker": false,
+      "reference_quarters_aligned": 7,
+      "target_periods": [
+        "2024-09-30",
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30"
+      ],
+      "note": "最新 Q3 原表尚未保存；瀏覽器下載結果未定、另一次正常 SEC 發行稿 GET 回 403 後停止。",
+      "permanent_source_unavailability_claimed": false,
+      "source_of_evidence": "本輪結果；來源覆蓋其餘沿用已保存正常頁面檢查紀錄。PGR 另有本輪新鮮選單查驗。"
+    },
+    {
+      "ticker": "PLD",
+      "status": "Fail",
+      "remaining_blocker_types": [
+        "原三家參考覆蓋"
+      ],
+      "period_mapping_remaining_blocker": false,
+      "reference_quarters_aligned": 8,
+      "target_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "note": "公司 IR 八季 32 項相同；原三家尚無完整八季，不列入主 OK 計數。",
+      "permanent_source_unavailability_claimed": false,
+      "source_of_evidence": "本輪結果；來源覆蓋其餘沿用已保存正常頁面檢查紀錄。PGR 另有本輪新鮮選單查驗。"
+    }
+  ]
+}
