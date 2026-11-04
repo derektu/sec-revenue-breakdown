@@ -1,0 +1,261 @@
+{
+  "schema_version": 1,
+  "frozen_at": "2026-11-04T04:24:33.769768+00:00",
+  "rule_version": "wmt-explicit-candidate-catalog-v1",
+  "plan": {
+    "schema_version": 1,
+    "ticker": "WMT",
+    "cik": "0000104169",
+    "rule_version": null,
+    "baseline_file": "research/sec-30-baseline-2026-11-04/WMT.json.gz",
+    "baseline_sha256": "3b66184f5a50f7642174e8c2d35b4357270e38fc3b28eb548b1ff5a6c0885b49",
+    "cutoff": {
+      "filing_date": "2026-05-29",
+      "period_end": "2026-04-30"
+    },
+    "training": [
+      {
+        "accession": "0000104169-24-000141",
+        "period_end": "2024-07-31",
+        "filing_date": "2024-08-30",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/104169/000010416924000141/wmt-20240731.htm",
+        "sha256": "c3054fde23f182a5afc81c3c89a2eb8a33fe45c81ce9524ec2b7bbea1f4502ee"
+      },
+      {
+        "accession": "0000104169-24-000178",
+        "period_end": "2024-10-31",
+        "filing_date": "2024-12-06",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/104169/000010416924000178/wmt-20241031.htm",
+        "sha256": "cab1dffd1d7c71e5e3ffd6f3123b84a73adbdcf912112a0809014e729bc323e9"
+      },
+      {
+        "accession": "0000104169-25-000021",
+        "period_end": "2025-01-31",
+        "filing_date": "2025-03-14",
+        "form": "10-K",
+        "url": "https://www.sec.gov/Archives/edgar/data/104169/000010416925000021/wmt-20250131.htm",
+        "sha256": "d8f9dd070c7f0257d9fdeaaf03efe56ad4ac4e7da9b9745bdada3aa37241cecb"
+      },
+      {
+        "accession": "0000104169-25-000090",
+        "period_end": "2025-04-30",
+        "filing_date": "2025-06-06",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/104169/000010416925000090/wmt-20250430.htm",
+        "sha256": "4f2815bb325690c376ec6ea6f34c068230ec49ecc962ac330b224d1c86c4108d"
+      },
+      {
+        "accession": "0000104169-25-000137",
+        "period_end": "2025-07-31",
+        "filing_date": "2025-08-29",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/104169/000010416925000137/wmt-20250731.htm",
+        "sha256": "290f645102e6be4f0a020f82c651e8f6f80c6015a8772d84afe02835b06f345a"
+      },
+      {
+        "accession": "0000104169-25-000191",
+        "period_end": "2025-10-31",
+        "filing_date": "2025-12-03",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/104169/000010416925000191/wmt-20251031.htm",
+        "sha256": "7dc0374aa9e12568d0b93514c724bad77bb971e6c4bb3024c4e61de7650457aa"
+      },
+      {
+        "accession": "0000104169-26-000055",
+        "period_end": "2026-01-31",
+        "filing_date": "2026-03-13",
+        "form": "10-K",
+        "url": "https://www.sec.gov/Archives/edgar/data/104169/000010416926000055/wmt-20260131.htm",
+        "sha256": "802a1e7c4658b4b566d7bd07bcf7ef62a615f72d2309951bee8dce86350cd64a"
+      },
+      {
+        "accession": "0000104169-26-000102",
+        "period_end": "2026-04-30",
+        "filing_date": "2026-05-29",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/104169/000010416926000102/wmt-20260430.htm",
+        "sha256": "0d21d2ec6dce8076c0ea336c91acd2d07d683f780aa557935abc9715d7c95072"
+      }
+    ],
+    "holdout": [
+      {
+        "accession": "0000104169-26-000154",
+        "period_end": "2026-07-31",
+        "filing_date": "2026-08-28",
+        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/104169/000010416926000154/wmt-20260731.htm",
+        "sha256": "4d62e75cfc58c2125661229314a5703b0a063a5b620247875d71d9d43b5af271"
+      }
+    ],
+    "exposure": {
+      "seen_during_development": "yes",
+      "evidence": [
+        "docs/vendor/training-test-split.json"
+      ],
+      "note": "Retrospective split; historical development exposure is not fully recorded."
+    },
+    "references": [
+      {
+        "source": "tradingview",
+        "availability": "not_loaded_by_this_workflow",
+        "seen_during_development": "unknown",
+        "evidence": []
+      },
+      {
+        "source": "futu",
+        "availability": "not_loaded_by_this_workflow",
+        "seen_during_development": "unknown",
+        "evidence": []
+      },
+      {
+        "source": "stockanalysis",
+        "availability": "not_loaded_by_this_workflow",
+        "seen_during_development": "unknown",
+        "evidence": []
+      }
+    ],
+    "adjudication": {
+      "preferred_reference": null,
+      "status": "unresolved",
+      "rationale": null,
+      "evidence": [],
+      "uncertainty": "No company-specific adjudication added."
+    }
+  },
+  "plan_sha256": "2df26f0fed640e90221ad4c6f582bb1b98a8ce6cf5f7ff8b95945d47e1596fb0",
+  "rules": {
+    "version": "wmt-explicit-candidate-catalog-v1",
+    "category_catalog": {
+      "stockanalysis": {},
+      "futu": {
+        "Walmart United States (U.S.)": {
+          "alternatives": [
+            [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "wmt:WalmartUSMember",
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "scope_candidate"
+        },
+        "沃爾瑪國際": {
+          "alternatives": [
+            [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "wmt:WalmartInternationalMember",
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "scope_candidate"
+        },
+        "Sam's Club United States (U.S.)": {
+          "alternatives": [
+            [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "wmt:SamsClubUSMember",
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+                },
+                "unit": "iso4217:USD",
+                "weight": 1
+              }
+            ]
+          ],
+          "role": "scope_candidate"
+        }
+      }
+    },
+    "selectors": [
+      {
+        "id": "Q:0",
+        "period_kind": "Q",
+        "semantic_basis": "WMT:explicit-scope-candidate-0",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "wmt:WalmartUSMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:1",
+        "period_kind": "Q",
+        "semantic_basis": "WMT:explicit-scope-candidate-1",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "wmt:WalmartInternationalMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "Q:2",
+        "period_kind": "Q",
+        "semantic_basis": "WMT:explicit-scope-candidate-2",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "wmt:SamsClubUSMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:0",
+        "period_kind": "FY",
+        "semantic_basis": "WMT:explicit-scope-candidate-0",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "wmt:WalmartUSMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:1",
+        "period_kind": "FY",
+        "semantic_basis": "WMT:explicit-scope-candidate-1",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "wmt:WalmartInternationalMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      },
+      {
+        "id": "FY:2",
+        "period_kind": "FY",
+        "semantic_basis": "WMT:explicit-scope-candidate-2",
+        "concept": "us-gaap:Revenues",
+        "dimensions": {
+          "us-gaap:StatementBusinessSegmentsAxis": "wmt:SamsClubUSMember",
+          "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+        },
+        "unit": "iso4217:USD"
+      }
+    ],
+    "independent_human_review": false
+  },
+  "rules_sha256": "320433ea8e5e10388810fe8d768c42dc20dbdb6c18c2a5ee615c1f0e572eebc7",
+  "code_sha256": {
+    "scripts/temporal_eval.py": "fe0231704faad744332c44d201b8869c0623a71e0093ca7a0362b957e39c9575",
+    "research/recovered-sec/extract.py": "1253782f4fabcf86dc6242bbff5054a091c533ba4f639be15da2b7165be99049",
+    "research/recovered-sec/eight_quarter_eval/run.py": "7593482ab11aea89564875ba88a26e635b6e4b84dd56d50c2061abd9495a084a"
+  },
+  "training_pack_sha256": "6bef57247b2215699cb31db81f0bdae854734daa98897f8d186a6d38db53ca72",
+  "note": "A freeze is a reproducibility receipt, not proof of unseen data."
+}

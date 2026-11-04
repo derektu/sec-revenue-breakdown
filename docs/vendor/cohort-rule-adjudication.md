@@ -1,6 +1,6 @@
 # 三十家公司分類規則與來源裁決實驗
 
-**完成狀態：9 / 30 OK。** 請先看 [八季 parser 的逐公司 OK／Fail](historical-rule-study.md)。本文件保留細節計數；數值候選相同不等於 parser 已完成。
+**完成狀態：14 / 30 OK。** 請先看 [八季 parser 的逐公司 OK／Fail](historical-rule-study.md)。本文件保留細節計數；數值候選相同不等於 parser 已完成。
 
 截至 2026-11-04，本輪已對完整 30 家執行明確 concept、完整 dimensions、USD unit 的分類候選重播。這是可稽核的回溯實驗，不是完成所有公司財報揭露的產品，也不是準確率報告。27 家最新季度已接觸；LLY、PGR、XOM 接觸未知，本輪排除其最新季度。嚴格未見測試為 **0**。
 
