@@ -1,6 +1,6 @@
 {
   "recorded_at_utc": "2026-11-04T07:10:52.999491+00:00",
-  "fixed_vendor_completion_count_unchanged": 23,
+  "fixed_vendor_completion_count_unchanged": 24,
   "blind_test": false,
   "XOM_excluded": true,
   "attempts": [
@@ -42,7 +42,7 @@
       "capture_sha256": "b4166f4332e547586c38880a409aa402181d3bc420b028c7ed07ffcdf4123f21",
       "capture_format": "web_tool_response_text_not_original_page_or_PDF_bytes",
       "status": "HTTP_403_stopped",
-      "note": "報告入口回 403；未重試、未繞過，三個缺季均未新增參考比對。"
+      "note": "報告入口回 403；未重試、未繞過，三個缺季均未新增參考比對。 main 另補回富途 2024 Q3；目前缺 2025 Q3、2025 Q4。"
     },
     {
       "ticker": "LLY",
@@ -67,7 +67,10 @@
   ],
   "PLD": "前輪公司 IR 八季已完整，本輪未重抓；仍缺原三家之一完整八季。",
   "test_results": {
-    "tests_directory": 143,
-    "new_reference_tests": 7
-  }
+    "tests_directory": 151,
+    "new_reference_tests": 7,
+    "before_integration_tests_directory": 143
+  },
+  "integration_main": "58ed0f6",
+  "integration_note": "main 已另補回 MCD 與 CVX 的富途 2024 Q3，MCD OK，整體 24/30；本研究十九項不另增加家數。"
 }

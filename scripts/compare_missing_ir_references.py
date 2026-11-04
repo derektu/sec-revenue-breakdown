@@ -155,7 +155,7 @@ def main():
     temporal.save(detail, json.loads(json.dumps(comparisons, default=str)))
     for row in comparisons:
         public.append({k: v for k, v in row.items() if k not in ('reference_usd',)})
-    prior_summary = ROOT / 'research/comcast-sec-repair-20261104/completion-status.json'
+    prior_summary = ROOT / 'research/reference-gap-completion-20261104/completion-status.json'
     result = {'status': 'supplementary_reference_study_only',
         'fixed_vendor_completion_count': temporal.load(prior_summary)['ok_count'],
         'source_summary_path': str(prior_summary.relative_to(ROOT)), 'source_summary_sha256': digest(prior_summary),

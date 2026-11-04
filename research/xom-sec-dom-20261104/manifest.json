@@ -1,0 +1,45 @@
+{
+  "method": "正常 Edge 唯讀擷取 SEC 財務表 cell textContent，保留收入與對帳；非原始 HTML bytes。轉存後 canonical checksum 與 browser 擷取物件一致。",
+  "files": [
+    {
+      "path": "research/xom-sec-dom-20261104/XOM-2026Q1.json",
+      "sha256": "5434290a747ff654732eb46c3be126301a9353a24dd755d903e0f176db7d4f38",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/34088/000003408826000067/xom-20260331.htm",
+      "browser_capture_fnv32": "fe7e8af1"
+    },
+    {
+      "path": "research/xom-sec-dom-20261104/XOM-2026Q2.json",
+      "sha256": "6b58273db454697c8cb52c5c6e28f366678cd49f1eea7b8440a3a43aed0699bc",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/34088/000003408826000093/xom-20260630.htm",
+      "browser_capture_fnv32": "332d3a95"
+    },
+    {
+      "path": "research/xom-sec-dom-20261104/XOM-2025Q3.json",
+      "sha256": "cc2446b45a8d649ce42f7b98da85c1f66d3ed36edc2a4587eb1c2b190bc6d299",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/34088/000003408825000061/xom-20250930.htm",
+      "browser_capture_fnv32": "954220d3"
+    },
+    {
+      "path": "research/xom-sec-dom-20261104/XOM-2025FY.json",
+      "sha256": "1a0a165f6ad790bdb610a915a89e16c6898a924364234fd16f4dd3f4d3a988aa",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/34088/000003408826000045/xom-20251231.htm",
+      "browser_capture_fnv32": "8bc59614"
+    }
+  ],
+  "supplemental_page_text": [
+    {
+      "path": "research/xom-sec-dom-20261104/XOM-annual-sales-web.txt",
+      "sha256": "0589705749e3ee0d5afe6ae50af89b8e245808b1cc9dffab060e0618c6473946",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/34088/000003408826000045/xom-20251231.htm",
+      "source_format": "SEC_page_text_returned_by_web_tool",
+      "method": "正常 web 工具直接讀取 SEC 文件；保留原表行號及欄位，不冒稱原始 HTML。"
+    },
+    {
+      "path": "research/xom-sec-dom-20261104/XOM-june-sales-web.txt",
+      "sha256": "e7e6786b59b6c5627bf6b83bb018c63f3633893b18c4e75dda8ab2414a9aa242",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/34088/000003408826000093/xom-20260630.htm",
+      "source_format": "SEC_page_text_returned_by_web_tool",
+      "method": "正常 web 工具直接讀取 SEC 文件；保留原表行號及欄位，不冒稱原始 HTML。"
+    }
+  ]
+}

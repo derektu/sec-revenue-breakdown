@@ -1,0 +1,396 @@
+{
+  "MCD": {
+    "period_end": "2024-09-30",
+    "selected_SEC_outputs": {
+      "國際運營的市場": {
+        "status": "observed",
+        "value": 3309000000,
+        "error": "500000",
+        "facts": [
+          {
+            "concept": "us-gaap:Revenues",
+            "context_id": "c-186",
+            "unit": "iso4217:USD",
+            "value": 3309000000,
+            "raw": "3,309",
+            "scale": "6",
+            "decimals": "-6",
+            "fact_id": "f-751",
+            "source_line": 8,
+            "table_index": 24,
+            "row_text": "International Operated Markets 3,309 3,300 9,443 9,251",
+            "dimensions": {
+              "us-gaap:StatementBusinessSegmentsAxis": "mcd:InternationalOperatedMarketsMember"
+            },
+            "startdate": "2024-07-01",
+            "enddate": "2024-09-30",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/63908/000006390824000156/mcd-20240930.htm",
+            "accession": "0000063908-24-000156",
+            "form": "10-Q",
+            "filing_date": "2024-11-07",
+            "derivation": "reported_quarter",
+            "duplicate_count": 1
+          }
+        ],
+        "role": "scope_candidate"
+      },
+      "United States (US)": {
+        "status": "observed",
+        "value": 2739000000,
+        "error": "500000",
+        "facts": [
+          {
+            "concept": "us-gaap:Revenues",
+            "context_id": "c-182",
+            "unit": "iso4217:USD",
+            "value": 2739000000,
+            "raw": "2,739",
+            "scale": "6",
+            "decimals": "-6",
+            "fact_id": "f-747",
+            "source_line": 8,
+            "table_index": 24,
+            "row_text": "U.S. $ 2,739 $ 2,704 $ 7,997 $ 7,893",
+            "dimensions": {
+              "us-gaap:StatementBusinessSegmentsAxis": "mcd:USMarketMember"
+            },
+            "startdate": "2024-07-01",
+            "enddate": "2024-09-30",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/63908/000006390824000156/mcd-20240930.htm",
+            "accession": "0000063908-24-000156",
+            "form": "10-Q",
+            "filing_date": "2024-11-07",
+            "original_dimensions": {
+              "us-gaap:StatementBusinessSegmentsAxis": "mcd:U.S.MarketMember"
+            },
+            "normalization_rule_id": "mcd-explicit-reported-row-scope",
+            "normalization_source": "https://www.sec.gov/Archives/edgar/data/63908/000006390825000012/mcd-20241231.htm",
+            "derivation": "reported_quarter",
+            "duplicate_count": 1
+          }
+        ],
+        "role": "scope_candidate"
+      },
+      "國際開發許可市場和公司": {
+        "status": "observed",
+        "value": 825000000,
+        "error": "500000",
+        "facts": [
+          {
+            "concept": "us-gaap:Revenues",
+            "context_id": "c-190",
+            "unit": "iso4217:USD",
+            "value": 825000000,
+            "raw": "825",
+            "scale": "6",
+            "decimals": "-6",
+            "fact_id": "f-755",
+            "source_line": 8,
+            "table_index": 24,
+            "row_text": "International Developmental Licensed Markets & Corporate 825 688 2,092 1,944",
+            "dimensions": {
+              "us-gaap:StatementBusinessSegmentsAxis": "mcd:InternationalDevelopmentalLicensedMarketsandCorporateMember"
+            },
+            "startdate": "2024-07-01",
+            "enddate": "2024-09-30",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/63908/000006390824000156/mcd-20240930.htm",
+            "accession": "0000063908-24-000156",
+            "form": "10-Q",
+            "filing_date": "2024-11-07",
+            "derivation": "reported_quarter",
+            "duplicate_count": 1
+          }
+        ],
+        "role": "scope_candidate"
+      }
+    },
+    "new_reference_cells": 3,
+    "comparison_statuses": {
+      "exact_scope_candidate_match": 3
+    }
+  },
+  "CVX": {
+    "period_end": "2024-09-30",
+    "selected_SEC_outputs": {
+      "下游": {
+        "status": "observed",
+        "value": 39655000000,
+        "error": "1000000",
+        "facts": [
+          {
+            "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+            "context_id": "c-185",
+            "unit": "iso4217:USD",
+            "value": 20167000000,
+            "raw": "20,167",
+            "scale": "6",
+            "decimals": "-6",
+            "fact_id": "f-891",
+            "source_line": 8,
+            "table_index": 21,
+            "row_text": "United States 20,167 22,749 61,889 62,394",
+            "dimensions": {
+              "us-gaap:StatementBusinessSegmentsAxis": "cvx:DownstreamSegmentMember",
+              "srt:StatementGeographicalAxis": "country:US",
+              "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+            },
+            "startdate": "2024-07-01",
+            "enddate": "2024-09-30",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341024000059/cvx-20240930.htm",
+            "accession": "0000093410-24-000059",
+            "form": "10-Q",
+            "filing_date": "2024-11-07",
+            "original_dimensions": {
+              "srt:StatementGeographicalAxis": "country:US",
+              "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+              "srt:ProductOrServiceAxis": "us-gaap:OilAndGasMember",
+              "us-gaap:StatementBusinessSegmentsAxis": "cvx:DownstreamMember"
+            },
+            "normalization_rule_id": "cvx-2024-gross-sales-reported-rows",
+            "normalization_source": "https://www.sec.gov/Archives/edgar/data/93410/000009341024000059/cvx-20240930.htm",
+            "derivation": "reported_quarter",
+            "duplicate_count": 1
+          },
+          {
+            "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+            "context_id": "c-189",
+            "unit": "iso4217:USD",
+            "value": 19488000000,
+            "raw": "19,488",
+            "scale": "6",
+            "decimals": "-6",
+            "fact_id": "f-895",
+            "source_line": 8,
+            "table_index": 21,
+            "row_text": "International 19,488 21,028 58,210 59,499",
+            "dimensions": {
+              "us-gaap:StatementBusinessSegmentsAxis": "cvx:DownstreamSegmentMember",
+              "srt:StatementGeographicalAxis": "us-gaap:NonUsMember",
+              "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+            },
+            "startdate": "2024-07-01",
+            "enddate": "2024-09-30",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341024000059/cvx-20240930.htm",
+            "accession": "0000093410-24-000059",
+            "form": "10-Q",
+            "filing_date": "2024-11-07",
+            "original_dimensions": {
+              "srt:StatementGeographicalAxis": "us-gaap:NonUsMember",
+              "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+              "srt:ProductOrServiceAxis": "us-gaap:OilAndGasMember",
+              "us-gaap:StatementBusinessSegmentsAxis": "cvx:DownstreamMember"
+            },
+            "normalization_rule_id": "cvx-2024-gross-sales-reported-rows",
+            "normalization_source": "https://www.sec.gov/Archives/edgar/data/93410/000009341024000059/cvx-20240930.htm",
+            "derivation": "reported_quarter",
+            "duplicate_count": 1
+          }
+        ],
+        "role": "scope_candidate"
+      },
+      "上游": {
+        "status": "observed",
+        "value": 22060000000,
+        "error": "1000000",
+        "facts": [
+          {
+            "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+            "context_id": "c-161",
+            "unit": "iso4217:USD",
+            "value": 10730000000,
+            "raw": "10,730",
+            "scale": "6",
+            "decimals": "-6",
+            "fact_id": "f-867",
+            "source_line": 8,
+            "table_index": 21,
+            "row_text": "United States $ 10,730 $ 10,278 $ 33,184 $ 28,656",
+            "dimensions": {
+              "us-gaap:StatementBusinessSegmentsAxis": "cvx:UpstreamSegmentMember",
+              "srt:StatementGeographicalAxis": "country:US",
+              "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+            },
+            "startdate": "2024-07-01",
+            "enddate": "2024-09-30",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341024000059/cvx-20240930.htm",
+            "accession": "0000093410-24-000059",
+            "form": "10-Q",
+            "filing_date": "2024-11-07",
+            "original_dimensions": {
+              "srt:StatementGeographicalAxis": "country:US",
+              "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+              "srt:ProductOrServiceAxis": "us-gaap:OilAndGasMember",
+              "us-gaap:StatementBusinessSegmentsAxis": "cvx:UpstreamMember"
+            },
+            "normalization_rule_id": "cvx-2024-gross-sales-reported-rows",
+            "normalization_source": "https://www.sec.gov/Archives/edgar/data/93410/000009341024000059/cvx-20240930.htm",
+            "derivation": "reported_quarter",
+            "duplicate_count": 1
+          },
+          {
+            "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+            "context_id": "c-165",
+            "unit": "iso4217:USD",
+            "value": 11330000000,
+            "raw": "11,330",
+            "scale": "6",
+            "decimals": "-6",
+            "fact_id": "f-871",
+            "source_line": 8,
+            "table_index": 21,
+            "row_text": "International 11,330 10,633 32,334 31,705",
+            "dimensions": {
+              "us-gaap:StatementBusinessSegmentsAxis": "cvx:UpstreamSegmentMember",
+              "srt:StatementGeographicalAxis": "us-gaap:NonUsMember",
+              "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+            },
+            "startdate": "2024-07-01",
+            "enddate": "2024-09-30",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341024000059/cvx-20240930.htm",
+            "accession": "0000093410-24-000059",
+            "form": "10-Q",
+            "filing_date": "2024-11-07",
+            "original_dimensions": {
+              "srt:StatementGeographicalAxis": "us-gaap:NonUsMember",
+              "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+              "srt:ProductOrServiceAxis": "us-gaap:OilAndGasMember",
+              "us-gaap:StatementBusinessSegmentsAxis": "cvx:UpstreamMember"
+            },
+            "normalization_rule_id": "cvx-2024-gross-sales-reported-rows",
+            "normalization_source": "https://www.sec.gov/Archives/edgar/data/93410/000009341024000059/cvx-20240930.htm",
+            "derivation": "reported_quarter",
+            "duplicate_count": 1
+          }
+        ],
+        "role": "scope_candidate"
+      },
+      "所有其他": {
+        "status": "observed",
+        "value": 139000000,
+        "error": "500000",
+        "facts": [
+          {
+            "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+            "context_id": "c-217",
+            "unit": "iso4217:USD",
+            "value": 139000000,
+            "raw": "139",
+            "scale": "6",
+            "decimals": "-6",
+            "fact_id": "f-923",
+            "source_line": 8,
+            "table_index": 21,
+            "row_text": "Subtotal 139 150 413 415",
+            "dimensions": {
+              "us-gaap:StatementBusinessSegmentsAxis": "us-gaap:AllOtherSegmentsMember",
+              "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+            },
+            "startdate": "2024-07-01",
+            "enddate": "2024-09-30",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341024000059/cvx-20240930.htm",
+            "accession": "0000093410-24-000059",
+            "form": "10-Q",
+            "filing_date": "2024-11-07",
+            "original_dimensions": {
+              "srt:ConsolidationItemsAxis": "us-gaap:CorporateNonSegmentMember",
+              "srt:ProductOrServiceAxis": "us-gaap:OilAndGasMember"
+            },
+            "normalization_rule_id": "cvx-2024-gross-sales-reported-rows",
+            "normalization_source": "https://www.sec.gov/Archives/edgar/data/93410/000009341024000059/cvx-20240930.htm",
+            "derivation": "reported_quarter",
+            "duplicate_count": 1
+          }
+        ],
+        "role": "scope_candidate"
+      },
+      "部門間收入抵銷": {
+        "status": "observed",
+        "value": -12928000000,
+        "error": "500000",
+        "facts": [
+          {
+            "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+            "context_id": "c-245",
+            "unit": "iso4217:USD",
+            "value": -12928000000,
+            "raw": "9,975",
+            "scale": "6",
+            "decimals": "-6",
+            "fact_id": "f-951",
+            "source_line": 8,
+            "table_index": 21,
+            "row_text": "Intersegment Elimination — United States ( 9,975 ) ( 9,192 ) ( 30,960 ) ( 25,010 )",
+            "dimensions": {
+              "srt:ConsolidationItemsAxis": "us-gaap:IntersegmentEliminationMember"
+            },
+            "startdate": "2024-07-01",
+            "enddate": "2024-09-30",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341024000059/cvx-20240930.htm",
+            "accession": "0000093410-24-000059",
+            "form": "10-Q",
+            "filing_date": "2024-11-07",
+            "aggregation_evidence": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "context_id": "c-245",
+                "unit": "iso4217:USD",
+                "value": -9975000000,
+                "raw": "9,975",
+                "scale": "6",
+                "decimals": "-6",
+                "fact_id": "f-951",
+                "source_line": 8,
+                "table_index": 21,
+                "row_text": "Intersegment Elimination — United States ( 9,975 ) ( 9,192 ) ( 30,960 ) ( 25,010 )",
+                "dimensions": {
+                  "srt:StatementGeographicalAxis": "country:US",
+                  "srt:ConsolidationItemsAxis": "srt:GeographyEliminationsMember",
+                  "srt:ProductOrServiceAxis": "us-gaap:OilAndGasMember"
+                },
+                "startdate": "2024-07-01",
+                "enddate": "2024-09-30",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341024000059/cvx-20240930.htm",
+                "accession": "0000093410-24-000059",
+                "form": "10-Q",
+                "filing_date": "2024-11-07"
+              },
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "context_id": "c-249",
+                "unit": "iso4217:USD",
+                "value": -2953000000,
+                "raw": "2,953",
+                "scale": "6",
+                "decimals": "-6",
+                "fact_id": "f-955",
+                "source_line": 8,
+                "table_index": 21,
+                "row_text": "Intersegment Elimination — International ( 2,953 ) ( 3,724 ) ( 9,990 ) ( 9,679 )",
+                "dimensions": {
+                  "srt:StatementGeographicalAxis": "us-gaap:NonUsMember",
+                  "srt:ConsolidationItemsAxis": "srt:GeographyEliminationsMember",
+                  "srt:ProductOrServiceAxis": "us-gaap:OilAndGasMember"
+                },
+                "startdate": "2024-07-01",
+                "enddate": "2024-09-30",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341024000059/cvx-20240930.htm",
+                "accession": "0000093410-24-000059",
+                "form": "10-Q",
+                "filing_date": "2024-11-07"
+              }
+            ],
+            "normalization_rule_id": "cvx-2024-global-geographical-eliminations",
+            "normalization_source": "https://www.sec.gov/Archives/edgar/data/93410/000009341024000059/cvx-20240930.htm",
+            "derivation": "reported_quarter",
+            "duplicate_count": 1
+          }
+        ],
+        "role": "scope_candidate"
+      }
+    },
+    "new_reference_cells": 4,
+    "comparison_statuses": {
+      "exact_scope_candidate_match": 4
+    }
+  }
+}
