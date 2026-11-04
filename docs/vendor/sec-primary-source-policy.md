@@ -36,4 +36,4 @@ data/vendor/local/.venv/bin/python scripts/enforce_sec_primary_source.py \
 
 [前輪驗證收據](../../research/sec-only-completion-20261104/local-verification.json)：125 項離線測試通過、三十家結果及來源快照雜湊通過、原始參考值與日期未改，680 個完成輸出全數有 SEC 出處。沿用已保存並驗證的 SEC facts，沒有宣稱本輪重新下載或重剖全部 SEC 原始 HTML。所有季度仍為回溯驗證。
 
-最新三十家明細路徑及 SHA-256 以 [24 家收據](../../research/reference-gap-completion-20261104/completion-status.json) 為準。CAT／Comcast 的正常 SEC 瀏覽器讀取已成功，原先 CLI 403 與公司 PDF 逾時不再代表這兩家的 SEC 原表缺口。剩餘七家及具體處理方式見 [最新修復報告](sec-remaining-company-repairs.md)。
+最新三十家明細路徑及 SHA-256 以 [24 家收據](../../research/reference-gap-completion-20261104/completion-status.json) 為準。CAT／Comcast 的正常 SEC 瀏覽器讀取已成功，原先 CLI 403 與公司 PDF 逾時不再代表這兩家的 SEC 原表缺口。剩餘六家及具體處理方式見 [最新修復報告](reference-gap-completion.md)。
