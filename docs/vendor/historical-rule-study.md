@@ -47,6 +47,8 @@
 
 「八筆運算相同、兩筆 Q4 缺運算元」是在數個欄位計算上得到的局部結果，不能表示八季通過。CVX（Chevron）先前只取得富途五季參考，且 Q4 四項計算未完成；本輪已修好 Q4，所以現在是 **CVX Fail：目前六季 24 項全部相同，但仍缺 2025 Q3、2025 Q4 參考。** 詳見 [Q4 修復收據](../../research/chevron-q4-repair-20261104/CVX-status.json)。
 
+後續已用正常 Edge 核實三家參考入口，仍未補齊兩季收入；SEC 八季 32 項重播成功，六季參考 24 項再次相同，完成數維持 29 / 30。各網站的具體結果及公開副本限制見 [CVX 最後缺口核查](cvx-reference-followup.md)。
+
 ## 程式與驗證位置
 
 - 三十家公司分類規則：[cohort_rule_catalog.py](../../scripts/cohort_rule_catalog.py)。共同抽取／季度計算基礎在 [recovered-sec](../../research/recovered-sec/)，本輪重播入口為 [cohort_rule_audit.py](../../scripts/cohort_rule_audit.py)。已完成公司共用引擎及各自規則，沒有為每家複製一份引擎。
