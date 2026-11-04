@@ -49,3 +49,5 @@ python3 scripts/stage_archive.py /path/to/eight_quarter_reproducible_results.zip
 接續研究：[WMT 與 NEE 範圍缺口查核](docs/vendor/scope-gap-review.md)。
 
 原始財報共用解析實驗：[四家 Q／FY、原始證據、拒絕判定與規模限制](docs/SHARED_RAW_SEMANTICS.md)。
+
+版本橋接接續：[64 組 Q／FY taxonomy 證據契約與覆核負擔](docs/TAXONOMY_BRIDGE.md)。
