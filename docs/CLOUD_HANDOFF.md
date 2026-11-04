@@ -1,5 +1,17 @@
 # Cloud continuation — 2026-11-04 UTC
 
+## Completed SEC continuation
+
+The subsequently republished environment correctly allows `data.sec.gov` and
+`www.sec.gov`; both returned HTTP 200. The full fixed 30-company cohort was
+executed as of 2026-11-04 on `research/sec-30-baseline`, based on `3eaba53`.
+See [SEC_30_BASELINE.md](SEC_30_BASELINE.md) for results and reproduction.
+There were 234 processed quarters, six successor-issuer history gaps, zero
+download errors, and successful offline replay of every processed quarter.
+Original archives and vendor reference imports remain separate unresolved work.
+The historical sections below describe earlier environments and blockers, not
+the currently verified SEC network policy.
+
 ## Current status after recovered-source integration
 
 Integrated the reviewed `local/vendor-reference` branch at `4113daa`, preserving

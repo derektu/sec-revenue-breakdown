@@ -1,0 +1,86 @@
+[
+  {
+    "ticker": "TSLA",
+    "kind": "numeric_parse",
+    "filing": {
+      "form": "10-Q",
+      "filingDate": "2026-04-23",
+      "reportDate": "2026-03-31",
+      "accessionNumber": "0001628280-26-026673",
+      "primaryDocument": "tsla-20260331.htm"
+    },
+    "concept": "us-gaap:AvailableForSaleSecuritiesDebtSecurities",
+    "raw": "",
+    "reason": "[<class 'decimal.ConversionSyntax'>]"
+  },
+  {
+    "ticker": "LLY",
+    "kind": "numeric_parse",
+    "filing": {
+      "form": "10-K",
+      "filingDate": "2025-02-19",
+      "reportDate": "2024-12-31",
+      "accessionNumber": "0000059478-25-000067",
+      "primaryDocument": "lly-20241231.htm"
+    },
+    "concept": "us-gaap:Revenues",
+    "raw": "no",
+    "reason": "[<class 'decimal.ConversionSyntax'>]"
+  },
+  {
+    "ticker": "LLY",
+    "kind": "numeric_parse",
+    "filing": {
+      "form": "10-K",
+      "filingDate": "2025-02-19",
+      "reportDate": "2024-12-31",
+      "accessionNumber": "0000059478-25-000067",
+      "primaryDocument": "lly-20241231.htm"
+    },
+    "concept": "us-gaap:Revenues",
+    "raw": "no",
+    "reason": "[<class 'decimal.ConversionSyntax'>]"
+  },
+  {
+    "ticker": "BRK-B",
+    "kind": "conflicting_duplicate_rejected",
+    "quarter_end": "2025-12-31",
+    "count": 1,
+    "evidence": "Original alternatives preserved in issuer raw_filings facts"
+  },
+  {
+    "ticker": "BRK-B",
+    "kind": "conflicting_duplicate_rejected",
+    "quarter_end": "2024-12-31",
+    "count": 1,
+    "evidence": "Original alternatives preserved in issuer raw_filings facts"
+  },
+  {
+    "ticker": "PLD",
+    "kind": "numeric_parse",
+    "filing": {
+      "form": "10-K",
+      "filingDate": "2026-02-13",
+      "reportDate": "2025-12-31",
+      "accessionNumber": "0001193125-26-051453",
+      "primaryDocument": "pld-20251231.htm"
+    },
+    "concept": "pld:NumberOfSalesAgents",
+    "raw": "twenty",
+    "reason": "[<class 'decimal.ConversionSyntax'>]"
+  },
+  {
+    "ticker": "PLD",
+    "kind": "numeric_parse",
+    "filing": {
+      "form": "10-K",
+      "filingDate": "2025-02-14",
+      "reportDate": "2024-12-31",
+      "accessionNumber": "0000950170-25-021272",
+      "primaryDocument": "pld-20241231.htm"
+    },
+    "concept": "pld:NumberOfSalesAgents",
+    "raw": "twenty",
+    "reason": "[<class 'decimal.ConversionSyntax'>]"
+  }
+]
