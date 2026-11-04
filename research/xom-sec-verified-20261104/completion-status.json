@@ -1,0 +1,1352 @@
+{
+  "primary_data_policy": "擷取與數字計算僅 SEC；vendor／公司 IR 只作參考與差異解釋。",
+  "ok_count": 23,
+  "total": 30,
+  "companies": [
+    {
+      "ticker": "AAPL",
+      "status": "OK",
+      "reference": "stockanalysis",
+      "reference_quarters_present": 8,
+      "target_periods": [
+        "2024-12-28",
+        "2025-03-29",
+        "2025-06-28",
+        "2025-09-27",
+        "2025-12-27",
+        "2026-03-28",
+        "2026-06-27",
+        "2026-09-26"
+      ],
+      "reference_periods": [
+        "2024-12-28",
+        "2025-03-29",
+        "2025-06-28",
+        "2025-09-27",
+        "2025-12-27",
+        "2026-03-28",
+        "2026-06-27",
+        "2026-09-26"
+      ],
+      "quarterly_cells": 40,
+      "cell_statuses": {
+        "exact_scope_candidate_match": 40
+      },
+      "fail_reasons": [],
+      "primary_source_checks": {
+        "SEC_operands_verified": 40
+      },
+      "local_detail_path": "data/vendor/local/cohort-adjudication-20261104/sec-only-completion-20261104/AAPL-sec-only.json",
+      "local_detail_sha256": "ad144e860ece5d01ac2958a3f77c7fc22723487ba10d80a112ef543260f6feb6"
+    },
+    {
+      "ticker": "MSFT",
+      "status": "OK",
+      "reference": "stockanalysis",
+      "reference_quarters_present": 8,
+      "target_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "reference_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "quarterly_cells": 23,
+      "cell_statuses": {
+        "exact_scope_candidate_match": 22,
+        "reference_not_applicable_evidenced": 25,
+        "explained_reference_error": 1
+      },
+      "fail_reasons": [],
+      "primary_source_checks": {
+        "SEC_operands_verified": 23,
+        "not_applicable_no_numeric_output": 25
+      },
+      "local_detail_path": "data/vendor/local/cohort-adjudication-20261104/sec-only-completion-20261104/MSFT-sec-only.json",
+      "local_detail_sha256": "f82bb170d594eab852f781f4eb4e75d4c74efa1bae4362fd467e97fe239985e5"
+    },
+    {
+      "ticker": "NVDA",
+      "status": "OK",
+      "reference": "stockanalysis",
+      "reference_quarters_present": 8,
+      "target_periods": [
+        "2024-10-27",
+        "2025-01-26",
+        "2025-04-27",
+        "2025-07-27",
+        "2025-10-26",
+        "2026-01-25",
+        "2026-04-26",
+        "2026-07-26"
+      ],
+      "reference_periods": [
+        "2024-10-27",
+        "2025-01-26",
+        "2025-04-27",
+        "2025-07-27",
+        "2025-10-26",
+        "2026-01-25",
+        "2026-04-26",
+        "2026-07-26"
+      ],
+      "quarterly_cells": 16,
+      "cell_statuses": {
+        "exact_scope_candidate_match": 16
+      },
+      "fail_reasons": [],
+      "primary_source_checks": {
+        "SEC_operands_verified": 16
+      },
+      "local_detail_path": "data/vendor/local/cohort-adjudication-20261104/sec-only-completion-20261104/NVDA-sec-only.json",
+      "local_detail_sha256": "b51787c9a804bd6801cc6645d2de28cae71e461aaa37667a45d84b6adbb575f6"
+    },
+    {
+      "ticker": "ORCL",
+      "status": "OK",
+      "reference": "stockanalysis",
+      "reference_quarters_present": 8,
+      "target_periods": [
+        "2024-11-30",
+        "2025-02-28",
+        "2025-05-31",
+        "2025-08-31",
+        "2025-11-30",
+        "2026-02-28",
+        "2026-05-31",
+        "2026-08-31"
+      ],
+      "reference_periods": [
+        "2024-11-30",
+        "2025-02-28",
+        "2025-05-31",
+        "2025-08-31",
+        "2025-11-30",
+        "2026-02-28",
+        "2026-05-31",
+        "2026-08-31"
+      ],
+      "quarterly_cells": 32,
+      "cell_statuses": {
+        "exact_scope_candidate_match": 32,
+        "reference_not_applicable_evidenced": 16
+      },
+      "fail_reasons": [],
+      "primary_source_checks": {
+        "SEC_operands_verified": 32,
+        "not_applicable_no_numeric_output": 16
+      },
+      "local_detail_path": "data/vendor/local/cohort-adjudication-20261104/sec-only-completion-20261104/ORCL-sec-only.json",
+      "local_detail_sha256": "40981377ce046253f09b3582354a1ab57e23d5a66b3187fec5e5b0f3f0bbe68b"
+    },
+    {
+      "ticker": "GOOGL",
+      "status": "OK",
+      "reference": "stockanalysis",
+      "reference_quarters_present": 8,
+      "target_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "reference_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "quarterly_cells": 56,
+      "cell_statuses": {
+        "exact_scope_candidate_match": 55,
+        "reference_not_applicable_evidenced": 8,
+        "explained_reported_precision": 1
+      },
+      "fail_reasons": [],
+      "primary_source_checks": {
+        "SEC_operands_verified": 56,
+        "not_applicable_no_numeric_output": 8
+      },
+      "local_detail_path": "data/vendor/local/cohort-adjudication-20261104/sec-only-completion-20261104/GOOGL-sec-only.json",
+      "local_detail_sha256": "d858e6e04f5f0431ec732aee5c447bbe19e029b63f024b70b755c0778bceb961"
+    },
+    {
+      "ticker": "META",
+      "status": "OK",
+      "reference": "stockanalysis",
+      "reference_quarters_present": 8,
+      "target_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "reference_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "quarterly_cells": 24,
+      "cell_statuses": {
+        "exact_scope_candidate_match": 22,
+        "explained_reported_precision": 2
+      },
+      "fail_reasons": [],
+      "primary_source_checks": {
+        "SEC_operands_verified": 24
+      },
+      "local_detail_path": "data/vendor/local/cohort-adjudication-20261104/sec-only-completion-20261104/META-sec-only.json",
+      "local_detail_sha256": "0991bdb67fcc4420f52215ccc9285c3b32153d95fe3a8a27c54afefd261516dd"
+    },
+    {
+      "ticker": "DIS",
+      "status": "OK",
+      "reference": "stockanalysis",
+      "reference_quarters_present": 8,
+      "target_periods": [
+        "2024-09-28",
+        "2024-12-28",
+        "2025-03-29",
+        "2025-06-28",
+        "2025-09-27",
+        "2025-12-27",
+        "2026-03-28",
+        "2026-06-27"
+      ],
+      "reference_periods": [
+        "2024-09-28",
+        "2024-12-28",
+        "2025-03-29",
+        "2025-06-28",
+        "2025-09-27",
+        "2025-12-27",
+        "2026-03-28",
+        "2026-06-27"
+      ],
+      "quarterly_cells": 24,
+      "cell_statuses": {
+        "exact_scope_candidate_match": 24,
+        "reference_not_applicable_evidenced": 8
+      },
+      "fail_reasons": [],
+      "primary_source_checks": {
+        "SEC_operands_verified": 24,
+        "not_applicable_no_numeric_output": 8
+      },
+      "local_detail_path": "data/vendor/local/cohort-adjudication-20261104/sec-only-completion-20261104/DIS-sec-only.json",
+      "local_detail_sha256": "10a580c36a957d1e820f7fd30fa8c2bae777ba87df262d00ea3159c69b15ded9"
+    },
+    {
+      "ticker": "CMCSA",
+      "status": "OK",
+      "reference": "stockanalysis",
+      "reference_quarters_present": 8,
+      "target_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "reference_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "quarterly_cells": 16,
+      "cell_statuses": {
+        "exact_scope_candidate_match": 10,
+        "explained_reference_error": 4,
+        "explained_reported_precision": 2
+      },
+      "fail_reasons": [],
+      "primary_source_checks": {
+        "SEC_operands_verified": 16
+      },
+      "local_detail_path": "data/vendor/local/cohort-adjudication-20261104/comcast-sec-repair-20261104/CMCSA-sec-repaired.json",
+      "local_detail_sha256": "74b963ae44d864f693dbf9a7c698521855475912ded66fe01c141af2876bfbe8"
+    },
+    {
+      "ticker": "AMZN",
+      "status": "OK",
+      "reference": "stockanalysis",
+      "reference_quarters_present": 8,
+      "target_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "reference_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "quarterly_cells": 56,
+      "cell_statuses": {
+        "exact_scope_candidate_match": 56
+      },
+      "fail_reasons": [],
+      "primary_source_checks": {
+        "SEC_operands_verified": 56
+      },
+      "local_detail_path": "data/vendor/local/cohort-adjudication-20261104/sec-only-completion-20261104/AMZN-sec-only.json",
+      "local_detail_sha256": "dcbc209992c6c2b0541f7485c7f5c50d1e901f41bcb5b03b760c25456e28da35"
+    },
+    {
+      "ticker": "TSLA",
+      "status": "OK",
+      "reference": "stockanalysis",
+      "reference_quarters_present": 8,
+      "target_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "reference_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "quarterly_cells": 24,
+      "cell_statuses": {
+        "exact_scope_candidate_match": 24
+      },
+      "fail_reasons": [],
+      "primary_source_checks": {
+        "SEC_operands_verified": 24
+      },
+      "local_detail_path": "data/vendor/local/cohort-adjudication-20261104/sec-only-completion-20261104/TSLA-sec-only.json",
+      "local_detail_sha256": "3dec6b3b88b9a8d50b39957bb7df06e5c755d3bdcdb81a97d92169ed5593a725"
+    },
+    {
+      "ticker": "HD",
+      "status": "OK",
+      "reference": "stockanalysis",
+      "reference_quarters_present": 8,
+      "target_periods": [
+        "2024-10-27",
+        "2025-02-02",
+        "2025-05-04",
+        "2025-08-03",
+        "2025-11-02",
+        "2026-02-01",
+        "2026-05-03",
+        "2026-08-02"
+      ],
+      "reference_periods": [
+        "2024-10-27",
+        "2025-02-02",
+        "2025-05-04",
+        "2025-08-03",
+        "2025-11-02",
+        "2026-02-01",
+        "2026-05-03",
+        "2026-08-02"
+      ],
+      "quarterly_cells": 32,
+      "cell_statuses": {
+        "exact_scope_candidate_match": 30,
+        "explained_reference_error": 2
+      },
+      "fail_reasons": [],
+      "primary_source_checks": {
+        "SEC_operands_verified": 32
+      },
+      "local_detail_path": "data/vendor/local/cohort-adjudication-20261104/sec-only-completion-20261104/HD-sec-only.json",
+      "local_detail_sha256": "0717a9b22792ab27590112fa3ea9af6f8650d41f8b12c7f31f0c54e01c211634"
+    },
+    {
+      "ticker": "MCD",
+      "status": "Fail",
+      "reference": "futu",
+      "reference_quarters_present": 7,
+      "target_periods": [
+        "2024-09-30",
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30"
+      ],
+      "reference_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30"
+      ],
+      "quarterly_cells": 21,
+      "cell_statuses": {
+        "exact_scope_candidate_match": 21
+      },
+      "fail_reasons": [
+        "eight_target_quarters_not_complete"
+      ],
+      "primary_source_checks": {
+        "SEC_operands_verified": 21
+      },
+      "local_detail_path": "data/vendor/local/cohort-adjudication-20261104/sec-only-completion-20261104/MCD-sec-only.json",
+      "local_detail_sha256": "1cb0ec0dd4c6229d1f1db5714eea9a7ae903831ba77b98d1504d6f6e65369dad"
+    },
+    {
+      "ticker": "WMT",
+      "status": "OK",
+      "reference": "futu",
+      "reference_quarters_present": 8,
+      "target_periods": [
+        "2024-10-31",
+        "2025-01-31",
+        "2025-04-30",
+        "2025-07-31",
+        "2025-10-31",
+        "2026-01-31",
+        "2026-04-30",
+        "2026-07-31"
+      ],
+      "reference_periods": [
+        "2024-10-31",
+        "2025-01-31",
+        "2025-04-30",
+        "2025-07-31",
+        "2025-10-31",
+        "2026-01-31",
+        "2026-04-30",
+        "2026-07-31"
+      ],
+      "quarterly_cells": 32,
+      "cell_statuses": {
+        "exact_scope_candidate_match": 32
+      },
+      "fail_reasons": [],
+      "primary_source_checks": {
+        "SEC_operands_verified": 32
+      },
+      "local_detail_path": "data/vendor/local/cohort-adjudication-20261104/sec-only-completion-20261104/WMT-sec-only.json",
+      "local_detail_sha256": "6090538fa43a6ebd43d72955b7c869d6393a3d991de7f636b33b37b7f8495070"
+    },
+    {
+      "ticker": "COST",
+      "status": "OK",
+      "reference": "stockanalysis",
+      "reference_quarters_present": 8,
+      "target_periods": [
+        "2024-11-24",
+        "2025-02-16",
+        "2025-05-11",
+        "2025-08-31",
+        "2025-11-23",
+        "2026-02-15",
+        "2026-05-10",
+        "2026-08-30"
+      ],
+      "reference_periods": [
+        "2024-11-24",
+        "2025-02-16",
+        "2025-05-11",
+        "2025-08-31",
+        "2025-11-23",
+        "2026-02-15",
+        "2026-05-10",
+        "2026-08-30"
+      ],
+      "quarterly_cells": 16,
+      "cell_statuses": {
+        "exact_scope_candidate_match": 16
+      },
+      "fail_reasons": [],
+      "primary_source_checks": {
+        "SEC_operands_verified": 16
+      },
+      "local_detail_path": "data/vendor/local/cohort-adjudication-20261104/sec-only-completion-20261104/COST-sec-only.json",
+      "local_detail_sha256": "30936b8cb970015d40cf5d7a7eccb9b43b4a6dc2d8ad01014695cd618c7a5067"
+    },
+    {
+      "ticker": "PG",
+      "status": "OK",
+      "reference": "stockanalysis",
+      "reference_quarters_present": 8,
+      "target_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "reference_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "quarterly_cells": 48,
+      "cell_statuses": {
+        "explained_reference_error": 1,
+        "explained_reported_precision": 35,
+        "exact_scope_candidate_match": 12
+      },
+      "fail_reasons": [],
+      "primary_source_checks": {
+        "SEC_operands_verified": 48
+      },
+      "local_detail_path": "data/vendor/local/cohort-adjudication-20261104/sec-only-completion-20261104/PG-sec-only.json",
+      "local_detail_sha256": "3e2168dce22b67c5f3ac620edb9b89ce5e25730f34a465207b2abc4e00373d63"
+    },
+    {
+      "ticker": "KO",
+      "status": "OK",
+      "reference": "stockanalysis",
+      "reference_quarters_present": 8,
+      "target_periods": [
+        "2024-12-31",
+        "2025-03-28",
+        "2025-06-27",
+        "2025-09-26",
+        "2025-12-31",
+        "2026-04-03",
+        "2026-07-03",
+        "2026-10-02"
+      ],
+      "reference_periods": [
+        "2024-12-31",
+        "2025-03-28",
+        "2025-06-27",
+        "2025-09-26",
+        "2025-12-31",
+        "2026-04-03",
+        "2026-07-03",
+        "2026-10-02"
+      ],
+      "quarterly_cells": 57,
+      "cell_statuses": {
+        "exact_scope_candidate_match": 57,
+        "reference_not_applicable_evidenced": 7
+      },
+      "fail_reasons": [],
+      "primary_source_checks": {
+        "SEC_operands_verified": 57,
+        "not_applicable_no_numeric_output": 7
+      },
+      "local_detail_path": "data/vendor/local/cohort-adjudication-20261104/sec-only-completion-20261104/KO-sec-only.json",
+      "local_detail_sha256": "cead60728af45ea082847b878c440f9265a53e196273dd21bad0a4cf7d9f08f9"
+    },
+    {
+      "ticker": "JNJ",
+      "status": "OK",
+      "reference": "stockanalysis",
+      "reference_quarters_present": 8,
+      "target_periods": [
+        "2024-12-29",
+        "2025-03-30",
+        "2025-06-29",
+        "2025-09-28",
+        "2025-12-28",
+        "2026-03-29",
+        "2026-06-28",
+        "2026-09-27"
+      ],
+      "reference_periods": [
+        "2024-12-29",
+        "2025-03-30",
+        "2025-06-29",
+        "2025-09-28",
+        "2025-12-28",
+        "2026-03-29",
+        "2026-06-28",
+        "2026-09-27"
+      ],
+      "quarterly_cells": 16,
+      "cell_statuses": {
+        "exact_scope_candidate_match": 16,
+        "reference_not_applicable_evidenced": 8
+      },
+      "fail_reasons": [],
+      "primary_source_checks": {
+        "SEC_operands_verified": 16,
+        "not_applicable_no_numeric_output": 8
+      },
+      "local_detail_path": "data/vendor/local/cohort-adjudication-20261104/sec-only-completion-20261104/JNJ-sec-only.json",
+      "local_detail_sha256": "5f3d767909f622fad08e618c054f7169a6dc111fb2f195d38ca6caf43b996187"
+    },
+    {
+      "ticker": "UNH",
+      "status": "OK",
+      "reference": "stockanalysis",
+      "reference_quarters_present": 8,
+      "target_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "reference_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "quarterly_cells": 24,
+      "cell_statuses": {
+        "exact_scope_candidate_match": 21,
+        "explained_reference_error": 3
+      },
+      "fail_reasons": [],
+      "primary_source_checks": {
+        "SEC_operands_verified": 24
+      },
+      "local_detail_path": "data/vendor/local/cohort-adjudication-20261104/sec-only-completion-20261104/UNH-sec-only.json",
+      "local_detail_sha256": "6a1f4d051eeee1f946c9bf0c759518576bf6b6bd16242c04f0f87759b863dfa3"
+    },
+    {
+      "ticker": "LLY",
+      "status": "Fail",
+      "reference": "stockanalysis",
+      "reference_quarters_present": 8,
+      "target_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "reference_periods": [
+        "2024-09-30",
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30"
+      ],
+      "quarterly_cells": 40,
+      "cell_statuses": {
+        "exact_scope_candidate_match": 39,
+        "reference_not_applicable_evidenced": 16,
+        "explained_reported_precision": 1
+      },
+      "fail_reasons": [
+        "eight_target_quarters_not_complete"
+      ],
+      "primary_source_checks": {
+        "SEC_operands_verified": 40,
+        "not_applicable_no_numeric_output": 16
+      },
+      "local_detail_path": "data/vendor/local/cohort-adjudication-20261104/sec-only-completion-20261104/LLY-sec-only.json",
+      "local_detail_sha256": "4aab733b7d58018bfedf2853172afa715345b72913de802e1c7cd05eff8963e5"
+    },
+    {
+      "ticker": "JPM",
+      "status": "OK",
+      "reference": "stockanalysis",
+      "reference_quarters_present": 8,
+      "target_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "reference_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "quarterly_cells": 32,
+      "cell_statuses": {
+        "exact_scope_candidate_match": 32,
+        "reference_not_applicable_evidenced": 16
+      },
+      "fail_reasons": [],
+      "primary_source_checks": {
+        "SEC_operands_verified": 32,
+        "not_applicable_no_numeric_output": 16
+      },
+      "local_detail_path": "data/vendor/local/cohort-adjudication-20261104/sec-only-completion-20261104/JPM-sec-only.json",
+      "local_detail_sha256": "c6aa84b3610dedf69fededcb30042d7ae4784982a4088aa4deed948f7675a53a"
+    },
+    {
+      "ticker": "BAC",
+      "status": "OK",
+      "reference": "stockanalysis",
+      "reference_quarters_present": 8,
+      "target_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "reference_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "quarterly_cells": 40,
+      "cell_statuses": {
+        "exact_scope_candidate_match": 40
+      },
+      "fail_reasons": [],
+      "primary_source_checks": {
+        "SEC_operands_verified": 40
+      },
+      "local_detail_path": "data/vendor/local/cohort-adjudication-20261104/sec-only-completion-20261104/BAC-sec-only.json",
+      "local_detail_sha256": "d22fa18319887af3d01f287d91e16df5157961ba27894a48f8693954269bf668"
+    },
+    {
+      "ticker": "BRK-B",
+      "status": "Fail",
+      "reference": "futu",
+      "reference_quarters_present": 6,
+      "target_periods": [
+        "2024-09-30",
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30"
+      ],
+      "reference_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30"
+      ],
+      "quarterly_cells": 48,
+      "cell_statuses": {
+        "exact_scope_candidate_match": 48
+      },
+      "fail_reasons": [
+        "eight_target_quarters_not_complete"
+      ],
+      "primary_source_checks": {
+        "SEC_operands_verified": 48
+      },
+      "local_detail_path": "data/vendor/local/cohort-adjudication-20261104/sec-only-completion-20261104/BRK-B-sec-only.json",
+      "local_detail_sha256": "7ef1b10a25673d17a6e2d45f23a26da2e564346a077d67aa4b243fd514c9bc50"
+    },
+    {
+      "ticker": "PGR",
+      "status": "Fail",
+      "reference": "futu",
+      "reference_quarters_present": 7,
+      "target_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "reference_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30"
+      ],
+      "quarterly_cells": 49,
+      "cell_statuses": {
+        "exact_scope_candidate_match": 43,
+        "explained_reference_error": 6
+      },
+      "fail_reasons": [
+        "eight_target_quarters_not_complete"
+      ],
+      "primary_source_checks": {
+        "SEC_operands_verified": 49
+      },
+      "local_detail_path": "data/vendor/local/cohort-adjudication-20261104/progressive-sec-completion-20261104/PGR-sec-repaired.json",
+      "local_detail_sha256": "ef9f2745397a903d85f61a3a52adc43d44724783f0c703a2d2bd5e18ec0c0581"
+    },
+    {
+      "ticker": "XOM",
+      "status": "Fail",
+      "reference": "futu",
+      "reference_quarters_present": 8,
+      "target_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "reference_periods": [
+        "2024-09-30",
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30"
+      ],
+      "quarterly_cells": 58,
+      "cell_statuses": {
+        "exact_scope_candidate_match": 42,
+        "explained_reference_error": 16
+      },
+      "fail_reasons": [
+        "eight_target_quarters_not_complete"
+      ],
+      "primary_source_checks": {
+        "SEC_operands_verified": 58
+      },
+      "historical_eight_quarter_assessment": {
+        "status": "OK",
+        "reference": "futu",
+        "reference_quarters_present": 8,
+        "target_periods": [
+          "2024-09-30",
+          "2024-12-31",
+          "2025-03-31",
+          "2025-06-30",
+          "2025-09-30",
+          "2025-12-31",
+          "2026-03-31",
+          "2026-06-30"
+        ],
+        "reference_periods": [
+          "2024-09-30",
+          "2024-12-31",
+          "2025-03-31",
+          "2025-06-30",
+          "2025-09-30",
+          "2025-12-31",
+          "2026-03-31",
+          "2026-06-30"
+        ],
+        "quarterly_cells": 58,
+        "cell_statuses": {
+          "exact_scope_candidate_match": 42,
+          "explained_reference_error": 16
+        },
+        "fail_reasons": []
+      },
+      "latest_reference_missing": "2026-09-30",
+      "latest_test_is_blind": false,
+      "local_detail_path": "data/vendor/local/cohort-adjudication-20261104/xom-sec-verified-20261104/XOM-sec-repaired.json",
+      "local_detail_sha256": "3494d09050b3aaf625d4db60741e4e9b4f47c3b6be8d157d8f600009024877b8"
+    },
+    {
+      "ticker": "CVX",
+      "status": "Fail",
+      "reference": "futu",
+      "reference_quarters_present": 5,
+      "target_periods": [
+        "2024-09-30",
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30"
+      ],
+      "reference_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2026-03-31",
+        "2026-06-30"
+      ],
+      "quarterly_cells": 20,
+      "cell_statuses": {
+        "exact_scope_candidate_match": 20
+      },
+      "fail_reasons": [
+        "eight_target_quarters_not_complete"
+      ],
+      "primary_source_checks": {
+        "SEC_operands_verified": 20
+      },
+      "local_detail_path": "data/vendor/local/cohort-adjudication-20261104/sec-only-completion-20261104/CVX-sec-only.json",
+      "local_detail_sha256": "2e1a1de4417c4be4ba151fb154419f8d1cc18986d388d438b1ccdf86d9fee6c0"
+    },
+    {
+      "ticker": "CAT",
+      "status": "OK",
+      "reference": "stockanalysis",
+      "reference_quarters_present": 8,
+      "target_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "reference_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "quarterly_cells": 48,
+      "cell_statuses": {
+        "exact_scope_candidate_match": 48,
+        "reference_not_applicable_evidenced": 8
+      },
+      "fail_reasons": [],
+      "primary_source_checks": {
+        "SEC_operands_verified": 48,
+        "not_applicable_no_numeric_output": 8
+      },
+      "local_detail_path": "data/vendor/local/cohort-adjudication-20261104/caterpillar-sec-completion-20261104/CAT-sec-repaired.json",
+      "local_detail_sha256": "3531270b8b2388fbe86ba060986ea81009d3242f67f81e310da0d0f6893607f3"
+    },
+    {
+      "ticker": "UPS",
+      "status": "OK",
+      "reference": "stockanalysis",
+      "reference_quarters_present": 8,
+      "target_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "reference_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "quarterly_cells": 24,
+      "cell_statuses": {
+        "exact_scope_candidate_match": 24
+      },
+      "fail_reasons": [],
+      "primary_source_checks": {
+        "SEC_operands_verified": 24
+      },
+      "local_detail_path": "data/vendor/local/cohort-adjudication-20261104/sec-only-completion-20261104/UPS-sec-only.json",
+      "local_detail_sha256": "b4c74143be569f31275022052dbe6f5d78deae337a9ce394d1b92f57f2403bd9"
+    },
+    {
+      "ticker": "NEE",
+      "status": "OK",
+      "reference": "futu",
+      "reference_quarters_present": 8,
+      "target_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "reference_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "quarterly_cells": 24,
+      "cell_statuses": {
+        "exact_scope_candidate_match": 24
+      },
+      "fail_reasons": [],
+      "primary_source_checks": {
+        "SEC_operands_verified": 24
+      },
+      "local_detail_path": "data/vendor/local/cohort-adjudication-20261104/sec-only-completion-20261104/NEE-sec-only.json",
+      "local_detail_sha256": "c3ab754c25e84fe88b6d4ffa804c23cfb31f7d4267198f614c51a025deac24f2"
+    },
+    {
+      "ticker": "LIN",
+      "status": "OK",
+      "reference": "stockanalysis",
+      "reference_quarters_present": 8,
+      "target_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "reference_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "quarterly_cells": 40,
+      "cell_statuses": {
+        "exact_scope_candidate_match": 40
+      },
+      "fail_reasons": [],
+      "primary_source_checks": {
+        "SEC_operands_verified": 40
+      },
+      "local_detail_path": "data/vendor/local/cohort-adjudication-20261104/sec-only-completion-20261104/LIN-sec-only.json",
+      "local_detail_sha256": "b4dd53604a19d67a33b6b38e36ee70b4e3a996172894d5c8df116a3d5ae4513a"
+    },
+    {
+      "ticker": "PLD",
+      "status": "Fail",
+      "reference": "issuer_ir",
+      "reference_quarters_present": 8,
+      "target_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "reference_periods": [
+        "2024-12-31",
+        "2025-03-31",
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-31",
+        "2026-03-31",
+        "2026-06-30",
+        "2026-09-30"
+      ],
+      "quarterly_cells": 32,
+      "cell_statuses": {
+        "exact_scope_candidate_match": 32
+      },
+      "fail_reasons": [
+        "original_three_vendor_reference_missing"
+      ],
+      "primary_source_checks": {
+        "SEC_operands_verified": 32
+      },
+      "local_detail_path": "data/vendor/local/cohort-adjudication-20261104/sec-only-completion-20261104/PLD-sec-only.json",
+      "local_detail_sha256": "e428a9071b28b7c9d2cb9eb46d48e0247e9e439a2aba92ce405c6c26e21f34eb"
+    }
+  ],
+  "blind_tests": 0,
+  "source_summary_sha256": "603dfff870d97f18eccc056ea87735cdd0b000cb420d3d55bf99b42c4ae37952",
+  "source_policy_code_sha256": "f775c1c6daac72741f0394830c56976aa11886af1b27773384275cfb0896fe76",
+  "ups_sec_url": "https://www.sec.gov/Archives/edgar/data/1090727/000162828026067381/exhibit991-earningspressre.htm",
+  "ups_sec_page_path": "data/vendor/local/sec-source-enforcement-20261104/UPS-2026Q3-sec-web.txt",
+  "ups_sec_page_sha256": "266a278740a2ea1e4409fc39bd261a388eada595cc7aedf7dc34df89c4e42761",
+  "ups_source_format": "正常 web 工具讀取 SEC 附件後保存的頁面文字；非公司 IR、非原始 HTML bytes；CLI 單次 GET 回 403 後未重試。",
+  "PGR_company_pdf_status": "reference_study_only_not_SEC_parser_output",
+  "PGR_source_status": "SEC Exhibit 13 and four 10-Q DOM table snapshots; no IR input",
+  "PGR_latest_quarter_seen": true,
+  "PGR_latest_reference_missing": true,
+  "capture_manifest": {
+    "captured_at": "2026-11-04T06:03:07.688648+00:00",
+    "method": "正常 Edge 直接讀取 SEC 頁面的 DOM 財務表格；移除空白及獨立貨幣格式格，不修改數值文字；轉存後與瀏覽器擷取物件逐份 canonical checksum 一致。",
+    "files": [
+      {
+        "path": "research/sec-dom-sources-20261104/PGR-2025-annual.json",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/80661/000008066126000086/pgr-20251231_d2.htm",
+        "sha256": "8554d468703bba3e4859ace9a3199c118c92c36aa721034772db475e9ed717f9",
+        "browser_capture_fnv32": "2ca13aa",
+        "format": "SEC_DOM_nonempty_cell_text"
+      },
+      {
+        "path": "research/sec-dom-sources-20261104/PGR-2026Q1.json",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/80661/000008066126000177/pgr-20260331.htm",
+        "sha256": "a8f83571ccc625e84014b46c683166c30fead70b45fbc77931efe2f9a4f7c463",
+        "browser_capture_fnv32": "91377372",
+        "format": "SEC_DOM_nonempty_cell_text"
+      },
+      {
+        "path": "research/sec-dom-sources-20261104/PGR-2026Q2.json",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/80661/000008066126000308/pgr-20260630.htm",
+        "sha256": "d2a11bc0dc410a649a3e6d4f80923f76d8e37d86578046cbf0def168436693bb",
+        "browser_capture_fnv32": "305e2109",
+        "format": "SEC_DOM_nonempty_cell_text"
+      },
+      {
+        "path": "research/sec-dom-sources-20261104/PGR-2026Q3.json",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/80661/000008066126000379/pgr-20260930.htm",
+        "sha256": "4deb5beb82a1f2217d52d9384521778fd26d983eb78c205db1e7e91932fe0db9",
+        "browser_capture_fnv32": "9b29b843",
+        "format": "SEC_DOM_nonempty_cell_text"
+      },
+      {
+        "path": "research/sec-dom-sources-20261104/PGR-2025Q3.json",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/80661/000008066125000129/pgr-20250930.htm",
+        "sha256": "c8c2551df91419a885b003cc9847ff032792b059179fbafc5e2d5b7d3e516222",
+        "browser_capture_fnv32": "b8e9abd7",
+        "format": "SEC_DOM_nonempty_cell_text"
+      }
+    ]
+  },
+  "capture_manifest_sha256": "b1a9e585a78be3bb9a809cd3283b11919a23eb8c6fdb4696bd25bea01f7524d8",
+  "repair_code_sha256": {
+    "scripts/evaluate_progressive_sec.py": "4926e6a1b168cd509befd76894de44b57854a257c10a147e7fade76683e28bf1",
+    "scripts/parse_progressive_sec.py": "9b44af329a09f3b0230cd5834bec6023fe7fc0bc773312fcf10b6c8f7413c406",
+    "scripts/collect_progressive_sec_dom.js": "c0a2d51b39337afad46fdfe78c05c57465c77ebcd8a19471682160433c5c5da5"
+  },
+  "CAT_new_period_source": {
+    "path": "research/sec-dom-sources-20261104/CAT-2026Q3.json",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/18230/000001823026000052/ex991toformcat3q2026earnin.htm",
+    "sha256": "7831feede35475028c0936044ca96ec388630fcfc99540f84ef7a9227e457ede",
+    "browser_capture_fnv32": "e1abd5ad",
+    "source_format": "SEC_DOM_nonempty_cell_text",
+    "method": "正常 Edge 讀取 SEC 8-K 附件、保留收入表及地區表當期列；保存後 canonical checksum 與 browser capture 相同。",
+    "not_repeated": "先前結果未定的公司 PDF 下載未重複。"
+  },
+  "CAT_target_update": "以 SEC 8-K 實際取得 2026-09-30，最新八季改為 2024Q4～2026Q3；不改舊基準／凍結收據，不宣稱盲測。",
+  "CAT_code_sha256": {
+    "scripts/parse_caterpillar_sec.py": "3e6638dfb6c214e0be3c89369b3a8464ec5a6d2645eaba6dea1ab4e1c5b1d8df",
+    "scripts/evaluate_caterpillar_sec.py": "637ea933f9701d28c6a89470263bf36ddc1759e36bb91b8196888e5db085b2b5",
+    "scripts/collect_caterpillar_sec_dom.js": "bb1aa5a11ce0da54a091c0e0fb1635de8b730ae9c7fd3c917acff362fa3c626e"
+  },
+  "CMCSA_source_files": [
+    {
+      "path": "research/sec-dom-sources-20261104/CMCSA-2026Q3.json",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1166691/000162828026066863/cmcsa-20260930.htm",
+      "sha256": "0a33ae0870dda4335f8bb5f2b5d4bcad1aa3f8000a2ee5567dfba79f14982657",
+      "browser_capture_fnv32": "2b08e82",
+      "rejected_constant_currency_tables": [
+        47
+      ]
+    },
+    {
+      "path": "research/sec-dom-sources-20261104/CMCSA-2026Q2.json",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1166691/000162828026049360/cmcsa-20260630.htm",
+      "sha256": "f772cf02d4b1ce8e858cc70b0598eff31e776adfcfde4925498cf03c737971cb",
+      "browser_capture_fnv32": "e6b01cc0",
+      "rejected_constant_currency_tables": [
+        47
+      ]
+    },
+    {
+      "path": "research/sec-dom-sources-20261104/CMCSA-2026Q1.json",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1166691/000162828026026805/cmcsa-20260331.htm",
+      "sha256": "0518d8292a3d0b0d4e9751289bb895a00f1d482824077f31959a5cdb83acd070",
+      "browser_capture_fnv32": "ada24098",
+      "rejected_constant_currency_tables": [
+        45
+      ]
+    },
+    {
+      "path": "research/sec-dom-sources-20261104/CMCSA-2025Q2.json",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1166691/000116669125000036/cmcsa-20250630.htm",
+      "sha256": "44d39a5565681f4127472cfad088c06ae8ac6a50691f276cbba5c02fd5b57f08",
+      "browser_capture_fnv32": "2541c8d6",
+      "rejected_constant_currency_tables": [
+        46,
+        47
+      ]
+    },
+    {
+      "path": "research/sec-dom-sources-20261104/CMCSA-2025Q1.json",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1166691/000116669125000021/cmcsa-20250331.htm",
+      "sha256": "4ae6ff05dc613cce8367dedc700c7a177e591b617e664951bdf5f36b5256aed9",
+      "browser_capture_fnv32": "1559fd70",
+      "rejected_constant_currency_tables": [
+        43,
+        44
+      ]
+    },
+    {
+      "path": "research/shared-raw-semantics/sources/CMCSA-2025-09-30.html.gz",
+      "url": "https://www.sec.gov/Archives/edgar/data/1166691/000116669125000054/cmcsa-20250930.htm",
+      "sha256": "2d9960f8fc7141742d954f12a27cc7653182cc95c71192266a229a1f8f2f7bd6",
+      "reportDate": "2025-09-30",
+      "form": "10-Q"
+    },
+    {
+      "path": "research/shared-raw-semantics/sources/CMCSA-2025-12-31.html.gz",
+      "url": "https://www.sec.gov/Archives/edgar/data/1166691/000162828026004994/cmcsa-20251231.htm",
+      "sha256": "8cafaeb9efe217e1e7cfc56ad80245ad3b92d6c75128e3b149d656651909e5af",
+      "reportDate": "2025-12-31",
+      "form": "10-K"
+    }
+  ],
+  "CMCSA_reference_UI_sha256": "00374b0b14882b6856d8153a04029ead510b572b8b1760fa8cead7a31c0f9b12",
+  "CMCSA_code_sha256": {
+    "scripts/parse_comcast_sec_dom.py": "a1f22abd09ce93b847dbb780d03e6ef47cba87aab06f2a1c8704bf44356d9e7b",
+    "scripts/evaluate_comcast_sec.py": "948b71b34bacaad6b830672494bcdbf1efa2034f3770a7b5b7e50cf051e19fe5",
+    "scripts/collect_comcast_sec_dom.js": "410a359703c1e460afb030ea98fe02311e658f42962549962241af4efbdb6b47",
+    "scripts/parse_comcast_business_groups.py": "3e5d1b18284752e79790878a23816ebc032d584e22f58f9f3d648d3684492fc4"
+  },
+  "CMCSA_note": "八季程式擷取／運算，非人工補表；保留原期申報，後期重編比較欄不覆蓋原季。已接觸最新季，沒有盲測。",
+  "XOM_capture_manifest": {
+    "method": "正常 Edge 唯讀擷取 SEC 財務表 cell textContent，保留收入與對帳；非原始 HTML bytes。轉存後 canonical checksum 與 browser 擷取物件一致。",
+    "files": [
+      {
+        "path": "research/xom-sec-dom-20261104/XOM-2026Q1.json",
+        "sha256": "5434290a747ff654732eb46c3be126301a9353a24dd755d903e0f176db7d4f38",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/34088/000003408826000067/xom-20260331.htm",
+        "browser_capture_fnv32": "fe7e8af1"
+      },
+      {
+        "path": "research/xom-sec-dom-20261104/XOM-2026Q2.json",
+        "sha256": "6b58273db454697c8cb52c5c6e28f366678cd49f1eea7b8440a3a43aed0699bc",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/34088/000003408826000093/xom-20260630.htm",
+        "browser_capture_fnv32": "332d3a95"
+      },
+      {
+        "path": "research/xom-sec-dom-20261104/XOM-2025Q3.json",
+        "sha256": "cc2446b45a8d649ce42f7b98da85c1f66d3ed36edc2a4587eb1c2b190bc6d299",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/34088/000003408825000061/xom-20250930.htm",
+        "browser_capture_fnv32": "954220d3"
+      },
+      {
+        "path": "research/xom-sec-dom-20261104/XOM-2025FY.json",
+        "sha256": "1a0a165f6ad790bdb610a915a89e16c6898a924364234fd16f4dd3f4d3a988aa",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/34088/000003408826000045/xom-20251231.htm",
+        "browser_capture_fnv32": "8bc59614"
+      }
+    ],
+    "supplemental_page_text": [
+      {
+        "path": "research/xom-sec-dom-20261104/XOM-annual-sales-web.txt",
+        "sha256": "0589705749e3ee0d5afe6ae50af89b8e245808b1cc9dffab060e0618c6473946",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/34088/000003408826000045/xom-20251231.htm",
+        "source_format": "SEC_page_text_returned_by_web_tool",
+        "method": "正常 web 工具直接讀取 SEC 文件；保留原表行號及欄位，不冒稱原始 HTML。"
+      },
+      {
+        "path": "research/xom-sec-dom-20261104/XOM-june-sales-web.txt",
+        "sha256": "e7e6786b59b6c5627bf6b83bb018c63f3633893b18c4e75dda8ab2414a9aa242",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/34088/000003408826000093/xom-20260630.htm",
+        "source_format": "SEC_page_text_returned_by_web_tool",
+        "method": "正常 web 工具直接讀取 SEC 文件；保留原表行號及欄位，不冒稱原始 HTML。"
+      }
+    ]
+  },
+  "XOM_capture_manifest_sha256": "d750fa8fba1474bb9e2fa82c51c0b24d4fe536862c9bda568dc9b87a00c71e70",
+  "XOM_code_sha256": {
+    "scripts/parse_xom_sec.py": "0510c220baa3c16e72bb28cf36a496df37fc3021b5a554b25526343c66178daf",
+    "scripts/evaluate_xom_sec.py": "d55ce67443920fdd3529b071ca58606868400712eb7df08e00b927b5e01ba89f"
+  },
+  "XOM_note": "先完成舊 CIK 歷史原表；最新目標季仍缺參考，不以較舊八季提高完成數。"
+}
