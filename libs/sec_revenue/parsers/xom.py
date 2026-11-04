@@ -267,3 +267,114 @@ class XOMParser(IssuerParser):
         rows.extend(latest)
         self.source_receipts = reader.receipts
         return rows
+
+    def parse_downloaded(self, records, periods):
+        """新下載路徑固定 all-income 完整對帳；不套用舊參考網站 Q2 欄位例外。"""
+        import copy
+        from .base import IssuerParser
+
+        def term(dimensions, weight=1):
+            return {
+                "concept": "us-gaap:Revenues",
+                "dimensions": dimensions,
+                "unit": "iso4217:USD",
+                "weight": weight,
+            }
+
+        rules = {}
+        for label, member in {
+            "上游": "UpstreamMember",
+            "能源產品": "EnergyProductsMember",
+            "化工產品": "ChemicalProductsMember",
+            "特種產品": "SpecialtyProductsMember",
+        }.items():
+            rules[label] = {
+                "alternatives": [
+                    [
+                        term(
+                            {
+                                "us-gaap:StatementBusinessSegmentsAxis": "xom:"
+                                + member,
+                                "srt:StatementGeographicalAxis": geo,
+                            }
+                        )
+                        for geo in ("country:US", "us-gaap:NonUsMember")
+                    ]
+                ],
+                "role": "segment_all_income",
+            }
+        for label, dimensions, weight in [
+            (
+                "Other revenues",
+                {"srt:ConsolidationItemsAxis": "us-gaap:CorporateNonSegmentMember"},
+                1,
+            ),
+            (
+                "分部間收入",
+                {"srt:ConsolidationItemsAxis": "us-gaap:IntersegmentEliminationMember"},
+                1,
+            ),
+            (
+                "Income from equity affiliates",
+                {"srt:ProductOrServiceAxis": "xom:IncomeFromEquityAffiliatesMember"},
+                -1,
+            ),
+            ("其他收入", {"srt:ProductOrServiceAxis": "xom:OtherRevenueMember"}, -1),
+            (
+                "Sales and other operating revenue",
+                {"srt:ProductOrServiceAxis": "xom:SalesAndOtherOperatingRevenueMember"},
+                1,
+            ),
+            ("Total revenues and other income", {}, 1),
+        ]:
+            rules[label] = {
+                "alternatives": [[term(dimensions, weight)]],
+                "role": (
+                    "total_not_component"
+                    if label
+                    in (
+                        "Sales and other operating revenue",
+                        "Total revenues and other income",
+                    )
+                    else "reconciliation"
+                ),
+            }
+        original = self.rules
+        try:
+            self.rules = {"segments": rules}
+            rows = IssuerParser.parse_downloaded(self, records, periods)
+            for row in rows:
+                row["basis_description"] = (
+                    "分部 revenues and other income，加公司與抵銷，扣回合併投資／其他收入對帳至 sales；不套用舊資料商 Q2 gross 例外"
+                )
+            from sec_revenue.engines import RevenueReconciliation
+
+            engine = RevenueReconciliation()
+            for row in rows:
+                formulas = [
+                    {
+                        key: 1
+                        for key in [
+                            "上游",
+                            "能源產品",
+                            "化工產品",
+                            "特種產品",
+                            "Other revenues",
+                            "分部間收入",
+                        ]
+                    },
+                    {
+                        "Total revenues and other income": 1,
+                        "Income from equity affiliates": 1,
+                        "其他收入": 1,
+                        "Sales and other operating revenue": -1,
+                    },
+                ]
+                formulas[0]["Total revenues and other income"] = -1
+                checks = [engine.check(row["outputs"], formula) for formula in formulas]
+                row["reconciliation_checks"] = checks
+                if any(check["status"] != "verified" for check in checks):
+                    engine.reject(row["outputs"], "all_income_reconciliation_failed")
+            return rows
+        finally:
+            self.rules = original

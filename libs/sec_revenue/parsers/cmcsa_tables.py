@@ -150,7 +150,7 @@ class RevenueTables(TableSourceReader):
             start += span
         return result
 
-    def parse_groups(self, body, form, report_year):
+    def parse_groups(self, body, form, report_year, report_month=9):
         result = {}
         for table in html.fromstring(body).xpath("//table"):
             rows = [self.cells(r) for r in table.xpath("./tr|./tbody/tr")]
@@ -166,7 +166,16 @@ class RevenueTables(TableSourceReader):
             ):
                 continue
             if form == "10-Q" and (
-                not ("threemonthsended" in head and "ninemonthsended" in head)
+                not (
+                    "threemonthsended" in head
+                    and (
+                        report_month == 3
+                        or (
+                            "sixmonthsended" if report_month == 6 else "ninemonthsended"
+                        )
+                        in head
+                    )
+                )
             ):
                 continue
             if form == "10-K" and "yearendeddecember31" not in head:
@@ -187,7 +196,14 @@ class RevenueTables(TableSourceReader):
                     columns = [
                         (c, span) for c, span, text in headers[0] if text == str(year)
                     ]
-                    kinds = ["Q", "YTD9"] if form == "10-Q" else ["FY"]
+                    kinds = (
+                        (
+                            ["Q"]
+                            + ([] if report_month == 3 else ["YTD" + str(report_month)])
+                        )
+                        if form == "10-Q"
+                        else ["FY"]
+                    )
                     if len(columns) != len(kinds):
                         raise ValueError("Unexpected business-group period columns")
                     for kind, (start, span) in zip(kinds, columns):
@@ -204,6 +220,6 @@ class RevenueTables(TableSourceReader):
                         if key in result and result[key] != value:
                             raise ValueError("Conflicting direct business-group tables")
                         result[key] = value
-        if len(result) != (8 if form == "10-Q" else 4):
+        if len(result) != (4 if form == "10-K" or report_month == 3 else 8):
             raise ValueError("Incomplete business groups or periods")
         return result

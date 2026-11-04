@@ -117,3 +117,99 @@ class IssuerParser:
             ),
             "annual_end_anchor": end.isoformat(),
         }
+
+    earnings_exhibits: dict = {}
+
+    def catalog_filings(self, filings: list[dict]) -> list[dict]:
+        """一般公司以正式 10-K／10-Q（含修訂）查詢；8-K 由公司明列口徑。"""
+        selected = []
+        for filing in filings:
+            if filing["form"] in ("10-K", "10-Q"):
+                selected.append(filing)
+            elif filing["accessionNumber"] in self.earnings_exhibits:
+                selected.append(
+                    dict(
+                        filing,
+                        event_report_date=filing["reportDate"],
+                        **self.earnings_exhibits[filing["accessionNumber"]],
+                    )
+                )
+        return selected
+
+    def download_dependencies(self, filing: dict, filings: list[dict]) -> list[dict]:
+        """年報 Q4 需同實體上一季 YTD9；不把缺九個月資料當零。"""
+        if filing["form"] != "10-K":
+            return []
+        import datetime as dt
+
+        end = dt.date.fromisoformat(filing["reportDate"])
+        candidates = [
+            f
+            for f in filings
+            if f["form"] == "10-Q"
+            and f["cik"] == filing["cik"]
+            and 70 <= (end - dt.date.fromisoformat(f["reportDate"])).days <= 120
+        ]
+        return (
+            [max(candidates, key=lambda f: (f["filingDate"], f["accessionNumber"]))]
+            if candidates
+            else []
+        )
+
+    def required_document_roles(self, filing: dict) -> list[str]:
+        return ["primary"]
+
+    def needs_filing_index(self, filing: dict) -> bool:
+        return False
+
+    def document_names(self, filing: dict, names: list[str]) -> dict[str, str]:
+        return {"primary": filing["primaryDocument"]}
+
+    def extract_document(self, filing: dict, documents: dict) -> dict:
+        """從這次下載 bytes 萃取；絕不退回固定研究 facts。"""
+        from sec_revenue.engines import XbrlEngine
+        from lxml import html
+
+        raw, receipt = documents["primary"]
+        facts = XbrlEngine().parse_html(
+            raw, receipt["source_url"], filing["accessionNumber"]
+        )
+        for fact in facts:
+            fact.update(
+                source_artifact_sha256=receipt["sha256"],
+                source_format="original_html",
+                source_cik=filing["cik"],
+                form=filing["form"],
+                filing_date=filing["filingDate"],
+            )
+        result = {"filing": filing, "facts": facts}
+        root = html.fromstring(raw)
+        reported_ends = {
+            XbrlEngine().document_date(
+                "".join(n.itertext()).strip(), n.get("format", "")
+            )
+            for n in root.iter()
+            if isinstance(n.tag, str) and n.get("name") == "dei:DocumentPeriodEndDate"
+        }
+        if reported_ends and reported_ends != {filing["reportDate"]}:
+            raise ValueError("SEC DocumentPeriodEndDate 與 catalog reportDate 不符")
+        for concept, key in [
+            ("dei:DocumentFiscalYearFocus", "fiscal_year"),
+            ("dei:DocumentFiscalPeriodFocus", "fiscal_focus"),
+        ]:
+            values = {
+                "".join(node.itertext()).strip()
+                for node in root.iter()
+                if isinstance(node.tag, str) and node.get("name") == concept
+            }
+            if len(values) == 1:
+                result[key] = values.pop()
+        return result
+
+    def parse_downloaded(self, records: list[dict], periods: list[str]) -> list[dict]:
+        """正式下載工作流只用傳入 records；歷史重播介面另行保留。"""
+        return [
+            row
+            for row in IssuerParser.parse(self, records)
+            if row["period_end"] in periods
+        ]

@@ -147,7 +147,7 @@ class EngineTests(unittest.TestCase):
             SecDownloadEngine(None, "")
 
     def test_inline_xbrl_value_and_full_scope(self):
-        body = b'<html><xbrli:context id="c"><xbrli:period><xbrli:startdate>2025-01-01</xbrli:startdate><xbrli:enddate>2025-03-31</xbrli:enddate></xbrli:period><xbrldi:explicitmember dimension="axis">member</xbrldi:explicitmember></xbrli:context><xbrli:unit id="u"><xbrli:measure>iso4217:USD</xbrli:measure></xbrli:unit><ix:nonfraction name="rev" contextref="c" unitref="u" scale="6" decimals="-6">123</ix:nonfraction></html>'
+        body = b'<html><xbrli:context id="c"><xbrli:period><xbrli:startdate>2025-01-01</xbrli:startdate><xbrli:enddate>2025-03-31</xbrli:enddate></xbrli:period><xbrldi:explicitmember dimension="axis">member</xbrldi:explicitmember></xbrli:context><xbrli:unit id="u"><xbrli:measure>iso4217:USD</xbrli:measure></xbrli:unit><ix:nonfraction name="us-gaap:Revenues" contextref="c" unitref="u" scale="6" decimals="-6">123</ix:nonfraction></html>'
         facts = XbrlEngine().parse_html(body, "https://www.sec.gov/a", "acc")
         self.assertEqual(facts[0]["value"], 123000000)
         self.assertEqual(facts[0]["dimensions"], {"axis": "member"})

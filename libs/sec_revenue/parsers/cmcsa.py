@@ -255,3 +255,56 @@ class CMCSAParser(IssuerParser):
         )
         self.source_receipts = reader.receipts
         return rows
+
+    def extract_document(self, filing, documents):
+        """從當次下載的 reported 淨業務群表萃取，不把分部相加冒充淨額。"""
+        from .cmcsa_tables import RevenueTables
+
+        reader = RevenueTables(self.repository, self.output)
+        raw, receipt = documents["primary"]
+        report_year = int(filing["reportDate"][:4])
+        report_month = int(filing["reportDate"][5:7])
+        facts = []
+        for (kind, year, label), value in reader.parse_groups(
+            raw, filing["form"], report_year, report_month
+        ).items():
+            month = 12 if kind == "FY" else report_month
+            import calendar
+
+            end = f"{year}-{month:02d}-{calendar.monthrange(year,month)[1]}"
+            start = f'{year}-{month-2 if kind=="Q" else 1:02d}-01'
+            facts.append(
+                {
+                    "kind": kind,
+                    "label": label,
+                    "value": value,
+                    "concept": "sec-table:NetBusinessGroupRevenue",
+                    "dimensions": {
+                        "reported_business_group": label,
+                        "basis": "reported_net_group_total",
+                    },
+                    "unit": "iso4217:USD",
+                    "decimals": "-6",
+                    "startdate": start,
+                    "enddate": end,
+                    "source_url": receipt["source_url"],
+                    "source_cik": filing["cik"],
+                    "source_report_date": filing["reportDate"],
+                    "source_artifact_sha256": receipt["sha256"],
+                    "source_format": "original_html",
+                    "accession": filing["accessionNumber"],
+                }
+            )
+        return {"filing": filing, "facts": facts}
+
+    def parse_downloaded(self, records, periods):
+        from .cmcsa_tables import RevenueTables
+
+        reader = RevenueTables(self.repository, self.output)
+        return reader.observations(
+            [f for r in records for f in r["facts"]],
+            self.ticker,
+            "reported",
+            {k: k for k in reader.LABELS},
+            periods,
+        )

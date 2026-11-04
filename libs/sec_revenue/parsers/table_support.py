@@ -128,3 +128,28 @@ class TableSourceReader:
                 }
             )
         return rows
+
+
+class HtmlTableAdapter:
+    """原始 HTML 到內部 cell 結構；來源標記仍指向原始 bytes。"""
+
+    def nonempty(self, raw: bytes, headings: list[str]) -> list[dict]:
+        from lxml import html
+
+        root = html.fromstring(raw, parser=html.HTMLParser(no_network=True))
+        tables = []
+        for index, table in enumerate(root.xpath("//table")):
+            text = " ".join(table.itertext())
+            if not any(heading in text for heading in headings):
+                continue
+            rows = []
+            for row in table.xpath(".//tr"):
+                cells = [
+                    " ".join(cell.text_content().split())
+                    for cell in row.xpath("./td|./th")
+                ]
+                cells = [cell for cell in cells if cell and cell != "$"]
+                if cells:
+                    rows.append(cells)
+            tables.append({"index": index, "rows": rows})
+        return tables

@@ -123,3 +123,51 @@ class PGRParser(IssuerParser):
         )
         self.source_receipts = reader.receipts
         return rows
+
+    def required_document_roles(self, filing):
+        return ["primary", "consolidated"] if filing["form"] == "10-K" else ["primary"]
+
+    def needs_filing_index(self, filing):
+        return filing["form"] == "10-K"
+
+    def document_names(self, filing, names):
+        result = super().document_names(filing, names)
+        if filing["form"] == "10-K":
+            expected = "pgr-" + filing["reportDate"].replace("-", "") + "_d2.htm"
+            found = [name for name in names if name.lower() == expected]
+            if len(found) != 1:
+                raise ValueError(
+                    "PGR 找不到唯一合併財報 Exhibit 13，不能用 parent-only 10-K 替代"
+                )
+            result["consolidated"] = found[0]
+        return result
+
+    def extract_document(self, filing, documents):
+        from .pgr_tables import RevenueTables
+
+        raw, receipt = documents[
+            "consolidated" if filing["form"] == "10-K" else "primary"
+        ]
+        facts = RevenueTables(self.repository, self.output).parse_html(
+            raw, receipt["source_url"]
+        )
+        for fact in facts:
+            fact["source_cik"] = filing["cik"]
+        return {"filing": filing, "facts": facts}
+
+    def parse_downloaded(self, records, periods):
+        from .pgr_tables import RevenueTables
+
+        reader = RevenueTables(self.repository, self.output)
+        labels = {
+            label: label
+            for label in reader.INCOME
+            + ["個人保險", "商業保險", "其他", "Total underwriting revenue"]
+        }
+        return reader.observations(
+            [f for r in records for f in r["facts"]],
+            self.ticker,
+            "reported",
+            labels,
+            periods,
+        )

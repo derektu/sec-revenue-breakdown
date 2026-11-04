@@ -230,3 +230,64 @@ class UPSParser(IssuerParser):
         )
         self.source_receipts = reader.receipts
         return rows
+
+    def download_dependencies(self, filing, filings):
+        dependencies = super().download_dependencies(filing, filings)
+        if filing["reportDate"] == "2024-12-31":
+            dependencies.extend(
+                f
+                for f in filings
+                if f["reportDate"] == "2025-09-30" and f["form"] == "10-Q"
+            )
+        return dependencies
+
+    earnings_exhibits = {
+        "0001628280-26-067381": {
+            "reportDate": "2026-09-30",
+            "primaryDocument": "exhibit991-earningspressre.htm",
+        }
+    }
+
+    def extract_document(self, filing, documents):
+        if filing["form"] != "8-K":
+            return super().extract_document(filing, documents)
+        from .ups_tables import RevenueTables
+
+        raw, receipt = documents["primary"]
+        facts = RevenueTables(self.repository, self.output).parse_earnings_html(
+            raw, receipt["source_url"], receipt["sha256"]
+        )
+        for fact in facts:
+            fact["source_cik"] = filing["cik"]
+        return {
+            "filing": filing,
+            "facts": facts,
+            "table_selected": {
+                fact["dimensions"]["reported_segment"]: {
+                    "status": "observed",
+                    "value_usd": fact["value"],
+                    "SEC_operands": [fact],
+                    "weights": [1],
+                    "rule_id": "ups-2026q3-sec-exhibit-direct",
+                }
+                for fact in facts
+            },
+        }
+
+    def parse_downloaded(self, records, periods):
+        rows = super().parse_downloaded(records, periods)
+        for record in records:
+            period = record["filing"]["reportDate"]
+            if period not in periods or not record.get("table_selected"):
+                continue
+            rows = [row for row in rows if row["period_end"] != period]
+            rows.append(
+                {
+                    "ticker": self.ticker,
+                    "period_end": period,
+                    "period_kind": "Q",
+                    "basis": "reported",
+                    "outputs": record["table_selected"],
+                }
+            )
+        return rows

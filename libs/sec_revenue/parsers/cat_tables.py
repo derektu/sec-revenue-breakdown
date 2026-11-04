@@ -24,6 +24,7 @@ class RevenueTables(TableSourceReader):
     ]
 
     def money(self, text):
+        text = "".join(text.split())
         if not re.fullmatch("\\(?\\d[\\d,]*\\)?", text):
             raise ValueError("Unreviewed CAT revenue value; missing is not zero")
         return int(text.replace(",", "").replace("(", "-").replace(")", "")) * 1000000
