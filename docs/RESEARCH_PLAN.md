@@ -1,86 +1,35 @@
-# SEC revenue composition research
+# SEC 營收組成研究
 
-The target universe is US companies in the S&P 500, 400 and 600. The first
-evaluation is the existing 30-company, cross-industry baseline, using the most
-recent eight fiscal quarters *at that baseline's recorded collection date*.
-The recovered runner freezes availability at **2026-11-03**. The exact cohort
-is now in `research/recovered-sec/eight_quarter_eval/roster.json`; raw filing
-snapshots and saved results have not been transferred into this cloud checkout.
-Do not treat those results as the latest eight quarters as of today, or infer
-index membership from company size. After import, preserve the baseline unchanged
-and record an explicit as-of date for a separate refresh.
+目標範圍是 S&P 500、400 與 600 的美國成分公司。首次評估採用既有的跨產業 30 家公司基準，以*該基準記錄的蒐集日期*當時最近八個財報季度為準。復原執行器將資料可用性截止日固定為 **2026-11-03**。完整名單現位於 `research/recovered-sec/eight_quarter_eval/roster.json`；原始申報快照與已存結果尚未傳入此雲端 checkout。不要將這些結果當成截至今日的最近八季，也不要由公司規模推定指數成分資格。匯入後應保留基準原樣，另行更新時須記錄明確截止日。
 
-## Evidence and output contract
+## 證據與輸出規範
 
-Use original SEC XBRL/iXBRL facts and filing evidence. For every observation,
-retain company identity (CIK and historical identity), accession, filing URL,
-filing date, raw concept QName, original labels/definition references, context
-ID, original period start/end, unit, decimals/scale, original value, and the
-complete axis/member mapping. Preserve multiple facts and restatement provenance;
-never silently replace conflicting observations. Keep the source filing hash
-and retrieval timestamp where available. Store any normalized labels separately.
+使用原始 SEC XBRL/iXBRL 資料項及申報證據。每個觀察值須保留公司身分（CIK 與歷史身分）、申報編號 accession、申報 URL、申報日期、原始概念 QName、原始標籤／定義參照、context ID、原始期間起訖、單位、decimals/scale、原始值，以及完整的軸／成員對應。保留多個資料項與重編來源；不可默默取代相互衝突的觀察值。若可取得，保留來源申報檔雜湊與擷取時間戳記。正規化標籤應另行儲存。
 
-Keep each disclosure family separate (product/service, segment, geography,
-customer or other). A business segment is not automatically a product/source.
-Do not sum different axes or flatten multi-axis cells into one list. Preserve
-company definitions and distinguish external sales, intersegment sales, subtotals
-and eliminations. If the evidence does not support a single By source partition,
-report the ambiguity and retain the candidate partitions for review.
+各類揭露應分開保留（產品／服務、部門、地理、客戶或其他）。業務部門不自動等於產品／來源。不可將不同軸加總，或把多軸儲存格攤平成單一清單。保留公司定義，區分對外銷售、部門間銷售、小計與沖銷。若證據無法支持唯一的 By source 分組，應回報歧義並保留候選分組供審查。
 
-Quarter values must retain their derivation: directly disclosed quarter versus
-YTD subtraction versus annual-minus-nine-month calculation. Derivations require
-compatible entities, concepts, complete dimensions, units, accounting basis and
-period boundaries; retain the input facts and method. Missing data is not zero.
+季度數值須保留推導方式：直接揭露的季度、年初至今（YTD）相減，或全年減九個月。推導須具備相容的實體、概念、完整維度、單位、會計基礎與期間邊界；保留輸入資料項及方法。缺值不是零。
 
-Arithmetic checks compare one coherent candidate partition to a compatible
-consolidated revenue fact, recording both values, difference, tolerance, units
-and candidate identity. Passing is arithmetic consistency only. It does not
-prove semantic correctness, complete disclosure, or agreement with a vendor.
+算術檢查應將一套一致的候選分組與相容的合併營收資料項比較，記錄兩邊的數值、差額、容許誤差、單位與候選識別資訊。通過只代表算術一致，不證明語意正確、揭露完整或與供應商相符。
 
-## Reported baseline and open issues
+## 已回報基準與待解問題
 
-The delegation reports 234 of 240 company-quarters processed, and 138 quarters
-with at least one candidate partition arithmetically matching total revenue.
-The local recovery task reports successful recomputation of 234 saved quarters;
-the cloud has verified source integrity and synthetic tests only. These numbers
-are **not independently reproduced from data in this cloud checkout**. Do not call
-them accuracy or disclosure coverage. Recover the exact tolerance, counting
-method and denominators from the source code before reproducing them.
+委派訊息回報已處理 240 個公司季度中的 234 個，其中 138 季至少有一組候選分組在算術上符合營收總額。本機復原工作回報成功重算已存的 234 季；雲端只驗證了來源完整性與合成測試。這些數字**尚未以此雲端 checkout 的資料獨立重現**。不可稱為準確率或揭露覆蓋率。重現前，應由原始碼確認精確容許誤差、計數方法與分母。
 
-- XOM: resolve historical company identity/CIK linkage before filling missing quarters.
-- Intel: inspect subtotals and elimination items before interpreting candidate sums.
-- PG and COST: inspect multi-axis observations; do not add across axes.
-- The 30-company roster is recovered, but dated index membership, exact fiscal
-  periods and the six missing company-quarters still require the saved evidence.
-- Intel was an exploratory extra, outside the frozen 30-company roster. Preserve
-  that distinction when reporting its subtotal/elimination case.
+- XOM：補齊缺漏季度前，先釐清歷史公司身分／CIK 關聯。
+- Intel：解讀候選加總前，先檢查小計與沖銷項目。
+- PG 與 COST：檢查多軸觀察值，不可跨軸加總。
+- 已復原 30 家公司名單，但具日期的指數成分資格、精確財報期間及缺漏的六個公司季度，仍需已存證據。
+- Intel 是固定 30 家名單之外的額外探索個案；回報其小計／沖銷案例時須保留此區別。
 
-Stock Analysis and Futu user-authorized data are future reference sources.
-Neither has been imported or compared. TradingView annual data is secondary and
-cannot validate quarterly detail. Restricted vendor bytes and authenticated
-browser state stay out of git even though the repository is private.
+經使用者授權的 Stock Analysis 與 Futu 資料是未來參考來源，目前兩者均未匯入或比對。TradingView 年度資料屬次要來源，無法驗證季度明細。即使儲存庫為私有，受限制的供應商位元組與已登入的瀏覽器狀態仍不得納入 Git。
 
-## Resume sequence
+## 接續步驟
 
-1. Source-only handoff is complete via reviewed private Git commit `4113daa`.
-   Full cloud data reproduction still needs the original archives and saved facts;
-   use a supported, authorized transfer. The cloud Library transfer failure remains
-   unresolved. Preserve source identities; do not assume local-machine paths exist.
-2. If the original archives are transferred, audit with `scripts/stage_archive.py`, stage each separately,
-   review every file, and promote only code, documentation and public SEC-derived
-   research data. A clean automated audit does not establish data ownership.
-   Never run imported code before inspecting it and its dependencies.
-3. Treat the eight-quarter archive as the baseline; retain the older experiment
-   and filing review separately. Compare overlapping files by SHA-256 before
-   consolidating them; do not overwrite one version with another.
-4. Record archive hashes, per-file hashes, exact original paths and promotion
-   decisions. Recover and run the original meaningful tests, pin dependencies,
-   and document the original entrypoints and offline/online commands.
-5. Recompute baseline counts offline where evidence permits. Reconcile the
-   234/240 and 138 counts and document any differences with original output.
-6. Request the cloud environment's supported network configuration workflow to
-   allow `www.sec.gov` and `data.sec.gov` before an online refresh. Use SEC's
-   current access policy and a real configured identifying User-Agent. No SEC
-   requests or access-policy validation have been performed in this task.
-7. Review the recovered cohort with the user before extending across the full
-   S&P 1500 universe. Record dated membership and identity mapping sources.
+1. 已透過經審查的私有 Git 提交 `4113daa` 完成僅含原始碼的交接。完整雲端資料重現仍需原始封存檔與已存資料項；應使用受支援且獲授權的傳輸。雲端 Library 傳輸失敗尚未解決。保留來源識別資訊，不要假設本機路徑存在。
+2. 若原始封存檔已傳入，使用 `scripts/stage_archive.py` 稽核，逐一暫存、審查所有檔案，僅將程式碼、文件與公開 SEC 衍生研究資料納入追蹤。自動稽核通過不代表已確認資料權利。檢查匯入程式碼與相依套件之前，絕不可執行。
+3. 將八季封存檔作為基準；較早實驗與申報審查分別保留。整併前以 SHA-256 比較重疊檔案，不可用一個版本覆寫另一個。
+4. 記錄封存檔雜湊、逐檔雜湊、精確原始路徑與納入追蹤的決策。復原並執行原有的有效測試、固定相依版本，並記錄原始入口及離線／線上命令。
+5. 在證據允許時離線重算基準數量，核對 234/240 與 138，記錄與原始輸出的差異。
+6. 線上更新前，透過雲端環境受支援的網路設定流程允許 `www.sec.gov` 與 `data.sec.gov`。遵守 SEC 目前存取政策，並設定能識別真實操作者的 User-Agent。本工作尚未發送 SEC 請求或驗證存取政策。
+7. 擴展至完整 S&P 1500 範圍前，先與使用者審閱復原名單。記錄具日期的成分資格與身分對應來源。
