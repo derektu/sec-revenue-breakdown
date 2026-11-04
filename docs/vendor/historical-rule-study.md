@@ -2,7 +2,7 @@
 
 截至 2026-11-04，依目前已保存資料與程式結果，**OK：AAPL、NVDA、AMZN、TSLA、NEE、LIN、DIS、JNJ、META、ORCL、GOOGL、MSFT、PG、JPM，另加 COST、KO、WMT、BAC、UNH、UPS，共 20 家；其餘 10 家 Fail。**
 
-這裡的 OK 表示：每家公司固定選 Stock Analysis、富途或 TradingView 其中一家，八個目標季度的所有參考分類都由現有程式擷取結果加計算產生，期間已確認，而且逐項相同。不要求三家網站互相一致，也不要求三十家公司選同一家。新季度能否泛化不影響本次判定。
+這裡的 OK 表示：每家公司固定選 Stock Analysis、富途或 TradingView 其中一家，八個目標季度的所有參考分類都由現有程式擷取結果加計算產生，期間已確認，而且逐項相同，或有公司原表支持的具體差異解釋。不要求三家網站互相一致，也不要求三十家公司選同一家。新季度能否泛化不影響本次判定。
 
 第一批 Fail 修復已完成 DIS、JNJ、META；第二批 ORCL、GOOGL、MSFT、PG、JPM 亦已完成，見 [第二批修復與裁決](priority-parser-repairs.md)。[修法、證據及剩餘 21 家處理方式](parser-fail-remediation.md)，[第一批 9 / 30 結果](../../research/parser-fail-resolution-20261104/eight-quarter-status.json)，[前批 14 / 30 結果](../../research/continued-parser-repairs-20261104/completion-status.json)。本批新增六家，見 [本批修復及剩餘十家](remaining-parser-repairs.md) 與 [最新 20 / 30 結果](../../research/completed-parser-repairs-20261104/extended-completion-status.json)。
 
