@@ -1,47 +1,29 @@
-# Apple local reference comparison
+# Apple 本機參考資料比對
 
-Executed 2026-11-04 using the user's existing Edge pages. Research-only DOM
-observations, their normalized values and the detailed comparison remain below
-Git-ignored `data/vendor/local/apple-20261104/`. No original third-party data is
-published or committed. The repository contains the reusable offline comparison
-script and this findings summary.
+2026-11-04 使用既有 Edge 頁面的 DOM，原始觀察及完整比對留在忽略追蹤的
+`data/vendor/local/apple-20261104/`。本結果是回溯比對，最新季度已看過，不能稱為盲測。
 
-## Observed result
-
-| Check | Observed result |
+| 查核 | 實際結果 |
 | --- | --- |
-| Stock Analysis quarterly product/service observations | 8 quarters, 40 values |
-| Stock Analysis values equal to saved SEC candidates | 40/40 |
-| Stock Analysis five-category sums equal to saved SEC consolidated totals | 8/8 |
-| Futu observations within the same target period range | 5 quarters, 25 values |
-| Futu values equal to Stock Analysis and saved SEC candidates | 25/25 |
-| Futu displayed percentages consistent with saved SEC totals | 25/25 within 0.005 percentage points |
-| Futu target quarters absent from the visible selector | FY2026 Q4, FY2026 Q2, FY2025 Q4 |
-| Native CSV file format/content verified | No |
+| Stock Analysis 季度產品／服務資料 | 八季、40 筆 |
+| 與已儲存 SEC 指定產品／服務成員相同 | 40/40 |
+| 五分類合計與 SEC 合併營收相同 | 8/8 |
+| 富途目標範圍內資料 | 五季、25 筆 |
+| 富途與 Stock Analysis、SEC 相同 | 25/25 |
+| 富途占比與 SEC 總額相容 | 25/25，容差 0.005 個百分點 |
+| 富途選單缺少的目標季度 | FY2026 Q4、FY2026 Q2、FY2025 Q4 |
+| 原生 CSV 格式、精度及內容已驗證 | 否 |
 
-The target display dates are 2024-12-31 through 2026-09-30. Stock Analysis uses
-calendar-end display labels, while Apple SEC quarter ends fall on fiscal dates
-a few days earlier. Futu uses Apple fiscal labels. The comparison uses an explicit
-reviewed Apple period mapping, not a join on equal date strings. FY entries are
-excluded from quarterly comparisons; missing Futu quarters are not filled in.
+Stock Analysis 顯示日期介於 2024-12-31 與 2026-09-30，與 Apple 實際財季截止日不同。
+程式採已覆核的 Apple 財季對照；不直接以顯示日期相等連接。FY 不當作 Q，缺季不補零。
+Stock Analysis 使用圖表無障礙標籤的完整美元值，History 表格則縮寫十億；富途使用更新後的
+「業務」DOM，`億` 為一億美元。富途各期會改變排序，因此依分類而非列位置對照，地區表另計。
 
-The source of Stock Analysis values is the rendered chart's accessibility labels,
-which expose full-dollar amounts. Its History table abbreviates billions. The
-source of Futu values is the rendered Business DOM after the selected quarter's
-revenue values refresh. Chinese 億 is normalized as 100,000,000 USD. Futu changes
-row order by period, so categories are mapped by their reviewed labels rather
-than row position. The Region section is outside this product/service comparison.
+SEC 證據來自凍結於 2026-11-03 的還原 `AAPL.json`。選取五個明確產品／服務成員，排除
+Products 小計；Q4 使用已儲存的全年減九個月運算。本比對未獨立重查所有運算元是否重編，
+也未重剖八份原始 HTML。數字相同不能推論跨公司準確率或完整揭露召回率。
 
-SEC evidence is the recovered `AAPL.json` from the frozen 2026-11-03 candidate
-audit. Five exact product/service members under the disclosed axis are selected;
-the Products subtotal is excluded. Q4 values in that evidence are annual-minus-
-nine-month derivations with saved operands. This comparison does not independently
-certify those operands against recasts or reparse the eight raw filings. Matching
-values do not establish cross-company accuracy or full disclosure recall.
-
-## Reproduce offline
-
-From the repository root, with the private local captures and recovered archive:
+## 離線重現
 
 ```sh
 data/vendor/local/.venv/bin/python scripts/compare_apple_reference.py \
@@ -49,35 +31,14 @@ data/vendor/local/.venv/bin/python scripts/compare_apple_reference.py \
   --sec-evidence data/vendor/local/research-imports/eight_quarter_reproducible_results/sec_revenue_experiment/eight_quarter_eval/outputs/AAPL.json
 ```
 
-The script makes no network requests. It validates issuer, schemas, currency,
-quarter labels and five-category coverage, and rejects missing/conflicting SEC
-values. `comparison.json` is written inside `--capture-dir`; it refuses to overwrite
-an existing result. Reproducing after the first run requires choosing a new local
-capture directory containing the two input captures. Input SHA-256 values, raw
-values, fiscal mappings and per-observation outcomes stay in that ignored result.
+程式不連網，檢查 issuer、schema、幣別、季標籤與五分類，拒絕缺漏或衝突的 SEC 值。
+`comparison.json` 留在 capture 目錄且不覆寫既有結果；重跑須準備新的本機輸入目錄。
+輸入 SHA-256、完整數值、財季對照與逐筆結果都在該忽略目錄。負控制將一筆改一美元，
+數字一致與季度合計一致各少一筆；混入 FY 則被拒絕。
 
-A local negative control changes one captured Stock Analysis value by one USD.
-It reduces the equal-value count by one and the matching-quarter-sum count by
-one. A mixed FY label is rejected. These controls check that disagreement and
-non-quarterly periods are detected, rather than forcing a successful comparison.
+## 下載與後續研究
 
-## Native export status and next step
-
-The earlier single Download to CSV action has no confirmed completed artifact.
-The exact pending download permission was checked again before this work; no
-affirmative reaction was available. No duplicate download was triggered. DOM
-observations are labelled as DOM captures, not native vendor CSV exports.
-
-To finish the native-export test, resolve the existing Stock Analysis download
-permission, confirm whether a file was produced, and only then decide whether
-one retry is necessary. The tool restriction on `edge://downloads/all` remains
-in force. No alternative route to the blocked page was used. No login change,
-credential extraction or hidden vendor endpoint was required for the DOM sample.
-
-## Batch readiness
-
-The Apple-only offline comparison is reusable, with explicit issuer-specific
-period and category mappings. It is not a 30-company scraper. Expanding to other
-issuers requires checking their actual categories, units, period definitions,
-source availability and applicable access conditions. The current 30-company
-coverage roster remains a plan; Apple is the sole vendor comparison performed.
+先前唯一一次 Download to CSV 未返回完成檔案，下載權限也未見可驗證的同意反應。
+未重複點擊；`edge://downloads/all` 的工具限制仍有效，未使用替代方式繞過。
+DOM 成果不是 CSV 成果。三十家後續成果見 [逐公司稽核](company-audit.md)，
+Apple 的成功不可直接當成通用 scraper 或全產業正確性的證據。

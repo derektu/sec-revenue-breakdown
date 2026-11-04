@@ -34,3 +34,5 @@ data/vendor/local/.venv/bin/python research/recovered-sec/verify_local.py \
 
 - [SEC 營收組成可行性先導實驗（繁體中文譯文）](README.zh-TW.md)；[封存原文](README.md)。
 - [最近八季 SEC 營收候選實驗（繁體中文譯文）](eight_quarter_eval/README.zh-TW.md)；[封存原文](eight_quarter_eval/README.md)。
+
+後續本機參考來源實驗與最新季度資料洩漏紀錄見 [第二輪查核](../../docs/vendor/evidence-review.md)。

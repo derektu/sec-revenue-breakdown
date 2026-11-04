@@ -1,125 +1,39 @@
-# Local vendor references and cloud handoff
+# 本機參考資料與雲端交接
 
-The local task owns `docs/vendor/`, ignored `data/vendor/local/`, and the isolated
-`research/recovered-sec/` experiment import. The cloud task owns the SEC baseline
-on `research/cloud-baseline`. The shared GitHub repository is
-`https://github.com/derektu/sec-revenue-breakdown`.
+本機研究負責 `docs/vendor/`、忽略追蹤的 `data/vendor/local/`，以及
+`research/recovered-sec/` 的還原程式。雲端 SEC 基準位於
+`research/sec-30-baseline-2026-11-04/`。程式與研究摘要透過獨立分支、PR 與測試整合至
+[共同 repo](https://github.com/derektu/sec-revenue-breakdown)，不直接修改另一工作的分支。
+使用者已授權本研究 repo 的程式 PR／merge。
 
-The local branch is `local/vendor-reference`, based on initial main commit
-`2be07ea`. The cloud branch was observed at
-`923303d69379fab6856089c9ba185b5aa49533e6` on 2026-11-04. It is not checked out or
-modified by this task. The source-only handoff uses the separate
-`local/vendor-reference` branch; cloud integration requires an explicit review
-and selection of files from that branch.
+## 目前入口
 
-## Files and responsibilities
+- [第二輪逐公司查核、來源選擇與擴展評估](evidence-review.md)
+- [逐公司日期與分類稽核](company-audit.md)
+- [第一輪涵蓋與數字候選診斷](cohort-research.md)
+- [Apple 小樣本](apple-comparison.md)
+- [瀏覽器、下載與條款的實際狀態](live-browser-check.md)
+- [還原 SEC 程式與驗證](../../research/recovered-sec/HANDOFF.md)
 
-| Location | Contents | Git handling |
+## 檔案界線
+
+| 路徑 | 內容 | Git 處理 |
 | --- | --- | --- |
-| `docs/vendor/` | Coverage, acquisition constraints, provenance and handoff | Reviewable source documents |
-| `research/recovered-sec/` | Selected SEC experiment source and synthetic tests | Reviewable source; separate from cloud baseline |
-| `data/vendor/local/` | Research ZIPs, extracted originals, verification logs and venv | Entire directory ignored |
-| `research/recovered-sec/data/` and `outputs/` | Disposable offline pilot snapshots and outputs | Ignored |
+| `docs/vendor/` | 方法、摘要、來源限制、查核計數 | 可檢閱並整合 |
+| `research/recovered-sec/` | SEC 研究程式、合成測試、名單 | 保留來源雜湊 |
+| `data/vendor/local/` | 第三方原始觀察、完整數值、詳細比對、研究 ZIP、虛擬環境 | 全部忽略追蹤 |
+| `research/recovered-sec/data/`、`outputs/` | 可重建的本機驗證產物 | 忽略追蹤 |
 
-Original vendor downloads, screenshots containing vendor data, browser sessions,
-cookies, passwords and tokens are not part of the Git handoff. A private repository
-does not establish redistribution rights. No vendor data files have been downloaded
-in this task. The ignored directory currently contains recovered SEC research
-archives, not a vendor reference dataset.
+本機已有 DOM 參考資料；原生 CSV 尚未確認成功。私人 repo 不代表取得第三方資料再散布權。
+瀏覽器登入、cookie、密碼、token 與原始第三方資料不進入 Git，也不交給雲端。
+完整研究值保留本機；可分享摘要僅含計數、狀態及公開 SEC／公司來源定位。
 
-## Apple acquisition status, 2026-11-04
+## 重現與協作
 
-The live-browser follow-up is recorded in [live-browser-check.md](live-browser-check.md).
-Both existing Edge pages have readable DOM. Stock Analysis offers native
-Excel/CSV/Google Sheets exports; its one CSV test is waiting on a download
-permission. Futu supports selecting a historical business quarter. The earlier
-public 403 below does not describe the existing Edge page's accessibility.
-The following paragraphs retain the initial public/isolated-page observations.
+原始資料保留不變，衍生結果另存新檔。記錄來源 URL、UTC 時間、期間基礎、幣別、倍率、
+分類、負值、缺值與來源版本；Q、YTD、FY、TTM 必須分開。不要以缺資料代替零，
+不要將父分類與子分類重複加總，也不要以名稱或數字相同直接認定語意一致。
 
-Stock Analysis page:
-<https://stockanalysis.com/stocks/aapl/metrics/revenue-by-segment/>.
-The initial isolated-browser page displayed a Log In link. The default chart
-explicitly described TTM. Selecting Quarterly displayed eight recent endpoints:
-2026-09-30, 2026-06-30, 2026-03-31, 2025-12-31, 2025-09-30, 2025-06-30,
-2025-03-31 and 2024-12-31. These are the vendor's display dates; verify actual
-fiscal period boundaries against SEC filings rather than assuming calendar dates.
-
-The five visible categories are iPhone, Services, Mac, Wearables/Home/Accessories,
-and iPad. This is a product/service decomposition; the site's separate geography
-page is a different decomposition. The display uses USD and abbreviated billions
-(`B`); the exact downloaded precision and schema are unverified. The page identifies
-TipRanks as the provider and shows a 2026-11-02 update date. No numeric vendor table
-is saved in this handoff.
-
-The Quarterly interaction also produced a logged-in notification, despite the
-initial Log In link. This is not proof of subscription entitlement. No credentials
-were entered, no account settings changed, and no subsequent download was attempted.
-The download control's file formats and contents remain untested.
-
-Stock Analysis terms, last updated 2026-10-29:
-<https://stockanalysis.com/terms-of-use/>. The Automated access section limits
-account/browser automation, with an exception for AI agents following robots.txt;
-the Your account section separately disallows machine/system account access.
-<https://stockanalysis.com/robots.txt> was checked. The AI crawler exception does
-not establish permission to operate a paid personal account or build a competing
-database. Written clarification is required before an authenticated batch workflow.
-This is an acquisition constraint, not a claim about the user's intent.
-
-Futu page already exists in the user's Edge session:
-<https://www.futunn.com/hk/stock/AAPL-US/financials-revenue>.
-The public web retrieval returned a 403/frequency-limit page. No retry, hidden API,
-login alteration or bypass was attempted. Eight-quarter coverage, category mapping,
-units and export format have not been independently verified in this task.
-
-Futu's official agreement was rendered in Edge:
-<https://www.futunn.com/about/services?lang=zh-hk>, updated 2024-08-13.
-Section III(3) limits third-party tool access and copying/interception of system
-data. Section V and the market-data appendix restrict redistribution. Applicability
-and permission for revenue-table automation need clarification before collection.
-The signed-in revenue page was left untouched.
-
-## Acquisition and comparison workflow
-
-1. Establish permission for the intended personal research, automated collection,
-   offline processing and any transfer. Paid access alone does not establish these
-   rights. Vendor permission or permitted manual exports are separate from GitHub
-   access. Neither account needs to be reconfigured for the current offline work.
-2. For an authorized manual export, the user selects Apple, Quarterly, By source /
-   product-service, absolute values, and the latest eight disclosed periods. Save
-   the unmodified file below `data/vendor/local/SOURCE/AAPL/DATE/`. Record the real
-   format and SHA-256 after saving; CSV/XLSX support is not assumed.
-3. Record source URL, UTC acquisition time, original filename, file format, SHA-256,
-   display period, fiscal start/end, quarter/YTD/TTM basis, currency, unit multiplier,
-   raw category, parent/subtotal structure, provider update date, source provider,
-   export settings and the permission basis. Preserve blanks and unavailable values.
-4. Keep the source file unchanged. Generate normalized rows only after validating
-   schema and period basis. A suitable comparison key is issuer, source, fiscal
-   start/end, period basis, breakdown axis and raw category. Retain original values,
-   scaling, rounding and source reference. Do not map categories by name alone.
-5. Compare Apple against the corresponding SEC product/service disclosure. Keep
-   operating segments and geography separate; preserve products subtotals without
-   adding them to child product values. Report missing quarters and differences,
-   including vendor rounding and possible restatements.
-6. Expand using the frozen 30-company roster at
-   `research/recovered-sec/eight_quarter_eval/roster.json` only after the Apple file
-   and rights check pass. `coverage.csv` tracks actual observations; planned issuers
-   do not count as downloaded or covered. The roster spans technology, media,
-   retail, consumer goods, healthcare, banks, insurance, energy, industrials,
-   utilities, materials and real estate. It is a sampling plan, not verified vendor
-   availability. Respect site limits and stop on authentication or access errors.
-
-## Cloud and local coordination
-
-Before combining branches, the cloud task checks these isolated paths against its
-current tree and explicitly chooses which recovered modules to incorporate. It
-must not merge duplicate pipelines blindly. `recovery-manifest.json` records archive
-checksums and exact imported source hashes. The original experiment READMEs describe
-their historical execution and include files intentionally excluded from this
-source-only handoff; use `research/recovered-sec/HANDOFF.md` as the current entry point.
-
-The local task does not write the cloud branch, and no active downloaders share a
-cache. A future authorized publication should include only reviewed source and docs
-from this branch. Git-ignored contents stay local until separately reviewed for
-licensing and necessary disclosure. Cloud/local task conversations are not assumed
-to share context automatically; this document and the recovery manifest provide an
-explicit handoff.
+還原套件的 ZIP 與原始檔雜湊在 `recovery-manifest.json`；歷史 README 描述的是原實驗，
+目前使用方式以 `research/recovered-sec/HANDOFF.md` 為準。整合時檢查重複程式與現有基準，
+避免兩個下載程序共用可寫快取。對話不視為自動共享的工作紀錄，交接依據是 repo 文件與 PR。

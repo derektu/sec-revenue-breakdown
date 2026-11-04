@@ -37,6 +37,13 @@ class VendorComparisonTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             comparison.calendar_fiscal_date('2026/FY')
 
+    def test_walmart_fiscal_year_rollover(self):
+        self.assertEqual(comparison.futu_fiscal_date('WMT', '2027/Q2'), '2026-07-31')
+        self.assertEqual(comparison.futu_fiscal_date('WMT', '2026/Q4'), '2026-01-31')
+        self.assertEqual(comparison.futu_fiscal_date('NEE', '2026/Q3'), '2026-09-30')
+        with self.assertRaises(ValueError):
+            comparison.futu_fiscal_date('WMT', '2026/FY')
+
     def test_aggregate_abstains_on_missing_or_wrong_scope(self):
         result = comparison.reviewed_aggregation('CMCSA', 'Connectivity and Platforms', 100, 1,
                                                  [{'value': 100, 'unit': 'iso4217:USD', 'dimensions': {}}])
