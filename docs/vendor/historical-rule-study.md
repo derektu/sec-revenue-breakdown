@@ -1,24 +1,16 @@
-# 八季 parser 完成狀態：24 / 30 OK
+# 八季 parser 完成狀態：跨來源 29 / 30 OK
 
-截至 2026-11-04，依目前 SEC 擷取、計算與來源檢查，**OK：AAPL、MSFT、NVDA、ORCL、GOOGL、META、DIS、AMZN、TSLA、HD、WMT、COST、PG、KO、JNJ、UNH、JPM、BAC、UPS、NEE、LIN、CAT、CMCSA、MCD，共 24 家；其餘 6 家 Fail。**
+截至 2026-11-04，**跨來源逐期裁決為 29 / 30 OK；只有 CVX 尚未完成。** 原固定供應商八季測試的 **24 / 30** 保留為歷史基準，沒有回寫舊成績。
 
-**原始數字的擷取與計算只用 SEC 申報文件（含 8-K 附件）；公司 IR 與其他網站只作參考。** 最新 [SEC 來源檢查](../../research/reference-gap-completion-20261104/completion-status.json) 及 [來源規則與修正](sec-primary-source-policy.md) 已涵蓋全部三十家。
+**所有主要數字的擷取與計算只用 SEC 申報文件（含 8-K 附件）；其他來源只作參考。** 最新 [跨來源結果](../../research/cross-source-final-20261104/completion-status.json) 與 [逐期裁決、來源、複雜度及投入紀錄](cross-source-adjudication.md) 涵蓋全部三十家。
 
-[剩餘六家 SEC 八季重播](remaining-sec-coverage.md) 已完成：48 個目標季度的指定欄位均可產生有 SEC 出處的輸出；固定參考仍缺，因此正式完成數維持 24 / 30。這區分了擷取能力與參考驗證，沒有將缺參考算成 parser 缺值。
+依使用者接續指示，各期可使用已取得且合法、日期與口徑可確認的參考，不因固定供應商缺季而忽略公司報表副本。OK 仍要求八個目標季度及每季完整預定分類，逐項相同或有 SEC 原表支持的具體差異解釋。公司申報副本與 SEC 有共同上游，不當作獨立資料商準確率；目前全為已接觸的回溯驗證，不稱盲測。
 
-這裡的 OK 表示：每家公司固定選 Stock Analysis、富途或 TradingView 其中一家，八個目標季度的所有參考分類都由現有程式擷取結果加計算產生，期間已確認，而且逐項相同，或有公司原表支持的具體差異解釋。不要求三家網站互相一致，也不要求三十家公司選同一家。新季度能否泛化不影響本次判定。
+原固定來源的 [24 家完成收據](../../research/reference-gap-completion-20261104/completion-status.json)、[MCD／CVX 缺季補回](reference-gap-completion.md)、[XOM 歷史八季](xom-sec-history.md) 與 [六家 SEC 指定欄位八季重播](remaining-sec-coverage.md) 均保留。舊公司 IR 解析不能取代 SEC 輸出；合法 IR 參考則可用來核對 SEC 數字。新季度能否泛化仍是另一項待測問題。
 
-最新 [XOM 歷史八季](xom-sec-history.md) 已完成舊 CIK 解析與差異裁決；另已 [補回 MCD 與 CVX 參考缺季](reference-gap-completion.md)，MCD 新增 OK，總數為 24 家。CAT、Comcast、PGR 修復見 [本批 SEC 修復](sec-remaining-company-repairs.md)。現行來源規則、實際修正與重跑方式見 [SEC 原始來源檢查](sec-primary-source-policy.md)。修復歷程另保留於 [前批修復](remaining-parser-repairs.md)、[五家優先修復](priority-parser-repairs.md) 與 [剩餘公司續查](remaining-company-resolution.md)；舊收據與公司 IR 實驗不代表目前完成標準。
+若程式與參考不同，可以用公司財報證明差異原因，再明列為可接受例外。目前沒有未解釋的數值差異計入這 29 家；MSFT、PG 各有一項以 SEC 原表裁決來源錯誤，PG、META、GOOGL 另有可計算的 SEC 申報精度解釋；UNH 三項差異依公司同表的 GAAP／adjusted 分別裁決；HD 兩項採公司原申報同口徑，另有完整年度與季間加總證據；已確認不適用的舊分類空欄保留為 N/A，不補零。精度相容而未完成裁決、人工讀表補值、缺季、缺分類、日期未確認，都先算 Fail。**Fail 代表未達完成標準，可能是缺資料或工作尚未完成，不等於完全無法解析。**
 
-雲端另完成 [PGR 原始 HTML 重跑與 Q4 期間檢查](progressive-sec-html.md)：保存五份 SEC 原始文件，204 筆 facts 與既有 DOM 結果相同；未新增供應商參考季，PGR 仍 Fail，該批當時完成數為 23 / 30。
-
-[前輪六家精確缺季盤點](remaining-gap-audit.md) 已核對收據與凍結基準：MCD 的目標窗口截至 2026 Q2，當時缺的 2024 Q3 已於本批補回；先前寫成缺目標 2026 Q3 是文件錯誤。未改動凍結窗口或舊收據。
-
-[公司報表副本補充核對](missing-ir-reference-study.md) 另完成 MCD 2024 Q3 三項及 BRK-B 2024／2025 Q3 各八項，共 19 項與 SEC 輸出相同。這些參考與申報有共同上游，只作補充證據，不另增加固定供應商八季完成家數。
-
-若程式與參考不同，可以用公司財報證明差異原因，再明列為可接受例外。目前沒有未解釋的數值差異計入這 24 家；MSFT、PG 各有一項以 SEC 原表裁決來源錯誤，PG、META、GOOGL 另有可計算的 SEC 申報精度解釋；UNH 三項差異依公司同表的 GAAP／adjusted 分別裁決；HD 兩項採公司原申報同口徑，另有完整年度與季間加總證據；已確認不適用的舊分類空欄保留為 N/A，不補零。精度相容而未完成裁決、人工讀表補值、缺季、缺分類、日期未確認，都先算 Fail。**Fail 代表未達完成標準，可能是缺資料或工作尚未完成，不等於完全無法解析。**
-
-| 公司 | 結論 | 固定參考來源 | 原因 |
+| 公司 | 結論 | 參考來源 | 原因 |
 |---|---|---|---|
 | AAPL | **OK** | Stock Analysis | 八季五分類，40 個結果全部相同。 |
 | MSFT | **OK** | Stock Analysis | 八季 22 項相同；一項來源錯誤：SA 將另一分部營業利益填入收入欄，採 SEC 正確收入，詳見裁決。 |
@@ -38,18 +30,18 @@
 | KO | **OK** | Stock Analysis | 八季 57 項收入結果全部相同；固定使用含分部間收入的 gross 口徑及獨立抵銷，七個不再適用的舊欄保留 N/A。 |
 | JNJ | **OK** | Stock Analysis | 八季兩分類，16 個結果全部相同；日期確認為曆季標籤對週日財季，分拆後 Consumer Health 空欄保留 N/A。 |
 | UNH | **OK** | Stock Analysis | 八季 21 項相同、三項差異有 GAAP／adjusted 口徑理由；數字輸出全部由 SEC facts 產生，公司表只作參考。 |
-| LLY | **Fail** | Stock Analysis | 已修復全球產品合計，保存的八季有 39 項相同、一項精度解釋；但這是較舊八季，缺目標最新 2026 Q3，不能算目標八季通過。 |
+| LLY | **OK** | Stock Analysis＋公司 PDF | 已補最新季全球五分類參考；目標八季 39 項相同、一項精度解釋，明標為治療領域收入分類。 |
 | JPM | **OK** | Stock Analysis | 八季 32 個結果相同；2024 Q3 CIB member 受限接合修復 Q4，保留 managed／FTE 口徑。 |
 | BAC | **OK** | Stock Analysis | 八季五分類，40 項全部相同；2025 Q4 依追溯會計方法變更後的九個月比較欄計算，不混用兩套會計版本。 |
-| BRK-B | **Fail** | 富途 | 六季 48 筆相同，但缺兩季參考資料，沒有跑滿八季。 |
-| PGR | **Fail** | 富途 | 五份 SEC 原表已解析，七季 43 項相同、六項 Q4 參考計算差異有證據；最新季 SEC 已擷取，但仍缺富途 2026 Q3 參考，未滿目標八季。 |
-| XOM | **Fail：缺最新季參考** | 富途 | 舊 CIK 歷史八季已實作：42 項相同、16 項 Q4 參考計算差異有 SEC 證據，無未解差異；但涵蓋 2024 Q3 至 2026 Q2，仍缺目標 2026 Q3，不以較舊一期補位。 |
-| CVX | **Fail** | 富途 | 已補 2024 Q3，六季 24 項全部相同；仍缺 2025 Q3、2025 Q4 的同一家參考。 |
+| BRK-B | **OK** | 富途＋公司 PDF | 六季 48 項加公司副本兩季 16 項，八季 64 項相同；保險含投資收入，保留公司與抵銷範圍。 |
+| PGR | **OK** | 公司 PDF，另保留富途差異 | 八季一致的合併／承保十二列共 96 項相同，主要輸出由 SEC 產生；原富途 Q4 六項差異仍保留，不混加證券總額與組成。 |
+| XOM | **OK** | 富途＋公司 PDF | 目標最新季已補公司副本參考；八季 44 項相同、16 項歷史 Q4 有具體差異解釋。gross 與 all-income 範圍及最新季 700 萬差額分開保留。 |
+| CVX | **Fail** | 富途 | 已補 2024 Q3，六季 24 項全部相同；仍缺 2025 Q3、2025 Q4 的同口徑收入參考。 |
 | CAT | **OK** | Stock Analysis | 八季六分類共 48 項全部相同；最新季直接解析 SEC 8-K 原表，gross 收入及兩組抵銷另由地區表交叉核對，舊分類保留 N/A。 |
 | UPS | **OK** | Stock Analysis | 八季 24 項全部相同；歷史資料採 SEC，最新 2026 Q3 由 SEC 8-K 附件擷取，不用公司 PDF 作原始數字。 |
 | NEE | **OK** | 富途 | 八季三分類，24 個結果全部相同；歷史 Q4 的法人／分部對應已寫成限定規則。 |
 | LIN | **OK** | Stock Analysis | 八季五分類，40 個結果全部相同。 |
-| PLD | **Fail** | 公司 IR（原三家缺資料） | 對公司 IR 的八季 32 個結果全部相同；但原本三家網站的八季參考仍缺，因此不計入本次 OK。 |
+| PLD | **OK** | 公司 IR | 既有八季參考與 SEC 輸出 32 項相同；三個合併收入列及總額，不當作完整營運分部揭露。 |
 
 ## CVX 那句話實際代表什麼
 
@@ -57,12 +49,12 @@
 
 ## 程式與驗證位置
 
-- 三十家公司分類規則：[cohort_rule_catalog.py](../../scripts/cohort_rule_catalog.py)。共同抽取／季度計算基礎在 [recovered-sec](../../research/recovered-sec/)，本輪重播入口為 [cohort_rule_audit.py](../../scripts/cohort_rule_audit.py)。目前二十四家共用引擎及各自規則，沒有為每家複製一份引擎。
+- 三十家公司分類規則：[cohort_rule_catalog.py](../../scripts/cohort_rule_catalog.py)。共同抽取／季度計算基礎在 [recovered-sec](../../research/recovered-sec/)，本輪重播入口為 [cohort_rule_audit.py](../../scripts/cohort_rule_audit.py)。已完成公司共用引擎及各自規則，沒有為每家複製一份引擎。
 - 第一版 6 / 30 的 OK／Fail 判定程式：[evaluate_eight_quarter_status.py](../../scripts/evaluate_eight_quarter_status.py)；[完整判定結果](../../research/cohort-rule-replay-20261104/eight-quarter-status.json) 含逐公司八季日期、欄位結果計數、固定來源及本機完整結果檔雜湊。
 - 完整逐筆金額、原始 SEC facts、Q4 運算元和參考差額仍在本機 `data/vendor/local/cohort-adjudication-20261104/cohort-rule-replay-20261104/{TICKER}-detailed.json`，未發布第三方原始資料。
 - 第一批修復入口：[resolve_parser_failures.py](../../scripts/resolve_parser_failures.py)。它重跑全部三十家公司，再套用有依據的日期／停用分類規則；META 另實際下載並解析公司公開 Q4 發行稿。原有 SEC HTML 未全部重新下載或重剖。
-- 最新入口：[complete_reference_gaps.py](../../scripts/complete_reference_gaps.py)，接續 [XOM](../../scripts/evaluate_xom_sec.py)、 [Comcast](../../scripts/evaluate_comcast_sec.py)、 [PGR](../../scripts/evaluate_progressive_sec.py)、[CAT](../../scripts/evaluate_caterpillar_sec.py) 與原 SEC 來源檢查。逐公司本機明細路徑及雜湊以最新收據的 `local_detail_path` 為準，沒有把未改動公司複製成新明細。原始參考金額與顯示日期未改動。
-- [本機驗證收據](../../research/reference-gap-completion-20261104/local-verification.json)：156 項離線測試通過、30 家基準與原凍結收據通過、30 份逐筆結果及程式／證據雜湊通過。
+- 最新入口：[adjudicate_cross_source_references.py](../../scripts/adjudicate_cross_source_references.py)；原固定來源重播入口 [complete_reference_gaps.py](../../scripts/complete_reference_gaps.py)，接續 [XOM](../../scripts/evaluate_xom_sec.py)、 [Comcast](../../scripts/evaluate_comcast_sec.py)、 [PGR](../../scripts/evaluate_progressive_sec.py)、[CAT](../../scripts/evaluate_caterpillar_sec.py) 與原 SEC 來源檢查。逐公司本機明細路徑及雜湊以最新收據的 `local_detail_path` 為準，沒有把未改動公司複製成新明細。原始參考金額與顯示日期未改動。
+- [本機驗證收據](../../research/cross-source-final-20261104/verification.json)：173 項離線測試通過、30 家基準與原凍結收據通過、30 份逐筆結果及程式／證據雜湊通過。
 
 重做第一批修復與判定（須已有本機來源）：
 
