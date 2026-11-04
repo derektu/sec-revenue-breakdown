@@ -1,0 +1,37 @@
+{
+  "measurement": "Observed agent branch wall clock; not human labor or model CPU time",
+  "branch_start_utc": "2026-11-04T04:03:11+00:00",
+  "recorded_at_utc": "2026-11-04T04:13:56.483576+00:00",
+  "elapsed_seconds": 645.483576,
+  "start_evidence": "git reflog checkout research/taxonomy-bridge at 2026-11-04 04:03:11 +0000",
+  "includes": [
+    "source metadata investigation",
+    "bridge implementation",
+    "agent review of seven representative cases",
+    "controlled negative tests",
+    "historical 2025 and 2024-comparative replay",
+    "offline verification",
+    "Traditional Chinese documentation"
+  ],
+  "excludes": [
+    "PR and merge after this receipt"
+  ],
+  "independent_human_seconds_observed": 0,
+  "required_human_review_seconds": null,
+  "per_case_human_time_measured": false,
+  "agent_reviewed_representative_cases": 7,
+  "machine_processing_seconds": 3.5820593790001567,
+  "offline_replay_and_regression_seconds": 13.137207584999942,
+  "new_network_source_requests": 0,
+  "new_company_specific_alias_or_role_mapping_rules": 0,
+  "remaining_primary_review_scopes": 41,
+  "remaining_hierarchy_inventory_only_scopes": 36,
+  "remaining_shared_role_changed_scopes": 5,
+  "estimated_cost_for_1500_companies": null,
+  "limitations": [
+    "No independent human review",
+    "23 passing scope cases cover only 13 distinct changed member pairs",
+    "2024 observations are comparative columns in 2025 source filings, not independent 2024 taxonomy snapshots",
+    "Passing metadata contract does not certify business or restatement continuity"
+  ]
+}

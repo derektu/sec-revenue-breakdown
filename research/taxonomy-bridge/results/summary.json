@@ -1,0 +1,64 @@
+{
+  "mode": "retrospective_Q3_FY2025_version_bridge_contract",
+  "blind_cases": 0,
+  "scope": "Only 64 lexical-QName-identical version-blocked scopes; no renamed or missing scopes added",
+  "company_specific_bridge_rules": 0,
+  "input_cases": 64,
+  "statuses": {
+    "evidence_supported_version_bridge": 23,
+    "abstain_needs_review": 41
+  },
+  "reason_counts": {
+    "axis_member_paths_or_neighbors_changed": 41,
+    "presentation_neighborhood_changed": 41,
+    "missing_table_row_label": 6,
+    "label_role_set_changed": 5,
+    "neighbor_metadata_changed": 5
+  },
+  "refusal_structure_categories": {
+    "role_inventory_only": 36,
+    "changed_shared_role": 5
+  },
+  "by_company": {
+    "CMCSA": {
+      "abstain_needs_review": 25
+    },
+    "NEE": {
+      "abstain_needs_review": 5
+    },
+    "TSLA": {
+      "evidence_supported_version_bridge": 11,
+      "abstain_needs_review": 1
+    },
+    "UNH": {
+      "abstain_needs_review": 10,
+      "evidence_supported_version_bridge": 12
+    }
+  },
+  "historical_comparison_statuses": {
+    "evidence_supported_version_bridge": 23,
+    "abstain_needs_review": 41
+  },
+  "primary_legacy_numeric_statuses": {
+    "numeric_equal_only": 23
+  },
+  "historical_legacy_numeric_statuses": {
+    "numeric_equal_only": 23
+  },
+  "processing_seconds": 3.5820593790001567,
+  "taxonomy_processing_seconds": {
+    "TSLA:10-Q": 0.22832922299994607,
+    "TSLA:10-K": 0.3122993839999708,
+    "CMCSA:10-Q": 0.15993758300010086,
+    "CMCSA:10-K": 0.2970967979999841,
+    "UNH:10-Q": 0.21274823599992487,
+    "UNH:10-K": 0.3918784060001599,
+    "NEE:10-Q": 0.37276986200004103,
+    "NEE:10-K": 0.658377248999841
+  },
+  "code_sha256": "fedb0f6896095218cb510038b40afef59ea27816e073f0c0d703ee29d5d83234",
+  "baseline_manifest_sha256": "600bac5163705f7fb238c34c536d820c63e19ecb3b1d0f653bb31a1df6421ab7",
+  "input_q4_sha256": "0390fabd84c822f6a7e01914166435249ad648bf972c0a443b442dcdb57d4c3e",
+  "vendor_raw_used": false,
+  "independent_human_review": false
+}
