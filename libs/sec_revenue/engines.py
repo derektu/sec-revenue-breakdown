@@ -72,6 +72,7 @@ class EvidenceStore:
                 "original_html": "html",
                 "web_text": "txt",
                 "dom_snapshot": "json",
+                "sec_json": "json",
             }[kind]
         )
         directory.mkdir(parents=True, exist_ok=True)
@@ -139,64 +140,151 @@ class XbrlEngine:
                     raise ValueError("非 SEC facts")
         return sorted(records, key=lambda row: row["filing"]["filingDate"])
 
-    def parse_html(self, body: bytes, source_url: str, accession: str) -> list[dict]:
-        from lxml import etree
+    def document_date(self, text: str, format: str = "") -> str:
+        """DEI 常以英文可見日期呈現，須套用明確 inline date transform 才能核對 ISO 期末。"""
+        import re
 
-        root = etree.fromstring(body, etree.HTMLParser())
+        value = " ".join(text.split())
+        transform = format.split(":")[-1].lower()
+        if not transform:
+            return dt.date.fromisoformat(value).isoformat()
+        if transform in ("date-monthname-day-year-en", "datemonthdayyearen"):
+            match = re.fullmatch(r"([A-Za-z]+) (\d{1,2}),? (\d{4})", value)
+            months = {
+                name: i
+                for i, name in enumerate(
+                    [
+                        "January",
+                        "February",
+                        "March",
+                        "April",
+                        "May",
+                        "June",
+                        "July",
+                        "August",
+                        "September",
+                        "October",
+                        "November",
+                        "December",
+                    ],
+                    1,
+                )
+            }
+            months.update({name[:3]: i for name, i in list(months.items())})
+            months["Sept"] = 9
+            if not match or match[1].title() not in months:
+                raise ValueError("DEI 英文日期不符")
+            return dt.date(
+                int(match[3]), months[match[1].title()], int(match[2])
+            ).isoformat()
+        raise ValueError("DEI date transform 尚未支援：" + transform)
+
+    def parse_html(self, body: bytes, source_url: str, accession: str) -> list[dict]:
+        """完整保留 revenue／sales 的 inline scope；不因無關 EPS、比率或 typed context 中止。"""
+        from lxml import html
+        from decimal import InvalidOperation
+        import re
+
+        root = html.fromstring(body, parser=html.HTMLParser(no_network=True))
         contexts, units = {}, {}
+        tree = root.getroottree()
+        tables = {tree.getpath(table): i for i, table in enumerate(root.iter("table"))}
         for node in root.iter():
-            name = node.tag.lower() if isinstance(node.tag, str) else ""
-            if name.endswith("typedmember"):
-                raise ValueError("尚未支援 typed dimension，拒絕遺失 scope")
-            if name.endswith("context"):
-                children = {
-                    n.tag.lower().split(":")[-1]: "".join(n.itertext()).strip()
-                    for n in node.iter()
-                    if isinstance(n.tag, str)
-                }
-                dims = {
-                    n.get("dimension"): "".join(n.itertext()).strip()
-                    for n in node.iter()
-                    if isinstance(n.tag, str)
-                    and n.tag.lower().endswith("explicitmember")
-                }
-                contexts[node.get("id")] = {
-                    "startdate": children.get("startdate"),
-                    "enddate": children.get("enddate", children.get("instant")),
-                    "dimensions": dims,
-                }
-            if name.endswith("unit"):
-                units[node.get("id")] = "".join(node.itertext()).strip()
+            name = str(node.tag).split(":")[-1].lower()
+            if name == "typedmember" and not any(
+                str(p.tag).split(":")[-1].lower() == "context"
+                for p in node.iterancestors()
+            ):
+                raise ValueError("orphan typed dimension")
+            if name == "context":
+                context = {"dimensions": {}}
+                for child in node.iter():
+                    kind = str(child.tag).split(":")[-1].lower()
+                    value = " ".join(" ".join(child.itertext()).split())
+                    if kind in ("startdate", "enddate", "instant"):
+                        context["enddate" if kind == "instant" else kind] = value
+                    elif kind == "explicitmember":
+                        context["dimensions"][child.get("dimension")] = value
+                    elif kind == "typedmember":
+                        # 保存完整 typed scope，未知 selector 自然不匹配，不能把維度丟掉。
+                        context["dimensions"][child.get("dimension")] = (
+                            "typed:" + html.tostring(child, encoding="unicode")
+                        )
+                contexts[node.get("id")] = context
+            elif name == "unit":
+                units[node.get("id")] = " ".join(" ".join(node.itertext()).split())
         facts = []
         for node in root.iter():
-            if not isinstance(node.tag, str) or not node.tag.lower().endswith(
-                "nonfraction"
-            ):
+            if str(node.tag).split(":")[-1].lower() != "nonfraction":
+                continue
+            concept = node.get("name", "")
+            if not re.search(r"(revenue|sales)", concept, re.I):
                 continue
             context = contexts.get(node.get("contextref"))
-            if not context:
+            if context is None:
                 raise ValueError("Missing XBRL context")
-            raw = "".join(node.itertext()).strip().replace(",", "")
-            if raw in ("", "—", "-"):
+            unit = units.get(node.get("unitref"))
+            if unit != "iso4217:USD":
                 continue
-            value = Decimal(raw) * Decimal(10) ** int(node.get("scale", "0"))
+            raw = " ".join(" ".join(node.itertext()).split())
+            cleaned = raw.replace(",", "").replace(" ", "").replace("−", "-")
+            transform = node.get("format", "").split(":")[-1].lower()
+            if transform not in (
+                "",
+                "num-dot-decimal",
+                "numdotdecimal",
+                "numcommadot",
+                "fixed-zero",
+                "zerodash",
+            ):
+                raise ValueError("Revenue numeric transform 不支援：" + transform)
+            if str(node.get("xsi:nil", node.get("nil", "false"))).lower() == "true":
+                continue
+            if transform in ("fixed-zero", "zerodash"):
+                if cleaned not in ("", "—", "–", "-", "0", "0.0"):
+                    raise ValueError("explicit zero transform 的內容不符")
+                cleaned = "0"
+            elif cleaned in ("", "—", "–", "-"):
+                # 只有明確 XBRL zero transform 可轉成 0；普通缺值仍拒絕。
+                continue
+            try:
+                value = Decimal(cleaned) * Decimal(10) ** int(node.get("scale", "0"))
+            except (InvalidOperation, ValueError) as error:
+                raise ValueError("Revenue numeric format 不支援：" + raw) from error
             if node.get("sign") == "-":
                 value = -value
-            if value != value.to_integral_value():
+            if not value.is_finite() or value != value.to_integral_value():
                 raise ValueError("非整數美元需明確精度處理")
+            ancestors = list(node.iterancestors())
+            row = next((a for a in ancestors if a.tag == "tr"), None)
+            table = next((a for a in ancestors if a.tag == "table"), None)
             facts.append(
                 dict(
                     context,
-                    concept=node.get("name"),
-                    unit=units.get(node.get("unitref")),
+                    concept=concept,
+                    unit=unit,
                     value=int(value),
+                    raw=raw,
+                    scale=node.get("scale", "0"),
                     decimals=node.get("decimals"),
+                    context_id=node.get("contextref"),
+                    fact_id=node.get("id"),
+                    source_line=node.sourceline,
+                    table_index=(
+                        tables.get(tree.getpath(table)) if table is not None else None
+                    ),
+                    row_text=(
+                        " ".join(" ".join(row.itertext()).split())
+                        if row is not None
+                        else ""
+                    ),
                     source_url=source_url,
                     accession=accession,
+                    numeric_transform=transform,
                 )
             )
         if not facts:
-            raise ValueError("無 inline XBRL facts")
+            raise ValueError("無可支援的 USD revenue inline XBRL facts")
         return facts
 
 
@@ -214,7 +302,12 @@ class QuarterEngine:
     @staticmethod
     def scope(fact: dict) -> str:
         return json.dumps(
-            [fact.get("concept"), fact.get("dimensions"), fact.get("unit")],
+            [
+                fact.get("concept"),
+                fact.get("dimensions"),
+                fact.get("unit"),
+                fact.get("source_cik"),
+            ],
             sort_keys=True,
         )
 
@@ -362,3 +455,46 @@ class PrecisionAnalyzer:
             return None
         weights = output.get("weights", [1] * len(errors))
         return str(sum((abs(w) * e for w, e in zip(weights, errors)), Decimal(0)))
+
+
+class RevenueReconciliation:
+    """精度範圍只來自實際申報運算元；不調整原數字來湊對帳。"""
+
+    def check(self, outputs: dict, coefficients: dict[str, int]) -> dict:
+        if any(
+            key not in outputs
+            or outputs[key]["status"] != "observed"
+            or outputs[key]["value_usd"] is None
+            for key in coefficients
+        ):
+            return {
+                "status": "operands_missing",
+                "difference_usd": None,
+                "precision_limit_usd": None,
+            }
+        difference = sum(
+            weight * outputs[key]["value_usd"] for key, weight in coefficients.items()
+        )
+        errors = [
+            PrecisionAnalyzer().output_error(outputs[key]) for key in coefficients
+        ]
+        bound = (
+            None
+            if None in errors
+            else sum(
+                abs(weight) * Decimal(error)
+                for weight, error in zip(coefficients.values(), errors)
+            )
+        )
+        accepted = difference == 0 or bound is not None and abs(difference) <= bound
+        return {
+            "status": "verified" if accepted else "reconciliation_failed",
+            "difference_usd": difference,
+            "precision_limit_usd": str(bound) if bound is not None else None,
+            "coefficients": coefficients,
+        }
+
+    def reject(self, outputs: dict, status: str):
+        for output in outputs.values():
+            output["unverified_value_usd"] = output.get("value_usd")
+            output.update(status=status, value_usd=None)

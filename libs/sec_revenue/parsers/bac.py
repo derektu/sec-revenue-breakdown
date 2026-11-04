@@ -119,3 +119,17 @@ class BACParser(IssuerParser):
                 comparative_filing_date=source["filing"]["filingDate"],
             )
         return facts, conflicts
+
+    def download_dependencies(self, filing, filings):
+        dependencies = super().download_dependencies(filing, filings)
+        if filing["reportDate"] == "2025-12-31":
+            later = [
+                f
+                for f in filings
+                if f["reportDate"] > "2025-12-31"
+                and f["reportDate"].endswith("-09-30")
+                and f["cik"] == filing["cik"]
+            ]
+            if later:
+                dependencies.append(min(later, key=lambda f: f["filingDate"]))
+        return dependencies

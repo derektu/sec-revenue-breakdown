@@ -401,3 +401,23 @@ class CVXParser(IssuerParser):
                 for value in outputs.values():
                     value.update(status="net_reconciliation_incomplete", value_usd=None)
         return rows
+
+    def parse_downloaded(self, records, periods):
+        from sec_revenue.engines import RevenueReconciliation
+
+        rows = super().parse_downloaded(records, periods)
+        engine = RevenueReconciliation()
+        for row in rows:
+            if row["basis"] != "net":
+                continue
+            check = engine.check(
+                row["outputs"],
+                {
+                    key: -1 if key == "consolidated_sales" else 1
+                    for key in row["outputs"]
+                },
+            )
+            row["reconciliation_checks"] = [check]
+            if check["status"] != "verified":
+                engine.reject(row["outputs"], "net_reconciliation_failed")
+        return rows

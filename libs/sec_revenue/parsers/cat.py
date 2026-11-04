@@ -198,3 +198,81 @@ class CATParser(IssuerParser):
         )
         self.source_receipts = reader.receipts
         return rows
+
+    earnings_exhibits = {
+        "0000018230-26-000052": {
+            "reportDate": "2026-09-30",
+            "primaryDocument": "ex991toformcat3q2026earnin.htm",
+        }
+    }
+
+    def extract_document(self, filing, documents):
+        if filing["form"] != "8-K":
+            return super().extract_document(filing, documents)
+        from .cat_tables import RevenueTables
+        from .table_support import HtmlTableAdapter
+
+        raw, receipt = documents["primary"]
+        tables = HtmlTableAdapter().nonempty(
+            raw,
+            [
+                "Sales and Revenues by Segment",
+                "Sales and Revenues by Geographic Region",
+            ],
+        )
+        for table in tables:
+            boundary = next(
+                (
+                    i
+                    for i, row in enumerate(table["rows"])
+                    if row[0] == "Third Quarter 2025"
+                ),
+                None,
+            )
+            if boundary is not None:
+                table["rows"] = table["rows"][:boundary]
+        parsed = RevenueTables(self.repository, self.output).parse_snapshot(
+            {
+                "source_url": receipt["source_url"],
+                "format": "SEC_DOM_nonempty_cell_text",
+                "tables": tables,
+            },
+            receipt["sha256"],
+        )
+        for fact in parsed["facts"]:
+            fact.update(source_format="original_html", source_cik=filing["cik"])
+        return {
+            "filing": filing,
+            "facts": parsed["facts"],
+            "table_selected": parsed["selected"],
+        }
+
+    def parse_downloaded(self, records, periods):
+        rows = super().parse_downloaded(records, periods)
+        for record in records:
+            if record["filing"]["reportDate"] not in periods or not record.get(
+                "table_selected"
+            ):
+                continue
+            period = record["filing"]["reportDate"]
+            rows = [row for row in rows if row["period_end"] != period]
+            outputs = {
+                label: {
+                    "status": value["status"],
+                    "value_usd": value["value"],
+                    "SEC_operands": value["facts"],
+                    "weights": [1] * len(value["facts"]),
+                    "rule_id": "cat-2026q3-sec-exhibit-corporate-bridge",
+                }
+                for label, value in record["table_selected"].items()
+            }
+            rows.append(
+                {
+                    "ticker": self.ticker,
+                    "period_end": period,
+                    "period_kind": "Q",
+                    "basis": "reported",
+                    "outputs": outputs,
+                }
+            )
+        return rows

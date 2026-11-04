@@ -14,12 +14,25 @@ class ViewerUiCheck:
         cli = argparse.ArgumentParser(description=__doc__)
         cli.add_argument("--url", default="http://127.0.0.1:8765")
         cli.add_argument("--out", type=Path, default=Path("data/engine-ui"))
+        cli.add_argument(
+            "--tickers", nargs="+", help="只驗證已萃取的 ticker；省略為全部支援 ticker"
+        )
+        cli.add_argument(
+            "--expected-periods",
+            type=int,
+            help="可選固定期數；一般操作允許任意日期範圍",
+        )
         args = cli.parse_args()
         args.out.mkdir(parents=True, exist_ok=True)
         from playwright.sync_api import sync_playwright, expect
 
         errors = []
-        tickers = json.load(urlopen(args.url + "/api/tickers"))
+        supported = json.load(urlopen(args.url + "/api/tickers"))
+        tickers = [t.upper() for t in args.tickers] if args.tickers else supported
+        self.assert_true(
+            bool(tickers) and set(tickers).issubset(supported),
+            "unsupported ticker selection",
+        )
         with sync_playwright() as playwright:
             browser = playwright.chromium.launch(
                 headless=True, executable_path=shutil.which("chromium")
@@ -32,21 +45,40 @@ class ViewerUiCheck:
                 page.locator("button").click()
                 expect(page.locator("#context")).to_contain_text(ticker + " ·")
                 expect(page.locator("#rows tr").first).to_be_visible()
+                count = page.locator("#period option").count()
                 self.assert_true(
-                    page.locator("#period option").count() == 8, ticker + " periods"
+                    (
+                        count == args.expected_periods
+                        if args.expected_periods
+                        else count > 0
+                    ),
+                    ticker + " periods",
                 )
-            page.locator("#ticker").fill("CVX")
+            selected = "CVX" if "CVX" in tickers else tickers[0]
+            page.locator("#ticker").fill(selected)
             page.locator("button").click()
-            expect(page.locator("#context")).to_contain_text("CVX ·")
-            expect(page.locator("#basis")).to_have_value("net")
-            page.locator("#basis").select_option("gross")
-            expect(page.locator("#context")).to_contain_text("gross")
+            expect(page.locator("#context")).to_contain_text(selected + " ·")
+            basis_options = page.locator("#basis option").evaluate_all(
+                "(nodes)=>nodes.map(n=>n.value)"
+            )
+            if selected == "CVX":
+                expect(page.locator("#basis")).to_have_value("net")
+            if len(basis_options) > 1:
+                alternate = "gross" if selected == "CVX" else basis_options[-1]
+                page.locator("#basis").select_option(alternate)
+                expect(page.locator("#context")).to_contain_text(alternate)
             oldest = page.locator("#period option").last.get_attribute("value")
             page.locator("#period").select_option(oldest)
             expect(page.locator("#context")).to_contain_text(oldest)
             page.locator("#rows details").first.locator("summary").click()
             expect(page.locator("#rows pre").first).to_be_visible()
-            page.screenshot(path=str(args.out / "viewer-cvx.png"), full_page=True)
+            page.screenshot(
+                path=str(
+                    args.out
+                    / ("viewer-cvx.png" if selected == "CVX" else "viewer-workflow.png")
+                ),
+                full_page=True,
+            )
             for query, status in [
                 ("ticker=NOPE", 400),
                 ("ticker=../AAPL", 400),
