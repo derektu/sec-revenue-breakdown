@@ -26,7 +26,7 @@ CVX 對外營收建議以 net 主系列、gross 與抵銷另存。原 gross 八�
 
 `research/refactor-baseline-sec-20261104/manifest.json` 索引 30 家、240 期、1,092 項 SEC 回歸期望值，每家公司及日期一份 `TICKER/YYYY-MM-DD/TICKER_YYYY-MM-DD_SEC_expected.json.gz`。含完整 SEC 運算元，不含第三方原始參考值。壓縮與解壓 bytes 雜湊均保存。**只能作回歸答案，不得作 runtime parser 的輸入或將讀檔偽稱重新解析。**
 
-另有 `source-snapshots/UPS_2026-09-30_SEC_web_text.txt`，是真正先前取得的 SEC 工具文字快照，bytes 與舊來源收據相同，不是原始 HTML。
+另有 `source-snapshots/UPS_2026-09-30_SEC_web_text.txt.gz`，是真正先前取得的 SEC 工具文字快照，解壓後 bytes 與舊來源收據相同，不是原始 HTML。
 
 主要可重播 SEC 證據已在 repo：
 
