@@ -1,0 +1,68 @@
+{
+  "checked_at_utc": "2026-11-04T01:48:32.706469+00:00",
+  "main_integrated": "94c219394b79f8d40567b177198ed310602996c4",
+  "existing_pr_reused": 2,
+  "existing_pr_head_integrated": "839285c8e15e29cf102daa29e15a2663e3fdda7a",
+  "cloud_baseline_commit": "bdcd5badbf2444afbdae9799885d84dcb6594962",
+  "tests": [
+    {
+      "name": "archive_safety",
+      "tests_run": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "recovered_pilot",
+      "tests_run": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "recovered_quarter_audit",
+      "tests_run": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "recovered_source_hashes_verified": 10,
+  "packaged_artifacts_verified": 36,
+  "quarter_results_replayed": 234,
+  "preserved_local_research": [
+    {
+      "file": "docs/vendor/README.md",
+      "sha256": "2d3a8980bef15728f0a2d7a91a561df4cd1c37e4a2e52bc7472a7b7c89d8f97c",
+      "identical_to_pr3_main": true
+    },
+    {
+      "file": "docs/vendor/apple-comparison.md",
+      "sha256": "aeeca1aaa8a3202dd01c240d06f8b1c38494b6b81281cedef25732abd2b6aa06",
+      "identical_to_pr3_main": true
+    },
+    {
+      "file": "docs/vendor/coverage.csv",
+      "sha256": "beb67a6693ce376a367c5faa31874b6c3c2ecbb86468a5b31847b44223452101",
+      "identical_to_pr3_main": true
+    },
+    {
+      "file": "docs/vendor/live-browser-check.md",
+      "sha256": "fa43a857dbe29f39da13bc346ee46209ec6809125c0b2037209bc123b97b0621",
+      "identical_to_pr3_main": true
+    },
+    {
+      "file": "scripts/compare_apple_reference.py",
+      "sha256": "4064d1627ecea1aa5e5dac1b09f93b3aedc5f19be95b37e77ecdca12ed0bb4a0",
+      "identical_to_pr3_main": true
+    }
+  ],
+  "local_vendor_inputs_available_in_cloud": false,
+  "local_vendor_comparison_rerun": false,
+  "synthetic_approval_submitted": false,
+  "limitations": [
+    "Six XOM history slots remain absent",
+    "Cloud baseline is candidate extraction/arithmetic, not cross-company accuracy",
+    "Local native CSV export still unverified; vendor captures remain outside Git"
+  ]
+}

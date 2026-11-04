@@ -1,0 +1,31 @@
+{
+  "completed_by_utc": "2026-11-04T01:38:59.980689+00:00",
+  "base_commit": "3eaba53",
+  "branch": "research/sec-30-baseline",
+  "as_of": "2026-11-04",
+  "python": "3.12.14",
+  "lxml": "6.1.1",
+  "workers": 2,
+  "minimum_request_start_interval_seconds": 0.22,
+  "maximum_attempts": 3,
+  "network_policy_state": "enforced",
+  "allowed_custom_hosts": [
+    "data.sec.gov",
+    "www.sec.gov"
+  ],
+  "source_code_modified": false,
+  "vendor_comparison_performed": false,
+  "main_observed_sha": "75cee741e5f0e4dc1c1151bf1bbda2da8c2c783b",
+  "commands_executed": [
+    "python3 scripts/verify_recovered.py --report research/sec-30-tests.json",
+    "python3 research/recovered-sec/eight_quarter_eval/run.py --workers 2 --as-of 2026-11-04",
+    "python3 research/recovered-sec/eight_quarter_eval/summarize.py",
+    "python3 scripts/package_sec_baseline.py export research/sec-30-baseline-2026-11-04",
+    "python3 scripts/package_sec_baseline.py verify research/sec-30-baseline-2026-11-04"
+  ],
+  "user_agent_identity": "Derek sec-revenue-breakdown research; project URL and public GitHub contact profile; no invented email",
+  "blockers": [
+    "Six XOM quarter slots need an explicit successor/legacy identity policy; not a network blocker",
+    "Stock Analysis and Futu reference datasets not imported; no vendor benchmark possible"
+  ]
+}

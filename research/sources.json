@@ -47,21 +47,29 @@
         "https://data.sec.gov/submissions/",
         "https://data.sec.gov/api/xbrl/companyfacts/"
       ],
-      "status": "not_fetched_in_this_environment"
+      "status": "cloud_30_company_baseline_executed_234_quarters_six_successor_history_gaps",
+      "network_check": "research/sec-30-network-check.json",
+      "pilot_manifest": "research/cloud-sec-pilot-aapl-2024/manifest.json",
+      "cohort_status": "research/sec-30-baseline-2026-11-04/summary.json",
+      "baseline_manifest": "research/sec-30-baseline-2026-11-04/manifest.json",
+      "historical_network_check": "research/cloud-sec-network-check.json",
+      "historical_cohort_status": "research/cloud-sec-cohort-status.json"
     },
     {
       "name": "Stock Analysis",
-      "role": "Future user-authorized comparison",
+      "role": "Local Apple-only DOM comparison; broader cohort not validated",
       "url": "https://stockanalysis.com/",
-      "status": "not_imported_not_compared",
-      "storage": "data/restricted/; ignored by git"
+      "status": "local_apple_dom_comparison_reported_raw_inputs_not_in_cloud",
+      "storage": "data/vendor/local/; ignored by git; raw captures remain on Mac",
+      "evidence": "docs/vendor/apple-comparison.md"
     },
     {
       "name": "Futu",
-      "role": "Future user-authorized comparison",
+      "role": "Local Apple-only DOM comparison; broader cohort not validated",
       "url": "https://www.futunn.com/",
-      "status": "not_imported_not_compared",
-      "storage": "data/restricted/; ignored by git"
+      "status": "local_apple_dom_comparison_reported_raw_inputs_not_in_cloud",
+      "storage": "data/vendor/local/; ignored by git; raw captures remain on Mac",
+      "evidence": "docs/vendor/apple-comparison.md"
     },
     {
       "name": "TradingView",

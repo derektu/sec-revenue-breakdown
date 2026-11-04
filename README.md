@@ -3,16 +3,23 @@
 Cloud research workspace for SEC revenue composition across the S&P 500, 400
 and 600, starting with a prior 30-company, eight-quarter experiment.
 
-**Current status:** recovered SEC source, 12 original synthetic tests and the
-30-company roster are integrated from `local/vendor-reference` at `4113daa`.
-Cloud verification passed all 18 tests (12 recovered + 6 archive safety) and
-matched all 10 recovered file hashes to the local recovery manifest. Original
-archives, cached SEC HTML and saved candidate datasets remain outside this
-cloud checkout; the local data-reproduction report is preserved separately.
-Local Apple DOM comparison matches 40 Stock Analysis observations across eight
-quarters and 25 Futu observations across five available quarters to saved SEC
-candidate evidence. The raw vendor data remains on the Mac in ignored paths;
-native CSV export and broader vendor accuracy remain unverified.
+**Current status:** the full 30-company SEC candidate baseline was executed in
+cloud on 2026-11-04. Both SEC hosts are reachable. All 234 available quarters
+were processed with zero download errors; six requested quarters are missing
+because ExxonMobil's successor CIK has only two reporting endpoints. All 18
+tests passed, source snapshot hashes were verified, and all 234 quarters replayed
+offline. Public SEC-derived results and provenance are committed; large raw HTML
+caches remain ignored.
+
+Separately, the local Apple DOM comparison reports 40 Stock Analysis values
+across eight quarters and 25 Futu values across five quarters matching saved SEC
+evidence. Those vendor captures remain on the Mac in ignored paths; native CSV
+export and broader vendor accuracy remain unverified. The generic cloud baseline
+does not use vendor inputs.
+
+- [Executed 30-company cloud baseline and reproduction](docs/SEC_30_BASELINE.md)
+- [Per-company results](research/sec-30-baseline-2026-11-04/company_summary.csv)
+- [All 240 requested quarter slots](research/sec-30-baseline-2026-11-04/quarter_summary.csv)
 
 - [Cloud status, validation and blockers](docs/CLOUD_HANDOFF.md)
 - [Research requirements, known issues and next steps](docs/RESEARCH_PLAN.md)
