@@ -8,6 +8,8 @@
 
 最新 CAT、Comcast、PGR 修復與剩餘缺口見 [本批 SEC 修復](sec-remaining-company-repairs.md)。現行來源規則、實際修正與重跑方式見 [SEC 原始來源檢查](sec-primary-source-policy.md)。修復歷程另保留於 [前批修復](remaining-parser-repairs.md)、[五家優先修復](priority-parser-repairs.md) 與 [剩餘公司續查](remaining-company-resolution.md)；舊收據與公司 IR 實驗不代表目前完成標準。
 
+雲端另完成 [PGR 原始 HTML 重跑與 Q4 期間檢查](progressive-sec-html.md)：保存五份 SEC 原始文件，204 筆 facts 與既有 DOM 結果相同；未新增供應商參考季，PGR 仍 Fail，完成數維持 23 / 30。
+
 若程式與參考不同，可以用公司財報證明差異原因，再明列為可接受例外。目前沒有未解釋的數值差異計入這 23 家；MSFT、PG 各有一項以 SEC 原表裁決來源錯誤，PG、META、GOOGL 另有可計算的 SEC 申報精度解釋；UNH 三項差異依公司同表的 GAAP／adjusted 分別裁決；HD 兩項採公司原申報同口徑，另有完整年度與季間加總證據；已確認不適用的舊分類空欄保留為 N/A，不補零。精度相容而未完成裁決、人工讀表補值、缺季、缺分類、日期未確認，都先算 Fail。**Fail 代表未達完成標準，可能是缺資料或工作尚未完成，不等於完全無法解析。**
 
 | 公司 | 結論 | 固定參考來源 | 原因 |

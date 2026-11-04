@@ -14,7 +14,7 @@ from compare_vendor_cohort import amount
 from continue_parser_repairs import ACCEPTED
 from continue_remaining_research import PGR_LABELS
 from enforce_sec_primary_source import assess, selected_is_sec
-from parse_progressive_sec import parse_snapshot
+from parse_progressive_sec import load_sources
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = ROOT / 'research/sec-only-completion-20261104'
@@ -32,6 +32,9 @@ def period_facts(observations, year, month, kind='Q'):
             prior = nine.get(label)
             if not prior or any(fact[k] != prior[k] for k in ['concept', 'dimensions', 'unit', 'startdate']):
                 raise ValueError('Q4 operands differ in fiscal start, unit or full table scope')
+            if (fact['startdate'] != f'{year}-01-01' or fact['enddate'] != f'{year}-12-31'
+                    or prior['enddate'] != f'{year}-09-30'):
+                raise ValueError('Q4 operands do not cover the full fiscal year and first nine months')
             result[label] = {**fact, 'value': fact['value'] - prior['value'], 'kind': 'Q',
                 'startdate': f'{year}-10-01', 'derivation': 'annual_minus_nine_months',
                 'annual_evidence': fact, 'nine_month_evidence': prior,
@@ -92,11 +95,7 @@ def main():
     args.out.mkdir(parents=True, exist_ok=False)
     local = ROOT / 'data/vendor/local/cohort-adjudication-20261104' / args.out.name
     local.mkdir(parents=True, exist_ok=False)
-    manifest = temporal.load(args.manifest); observations = []
-    for source in manifest['files']:
-        if digest(ROOT / source['path']) != source['sha256']:
-            raise ValueError('SEC capture hash mismatch')
-        observations.extend(parse_snapshot(temporal.load(ROOT / source['path']), source['sha256']))
+    manifest = temporal.load(args.manifest); observations = load_sources(manifest, ROOT)
     temporal.save(args.out / 'PGR-parsed-SEC-facts.json', observations)
     base = temporal.load(BASE / 'completion-status.json'); companies = []
     for company in base['companies']:
@@ -120,11 +119,11 @@ def main():
         'facts': latest, 'reference_present': False, 'blind_test': False})
     result = {**base, 'companies': companies, 'ok_count': sum(c['status'] == 'OK' for c in companies),
         'source_summary_sha256': digest(BASE / 'completion-status.json'),
-        'PGR_source_status': 'SEC Exhibit 13 and four 10-Q DOM table snapshots; no IR input',
+        'PGR_source_status': 'SEC Exhibit 13 and four 10-Q tables; artifact formats in capture_manifest; no IR input',
         'PGR_latest_quarter_seen': True, 'PGR_latest_reference_missing': True,
         'capture_manifest': manifest, 'capture_manifest_sha256': digest(args.manifest),
         'repair_code_sha256': {p: digest(ROOT / p) for p in ['scripts/evaluate_progressive_sec.py', 'scripts/parse_progressive_sec.py',
-                                                         'scripts/collect_progressive_sec_dom.js']}}
+                                                         'scripts/parse_progressive_sec_html.py', 'scripts/collect_progressive_sec_dom.js']}}
     temporal.save(args.out / 'completion-status.json', result)
     print('PGR SEC replay complete; overall ' + str(result['ok_count']) + ' / 30')
 

@@ -65,12 +65,16 @@ class ProgressiveSecTests(unittest.TestCase):
 
     def test_q4_requires_identical_scope_and_fiscal_start(self):
         fact = parse_snapshot(self.fixture(), 'sha')[0]
-        annual = {**fact, 'kind': 'FY', 'month': 12, 'value': 200}
-        nine = {**fact, 'kind': 'YTD9', 'month': 9, 'value': 150}
+        annual = {**fact, 'kind': 'FY', 'month': 12, 'enddate': '2026-12-31', 'value': 200}
+        nine = {**fact, 'kind': 'YTD9', 'month': 9, 'enddate': '2026-09-30', 'value': 150}
         result = period_facts([annual, nine], 2026, 12)
         self.assertEqual(result[fact['label']]['value'], 50)
         changed = {**nine, 'dimensions': {**nine['dimensions'], 'extra_scope': 'Other'}}
         with self.assertRaises(ValueError): period_facts([annual, changed], 2026, 12)
+        for changed in [{**nine, 'enddate': '2026-06-30'}, {**nine, 'startdate': '2026-04-01'}]:
+            with self.assertRaises(ValueError): period_facts([annual, changed], 2026, 12)
+        with self.assertRaises(ValueError):
+            period_facts([{**annual, 'enddate': '2026-09-30'}, nine], 2026, 12)
 
     def test_version_selection_uses_earliest_report_not_reference_amount(self):
         fact = parse_snapshot(self.fixture(), 'sha')[0]
