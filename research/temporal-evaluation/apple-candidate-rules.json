@@ -1,0 +1,22 @@
+{
+  "version": "candidate-total-v1",
+  "development_evidence": "Historical SEC concept only; no adjudicated product mapping or vendor answer supplied.",
+  "selectors": [
+    {
+      "id": "quarter-total-candidate",
+      "period_kind": "Q",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "dimensions": {},
+      "unit": "iso4217:USD",
+      "semantic_basis": "unadjudicated_consolidated_revenue_candidate"
+    },
+    {
+      "id": "annual-total-candidate",
+      "period_kind": "FY",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "dimensions": {},
+      "unit": "iso4217:USD",
+      "semantic_basis": "unadjudicated_consolidated_revenue_candidate"
+    }
+  ]
+}
