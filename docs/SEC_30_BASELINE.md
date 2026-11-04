@@ -140,5 +140,9 @@ and linkbase hierarchy remain unresolved. See the recovered
 
 SEC access is resolved. Outstanding work is semantic/standards-aware validation,
 any explicitly approved successor continuity mapping, and importing authorized
-Stock Analysis/Futu references before conducting a vendor comparison. No accuracy
-or vendor-agreement percentage is claimed.
+Stock Analysis/Futu references for a broader cohort comparison. The separate
+[local Apple DOM comparison](vendor/apple-comparison.md), merged through PR #3,
+reports 40 Stock Analysis values and 25 Futu values matching saved SEC evidence.
+Its raw inputs remain on the Mac and were not used or revalidated by this cloud
+baseline. Native CSV export and cross-company vendor accuracy remain unverified.
+No accuracy or vendor-agreement percentage is claimed for this baseline.
