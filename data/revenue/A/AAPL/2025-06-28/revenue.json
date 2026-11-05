@@ -1,0 +1,458 @@
+{
+  "categories": {
+    "Mac": {
+      "expression": [
+        {
+          "operand": "op2",
+          "weight": 1
+        }
+      ],
+      "value": 8046000000
+    },
+    "Services": {
+      "expression": [
+        {
+          "operand": "op5",
+          "weight": 1
+        }
+      ],
+      "value": 27423000000
+    },
+    "Wearables, Home and Accessories": {
+      "expression": [
+        {
+          "operand": "op4",
+          "weight": 1
+        }
+      ],
+      "value": 7404000000
+    },
+    "iPad": {
+      "expression": [
+        {
+          "operand": "op3",
+          "weight": 1
+        }
+      ],
+      "value": 6581000000
+    },
+    "iPhone": {
+      "expression": [
+        {
+          "operand": "op1",
+          "weight": 1
+        }
+      ],
+      "value": 44582000000
+    }
+  },
+  "checks": {
+    "cross_period": [
+      {
+        "baseline_period": "2025-03-29",
+        "check": "期別連續",
+        "flagged": false
+      },
+      {
+        "baseline_period": "2025-03-29",
+        "check": "分類集合",
+        "flagged": false
+      },
+      {
+        "baseline_period": "2024-06-29",
+        "category": "Mac",
+        "change_pp": 0.39,
+        "check": "占比變動",
+        "flagged": false,
+        "threshold_pp": 5.0
+      },
+      {
+        "baseline_period": "2024-06-29",
+        "category": "Mac",
+        "change": 0.148,
+        "check": "YoY",
+        "flagged": false,
+        "threshold": 0.5
+      },
+      {
+        "baseline_period": "2025-03-29",
+        "category": "Mac",
+        "change": 0.0122,
+        "check": "QoQ",
+        "flagged": false,
+        "note": "只記錄"
+      },
+      {
+        "baseline_period": "2024-06-29",
+        "category": "Services",
+        "change_pp": 0.93,
+        "check": "占比變動",
+        "flagged": false,
+        "threshold_pp": 5.0
+      },
+      {
+        "baseline_period": "2024-06-29",
+        "category": "Services",
+        "change": 0.1326,
+        "check": "YoY",
+        "flagged": false,
+        "threshold": 0.5
+      },
+      {
+        "baseline_period": "2025-03-29",
+        "category": "Services",
+        "change": 0.0292,
+        "check": "QoQ",
+        "flagged": false,
+        "note": "只記錄"
+      },
+      {
+        "baseline_period": "2024-06-29",
+        "category": "Wearables, Home and Accessories",
+        "change_pp": -1.57,
+        "check": "占比變動",
+        "flagged": false,
+        "threshold_pp": 5.0
+      },
+      {
+        "baseline_period": "2024-06-29",
+        "category": "Wearables, Home and Accessories",
+        "change": -0.0856,
+        "check": "YoY",
+        "flagged": false,
+        "threshold": 0.5
+      },
+      {
+        "baseline_period": "2025-03-29",
+        "category": "Wearables, Home and Accessories",
+        "change": -0.0157,
+        "check": "QoQ",
+        "flagged": false,
+        "note": "只記錄"
+      },
+      {
+        "baseline_period": "2024-06-29",
+        "category": "iPad",
+        "change_pp": -1.35,
+        "check": "占比變動",
+        "flagged": false,
+        "threshold_pp": 5.0
+      },
+      {
+        "baseline_period": "2024-06-29",
+        "category": "iPad",
+        "change": -0.0811,
+        "check": "YoY",
+        "flagged": false,
+        "threshold": 0.5
+      },
+      {
+        "baseline_period": "2025-03-29",
+        "category": "iPad",
+        "change": 0.028,
+        "check": "QoQ",
+        "flagged": false,
+        "note": "只記錄"
+      },
+      {
+        "baseline_period": "2024-06-29",
+        "category": "iPhone",
+        "change_pp": 1.6,
+        "check": "占比變動",
+        "flagged": false,
+        "threshold_pp": 5.0
+      },
+      {
+        "baseline_period": "2024-06-29",
+        "category": "iPhone",
+        "change": 0.1345,
+        "check": "YoY",
+        "flagged": false,
+        "threshold": 0.5
+      },
+      {
+        "baseline_period": "2025-03-29",
+        "category": "iPhone",
+        "change": -0.0482,
+        "check": "QoQ",
+        "flagged": false,
+        "note": "只記錄"
+      }
+    ],
+    "restatements": [],
+    "structural": [
+      {
+        "check": "定義唯一",
+        "result": "pass"
+      },
+      {
+        "check": "fact 存在且唯一",
+        "result": "pass"
+      },
+      {
+        "check": "單位與精度",
+        "result": "pass"
+      },
+      {
+        "check": "加總",
+        "result": "pass"
+      },
+      {
+        "check": "證據完整",
+        "result": "pass"
+      }
+    ],
+    "sum": {
+      "categories": 94036000000,
+      "difference": 0,
+      "tolerance": "3000000",
+      "total": 94036000000
+    }
+  },
+  "filings": {
+    "primary": {
+      "accession": "0000320193-25-000073",
+      "filing_date": "2025-08-01",
+      "form": "10-Q",
+      "report_date": "2025-06-28"
+    }
+  },
+  "fiscal_quarter": 3,
+  "fiscal_year": 2025,
+  "operands": {
+    "op1": {
+      "accession": "0000320193-25-000073",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-58",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "aapl:IPhoneMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/320193/000032019325000073/aapl-20250628.htm",
+        "name": "aapl-20250628.htm",
+        "sha256": "86f168a626e3f338bd2e251dad143270c43fd76137852bb9d026cbb3158ba493",
+        "url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000073/aapl-20250628.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "0ac76e8879bc3d7d69b96ea57bd3181b4772db1cdfe9bea28cac1a62e52f661b",
+        "png_scale": 1,
+        "png_sha256": "2281639ea5e4ae5f018958afc746119d9d6b4d216a99e61af64001f28ed5b558",
+        "table": "0000320193-25-000073-86f168a626e3-t17"
+      },
+      "fact_id": "f-362",
+      "filing_date": "2025-08-01",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-06-28",
+        "start": "2025-03-30"
+      },
+      "raw": "44,582",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 44582000000
+    },
+    "op2": {
+      "accession": "0000320193-25-000073",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-62",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "aapl:MacMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/320193/000032019325000073/aapl-20250628.htm",
+        "name": "aapl-20250628.htm",
+        "sha256": "86f168a626e3f338bd2e251dad143270c43fd76137852bb9d026cbb3158ba493",
+        "url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000073/aapl-20250628.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "0ac76e8879bc3d7d69b96ea57bd3181b4772db1cdfe9bea28cac1a62e52f661b",
+        "png_scale": 1,
+        "png_sha256": "2281639ea5e4ae5f018958afc746119d9d6b4d216a99e61af64001f28ed5b558",
+        "table": "0000320193-25-000073-86f168a626e3-t17"
+      },
+      "fact_id": "f-366",
+      "filing_date": "2025-08-01",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-06-28",
+        "start": "2025-03-30"
+      },
+      "raw": "8,046",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 8046000000
+    },
+    "op3": {
+      "accession": "0000320193-25-000073",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-66",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "aapl:IPadMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/320193/000032019325000073/aapl-20250628.htm",
+        "name": "aapl-20250628.htm",
+        "sha256": "86f168a626e3f338bd2e251dad143270c43fd76137852bb9d026cbb3158ba493",
+        "url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000073/aapl-20250628.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "0ac76e8879bc3d7d69b96ea57bd3181b4772db1cdfe9bea28cac1a62e52f661b",
+        "png_scale": 1,
+        "png_sha256": "2281639ea5e4ae5f018958afc746119d9d6b4d216a99e61af64001f28ed5b558",
+        "table": "0000320193-25-000073-86f168a626e3-t17"
+      },
+      "fact_id": "f-370",
+      "filing_date": "2025-08-01",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-06-28",
+        "start": "2025-03-30"
+      },
+      "raw": "6,581",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 6581000000
+    },
+    "op4": {
+      "accession": "0000320193-25-000073",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-70",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "aapl:WearablesHomeandAccessoriesMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/320193/000032019325000073/aapl-20250628.htm",
+        "name": "aapl-20250628.htm",
+        "sha256": "86f168a626e3f338bd2e251dad143270c43fd76137852bb9d026cbb3158ba493",
+        "url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000073/aapl-20250628.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "0ac76e8879bc3d7d69b96ea57bd3181b4772db1cdfe9bea28cac1a62e52f661b",
+        "png_scale": 1,
+        "png_sha256": "2281639ea5e4ae5f018958afc746119d9d6b4d216a99e61af64001f28ed5b558",
+        "table": "0000320193-25-000073-86f168a626e3-t17"
+      },
+      "fact_id": "f-374",
+      "filing_date": "2025-08-01",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-06-28",
+        "start": "2025-03-30"
+      },
+      "raw": "7,404",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 7404000000
+    },
+    "op5": {
+      "accession": "0000320193-25-000073",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-15",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "us-gaap:ServiceMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/320193/000032019325000073/aapl-20250628.htm",
+        "name": "aapl-20250628.htm",
+        "sha256": "86f168a626e3f338bd2e251dad143270c43fd76137852bb9d026cbb3158ba493",
+        "url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000073/aapl-20250628.htm"
+      },
+      "duplicates": [
+        "f-55"
+      ],
+      "evidence": {
+        "html_sha256": "0ac76e8879bc3d7d69b96ea57bd3181b4772db1cdfe9bea28cac1a62e52f661b",
+        "png_scale": 1,
+        "png_sha256": "2281639ea5e4ae5f018958afc746119d9d6b4d216a99e61af64001f28ed5b558",
+        "table": "0000320193-25-000073-86f168a626e3-t17"
+      },
+      "fact_id": "f-378",
+      "filing_date": "2025-08-01",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-06-28",
+        "start": "2025-03-30"
+      },
+      "raw": "27,423",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 27423000000
+    },
+    "op6": {
+      "accession": "0000320193-25-000073",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-19",
+      "decimals": "-6",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/320193/000032019325000073/aapl-20250628.htm",
+        "name": "aapl-20250628.htm",
+        "sha256": "86f168a626e3f338bd2e251dad143270c43fd76137852bb9d026cbb3158ba493",
+        "url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000073/aapl-20250628.htm"
+      },
+      "duplicates": [
+        "f-59"
+      ],
+      "evidence": {
+        "html_sha256": "0ac76e8879bc3d7d69b96ea57bd3181b4772db1cdfe9bea28cac1a62e52f661b",
+        "png_scale": 1,
+        "png_sha256": "2281639ea5e4ae5f018958afc746119d9d6b4d216a99e61af64001f28ed5b558",
+        "table": "0000320193-25-000073-86f168a626e3-t17"
+      },
+      "fact_id": "f-382",
+      "filing_date": "2025-08-01",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-06-28",
+        "start": "2025-03-30"
+      },
+      "raw": "94,036",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 94036000000
+    }
+  },
+  "parser": {
+    "engine_sha256": "b40283cc0912d775cc06d70c7315682e6ef301ccba21cc301040839b1f5697ea",
+    "spec_sha256": "e93ec49768f01b33eaac003a94785305de290053959b68ff8310e5a6b7af0c6d"
+  },
+  "period_end": "2025-06-28",
+  "review": {
+    "reasons": [],
+    "status": "none"
+  },
+  "schema_version": 1,
+  "ticker": "AAPL",
+  "total": {
+    "expression": [
+      {
+        "operand": "op6",
+        "weight": 1
+      }
+    ],
+    "value": 94036000000
+  },
+  "unit": "USD",
+  "view": "product"
+}
