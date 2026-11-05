@@ -6,15 +6,23 @@ download 接受任何 ticker，下載完整申報包；extract 只處理 registr
 
 import argparse
 import json
+import os
 from pathlib import Path
 import sys
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "libs"))
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "libs"))
 from sec_revenue.dotenv import load_dotenv
 from sec_revenue.download import DownloadBatch, DownloadWorkflow
 from sec_revenue.tickers import DownloadTickers, SupportedTickers
 from sec_revenue.workflow import PeriodSelection, ExtractionWorkflow
 from sec_revenue.viewer import RevenueViewer
+
+
+def data_root() -> Path:
+    """SEC 原文與流程產物的根目錄：`SEC_DATA_DIR`（可放在 `.env`），未設定時為 repo 的 `data/`。"""
+    configured = os.environ.get("SEC_DATA_DIR", "").strip()
+    return Path(configured).expanduser() if configured else ROOT / "data"
 
 
 class WorkflowCli:
@@ -55,7 +63,7 @@ class WorkflowCli:
                 action="store_true",
                 help="download 強制重抓；extract 強制重新萃取",
             )
-            sub.add_argument("--data", type=Path, default=Path("data"))
+            sub.add_argument("--data", type=Path, default=data_root(), help="資料根目錄（預設 SEC_DATA_DIR 或 repo 的 data/）")
             if command == "download":
                 sub.add_argument(
                     "--offline",
@@ -68,7 +76,7 @@ class WorkflowCli:
                     help="一併下載 XBRL R 頁面與其呈現檔；預設略過，之後加此參數重跑可補抓",
                 )
         viewer = commands.add_parser("viewer")
-        viewer.add_argument("--data", type=Path, default=Path("data"))
+        viewer.add_argument("--data", type=Path, default=data_root(), help="資料根目錄（預設 SEC_DATA_DIR 或 repo 的 data/）")
         viewer.add_argument("--host", default="127.0.0.1")
         viewer.add_argument("--port", type=int, default=7290)
         args = cli.parse_args()
@@ -84,7 +92,7 @@ class WorkflowCli:
                 server.serve_forever()
                 return 0
             periods = PeriodSelection(args.start, args.end, args.latest)
-            repository = Path(__file__).resolve().parents[1]
+            repository = ROOT
             if args.command == "download":
                 tickers = DownloadTickers().select(
                     args.tickers, args.ticker_file, args.all_tickers
@@ -119,5 +127,5 @@ class WorkflowCli:
 
 
 if __name__ == "__main__":
-    load_dotenv(Path(__file__).resolve().parents[1] / ".env")
+    load_dotenv(ROOT / ".env")
     raise SystemExit(WorkflowCli().run())

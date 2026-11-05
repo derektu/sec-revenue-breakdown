@@ -84,7 +84,10 @@ class EvidenceStore:
         receipt = dict(
             metadata, path=str(path), sha256=digest, source_format=kind, bytes=len(body)
         )
-        JsonCodec.write(path.with_suffix(path.suffix + ".receipt.json"), receipt)
+        # 收據與原文同目錄，只記檔名，資料目錄整個搬移後仍正確。
+        JsonCodec.write(
+            path.with_suffix(path.suffix + ".receipt.json"), dict(receipt, path=path.name)
+        )
         return receipt
 
 

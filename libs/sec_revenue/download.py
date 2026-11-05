@@ -163,7 +163,9 @@ class RawFileStore:
         receipt = dict(
             metadata, path=str(relative), sha256=digest, source_format="sec_file", bytes=len(raw)
         )
-        JsonCodec.write(path.with_suffix(path.suffix + ".receipt.json"), receipt)
+        JsonCodec.write(
+            path.with_suffix(path.suffix + ".receipt.json"), dict(receipt, path=path.name)
+        )
         return receipt
 
 

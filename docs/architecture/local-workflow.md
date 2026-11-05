@@ -36,6 +36,8 @@ download 與 extract 都接受 `--tickers AAPL MSFT CVX`、`--tickers AAPL,MSFT`
 
 連網下載需要 **SEC_USER_AGENT**，內容為真實姓名／組織與聯絡 email（SEC 規範）。設定放在 repo 根目錄的 `.env`（格式見 `.env.example`，`.env` 不進 Git），`sec_pipeline.py` 啟動時讀取；終端已設定的環境變數優先。程式不提供預設身分、不保存帳密，也不把身分寫入快取。`--offline` 與萃取不需要此設定；線上 `--latest` 刷新仍需要。
 
+SEC 原文（`sec/`）、下載與萃取索引（`pipeline/`）和萃取輸出（`outputs/`）放在資料根目錄。資料根目錄由 `.env` 的 **SEC_DATA_DIR** 指定，建議放在 repo 以外，讓主 repo 與各 worktree 共用同一份、不重複下載；未設定時為 repo 的 `data/`，`--data` 參數優先。原文可依 `packages.json` 的 SEC URL 與 sha256 重建，不進 Git。收據（`*.receipt.json`）與原文同目錄、只記檔名，索引內的路徑都相對於資料根目錄，所以整個目錄可以直接搬移。ticker 清單與對照資料（`data/universe/`）一律留在 repo 並進 Git。
+
 ```bash
 # 任何 ticker：下載指定實際申報期範圍內的完整申報包；已有且 hash 正確的檔案直接沿用
 .venv/bin/python scripts/sec_pipeline.py download --tickers AAPL ALL --start 2025-01-01 --end 2026-11-04
