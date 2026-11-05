@@ -187,19 +187,41 @@ def table_key(fact: dict, index: int) -> str:
     return f"{fact['accession']}-{fact['source_artifact_sha256'][:SOURCE_PREFIX]}-t{index}"
 
 
-def fact_value(node, raw: str) -> int | None:
-    """依 parser 的規則由 `ix:nonFraction` 的文字、scale 與 sign 算出整數美元；無法解析時回傳 None。"""
-    transform = node.get("format", "").split(":")[-1].lower()
-    cleaned = raw.replace(",", "").replace(" ", "").replace("−", "-")
-    if transform in ("fixed-zero", "zerodash"):
+SUPPORTED_FORMATS = {"", "num-dot-decimal", "numdotdecimal", "fixed-zero", "zerodash"}
+ZERO_FORMATS = {"fixed-zero", "zerodash"}
+NEGATIVE_MARKS = ("-", "−", "(", ")")
+
+
+def ix_number(raw: str, transform: str, scale: str, sign: str | None) -> tuple[int | None, str | None]:
+    """依 iXBRL 規則由顯示文字、format、scale 與 sign 算出整數美元；不符時回傳 (None, 原因)。
+
+    正負號只由 `sign="-"` 表示；顯示文字帶負號或括號時視為無法解析，不自行推斷。
+    """
+    if transform not in SUPPORTED_FORMATS:
+        return None, f"不支援的數字格式 {transform}"
+    if transform in ZERO_FORMATS:
         cleaned = "0"
+    else:
+        if any(mark in raw for mark in NEGATIVE_MARKS):
+            return None, f"顯示文字 {raw!r} 帶負號；iXBRL 的正負號應由 sign 屬性表示"
+        cleaned = raw.replace(",", "").replace(" ", "")
     try:
-        value = Decimal(cleaned) * Decimal(10) ** int(node.get("scale", "0"))
+        value = Decimal(cleaned) * Decimal(10) ** int(scale)
     except (InvalidOperation, ValueError):
-        return None
-    if node.get("sign") == "-":
+        return None, f"無法解析數字 {raw!r}"
+    if not value.is_finite():
+        return None, f"數值不是有限數：{raw!r}"
+    if sign == "-":
         value = -value
-    return int(value) if value == value.to_integral_value() else None
+    if value != value.to_integral_value():
+        return None, f"不是整數美元：{raw!r}"
+    return int(value), None
+
+
+def fact_value(node, raw: str) -> int | None:
+    """`ix:nonFraction` 的整數美元；規則與 `ix_number` 相同，無法解析時回傳 None。"""
+    transform = node.get("format", "").split(":")[-1].lower()
+    return ix_number(raw, transform, node.get("scale", "0"), node.get("sign"))[0]
 
 
 class TableLocator:
@@ -323,7 +345,8 @@ class TableScreenshotter:
     原文以 `set_content` 載入，沒有導覽請求；context 設為 offline，所有資源請求另由攔截器中止。
     """
 
-    def __init__(self):
+    def __init__(self, device_scale: int = DEVICE_SCALE):
+        self.device_scale = device_scale
         self.playwright = None
         self.browser = None
 
@@ -348,7 +371,7 @@ class TableScreenshotter:
         """回傳 PNG、是否裁切，以及瀏覽器中整張表的文字（供呼叫端核對是同一張表）。"""
         context = self.browser.new_context(
             viewport=VIEWPORT,
-            device_scale_factor=DEVICE_SCALE,
+            device_scale_factor=self.device_scale,
             service_workers="block",
             offline=True,
             java_script_enabled=False,
