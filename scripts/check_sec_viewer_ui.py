@@ -39,7 +39,7 @@ class ViewerUiCheck:
             )
             page = browser.new_page(viewport={"width": 1280, "height": 1000})
             page.on("pageerror", lambda error: errors.append(str(error)))
-            page.goto(args.url)
+            page.goto(args.url + "/legacy")
             for ticker in tickers:
                 page.locator("#ticker").fill(ticker)
                 page.locator("button").click()

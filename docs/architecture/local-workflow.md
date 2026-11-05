@@ -1,6 +1,6 @@
 # 本機分階段操作
 
-這條正式路徑將下載與萃取分開。`download` 不產生營收輸出；`extract` 不連網，只讀已下載的 SEC 原文；`evidence` 不連網，由萃取輸出回到 SEC 原文產生表格證據；`viewer` 只讀萃取輸出與證據。沒有前端編譯步驟，Python 3.11+ 與 lxml 即可執行；`evidence` 另需 Playwright 與 Chromium。
+這條正式路徑將下載與萃取分開。`download` 不產生營收輸出；`extract` 不連網，只讀已下載的 SEC 原文；`evidence` 不連網，由萃取輸出回到 SEC 原文產生表格證據；`viewer` 只讀正式輸出、萃取輸出與證據。沒有前端編譯步驟，Python 3.11+ 與 lxml 即可執行；`evidence` 另需 Playwright 與 Chromium。
 
 ## 拉取與安裝
 
@@ -177,11 +177,77 @@ CVX net 與 XOM all-income 另有明確成分對帳：差額只在所有 SEC 申
 .venv/bin/python scripts/sec_pipeline.py viewer --host 127.0.0.1 --port 7290
 ```
 
-從同一台本機瀏覽器開啟 <http://127.0.0.1:7290>。ticker、期間與 basis 選單來自現有輸出，不限制固定八期。未下載／未萃取的公司回報無資料；已有成功歷史期不因本次只萃取某一季而從索引消失。頁面可看完整 SEC 運算元、申報精度、風險及來源格式。
+從同一台本機瀏覽器開啟 <http://127.0.0.1:7290>。viewer 唯讀，不執行 parser，有兩個頁面：
 
-已產生證據的期別，每個欄位下方列出運算式，例如「8,726,000,000 = ① 10-K 年度（2024-09-29～2025-09-27）33,708 百萬 − ② 10-Q 9M（2024-09-29～2025-06-28）24,982 百萬」，並逐一顯示各 fact 的表格截圖，以及 SEC 原文、XBRL viewer 與表格 HTML 連結。尚未產生證據、證據失敗、`evidence.json` 無法讀取，或證據過期（萃取輸出 hash、表格檔 hash 或證據程式版本與紀錄不同）時，欄位以紅色「無證據」區塊標示並附原因；部分運算元不在 HTML 表格內時以黃色區塊標示「部分運算元無證據」。萃取值為空的欄位不寫成「值 = 運算式」，只標「萃取值為空，替代式僅供參考」。表格檔只經 `/evidence/TICKER/PERIOD/ACCESSION-SHA12-tN.(png|html)` 提供，表格 HTML 以 CSP sandbox 開啟。
+- `/`：正式輸出（repo 的 `data/revenue/`，可用 `--revenue` 指定其他目錄）。
+- `/legacy`：舊流程的萃取輸出（`--data` 下的 `outputs/`）。
 
-可選 Playwright UI 測試（先安裝 `playwright`，並使用本機 Chromium 或執行 `python -m playwright install chromium`）：
+### 正式輸出頁面
+
+**公司搜尋框**
+
+- 輸入代碼或名稱即時篩選候選清單，兩者都比對、不分大小寫；代碼開頭相符的排在前面。
+- 方向鍵上下移動、Enter 選定、Esc 取消並還原目前的公司。
+- 候選清單只列 `tickers.csv` 中 `status=ok` 的公司，每筆是「代碼 公司名」。其他公司不在清單上，用 URL hash 開啟（例如 `#ticker=KO&series=Q`）。
+
+**數字表**
+
+一家公司一張表：列是分類，規格宣告調節項（`reconciling`，例如公司間抵銷）時接在分類之後，以斜體加「調節」標記區隔，最後一列是總營收；欄是期別，由舊到新。表上方的按鈕切換季度 Q 與年度 FY 兩個序列。期別取自 `status.json` 的 `periods`（格式見 [parser.md](parser.md)）與 `Q/`、`FY/` 下有 `revenue.json` 的目錄。
+
+`status.json` 有 `comparison_errors` 時，表上方列出讀不到原文、沒有做比較欄比對的申報與原因。
+
+- **單位**：百萬美元，標在表頭「分類」旁。原文以千為單位的公司（例如 PLD）顯示到小數三位。
+- **欄名**：財年季別與期末日；不是 `published` 的期別加註狀態，有 `differs_from_published` 的期別加註「重算不同」。
+- **列的順序**：取各期分類的聯集，依最新一期的順序排列，只在較舊期別出現的分類接在後面；調節項同樣取聯集。點調節項的格子與分類一樣顯示運算式與證據。
+- **格子的標示**：
+
+  | `status.json` 中該期的紀錄 | 格子顯示 |
+  |---|---|
+  | `not_derived`（Q4 留空） | 灰底「留空」，滑鼠停留顯示檢核名稱與原因 |
+  | `failed` | 紅底「失敗」，滑鼠停留顯示檢核名稱與原因 |
+  | `not_derived` 或 `failed`，且 `published_output_kept` | 同上底色，顯示保留的已上線值；欄名註明「保留已上線值」 |
+  | `differences` | 橘底加 △，標在差異標記的分類或調節項那一列；分類是「總營收」的標在總營收列 |
+
+**點一個格子**
+
+表下方會顯示：
+
+- **運算式**：例如「8,726 百萬 = ③ 10-K 年度（2024-09-29～2025-09-27）33,708 百萬 − ④ 10-Q 九個月（2024-09-29～2025-06-28）24,982 百萬」。
+- 主申報與九個月申報的表單、accession、申報日。
+- 結構檢核與加總的結果。
+- 留空或失敗：檢核名稱與原因、是否保留先前上線的輸出；Q4 留空另列年度的分類與 Q1–Q3 期間各段的分類。保留了已上線輸出時，運算式與證據照常顯示。
+- 重算不同（`differs_from_published`）：原因、各分類的已上線值與重算值、不同的欄位；只有中繼資料不同（`stale_fields`）時列出欄位。
+- 差異標記的明細：分類、運算元與期間、結果（數值不同或無法解析）、已上線值、申報列示值、來源申報與申報日、fact。
+- 各運算元的 SEC 表格截圖：同一張表只顯示一次，表頭列出表內的運算元編號；每張表附 SEC 原文、XBRL viewer 與表格 HTML 連結。
+
+**表格檔的核對**
+
+表格檔以 `revenue.json` 記錄的 sha256 核對；同一張表由多個運算元引用時，每個運算元的紀錄都要相符。缺檔或 hash 不符時，不顯示截圖，改以紅色「無表格證據」區塊標示，並附原因。
+
+**API 與安全**
+
+- `/api/companies` 列出公司。
+- `/api/company?ticker=` 回傳一家公司的兩個序列。
+- 表格檔只經 `/revenue-evidence/TICKER/(Q|FY)/期末日/ACCESSION-SHA12-tN.(png|html)` 提供，並檢查路徑不超出輸出根目錄。表格 HTML 以 CSP sandbox 開啟。頁面本身的 CSP 只允許同源資源。
+
+### 舊流程頁面
+
+ticker、期間與 basis 選單來自現有輸出，不限制固定八期。未下載／未萃取的公司回報無資料；已有成功歷史期不因本次只萃取某一季而從索引消失。頁面可看完整 SEC 運算元、申報精度、風險及來源格式。
+
+已產生證據的期別，每個欄位下方會列出運算式，例如「8,726,000,000 = ① 10-K 年度（2024-09-29～2025-09-27）33,708 百萬 − ② 10-Q 9M（2024-09-29～2025-06-28）24,982 百萬」，並逐一顯示各 fact 的表格截圖，以及 SEC 原文、XBRL viewer 與表格 HTML 連結。
+
+以下情況會以紅色「無證據」區塊標示，並附原因：
+
+- 尚未產生證據。
+- 證據產生失敗。
+- `evidence.json` 無法讀取。
+- 證據過期：萃取輸出 hash、表格檔 hash 或證據程式版本與紀錄不同。
+
+部分運算元不在 HTML 表格內時，以黃色區塊標示「部分運算元無證據」。萃取值為空的欄位不寫成「值 = 運算式」，只標「萃取值為空，替代式僅供參考」。
+
+表格檔只經 `/evidence/TICKER/PERIOD/ACCESSION-SHA12-tN.(png|html)` 提供，表格 HTML 以 CSP sandbox 開啟。
+
+可選 Playwright UI 測試（舊流程頁面；先安裝 `playwright`，並使用本機 Chromium 或執行 `python -m playwright install chromium`）：
 
 ```bash
 .venv/bin/python scripts/check_sec_viewer_ui.py --tickers AAPL MSFT CVX

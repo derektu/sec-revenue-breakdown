@@ -1,7 +1,15 @@
-"""唯讀雲端 viewer；API 不執行 parser、不接受檔案路徑。
+"""唯讀 viewer；API 不執行 parser、不接受檔案路徑。
 
-`/api/revenue` 回傳萃取輸出，並附上該期 `evidence/evidence.json` 中對應的證據；
-`/evidence/<TICKER>/<period>/<file>` 只提供證據目錄內符合命名規則的表格 PNG 與 HTML。
+正式輸出（`data/revenue/`）：
+- `/` 是正式輸出頁面。
+- `/api/companies` 列出公司。
+- `/api/company?ticker=` 回傳一家公司的 Q、FY 兩個序列。
+- `/revenue-evidence/<TICKER>/<Q|FY>/<期末日>/<file>` 只提供證據目錄內符合命名規則的表格 PNG 與 HTML。
+
+舊流程的萃取輸出（`<data>/outputs/`）：
+- `/legacy` 是舊頁面。
+- `/api/revenue` 回傳萃取輸出，並附上該期 `evidence/evidence.json` 中對應的證據。
+- `/evidence/<TICKER>/<period>/<file>` 提供該期的表格檔。
 """
 
 from __future__ import annotations
@@ -13,26 +21,44 @@ import re
 from urllib.parse import parse_qs, urlsplit
 from sec_revenue.engines import JsonCodec
 from sec_revenue.evidence import FILE_NAME_RE, EvidenceWorkflow
+from sec_revenue.published import PublishedRevenue
 from sec_revenue.service import ParserRegistry
 
 EVIDENCE_PATH_RE = re.compile(r"/evidence/([A-Z0-9.\-]{1,10})/(\d{4}-\d{2}-\d{2})/([^/]+)")
+REVENUE_EVIDENCE_RE = re.compile(r"/revenue-evidence/([A-Z0-9\-]{1,10})/(Q|FY)/(\d{4}-\d{2}-\d{2})/([^/]+)")
+DEFAULT_REVENUE_ROOT = Path(__file__).resolve().parents[2] / "data" / "revenue"
 # 證據 HTML 由 SEC 原文抽出，以 sandbox 隔離，不執行 script、不載入任何資源。
 EVIDENCE_HTML_CSP = "default-src 'none'; style-src 'unsafe-inline'; sandbox"
+# 頁面只載入自身的 inline script、樣式與同源圖片，不連外。
+PAGE_CSP = (
+    "default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; "
+    "img-src 'self'; connect-src 'self'; frame-ancestors 'none'"
+)
 
 
 class RevenueViewer:
-    def __init__(self, data: Path):
+    """`data` 是舊流程的資料根目錄；`revenue_root` 是正式輸出根目錄；`universe` 是 `tickers.csv` 路徑。"""
+
+    def __init__(self, data: Path, revenue_root: Path | None = None, universe: Path | None = None):
         self.data = data
         self.registry = ParserRegistry()
+        self.published = PublishedRevenue(revenue_root or DEFAULT_REVENUE_ROOT, universe)
 
     def request(self, url: str) -> tuple[int, str, bytes]:
         parsed = urlsplit(url)
-        if parsed.path == "/":
+        pages = {"/": "viewer.html", "/legacy": "viewer_legacy.html"}
+        if parsed.path in pages:
             return (
                 200,
                 "text/html; charset=utf-8",
-                Path(__file__).with_name("viewer.html").read_bytes(),
+                Path(__file__).with_name(pages[parsed.path]).read_bytes(),
             )
+        if parsed.path == "/api/companies":
+            return 200, "application/json", JsonCodec.encode(self.published.companies())
+        if parsed.path == "/api/company":
+            return self.company(parsed.query)
+        if parsed.path.startswith("/revenue-evidence/"):
+            return self.revenue_evidence_file(parsed.path)
         if parsed.path == "/api/tickers":
             return (
                 200,
@@ -77,6 +103,26 @@ class RevenueViewer:
                 b'{"error":"no data for ticker / period / basis"}',
             )
         return 200, "application/json", JsonCodec.encode(rows)
+
+    def company(self, query_string: str) -> tuple[int, str, bytes]:
+        query = parse_qs(query_string, keep_blank_values=True)
+        if set(query) != {"ticker"} or len(query["ticker"]) != 1:
+            return 400, "application/json", b'{"error":"invalid query"}'
+        ticker = query["ticker"][0].upper()
+        if not self.published.known(ticker):
+            return 400, "application/json", b'{"error":"invalid ticker"}'
+        company = self.published.company(ticker)
+        if company is None:
+            return 404, "application/json", b'{"error":"no published output"}'
+        return 200, "application/json", JsonCodec.encode(company)
+
+    def revenue_evidence_file(self, path: str) -> tuple[int, str, bytes]:
+        match = REVENUE_EVIDENCE_RE.fullmatch(path)
+        file = self.published.evidence_file(*match.groups()) if match else None
+        if file is None:
+            return 404, "application/json", b'{"error":"evidence not found"}'
+        kind = "image/png" if file.suffix == ".png" else "text/html; charset=utf-8"
+        return 200, kind, file.read_bytes()
 
     def load_evidence(self, period_dir: Path) -> dict | None:
         """讀該期 evidence.json 並核對表格檔 hash；檔案壞掉時回傳錯誤，不讓整個 API 失敗。"""
@@ -173,7 +219,11 @@ class RevenueViewer:
                 self.send_header("Content-Length", str(len(body)))
                 self.send_header("X-Content-Type-Options", "nosniff")
                 self.send_header("Cache-Control", "no-store")
-                if self.path.startswith("/evidence/") and kind.startswith("text/html"):
+                # 與 request() 的路由一致，以 urlsplit 的路徑判斷；absolute-form 請求（GET http://host/...）也套用 CSP。
+                route = urlsplit(self.path).path
+                if route in ("/", "/legacy"):
+                    self.send_header("Content-Security-Policy", PAGE_CSP)
+                elif route.startswith(("/evidence/", "/revenue-evidence/")) and kind.startswith("text/html"):
                     self.send_header("Content-Security-Policy", EVIDENCE_HTML_CSP)
                 self.end_headers()
                 self.wfile.write(body)

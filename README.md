@@ -84,7 +84,7 @@
 | `npm run parse -- ...` | 新版 parser：依公司規格產生 `data/revenue/` 的正式輸出與證據，不連網；不指定 `--start` 時從預設起始日（2024-01-01）起；`--check` 與已提交的輸出比對 |
 | `npm run capture:setup` | 開啟擷取用的專用瀏覽器，檢查並等待登入 |
 | `npm run capture -- ...` | 擷取對照資料 |
-| `npm run viewer` | 本機唯讀 viewer，<http://127.0.0.1:7290> |
+| `npm run viewer` | 本機唯讀 viewer，<http://127.0.0.1:7290>：正式輸出（`data/revenue/`）的 Q／FY 數字與 SEC 證據；舊流程輸出在 `/legacy` |
 
 範例：
 
