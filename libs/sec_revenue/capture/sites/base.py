@@ -42,8 +42,11 @@ class Site:
             page.wait_for_timeout(500)
         return "logged_out"
 
-    def capture(self, page, ticker: str) -> Iterator[Table]:
-        """開到 ticker 的目標頁並逐一產生要擷取的表。失敗時丟出 `CaptureError`。"""
+    def capture(self, page, ticker: str, periods: int) -> Iterator[Table]:
+        """開到 ticker 的目標頁並逐一產生要擷取的表。失敗時丟出 `CaptureError`。
+
+        `periods` 只用於一個畫面只顯示一期的來源：擷取最近幾期。
+        """
         raise NotImplementedError
 
 

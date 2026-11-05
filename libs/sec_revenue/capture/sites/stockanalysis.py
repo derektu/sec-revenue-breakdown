@@ -29,7 +29,7 @@ class StockAnalysis(Site):
         # 類別股在 Stock Analysis 以 `.` 分隔，例如 BRK-B → brk.b。
         return f"https://stockanalysis.com/stocks/{ticker.lower().replace('-', '.')}/metrics/revenue-by-segment/"
 
-    def capture(self, page, ticker: str) -> Iterator[Table]:
+    def capture(self, page, ticker: str, periods: int) -> Iterator[Table]:
         url = self.target_url(ticker)
         response = page.goto(url, wait_until="domcontentloaded", timeout=60_000)
         if response is not None and response.status == 404:

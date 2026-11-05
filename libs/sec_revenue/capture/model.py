@@ -29,6 +29,8 @@ class Table:
 
     `element` 是表格區塊的 Playwright Locator，外殼對它截圖並讀出 html；
     `rows` 是表格文字（含表頭列），寫成 `table.txt`，`html_mode` 為 `rebuild` 時也用來重建 html。
+    `caption` 是表格本身沒有、但截圖中可見的脈絡（例如富途的期間與幣別），
+    寫在 `table.txt` 第一行與重建 html 的 `<caption>`，讓文字證據能對應到哪一期。
     """
 
     url: str
@@ -37,3 +39,4 @@ class Table:
     periods: list[Period]
     html_mode: HtmlMode
     display_unit: str | None = None
+    caption: str | None = None

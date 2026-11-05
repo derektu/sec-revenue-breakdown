@@ -1,4 +1,7 @@
-"""`setup` 與 `capture` 的流程：登入檢查、逐檔擷取、寫入證據與合併、最後整體驗證。"""
+"""`setup` 與 `capture` 的流程：登入檢查、逐檔擷取、寫入證據與合併、最後整體驗證。
+
+一個 ticker 的所有表（富途一期一張）都截圖完成後才一次寫入；中途失敗就整檔不寫，不留下部分期別。
+"""
 
 from __future__ import annotations
 
@@ -10,30 +13,48 @@ from typing import Callable
 
 from ..universe import TICKER_RE, capture_id, validate_universe
 from .evidence import PNG_WARN_BYTES, compress_png, table_html, table_text
-from .merge import commit_capture
+from .merge import PendingCapture, commit_captures
 from .model import CaptureError, Table
+from .browser import VIEWPORT
 from .sites import SITES, Site
 
-# 兩檔之間的間隔，讓擷取速度接近人工操作。
-PACE_SECONDS = 3.0
+# 兩檔之間的預設間隔（秒），讓擷取速度接近人工操作。
+DEFAULT_PAUSE = 10.0
 # 截圖時表格四周保留的像素。
 SHOT_MARGIN = 16
+# 一個畫面只顯示一期的來源（富途）每檔擷取的季度範圍：最近 12 季（三年）。
+DEFAULT_PERIODS = 12
 
 Prompt = Callable[[str], str]
 Output = Callable[[str], None]
 
 # 截圖前隱藏表格以外的 fixed／sticky 元素（例如帶有帳號頭像的頁首），
-# 並讓祖先元素不裁切，使截圖只含完整的表格。
+# 並讓祖先元素不裁切，使截圖只含完整的表格。原本的 inline style 記在 window 上，截圖後由 _RESTORE_JS 復原，
+# 避免影響同一頁後續的操作（例如富途切換期間）。
 _ISOLATE_JS = """
 el => {
+  const saved = window.__secCaptureSaved = [];
+  const set = (n, prop, value) => {
+    saved.push([n, prop, n.style.getPropertyValue(prop), n.style.getPropertyPriority(prop)]);
+    n.style.setProperty(prop, value, 'important');
+  };
   for (const n of document.querySelectorAll('body *')) {
     if (n.contains(el) || el.contains(n)) continue;
     const pos = getComputedStyle(n).position;
-    if (pos === 'fixed' || pos === 'sticky') n.style.setProperty('visibility', 'hidden', 'important');
+    if (pos === 'fixed' || pos === 'sticky') set(n, 'visibility', 'hidden');
   }
   for (let a = el.parentElement; a && a !== document.documentElement; a = a.parentElement) {
-    a.style.setProperty('overflow', 'visible', 'important');
+    set(a, 'overflow', 'visible');
   }
+}
+"""
+
+_RESTORE_JS = """
+() => {
+  for (const [n, prop, value, priority] of (window.__secCaptureSaved || []).reverse()) {
+    if (value) n.style.setProperty(prop, value, priority); else n.style.removeProperty(prop);
+  }
+  window.__secCaptureSaved = [];
 }
 """
 
@@ -90,86 +111,127 @@ def ensure_login(context, sites: list[Site], prompt: Prompt, out: Output) -> boo
             page.goto(site.probe_url, wait_until="domcontentloaded", timeout=60_000)
 
 
+def check_login(context, sites: list[Site]) -> dict[str, str]:
+    """逐站檢查登入狀態，不等待使用者；回傳 `{來源: logged_in | logged_out}`。"""
+    states = {}
+    for site in sites:
+        page = context.new_page()
+        try:
+            page.goto(site.probe_url, wait_until="domcontentloaded", timeout=60_000)
+            states[site.name] = site.login_state(page)
+        finally:
+            page.close()
+    return states
+
+
+OpenBrowser = Callable[[bool], object]
+
+
 def run_capture(
-    context,
+    open_browser: OpenBrowser,
     source: str,
     tickers: list[str],
     universe_dir: Path,
+    *,
+    headless: bool = True,
+    periods: int = DEFAULT_PERIODS,
+    pause: float = DEFAULT_PAUSE,
     prompt: Prompt = input,
     out: Output = print,
     clock: CaptureClock | None = None,
 ) -> Summary:
+    """擷取一個來源的多個 ticker。
+
+    `open_browser(headless)` 開啟專用 profile 的瀏覽器。無視窗執行時先檢查登入；
+    未登入就關閉無視窗瀏覽器，改開視窗走 `setup` 的登入流程，登入後再以無視窗繼續。
+    """
     site = SITES[source]
     clock = clock or CaptureClock()
     summary = Summary()
-    if not ensure_login(context, [site], prompt, out):
-        summary.failed = [(ticker, f"{source} 未登入") for ticker in tickers]
+    context = open_browser(headless)
+    try:
+        if not headless:
+            ok = ensure_login(context, [site], prompt, out)
+        elif check_login(context, [site])[site.name] == "logged_in":
+            ok = True
+        else:
+            out(f"{source} 未登入，開啟瀏覽器視窗登入")
+            context.close()
+            context = None
+            context = open_browser(False)
+            ok = ensure_login(context, [site], prompt, out)
+            context.close()
+            context = None
+            if ok:
+                context = open_browser(True)
+        if not ok:
+            summary.failed = [(ticker, f"{source} 未登入") for ticker in tickers]
+            return summary
+        page = context.new_page()
+        for index, ticker in enumerate(tickers):
+            if index:
+                time.sleep(pause)
+            out(f"[{index + 1}/{len(tickers)}] {source} {ticker}")
+            try:
+                if not TICKER_RE.match(ticker):
+                    raise CaptureError(f"ticker 格式不合法：{ticker!r}")
+                pending = [_shoot(table, source, clock) for table in site.capture(page, ticker, periods)]
+                if not pending:
+                    raise CaptureError("沒有可擷取的表格")
+                _commit(pending, source, ticker, universe_dir, out)
+                summary.succeeded.append(ticker)
+            except Exception as exc:  # 一檔失敗不影響其他檔
+                message = str(exc).strip() or type(exc).__name__
+                out(f"  失敗：{message}")
+                summary.failed.append((ticker, message))
         return summary
-    page = context.new_page()
-    for index, ticker in enumerate(tickers):
-        if index:
-            time.sleep(PACE_SECONDS)
-        out(f"[{index + 1}/{len(tickers)}] {source} {ticker}")
-        try:
-            if not TICKER_RE.match(ticker):
-                raise CaptureError(f"ticker 格式不合法：{ticker!r}")
-            count = 0
-            for table in site.capture(page, ticker):
-                _save(table, source, ticker, universe_dir, clock, out)
-                count += 1
-            if not count:
-                raise CaptureError("沒有可擷取的表格")
-            summary.succeeded.append(ticker)
-        except Exception as exc:  # 一檔失敗不影響其他檔
-            message = str(exc).strip() or type(exc).__name__
-            out(f"  失敗：{message}")
-            summary.failed.append((ticker, message))
-    page.close()
-    return summary
+    finally:
+        if context is not None:
+            context.close()
 
 
-def _save(table: Table, source: str, ticker: str, universe_dir: Path, clock: CaptureClock, out: Output) -> None:
+def _shoot(table: Table, source: str, clock: CaptureClock) -> PendingCapture:
+    """截圖並產生證據內容，尚不寫入。"""
     captured_at = clock.next(source)
     png = compress_png(_screenshot(table.element))
     fragment = table.element.evaluate("e => e.outerHTML")
-    result = commit_capture(
-        universe_dir,
-        ticker,
-        source,
+    return PendingCapture(
         url=table.url,
         captured_at=captured_at,
         periods=table.periods,
         display_unit=table.display_unit,
         png=png,
-        html_text=table_html(fragment, table.rows, table.html_mode),
-        txt=table_text(table.rows),
+        html_text=table_html(fragment, table.rows, table.html_mode, table.caption),
+        txt=table_text(table.rows, table.caption),
     )
-    line = f"  {result.capture}：{result.periods} 期，table.png {len(png) // 1024} KB"
+
+
+def _commit(pending: list[PendingCapture], source: str, ticker: str, universe_dir: Path, out: Output) -> None:
+    result = commit_captures(universe_dir, ticker, source, pending)
+    sizes = [len(p.png) for p in pending]
+    line = f"  {len(result.captures)} 次擷取、{result.periods} 期，table.png 最大 {max(sizes) // 1024} KB"
     if result.removed_captures:
         line += f"，移除未引用的擷取 {', '.join(result.removed_captures)}"
     out(line)
-    if len(png) > PNG_WARN_BYTES:
-        out(f"  警告：table.png 超過 {PNG_WARN_BYTES // 1024} KB")
+    for p, size in zip(pending, sizes):
+        if size > PNG_WARN_BYTES:
+            out(f"  警告：{capture_id(p.captured_at)} 的 table.png 超過 {PNG_WARN_BYTES // 1024} KB")
 
 
 def _screenshot(element) -> bytes:
     """只截表格區塊，四周留 `SHOT_MARGIN` 像素，避免貼齊邊緣的文字被裁掉。
 
-    表格右緣超出視窗時暫時加寬視窗。
+    表格右緣超出視窗時暫時加寬視窗；截完恢復成 `VIEWPORT`。
     """
-    element.evaluate(_ISOLATE_JS)
     page = element.page
-    original = page.viewport_size
-    box = element.evaluate(
-        """e => { const r = e.getBoundingClientRect();
-                  return {x: r.left + window.scrollX, y: r.top + window.scrollY,
-                          width: Math.max(r.width, e.scrollWidth), height: Math.max(r.height, e.scrollHeight)}; }"""
-    )
-    right = box["x"] + box["width"] + SHOT_MARGIN
-    if original and right > original["width"]:
-        page.set_viewport_size({"width": int(right) + 20, "height": original["height"]})
-        page.wait_for_timeout(500)
     try:
+        element.evaluate(_ISOLATE_JS)
+        box = _box(element)
+        right = box["x"] + box["width"] + SHOT_MARGIN
+        if right > page.viewport_size["width"]:
+            page.set_viewport_size({"width": int(right) + 20, "height": page.viewport_size["height"]})
+            page.wait_for_timeout(500)
+            box = _box(element)
         clip = {
             "x": max(box["x"] - SHOT_MARGIN, 0),
             "y": max(box["y"] - SHOT_MARGIN, 0),
@@ -178,8 +240,17 @@ def _screenshot(element) -> bytes:
         }
         return page.screenshot(clip=clip, full_page=True)
     finally:
-        if original and page.viewport_size != original:
-            page.set_viewport_size(original)
+        page.evaluate(_RESTORE_JS)
+        if page.viewport_size != VIEWPORT:
+            page.set_viewport_size(VIEWPORT)
+
+
+def _box(element) -> dict:
+    return element.evaluate(
+        """e => { const r = e.getBoundingClientRect();
+                  return {x: r.left + window.scrollX, y: r.top + window.scrollY,
+                          width: Math.max(r.width, e.scrollWidth), height: Math.max(r.height, e.scrollHeight)}; }"""
+    )
 
 
 def report(summary: Summary, universe_dir: Path, out: Output = print) -> int:
