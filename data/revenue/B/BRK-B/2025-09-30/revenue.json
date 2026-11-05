@@ -1,0 +1,876 @@
+{
+  "annotations": [
+    {
+      "check": "YoY",
+      "detail": {
+        "baseline_period": "2024-09-30",
+        "category": "Corporate, eliminations and other",
+        "change": 2.9516,
+        "threshold": 0.5
+      },
+      "message": "Corporate, eliminations and other YoY 2.9516，超過 ±0.5"
+    }
+  ],
+  "categories": {
+    "BHE": {
+      "expression": [
+        {
+          "operand": "op3",
+          "weight": 1
+        }
+      ],
+      "value": 7304000000
+    },
+    "BNSF": {
+      "expression": [
+        {
+          "operand": "op2",
+          "weight": 1
+        }
+      ],
+      "value": 6039000000
+    },
+    "Corporate, eliminations and other": {
+      "expression": [
+        {
+          "operand": "op8",
+          "weight": 1
+        }
+      ],
+      "value": 735000000
+    },
+    "Insurance": {
+      "expression": [
+        {
+          "operand": "op1",
+          "weight": 1
+        }
+      ],
+      "value": 26181000000
+    },
+    "Manufacturing": {
+      "expression": [
+        {
+          "operand": "op4",
+          "weight": 1
+        }
+      ],
+      "value": 20047000000
+    },
+    "McLane": {
+      "expression": [
+        {
+          "operand": "op5",
+          "weight": 1
+        }
+      ],
+      "value": 13191000000
+    },
+    "Pilot": {
+      "expression": [
+        {
+          "operand": "op6",
+          "weight": 1
+        }
+      ],
+      "value": 10882000000
+    },
+    "Service and retailing": {
+      "expression": [
+        {
+          "operand": "op7",
+          "weight": 1
+        }
+      ],
+      "value": 10593000000
+    }
+  },
+  "checks": {
+    "comparatives": [
+      {
+        "category": "BHE",
+        "operand": "op3",
+        "period": {
+          "end": "2024-09-30",
+          "start": "2024-07-01"
+        },
+        "period_end": "2024-09-30",
+        "result": "consistent",
+        "role": "quarter"
+      },
+      {
+        "category": "BNSF",
+        "operand": "op2",
+        "period": {
+          "end": "2024-09-30",
+          "start": "2024-07-01"
+        },
+        "period_end": "2024-09-30",
+        "result": "consistent",
+        "role": "quarter"
+      },
+      {
+        "category": "Corporate, eliminations and other",
+        "operand": "op8",
+        "period": {
+          "end": "2024-09-30",
+          "start": "2024-07-01"
+        },
+        "period_end": "2024-09-30",
+        "result": "consistent",
+        "role": "quarter"
+      },
+      {
+        "category": "Insurance",
+        "operand": "op1",
+        "period": {
+          "end": "2024-09-30",
+          "start": "2024-07-01"
+        },
+        "period_end": "2024-09-30",
+        "result": "consistent",
+        "role": "quarter"
+      },
+      {
+        "category": "Manufacturing",
+        "operand": "op4",
+        "period": {
+          "end": "2024-09-30",
+          "start": "2024-07-01"
+        },
+        "period_end": "2024-09-30",
+        "result": "consistent",
+        "role": "quarter"
+      },
+      {
+        "category": "McLane",
+        "operand": "op5",
+        "period": {
+          "end": "2024-09-30",
+          "start": "2024-07-01"
+        },
+        "period_end": "2024-09-30",
+        "result": "consistent",
+        "role": "quarter"
+      },
+      {
+        "category": "Pilot",
+        "operand": "op6",
+        "period": {
+          "end": "2024-09-30",
+          "start": "2024-07-01"
+        },
+        "period_end": "2024-09-30",
+        "result": "consistent",
+        "role": "quarter"
+      },
+      {
+        "category": "Service and retailing",
+        "operand": "op7",
+        "period": {
+          "end": "2024-09-30",
+          "start": "2024-07-01"
+        },
+        "period_end": "2024-09-30",
+        "result": "consistent",
+        "role": "quarter"
+      },
+      {
+        "category": "總營收",
+        "operand": "op9",
+        "period": {
+          "end": "2024-09-30",
+          "start": "2024-07-01"
+        },
+        "period_end": "2024-09-30",
+        "result": "consistent",
+        "role": "quarter"
+      },
+      {
+        "category": "BHE",
+        "operand": "op6",
+        "period": {
+          "end": "2024-09-30",
+          "start": "2024-01-01"
+        },
+        "period_end": "2024-12-31",
+        "result": "consistent",
+        "role": "nine_months"
+      },
+      {
+        "category": "BNSF",
+        "operand": "op4",
+        "period": {
+          "end": "2024-09-30",
+          "start": "2024-01-01"
+        },
+        "period_end": "2024-12-31",
+        "result": "consistent",
+        "role": "nine_months"
+      },
+      {
+        "category": "Corporate, eliminations and other",
+        "operand": "op16",
+        "period": {
+          "end": "2024-09-30",
+          "start": "2024-01-01"
+        },
+        "period_end": "2024-12-31",
+        "result": "consistent",
+        "role": "nine_months"
+      },
+      {
+        "category": "Insurance",
+        "operand": "op2",
+        "period": {
+          "end": "2024-09-30",
+          "start": "2024-01-01"
+        },
+        "period_end": "2024-12-31",
+        "result": "consistent",
+        "role": "nine_months"
+      },
+      {
+        "category": "Manufacturing",
+        "operand": "op8",
+        "period": {
+          "end": "2024-09-30",
+          "start": "2024-01-01"
+        },
+        "period_end": "2024-12-31",
+        "result": "consistent",
+        "role": "nine_months"
+      },
+      {
+        "category": "McLane",
+        "operand": "op10",
+        "period": {
+          "end": "2024-09-30",
+          "start": "2024-01-01"
+        },
+        "period_end": "2024-12-31",
+        "result": "consistent",
+        "role": "nine_months"
+      },
+      {
+        "category": "Pilot",
+        "operand": "op12",
+        "period": {
+          "end": "2024-09-30",
+          "start": "2024-01-01"
+        },
+        "period_end": "2024-12-31",
+        "result": "consistent",
+        "role": "nine_months"
+      },
+      {
+        "category": "Service and retailing",
+        "operand": "op14",
+        "period": {
+          "end": "2024-09-30",
+          "start": "2024-01-01"
+        },
+        "period_end": "2024-12-31",
+        "result": "consistent",
+        "role": "nine_months"
+      },
+      {
+        "category": "總營收",
+        "operand": "op18",
+        "period": {
+          "end": "2024-09-30",
+          "start": "2024-01-01"
+        },
+        "period_end": "2024-12-31",
+        "result": "consistent",
+        "role": "nine_months"
+      }
+    ],
+    "cross_period": [
+      {
+        "annotated": false,
+        "baseline_period": "2025-06-30",
+        "check": "期別連續"
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2025-06-30",
+        "check": "分類集合"
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2024-09-30",
+        "category": "BHE",
+        "change_pp": -0.2,
+        "check": "占比變動",
+        "threshold_pp": 5.0
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2024-09-30",
+        "category": "BHE",
+        "change": -0.0042,
+        "check": "YoY",
+        "threshold": 0.5
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2025-06-30",
+        "category": "BHE",
+        "change": 0.138,
+        "check": "QoQ",
+        "note": "只記錄"
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2024-09-30",
+        "category": "BNSF",
+        "change_pp": -0.03,
+        "check": "占比變動",
+        "threshold_pp": 5.0
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2024-09-30",
+        "category": "BNSF",
+        "change": 0.0167,
+        "check": "YoY",
+        "threshold": 0.5
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2025-06-30",
+        "category": "BNSF",
+        "change": 0.0468,
+        "check": "QoQ",
+        "note": "只記錄"
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2024-09-30",
+        "category": "Corporate, eliminations and other",
+        "change_pp": 0.57,
+        "check": "占比變動",
+        "threshold_pp": 5.0
+      },
+      {
+        "annotated": true,
+        "baseline_period": "2024-09-30",
+        "category": "Corporate, eliminations and other",
+        "change": 2.9516,
+        "check": "YoY",
+        "threshold": 0.5
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2025-06-30",
+        "category": "Corporate, eliminations and other",
+        "change": 0.0309,
+        "check": "QoQ",
+        "note": "只記錄"
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2024-09-30",
+        "category": "Insurance",
+        "change_pp": -1.11,
+        "check": "占比變動",
+        "threshold_pp": 5.0
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2024-09-30",
+        "category": "Insurance",
+        "change": -0.0181,
+        "check": "YoY",
+        "threshold": 0.5
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2025-06-30",
+        "category": "Insurance",
+        "change": -0.0026,
+        "check": "QoQ",
+        "note": "只記錄"
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2024-09-30",
+        "category": "Manufacturing",
+        "change_pp": -0.05,
+        "check": "占比變動",
+        "threshold_pp": 5.0
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2024-09-30",
+        "category": "Manufacturing",
+        "change": 0.0189,
+        "check": "YoY",
+        "threshold": 0.5
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2025-06-30",
+        "category": "Manufacturing",
+        "change": 0.0039,
+        "check": "QoQ",
+        "note": "只記錄"
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2024-09-30",
+        "category": "McLane",
+        "change_pp": 0.21,
+        "check": "占比變動",
+        "threshold_pp": 5.0
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2024-09-30",
+        "category": "McLane",
+        "change": 0.0368,
+        "check": "YoY",
+        "threshold": 0.5
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2025-06-30",
+        "category": "McLane",
+        "change": 0.0468,
+        "check": "QoQ",
+        "note": "只記錄"
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2024-09-30",
+        "category": "Pilot",
+        "change_pp": 0.03,
+        "check": "占比變動",
+        "threshold_pp": 5.0
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2024-09-30",
+        "category": "Pilot",
+        "change": 0.0237,
+        "check": "YoY",
+        "threshold": 0.5
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2025-06-30",
+        "category": "Pilot",
+        "change": 0.0765,
+        "check": "QoQ",
+        "note": "只記錄"
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2024-09-30",
+        "category": "Service and retailing",
+        "change_pp": 0.57,
+        "check": "占比變動",
+        "threshold_pp": 5.0
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2024-09-30",
+        "category": "Service and retailing",
+        "change": 0.0763,
+        "check": "YoY",
+        "threshold": 0.5
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2025-06-30",
+        "category": "Service and retailing",
+        "change": -0.0089,
+        "check": "QoQ",
+        "note": "只記錄"
+      }
+    ],
+    "restatements": [],
+    "structural": [
+      {
+        "check": "定義唯一",
+        "result": "pass"
+      },
+      {
+        "check": "fact 存在且唯一",
+        "result": "pass"
+      },
+      {
+        "check": "單位與精度",
+        "result": "pass"
+      },
+      {
+        "check": "加總",
+        "result": "pass"
+      },
+      {
+        "check": "證據完整",
+        "result": "pass"
+      }
+    ],
+    "sum": {
+      "categories": 94972000000,
+      "difference": 0,
+      "tolerance": "4500000",
+      "total": 94972000000
+    }
+  },
+  "filings": {
+    "primary": {
+      "accession": "0001193125-25-261548",
+      "filing_date": "2025-11-03",
+      "form": "10-Q",
+      "report_date": "2025-09-30"
+    }
+  },
+  "fiscal_quarter": 3,
+  "fiscal_year": 2025,
+  "operands": {
+    "op1": {
+      "accession": "0001193125-25-261548",
+      "concept": "us-gaap:Revenues",
+      "context_id": "C_86f40d66-d47e-4062-b76a-6cea75374afb",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "brka:BerkshireHathawayInsuranceGroupMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1067983/000119312525261548/brka-20250930.htm",
+        "name": "brka-20250930.htm",
+        "sha256": "774abea9bb66db676a52de2f0ce46ba3e6f7e94f14a82f6dd33abeaf23a72e70",
+        "url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312525261548/brka-20250930.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "3e1295051912110b0e4c565588fd6875f96417dcd42d5b36185da74a33fefabe",
+        "png_scale": 1,
+        "png_sha256": "2ac545f625fdf95884aaa774e6fb9d838a1c6480402b35916c537e93be6117f9",
+        "table": "0001193125-25-261548-774abea9bb66-t53"
+      },
+      "fact_id": "F_12e60efb-4c2f-4e47-af44-e1025e6dde10",
+      "filing_date": "2025-11-03",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-09-30",
+        "start": "2025-07-01"
+      },
+      "raw": "26,181",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 26181000000
+    },
+    "op2": {
+      "accession": "0001193125-25-261548",
+      "concept": "us-gaap:Revenues",
+      "context_id": "C_d7e84cda-55ad-4b19-98dc-ea1d6b80b549",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "brka:BurlingtonNorthernSantaFeCorporationMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1067983/000119312525261548/brka-20250930.htm",
+        "name": "brka-20250930.htm",
+        "sha256": "774abea9bb66db676a52de2f0ce46ba3e6f7e94f14a82f6dd33abeaf23a72e70",
+        "url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312525261548/brka-20250930.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "036fb32b14b98e99210a83b55a8cbfa65ab7bcf07a4ed03ca69d3502fc717610",
+        "png_scale": 1,
+        "png_sha256": "ffd3f23309cd10eac3cff6936272c1851bf977a081b6b699971fb238ef233cfd",
+        "table": "0001193125-25-261548-774abea9bb66-t57"
+      },
+      "fact_id": "F_610e117d-4902-4522-9bbe-96f979c03cb1",
+      "filing_date": "2025-11-03",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-09-30",
+        "start": "2025-07-01"
+      },
+      "raw": "6,039",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 6039000000
+    },
+    "op3": {
+      "accession": "0001193125-25-261548",
+      "concept": "us-gaap:Revenues",
+      "context_id": "C_e862faf6-7fbd-4d9a-9f5b-00f9994c2926",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "brka:BerkshireHathawayEnergyCompanyMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1067983/000119312525261548/brka-20250930.htm",
+        "name": "brka-20250930.htm",
+        "sha256": "774abea9bb66db676a52de2f0ce46ba3e6f7e94f14a82f6dd33abeaf23a72e70",
+        "url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312525261548/brka-20250930.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "6d47bedf3a9c1cc28a998618af8e2db6b23a371f90bb92ac1077903b6406939a",
+        "png_scale": 1,
+        "png_sha256": "02e003b3c3c5ccd602114f2b0dd7fc56065daeb71fd399b21ee23bc0ee965337",
+        "table": "0001193125-25-261548-774abea9bb66-t58"
+      },
+      "fact_id": "F_c0b4fc05-b877-4436-9bf9-23b102b7c451",
+      "filing_date": "2025-11-03",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-09-30",
+        "start": "2025-07-01"
+      },
+      "raw": "7,304",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 7304000000
+    },
+    "op4": {
+      "accession": "0001193125-25-261548",
+      "concept": "us-gaap:Revenues",
+      "context_id": "C_dc2d6f47-f3c5-405e-9bad-d057976b41fc",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "brka:ManufacturingBusinessesMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1067983/000119312525261548/brka-20250930.htm",
+        "name": "brka-20250930.htm",
+        "sha256": "774abea9bb66db676a52de2f0ce46ba3e6f7e94f14a82f6dd33abeaf23a72e70",
+        "url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312525261548/brka-20250930.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "384151392ce2e73e90d0b7f477c95e5f94c99c4fc113394aa0ef7ba91d87e6a1",
+        "png_scale": 1,
+        "png_sha256": "0b692d23de2da751377d5c5fd525cb1e5b4fa41e2322a4d160ee072d7a8e5cd6",
+        "table": "0001193125-25-261548-774abea9bb66-t59"
+      },
+      "fact_id": "F_5ba75e7e-838f-4cbf-9080-4b836851d7af",
+      "filing_date": "2025-11-03",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-09-30",
+        "start": "2025-07-01"
+      },
+      "raw": "20,047",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 20047000000
+    },
+    "op5": {
+      "accession": "0001193125-25-261548",
+      "concept": "us-gaap:Revenues",
+      "context_id": "C_5d16393c-75f6-4115-be94-c96969a792ec",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "brka:McLaneCompanyMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1067983/000119312525261548/brka-20250930.htm",
+        "name": "brka-20250930.htm",
+        "sha256": "774abea9bb66db676a52de2f0ce46ba3e6f7e94f14a82f6dd33abeaf23a72e70",
+        "url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312525261548/brka-20250930.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "c74889ff82aba530f4fbe313435c3e0726686e40599b98d3b11ce64736567037",
+        "png_scale": 1,
+        "png_sha256": "91a308b9b5815be969ed08efc0679cbf03461937df77c50f7621c745afc9fc19",
+        "table": "0001193125-25-261548-774abea9bb66-t60"
+      },
+      "fact_id": "F_c87d3c18-ca92-4fa7-82eb-17b77f603353",
+      "filing_date": "2025-11-03",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-09-30",
+        "start": "2025-07-01"
+      },
+      "raw": "13,191",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 13191000000
+    },
+    "op6": {
+      "accession": "0001193125-25-261548",
+      "concept": "us-gaap:Revenues",
+      "context_id": "C_6262af3f-3978-4092-ad97-82c437d3fd96",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "brka:PilotTravelCentersLLCMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1067983/000119312525261548/brka-20250930.htm",
+        "name": "brka-20250930.htm",
+        "sha256": "774abea9bb66db676a52de2f0ce46ba3e6f7e94f14a82f6dd33abeaf23a72e70",
+        "url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312525261548/brka-20250930.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "c74889ff82aba530f4fbe313435c3e0726686e40599b98d3b11ce64736567037",
+        "png_scale": 1,
+        "png_sha256": "91a308b9b5815be969ed08efc0679cbf03461937df77c50f7621c745afc9fc19",
+        "table": "0001193125-25-261548-774abea9bb66-t60"
+      },
+      "fact_id": "F_bdf3a829-b367-4923-8c8e-c342458b2607",
+      "filing_date": "2025-11-03",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-09-30",
+        "start": "2025-07-01"
+      },
+      "raw": "10,882",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 10882000000
+    },
+    "op7": {
+      "accession": "0001193125-25-261548",
+      "concept": "us-gaap:Revenues",
+      "context_id": "C_c31cd44f-7f6e-4cfb-87f2-01b4333df29d",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "brka:ServiceAndRetailingBusinessesMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1067983/000119312525261548/brka-20250930.htm",
+        "name": "brka-20250930.htm",
+        "sha256": "774abea9bb66db676a52de2f0ce46ba3e6f7e94f14a82f6dd33abeaf23a72e70",
+        "url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312525261548/brka-20250930.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "384151392ce2e73e90d0b7f477c95e5f94c99c4fc113394aa0ef7ba91d87e6a1",
+        "png_scale": 1,
+        "png_sha256": "0b692d23de2da751377d5c5fd525cb1e5b4fa41e2322a4d160ee072d7a8e5cd6",
+        "table": "0001193125-25-261548-774abea9bb66-t59"
+      },
+      "fact_id": "F_d9e12519-f7c2-46d4-bbd4-ca3f394d0976",
+      "filing_date": "2025-11-03",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-09-30",
+        "start": "2025-07-01"
+      },
+      "raw": "10,593",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 10593000000
+    },
+    "op8": {
+      "accession": "0001193125-25-261548",
+      "concept": "us-gaap:Revenues",
+      "context_id": "C_52662f03-c624-493e-8b7b-8614356b2147",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "brka:CorporateReconcilingItemsAndEliminationsMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1067983/000119312525261548/brka-20250930.htm",
+        "name": "brka-20250930.htm",
+        "sha256": "774abea9bb66db676a52de2f0ce46ba3e6f7e94f14a82f6dd33abeaf23a72e70",
+        "url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312525261548/brka-20250930.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "83d14471cab71833db054402e88833bb67e3ff71a5b65818433196b3e5e6f7e2",
+        "png_scale": 1,
+        "png_sha256": "4cd5870e9ef6ced9655bfd20a61f1c71b2ebf5b61436f8db3901b7ba57b820cd",
+        "table": "0001193125-25-261548-774abea9bb66-t61"
+      },
+      "fact_id": "F_6a3b35d5-efb3-457a-94e1-171ac81c0daa",
+      "filing_date": "2025-11-03",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-09-30",
+        "start": "2025-07-01"
+      },
+      "raw": "735",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 735000000
+    },
+    "op9": {
+      "accession": "0001193125-25-261548",
+      "concept": "us-gaap:Revenues",
+      "context_id": "C_5f4b0f98-6043-40d3-986d-d09566950c6e",
+      "decimals": "-6",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1067983/000119312525261548/brka-20250930.htm",
+        "name": "brka-20250930.htm",
+        "sha256": "774abea9bb66db676a52de2f0ce46ba3e6f7e94f14a82f6dd33abeaf23a72e70",
+        "url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312525261548/brka-20250930.htm"
+      },
+      "duplicates": [
+        "F_cc42da35-1d61-48fc-a1bc-15b276a9142b",
+        "F_102477aa-3809-42fa-9f53-55f93bc0bcdd"
+      ],
+      "evidence": {
+        "html_sha256": "83d14471cab71833db054402e88833bb67e3ff71a5b65818433196b3e5e6f7e2",
+        "png_scale": 1,
+        "png_sha256": "4cd5870e9ef6ced9655bfd20a61f1c71b2ebf5b61436f8db3901b7ba57b820cd",
+        "table": "0001193125-25-261548-774abea9bb66-t61"
+      },
+      "fact_id": "F_7e3a6005-397b-497c-9a36-f257b140cea8",
+      "filing_date": "2025-11-03",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-09-30",
+        "start": "2025-07-01"
+      },
+      "raw": "94,972",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 94972000000
+    }
+  },
+  "parser": {
+    "engine_sha256": "caf97a96cdc63be1b492a230ae7d1fd78a1b9557af6fa867684a8ee1b90ec1fd",
+    "spec_sha256": "aaf39d5a217936346b296ee6ba58d5c2c60f3e016e5b879365d8c22961add2aa"
+  },
+  "period_end": "2025-09-30",
+  "schema_version": 1,
+  "ticker": "BRK-B",
+  "total": {
+    "expression": [
+      {
+        "operand": "op9",
+        "weight": 1
+      }
+    ],
+    "value": 94972000000
+  },
+  "unit": "USD",
+  "view": "business_segment"
+}
