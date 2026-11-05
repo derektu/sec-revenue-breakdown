@@ -17,15 +17,9 @@ sys.path.insert(0, str(ROOT / "libs"))
 sys.path.insert(0, str(ROOT / "scripts"))
 from sec_revenue.engines import JsonCodec, QuarterEngine, XbrlEngine
 from sec_revenue.service import ParserRegistry
-from sec_revenue.workflow import (
-    SupportedTickers,
-    PeriodSelection,
-    WorkflowCache,
-    DownloadWorkflow,
-    ExtractionWorkflow,
-    SecHttpClient,
-    NoRedirect,
-)
+from sec_revenue.download import DownloadWorkflow, NoRedirect, SecHttpClient
+from sec_revenue.tickers import SupportedTickers
+from sec_revenue.workflow import PeriodSelection, WorkflowCache, ExtractionWorkflow
 from sec_revenue.viewer import RevenueViewer
 from check_engine_regression import RegressionCheck
 
@@ -286,7 +280,7 @@ class WorkflowTests(WorkflowFixture):
         workflow, _ = self.simple()
         workflow.run(["AAPL"], PeriodSelection())
         with patch(
-            "sec_revenue.workflow.SecHttpClient.get",
+            "sec_revenue.download.SecHttpClient.get",
             side_effect=AssertionError("network forbidden"),
         ):
             self.assertTrue(
@@ -642,7 +636,10 @@ class WorkflowTests(WorkflowFixture):
             SupportedTickers().select(file=path)
         with self.assertRaises(ValueError):
             PeriodSelection("20260331")
-        self.assertEqual(len(SupportedTickers().select(["ALL", "AAPL"])), 30)
+        # ALL 是 Allstate 的 ticker，沒有 parser；全部公司用 all_tickers。
+        with self.assertRaises(ValueError):
+            SupportedTickers().select(["ALL", "AAPL"])
+        self.assertEqual(len(SupportedTickers().select(["AAPL"], all_tickers=True)), 30)
 
     def test_empty_issuer_rules_are_not_successful_extraction(self):
         workflow, _ = self.simple()

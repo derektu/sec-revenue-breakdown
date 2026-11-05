@@ -56,7 +56,7 @@ class RevenueViewer:
             )
         return 200, "application/json", JsonCodec.encode(rows)
 
-    def server(self, host: str = "0.0.0.0", port: int = 8765) -> ThreadingHTTPServer:
+    def server(self, host: str = "0.0.0.0", port: int = 7290) -> ThreadingHTTPServer:
         viewer = self
 
         class Handler(BaseHTTPRequestHandler):
