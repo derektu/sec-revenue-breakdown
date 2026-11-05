@@ -73,20 +73,29 @@ def write_fixture(root: Path):
                     "accession": "0000320193-25-000057",
                     "differences": [
                         {
-                            "category": "iPhone", "operand": "op1", "role": "quarter", "period": quarter,
+                            # 已上線是一個運算元，申報中的同一分類由兩個 fact 加權加總。
+                            "category": "iPhone", "role": "quarter", "period": quarter,
                             "result": "different", "published_value": 95e6, "listed_value": 96e6,
-                            "source": {
-                                "accession": "0000320193-26-000002", "form": "10-Q",
-                                "filing_date": "2026-05-01", "fact_id": "f-1",
-                            },
+                            "source": {"accession": "0000320193-26-000002", "form": "10-Q", "filing_date": "2026-05-01"},
+                            "published_addends": [
+                                {"operand": "op1", "concept": "us-gaap:Revenues", "dimensions": {"srt:ProductOrServiceAxis": "aapl:IPhoneMember"}, "weight": 1, "value": 95e6}
+                            ],
+                            "listed_addends": [
+                                {"fact_id": "f-1a", "concept": "us-gaap:Revenues", "dimensions": {"srt:ProductOrServiceAxis": "aapl:IPhoneMember"}, "weight": 1, "value": 97e6},
+                                {"fact_id": "f-1b", "concept": "us-gaap:Revenues", "dimensions": {"srt:ProductOrServiceAxis": "aapl:IPhoneCaseMember"}, "weight": -1, "value": 1e6},
+                            ],
                         },
                         {
-                            "category": "Eliminations", "operand": "op2", "role": "quarter", "period": quarter,
+                            "category": "Eliminations", "role": "quarter", "period": quarter,
                             "result": "unparseable", "published_value": -1e6, "listed_value": None,
-                            "source": {
-                                "accession": "0000320193-26-000002", "form": "10-Q",
-                                "filing_date": "2026-05-01", "fact_id": "f-2",
-                            },
+                            "source": {"accession": "0000320193-26-000002", "form": "10-Q", "filing_date": "2026-05-01"},
+                            "published_addends": [
+                                {"operand": "op2", "concept": "us-gaap:Revenues", "dimensions": {}, "weight": 1, "value": -1e6}
+                            ],
+                            "listed_addends": [
+                                {"fact_id": "f-2", "concept": "us-gaap:Revenues", "dimensions": {}, "weight": 1, "value": None}
+                            ],
+                            "note": "無法比較：f-2：缺 decimals",
                         },
                     ],
                 },
@@ -314,14 +323,17 @@ class PublishedViewerPageTests(unittest.TestCase):
         self.assertNotIn("diff", self.cell(1, 1).get_attribute("class") or "")
         self.cell(1, 0).click()
         detail = self.page.locator("#detail").inner_text()
-        for text in ["調節項 Eliminations", "差異標記 1 筆", "無法解析", "f-2", "-1 百萬 ="]:
+        for text in ["調節項 Eliminations", "差異標記 1 筆", "無法解析", "f-2", "缺 decimals", "-1 百萬 ="]:
             self.assertIn(text, detail)
-        self.assertNotIn("f-1", detail)
+        self.assertNotIn("f-1a", detail)
 
     def test_detail_shows_records(self):
         detail = self.page.locator("#detail")
         self.cell(0, 0).click()
-        for text in ["差異標記 1 筆", "數值不同", "申報列示值", "96 百萬", "10-Q 0000320193-26-000002", "f-1"]:
+        for text in [
+            "差異標記 1 筆", "數值不同", "申報列示值", "96 百萬", "10-Q 0000320193-26-000002",
+            "已上線的加數", "申報中的加數", "f-1a", "f-1b", "aapl:IPhoneCaseMember", "op1",
+        ]:
             self.assertIn(text, detail.inner_text())
         self.cell(0, 1).click()
         for text in ["規則或原文變更", "已上線 94 百萬", "重算 95 百萬", "hash"]:
