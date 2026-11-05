@@ -77,6 +77,10 @@
     dl.kv dt { color: #516276; }
     dl.kv dd { margin: 0; }
     ul.plain { margin: 4px 0; padding-left: 20px; }
+    .addends { margin: 4px 0 8px; }
+    .addends table { border-collapse: collapse; font-size: 12px; font-variant-numeric: tabular-nums; }
+    .addends td { padding: 1px 8px 1px 0; vertical-align: top; }
+    .addends td.num { text-align: right; }
   </style>
   <h1>SEC 營收正式輸出</h1>
   <div class="bar">
@@ -135,6 +139,28 @@
     }
     function span(period) {
       return period?.start ? `${period.start}～${period.end}` : period?.end ?? "";
+    }
+    // 差異標記一方的加數：每列是一個 XBRL fact（運算元編號或 fact id、concept 與維度、權重、值）。
+    function addendTable(title, addends, id) {
+      const wrap = node("div", "addends");
+      wrap.append(node("div", "", title));
+      if (!Array.isArray(addends) || !addends.length) {
+        wrap.append(node("div", "muted", "（無）"));
+        return wrap;
+      }
+      const table = node("table");
+      for (const a of addends) {
+        const row = table.insertRow();
+        const dims = Object.entries(a.dimensions || {}).map(([axis, member]) => `${axis}=${member}`).join("，");
+        row.append(
+          node("td", "", id(a) ?? ""),
+          node("td", "", a.concept + (dims ? ` [${dims}]` : "")),
+          node("td", "num", a.weight < 0 ? "−" : "+"),
+          node("td", "num", typeof a.value === "number" ? millions(a.value) : a.value ?? "—"),
+        );
+      }
+      wrap.append(table);
+      return wrap;
     }
     function differences(p) {
       const list = p.record?.differences;
@@ -426,17 +452,18 @@
           const source = d.source || {};
           const rows = [
             ["分類", d.category],
-            ["運算元", `${d.operand ?? ""} ${ROLE[d.role] ?? d.role ?? ""}（${span(d.period)}）`],
+            ["期間", `${ROLE[d.role] ?? d.role ?? ""}（${span(d.period)}）`],
             ["結果", RESULT[d.result] ?? d.result],
             ["已上線值", amount(d.published_value)],
             ["申報列示值", amount(d.listed_value)],
             ["來源申報", `${source.form ?? ""} ${source.accession ?? ""}，申報日 ${source.filing_date ?? ""}`],
-            ["fact", source.fact_id],
             ["說明", d.note],
           ];
           for (const [label, value] of rows)
             if (value !== undefined && value !== null) dl.append(node("dt", "", label), node("dd", "", String(value)));
           warn.append(dl);
+          warn.append(addendTable("已上線的加數", d.published_addends, (a) => a.operand));
+          warn.append(addendTable("申報中的加數", d.listed_addends, (a) => a.fact_id));
         }
         box.append(warn);
       }
