@@ -16,15 +16,19 @@ from sec_revenue.evidence import TableLocator  # noqa: E402
 from sec_revenue.revenue.compose import PeriodComposer  # noqa: E402
 from sec_revenue.revenue.engine import RevenueParser, check_outputs, ticker_dir  # noqa: E402
 from sec_revenue.revenue.filings import FilingSet, ParseError  # noqa: E402
+from sec_revenue.revenue.review import comparatives  # noqa: E402
 from sec_revenue.revenue.spec import (  # noqa: E402
     Category,
     CompanySpec,
     define,
     effective,
     fact,
+    Addend,
+    minus,
+    sum_of,
     table_cell,
 )
-from sec_revenue.revenue.xbrl import classify_duration  # noqa: E402
+from sec_revenue.revenue.xbrl import InlineDocument, classify_duration  # noqa: E402
 
 REVENUE = "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax"
 AXIS = "srt:ProductOrServiceAxis"
@@ -675,9 +679,11 @@ class ComparativeTest(Fixture):
         self.assertEqual((ticker_dir(self.out, "TEST") / "Q" / "2024-03-31" / "revenue.json").read_bytes(), before)
         markers = self.status()["periods"]["Q"]["2024-03-31"]["differences"]
         self.assertEqual(
-            [(m["category"], m["published_value"], m["listed_value"], m["source"]["accession"], m["source"]["fact_id"]) for m in markers],
-            [("A", 60_000_000, 62_000_000, "0000000001-25-000001", "pa"), ("總營收", 100_000_000, 102_000_000, "0000000001-25-000001", "pt")],
+            [(m["category"], m["published_value"], m["listed_value"], m["source"]["accession"]) for m in markers],
+            [("A", 60_000_000, 62_000_000, "0000000001-25-000001"), ("總營收", 100_000_000, 102_000_000, "0000000001-25-000001")],
         )
+        self.assertEqual([a["fact_id"] for a in markers[0]["listed_addends"]], ["pa"])
+        self.assertEqual([(a["operand"], a["value"]) for a in markers[0]["published_addends"]], [("op1", 60_000_000)])
         self.assertNotIn("differences", self.status()["periods"]["Q"]["2025-03-31"])
 
     def test_comparison_follows_spec_definition_across_rename(self):
@@ -864,14 +870,223 @@ class ComparativeTest(Fixture):
             item("pa", REVENUE, A, "2024-01-01", "2024-03-31", "n/a"),
             item("pt", REVENUE, None, "2024-01-01", "2024-03-31", "100"),
         ]
-        selector = fact(REVENUE, A)
         found = comparatives(
             InlineDocument(build_html(2025, "Q1", items)), "new", [("Q", "2024-03-31", published)],
-            lambda name: selector if name == "A" else (fact(REVENUE) if name is None else None),
+            lambda name: [Addend(fact(REVENUE, A))] if name == "A" else ([Addend(fact(REVENUE))] if name is None else None),
         )
         self.assertEqual(len(found), 1)
         self.assertEqual((found[0]["result"], found[0]["listed_value"]), ("unparseable", None))
         self.assertIn("無法比較", found[0]["note"])
+
+
+A1 = {AXIS: "x:A1Member"}
+A2 = {AXIS: "x:A2Member"}
+GEO = "srt:StatementGeographicalAxis"
+US = {GEO: "x:USMember"}
+NON_US = {GEO: "x:NonUSMember"}
+SUM_SPEC = CompanySpec(
+    ticker="TEST",
+    view="product",
+    categories=(Category("A", sum_of(fact(REVENUE, A1), fact(REVENUE, A2))), Category("B", fact(REVENUE, B))),
+    total=Category("Total", fact(REVENUE)),
+)
+
+
+class MultiFactSumTest(Fixture):
+    """一個分類由多個 fact 加權相加：每個加數各是一個運算元，Q4 每個加數各自年度減九個月累計。"""
+
+    QUARTER_VALUES = {"2025-03-31": (35, 25, 40), "2025-06-30": (40, 30, 30), "2025-09-30": (45, 35, 20)}
+
+    def members(self, prefix, start, end, values, dims=(A1, A2, B), table=0):
+        items = [item(f"{prefix}{n}", REVENUE, d, start, end, str(v), table) for n, (d, v) in enumerate(zip(dims, values))]
+        return items + [item(f"{prefix}t", REVENUE, None, start, end, str(sum(values)), table)]
+
+    def year(self, values=None, dims=(A1, A2, B), drop=None, extra=()):
+        """Q1–Q3 10-Q 與 FY 10-K；`drop` 為 (期末日, 加數序號) 時該申報少一個加數；`extra` 附加到每份申報。"""
+        values = values or self.QUARTER_VALUES
+        nine = [sum(v[i] for v in values.values()) for i in range(len(dims))]
+        for n, (end, triple) in enumerate(values.items(), 1):
+            focus, start = QUARTERS[end]
+            items = self.members("q", start, end, triple, dims)
+            if focus == "Q3":
+                items += self.members("n", "2025-01-01", end, nine, dims, table=1)
+            if drop and drop[0] == end:
+                items = [i for i in items if i["id"] not in (f"q{drop[1]}", f"n{drop[1]}")]
+            items += [dict(i, id=f"{i['id']}{n}", end=end, start=start) for i in extra]
+            self.add(f"0000000001-25-00000{n}", "10-Q", end, f"2025-{int(end[5:7]) + 1:02d}-15", build_html(2025, focus, items))
+        annual = [v + 10 * (i + 1) for i, v in enumerate(nine)]
+        items = self.members("y", "2025-01-01", "2025-12-31", annual, dims)
+        self.add("0000000001-26-000001", "10-K", "2025-12-31", "2026-02-15", build_html(2025, "FY", items))
+
+    def test_quarter_annual_and_q4_use_every_addend(self):
+        self.year()
+        parser = self.parser(SUM_SPEC)
+        self.assertTrue(parser.run(parser.periods())["complete"])
+        q1 = self.output("2025-03-31")
+        self.assertEqual(q1["categories"]["A"]["value"], 60_000_000)
+        self.assertEqual(q1["categories"]["A"]["expression"], [{"operand": "op1", "weight": 1}, {"operand": "op2", "weight": 1}])
+        self.assertEqual([q1["operands"][o]["fact_id"] for o in ("op1", "op2")], ["q0", "q1"])
+        self.assertEqual(q1["checks"]["sum"]["difference"], 0)
+        annual = self.output("2025-12-31", "FY")
+        self.assertEqual(annual["categories"]["A"]["value"], (120 + 10 + 90 + 20) * 1_000_000)
+        q4 = self.output("2025-12-31")
+        expression = q4["categories"]["A"]["expression"]
+        self.assertEqual([(e["weight"], q4["operands"][e["operand"]]["fact_id"]) for e in expression], [(1, "y0"), (-1, "n0"), (1, "y1"), (-1, "n1")])
+        self.assertEqual([q4["operands"][e["operand"]]["role"] for e in expression], ["annual", "nine_months", "annual", "nine_months"])
+        self.assertEqual(q4["categories"]["A"]["value"], 30_000_000)
+        for operand in q4["operands"].values():
+            self.assertTrue(operand["evidence"]["table"])
+
+    def test_negative_addend_and_define_weight(self):
+        with self.assertRaisesRegex(ValueError, "同一個運算元"):
+            CompanySpec(
+                ticker="TEST",
+                view="product",
+                categories=(Category("A", sum_of(fact(REVENUE, A1), minus(fact(REVENUE, B)))), Category("B", fact(REVENUE, B))),
+                total=Category("Total", fact(REVENUE)),
+            )
+        C = {AXIS: "x:CMember"}
+        spec = CompanySpec(
+            ticker="TEST",
+            view="product",
+            categories=(Category("A", sum_of(fact(REVENUE, A1), fact(REVENUE, A2), minus(fact(REVENUE, C)))),),
+            reconciling=(Category("Eliminations", define(sum_of(fact(REVENUE, B), minus(fact(REVENUE, {AXIS: "x:DMember"}))), weight=-1)),),
+            total=Category("Total", fact(REVENUE)),
+        )
+        # A = 35 + 25 − 10 = 50；Eliminations = −(40 − 15) = −25；總營收 25。
+        dims = (A1, A2, C, B, {AXIS: "x:DMember"})
+        items = [item(f"q{n}", REVENUE, d, "2025-01-01", "2025-03-31", str(v)) for n, (d, v) in enumerate(zip(dims, (35, 25, 10, 40, 15)))]
+        items.append(item("qt", REVENUE, None, "2025-01-01", "2025-03-31", "25"))
+        self.add("0000000001-25-000001", "10-Q", "2025-03-31", "2025-04-15", build_html(2025, "Q1", items))
+        result = self.composer(spec).compose("2025-03-31")
+        lines = {l.name: l for l in result.lines}
+        self.assertEqual([t.weight for t in lines["A"].terms], [1, 1, -1])
+        self.assertEqual(lines["A"].value, 50_000_000)
+        self.assertEqual([t.weight for t in lines["Eliminations"].terms], [-1, 1])
+        self.assertEqual(lines["Eliminations"].value, -25_000_000)
+        self.assertEqual(result.sum_check["difference"], 0)
+
+    def test_missing_addend_fails_period_and_q4(self):
+        self.year(drop=("2025-06-30", 1))
+        parser = self.parser(SUM_SPEC)
+        parser.run(parser.periods())
+        entries = self.status()["periods"]["Q"]
+        self.assertEqual((entries["2025-06-30"]["status"], entries["2025-06-30"]["check"]), ("failed", "fact 存在且唯一"))
+        self.assertIn("x:A2Member", entries["2025-06-30"]["reason"])
+        self.assertEqual(entries["2025-12-31"]["status"], "failed")
+        self.assertIn("Q4 依據的 Q 2025-06-30 不通過", entries["2025-12-31"]["reason"])
+        self.assertEqual(entries["2025-03-31"]["status"], "published")
+
+    def test_missing_nine_month_addend_fails_q4(self):
+        self.year(drop=("2025-09-30", 1))
+        with self.assertRaisesRegex(ParseError, "fact 存在且唯一"):
+            self.composer(SUM_SPEC).compose("2025-12-31")
+
+    def test_addends_with_different_start_fail(self):
+        items = self.members("q", "2025-01-01", "2025-03-31", (35, 25, 40))
+        items[1]["start"] = "2024-12-29"
+        self.add("0000000001-25-000001", "10-Q", "2025-03-31", "2025-04-15", build_html(2025, "Q1", items))
+        with self.assertRaisesRegex(ParseError, "各加數的 quarter 起日不同"):
+            self.composer(SUM_SPEC).compose("2025-03-31")
+
+    def geographic_spec(self):
+        return CompanySpec(
+            ticker="TEST",
+            view="product",
+            categories=(Category("A", sum_of(fact(REVENUE, US), fact(REVENUE, NON_US))),),
+            total=Category("Total", fact(REVENUE)),
+        )
+
+    def test_geographic_sum_of_all_members(self):
+        self.year(values={"2025-03-31": (60, 40)}, dims=(US, NON_US))
+        result = self.composer(self.geographic_spec()).compose("2025-03-31")
+        self.assertEqual(result.lines[0].value, 100_000_000)
+        self.assertIn({"check": "地區成員完整", "result": "pass"}, result.structural)
+
+    def test_geographic_sum_missing_member_fails(self):
+        other = item("geo", REVENUE, {GEO: "x:OtherMember"}, "2025-01-01", "2025-03-31", "5")
+        items = self.members("q", "2025-01-01", "2025-03-31", (60, 40), (US, NON_US)) + [other]
+        self.add("0000000001-25-000001", "10-Q", "2025-03-31", "2025-04-15", build_html(2025, "Q1", items))
+        with self.assertRaisesRegex(ParseError, r"地區成員完整.*x:OtherMember"):
+            self.composer(self.geographic_spec()).compose("2025-03-31")
+
+    def test_geographic_check_uses_namespace_not_prefix(self):
+        namespaces = {**NAMESPACES, "geo": NAMESPACES["srt"], "y": NAMESPACES["x"]}
+        items = self.members("q", "2025-01-01", "2025-03-31", (60, 40), (US, NON_US)) + [
+            item("geo", REVENUE, {"geo:StatementGeographicalAxis": "y:OtherMember"}, "2025-01-01", "2025-03-31", "5")
+        ]
+        self.add("0000000001-25-000001", "10-Q", "2025-03-31", "2025-04-15", build_html(2025, "Q1", items, namespaces))
+        with self.assertRaisesRegex(ParseError, r"地區成員完整.*y:OtherMember"):
+            self.composer(self.geographic_spec()).compose("2025-03-31")
+
+    def test_geographic_check_fails_on_unresolvable_dimensions(self):
+        items = self.members("q", "2025-01-01", "2025-03-31", (60, 40), (US, NON_US)) + [
+            item("geo", REVENUE, {GEO: "zz:OtherMember"}, "2025-01-01", "2025-03-31", "5")
+        ]
+        self.add("0000000001-25-000001", "10-Q", "2025-03-31", "2025-04-15", build_html(2025, "Q1", items))
+        with self.assertRaisesRegex(ParseError, r"地區成員完整.*無法解析"):
+            self.composer(self.geographic_spec()).compose("2025-03-31")
+
+    def test_geographic_member_of_other_period_or_dimension_is_ignored(self):
+        items = self.members("q", "2025-01-01", "2025-03-31", (60, 40), (US, NON_US)) + [
+            item("g1", REVENUE, {GEO: "x:OtherMember"}, "2024-01-01", "2024-03-31", "5"),
+            item("g2", REVENUE, {**A, GEO: "x:OtherMember"}, "2025-01-01", "2025-03-31", "5"),
+        ]
+        self.add("0000000001-25-000001", "10-Q", "2025-03-31", "2025-04-15", build_html(2025, "Q1", items))
+        self.assertEqual(self.composer(self.geographic_spec()).compose("2025-03-31").lines[0].value, 100_000_000)
+
+    def published_sum(self):
+        return {
+            "categories": {"A": {"value": 60_000_000, "expression": [{"weight": 1, "operand": "op1"}, {"weight": 1, "operand": "op2"}]}},
+            "total": {"value": 60_000_000, "expression": []},
+            "operands": {
+                f"op{n}": {"kind": "xbrl_fact", "role": "quarter", "accession": "old", "concept": REVENUE, "dimensions": d,
+                           "period": {"start": "2024-01-01", "end": "2024-03-31"}, "value": v, "decimals": "-6"}
+                for n, d, v in ((1, A1, 35_000_000), (2, A2, 25_000_000))
+            },
+        }
+
+    def compare(self, values, dims, addends):
+        document = InlineDocument(build_html(2025, "Q1", self.members("p", "2024-01-01", "2024-03-31", values, dims)))
+        lookup = {"A": [Addend(fact(REVENUE, d), w) for d, w in addends], None: [Addend(fact(REVENUE))]}
+        found = comparatives(document, "new", [("Q", "2024-03-31", self.published_sum())], lookup.get)
+        self.assertEqual(len(found), 1)
+        return found[0]
+
+    def test_comparative_compares_category_value_not_addends(self):
+        A3 = {AXIS: "x:A3Member"}
+        # 加數順序相反：分類值相同。
+        found = self.compare((35, 25), (A1, A2), [(A2, 1), (A1, 1)])
+        self.assertEqual((found["result"], found["published_value"], found["listed_value"]), ("consistent", 60_000_000, 60_000_000))
+        # 換了一個成員、個數也不同，但和相同（例如公司把兩個項目併成一個重新列示）。
+        found = self.compare((60,), (A3,), [(A3, 1)])
+        self.assertEqual(found["result"], "consistent")
+        self.assertEqual([a["fact_id"] for a in found["listed_addends"]], ["p0"])
+        self.assertEqual([a["operand"] for a in found["published_addends"]], ["op1", "op2"])
+        # 和不同。
+        found = self.compare((35, 29), (A1, A3), [(A1, 1), (A3, 1)])
+        self.assertEqual((found["result"], found["listed_value"]), ("different", 64_000_000))
+        # 負號加數。
+        found = self.compare((70, 10), (A1, A3), [(A1, 1), (A3, -1)])
+        self.assertEqual((found["result"], found["listed_value"]), ("consistent", 60_000_000))
+
+    def test_comparative_missing_addend_is_not_found(self):
+        found = self.compare((35,), (A1,), [(A1, 1), (A2, 1)])
+        self.assertEqual(found["result"], "not_found")
+        self.assertIn("x:A2Member", found["note"])
+        self.assertNotIn("listed_value", found)
+
+    def test_comparative_follows_addends_through_parser(self):
+        self.year()
+        parser = self.parser(SUM_SPEC)
+        parser.run(["2025-03-31"])
+        later = self.members("q", "2026-01-01", "2026-03-31", (1, 1, 1)) + self.members("c", "2025-01-01", "2025-03-31", (35, 29, 40), table=1)
+        self.add("0000000001-26-000002", "10-Q", "2026-03-31", "2026-04-15", build_html(2026, "Q1", later))
+        self.parser(SUM_SPEC).run([])
+        marks = self.status()["periods"]["Q"]["2025-03-31"]["differences"]
+        self.assertEqual([(m["category"], m["published_value"], m["listed_value"]) for m in marks], [("A", 60_000_000, 64_000_000), ("總營收", 100_000_000, 104_000_000)])
+        self.assertEqual([(a["operand"], a["value"]) for a in marks[0]["published_addends"]], [("op1", 35_000_000), ("op2", 25_000_000)])
+        self.assertEqual([(a["fact_id"], a["value"]) for a in marks[0]["listed_addends"]], [("c0", 35_000_000), ("c1", 29_000_000)])
 
 
 class DefaultStartTest(Fixture):
@@ -1193,13 +1408,23 @@ class SpecValidationTest(unittest.TestCase):
             define(fact(REVENUE, A), -1)
         with self.assertRaisesRegex(ValueError, "只能是 1 或 -1"):
             define(fact(REVENUE, A), weight=2)
-        self.assertEqual(define(fact(REVENUE, A), weight=-1).weight, -1)
+        self.assertEqual([a.weight for a in define(fact(REVENUE, A), weight=-1).addends], [-1])
+        self.assertEqual([a.weight for a in define(sum_of(fact(REVENUE, A), minus(fact(REVENUE, B))), weight=-1).addends], [-1, 1])
+        with self.assertRaisesRegex(ValueError, "至少要有兩個加數"):
+            sum_of(fact(REVENUE, A))
+        with self.assertRaisesRegex(ValueError, "加數重複"):
+            sum_of(fact(REVENUE, A), fact(REVENUE, A))
 
     def test_spec_rules(self):
         cases = [
             (dict(view="geography"), "view 必須是"),
             (dict(total=Category("A", fact(REVENUE))), "與分類重名"),
-            (dict(categories=(Category("A", fact(REVENUE, {"srt:StatementGeographicalAxis": "country:US"})), SPEC.categories[1])), "地區軸"),
+            (dict(categories=(Category("A", fact(REVENUE, {GEO: "x:USMember"})), SPEC.categories[1])), "地區軸只能以 sum_of"),
+            (dict(categories=(Category("A", sum_of(fact(REVENUE, {GEO: "x:USMember"}), fact(REVENUE, A))), SPEC.categories[1])), "每個加數都必須是帶地區軸"),
+            (dict(categories=(Category("A", sum_of(fact(REVENUE, {GEO: "x:USMember"}), minus(fact(REVENUE, {GEO: "x:NonUSMember"})))), SPEC.categories[1])), "權重 1"),
+            (dict(categories=(Category("A", sum_of(fact(REVENUE, {GEO: "x:USMember"}), fact("us-gaap:Revenues", {GEO: "x:NonUSMember"}))), SPEC.categories[1])), "concept 與地區軸以外"),
+            (dict(categories=(Category("A", sum_of(fact(REVENUE, {**A, GEO: "x:USMember"}), fact(REVENUE, {**B, GEO: "x:NonUSMember"}))), SPEC.categories[1])), "concept 與地區軸以外"),
+            (dict(categories=(Category("A", sum_of(fact(REVENUE, {AXIS: "x:CMember"}), fact(REVENUE, B))), SPEC.categories[1])), "同一個運算元"),
             (dict(categories=(SPEC.categories[0], Category("B", fact(REVENUE, A)))), "同一個運算元"),
         ]
         for change, pattern in cases:

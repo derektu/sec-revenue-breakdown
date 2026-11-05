@@ -10,8 +10,8 @@ import datetime as dt
 
 # 觀點只取產品或業務別的拆分；地區拆分不是觀點。
 VIEWS = ("product", "business_segment")
-# 地區軸不可出現在規格中。
-FORBIDDEN_AXES = ("srt:StatementGeographicalAxis",)
+# 地區軸只能以「該軸全部成員相加」的加總出現（見 `geographic_sum`），不能單獨成為分類的運算元。
+GEOGRAPHIC_AXES = ("srt:StatementGeographicalAxis",)
 # 業務分部軸常被公司用於地區分部（例如 AAPL 的 Americas、Europe），規格使用時 parser.md 必須說明為何是業務別。
 SEGMENT_AXIS = "us-gaap:StatementBusinessSegmentsAxis"
 
@@ -96,38 +96,106 @@ def effective(start: str | None = None, end: str | None = None) -> Effective:
 
 
 @dataclass(frozen=True)
-class Definition:
-    """某個適用期間內，分類或總營收的運算元與權重。"""
+class Addend:
+    """定義中的一個加數：一個運算元與權重（1 或 -1）。"""
 
     selector: Selector
     weight: int = 1
-    period: Effective = ALWAYS
 
     def __post_init__(self):
         if self.weight not in (1, -1):
-            raise ValueError(f"define 的 weight 只能是 1 或 -1，收到 {self.weight!r}")
+            raise ValueError(f"加數的 weight 只能是 1 或 -1，收到 {self.weight!r}")
+
+
+@dataclass(frozen=True)
+class Sum:
+    """多個加數的加權和；由 `sum_of` 建立。"""
+
+    addends: tuple[Addend, ...]
+
+
+def minus(selector: Selector) -> Addend:
+    """權重 -1 的加數，用於 `sum_of`。"""
+    return Addend(selector, -1)
+
+
+def sum_of(*parts: Selector | Addend) -> Sum:
+    """一個分類在同一期由多個 fact 加權相加；規格逐一列出每個加數，任一加數該期找不到時該期失敗。"""
+    addends = tuple(p if isinstance(p, Addend) else Addend(p) for p in parts)
+    if len(addends) < 2:
+        raise ValueError("sum_of 至少要有兩個加數；單一運算元直接寫 fact(...)")
+    if len(set(a.selector for a in addends)) != len(addends):
+        raise ValueError("sum_of 的加數重複")
+    return Sum(addends)
+
+
+@dataclass(frozen=True)
+class Definition:
+    """某個適用期間內，分類或總營收的加數（一個或多個運算元與各自的權重）。"""
+
+    addends: tuple[Addend, ...]
+    period: Effective = ALWAYS
+
+    def __post_init__(self):
         if not isinstance(self.period, Effective):
             raise ValueError(f"define 的第二個參數必須是 effective(...)，收到 {self.period!r}；權重請用 weight= 關鍵字")
 
+    def geographic_sum(self) -> tuple[str, str, tuple[tuple[str, str], ...], tuple[str, ...]] | None:
+        """使用地區軸時回傳 (地區軸, concept, 其他 dimensions, 成員)；不使用時回傳 None。
 
-def define(selector: Selector, period: Effective = ALWAYS, *, weight: int = 1) -> Definition:
-    """宣告一個定義；`weight` 只能是 1 或 -1（以關鍵字傳入）。"""
-    return Definition(selector, weight, period)
+        地區軸只能以「該軸全部成員相加」出現：所有加數都是 fact、權重 1、concept 與地區軸以外的 dimensions 相同，
+        只差地區成員。成員是否為該軸全部成員，由引擎在每份申報中檢查。
+        """
+        axes = {
+            axis
+            for a in self.addends
+            if isinstance(a.selector, FactSelector)
+            for axis, _ in a.selector.dimensions
+            if axis in GEOGRAPHIC_AXES
+        }
+        if not axes:
+            return None
+        if len(axes) != 1 or len(self.addends) < 2:
+            raise ValueError("地區軸只能以 sum_of 列出同一地區軸的全部成員相加")
+        axis = axes.pop()
+        shapes = set()
+        members = []
+        for a in self.addends:
+            selector = a.selector
+            if not isinstance(selector, FactSelector) or a.weight != 1 or axis not in selector.dimension_map:
+                raise ValueError("地區軸的加總中，每個加數都必須是帶地區軸、權重 1 的 fact")
+            shapes.add((selector.concept, tuple(d for d in selector.dimensions if d[0] != axis)))
+            members.append(selector.dimension_map[axis])
+        if len(shapes) != 1:
+            raise ValueError("地區軸的加總中，各加數的 concept 與地區軸以外的 dimensions 必須相同")
+        concept, others = shapes.pop()
+        return axis, concept, others, tuple(members)
+
+
+def define(target: Selector | Sum, period: Effective = ALWAYS, *, weight: int = 1) -> Definition:
+    """宣告一個定義；`target` 是單一運算元或 `sum_of(...)`。`weight` 只能是 1 或 -1（以關鍵字傳入），乘上每個加數的權重。"""
+    if weight not in (1, -1):
+        raise ValueError(f"define 的 weight 只能是 1 或 -1，收到 {weight!r}")
+    addends = target.addends if isinstance(target, Sum) else (Addend(target),)
+    return Definition(tuple(Addend(a.selector, a.weight * weight) for a in addends), period)
 
 
 @dataclass(frozen=True)
 class Category:
-    """觀點中的一項。`definitions` 可有多個，同一期最多一個生效；沒有生效的定義時該期沒有這一項（總營收除外，必須有）。"""
+    """觀點中的一項。`definitions` 可有多個，同一期最多一個生效；沒有生效的定義時該期沒有這一項（總營收除外，必須有）。
+
+    定義可以直接寫 `fact(...)` 或 `sum_of(...)`，代表不限期間、權重 1 的定義。
+    """
 
     name: str
     definitions: tuple[Definition, ...]
 
-    def __init__(self, name: str, *definitions: Selector | Definition):
+    def __init__(self, name: str, *definitions: Selector | Sum | Definition):
         object.__setattr__(self, "name", name)
         object.__setattr__(
             self,
             "definitions",
-            tuple(d if isinstance(d, Definition) else Definition(d) for d in definitions),
+            tuple(d if isinstance(d, Definition) else define(d) for d in definitions),
         )
 
 
@@ -154,22 +222,22 @@ class CompanySpec:
             if not item.definitions:
                 raise ValueError(f"{self.ticker} 規格的 {item.name} 沒有定義")
             for definition in item.definitions:
-                selector = definition.selector
-                if isinstance(selector, FactSelector):
-                    for axis, _ in selector.dimensions:
-                        if axis in FORBIDDEN_AXES:
-                            raise ValueError(f"{self.ticker} 規格的 {item.name} 使用地區軸 {axis}；觀點只取產品或業務別")
-        used = [(item.name, d) for item in items for d in item.definitions]
-        for i, (name, first) in enumerate(used):
-            for other, second in used[i + 1 :]:
-                if first.selector == second.selector and first.period.overlaps(second.period):
+                try:
+                    definition.geographic_sum()
+                except ValueError as error:
+                    raise ValueError(f"{self.ticker} 規格的 {item.name}：{error}；觀點只取產品或業務別") from None
+        used = [(item.name, d, a.selector) for item in items for d in item.definitions for a in d.addends]
+        for i, (name, first, selector) in enumerate(used):
+            for other, second, other_selector in used[i + 1 :]:
+                if selector == other_selector and first.period.overlaps(second.period):
                     raise ValueError(
-                        f"{self.ticker} 規格的 {name} 與 {other} 在重疊的期間使用同一個運算元 {first.selector.describe()}"
+                        f"{self.ticker} 規格的 {name} 與 {other} 在重疊的期間使用同一個運算元 {selector.describe()}"
                     )
 
     def uses_axis(self, axis: str) -> bool:
         return any(
-            isinstance(d.selector, FactSelector) and axis in d.selector.dimension_map
+            isinstance(a.selector, FactSelector) and axis in a.selector.dimension_map
             for item in list(self.categories) + list(self.reconciling) + [self.total]
             for d in item.definitions
+            for a in d.addends
         )

@@ -293,7 +293,8 @@ class RevenueParser:
         return output, files
 
     def selector_for(self, period: str):
-        """回傳查詢函式：分類名稱（`None` 為總營收）→ 在 `period` 生效的 FactSelector；沒有或不是 fact 時為 None。"""
+        """回傳查詢函式：分類名稱（`None` 為總營收）→ 在 `period` 生效定義的加數（`Addend`，依規格順序）；
+        沒有生效的定義或有加數不是 fact 時為 None。"""
         items = {c.name: c for c in self.spec.categories + self.spec.reconciling}
 
         def lookup(name):
@@ -304,7 +305,9 @@ class RevenueParser:
                 definition = self.composer.definition(item, period)
             except ParseError:
                 return None
-            return definition.selector if definition and isinstance(definition.selector, FactSelector) else None
+            if definition is None or not all(isinstance(a.selector, FactSelector) for a in definition.addends):
+                return None
+            return list(definition.addends)
 
         return lookup
 
@@ -520,18 +523,14 @@ class RevenueParser:
                 markers.setdefault((item["series"], item["period_end"]), []).append(
                     {
                         "category": item["category"],
-                        "operand": item["operand"],
                         "role": item["role"],
                         "period": item["period"],
                         "result": item["result"],
                         "published_value": item["published_value"],
                         "listed_value": item["listed_value"],
-                        "source": {
-                            "accession": filing.accession,
-                            "form": filing.form,
-                            "filing_date": filing.filing_date,
-                            "fact_id": item["listed_fact_id"],
-                        },
+                        "source": {"accession": filing.accession, "form": filing.form, "filing_date": filing.filing_date},
+                        "published_addends": item["published_addends"],
+                        "listed_addends": item["listed_addends"],
                         **({"note": item["note"]} if item.get("note") else {}),
                     }
                 )
