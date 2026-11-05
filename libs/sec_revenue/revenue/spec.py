@@ -110,6 +110,15 @@ class Definition:
             raise ValueError(f"define 的第二個參數必須是 effective(...)，收到 {self.period!r}；權重請用 weight= 關鍵字")
 
 
+def describe_definition(definition: Definition) -> dict:
+    """輸出用的定義描述：運算元選擇條件、適用期間與權重。"""
+    return {
+        "selector": definition.selector.describe(),
+        "effective": {"start": definition.period.start, "end": definition.period.end},
+        "weight": definition.weight,
+    }
+
+
 def define(selector: Selector, period: Effective = ALWAYS, *, weight: int = 1) -> Definition:
     """宣告一個定義；`weight` 只能是 1 或 -1（以關鍵字傳入）。"""
     return Definition(selector, weight, period)
@@ -132,21 +141,12 @@ class Category:
 
 
 @dataclass(frozen=True)
-class Thresholds:
-    """跨期檢核門檻；超過時照常上線並標示待 review。"""
-
-    share_change_pp: float = 5.0
-    yoy_change: float = 0.50
-
-
-@dataclass(frozen=True)
 class CompanySpec:
     ticker: str
     view: str
     categories: tuple[Category, ...]
     total: Category
     reconciling: tuple[Category, ...] = ()
-    thresholds: Thresholds = field(default_factory=Thresholds)
 
     def __post_init__(self):
         if self.view not in VIEWS:

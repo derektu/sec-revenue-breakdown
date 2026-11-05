@@ -1,4 +1,5 @@
 {
+  "annotations": [],
   "categories": {
     "Mac": {
       "expression": [
@@ -67,135 +68,203 @@
     }
   },
   "checks": {
+    "comparatives": [
+      {
+        "category": "Mac",
+        "operand": "op3",
+        "period": {
+          "end": "2024-09-28",
+          "start": "2023-10-01"
+        },
+        "period_end": "2024-09-28",
+        "result": "consistent",
+        "role": "annual"
+      },
+      {
+        "category": "Services",
+        "operand": "op9",
+        "period": {
+          "end": "2024-09-28",
+          "start": "2023-10-01"
+        },
+        "period_end": "2024-09-28",
+        "result": "consistent",
+        "role": "annual"
+      },
+      {
+        "category": "Wearables, Home and Accessories",
+        "operand": "op7",
+        "period": {
+          "end": "2024-09-28",
+          "start": "2023-10-01"
+        },
+        "period_end": "2024-09-28",
+        "result": "consistent",
+        "role": "annual"
+      },
+      {
+        "category": "iPad",
+        "operand": "op5",
+        "period": {
+          "end": "2024-09-28",
+          "start": "2023-10-01"
+        },
+        "period_end": "2024-09-28",
+        "result": "consistent",
+        "role": "annual"
+      },
+      {
+        "category": "iPhone",
+        "operand": "op1",
+        "period": {
+          "end": "2024-09-28",
+          "start": "2023-10-01"
+        },
+        "period_end": "2024-09-28",
+        "result": "consistent",
+        "role": "annual"
+      },
+      {
+        "category": "總營收",
+        "operand": "op11",
+        "period": {
+          "end": "2024-09-28",
+          "start": "2023-10-01"
+        },
+        "period_end": "2024-09-28",
+        "result": "consistent",
+        "role": "annual"
+      }
+    ],
     "cross_period": [
       {
+        "annotated": false,
         "baseline_period": "2025-06-28",
-        "check": "期別連續",
-        "flagged": false
+        "check": "期別連續"
       },
       {
+        "annotated": false,
         "baseline_period": "2025-06-28",
-        "check": "分類集合",
-        "flagged": false
+        "check": "分類集合"
       },
       {
+        "annotated": false,
         "baseline_period": "2024-09-28",
         "category": "Mac",
         "change_pp": 0.36,
         "check": "占比變動",
-        "flagged": false,
         "threshold_pp": 5.0
       },
       {
+        "annotated": false,
         "baseline_period": "2024-09-28",
         "category": "Mac",
         "change": 0.1268,
         "check": "YoY",
-        "flagged": false,
         "threshold": 0.5
       },
       {
+        "annotated": false,
         "baseline_period": "2025-06-28",
         "category": "Mac",
         "change": 0.0845,
         "check": "QoQ",
-        "flagged": false,
         "note": "只記錄"
       },
       {
+        "annotated": false,
         "baseline_period": "2024-09-28",
         "category": "Services",
         "change_pp": 1.75,
         "check": "占比變動",
-        "flagged": false,
         "threshold_pp": 5.0
       },
       {
+        "annotated": false,
         "baseline_period": "2024-09-28",
         "category": "Services",
         "change": 0.1513,
         "check": "YoY",
-        "flagged": false,
         "threshold": 0.5
       },
       {
+        "annotated": false,
         "baseline_period": "2025-06-28",
         "category": "Services",
         "change": 0.0484,
         "check": "QoQ",
-        "flagged": false,
         "note": "只記錄"
       },
       {
+        "annotated": false,
         "baseline_period": "2024-09-28",
         "category": "Wearables, Home and Accessories",
         "change_pp": -0.73,
         "check": "占比變動",
-        "flagged": false,
         "threshold_pp": 5.0
       },
       {
+        "annotated": false,
         "baseline_period": "2024-09-28",
         "category": "Wearables, Home and Accessories",
         "change": -0.0032,
         "check": "YoY",
-        "flagged": false,
         "threshold": 0.5
       },
       {
+        "annotated": false,
         "baseline_period": "2025-06-28",
         "category": "Wearables, Home and Accessories",
         "change": 0.2173,
         "check": "QoQ",
-        "flagged": false,
         "note": "只記錄"
       },
       {
+        "annotated": false,
         "baseline_period": "2024-09-28",
         "category": "iPad",
         "change_pp": -0.54,
         "check": "占比變動",
-        "flagged": false,
         "threshold_pp": 5.0
       },
       {
+        "annotated": false,
         "baseline_period": "2024-09-28",
         "category": "iPad",
         "change": 0.0003,
         "check": "YoY",
-        "flagged": false,
         "threshold": 0.5
       },
       {
+        "annotated": false,
         "baseline_period": "2025-06-28",
         "category": "iPad",
         "change": 0.0564,
         "check": "QoQ",
-        "flagged": false,
         "note": "只記錄"
       },
       {
+        "annotated": false,
         "baseline_period": "2024-09-28",
         "category": "iPhone",
         "change_pp": -0.85,
         "check": "占比變動",
-        "flagged": false,
         "threshold_pp": 5.0
       },
       {
+        "annotated": false,
         "baseline_period": "2024-09-28",
         "category": "iPhone",
         "change": 0.0606,
         "check": "YoY",
-        "flagged": false,
         "threshold": 0.5
       },
       {
+        "annotated": false,
         "baseline_period": "2025-06-28",
         "category": "iPhone",
         "change": 0.0997,
         "check": "QoQ",
-        "flagged": false,
         "note": "只記錄"
       }
     ],
@@ -678,14 +747,10 @@
     }
   },
   "parser": {
-    "engine_sha256": "b40283cc0912d775cc06d70c7315682e6ef301ccba21cc301040839b1f5697ea",
+    "engine_sha256": "caf97a96cdc63be1b492a230ae7d1fd78a1b9557af6fa867684a8ee1b90ec1fd",
     "spec_sha256": "e93ec49768f01b33eaac003a94785305de290053959b68ff8310e5a6b7af0c6d"
   },
   "period_end": "2025-09-27",
-  "review": {
-    "reasons": [],
-    "status": "none"
-  },
   "schema_version": 1,
   "ticker": "AAPL",
   "total": {

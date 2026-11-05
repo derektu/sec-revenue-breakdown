@@ -10,7 +10,7 @@ import datetime as dt
 from decimal import Decimal
 
 from .filings import Filing, FilingSet, ParseError
-from .spec import Category, CompanySpec, FactSelector, TableCellSelector
+from .spec import Definition, Category, CompanySpec, FactSelector, TableCellSelector
 from .xbrl import USD, Fact, classify_duration, decimals_rank
 
 QUARTER_FOCUS = {"Q1": 1, "Q2": 2, "Q3": 3, "FY": 4}
@@ -58,6 +58,8 @@ class PeriodResult:
     lines: list[Line]
     structural: list[dict] = field(default_factory=list)
     sum_check: dict = field(default_factory=dict)
+    # Q4 年度與九個月運算元使用不同定義的分類：(名稱, 年度定義, 九個月定義)。
+    mixed_definitions: list[tuple[str, Definition, Definition]] = field(default_factory=list)
 
     @property
     def operands(self) -> list[Operand]:
@@ -112,31 +114,28 @@ class PeriodComposer:
             raise ParseError("財年與季別", f"{primary.accession} 是 {primary.form}，但宣告的期別是 {focus}")
         nine_filing = self.third_quarter(period, year) if quarter == 4 else None
 
-        definitions = {}
+        # 定義依運算元來源申報的期末日選取：Q1–Q3 與 Q4 的年度運算元是本期，Q4 的九個月運算元是 Q3 期末日。
+        # 公司在財年中途改 tag 時（例如 10-K 起換新成員、同財年 Q3 10-Q 仍是舊成員），兩個運算元各用各的定義。
+        groups, candidates, mixed = {}, {}, []
         for group, item in self.items():
-            active = [d for d in item.definitions if d.period.covers(period)]
-            if len(active) != 1:
-                raise ParseError("定義唯一", f"{item.name} 在 {period} 有 {len(active)} 個生效的定義")
-            if isinstance(active[0].selector, TableCellSelector):
-                raise ParseError("定義唯一", f"{item.name} 使用 {active[0].selector.describe()}：table_cell 運算元尚未支援")
-            definitions[item.name] = (group, active[0])
-        structural.append({"check": "定義唯一", "result": "pass"})
-
-        candidates: dict[str, list[Candidate]] = {}
-        for name, (group, definition) in definitions.items():
-            selector = definition.selector
+            groups[item.name] = group
+            definition = self.definition(item, period)
             if quarter == 4:
-                annual = self.candidate(primary, selector, period, "annual", None, name)
+                nine_definition = self.definition(item, nine_filing.report_date)
+                annual = self.candidate(primary, definition.selector, period, "annual", None, item.name)
                 nine = self.candidate(
-                    nine_filing, selector, nine_filing.report_date, "nine_months", annual.facts[0].start, name
+                    nine_filing, nine_definition.selector, nine_filing.report_date, "nine_months", annual.facts[0].start, item.name
                 )
-                self.check_q4(name, annual.facts[0], nine.facts[0], period)
-                annual.weight, nine.weight = definition.weight, -definition.weight
-                candidates[name] = [annual, nine]
+                self.check_q4(item.name, annual.facts[0], nine.facts[0], period)
+                annual.weight, nine.weight = definition.weight, -nine_definition.weight
+                candidates[item.name] = [annual, nine]
+                if nine_definition is not definition:
+                    mixed.append((item.name, definition, nine_definition))
             else:
-                found = self.candidate(primary, selector, period, "quarter", None, name)
+                found = self.candidate(primary, definition.selector, period, "quarter", None, item.name)
                 found.weight = definition.weight
-                candidates[name] = [found]
+                candidates[item.name] = [found]
+        structural.append({"check": "定義唯一", "result": "pass"})
         structural.append({"check": "fact 存在且唯一", "result": "pass"})
         structural.append({"check": "單位與精度", "result": "pass"})
         if quarter == 4:
@@ -144,13 +143,23 @@ class PeriodComposer:
 
         chosen = self.choose(candidates)
         lines = [
-            Line(name, definitions[name][0], [Term(c.weight, op) for c, op in zip(candidates[name], chosen[name])])
-            for name in definitions
+            Line(name, groups[name], [Term(c.weight, op) for c, op in zip(candidates[name], chosen[name])])
+            for name in candidates
         ]
-        result = PeriodResult(period, year, quarter, primary, selection.replaced, nine_filing, lines, structural)
+        result = PeriodResult(period, year, quarter, primary, selection.replaced, nine_filing, lines, structural, mixed_definitions=mixed)
         result.sum_check = self.check_sum(result)
         structural.append({"check": "加總", "result": "pass"})
         return result
+
+    @staticmethod
+    def definition(item: Category, source_period: str):
+        """`source_period` 是運算元來源申報的期末日；剛好一個定義生效，且不是尚未支援的 table_cell。"""
+        active = [d for d in item.definitions if d.period.covers(source_period)]
+        if len(active) != 1:
+            raise ParseError("定義唯一", f"{item.name} 在 {source_period} 有 {len(active)} 個生效的定義")
+        if isinstance(active[0].selector, TableCellSelector):
+            raise ParseError("定義唯一", f"{item.name} 使用 {active[0].selector.describe()}：table_cell 運算元尚未支援")
+        return active[0]
 
     def third_quarter(self, period: str, year: int) -> Filing:
         """Q4 的九個月累計來自前一季的 10-Q：期末日在年度期末前一個單季內，且宣告同財年 Q3。"""

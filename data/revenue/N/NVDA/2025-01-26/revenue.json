@@ -1,0 +1,522 @@
+{
+  "annotations": [
+    {
+      "check": "占比變動",
+      "detail": {
+        "baseline_period": "2024-01-28",
+        "category": "Compute & Networking",
+        "change_pp": 10.65,
+        "threshold_pp": 5.0
+      },
+      "message": "Compute & Networking 占比較去年同季 2024-01-28 變動 10.65 個百分點"
+    },
+    {
+      "check": "YoY",
+      "detail": {
+        "baseline_period": "2024-01-28",
+        "category": "Compute & Networking",
+        "change": 1.0134,
+        "threshold": 0.5
+      },
+      "message": "Compute & Networking YoY 1.0134，超過 ±0.5"
+    },
+    {
+      "check": "占比變動",
+      "detail": {
+        "baseline_period": "2024-01-28",
+        "category": "Graphics",
+        "change_pp": -10.65,
+        "threshold_pp": 5.0
+      },
+      "message": "Graphics 占比較去年同季 2024-01-28 變動 -10.65 個百分點"
+    },
+    {
+      "check": "Q4 跨定義",
+      "detail": {
+        "category": "Compute & Networking"
+      },
+      "message": "Compute & Networking 年度用 us-gaap:Revenues [srt:ConsolidationItemsAxis=us-gaap:OperatingSegmentsMember, us-gaap:StatementBusinessSegmentsAxis=nvda:ComputeAndNetworkingSegmentMember]、九個月用 us-gaap:Revenues [srt:ConsolidationItemsAxis=us-gaap:OperatingSegmentsMember, us-gaap:StatementBusinessSegmentsAxis=nvda:ComputeAndNetworkingMember]；輔助證據：0001045810-25-000230 以年度定義標示的九個月值一致"
+    },
+    {
+      "check": "Q4 跨定義",
+      "detail": {
+        "category": "Graphics"
+      },
+      "message": "Graphics 年度用 us-gaap:Revenues [srt:ConsolidationItemsAxis=us-gaap:OperatingSegmentsMember, us-gaap:StatementBusinessSegmentsAxis=nvda:GraphicsSegmentMember]、九個月用 us-gaap:Revenues [srt:ConsolidationItemsAxis=us-gaap:OperatingSegmentsMember, us-gaap:StatementBusinessSegmentsAxis=nvda:GraphicsMember]；輔助證據：0001045810-25-000230 以年度定義標示的九個月值一致"
+    }
+  ],
+  "categories": {
+    "Compute & Networking": {
+      "expression": [
+        {
+          "operand": "op1",
+          "weight": 1
+        },
+        {
+          "operand": "op2",
+          "weight": -1
+        }
+      ],
+      "value": 36036000000
+    },
+    "Graphics": {
+      "expression": [
+        {
+          "operand": "op3",
+          "weight": 1
+        },
+        {
+          "operand": "op4",
+          "weight": -1
+        }
+      ],
+      "value": 3295000000
+    }
+  },
+  "checks": {
+    "comparatives": [
+      {
+        "category": "Compute & Networking",
+        "operand": "op1",
+        "period": {
+          "end": "2024-01-28",
+          "start": "2023-01-30"
+        },
+        "period_end": "2024-01-28",
+        "result": "consistent",
+        "role": "annual"
+      },
+      {
+        "category": "Graphics",
+        "operand": "op3",
+        "period": {
+          "end": "2024-01-28",
+          "start": "2023-01-30"
+        },
+        "period_end": "2024-01-28",
+        "result": "consistent",
+        "role": "annual"
+      },
+      {
+        "category": "總營收",
+        "operand": "op5",
+        "period": {
+          "end": "2024-01-28",
+          "start": "2023-01-30"
+        },
+        "period_end": "2024-01-28",
+        "result": "consistent",
+        "role": "annual"
+      }
+    ],
+    "cross_period": [
+      {
+        "annotated": false,
+        "baseline_period": "2024-10-27",
+        "check": "期別連續"
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2024-10-27",
+        "check": "分類集合"
+      },
+      {
+        "annotated": true,
+        "baseline_period": "2024-01-28",
+        "category": "Compute & Networking",
+        "change_pp": 10.65,
+        "check": "占比變動",
+        "threshold_pp": 5.0
+      },
+      {
+        "annotated": true,
+        "baseline_period": "2024-01-28",
+        "category": "Compute & Networking",
+        "change": 1.0134,
+        "check": "YoY",
+        "threshold": 0.5
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2024-10-27",
+        "category": "Compute & Networking",
+        "change": 0.1611,
+        "check": "QoQ",
+        "note": "只記錄"
+      },
+      {
+        "annotated": true,
+        "baseline_period": "2024-01-28",
+        "category": "Graphics",
+        "change_pp": -10.65,
+        "check": "占比變動",
+        "threshold_pp": 5.0
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2024-01-28",
+        "category": "Graphics",
+        "change": -0.2164,
+        "check": "YoY",
+        "threshold": 0.5
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2024-10-27",
+        "category": "Graphics",
+        "change": -0.1856,
+        "check": "QoQ",
+        "note": "只記錄"
+      }
+    ],
+    "q4_definitions": [
+      {
+        "annual": {
+          "effective": {
+            "end": null,
+            "start": "2025-01-26"
+          },
+          "operand": "op1",
+          "selector": "us-gaap:Revenues [srt:ConsolidationItemsAxis=us-gaap:OperatingSegmentsMember, us-gaap:StatementBusinessSegmentsAxis=nvda:ComputeAndNetworkingSegmentMember]",
+          "weight": 1
+        },
+        "auxiliary": {
+          "accession": "0001045810-25-000230",
+          "consistent": true,
+          "fact_id": "f-885",
+          "found": true,
+          "value": 80157000000
+        },
+        "category": "Compute & Networking",
+        "nine_months": {
+          "effective": {
+            "end": "2024-10-27",
+            "start": null
+          },
+          "operand": "op2",
+          "selector": "us-gaap:Revenues [srt:ConsolidationItemsAxis=us-gaap:OperatingSegmentsMember, us-gaap:StatementBusinessSegmentsAxis=nvda:ComputeAndNetworkingMember]",
+          "weight": 1
+        }
+      },
+      {
+        "annual": {
+          "effective": {
+            "end": null,
+            "start": "2025-01-26"
+          },
+          "operand": "op3",
+          "selector": "us-gaap:Revenues [srt:ConsolidationItemsAxis=us-gaap:OperatingSegmentsMember, us-gaap:StatementBusinessSegmentsAxis=nvda:GraphicsSegmentMember]",
+          "weight": 1
+        },
+        "auxiliary": {
+          "accession": "0001045810-25-000230",
+          "consistent": true,
+          "fact_id": "f-886",
+          "found": true,
+          "value": 11009000000
+        },
+        "category": "Graphics",
+        "nine_months": {
+          "effective": {
+            "end": "2024-10-27",
+            "start": null
+          },
+          "operand": "op4",
+          "selector": "us-gaap:Revenues [srt:ConsolidationItemsAxis=us-gaap:OperatingSegmentsMember, us-gaap:StatementBusinessSegmentsAxis=nvda:GraphicsMember]",
+          "weight": 1
+        }
+      }
+    ],
+    "restatements": [],
+    "structural": [
+      {
+        "check": "定義唯一",
+        "result": "pass"
+      },
+      {
+        "check": "fact 存在且唯一",
+        "result": "pass"
+      },
+      {
+        "check": "單位與精度",
+        "result": "pass"
+      },
+      {
+        "check": "Q4 期間",
+        "result": "pass"
+      },
+      {
+        "check": "加總",
+        "result": "pass"
+      },
+      {
+        "check": "證據完整",
+        "result": "pass"
+      }
+    ],
+    "sum": {
+      "categories": 39331000000,
+      "difference": 0,
+      "tolerance": "3000000",
+      "total": 39331000000
+    }
+  },
+  "filings": {
+    "nine_months": {
+      "accession": "0001045810-24-000316",
+      "filing_date": "2024-11-20",
+      "form": "10-Q",
+      "report_date": "2024-10-27"
+    },
+    "primary": {
+      "accession": "0001045810-25-000023",
+      "filing_date": "2025-02-26",
+      "form": "10-K",
+      "report_date": "2025-01-26"
+    }
+  },
+  "fiscal_quarter": 4,
+  "fiscal_year": 2025,
+  "operands": {
+    "op1": {
+      "accession": "0001045810-25-000023",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-201",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "nvda:ComputeAndNetworkingSegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1045810/000104581025000023/nvda-20250126.htm",
+        "name": "nvda-20250126.htm",
+        "sha256": "d0b26188670c2aef788b2cb31f67f2594c12553a022cd0366339be419c5acfac",
+        "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000023/nvda-20250126.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "c809f02b77b33b3c0b369324e53f29b47a483b9fdd90f541bffba7fbdabc7541",
+        "png_scale": 1,
+        "png_sha256": "666b7ac32e84a1c75f850faabaf3a1702aa7927ecf6a6daffb7b21634e6977bd",
+        "table": "0001045810-25-000023-d0b26188670c-t55"
+      },
+      "fact_id": "f-1231",
+      "filing_date": "2025-02-26",
+      "form": "10-K",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-01-26",
+        "start": "2024-01-29"
+      },
+      "raw": "116,193",
+      "role": "annual",
+      "scale": "6",
+      "sign": null,
+      "value": 116193000000
+    },
+    "op2": {
+      "accession": "0001045810-24-000316",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-181",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "nvda:ComputeAndNetworkingMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1045810/000104581024000316/nvda-20241027.htm",
+        "name": "nvda-20241027.htm",
+        "sha256": "4d4f58458bf041635fe5acab43d97a374970dd2903e542a5b6f2196e3bfcb817",
+        "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000316/nvda-20241027.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "66e58a192917361beb9f0523df7ea2e51f1106b4f650b82d73c2cfe090c69740",
+        "png_scale": 1,
+        "png_sha256": "759dd4e9c4eb5b2abf1d410edca5b24026c8bbfad025db96f8fa2972c93da74a",
+        "table": "0001045810-24-000316-4d4f58458bf0-t36"
+      },
+      "fact_id": "f-975",
+      "filing_date": "2024-11-20",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-10-27",
+        "start": "2024-01-29"
+      },
+      "raw": "80,157",
+      "role": "nine_months",
+      "scale": "6",
+      "sign": null,
+      "value": 80157000000
+    },
+    "op3": {
+      "accession": "0001045810-25-000023",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-202",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "nvda:GraphicsSegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1045810/000104581025000023/nvda-20250126.htm",
+        "name": "nvda-20250126.htm",
+        "sha256": "d0b26188670c2aef788b2cb31f67f2594c12553a022cd0366339be419c5acfac",
+        "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000023/nvda-20250126.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "c809f02b77b33b3c0b369324e53f29b47a483b9fdd90f541bffba7fbdabc7541",
+        "png_scale": 1,
+        "png_sha256": "666b7ac32e84a1c75f850faabaf3a1702aa7927ecf6a6daffb7b21634e6977bd",
+        "table": "0001045810-25-000023-d0b26188670c-t55"
+      },
+      "fact_id": "f-1232",
+      "filing_date": "2025-02-26",
+      "form": "10-K",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-01-26",
+        "start": "2024-01-29"
+      },
+      "raw": "14,304",
+      "role": "annual",
+      "scale": "6",
+      "sign": null,
+      "value": 14304000000
+    },
+    "op4": {
+      "accession": "0001045810-24-000316",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-182",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "nvda:GraphicsMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1045810/000104581024000316/nvda-20241027.htm",
+        "name": "nvda-20241027.htm",
+        "sha256": "4d4f58458bf041635fe5acab43d97a374970dd2903e542a5b6f2196e3bfcb817",
+        "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000316/nvda-20241027.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "66e58a192917361beb9f0523df7ea2e51f1106b4f650b82d73c2cfe090c69740",
+        "png_scale": 1,
+        "png_sha256": "759dd4e9c4eb5b2abf1d410edca5b24026c8bbfad025db96f8fa2972c93da74a",
+        "table": "0001045810-24-000316-4d4f58458bf0-t36"
+      },
+      "fact_id": "f-976",
+      "filing_date": "2024-11-20",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-10-27",
+        "start": "2024-01-29"
+      },
+      "raw": "11,009",
+      "role": "nine_months",
+      "scale": "6",
+      "sign": null,
+      "value": 11009000000
+    },
+    "op5": {
+      "accession": "0001045810-25-000023",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-1",
+      "decimals": "-6",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1045810/000104581025000023/nvda-20250126.htm",
+        "name": "nvda-20250126.htm",
+        "sha256": "d0b26188670c2aef788b2cb31f67f2594c12553a022cd0366339be419c5acfac",
+        "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000023/nvda-20250126.htm"
+      },
+      "duplicates": [
+        "f-77",
+        "f-1301",
+        "f-1335"
+      ],
+      "evidence": {
+        "html_sha256": "c809f02b77b33b3c0b369324e53f29b47a483b9fdd90f541bffba7fbdabc7541",
+        "png_scale": 1,
+        "png_sha256": "666b7ac32e84a1c75f850faabaf3a1702aa7927ecf6a6daffb7b21634e6977bd",
+        "table": "0001045810-25-000023-d0b26188670c-t55"
+      },
+      "fact_id": "f-1234",
+      "filing_date": "2025-02-26",
+      "form": "10-K",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-01-26",
+        "start": "2024-01-29"
+      },
+      "raw": "130,497",
+      "role": "annual",
+      "scale": "6",
+      "sign": null,
+      "value": 130497000000
+    },
+    "op6": {
+      "accession": "0001045810-24-000316",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-1",
+      "decimals": "-6",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1045810/000104581024000316/nvda-20241027.htm",
+        "name": "nvda-20241027.htm",
+        "sha256": "4d4f58458bf041635fe5acab43d97a374970dd2903e542a5b6f2196e3bfcb817",
+        "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000316/nvda-20241027.htm"
+      },
+      "duplicates": [
+        "f-32",
+        "f-1034",
+        "f-1076"
+      ],
+      "evidence": {
+        "html_sha256": "66e58a192917361beb9f0523df7ea2e51f1106b4f650b82d73c2cfe090c69740",
+        "png_scale": 1,
+        "png_sha256": "759dd4e9c4eb5b2abf1d410edca5b24026c8bbfad025db96f8fa2972c93da74a",
+        "table": "0001045810-24-000316-4d4f58458bf0-t36"
+      },
+      "fact_id": "f-978",
+      "filing_date": "2024-11-20",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-10-27",
+        "start": "2024-01-29"
+      },
+      "raw": "91,166",
+      "role": "nine_months",
+      "scale": "6",
+      "sign": null,
+      "value": 91166000000
+    }
+  },
+  "parser": {
+    "engine_sha256": "caf97a96cdc63be1b492a230ae7d1fd78a1b9557af6fa867684a8ee1b90ec1fd",
+    "spec_sha256": "89e8332bb5468deb54b9bec8bd02ef8f2546e2b74517d0193535d9bfd54a39b3"
+  },
+  "period_end": "2025-01-26",
+  "schema_version": 1,
+  "ticker": "NVDA",
+  "total": {
+    "expression": [
+      {
+        "operand": "op5",
+        "weight": 1
+      },
+      {
+        "operand": "op6",
+        "weight": -1
+      }
+    ],
+    "value": 39331000000
+  },
+  "unit": "USD",
+  "view": "business_segment"
+}
