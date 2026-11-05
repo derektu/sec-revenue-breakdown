@@ -17,7 +17,7 @@ import datetime as dt
 from decimal import Decimal
 
 from .filings import Filing, FilingSet, ParseError
-from .spec import Category, CompanySpec, Definition, FactSelector, TableCellSelector
+from .spec import Category, CompanySpec, Definition, Selector, TableCellSelector, fact_variants
 from .xbrl import USD, Fact, classify_duration, decimals_rank
 
 QUARTER_FOCUS = {"Q1": 1, "Q2": 2, "Q3": 3, "FY": 4}
@@ -295,24 +295,35 @@ class PeriodComposer:
                 f"{name}：{filing.accession} 的 {axis} 在 {duration} 期末 {end} 有規格沒有列出的成員 {missing}；地區軸只能以全部成員相加",
             )
 
-    def candidate(self, filing, selector: FactSelector, end: str, duration: str, start: str | None, name: str, weight: int = 1) -> Candidate:
+    def candidate(self, filing, selector: Selector, end: str, duration: str, start: str | None, name: str, weight: int = 1) -> Candidate:
+        """一個運算元在申報中的候選 fact 群。
+
+        `one_of` 的每種寫法都找；找到多種寫法時，所有 fact 合成一群，照重複 fact 的規則處理：數值必須在各自精度內一致，
+        選精度最高、所在表格含最多其他項目的那一個，其餘記在 duplicates。寫法的前綴在文件中沒有宣告時，該寫法視為不存在；
+        前綴宣告衝突時無法確定該寫法對應哪些 fact，該期失敗；所有寫法都無法解析時該期失敗。
+        """
         document = self.filings.document(filing)
         label = f"{name}：{selector.describe()} {duration} 期末 {end}（{filing.accession}）"
-        concept = document.resolve(selector.concept)
-        dimensions = document.resolve_dimensions(selector.dimensions)
-        if concept is None or dimensions is None:
+        variants = fact_variants(selector)
+        for variant in variants:
+            conflicts = document.conflicting_prefixes(variant.concept, variant.dimensions)
+            if conflicts:
+                raise ParseError("fact 存在且唯一", f"{label}：{variant.describe()} 的前綴 {conflicts} 在文件中宣告衝突")
+        resolved = [(document.resolve(v.concept), document.resolve_dimensions(v.dimensions)) for v in variants]
+        resolved = [keys for keys in resolved if None not in keys]
+        if not resolved:
             raise ParseError("fact 存在且唯一", f"{label}：規格使用的前綴在文件中沒有宣告或宣告衝突")
         facts = [
             f
             for f in document.facts
-            if f.concept_key == concept
-            and f.dimension_keys == dimensions
+            if (f.concept_key, f.dimension_keys) in resolved
             and f.end == end
             and classify_duration(f.start, f.end) == duration
             and (start is None or f.start == start)
         ]
         if not facts:
             raise ParseError("fact 存在且唯一", f"找不到 {label}")
+        forms = {(f.concept_key, f.dimension_keys) for f in facts}
         if len({f.start for f in facts}) != 1:
             raise ParseError("fact 存在且唯一", f"{label} 有多個起日：{sorted({f.start for f in facts})}")
         for f in facts:
@@ -328,8 +339,9 @@ class PeriodComposer:
         # 重複 fact 以精度最高者為準；精度較低的重複值只需在自己的精度內與它一致。
         inconsistent = [f for f in facts if abs(f.value - best.value) > f.error_bound()]
         if inconsistent:
-            values = ", ".join(f"{f.fact_id}={f.value}（decimals {f.decimals}）" for f in facts)
-            raise ParseError("fact 存在且唯一", f"{label} 重複 fact 的數值不一致：{values}")
+            values = ", ".join(f"{f.fact_id} {f.concept} {dict(f.dimensions)}={f.value}（decimals {f.decimals}）" for f in facts)
+            kind = "多種寫法同時出現且數值不一致" if len(forms) > 1 else "重複 fact 的數值不一致"
+            raise ParseError("fact 存在且唯一", f"{label} {kind}：{values}")
         return Candidate(filing, facts, duration, weight)
 
     @staticmethod

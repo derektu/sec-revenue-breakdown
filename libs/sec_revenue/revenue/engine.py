@@ -30,7 +30,7 @@ from ..evidence import TableScreenshotter
 from .compose import NotDerived, Operand, PeriodComposer, PeriodResult
 from .filings import FilingSet, ParseError
 from .review import comparatives
-from .spec import CompanySpec, FactSelector
+from .spec import CompanySpec, fact_variants
 
 SCHEMA_VERSION = 1
 # 預設起始日（期末日，含）：所有公司共用，沒有指定起日時使用；要處理更早的期別時指定起日。
@@ -305,7 +305,7 @@ class RevenueParser:
                 definition = self.composer.definition(item, period)
             except ParseError:
                 return None
-            if definition is None or not all(isinstance(a.selector, FactSelector) for a in definition.addends):
+            if definition is None or not all(fact_variants(a.selector) for a in definition.addends):
                 return None
             return list(definition.addends)
 

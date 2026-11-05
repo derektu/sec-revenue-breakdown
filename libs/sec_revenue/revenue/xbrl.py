@@ -117,6 +117,11 @@ class InlineDocument:
             return None
         return "{" + self.namespaces[prefix] + "}" + local
 
+    def conflicting_prefixes(self, concept: str, dimensions) -> list[str]:
+        """concept 與 dimensions（軸與成員）用到、在文件中宣告衝突（同一前綴對應多個 namespace）的前綴。"""
+        qnames = [concept] + [q for axis, member in dimensions for q in (axis, member) if not q.startswith("typed:")]
+        return sorted({q.partition(":")[0] for q in qnames} & self.conflicts)
+
     def resolve_dimensions(self, dimensions) -> tuple[tuple[str, str], ...] | None:
         resolved = []
         for axis, member in dimensions:
