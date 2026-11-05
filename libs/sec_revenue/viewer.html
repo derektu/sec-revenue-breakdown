@@ -1,237 +1,115 @@
 <!doctype html>
 <html lang="zh-Hant">
-  <meta charset="utf-8" /><meta
-    name="viewport"
-    content="width=device-width"
-  /><title>SEC 營收證據</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>SEC 營收正式輸出</title>
   <style>
     body {
-      font: 16px system-ui;
+      font: 15px system-ui;
       background: #f5f6fa;
       color: #182332;
-      max-width: 1100px;
-      margin: 40px auto;
-      padding: 0 24px;
+      margin: 24px auto;
+      max-width: 1400px;
+      padding: 0 20px;
     }
-    h1 {
-      font-size: 30px;
-    }
-    input,
-    select,
-    button {
-      padding: 10px;
-      margin: 6px;
+    h1 { font-size: 24px; margin: 0 0 4px; }
+    h2 { font-size: 18px; margin: 20px 0 8px; }
+    small, .muted { color: #516276; }
+    a { color: #176797; }
+    input, select, button {
+      font: inherit;
+      padding: 6px 10px;
       border: 1px solid #abb8ca;
       border-radius: 6px;
-    }
-    table {
-      border-collapse: collapse;
-      width: 100%;
       background: white;
     }
-    td,
-    th {
-      padding: 12px;
-      text-align: left;
-      border-bottom: 1px solid #ddd;
+    .bar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 12px 0; }
+    .picker { position: relative; }
+    .picker input { width: 320px; }
+    .picker ul {
+      position: absolute; z-index: 10; left: 0; top: 100%; margin: 2px 0 0; padding: 4px 0;
+      width: 420px; max-height: 360px; overflow-y: auto; list-style: none;
+      background: white; border: 1px solid #abb8ca; border-radius: 6px; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
     }
-    td.amount {
-      text-align: right;
-      font-variant-numeric: tabular-nums;
+    .picker li { padding: 5px 12px; cursor: pointer; }
+    .picker li[aria-selected="true"] { background: #176797; color: white; }
+    .picker li .name { color: #516276; margin-left: 6px; }
+    .picker li[aria-selected="true"] .name { color: #dbe9f5; }
+    .picker li.none { color: #8a99ad; cursor: default; }
+    .toggle button[aria-pressed="true"] { background: #176797; color: white; border-color: #176797; }
+    #error { color: #a00; }
+    .scroll { overflow-x: auto; background: white; border: 1px solid #d5dce6; }
+    table.grid { border-collapse: collapse; font-variant-numeric: tabular-nums; }
+    .grid th, .grid td { padding: 6px 10px; border-bottom: 1px solid #e3e8ef; white-space: nowrap; }
+    .grid thead th { position: sticky; top: 0; background: #eef2f7; text-align: right; vertical-align: bottom; }
+    .grid th.label { text-align: left; position: sticky; left: 0; background: white; z-index: 1; }
+    .grid thead th.label { background: #eef2f7; z-index: 2; }
+    .grid td { text-align: right; cursor: pointer; }
+    .grid td:hover { outline: 2px solid #9cc3e0; outline-offset: -2px; }
+    .grid tr.total th, .grid tr.total td { border-top: 2px solid #8a99ad; font-weight: 600; }
+    .grid td.selected { outline: 2px solid #176797; outline-offset: -2px; background: #e8f2fa; }
+    .grid td.empty { color: #8a99ad; }
+    .grid td.blank { background: #f1f1f1; color: #6b5d00; font-style: italic; }
+    .grid td.failed { background: #fde7e9; color: #a50e0e; }
+    .grid td.diff { background: #fff1d6; box-shadow: inset 4px 0 #e08a00; }
+    .flag { color: #c25e00; font-weight: 700; margin-left: 4px; }
+    .unit { margin-left: 8px; font-weight: 400; font-size: 12px; color: #516276; }
+    .colnote { display: block; font-weight: 400; font-size: 12px; color: #6b5d00; }
+    .colnote.failed { color: #a50e0e; }
+    .grid td.kept { font-style: normal; }
+    .grid tr.reconciling th, .grid tr.reconciling td { font-style: italic; color: #3d4a5c; }
+    .grid tr.reconciling.first th, .grid tr.reconciling.first td { border-top: 1px dashed #8a99ad; }
+    .tag { font: 400 11px system-ui; font-style: normal; color: #516276; border: 1px solid #b8c3d1; border-radius: 3px; padding: 0 4px; margin-right: 6px; }
+    #detail { background: white; border: 1px solid #d5dce6; padding: 14px 18px; margin-top: 16px; }
+    .box { padding: 8px 12px; margin: 8px 0; border-left: 5px solid; }
+    .box.warn { background: #fff4d6; border-color: #c98a00; color: #5c3b00; }
+    .box.bad { background: #fde7e9; border-color: #a50e0e; color: #7a0b0b; }
+    .box.info { background: #eef4fa; border-color: #5a8fbf; }
+    .expr { font-variant-numeric: tabular-nums; margin: 6px 0; line-height: 1.9; }
+    .badge {
+      display: inline-block; min-width: 16px; padding: 0 5px; border-radius: 9px;
+      background: #d93025; color: white; font: 700 12px/18px system-ui; text-align: center;
     }
-    .bar {
-      height: 14px;
-      background: #287cc0;
-    }
-    .negative {
-      background: #b94650;
-    }
-    pre {
-      white-space: pre-wrap;
-      font-size: 12px;
-      max-height: 350px;
-      overflow: auto;
-    }
-    #risk {
-      background: #fff1d9;
-      padding: 18px;
-      margin: 20px 0;
-    }
-    #error {
-      color: #a00;
-    }
-    small {
-      color: #516276;
-    }
-    a {
-      color: #176797;
-    }
-    tr.evidence > td {
-      padding: 4px 12px 18px;
-      background: #fbfcfe;
-    }
-    .ev-missing {
-      background: #fde7e9;
-      color: #a50e0e;
-      border-left: 5px solid #a50e0e;
-      padding: 8px 12px;
-      font-weight: 700;
-    }
-    .ev-warn {
-      background: #fff4d6;
-      color: #7a4b00;
-      border-left: 5px solid #c98a00;
-      padding: 8px 12px;
-      font-weight: 700;
-    }
-    .ev-expression {
-      font-variant-numeric: tabular-nums;
-      margin: 6px 0 10px;
-    }
-    .ev-badge {
-      display: inline-block;
-      min-width: 14px;
-      padding: 0 4px;
-      border-radius: 8px;
-      background: #d93025;
-      color: white;
-      font: 700 12px/17px system-ui;
-      text-align: center;
-    }
-    .ev-fact {
-      margin: 10px 0 16px;
-    }
-    .ev-fact a {
-      margin-right: 14px;
-    }
-    .ev-fact img {
-      display: block;
-      max-width: 100%;
-      margin-top: 6px;
-      border: 1px solid #ccd5e1;
-    }
+    .table-ev { margin: 14px 0 22px; }
+    .table-ev img { display: block; max-width: 100%; margin-top: 6px; border: 1px solid #ccd5e1; }
+    .links a { margin-right: 14px; }
+    dl.kv { display: grid; grid-template-columns: max-content 1fr; gap: 2px 14px; margin: 6px 0; }
+    dl.kv dt { color: #516276; }
+    dl.kv dd { margin: 0; }
+    ul.plain { margin: 4px 0; padding-left: 20px; }
   </style>
-  <h1>SEC 營收與解析證據</h1>
-  <p>已見期間回溯 · parser 維護風險 · SEC 主要來源</p>
-  <form id="form">
-    <label
-      >Ticker
-      <input id="ticker" value="AAPL" list="tickers" maxlength="8" /></label
-    ><datalist id="tickers"></datalist><button>載入</button
-    ><label
-      >期間
-      <select id="period"></select></label
-    ><label
-      >口徑
-      <select id="basis"></select
-    ></label>
-  </form>
+  <h1>SEC 營收正式輸出</h1>
+  <div class="bar">
+    <label class="picker">公司
+      <input id="company" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="company-list"
+        autocomplete="off" spellcheck="false" placeholder="輸入代碼或名稱" />
+      <ul id="company-list" role="listbox" hidden></ul>
+    </label>
+    <span class="toggle" id="series">
+      <button type="button" data-series="Q" aria-pressed="true">季度 Q</button>
+      <button type="button" data-series="FY" aria-pressed="false">年度 FY</button>
+    </span>
+  </div>
   <p id="error" role="alert"></p>
-  <p id="context"></p>
-  <p id="reference"></p>
-  <section id="risk"></section>
-  <table>
-    <thead>
-      <tr>
-        <th>分類</th>
-        <th>美元</th>
-        <th>數值方向／規模</th>
-        <th>萃取運算元</th>
-      </tr>
-    </thead>
-    <tbody id="rows"></tbody>
-  </table>
-  <p>
-    <small
-      >圖條顯示正負數與相對規模；總額、子項及證券收入組成不可重複相加。參考原值未上傳雲端。</small
-    >
+  <div id="notes"></div>
+  <div class="scroll"><table class="grid" id="grid"></table></div>
+  <p class="muted" id="legend">
+    <span class="flag">△</span> 後來申報的比較欄與已上線值不同（差異標記）；灰底斜體：留空（未推算）；紅底：失敗。
+    留空或失敗而保留先前上線輸出的期別，格子顯示已上線值。
   </p>
+  <section id="detail" hidden></section>
   <script>
-    let data = [];
     const el = (id) => document.getElementById(id);
-    function options(node, values, selected) {
-      node.replaceChildren(
-        ...values.map((v) => {
-          const x = document.createElement("option");
-          x.value = v;
-          x.textContent = v;
-          return x;
-        }),
-      );
-      if (values.includes(selected)) node.value = selected;
-    }
-    function render() {
-      const matching = data.filter((r) => r.period_end === el("period").value);
-      options(
-        el("basis"),
-        [...new Set(matching.map((r) => r.basis))],
-        el("basis").value || matching[0]?.primary_basis,
-      );
-      const row = matching.find((r) => r.basis === el("basis").value);
-      if (!row) return;
-      el("context").textContent =
-        `${row.ticker} · FY${row.fiscal_year ?? "未知"} Q${row.fiscal_quarter ?? "未知"} · ${row.fiscal_period?.startdate || "起日缺失"} → ${row.period_end} · ${row.basis} · ${row.source_formats.join(", ")}`;
-      el("reference").textContent =
-        "參考來源：" +
-        (row.reference.reference_sources_by_period[row.period_end] || []).join(
-          ", ",
-        ) +
-        "；雲端無參考原值，SEC 重播可獨立完成。";
-      el("risk").textContent =
-        `維護風險 ${row.risk.level} (${row.risk.score}/100)：${row.risk.reasons.join("；")}`;
-      el("rows").replaceChildren();
-      const max = Math.max(
-        1,
-        ...Object.values(row.outputs).map((o) => Math.abs(o.value_usd || 0)),
-      );
-      for (const [label, output] of Object.entries(row.outputs)) {
-        const tr = document.createElement("tr");
-        for (const text of [
-          label,
-          output.value_usd === null
-            ? `缺值：${output.status}`
-            : output.value_usd.toLocaleString("en-US"),
-        ]) {
-          const td = document.createElement("td");
-          td.textContent = text;
-          tr.append(td);
-        }
-        tr.children[1].className = "amount";
-        const chart = document.createElement("td");
-        const bar = document.createElement("div");
-        bar.className = "bar" + (output.value_usd < 0 ? " negative" : "");
-        bar.style.width = (Math.abs(output.value_usd || 0) / max) * 100 + "%";
-        chart.append(bar);
-        tr.append(chart);
-        const evidence = document.createElement("td");
-        const detail = document.createElement("details");
-        const summary = document.createElement("summary");
-        summary.textContent = `${output.SEC_operands.length} 個運算元（JSON）`;
-        detail.append(summary);
-        for (const fact of output.SEC_operands) {
-          const link = document.createElement("a");
-          if (/^https:\/\/www\.sec\.gov\/Archives\//.test(fact.source_url)) {
-            link.href = fact.source_url;
-            link.target = "_blank";
-            link.rel = "noopener";
-            link.textContent = "SEC 文件";
-            detail.append(link);
-          }
-          const pre = document.createElement("pre");
-          pre.textContent = JSON.stringify(fact, null, 2);
-          detail.append(pre);
-        }
-        evidence.append(detail);
-        tr.append(evidence);
-        el("rows").append(tr, evidenceRow(row, label));
-      }
-    }
-    const SCALE = { 3: " 千", 6: " 百萬", 9: " 十億" };
+    const state = { companies: [], ticker: null, company: null, series: "Q", selected: null };
+    const ROLE = { quarter: "單季", annual: "年度", nine_months: "九個月", six_months: "六個月" };
+    const STATUS = { published: "已上線", failed: "失敗", not_derived: "留空", unknown: "狀態不明" };
     const SEC_URL = /^https:\/\/www\.sec\.gov\//;
+    const IX_URL = /^https:\/\/www\.sec\.gov\/ix\?doc=/;
+
     function node(tag, className, text) {
       const x = document.createElement(tag);
       if (className) x.className = className;
-      if (text !== undefined) x.textContent = text;
+      if (text !== undefined && text !== null) x.textContent = text;
       return x;
     }
     function link(href, text) {
@@ -241,144 +119,413 @@
       a.rel = "noopener";
       return a;
     }
-    function factLabel(fact) {
-      const dates = fact.startdate
-        ? `${fact.startdate}～${fact.enddate}`
-        : fact.enddate;
-      const sign = fact.value < 0 ? "−" : "";
-      return `${fact.form} ${fact.duration}（${dates}）${sign}${fact.raw}${SCALE[fact.scale] || ""}`;
+    function millions(value) {
+      if (value === null || value === undefined) return "—";
+      const m = value / 1e6;
+      const digits = Number.isInteger(m) ? 0 : 3;
+      return m.toLocaleString("en-US", { minimumFractionDigits: digits, maximumFractionDigits: digits });
     }
-    function usd(value) {
-      return value === null || value === undefined ? "空值" : value.toLocaleString("en-US");
+    function periodLabel(p, series) {
+      if (series === "FY" || !p.fiscal_quarter) return `FY${p.fiscal_year ?? "?"}`;
+      return `FY${p.fiscal_year ?? "?"} Q${p.fiscal_quarter}`;
     }
-    // 證據缺失、失敗或與萃取輸出不符時以紅色區塊標示「無證據」，不顯示成正常狀態。
-    function evidenceRow(row, label) {
-      const tr = node("tr", "evidence");
-      const td = node("td");
-      td.colSpan = 4;
-      tr.append(td);
-      const evidence = row.evidence;
-      const field = evidence?.fields?.[label];
-      if (!evidence) {
-        td.append(node("div", "ev-missing", "無證據：這一期尚未產生 SEC 表格證據"));
-        return tr;
-      }
-      if (evidence.error && !field) {
-        td.append(node("div", "ev-missing", "無證據：" + evidence.error));
-        return tr;
-      }
-      if (evidence.stale) {
-        td.append(
-          node(
-            "div",
-            "ev-missing",
-            "無證據：證據已過期，需重新產生（" + evidence.stale_reasons.join("；") + "）",
-          ),
-        );
-        return tr;
-      }
-      if (!field || field.status === "failed" || field.status === "no_operands") {
-        td.append(
-          node(
-            "div",
-            "ev-missing",
-            "無證據：" + (field?.reasons.join("；") || "找不到這個欄位的證據"),
-          ),
-        );
-        if (!field?.expressions.length) return tr;
-      } else if (field.status === "not_in_table") {
-        td.append(
-          node("div", "ev-warn", "部分運算元無證據（不在 HTML 表格內）：" + field.reasons.join("；")),
-        );
-      }
-      const empty = row.outputs[label].value_usd === null;
-      const facts = [];
-      field.expressions.forEach((expression, index) => {
-        const line = node("div", "ev-expression");
-        // 萃取值為空時不寫成「值 = 運算式」，避免看起來像有萃取結果。
-        line.append(
-          (empty ? "萃取值為空，替代式僅供參考：" : "") +
-            (field.expressions.length > 1 ? `替代式 ${index + 1}：` : "") +
-            (empty ? "" : `${usd(expression.value_usd)} = `),
-        );
-        expression.terms.forEach((term, i) => {
-          const fact = evidence.facts[term.fact];
-          const sign = term.weight < 0 ? " − " : i ? " + " : "";
-          const weight = Math.abs(term.weight) === 1 ? "" : `${Math.abs(term.weight)} × `;
-          line.append(sign + weight, node("span", "ev-badge", String(fact.number)), " " + factLabel(fact));
-          if (!facts.includes(term.fact)) facts.push(term.fact);
+    const RESULT = { different: "數值不同", unparseable: "無法解析" };
+    function amount(value) {
+      return typeof value === "number" ? `${millions(value)} 百萬（${value.toLocaleString("en-US")}）` : value ?? "—";
+    }
+    function span(period) {
+      return period?.start ? `${period.start}～${period.end}` : period?.end ?? "";
+    }
+    function differences(p) {
+      const list = p.record?.differences;
+      return Array.isArray(list) ? list : [];
+    }
+    // 表格的列：`kind` 是 category（分類）、reconciling（調節項）或 total（總營收）。
+    const TOTAL_ROW = { kind: "total", name: "總營收" };
+    function entryOf(p, row) {
+      if (row.kind === "total") return p.revenue?.total;
+      return (row.kind === "reconciling" ? p.revenue?.reconciling : p.revenue?.categories)?.[row.name];
+    }
+    function sameRow(a, b) {
+      return a.kind === b.kind && a.name === b.name;
+    }
+    // 差異標記依 `category` 掛到同名的分類或調節項列；沒有分類（或分類為總營收）的歸在總營收列。
+    function cellDiffs(p, row) {
+      const isTotal = (d) => !d.category || d.category === "總營收" || d.category === "total";
+      return differences(p).filter((d) => (row.kind === "total" ? isTotal(d) : !isTotal(d) && d.category === row.name));
+    }
+
+    async function loadCompanies() {
+      const response = await fetch("/api/companies");
+      state.companies = await response.json();
+      const hash = new URLSearchParams(location.hash.slice(1));
+      const series = hash.get("series");
+      if (series === "FY" || series === "Q") state.series = series;
+      const wanted = state.companies.find((c) => c.ticker === hash.get("ticker"));
+      const first = wanted || state.companies.find((c) => c.listed && c.has_output);
+      if (first) await chooseCompany(first.ticker);
+    }
+
+    // 公司搜尋：候選只列 tickers.csv status=ok 的公司；其他公司可用 URL hash 開啟。
+    // 代碼與名稱都比對、不分大小寫；代碼開頭相符的排前面。
+    const picker = { matches: [], active: -1 };
+    function matchCompanies(query) {
+      const q = query.trim().toLowerCase();
+      const rank = (c) => {
+        const t = c.ticker.toLowerCase();
+        if (!q || t === q) return 0;
+        if (t.startsWith(q)) return 1;
+        if (t.includes(q)) return 2;
+        if ((c.name || "").toLowerCase().includes(q)) return 3;
+        return -1;
+      };
+      return state.companies
+        .filter((c) => c.listed)
+        .map((c) => [rank(c), c])
+        .filter(([r]) => r >= 0)
+        .sort((a, b) => a[0] - b[0] || a[1].ticker.localeCompare(b[1].ticker))
+        .map(([, c]) => c);
+    }
+    function renderPicker() {
+      const list = el("company-list");
+      list.replaceChildren();
+      picker.matches = matchCompanies(el("company").value);
+      if (picker.active >= picker.matches.length) picker.active = picker.matches.length - 1;
+      if (!picker.matches.length) list.append(node("li", "none", "沒有符合的公司"));
+      picker.matches.forEach((c, i) => {
+        const li = node("li", "", c.ticker);
+        li.id = "company-option-" + i;
+        li.setAttribute("role", "option");
+        li.setAttribute("aria-selected", String(i === picker.active));
+        li.append(node("span", "name", c.name || ""));
+        li.addEventListener("mousedown", (event) => {
+          event.preventDefault();
+          chooseCompany(c.ticker);
         });
-        td.append(line);
+        list.append(li);
       });
-      for (const key of facts) {
-        const fact = evidence.facts[key];
-        const box = node("div", "ev-fact");
-        box.append(
-          node("span", "ev-badge", String(fact.number)),
-          ` ${fact.form} · 申報日 ${fact.filing_date} · accession ${fact.accession} · ${fact.fact_id} `,
-        );
-        const links = node("div");
-        if (SEC_URL.test(fact.source_url || "")) links.append(link(fact.source_url, "SEC 原文"));
-        if (/^https:\/\/www\.sec\.gov\/ix\?doc=/.test(fact.ixviewer_url || ""))
-          links.append(link(fact.ixviewer_url, "XBRL viewer"));
-        const table = fact.table && evidence.tables[fact.table];
-        const base = `/evidence/${encodeURIComponent(row.ticker)}/${row.period_end}/`;
-        if (table) links.append(link(base + table.html, "表格 HTML"));
-        box.append(links);
-        if (table) {
-          if (table.cropped)
-            box.append(node("div", "ev-warn", "截圖已裁切：只保留表頭與標示列附近，略過的列以 ✂ 標示"));
-          const image = node("img");
-          image.src = base + table.png;
-          image.alt = `${fact.form} 表格 #${fact.table_index}`;
-          image.loading = "lazy";
-          box.append(link(base + table.png, ""));
-          box.lastChild.append(image);
-        } else {
-          box.append(
-            node(
-              "div",
-              fact.status === "not_in_table" ? "ev-warn" : "ev-missing",
-              "無表格證據：" + fact.reason,
-            ),
-          );
-        }
-        td.append(box);
-      }
-      return tr;
+      const input = el("company");
+      if (picker.active >= 0) {
+        input.setAttribute("aria-activedescendant", "company-option-" + picker.active);
+        document.getElementById("company-option-" + picker.active)?.scrollIntoView({ block: "nearest" });
+      } else input.removeAttribute("aria-activedescendant");
     }
-    async function load(event) {
-      event?.preventDefault();
+    function openPicker() {
+      el("company-list").hidden = false;
+      el("company").setAttribute("aria-expanded", "true");
+      renderPicker();
+    }
+    function closePicker() {
+      el("company-list").hidden = true;
+      el("company").setAttribute("aria-expanded", "false");
+      picker.active = -1;
+      const current = state.companies.find((c) => c.ticker === state.ticker);
+      el("company").value = current ? `${current.ticker} ${current.name}` : "";
+    }
+    async function chooseCompany(ticker) {
+      state.ticker = ticker;
+      closePicker();
+      el("company").blur();
+      await loadCompany();
+    }
+    el("company").addEventListener("focus", () => {
+      picker.active = -1;
+      el("company").value = "";
+      openPicker();
+    });
+    el("company").addEventListener("input", () => {
+      picker.active = el("company").value.trim() ? 0 : -1;
+      openPicker();
+    });
+    el("company").addEventListener("blur", closePicker);
+    el("company").addEventListener("keydown", (event) => {
+      const n = picker.matches.length;
+      if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+        event.preventDefault();
+        if (el("company-list").hidden) openPicker();
+        if (!n) return;
+        const step = event.key === "ArrowDown" ? 1 : -1;
+        picker.active = picker.active < 0 ? (step > 0 ? 0 : n - 1) : (picker.active + step + n) % n;
+        renderPicker();
+      } else if (event.key === "Enter") {
+        event.preventDefault();
+        const choice = picker.matches[picker.active >= 0 ? picker.active : 0];
+        if (choice) chooseCompany(choice.ticker);
+      } else if (event.key === "Escape") {
+        el("company").blur();
+      }
+    });
+
+    async function loadCompany() {
       el("error").textContent = "";
-      try {
-        const response = await fetch(
-          "/api/revenue?ticker=" + encodeURIComponent(el("ticker").value),
-        );
-        if (!response.ok)
-          throw new Error(
-            response.status === 404 ? "尚無已重播資料" : "Ticker 或查詢無效",
-          );
-        data = await response.json();
-        options(
-          el("period"),
-          [...new Set(data.map((r) => r.period_end))].sort().reverse(),
-        );
-        el("basis").replaceChildren();
-        render();
-      } catch (error) {
-        el("error").textContent = error.message;
-        el("rows").replaceChildren();
-        el("context").textContent = "";
-        el("risk").textContent = "";
-        el("reference").textContent = "";
+      state.selected = null;
+      el("detail").hidden = true;
+      const ticker = state.ticker;
+      if (!ticker) return;
+      const response = await fetch("/api/company?ticker=" + encodeURIComponent(ticker));
+      if (!response.ok) {
+        state.company = null;
+        el("grid").replaceChildren();
+        el("notes").replaceChildren();
+        el("error").textContent = response.status === 404 ? `${ticker} 沒有正式輸出` : "查詢無效";
+        return;
+      }
+      state.company = await response.json();
+      const notes = el("notes");
+      notes.replaceChildren();
+      const errors = state.company.comparison_errors || [];
+      if (errors.length) {
+        const box = node("div", "box warn", `${errors.length} 份申報讀不到原文，沒有做比較欄比對：`);
+        const ul = node("ul", "plain");
+        for (const e of errors) ul.append(node("li", "", `${e.accession}：` + [e.check, e.reason].filter(Boolean).join("：")));
+        box.append(ul);
+        notes.append(box);
+      }
+      render();
+    }
+
+    function setSeries(series) {
+      state.series = series;
+      state.selected = null;
+      el("detail").hidden = true;
+      render();
+    }
+
+    function render() {
+      const company = state.company;
+      if (!company) return;
+      for (const b of el("series").querySelectorAll("button"))
+        b.setAttribute("aria-pressed", String(b.dataset.series === state.series));
+      history.replaceState(null, "", `#ticker=${encodeURIComponent(company.ticker)}&series=${state.series}`);
+      const periods = company.series[state.series] || [];
+      const grid = el("grid");
+      grid.replaceChildren();
+      if (!periods.length) {
+        const row = grid.insertRow();
+        row.append(node("td", "empty", state.series === "FY" ? "這家公司還沒有 FY 序列的輸出" : "這家公司還沒有 Q 序列的輸出"));
+        return;
+      }
+      // 列：各期分類的聯集，依最新一期的順序，舊期才有的分類接在後面。
+      // 調節項（`reconciling`）同樣取聯集，列在分類之後、總營收之前。
+      const rows = [];
+      for (const kind of ["category", "reconciling"])
+        for (const p of [...periods].reverse())
+          for (const name of Object.keys((kind === "category" ? p.revenue?.categories : p.revenue?.reconciling) || {}))
+            if (!rows.some((r) => sameRow(r, { kind, name }))) rows.push({ kind, name });
+      const kept = (p) => p.status !== "published" && p.record?.published_output_kept && p.revenue;
+      const head = grid.createTHead().insertRow();
+      const corner = node("th", "label", "分類");
+      corner.append(node("span", "unit", "百萬美元"));
+      head.append(corner);
+      for (const p of periods) {
+        const th = node("th", "", periodLabel(p, state.series));
+        th.append(node("span", "colnote", p.period_end));
+        if (p.status !== "published")
+          th.append(node("span", "colnote" + (p.status === "failed" ? " failed" : ""), (STATUS[p.status] ?? p.status) + (kept(p) ? "（保留已上線值）" : "")));
+        if (p.record?.differs_from_published) th.append(node("span", "colnote", "重算不同"));
+        head.append(th);
+      }
+      const body = grid.createTBody();
+      let firstReconciling = true;
+      for (const item of [...rows, TOTAL_ROW]) {
+        const row = body.insertRow();
+        const label = node("th", "label");
+        if (item.kind === "total") row.className = "total";
+        if (item.kind === "reconciling") {
+          row.className = "reconciling" + (firstReconciling ? " first" : "");
+          firstReconciling = false;
+          label.append(node("span", "tag", "調節"));
+        }
+        label.append(item.name);
+        row.append(label);
+        for (const p of periods) {
+          const td = row.insertCell();
+          const entry = entryOf(p, item);
+          if (p.status === "not_derived" || p.status === "failed") {
+            td.className = p.status === "failed" ? "failed" : "blank";
+            td.textContent = kept(p) ? (entry ? millions(entry.value) : "") : STATUS[p.status];
+            if (kept(p)) td.classList.add("kept");
+            td.title = [p.record?.check, p.record?.reason].filter(Boolean).join("：");
+          } else if (!entry) {
+            td.className = "empty";
+            td.textContent = p.revenue ? "" : "無法讀取";
+          } else {
+            td.textContent = millions(entry.value);
+          }
+          const diffs = cellDiffs(p, item);
+          if (diffs.length) {
+            td.classList.add("diff");
+            td.append(node("span", "flag", "△"));
+            td.title = `差異標記 ${diffs.length} 筆`;
+          }
+          td.addEventListener("click", () => select(td, p, item));
+          if (state.selected && state.selected.period === p.period_end && sameRow(state.selected.row, item)) td.classList.add("selected");
+        }
       }
     }
-    el("form").addEventListener("submit", load);
-    el("period").addEventListener("change", render);
-    el("basis").addEventListener("change", render);
-    fetch("/api/tickers")
-      .then((r) => r.json())
-      .then((values) => options(el("tickers"), values));
-    load();
+
+    function select(td, p, row) {
+      for (const x of el("grid").querySelectorAll("td.selected")) x.classList.remove("selected");
+      td.classList.add("selected");
+      state.selected = { period: p.period_end, row };
+      showDetail(p, row);
+    }
+
+    function factLine(n, operand) {
+      const dates = operand.period?.start ? `${operand.period.start}～${operand.period.end}` : operand.period?.end;
+      const scale = { 3: " 千", 6: " 百萬", 9: " 十億" }[operand.scale] || "";
+      return `${operand.form} ${ROLE[operand.role] ?? operand.role}（${dates}）${operand.value < 0 ? "−" : ""}${operand.raw}${scale}`;
+    }
+
+    function showDetail(p, row) {
+      const company = state.company;
+      const box = el("detail");
+      box.hidden = false;
+      box.replaceChildren();
+      const revenue = p.revenue;
+      const entry = entryOf(p, row);
+      const label = row.kind === "reconciling" ? `調節項 ${row.name}` : row.name;
+      box.append(node("h2", "", `${company.ticker} · ${label} · ${periodLabel(p, state.series)}（期末 ${p.period_end}）`));
+      const status = node("div", "muted", `狀態：${STATUS[p.status] ?? p.status}` + (p.record?.accession ? ` · 主申報 ${p.record.accession}` : ""));
+      box.append(status);
+      const record = p.record || {};
+      if (p.status === "not_derived" || p.status === "failed") {
+        const why = node("div", p.status === "failed" ? "box bad" : "box warn");
+        why.append(node("strong", "", `${STATUS[p.status]}：` + [record.check, record.reason].filter(Boolean).join("：")));
+        if (record.fy_categories) {
+          const dl = node("dl", "kv");
+          dl.append(node("dt", "", "年度分類"), node("dd", "", record.fy_categories.join("、")));
+          for (const q of record.quarter_categories || [])
+            dl.append(node("dt", "", span(q)), node("dd", "", q.categories.join("、")));
+          why.append(dl);
+        }
+        why.append(
+          node("div", "", record.published_output_kept ? `保留先前上線的輸出（${record.published_output?.accession ?? ""}），以下是它的內容。` : "沒有先前上線的輸出。"),
+        );
+        box.append(why);
+      }
+      const changed = record.differs_from_published;
+      if (changed) {
+        const warn = node("div", "box warn");
+        warn.append(node("strong", "", `重算結果與已上線輸出不同：${changed.reason}。已上線數字不改，待人確認後覆寫。`));
+        const dl = node("dl", "kv");
+        for (const c of changed.categories || [])
+          dl.append(node("dt", "", c.category), node("dd", "", `已上線 ${amount(c.published)} → 重算 ${amount(c.new)}`));
+        if (changed.fields?.length) dl.append(node("dt", "", "不同的欄位"), node("dd", "", changed.fields.join("、")));
+        warn.append(dl);
+        box.append(warn);
+      }
+      if (record.stale_fields?.length)
+        box.append(node("div", "box info", "重算結果只有中繼資料不同：" + record.stale_fields.join("、")));
+      const diffs = cellDiffs(p, row);
+      if (diffs.length) {
+        const warn = node("div", "box warn");
+        warn.append(node("strong", "", `差異標記 ${diffs.length} 筆：後來申報的比較欄與已上線值不同。已上線數字不改。`));
+        for (const d of diffs) {
+          const dl = node("dl", "kv");
+          const source = d.source || {};
+          const rows = [
+            ["分類", d.category],
+            ["運算元", `${d.operand ?? ""} ${ROLE[d.role] ?? d.role ?? ""}（${span(d.period)}）`],
+            ["結果", RESULT[d.result] ?? d.result],
+            ["已上線值", amount(d.published_value)],
+            ["申報列示值", amount(d.listed_value)],
+            ["來源申報", `${source.form ?? ""} ${source.accession ?? ""}，申報日 ${source.filing_date ?? ""}`],
+            ["fact", source.fact_id],
+            ["說明", d.note],
+          ];
+          for (const [label, value] of rows)
+            if (value !== undefined && value !== null) dl.append(node("dt", "", label), node("dd", "", String(value)));
+          warn.append(dl);
+        }
+        box.append(warn);
+      }
+      if (!revenue) {
+        if (p.status === "published") box.append(node("div", "box bad", "revenue.json 無法讀取"));
+        return;
+      }
+      if (!entry) {
+        box.append(node("div", "muted", "這一期沒有這個分類。"));
+        return;
+      }
+      // 運算式：值 = ① … − ② …
+      const operands = revenue.operands || {};
+      const expr = node("div", "expr");
+      expr.append(node("strong", "", `${millions(entry.value)} 百萬`), " = ");
+      const used = [];
+      entry.expression.forEach((term, i) => {
+        const operand = operands[term.operand];
+        const n = term.operand.replace(/^op/, "");
+        const sign = term.weight < 0 ? (i ? " − " : "−") : i ? " + " : "";
+        const weight = Math.abs(term.weight) === 1 ? "" : `${Math.abs(term.weight)} × `;
+        expr.append(sign + weight, node("span", "badge", n), " " + (operand ? factLine(n, operand) : term.operand));
+        if (operand) used.push([n, operand]);
+      });
+      box.append(expr);
+      const filings = revenue.filings || {};
+      const fl = node("ul", "plain muted");
+      const order = (role) => (role === "primary" ? 0 : 1);
+      for (const [role, f] of Object.entries(filings).sort((a, b) => order(a[0]) - order(b[0])))
+        fl.append(node("li", "", `${role === "primary" ? "主申報" : role === "nine_months" ? "九個月申報" : role}：${f.form} ${f.accession}，申報日 ${f.filing_date}，期末 ${f.report_date}`));
+      box.append(fl);
+      const checks = revenue.checks || {};
+      const structural = checks.structural || [];
+      const failed = structural.filter((c) => c.result !== "pass");
+      const sum = checks.sum;
+      box.append(
+        node(
+          "div",
+          failed.length ? "box bad" : "box info",
+          `結構檢核：${failed.length ? "不通過 " + failed.map((c) => c.check).join("、") : `${structural.length} 項通過`}` +
+            (sum ? ` · 加總：分類合計 ${millions(sum.categories)}，總營收 ${millions(sum.total)}，差額 ${millions(sum.difference)}（容許 ${millions(Number(sum.tolerance))}）` : ""),
+        ),
+      );
+      // 證據：依表格分組，同一張表只顯示一次，列出表內的運算元編號。
+      const tables = new Map();
+      const loose = [];
+      for (const [n, operand] of used) {
+        const key = operand.evidence?.table;
+        if (!key) { loose.push([n, operand]); continue; }
+        if (!tables.has(key)) tables.set(key, []);
+        tables.get(key).push([n, operand]);
+      }
+      const files = revenue.evidence_files || {};
+      const base = `/revenue-evidence/${encodeURIComponent(company.ticker)}/${state.series}/${encodeURIComponent(p.period_end)}/`;
+      for (const [key, members] of tables) {
+        const section = node("div", "table-ev");
+        const title = node("div");
+        for (const [n] of members) title.append(node("span", "badge", n), " ");
+        const first = members[0][1];
+        title.append(`${first.form} · ${first.accession} · 申報日 ${first.filing_date} · ${first.document?.name ?? ""} · ` + members.map(([n, o]) => `${n}: ${o.fact_id}`).join("、"));
+        section.append(title);
+        const links = node("div", "links");
+        if (SEC_URL.test(first.document?.url || "")) links.append(link(first.document.url, "SEC 原文"));
+        if (IX_URL.test(first.document?.ixviewer_url || "")) links.append(link(first.document.ixviewer_url, "XBRL viewer"));
+        const file = files[key];
+        if (file && !file.problems.length) links.append(link(base + file.html, "表格 HTML"));
+        section.append(links);
+        if (!file || file.problems.length) {
+          section.append(node("div", "box bad", "無表格證據：" + (file ? file.problems.join("；") : "找不到表格檔")));
+        } else {
+          const image = node("img");
+          image.src = base + file.png;
+          image.alt = `${first.form} 表格 ${key}`;
+          image.loading = "lazy";
+          const a = link(base + file.png, "");
+          a.append(image);
+          section.append(a);
+        }
+        box.append(section);
+      }
+      for (const [n, operand] of loose) {
+        const section = node("div", "table-ev");
+        section.append(node("span", "badge", n), ` ${operand.form} · ${operand.accession} · ${operand.fact_id}`);
+        section.append(node("div", "box warn", "這個運算元沒有表格證據"));
+        box.append(section);
+      }
+    }
+
+    for (const b of el("series").querySelectorAll("button")) b.addEventListener("click", () => setSeries(b.dataset.series));
+    loadCompanies().catch((error) => (el("error").textContent = "載入失敗：" + error.message));
   </script>
 </html>

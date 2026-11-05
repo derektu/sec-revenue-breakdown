@@ -107,6 +107,7 @@ class WorkflowCli:
         viewer.add_argument("--data", type=Path, default=data_root(), help="資料根目錄（預設 SEC_DATA_DIR 或 repo 的 data/）")
         viewer.add_argument("--host", default="127.0.0.1")
         viewer.add_argument("--port", type=int, default=7290)
+        viewer.add_argument("--revenue", type=Path, default=REVENUE_ROOT, help="正式輸出根目錄（預設 repo 的 data/revenue/）")
         args = cli.parse_args()
         try:
             roster = SupportedTickers()
@@ -115,7 +116,7 @@ class WorkflowCli:
                 print(json.dumps(names) if args.json else "\n".join(names))
                 return 0
             if args.command == "viewer":
-                server = RevenueViewer(args.data).server(args.host, args.port)
+                server = RevenueViewer(args.data, args.revenue).server(args.host, args.port)
                 print(f"Viewer http://{args.host}:{server.server_port}", flush=True)
                 server.serve_forever()
                 return 0
