@@ -5,6 +5,8 @@
 - FY 序列：10-K 的年度 fact。
 
 每期的分類集合是規格中在該期有生效定義的分類；沒有生效定義的分類該期不列出。
+一個定義可以有多個加數（`sum_of`）：每個加數各是一個運算元，任一加數找不到時該期失敗；Q4 的每個加數同樣是
+年度減九個月累計。分類的運算式依規格的加數順序列出（Q4 為各加數的年度、九個月累計交錯排列）。
 任何結構檢核不通過都以 `ParseError` 結束該期；訊息開頭的 `[檢核名稱]` 與設計文件的檢核表一致。
 """
 
@@ -15,7 +17,7 @@ import datetime as dt
 from decimal import Decimal
 
 from .filings import Filing, FilingSet, ParseError
-from .spec import Definition, Category, CompanySpec, FactSelector, TableCellSelector
+from .spec import Category, CompanySpec, Definition, FactSelector, TableCellSelector
 from .xbrl import USD, Fact, classify_duration, decimals_rank
 
 QUARTER_FOCUS = {"Q1": 1, "Q2": 2, "Q3": 3, "FY": 4}
@@ -111,35 +113,30 @@ class PeriodComposer:
         primary, year, quarter = self.primary(period)
         if quarter != 4:
             items = self.active_items(period)
-            candidates = {}
-            for group, item, definition in items:
-                found = self.candidate(primary, definition.selector, period, "quarter", None, item.name)
-                found.weight = definition.weight
-                candidates[item.name] = [found]
+            candidates = {
+                item.name: self.addends(primary, definition, period, "quarter", None, item.name) for group, item, definition in items
+            }
             return self.finish("Q", period, year, quarter, primary, None, items, candidates)
 
         # Point in time：九個月與 Q1–Q3 都來自申報日不晚於本期主申報的申報。
         nine_filing = self.third_quarter(period, year, primary.filing_date)
         start = self.dependencies(period, primary.filing_date, nine_filing.report_date)
         items = self.active_items(period)
-        annual = {
-            item.name: self.candidate(primary, definition.selector, period, "annual", None, item.name)
-            for group, item, definition in items
-        }
+        annual = {item.name: self.addends(primary, definition, period, "annual", None, item.name) for group, item, definition in items}
         self.check_categories(items, start, nine_filing.report_date, period)
         # 定義依運算元來源申報的期末日選取：年度運算元是本期，九個月運算元是 Q3 期末日。
         # 公司在財年中途改 tag 時（例如 10-K 起換新成員、同財年 Q3 10-Q 仍是舊成員），兩個運算元各用各的定義。
+        # 年度與九個月累計的加數個數可以不同（兩者的定義各自選取）；Q4 = 年度各加數之和 − 九個月各加數之和。
         candidates = {}
         for group, item, definition in items:
             nine_definition = self.definition(item, nine_filing.report_date)
             if nine_definition is None:
                 raise ParseError("定義唯一", f"{item.name} 在 {nine_filing.report_date} 沒有生效的定義")
-            nine = self.candidate(
-                nine_filing, nine_definition.selector, nine_filing.report_date, "nine_months", annual[item.name].facts[0].start, item.name
-            )
-            self.check_q4(item.name, annual[item.name].facts[0], nine.facts[0], period)
-            annual[item.name].weight, nine.weight = definition.weight, -nine_definition.weight
-            candidates[item.name] = [annual[item.name], nine]
+            annual_start = annual[item.name][0].facts[0].start
+            nine = self.addends(nine_filing, nine_definition, nine_filing.report_date, "nine_months", annual_start, item.name, sign=-1)
+            for found in annual[item.name] + nine:
+                self.check_q4(item.name, annual_start, found.facts[0], period)
+            candidates[item.name] = interleave(annual[item.name], nine)
         return self.finish("Q", period, year, quarter, primary, nine_filing, items, candidates)
 
     def compose_annual(self, period: str) -> PeriodResult:
@@ -148,11 +145,9 @@ class PeriodComposer:
         if quarter != 4:
             raise ParseError("財年與季別", f"{primary.accession} 宣告的期別是 Q{quarter}，FY 序列只取 10-K")
         items = self.active_items(period)
-        candidates = {}
-        for group, item, definition in items:
-            found = self.candidate(primary, definition.selector, period, "annual", None, item.name)
-            found.weight = definition.weight
-            candidates[item.name] = [found]
+        candidates = {
+            item.name: self.addends(primary, definition, period, "annual", None, item.name) for group, item, definition in items
+        }
         return self.finish("FY", period, year, None, primary, None, items, candidates)
 
     def dependencies(self, period: str, as_of: str, nine_end: str) -> str:
@@ -219,6 +214,8 @@ class PeriodComposer:
             {"check": "fact 存在且唯一", "result": "pass"},
             {"check": "單位與精度", "result": "pass"},
         ]
+        if any(definition.geographic_sum() for _, _, definition in items):
+            structural.append({"check": "地區成員完整", "result": "pass"})
         if nine_filing is not None:
             structural.append({"check": "Q4 期間", "result": "pass"})
         groups = {item.name: group for group, item, _ in items}
@@ -243,8 +240,9 @@ class PeriodComposer:
             return None
         if len(active) > 1:
             raise ParseError("定義唯一", f"{item.name} 在 {source_period} 有 {len(active)} 個生效的定義")
-        if isinstance(active[0].selector, TableCellSelector):
-            raise ParseError("定義唯一", f"{item.name} 使用 {active[0].selector.describe()}：table_cell 運算元尚未支援")
+        for addend in active[0].addends:
+            if isinstance(addend.selector, TableCellSelector):
+                raise ParseError("定義唯一", f"{item.name} 使用 {addend.selector.describe()}：table_cell 運算元尚未支援")
         return active[0]
 
     def third_quarter(self, period: str, year: int, as_of: str) -> Filing:
@@ -260,7 +258,44 @@ class PeriodComposer:
             raise ParseError("Q4 期間", f"{filing.accession}（{earlier[0]}）宣告 {found}，不是財年 {year} 的 Q3")
         return filing
 
-    def candidate(self, filing, selector: FactSelector, end: str, duration: str, start: str | None, name: str) -> Candidate:
+    def addends(self, filing, definition: Definition, end: str, duration: str, start: str | None, name: str, sign: int = 1) -> list[Candidate]:
+        """定義的每個加數各找一個候選 fact 群；任一加數找不到時該期失敗。地區軸的加總另檢查成員完整。"""
+        found = [self.candidate(filing, a.selector, end, duration, start, name, sign * a.weight) for a in definition.addends]
+        starts = sorted({c.facts[0].start for c in found})
+        if len(starts) != 1:
+            raise ParseError("fact 存在且唯一", f"{name}：{filing.accession} 各加數的 {duration} 起日不同：{starts}")
+        self.check_geography(filing, definition, end, duration, found[0].facts[0].start, name)
+        return found
+
+    def check_geography(self, filing, definition: Definition, end: str, duration: str, start: str, name: str):
+        """地區軸的加總必須涵蓋申報中該軸的全部成員：同 concept、同其他 dimensions、同期間的 fact，地區成員不得有規格沒列的。"""
+        geographic = definition.geographic_sum()
+        if geographic is None:
+            return
+        axis, concept, others, members = geographic
+        document = self.filings.document(filing)
+        axis_key, concept_key = document.resolve(axis), document.resolve(concept)
+        other_keys = document.resolve_dimensions(others)
+        listed = document.resolve_dimensions(tuple((axis, m) for m in members))
+        listed = {member for _, member in listed}
+        present = {}
+        for f in document.facts:
+            if f.concept_key != concept_key or f.end != end or f.start != start:
+                continue
+            if f.dimension_keys is None:
+                # dimensions 解析不了時無法判斷是不是該軸的其他成員，不能當成沒有。
+                raise ParseError("地區成員完整", f"{name}：{filing.accession} 的 {f.fact_id} dimensions 前綴無法解析（{dict(f.dimensions)}），無法確認地區成員完整")
+            dims = dict(f.dimension_keys)
+            if axis_key in dims and tuple(sorted((a, m) for a, m in f.dimension_keys if a != axis_key)) == other_keys:
+                present[dims[axis_key]] = next((m for a, m in f.dimensions if document.resolve(a) == axis_key), dims[axis_key])
+        missing = sorted(shown for key, shown in present.items() if key not in listed)
+        if missing:
+            raise ParseError(
+                "地區成員完整",
+                f"{name}：{filing.accession} 的 {axis} 在 {duration} 期末 {end} 有規格沒有列出的成員 {missing}；地區軸只能以全部成員相加",
+            )
+
+    def candidate(self, filing, selector: FactSelector, end: str, duration: str, start: str | None, name: str, weight: int = 1) -> Candidate:
         document = self.filings.document(filing)
         label = f"{name}：{selector.describe()} {duration} 期末 {end}（{filing.accession}）"
         concept = document.resolve(selector.concept)
@@ -295,14 +330,15 @@ class PeriodComposer:
         if inconsistent:
             values = ", ".join(f"{f.fact_id}={f.value}（decimals {f.decimals}）" for f in facts)
             raise ParseError("fact 存在且唯一", f"{label} 重複 fact 的數值不一致：{values}")
-        return Candidate(filing, facts, duration, 1)
+        return Candidate(filing, facts, duration, weight)
 
     @staticmethod
-    def check_q4(name: str, annual: Fact, nine: Fact, period: str):
-        if nine.start != annual.start:
-            raise ParseError("Q4 期間", f"{name}：九個月起日 {nine.start} 不等於年度起日 {annual.start}")
-        if classify_duration(_next_day(nine.end), period) != "quarter":
-            raise ParseError("Q4 期間", f"{name}：九個月迄日 {nine.end} 到年度期末 {period} 不是一個季度")
+    def check_q4(name: str, annual_start: str, found: Fact, period: str):
+        """年度與九個月累計的每個加數都從年度起日開始；九個月累計迄日到年度期末是一個季度。"""
+        if found.start != annual_start:
+            raise ParseError("Q4 期間", f"{name}：{found.fact_id} 起日 {found.start} 不等於年度起日 {annual_start}")
+        if found.duration == "nine_months" and classify_duration(_next_day(found.end), period) != "quarter":
+            raise ParseError("Q4 期間", f"{name}：九個月迄日 {found.end} 到年度期末 {period} 不是一個季度")
 
     @staticmethod
     def choose(candidates: dict[str, list[Candidate]]) -> dict[str, list[Operand]]:
@@ -339,6 +375,14 @@ class PeriodComposer:
         if abs(difference) > tolerance:
             raise ParseError("加總", f"分類加總 {parts} 與總營收 {total} 相差 {difference}，超過精度容許 {tolerance}")
         return {"categories": parts, "total": total, "difference": difference, "tolerance": str(tolerance)}
+
+
+def interleave(annual: list[Candidate], nine: list[Candidate]) -> list[Candidate]:
+    """Q4 運算式的順序：第 k 個年度加數之後接第 k 個九個月加數；個數不同時多出的依序接在後面。"""
+    ordered = []
+    for k in range(max(len(annual), len(nine))):
+        ordered += annual[k : k + 1] + nine[k : k + 1]
+    return ordered
 
 
 def _next_day(date: str) -> str:

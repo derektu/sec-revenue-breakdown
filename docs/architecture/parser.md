@@ -37,7 +37,7 @@ parser 的範圍：
 
 ```
 libs/sec_revenue/revenue/              引擎
-  spec.py          規格的資料結構（CompanySpec、Category、fact、table_cell、define、effective）
+  spec.py          規格的資料結構（CompanySpec、Category、fact、table_cell、sum_of、minus、define、effective）
   xbrl.py          讀 inline XBRL：contexts、units、dei、fact 與所在表格
   filings.py       選主申報、讀原文並核對 sha256
   compose.py       組合數值與結構檢核
@@ -92,6 +92,12 @@ SPEC = CompanySpec(
 - **分類**：`Category(名稱, 定義...)`。每個定義指定 concept 與完整的 dimensions，dimensions 用帶前綴的 QName（軸與成員都帶前綴）。比對是精確的：fact 的 dimensions 必須與規格完全相同，多一個或少一個都不算。`fact(concept)` 不帶 dimensions，代表合計。
 - **總營收**：`total` 是用於加總檢核的項目。分類加總與總營收之間若有合法差額（例如公司間抵銷、未分配項目），以 `reconciling=(Category(...),)` 宣告，參與加總但不輸出成分類。
 - **權重**：`define(selector, weight=-1)` 讓運算元以負號參與，例如抵銷項。`weight` 只能以關鍵字傳入，值只能是 1 或 -1。
+- **多個 fact 相加**：申報沒有分類所需的小計時，以 `sum_of(加數...)` 列出每個加數，例如 LIN 的 Industrial Gases ＝ Americas＋EMEA＋APAC 三個分部。加數是 `fact(...)`，以 `minus(fact(...))` 減去；`define(sum_of(...), weight=-1)` 把整個加總取負號。`sum_of` 至少兩個加數、不可重複。
+  - 每個加數各是一個運算元，有自己的表格證據。任一加數在該期找不到時該期失敗，不會少一個加數照樣輸出。同一份申報中各加數的起日必須相同。
+  - 加總只用規格明列的加數，不會自動找出某個軸的全部成員。
+  - 加總檢核的容許誤差是所有運算元精度誤差的總和，所以隨加數個數線性放大（Q4 每個加數有年度與九個月累計兩個運算元，再加倍）。例如三個 `-6` 精度的加數，在單季為容許誤差貢獻 ±150 萬，在 Q4 貢獻 ±300 萬。這是已知的取捨：誤差上限依精度推得，不另設較緊的門檻。
+- **地區軸**：觀點只取產品或業務別，地區軸 `srt:StatementGeographicalAxis` 不能單獨成為運算元，只能以「該軸全部成員相加」出現：分部營收只以美國＋非美國揭露時（XOM、CVX、LLY），分類＝ `sum_of` 列出該軸每個成員。各加數都是權重 1 的 fact，concept 與地區軸以外的 dimensions 相同，只差地區成員。引擎在每份申報中檢查：同 concept、同其他 dimensions、同期間的 fact 中，地區成員不得有規格沒列出的，否則該期失敗；同 concept、同期間的 fact 有 dimensions 前綴無法解析時，無法確認成員完整，該期也失敗。成員以 namespace URI 比對，不看前綴。輸出只有加總後的分類，沒有地區分類。
+  - 地區成員有階層時（例如 Non-US 與其下的 Europe、Asia 並列為同一軸的成員），規格只能選一層。只列父成員會被成員完整檢核擋下（子成員沒列出）；父子都列會重複計算，被加總檢核擋下。
 - **適用期間**：公司改 tag、改分類時，以 `define(selector, effective(start, end))` 宣告每個定義適用的申報期別（期末日，含首尾，`None` 不設限）。
   - 同一期別最多一個定義生效。分類在某期沒有生效的定義，代表該期沒有這個項目，輸出不列出；總營收每期都必須有定義。規格漏寫適用期間時，該期少了一個分類，加總檢核對不上而失敗，不會無聲少一個分類：調節項是指定的 fact，不會吸收漏掉的分類。
   - 定義依運算元來源申報的期末日選取：Q1–Q3、FY 與 Q4 的年度運算元是本期，Q4 的九個月運算元是 Q3 的期末日。公司在 10-K 才改名、同財年的 Q3 10-Q 仍用舊名時（例如 NVDA 的分部成員），以同一個分類的兩個定義宣告，Q4 的兩個運算元各用各的定義，`effective` 的界線寫在最後一份舊申報與第一份新申報的期末日之間。
@@ -105,9 +111,10 @@ SPEC = CompanySpec(
 |---|---|
 | `view` 是允許的值 | `view 必須是 product、business_segment 之一` |
 | 分類名稱不重複，總營收名稱不與分類重名 | `分類名稱重複`、`與分類重名` |
-| 不使用地區軸 `srt:StatementGeographicalAxis` | `使用地區軸` |
-| 適用期間重疊的兩個定義不使用同一個運算元 | `在重疊的期間使用同一個運算元` |
-| `define` 的 weight 以關鍵字傳入且為 ±1 | `第二個參數必須是 effective(...)`、`只能是 1 或 -1` |
+| 地區軸 `srt:StatementGeographicalAxis` 只以 `sum_of` 列出同一地區軸的成員相加，各加數權重 1、concept 與其他 dimensions 相同 | `地區軸只能以 sum_of`、`每個加數都必須是帶地區軸、權重 1 的 fact`、`concept 與地區軸以外的 dimensions 必須相同` |
+| 適用期間重疊的定義（含同一個定義的各加數）不使用同一個運算元 | `在重疊的期間使用同一個運算元`、`加數重複` |
+| `sum_of` 至少兩個加數 | `至少要有兩個加數` |
+| `define` 的 weight 以關鍵字傳入且為 ±1；加數的 weight 為 ±1 | `第二個參數必須是 effective(...)`、`只能是 1 或 -1` |
 | 每家公司都有 `parser.md` | `缺少 parser.md` |
 | 使用 `us-gaap:StatementBusinessSegmentsAxis` 時，`parser.md` 提到這個軸並說明成員是業務別 | `必須寫明這個軸的成員是業務別而不是地區` |
 
@@ -127,6 +134,7 @@ SPEC = CompanySpec(
    - Q1–Q3：主申報中期末日為該期的單季 fact。
    - FY：主申報（10-K）中期末日為該期的年度 fact。
    - Q4：年度（10-K）減九個月累計。九個月取自年度期末前一季的原 10-Q（申報日不晚於 10-K），它必須宣告同財年 Q3；九個月的起日必須等於年度起日，九個月迄日的隔天到年度期末必須是一個單季。
+   - 多個加數的分類：每個加數各取一個 fact；Q4 的每個加數同樣是年度減九個月累計。年度與九個月累計依各自的定義選取，加數個數可以不同（例如公司在財年中改了揭露格式），Q4 ＝ 年度各加數之和 − 九個月各加數之和。運算式依規格的加數順序列出；Q4 為第一個加數的年度、九個月累計，接著第二個加數，依此類推。
    - Q4 依據的各期：同期末日的 FY，以及同財年在範圍內有申報的 Q1–Q3，都必須通過結構檢核（含加總）。任一期不通過時 Q4 失敗，原因指向不通過的那一期。
    - Q4 推算條件：依據的各期都通過時，年度期末的分類集合必須等於財年起日到 Q3 期末之間每一天的分類集合。判斷只依規格，不需要 Q1、Q2 的申報（範圍內第一個財年可能沒有）。不相同時 Q4 不推算，`status.json` 記為 `not_derived`，附年度與 Q1–Q3 期間的分類；FY 照常上線。同一個分類換定義（例如成員改名）不算不同。規格漏寫適用期間時，少了分類的那一期加總失敗，Q4 也跟著失敗，不會被當成分類集合不同。
    - 同一個值出現多次（同 concept、dimensions、期間）時，以精度最高（decimals 最大）的 fact 為準；其他重複值只需在自己的精度內與它一致。同精度時選所在表格含最多其他項目的 fact，再平手取文件順序第一個，其餘記在 `duplicates`。這讓同一期的運算元盡量落在同一張表，證據截圖較少。
@@ -152,10 +160,11 @@ SPEC = CompanySpec(
 | 原文存在 | 主文件在共用資料目錄中，sha256 與申報包紀錄一致 |
 | 財年與季別 | 申報宣告財年與季別，且與表單種類相符；FY 序列的主申報是 10-K |
 | 定義唯一 | 每個分類在該期最多一個生效的定義，總營收剛好一個；定義不是尚未支援的 `table_cell` |
-| fact 存在且唯一 | 規格的前綴在文件中有宣告；每個運算元在原文中找得到、只有一個起日、數值可解析；重複出現時在各自精度內一致 |
+| fact 存在且唯一 | 規格的前綴在文件中有宣告；每個運算元（含多個加數的每一個）在原文中找得到、只有一個起日、數值可解析；同一份申報中各加數的起日相同；重複出現時在各自精度內一致 |
+| 地區成員完整 | 使用地區軸的加總：申報中同 concept、同其他 dimensions、同期間的地區成員都列在規格中（只在用到地區軸時檢查） |
 | 單位與精度 | 單位是 USD；`decimals` 有記錄且不低於 `-6`（百萬位），誤差上限由精度推得（`-6` 為 ±50 萬）。精度更粗的數字誤差過大，不上線 |
 | 加總 | 分類（含 `reconciling`）加總等於總營收，差距不超過所有運算元精度誤差的總和 |
-| Q4 期間 | 年度期末前一季剛好有一份 10-Q，且宣告同財年 Q3；年度與九個月運算元首尾相接；Q4 依據的 FY 與 Q1–Q3 都通過結構檢核 |
+| Q4 期間 | 年度期末前一季剛好有一份 10-Q，且宣告同財年 Q3；年度與九個月運算元（每個加數）首尾相接；Q4 依據的 FY 與 Q1–Q3 都通過結構檢核 |
 | 證據完整 | 每個運算元都在 HTML 表格內；原文節點是 `ix:nonFraction`，name、contextref、scale、顯示文字與數值等於運算元；瀏覽器截到的表格與原文表格文字相同 |
 
 Q4 推算條件（依據的各期都通過，但年度與 Q1–Q3 的分類集合不同）不成立時不是失敗：該期記為 `not_derived`，不輸出 Q4。
@@ -163,10 +172,14 @@ Q4 推算條件（依據的各期都通過，但年度與 Q1–Q3 的分類集�
 比較欄比對（不擋上線，不改已上線輸出）：
 
 - 每次執行結束時，每一份已下載的 10-Q、10-K 與修正申報，都與它申報當時看得到的已上線輸出比對：運算元全部來自申報日不晚於它的申報。比對使用目前的已上線值，所以覆寫（`--republish`）或補上較早的期別後，標記隨之更新；比對結果不存在 `revenue.json`。
-- 申報有某段期間的總營收時，視為涵蓋該期間，已上線輸出中運算元期間相同者逐一比對：單季欄對 Q 輸出的單季運算元（去年同季，或修正申報的本期）；全年欄對 FY 與 Q4 的年度運算元；九個月欄對 Q4 的九個月運算元。運算元來自同一份申報時不比。
+- 比對單位是分類（含調節項與總營收）在一個角色的值。角色是已上線運算元的 `role`：Q1–Q3 為單季；FY 為年度；Q4 分別比年度與九個月累計。
+  - 已上線值：該角色運算元的加權和（九個月累計以定義本身的符號計，與申報列示的九個月累計同號）。
+  - 申報列示值：申報中同一期間、以該申報期別生效的規格定義組出的加權和，每個加數都要找得到該期間的 fact。
+  - 只比分類值，不比個別加數：加數的個數、順序或成員與已上線不同都無妨（例如公司把兩個項目併成一個重新列示，和相同即一致）。單一加數的分類就是運算元對運算元。以規格定義而不是已上線運算元的 QName 查找，公司改 tag 或改成員名稱後仍比得到。
+- 申報有某段期間的總營收（總營收的每個加數都有該期間的 fact）時，視為涵蓋該期間，已上線輸出中期間相同的角色都比對：單季欄對 Q 輸出的單季（去年同季，或修正申報的本期）；全年欄對 FY 與 Q4 的年度；九個月欄對 Q4 的九個月累計。運算元來自同一份申報時不比。
 - 已上線輸出沒有的期間長度（例如 10-Q 的六個月累計）不比對：把兩季相加再比屬於解讀。
-- 結果：`consistent`（在雙方精度內相同）、`different`（超出精度）、`unparseable`（申報中的 fact 無法解析）、`not_found`（申報期別沒有對應的規格定義，或以該定義找不到同期間的 fact）。
-- `different` 與 `unparseable` 寫成舊期別的差異標記（`status.json` 的 `differences`），列出申報列示值、已上線值與來源申報。`consistent` 與 `not_found` 不寫。
+- 結果：`consistent`（差距不超過雙方所有運算元的精度誤差總和）、`different`（超出）、`unparseable`（有 fact 無法解析或缺 decimals）、`not_found`（申報期別沒有這個分類的規格定義，或有加數在申報中找不到該期間的 fact）。
+- `different` 與 `unparseable` 寫成舊期別的差異標記（`status.json` 的 `differences`），列出分類、角色、期間、已上線值、申報列示值、來源申報，以及雙方各自的加數。`consistent` 與 `not_found` 不寫。
 - 已上線輸出在 `status.json` 沒有紀錄時（例如紀錄被手動刪除），由輸出補上該期的紀錄，標記照樣寫入。原文讀不到的申報不比對，列在 `status.json` 的 `comparison_errors`。
 
 ## 正式輸出
@@ -245,6 +258,7 @@ Q4 推算條件（依據的各期都通過，但年度與 Q1–Q3 的分類集�
 ```
 
 - `role`：`quarter`、`annual` 或 `nine_months`。
+- `expression` 依規格的加數順序列出運算元；多個加數的分類有多個運算元，Q4 依加數交錯列出年度與九個月累計。
 - 規格宣告 `reconciling` 時另有同格式的 `reconciling` 欄位。
 - 證據圖上的編號就是運算元編號（`op3` 標成 3）；`evidence.png_scale` 是截圖倍率。
 - 以 `--republish` 覆寫過的期別有 `republished` 清單，每筆記錄原因與覆寫前的申報、分類數值、總營收與 `parser`。
@@ -262,10 +276,18 @@ Q4 推算條件（依據的各期都通過，但年度與 Q1–Q3 的分類集�
         "status": "published", "fiscal_year": 2025, "fiscal_quarter": 3, "accession": "0000320193-25-000073",
         "differences": [
           {
-            "category": "Mac", "operand": "op2", "role": "quarter",
+            "category": "Mac", "role": "quarter",
             "period": { "start": "2025-03-30", "end": "2025-06-28" },
             "result": "different", "published_value": "<已上線值>", "listed_value": "<申報列示值>",
-            "source": { "accession": "...", "form": "10-Q", "filing_date": "2026-07-31", "fact_id": "..." }
+            "source": { "accession": "...", "form": "10-Q", "filing_date": "2026-07-31" },
+            "published_addends": [
+              { "operand": "op2", "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": { "srt:ProductOrServiceAxis": "aapl:MacMember" }, "weight": 1, "value": "<已上線值>" }
+            ],
+            "listed_addends": [
+              { "fact_id": "...", "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": { "srt:ProductOrServiceAxis": "aapl:MacMember" }, "weight": 1, "value": "<申報列示值>" }
+            ]
           }
         ]
       },
@@ -295,7 +317,7 @@ Q4 推算條件（依據的各期都通過，但年度與 Q1–Q3 的分類集�
 | `fy_categories`、`quarter_categories` | 不推算時：年度的分類，以及財年起日到 Q3 期末之間依日期分段的分類 |
 | `published_output_kept` | 失敗或不推算時：該期是否仍有先前上線的輸出 |
 | `published_output` | 失敗或不推算而仍有先前上線的輸出時：它的申報、分類數值與總營收，說明已上線值保留不動 |
-| `differences` | 差異標記：較晚申報的比較欄與此期已上線運算元不同（`different`）或無法解析（`unparseable`）；每筆有分類、運算元、期間、已上線值、申報列示值與來源申報 |
+| `differences` | 差異標記：較晚申報的比較欄與此期已上線的分類值不同（`different`）或無法解析（`unparseable`）。每筆一個分類 × 角色：`category`、`role`（`quarter`／`annual`／`nine_months`）、`period`、`result`、`published_value`、`listed_value`（無法解析時為 null）、`source`（申報的 accession、form、filing_date）、`published_addends`（已上線運算元：`operand`、concept、dimensions、`weight`、`value`）、`listed_addends`（申報中的 fact：`fact_id`、concept、dimensions、`weight`、`value`）、選用的 `note` |
 | `differs_from_published` | 重算結果與已上線輸出的數值或依據不同：原因、差異的分類與新舊值、不同的欄位 |
 | `stale_fields` | 重算結果與已上線輸出只有中繼資料不同時，不同的欄位 |
 
