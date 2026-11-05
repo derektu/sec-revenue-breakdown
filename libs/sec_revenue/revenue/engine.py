@@ -34,7 +34,7 @@ from .spec import CompanySpec, FactSelector
 
 SCHEMA_VERSION = 1
 # 預設起始日（期末日，含）：所有公司共用，沒有指定起日時使用；要處理更早的期別時指定起日。
-DEFAULT_START = "2023-10-01"
+DEFAULT_START = "2024-01-01"
 SCREENSHOT_SCALE = 1
 SERIES = ("Q", "FY")
 PERIOD_RE = re.compile(r"\d{4}-\d{2}-\d{2}")

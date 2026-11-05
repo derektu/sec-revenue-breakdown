@@ -81,7 +81,7 @@
 | `npm run download -- ...` | 下載 SEC 申報包 |
 | `npm run extract -- ...` | 從下載快取萃取營收，不連網 |
 | `npm run evidence -- ...` | 由萃取輸出回到 SEC 原文，產生表格 HTML 與截圖，不連網（目前只驗證 AAPL） |
-| `npm run parse -- ...` | 新版 parser：依公司規格產生 `data/revenue/` 的正式輸出與證據，不連網；不指定 `--start` 時從預設起始日（2023-10-01）起；`--check` 與已提交的輸出比對 |
+| `npm run parse -- ...` | 新版 parser：依公司規格產生 `data/revenue/` 的正式輸出與證據，不連網；不指定 `--start` 時從預設起始日（2024-01-01）起；`--check` 與已提交的輸出比對 |
 | `npm run capture:setup` | 開啟擷取用的專用瀏覽器，檢查並等待登入 |
 | `npm run capture -- ...` | 擷取對照資料 |
 | `npm run viewer` | 本機唯讀 viewer，<http://127.0.0.1:7290> |

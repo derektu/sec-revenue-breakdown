@@ -42,9 +42,9 @@ concept 是 `us-gaap:Revenues`。分部 fact 帶兩個維度：`srt:Consolidatio
 
 ## 驗證
 
-12 季（2023-12-31 至 2026-09-30）與對照資料逐期比對：
+11 季（2024-03-31 至 2026-09-30）與對照資料逐期比對：
 
-- TradingView：只有年度。FY2024、FY2025 的四季加總兩類都在顯示精度內；FY2023、FY2026 在範圍內不足四季。
+- TradingView：只有年度。FY2024、FY2025 的四季加總兩類都在顯示精度內；FY2026 在範圍內不足四季。
 - Stock Analysis、富途：沒有 PLD 的資料。
 - 舊流程輸出（`reported`）用的是損益表的營收類型。有輸出的 8 季（2024-12-31 起）：Rental 加 Development management and other 等於 Real estate segment，Strategic capital 等於 Strategic capital segment，總營收也相同，三者都完全一致。
 - FY 序列：每個 FY 的數值與同期 Q4 的年度運算元相同。
