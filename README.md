@@ -40,34 +40,74 @@
 
 格式規格見 [ticker 清單與對照資料格式](docs/architecture/universe.md)。
 
-## 擷取對照資料
+## Setup
 
-擷取工具使用 Playwright 內建的 Chromium。第一次使用先安裝瀏覽器，再開啟專用瀏覽器登入三個網站：
+需要 Python 3.11 以上與 Node.js（只用 `npm run` 執行常用指令，沒有 Node 依賴）。
+
+1. 建立 `.venv`，安裝依賴與擷取用的 Chromium：
+
+   ```bash
+   npm run setup
+   ```
+
+2. 設定 SEC 身分：複製 `.env.example` 為 `.env`，填入 `SEC_USER_AGENT`（姓名或組織加上聯絡 email）。SEC 要求自動化請求註明身分，email 須是聯絡得到的真實地址。`.env` 不進 Git；只讀本機快取（`--offline`）時不需要。
+
+   ```bash
+   cp .env.example .env
+   ```
+
+3. 確認環境：
+
+   ```bash
+   npm run check
+   ```
+
+## 常用指令
+
+指令定義在 `package.json`，額外參數接在 `--` 之後。
+
+| 指令 | 用途 |
+|---|---|
+| `npm run setup` | 建立 `.venv`，安裝 `requirements.txt` 與擷取用的 Chromium |
+| `npm run test` | unit test |
+| `npm run regression` | 三十家凍結資料的引擎回歸 |
+| `npm run validate` | 驗證 `tickers.csv` 與對照資料 |
+| `npm run check` | 依序執行以上三項（CI 在每個 PR 執行前兩項） |
+| `npm run tickers` | 列出有 parser 的 ticker |
+| `npm run download -- ...` | 下載 SEC 申報包 |
+| `npm run extract -- ...` | 從下載快取萃取營收，不連網 |
+| `npm run capture:setup` | 開啟擷取用的專用瀏覽器，檢查並等待登入 |
+| `npm run capture -- ...` | 擷取對照資料 |
+| `npm run viewer` | 本機唯讀 viewer，<http://127.0.0.1:7290> |
+
+範例：
 
 ```bash
-.venv/bin/playwright install chromium
-.venv/bin/python scripts/capture_references.py setup
-.venv/bin/python scripts/capture_references.py capture --source stockanalysis --tickers AAPL,MSFT
+# 下載任何 ticker 自 2025 年起的申報包，並刷新到最新一期
+npm run download -- --tickers AAPL PGR --start 2025-01-01 --latest
+
+# 下載 tickers.csv 的全部公司；只用本機快取
+npm run download -- --all --start 2025-01-01 --offline
+
+# 一併下載 XBRL R 頁面（預設略過）
+npm run download -- --tickers AAPL --start 2025-01-01 --include-r-pages
+
+# 萃取有 parser 的公司
+npm run extract -- --tickers AAPL --start 2025-01-01
+```
+
+`ALL` 是 Allstate 的 ticker；全部公司用 `--all`。下載、萃取的完整參數、快取與回傳碼見 [本機分階段操作](docs/architecture/local-workflow.md)。
+
+## 擷取對照資料
+
+擷取工具使用 Playwright 內建的 Chromium（`npm run setup` 已安裝）。先開啟專用瀏覽器登入三個網站，再擷取：
+
+```bash
+npm run capture:setup
+npm run capture -- --source stockanalysis --tickers AAPL,MSFT
 ```
 
 登入狀態保存在 repo 以外的專用 profile（預設 `~/.sec-revenue-capture/profile/`）。流程、登入判斷與證據規則見 [對照資料擷取工具](docs/architecture/capture.md)。
-
-## 開發環境
-
-需要 Python 3.11 以上，依賴裝在 repo 根目錄的 `.venv`：
-
-```bash
-python3 -m venv .venv
-.venv/bin/python -m pip install -r requirements.txt
-```
-
-測試與檢查（CI 在每個 PR 執行前兩項）：
-
-```bash
-.venv/bin/python -m unittest discover -s tests
-.venv/bin/python scripts/check_engine_regression.py
-.venv/bin/python scripts/validate_universe.py
-```
 
 ## 先前的研究
 

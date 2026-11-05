@@ -1,0 +1,18 @@
+{
+  "name": "sec-revenue-breakdown",
+  "private": true,
+  "description": "常用指令；以 npm run <名稱> 執行，額外參數接在 -- 之後",
+  "scripts": {
+    "setup": "python3 -m venv .venv && .venv/bin/python -m pip install -r requirements.txt && .venv/bin/playwright install chromium",
+    "test": ".venv/bin/python -m unittest discover -s tests",
+    "regression": ".venv/bin/python scripts/check_engine_regression.py",
+    "validate": ".venv/bin/python scripts/validate_universe.py",
+    "check": "npm run test && npm run regression && npm run validate",
+    "tickers": ".venv/bin/python scripts/sec_pipeline.py tickers",
+    "download": ".venv/bin/python scripts/sec_pipeline.py download",
+    "extract": ".venv/bin/python scripts/sec_pipeline.py extract",
+    "capture:setup": ".venv/bin/python scripts/capture_references.py setup",
+    "capture": ".venv/bin/python scripts/capture_references.py capture",
+    "viewer": ".venv/bin/python scripts/sec_pipeline.py viewer"
+  }
+}
