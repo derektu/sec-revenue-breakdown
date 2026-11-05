@@ -1,1 +1,4 @@
 lxml>=5.3,<7
+# 擷取工具的瀏覽器；Chromium 版本跟著套件，鎖定小版本以免舊 profile 失去登入狀態。
+playwright>=1.64,<1.65
+Pillow>=11,<14
