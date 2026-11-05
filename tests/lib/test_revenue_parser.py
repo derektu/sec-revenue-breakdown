@@ -378,6 +378,85 @@ class FourthQuarterTest(Fixture):
         self.assertEqual(a.value, 90_000_000)
         self.assertEqual([(t.weight, t.operand.role) for t in a.terms], [(1, "annual"), (-1, "nine_months")])
 
+    def test_q4_operands_use_definition_of_their_source_filing(self):
+        # 10-K 起改用新成員，同財年 Q3 10-Q 仍是舊成員：年度用新定義、九個月用舊定義。
+        self.standard_year()
+        self.packages.pop("0000000001-26-000001")
+        annual = [
+            item("ya", REVENUE, {AXIS: "x:ANewMember"}, "2025-01-01", "2025-12-31", "300"),
+            item("yb", REVENUE, B, "2025-01-01", "2025-12-31", "100"),
+            item("yt", REVENUE, None, "2025-01-01", "2025-12-31", "400"),
+        ]
+        self.add("0000000001-26-000001", "10-K", "2025-12-31", "2026-02-15", build_html(2025, "FY", annual))
+        spec = CompanySpec(
+            ticker="TEST",
+            view="product",
+            categories=(
+                Category("A", define(fact(REVENUE, A), effective(None, "2025-09-30")), define(fact(REVENUE, {AXIS: "x:ANewMember"}), effective("2025-12-31"))),
+                SPEC.categories[1],
+            ),
+            total=SPEC.total,
+        )
+        a = next(l for l in self.composer(spec).compose("2025-12-31").lines if l.name == "A")
+        self.assertEqual([(t.weight, t.operand.fact.fact_id) for t in a.terms], [(1, "ya"), (-1, "na")])
+        self.assertEqual(a.value, 90_000_000)
+
+    def mixed_year(self, later_nine=None):
+        """10-K 起 A 改用新成員；同財年 Q3 10-Q 仍是舊成員。`later_nine` 是下一年 Q3 10-Q 以新成員標示的 2025 九個月值。"""
+        self.standard_year()
+        self.packages.pop("0000000001-26-000001")
+        annual = [
+            item("ya", REVENUE, {AXIS: "x:ANewMember"}, "2025-01-01", "2025-12-31", "300"),
+            item("yb", REVENUE, B, "2025-01-01", "2025-12-31", "100"),
+            item("yt", REVENUE, None, "2025-01-01", "2025-12-31", "400"),
+        ]
+        self.add("0000000001-26-000001", "10-K", "2025-12-31", "2026-02-15", build_html(2025, "FY", annual))
+        if later_nine is not None:
+            self.add(
+                "0000000001-26-000009", "10-Q", "2026-09-30", "2026-10-15",
+                build_html(2026, "Q3", [item("la", REVENUE, {AXIS: "x:ANewMember"}, "2025-01-01", "2025-09-30", str(later_nine))]),
+            )
+        return CompanySpec(
+            ticker="TEST",
+            view="product",
+            categories=(
+                Category("A", define(fact(REVENUE, A), effective(None, "2025-09-30")), define(fact(REVENUE, {AXIS: "x:ANewMember"}), effective("2025-12-31"))),
+                SPEC.categories[1],
+            ),
+            total=SPEC.total,
+        )
+
+    def test_q4_mixed_definitions_are_annotated_with_auxiliary_evidence(self):
+        spec = self.mixed_year(later_nine=210)
+        self.parser(spec).run(["2025-12-31"])
+        output = self.output("2025-12-31")
+        record = output["checks"]["q4_definitions"]
+        self.assertEqual([r["category"] for r in record], ["A"])
+        self.assertEqual(record[0]["annual"]["selector"], "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax [srt:ProductOrServiceAxis=x:ANewMember]")
+        self.assertEqual(record[0]["nine_months"]["effective"], {"start": None, "end": "2025-09-30"})
+        self.assertEqual(record[0]["auxiliary"]["found"], True)
+        self.assertEqual((record[0]["auxiliary"]["consistent"], record[0]["auxiliary"]["accession"]), (True, "0000000001-26-000009"))
+        self.assertTrue(any(a["check"] == "Q4 跨定義" and a["message"].startswith("A 年度用") and a["message"].endswith("九個月值一致") for a in output["annotations"]))
+        self.assertEqual(self.status()["periods"]["2025-12-31"]["status"], "published")
+
+    def test_q4_mixed_definitions_without_auxiliary_evidence(self):
+        spec = self.mixed_year()
+        self.parser(spec).run(["2025-12-31"])
+        record = self.output("2025-12-31")["checks"]["q4_definitions"][0]
+        self.assertEqual(record["auxiliary"]["found"], False)
+
+    def test_q4_auxiliary_evidence_reports_inconsistency(self):
+        spec = self.mixed_year(later_nine=999)
+        self.parser(spec).run(["2025-12-31"])
+        auxiliary = self.output("2025-12-31")["checks"]["q4_definitions"][0]["auxiliary"]
+        self.assertEqual((auxiliary["found"], auxiliary["consistent"], auxiliary["value"]), (True, False, 999_000_000))
+        self.assertTrue(any(a["message"].endswith("九個月值不一致") for a in self.output("2025-12-31")["annotations"]))
+
+    def test_same_definition_q4_has_no_definition_record(self):
+        self.standard_year()
+        self.parser().run(self.parser().periods())
+        self.assertNotIn("q4_definitions", self.output("2025-12-31")["checks"])
+
     def test_q4_requires_contiguous_periods(self):
         self.standard_year()
         html = build_html(
@@ -479,8 +558,8 @@ class ParserOutputTest(Fixture):
         shots = len(self.shots)
         self.assertEqual(check_outputs(self.data, self.out, SPEC, "spec-sha", periods)[1], [])
         self.assertEqual(len(self.shots), shots)
-        # 規格 hash 不同只是中繼資料：一般 parse 會記錄 stale_fields，因此 --check 回報 status 差異。
-        self.assertTrue(any("stale_fields" in d for d in check_outputs(self.data, self.out, SPEC, "other-spec-sha", periods)[1]))
+        # 規格或引擎 hash 不同而內容相同：一般 parse 不改動任何東西，--check 一致。
+        self.assertEqual(check_outputs(self.data, self.out, SPEC, "other-spec-sha", periods)[1], [])
         committed = ticker_dir(self.out, "TEST") / "2025-03-31" / "revenue.json"
         output = JsonCodec.read(committed)
         output["categories"]["A"]["value"] += 1
@@ -513,6 +592,7 @@ class CrossPeriodTest(Fixture):
             found += [
                 item("pa", REVENUE, A, f"{prior}-01-01", f"{prior}-03-31", str(ca), 1),
                 item("pb", REVENUE, B, f"{prior}-01-01", f"{prior}-03-31", str(cb), 1),
+                item("pt", REVENUE, None, f"{prior}-01-01", f"{prior}-03-31", str(ca + cb), 1),
             ]
         return found
 
@@ -520,10 +600,10 @@ class CrossPeriodTest(Fixture):
         self.two_years()
         self.parser().run(["2024-03-31"])
         checks = self.output("2024-03-31")["checks"]["cross_period"]
-        self.assertEqual(checks[0], {"check": "期別連續", "flagged": False, "note": "沒有上一期可比"})
-        self.assertEqual(checks[1], {"check": "分類集合", "flagged": False, "note": "沒有上一期可比"})
-        self.assertTrue(all(not c["flagged"] for c in checks))
-        self.assertEqual(self.output("2024-03-31")["review"], {"reasons": [], "status": "none"})
+        self.assertEqual(checks[0], {"check": "期別連續", "annotated": False, "note": "沒有上一期可比"})
+        self.assertEqual(checks[1], {"check": "分類集合", "annotated": False, "note": "沒有上一期可比"})
+        self.assertTrue(all(not c["annotated"] for c in checks))
+        self.assertEqual(self.output("2024-03-31")["annotations"], [])
 
     def test_quarter_over_quarter_is_recorded_only(self):
         self.two_years()
@@ -532,21 +612,26 @@ class CrossPeriodTest(Fixture):
         q2 = self.output("2024-06-30")["checks"]["cross_period"]
         qoq = [c for c in q2 if c["check"] == "QoQ"]
         self.assertEqual({c["category"]: c["change"] for c in qoq}, {"A": 0.1667, "B": -0.25})
-        self.assertTrue(all(not c["flagged"] for c in qoq))
+        self.assertTrue(all(not c["annotated"] for c in qoq))
 
     def test_share_and_yoy_compare_with_same_quarter_last_year(self):
         self.two_years(second_q1=(95, 5))
         parser = self.parser()
         parser.run(parser.periods())
         output = self.output("2025-03-31")
-        flagged = {(c["check"], c.get("category")) for c in output["checks"]["cross_period"] if c["flagged"]}
+        annotated = {(c["check"], c.get("category")) for c in output["checks"]["cross_period"] if c["annotated"]}
         # 2024 Q3、Q4 沒有上線，上一個已上線期別是 2024 Q2，因此期別連續也標示。
-        self.assertEqual(flagged, {("期別連續", None), ("占比變動", "A"), ("占比變動", "B"), ("YoY", "A"), ("YoY", "B")})
+        self.assertEqual(annotated, {("期別連續", None), ("占比變動", "A"), ("占比變動", "B"), ("YoY", "A"), ("YoY", "B")})
         self.assertEqual(next(c for c in output["checks"]["cross_period"] if c["check"] == "占比變動")["baseline_period"], "2024-03-31")
-        self.assertEqual(output["review"]["status"], "pending")
-        self.assertEqual(self.status()["periods"]["2025-03-31"]["status"], "review_pending")
+        # 2025 Q1 的申報沒有 2024 Q1 的比較期，因此另有比較期總營收的標註。
+        self.assertEqual(sorted({a["check"] for a in output["annotations"]}), ["YoY", "占比變動", "期別連續", "比較期總營收"])
+        share = next(a for a in output["annotations"] if a["check"] == "占比變動")
+        self.assertEqual(share["detail"]["baseline_period"], "2024-03-31")
+        entry = self.status()["periods"]["2025-03-31"]
+        self.assertEqual(entry["status"], "published")
+        self.assertEqual(len(entry["annotations"]), 6)
 
-    def test_category_set_change_is_flagged(self):
+    def test_category_set_change_is_annotated(self):
         self.two_years()
         parser = self.parser()
         parser.run(["2024-03-31"])
@@ -555,7 +640,7 @@ class CrossPeriodTest(Fixture):
         )
         self.parser(spec).run(["2024-06-30"])
         check = next(c for c in self.output("2024-06-30")["checks"]["cross_period"] if c["check"] == "分類集合")
-        self.assertEqual((check["flagged"], check["added"], check["removed"]), (True, ["Bee"], ["B"]))
+        self.assertEqual((check["annotated"], check["added"], check["removed"]), (True, ["Bee"], ["B"]))
 
     def test_restatement_marks_new_period_and_keeps_old_output(self):
         self.add("0000000001-24-000001", "10-Q", "2024-03-31", "2024-04-15", build_html(2024, "Q1", self.items("2024", (60, 40))))
@@ -571,11 +656,65 @@ class CrossPeriodTest(Fixture):
         restated = output["checks"]["restatements"]
         self.assertEqual(
             [(r["period_end"], r["published_value"], r["restated_value"]) for r in restated],
-            [("2024-03-31", 60_000_000, 62_000_000)],
+            [("2024-03-31", 60_000_000, 62_000_000), ("2024-03-31", 100_000_000, 102_000_000)],
         )
-        self.assertEqual(output["review"]["status"], "pending")
+        self.assertTrue(any(a["check"] == "重編" for a in output["annotations"]))
         self.assertEqual((ticker_dir(self.out, "TEST") / "2024-03-31" / "revenue.json").read_bytes(), before)
         self.assertEqual(self.status()["periods"]["2024-03-31"]["restated_by"], ["2025-03-31"])
+
+    def test_restatement_check_follows_spec_definition_across_rename(self):
+        # 2024 Q1 用舊成員 x:AMember；2025 Q1 申報改用 x:ANewMember，且其比較期把 2024 Q1 的 A 改為 62。
+        spec = CompanySpec(
+            ticker="TEST",
+            view="product",
+            categories=(
+                Category("A", define(fact(REVENUE, A), effective(None, "2024-12-31")), define(fact(REVENUE, {AXIS: "x:ANewMember"}), effective("2025-01-01"))),
+                SPEC.categories[1],
+            ),
+            total=SPEC.total,
+        )
+        self.add("0000000001-24-000001", "10-Q", "2024-03-31", "2024-04-15", build_html(2024, "Q1", self.items("2024", (60, 40))))
+        current = self.items("2025", (66, 44), comparative=(62, 40))
+        for f in current:
+            if f["dims"] == A:
+                f["dims"] = {AXIS: "x:ANewMember"}
+        self.add("0000000001-25-000001", "10-Q", "2025-03-31", "2025-04-15", build_html(2025, "Q1", current))
+        self.parser(spec).run(["2024-03-31", "2025-03-31"])
+        restated = self.output("2025-03-31")["checks"]["restatements"]
+        self.assertEqual(
+            [(r["period_end"], r["published_value"], r["restated_value"]) for r in restated],
+            [("2024-03-31", 60_000_000, 62_000_000), ("2024-03-31", 100_000_000, 102_000_000)],
+        )
+
+    def test_comparatives_list_every_covered_operand(self):
+        self.add("0000000001-24-000001", "10-Q", "2024-03-31", "2024-04-15", build_html(2024, "Q1", self.items("2024", (60, 40))))
+        self.add("0000000001-25-000001", "10-Q", "2025-03-31", "2025-04-15", build_html(2025, "Q1", self.items("2025", (66, 44), comparative=(60, 40))))
+        self.parser().run(["2024-03-31", "2025-03-31"])
+        output = self.output("2025-03-31")
+        self.assertEqual(
+            sorted((e["category"], e["result"]) for e in output["checks"]["comparatives"]),
+            [("A", "consistent"), ("B", "consistent"), ("總營收", "consistent")],
+        )
+        # 只缺 2024 Q2–Q4，期別連續會標示；比較期本身沒有問題。
+        self.assertFalse(any(a["check"].startswith(("比較期", "重編")) for a in output["annotations"]))
+
+    def test_missing_comparative_category_is_annotated(self):
+        self.add("0000000001-24-000001", "10-Q", "2024-03-31", "2024-04-15", build_html(2024, "Q1", self.items("2024", (60, 40))))
+        current = [f for f in self.items("2025", (66, 44), comparative=(60, 40)) if f["id"] != "pb"]
+        self.add("0000000001-25-000001", "10-Q", "2025-03-31", "2025-04-15", build_html(2025, "Q1", current))
+        self.parser().run(["2024-03-31", "2025-03-31"])
+        output = self.output("2025-03-31")
+        missing = [e for e in output["checks"]["comparatives"] if e["result"] == "not_found"]
+        self.assertEqual([(e["period_end"], e["category"]) for e in missing], [("2024-03-31", "B")])
+        self.assertTrue(any(a["check"] == "比較期找不到" and a["message"].startswith("2024-03-31 B") for a in output["annotations"]))
+
+    def test_missing_year_ago_total_is_annotated(self):
+        self.add("0000000001-24-000001", "10-Q", "2024-03-31", "2024-04-15", build_html(2024, "Q1", self.items("2024", (60, 40))))
+        self.add("0000000001-25-000001", "10-Q", "2025-03-31", "2025-04-15", build_html(2025, "Q1", self.items("2025", (66, 44))))
+        self.parser().run(["2024-03-31", "2025-03-31"])
+        output = self.output("2025-03-31")
+        self.assertEqual(output["checks"]["comparatives"], [])
+        self.assertTrue(any(a["check"] == "比較期總營收" and "去年同季 2024-03-31" in a["message"] for a in output["annotations"]))
 
     def test_difference_within_precision_is_not_restatement(self):
         self.add("0000000001-24-000001", "10-Q", "2024-03-31", "2024-04-15", build_html(2024, "Q1", self.items("2024", (60, 40))))
@@ -604,13 +743,13 @@ class PublishedProtectionTest(Fixture):
         report = self.parser().run(["2025-03-31"])
         self.assertEqual((ticker_dir(self.out, "TEST") / "2025-03-31" / "revenue.json").read_bytes(), published)
         entry = self.status()["periods"]["2025-03-31"]
-        self.assertEqual(entry["status"], "review_pending")
+        self.assertEqual(entry["status"], "published")
         changes = entry["differs_from_published"]
         self.assertEqual(changes["reason"], "修正申報取代原申報")
         self.assertIn({"category": "A", "published": 60_000_000, "new": 65_000_000}, changes["categories"])
-        self.assertTrue(any("--republish TEST 2025-03-31" in r for r in entry["review_reasons"]))
-        # 修正申報造成的重編也以重算的 review 原因記錄。
-        self.assertTrue(any(r.startswith("重算跨期檢核：重編") for r in entry["review_reasons"]))
+        self.assertTrue(any("--republish TEST 2025-03-31" in a["message"] for a in entry["new_annotations"]))
+        # 修正申報造成的重編也是重算出的新標註。
+        self.assertTrue(any(a["check"] == "重編" for a in entry["new_annotations"]))
         self.assertTrue(report["complete"])
 
     def test_republish_overwrites_and_records_previous_values(self):
@@ -625,19 +764,32 @@ class PublishedProtectionTest(Fixture):
         self.assertEqual(record["previous"]["accession"], "0000000001-25-000001")
         amendment = [r for r in output["checks"]["restatements"] if r["kind"] == "amendment"]
         self.assertIn(("op1", 60_000_000, 65_000_000), [(r["operand"], r["published_value"], r["restated_value"]) for r in amendment])
-        self.assertEqual(output["review"]["status"], "pending")
+        self.assertTrue(any(a["check"] == "重編" for a in output["annotations"]))
         # 覆寫後的一般重跑不再有差異，也不重複累加 republished 紀錄。
         before = (ticker_dir(self.out, "TEST") / "2025-03-31" / "revenue.json").read_bytes()
         self.parser().run(["2025-03-31"])
         self.assertEqual((ticker_dir(self.out, "TEST") / "2025-03-31" / "revenue.json").read_bytes(), before)
         self.assertNotIn("differs_from_published", self.status()["periods"]["2025-03-31"])
 
-    def test_metadata_only_change_is_recorded_as_stale_fields(self):
+    def test_parser_version_alone_is_not_a_difference(self):
         published = self.publish_q1()
         RevenueParser(self.data, self.out, SPEC, "new-spec-sha", screenshotter=lambda: FakeShooter(self)).run(["2025-03-31"])
         self.assertEqual((ticker_dir(self.out, "TEST") / "2025-03-31" / "revenue.json").read_bytes(), published)
         entry = self.status()["periods"]["2025-03-31"]
-        self.assertEqual((entry["status"], entry["stale_fields"]), ("published", ["parser"]))
+        self.assertEqual(entry["status"], "published")
+        self.assertNotIn("stale_fields", entry)
+
+    def test_metadata_only_change_is_recorded_as_stale_fields(self):
+        published = self.publish_q1()
+        path = ticker_dir(self.out, "TEST") / "2025-03-31" / "revenue.json"
+        output = JsonCodec.read(path)
+        output["checks"]["structural"].append({"check": "舊版檢核", "result": "pass"})
+        JsonCodec.write(path, output)
+        edited = path.read_bytes()
+        self.parser().run(["2025-03-31"])
+        self.assertEqual(path.read_bytes(), edited)
+        entry = self.status()["periods"]["2025-03-31"]
+        self.assertEqual((entry["status"], entry["stale_fields"]), ("published", ["checks"]))
 
     def test_evidence_only_change_is_not_a_value_change(self):
         from sec_revenue.revenue.engine import published_differences
@@ -648,11 +800,12 @@ class PublishedProtectionTest(Fixture):
         changed["operands"]["op1"]["evidence"]["png_sha256"] = "0" * 64
         result = published_differences(existing, changed)
         self.assertEqual((result["fields"], result["value_changed"]), (["operands.evidence"], False))
+        self.assertEqual(result["reason"], "只有中繼資料更新：operands.evidence")
         changed["operands"]["op1"]["fact_id"] = "other"
         self.assertTrue(published_differences(existing, changed)["value_changed"])
 
-    def test_new_history_review_on_published_period_goes_to_status(self):
-        # 先上線 2025 Q1，之後才補上 2024 Q1（數字差很多），重算 2025 Q1 的跨期檢核會觸發 review。
+    def test_new_annotations_on_published_period_go_to_status(self):
+        # 先上線 2025 Q1，之後才補上 2024 Q1（數字差很多），重算 2025 Q1 的跨期檢核產生新的標註。
         self.add("0000000001-25-000001", "10-Q", "2025-03-31", "2025-04-15", build_html(2025, "Q1", quarter_items("2025-03-31", (60, 40))))
         self.parser().run(["2025-03-31"])
         published = (ticker_dir(self.out, "TEST") / "2025-03-31" / "revenue.json").read_bytes()
@@ -665,9 +818,9 @@ class PublishedProtectionTest(Fixture):
         self.parser().run(["2024-03-31", "2025-03-31"])
         self.assertEqual((ticker_dir(self.out, "TEST") / "2025-03-31" / "revenue.json").read_bytes(), published)
         entry = self.status()["periods"]["2025-03-31"]
-        self.assertEqual(entry["status"], "review_pending")
+        self.assertEqual(entry["status"], "published")
         self.assertIn("checks", entry["stale_fields"])
-        self.assertTrue(any(r.startswith("重算跨期檢核：A 占比") for r in entry["review_reasons"]), entry)
+        self.assertTrue(any(a["check"] == "占比變動" and a["message"].startswith("A 占比") for a in entry["new_annotations"]), entry)
 
     def test_exception_in_one_period_does_not_stop_run(self):
         self.standard_year()
@@ -684,18 +837,17 @@ class PublishedProtectionTest(Fixture):
         statuses = {p: e["status"] for p, e in self.status()["periods"].items()}
         self.assertEqual(statuses["2025-06-30"], "failed")
         self.assertEqual(self.status()["periods"]["2025-06-30"]["reason"], "RuntimeError: boom")
-        # 下一期照常上線；上一個已上線期別變成 Q1，所以以期別連續標示待 review。
-        self.assertEqual(statuses["2025-09-30"], "review_pending")
-        self.assertIn("期別連續", self.status()["periods"]["2025-09-30"]["review_reasons"][0])
+        # 下一期照常上線；上一個已上線期別變成 Q1，所以寫期別連續的標註。
+        self.assertEqual(statuses["2025-09-30"], "published")
+        self.assertEqual(self.status()["periods"]["2025-09-30"]["annotations"][0]["check"], "期別連續")
         self.assertFalse(report["complete"])
 
     def test_failed_swap_restores_previous_output(self):
         from unittest import mock
 
         published = self.publish_q1()
-        spec = CompanySpec(ticker="TEST", view="product", categories=SPEC.categories, total=SPEC.total)
-        parser = RevenueParser(self.data, self.out, spec, "spec-sha", screenshotter=lambda: FakeShooter(self), republish={"2025-03-31"})
         self.amend_q1()
+        parser = RevenueParser(self.data, self.out, SPEC, "spec-sha", screenshotter=lambda: FakeShooter(self), republish={"2025-03-31"})
         real_rename = Path.rename
 
         def rename(path, target):
@@ -813,9 +965,8 @@ class ReviewMatchingTest(Fixture):
 
     def check(self, current, baselines):
         from sec_revenue.revenue.review import cross_period
-        from sec_revenue.revenue.spec import Thresholds
 
-        return cross_period(current, baselines, Thresholds())
+        return cross_period(current, baselines)
 
     def test_last_year_must_be_unique_and_one_year_apart(self):
         current = self.baseline("2025-03-31", 2025, 1)
@@ -824,25 +975,25 @@ class ReviewMatchingTest(Fixture):
         self.assertTrue(notes and all("有 2 期" in n for n in notes))
         shifted = {"2024-06-30": self.baseline("2024-06-30", 2024, 1)}
         checks = [c for c in self.check(current, shifted) if c["check"] == "去年同季"]
-        self.assertTrue(all(c["flagged"] and "相隔不是一年" in c["note"] for c in checks))
+        self.assertTrue(all(c["annotated"] and "相隔不是一年" in c["note"] for c in checks))
 
-    def test_missing_last_year_with_older_history_is_flagged(self):
+    def test_missing_last_year_with_older_history_is_annotated(self):
         current = self.baseline("2025-03-31", 2025, 1)
         history = {"2023-12-31": self.baseline("2023-12-31", 2023, 4)}
         checks = [c for c in self.check(current, history) if c["check"] == "去年同季"]
-        self.assertTrue(checks and all(c["flagged"] and "缺去年同季" in c["note"] for c in checks))
+        self.assertTrue(checks and all(c["annotated"] and "缺去年同季" in c["note"] for c in checks))
 
     def test_period_continuity_uses_gap_and_fiscal_labels(self):
         current = self.baseline("2025-06-30", 2025, 2)
         good = {"2025-03-31": self.baseline("2025-03-31", 2025, 1)}
-        self.assertFalse(next(c for c in self.check(current, good) if c["check"] == "期別連續")["flagged"])
+        self.assertFalse(next(c for c in self.check(current, good) if c["check"] == "期別連續")["annotated"])
         mislabeled = {"2025-03-31": self.baseline("2025-03-31", 2024, 4)}
-        self.assertTrue(next(c for c in self.check(current, mislabeled) if c["check"] == "期別連續")["flagged"])
+        self.assertTrue(next(c for c in self.check(current, mislabeled) if c["check"] == "期別連續")["annotated"])
 
-    def test_zero_totals_are_flagged_not_divided(self):
+    def test_zero_totals_are_annotated_not_divided(self):
         current = self.baseline("2025-03-31", 2025, 1, (0, 0))
         last = {"2024-03-31": self.baseline("2024-03-31", 2024, 1, (0, 0))}
-        checks = {(c["check"], c.get("note")) for c in self.check(current, last) if c["flagged"]}
+        checks = {(c["check"], c.get("note")) for c in self.check(current, last) if c["annotated"]}
         self.assertIn(("占比變動", "總營收為 0，無法計算占比"), checks)
         self.assertIn(("YoY", "去年同季為 0"), checks)
 
@@ -851,7 +1002,7 @@ class ReviewMatchingTest(Fixture):
         last = {"2024-03-31": self.baseline("2024-03-31", 2024, 1, (1000000, 1000000))}
         yoy = next(c for c in self.check(current, last) if c["check"] == "YoY" and c["category"] == "A")
         self.assertEqual(yoy["change"], 0.5)
-        self.assertTrue(yoy["flagged"])
+        self.assertTrue(yoy["annotated"])
 
     def test_unparseable_comparative_fact_is_recorded(self):
         from sec_revenue.revenue.review import restatements
@@ -862,8 +1013,17 @@ class ReviewMatchingTest(Fixture):
             "op1": {"kind": "xbrl_fact", "accession": "old", "concept": REVENUE, "dimensions": A,
                     "period": {"start": "2024-01-01", "end": "2024-03-31"}, "value": 60_000_000, "decimals": "-6"}
         }
-        items = [item("pa", REVENUE, A, "2024-01-01", "2024-03-31", "n/a")]
-        found = restatements(InlineDocument(build_html(2025, "Q1", items)), "new", {"2024-03-31": published})
+        items = [
+            item("pa", REVENUE, A, "2024-01-01", "2024-03-31", "n/a"),
+            item("pt", REVENUE, None, "2024-01-01", "2024-03-31", "100"),
+        ]
+        published["categories"] = {"A": {"value": 60_000_000, "expression": [{"weight": 1, "operand": "op1"}]}}
+        published["total"] = {"value": 60_000_000, "expression": []}
+        selector = fact(REVENUE, A)
+        found = restatements(
+            InlineDocument(build_html(2025, "Q1", items)), "new", {"2024-03-31": published},
+            lambda name: selector if name == "A" else (fact(REVENUE) if name is None else None),
+        )
         self.assertEqual(len(found), 1)
         self.assertIsNone(found[0]["restated_value"])
         self.assertIn("無法比較", found[0]["note"])
@@ -880,11 +1040,11 @@ class CheckModeTest(Fixture):
         directory = ticker_dir(self.out, "TEST")
         (directory / "2025-03-31" / "evidence" / "stray.png").write_bytes(b"x")
         status = self.status()
-        status["periods"]["2025-03-31"]["review_reasons"] = ["manual"]
+        status["periods"]["2025-03-31"]["annotations"] = [{"check": "manual", "message": "manual"}]
         JsonCodec.write(directory / "status.json", status)
         found = self.run_check(["2025-03-31"])
         self.assertTrue(any("stray.png" in d for d in found), found)
-        self.assertTrue(any("status.review_reasons" in d for d in found), found)
+        self.assertTrue(any("status.annotations" in d for d in found), found)
 
     def test_failed_periods_compare_reasons(self):
         items = quarter_items("2025-03-31", (60, 40))
