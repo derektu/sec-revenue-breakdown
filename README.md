@@ -70,7 +70,7 @@
 
 | 指令 | 用途 |
 |---|---|
-| `npm run setup` | 建立 `.venv`，安裝 `requirements.txt` 與擷取用的 Chromium |
+| `npm run setup` | 建立 `.venv`，安裝 `requirements.txt` 與擷取、截圖用的 Chromium |
 | `npm run test` | unit test |
 | `npm run regression` | 三十家凍結資料的引擎回歸 |
 | `npm run validate` | 驗證 `tickers.csv` 與對照資料 |
@@ -78,6 +78,7 @@
 | `npm run tickers` | 列出有 parser 的 ticker |
 | `npm run download -- ...` | 下載 SEC 申報包 |
 | `npm run extract -- ...` | 從下載快取萃取營收，不連網 |
+| `npm run evidence -- ...` | 由萃取輸出回到 SEC 原文，產生表格 HTML 與截圖，不連網（目前只驗證 AAPL） |
 | `npm run capture:setup` | 開啟擷取用的專用瀏覽器，檢查並等待登入 |
 | `npm run capture -- ...` | 擷取對照資料 |
 | `npm run viewer` | 本機唯讀 viewer，<http://127.0.0.1:7290> |
@@ -96,9 +97,12 @@ npm run download -- --tickers AAPL --start 2025-01-01 --include-r-pages
 
 # 萃取有 parser 的公司
 npm run extract -- --tickers AAPL --start 2025-01-01
+
+# 為萃取結果產生 SEC 表格證據
+npm run evidence -- --tickers AAPL --start 2025-01-01
 ```
 
-`ALL` 是 Allstate 的 ticker；全部公司用 `--all`。下載、萃取的完整參數、快取與回傳碼見 [本機分階段操作](docs/architecture/local-workflow.md)。
+`ALL` 是 Allstate 的 ticker；全部公司用 `--all`。下載、萃取、證據的完整參數、快取與回傳碼見 [本機分階段操作](docs/architecture/local-workflow.md)。
 
 ## 擷取對照資料
 
