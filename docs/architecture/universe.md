@@ -106,7 +106,7 @@ BRK-B,1067983,Berkshire Hathaway Inc.,ok,stockanalysis,4,分部 tag 八季一致
 
 ### 保存模型
 
-每個來源累積保存多次擷取。有些來源一次只顯示部分期別（例如富途只顯示最近 8 季），只留最近一次擷取會讓較早的期別失去數值與證據。
+每個來源累積保存多次擷取。有些來源每次只擷取部分期別（例如富途每次擷取最近 12 季、TradingView 顯示最近約 10 年），只留最近一次擷取會讓較早的期別失去數值與證據。
 
 - `captures` 記錄該來源的每一次擷取：時間、方式、單位與證據檔。
 - `periods` 每期一筆，以 `capture` 指向數值來自哪一次擷取。
@@ -128,7 +128,7 @@ BRK-B,1067983,Berkshire Hathaway Inc.,ok,stockanalysis,4,分部 tag 八季一致
 | 擷取 | `display_unit` | 選填；`K`、`M`、`B`、`萬`、`億` | 表格表頭標示的單位，例如表頭寫「Millions」、儲存格只有 `57,583` 時填 `M` |
 | 擷取 | `files` | `{png, html, txt}`，各為 `{path, sha256}` | 證據檔；`browser_dom` 必填且三個都要，`legacy_import`、`manual` 不得有 |
 | 期間 | `label` | 非空字串 | 來源上的期間標籤原文，例如 `Q3 2026`、`2026/Q3` |
-| 期間 | `period_end` | 選填；`YYYY-MM-DD` | 來源上的期末日期；來源沒有日期時省略，不自行推算 |
+| 期間 | `period_end` | 選填；`YYYY-MM-DD` | 來源顯示的日期，不保證是公司的期末日（例如 Stock Analysis 把非曆年季底的公司對齊到曆年季底）；來源沒有日期時省略，不自行推算。與 SEC 期間的對齊由比對工具處理 |
 | 期間 | `kind` | `Q`、`FY` | 單季或會計年度 |
 | 期間 | `capture` | 同來源 `captures` 的鍵 | 數值來自哪一次擷取 |
 | 期間 | `values` | 非空物件 | 鍵為分類名稱，值為 `{display, usd}` |

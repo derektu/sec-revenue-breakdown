@@ -60,9 +60,11 @@ def clean_html(fragment: str) -> str:
     return "".join(parts).strip() + "\n"
 
 
-def rebuild_html(rows: list[list[str]]) -> str:
+def rebuild_html(rows: list[list[str]], caption: str | None = None) -> str:
     """以表格文字重建 `<table>`：第一列為表頭（`th`），其餘為資料列（`td`）。"""
     out = ["<table>"]
+    if caption:
+        out.append(f"<caption>{html.escape(caption)}</caption>")
     for index, row in enumerate(rows):
         cell = "th" if index == 0 else "td"
         out.append("<tr>" + "".join(f"<{cell}>{html.escape(text)}</{cell}>" for text in row) + "</tr>")
@@ -70,9 +72,11 @@ def rebuild_html(rows: list[list[str]]) -> str:
     return "\n".join(out) + "\n"
 
 
-def table_text(rows: list[list[str]]) -> str:
-    """表格文字：一列一行，欄位以 tab 分隔。"""
-    return "".join("\t".join(cell.replace("\t", " ").replace("\n", " ") for cell in row) + "\n" for row in rows)
+def table_text(rows: list[list[str]], caption: str | None = None) -> str:
+    """表格文字：有 caption 時為第一行，其後一列一行，欄位以 tab 分隔。"""
+    lines = [caption] if caption else []
+    lines += ["\t".join(cell.replace("\t", " ").replace("\n", " ") for cell in row) for row in rows]
+    return "".join(line + "\n" for line in lines)
 
 
 def compress_png(data: bytes) -> bytes:
@@ -84,11 +88,12 @@ def compress_png(data: bytes) -> bytes:
     return out.getvalue()
 
 
-def table_html(fragment: str, rows: list[list[str]], mode: HtmlMode) -> str:
+def table_html(fragment: str, rows: list[list[str]], mode: HtmlMode, caption: str | None = None) -> str:
+    """`clean` 用於帶有自身表頭的原始表格，不加 caption；`rebuild` 時 caption 寫入 `<caption>`。"""
     if mode == "clean":
         return clean_html(fragment)
     if mode == "rebuild":
-        return rebuild_html(rows)
+        return rebuild_html(rows, caption)
     raise ValueError(f"未知的 html_mode：{mode!r}")
 
 

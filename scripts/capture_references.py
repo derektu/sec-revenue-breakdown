@@ -4,6 +4,7 @@
     capture_references.py setup [--sources stockanalysis,futu,tradingview]
     capture_references.py capture --source stockanalysis --tickers AAPL,MSFT
     capture_references.py capture --source stockanalysis --tickers-file list.txt
+    capture_references.py capture --source futu --tickers AAPL --periods 8 --headed
 
 說明見 docs/architecture/capture.md。
 """
@@ -13,6 +14,7 @@ from pathlib import Path
 import sys
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "libs"))
+from sec_revenue.capture.runner import DEFAULT_PAUSE, DEFAULT_PERIODS
 from sec_revenue.capture.sites import SITES
 from sec_revenue.universe import DEFAULT_UNIVERSE_DIR
 
@@ -42,6 +44,12 @@ def main(argv: list[str] | None = None) -> int:
     capture.add_argument("--tickers", help="以逗號分隔的 ticker")
     capture.add_argument("--tickers-file", type=Path, help="ticker 清單檔，以空白、逗號或換行分隔，# 之後為註解")
     capture.add_argument("--universe-dir", type=Path, default=DEFAULT_UNIVERSE_DIR)
+    capture.add_argument("--periods", type=int, default=DEFAULT_PERIODS,
+                         help=f"一個畫面只顯示一期的來源（富途）每檔擷取最近幾季範圍內的季度（預設 {DEFAULT_PERIODS}）")
+    capture.add_argument("--pause", type=float, default=DEFAULT_PAUSE,
+                         help=f"兩檔之間間隔的秒數（預設 {DEFAULT_PAUSE:g}）")
+    capture.add_argument("--headed", action="store_true",
+                         help="開視窗擷取；預設不開視窗，未登入時才開視窗登入")
     args = parser.parse_args(argv)
 
     if args.command == "setup":
@@ -53,6 +61,10 @@ def main(argv: list[str] | None = None) -> int:
         tickers = read_tickers(args)
         if not tickers:
             parser.error("須以 --tickers 或 --tickers-file 指定至少一個 ticker")
+        if args.periods < 1:
+            parser.error("--periods 須為正整數")
+        if args.pause < 0:
+            parser.error("--pause 不可為負數")
 
     from playwright.sync_api import sync_playwright
 
@@ -60,16 +72,24 @@ def main(argv: list[str] | None = None) -> int:
     from sec_revenue.capture.runner import ensure_login, report, run_capture
 
     with sync_playwright() as playwright:
-        context = open_context(playwright)
-        try:
-            if args.command == "setup":
+        if args.command == "setup":
+            context = open_context(playwright, headless=False)
+            try:
                 ok = ensure_login(context, [SITES[name] for name in names], input, print)
-                print("全部已登入" if ok else "仍有網站未登入")
-                return 0 if ok else 1
-            summary = run_capture(context, args.source, tickers, args.universe_dir)
-            return report(summary, args.universe_dir)
-        finally:
-            context.close()
+            finally:
+                context.close()
+            print("全部已登入" if ok else "仍有網站未登入")
+            return 0 if ok else 1
+        summary = run_capture(
+            lambda headless: open_context(playwright, headless=headless),
+            args.source,
+            tickers,
+            args.universe_dir,
+            headless=not args.headed,
+            periods=args.periods,
+            pause=args.pause,
+        )
+        return report(summary, args.universe_dir)
 
 
 if __name__ == "__main__":

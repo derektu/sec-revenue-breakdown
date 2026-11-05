@@ -1,4 +1,4 @@
-"""把一次擷取累積合併進 `reference.json`，並寫入證據檔。
+"""把擷取累積合併進 `reference.json`，並寫入證據檔。
 
 合併規則（`docs/architecture/universe.md`「保存模型」）：
 
@@ -6,8 +6,9 @@
   同一來源內 `label` 相同，或 `(kind, period_end)` 相同，即視為同一期。
 - 不再被任何期別引用的擷取，連同證據目錄一併刪除。
 
-寫入先在 ticker 目錄旁的暫存目錄（`.` 開頭，驗證程式不檢查）完成並通過 `validate_reference()`，
-再整個換上；驗證失敗時原目錄不變。
+同一 ticker、同一來源一次執行的所有擷取（富途一期一次）一起寫入：先在 ticker 目錄旁的暫存目錄
+（`.` 開頭，驗證程式不檢查）完成並通過 `validate_reference()`，再整個換上；任何一步失敗時原目錄不變，
+不會留下部分期別。
 """
 
 from __future__ import annotations
@@ -35,8 +36,21 @@ from .model import CaptureError, Period
 
 
 @dataclass(frozen=True)
+class PendingCapture:
+    """已截圖、尚未寫入的一次 `browser_dom` 擷取。"""
+
+    url: str
+    captured_at: str
+    periods: list[Period]
+    display_unit: str | None
+    png: bytes
+    html_text: str
+    txt: str
+
+
+@dataclass(frozen=True)
 class CommitResult:
-    capture: str
+    captures: list[str]
     periods: int
     removed_captures: list[str]
     reference_path: Path
@@ -96,44 +110,43 @@ def merge_reference(
 
 
 def _ordered(periods: list[dict]) -> list[dict]:
-    """有期末日的期別依期末日新到舊（同日 FY 在 Q 前）；沒有期末日的依原順序排在後面。"""
+    """有期末日的期別依期末日新到舊（同日 FY 在 Q 前）；沒有期末日的依標籤由大到小排在後面。
+
+    沒有期末日的來源（富途 `2026/Q3`、TradingView `2026`）標籤以年度開頭，由大到小即新到舊。
+    """
     dated = [p for p in periods if "period_end" in p]
     undated = [p for p in periods if "period_end" not in p]
     dated.sort(key=lambda p: (p["period_end"], p["kind"] == "FY"), reverse=True)
+    undated.sort(key=lambda p: p["label"], reverse=True)
     return dated + undated
 
 
-def commit_capture(
-    universe_dir: Path,
-    ticker: str,
-    source: str,
-    *,
-    url: str,
-    captured_at: str,
-    periods: list[Period],
-    display_unit: str | None,
-    png: bytes,
-    html_text: str,
-    txt: str,
-) -> CommitResult:
-    """寫入一次 `browser_dom` 擷取：證據檔、合併後的 reference.json、刪除未引用的擷取。"""
+def commit_captures(universe_dir: Path, ticker: str, source: str, captures: list[PendingCapture]) -> CommitResult:
+    """一次寫入同一 ticker、同一來源的多次擷取：證據檔、合併後的 reference.json、刪除未引用的擷取。"""
+    if not captures:
+        raise CaptureError("沒有可寫入的擷取")
     target = reference_dir(ticker, universe_dir)
     target.parent.mkdir(parents=True, exist_ok=True)
-    cid = capture_id(captured_at)
     staging = Path(tempfile.mkdtemp(prefix=f".capture-{ticker}-", dir=target.parent))
     try:
         reference = None
         if target.exists():
             shutil.copytree(target, staging, dirs_exist_ok=True)
             reference = json.loads((staging / REFERENCE_FILE).read_text(encoding="utf-8"))
-        meta: dict = {"url": url, "captured_at": captured_at, "method": "browser_dom"}
-        if display_unit is not None:
-            meta["display_unit"] = display_unit
-        merged, removed = merge_reference(reference, ticker, source, cid, meta, periods)
-        meta["files"] = write_evidence(staging, source, cid, png, html_text, txt)
-        for old in removed:
+        before = set(reference["sources"].get(source, {}).get("captures", {})) if reference else set()
+        written = []
+        for pending in captures:
+            cid = capture_id(pending.captured_at)
+            meta: dict = {"url": pending.url, "captured_at": pending.captured_at, "method": "browser_dom"}
+            if pending.display_unit is not None:
+                meta["display_unit"] = pending.display_unit
+            reference, _ = merge_reference(reference, ticker, source, cid, meta, pending.periods)
+            meta["files"] = write_evidence(staging, source, cid, pending.png, pending.html_text, pending.txt)
+            written.append(cid)
+        kept = set(reference["sources"][source]["captures"])
+        for old in sorted((before | set(written)) - kept):
             shutil.rmtree(staging / CAPTURES_DIR / source / old, ignore_errors=True)
-        text = json.dumps(merged, ensure_ascii=False, indent=2) + "\n"
+        text = json.dumps(reference, ensure_ascii=False, indent=2) + "\n"
         (staging / REFERENCE_FILE).write_text(text, encoding="utf-8")
         errors = validate_reference(staging / REFERENCE_FILE, ticker)
         if errors:
@@ -141,7 +154,12 @@ def commit_capture(
         _swap(staging, target)
     finally:
         shutil.rmtree(staging, ignore_errors=True)
-    return CommitResult(cid, len(periods), removed, target / REFERENCE_FILE)
+    return CommitResult(
+        captures=written,
+        periods=sum(len(pending.periods) for pending in captures),
+        removed_captures=sorted(before - kept),
+        reference_path=target / REFERENCE_FILE,
+    )
 
 
 def _swap(staging: Path, target: Path) -> None:
