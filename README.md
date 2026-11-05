@@ -50,7 +50,9 @@
    npm run setup
    ```
 
-2. 設定 SEC 身分：複製 `.env.example` 為 `.env`，填入 `SEC_USER_AGENT`（姓名或組織加上聯絡 email）。SEC 要求自動化請求註明身分，email 須是聯絡得到的真實地址。`.env` 不進 Git；只讀本機快取（`--offline`）時不需要。
+2. 設定 `.env`：複製 `.env.example` 為 `.env`，填入兩項設定。`.env` 不進 Git，主 repo 與每個 worktree 各放一份。
+   - `SEC_USER_AGENT`：姓名或組織加上聯絡 email。SEC 要求自動化請求註明身分，email 須是聯絡得到的真實地址；只讀本機快取（`--offline`）時不需要。
+   - `SEC_DATA_DIR`：SEC 原文與萃取產物的共用目錄，放在 repo 以外，例如 `~/sec-revenue-data`。原文可依記錄的 SEC URL 與 sha256 重建，不進 Git。
 
    ```bash
    cp .env.example .env
