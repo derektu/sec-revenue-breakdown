@@ -52,7 +52,39 @@ class TableCellSelector:
         return f"table_cell({self.document}, {self.table_header!r}, {self.row_label!r}, {self.column_period!r})"
 
 
-Selector = FactSelector | TableCellSelector
+@dataclass(frozen=True)
+class OneOf:
+    """同一個運算元在不同申報中的多種寫法（concept、成員或 dimensions 組合不同），由 `one_of` 建立。
+
+    每種寫法都在規格中明列，比對仍是精確的：不忽略大小寫、不比對相近名稱。一份申報中找得到一種寫法時用它；
+    找得到多種時，各寫法的數值必須在各自精度內一致（同一個數字以不同 tag 重複標記），否則該期失敗。
+    """
+
+    variants: tuple[FactSelector, ...]
+
+    def describe(self) -> str:
+        return "one_of(" + "；".join(v.describe() for v in self.variants) + ")"
+
+
+Selector = FactSelector | TableCellSelector | OneOf
+
+
+def one_of(*variants: FactSelector) -> OneOf:
+    """宣告一個運算元的多種寫法；至少兩種、不可重複，每種都是 `fact(...)`。"""
+    if len(variants) < 2:
+        raise ValueError("one_of 至少要有兩種寫法；單一寫法直接寫 fact(...)")
+    if not all(isinstance(v, FactSelector) for v in variants):
+        raise ValueError("one_of 的每種寫法都必須是 fact(...)")
+    if len(set(variants)) != len(variants):
+        raise ValueError("one_of 的寫法重複")
+    return OneOf(tuple(variants))
+
+
+def fact_variants(selector: Selector) -> tuple[FactSelector, ...]:
+    """運算元的每種 fact 寫法；`table_cell` 沒有 fact 寫法，回傳空 tuple。"""
+    if isinstance(selector, OneOf):
+        return selector.variants
+    return (selector,) if isinstance(selector, FactSelector) else ()
 
 
 def fact(concept: str, dimensions: dict[str, str] | None = None) -> FactSelector:
@@ -124,7 +156,8 @@ def sum_of(*parts: Selector | Addend) -> Sum:
     addends = tuple(p if isinstance(p, Addend) else Addend(p) for p in parts)
     if len(addends) < 2:
         raise ValueError("sum_of 至少要有兩個加數；單一運算元直接寫 fact(...)")
-    if len(set(a.selector for a in addends)) != len(addends):
+    variants = [v for a in addends for v in fact_variants(a.selector)]
+    if len(set(a.selector for a in addends)) != len(addends) or len(set(variants)) != len(variants):
         raise ValueError("sum_of 的加數重複")
     return Sum(addends)
 
@@ -146,6 +179,9 @@ class Definition:
         地區軸只能以「該軸全部成員相加」出現：所有加數都是 fact、權重 1、concept 與地區軸以外的 dimensions 相同，
         只差地區成員。成員是否為該軸全部成員，由引擎在每份申報中檢查。
         """
+        for a in self.addends:
+            if isinstance(a.selector, OneOf) and any(axis in GEOGRAPHIC_AXES for v in a.selector.variants for axis, _ in v.dimensions):
+                raise ValueError("地區軸的加數不可使用 one_of")
         axes = {
             axis
             for a in self.addends
@@ -226,18 +262,26 @@ class CompanySpec:
                     definition.geographic_sum()
                 except ValueError as error:
                     raise ValueError(f"{self.ticker} 規格的 {item.name}：{error}；觀點只取產品或業務別") from None
-        used = [(item.name, d, a.selector) for item in items for d in item.definitions for a in d.addends]
-        for i, (name, first, selector) in enumerate(used):
-            for other, second, other_selector in used[i + 1 :]:
-                if selector == other_selector and first.period.overlaps(second.period):
+        # 同一種寫法（含 one_of 中的每一種）在重疊的期間只能屬於一個運算元。
+        used = [
+            (item.name, d, a.selector, set(fact_variants(a.selector)) or {a.selector})
+            for item in items
+            for d in item.definitions
+            for a in d.addends
+        ]
+        for i, (name, first, selector, forms) in enumerate(used):
+            for other, second, other_selector, other_forms in used[i + 1 :]:
+                if forms & other_forms and first.period.overlaps(second.period):
+                    shared = sorted(f.describe() for f in forms & other_forms)
                     raise ValueError(
-                        f"{self.ticker} 規格的 {name} 與 {other} 在重疊的期間使用同一個運算元 {selector.describe()}"
+                        f"{self.ticker} 規格的 {name} 與 {other} 在重疊的期間使用同一個運算元 {'、'.join(shared)}"
                     )
 
     def uses_axis(self, axis: str) -> bool:
         return any(
-            isinstance(a.selector, FactSelector) and axis in a.selector.dimension_map
+            axis in variant.dimension_map
             for item in list(self.categories) + list(self.reconciling) + [self.total]
             for d in item.definitions
             for a in d.addends
+            for variant in fact_variants(a.selector)
         )

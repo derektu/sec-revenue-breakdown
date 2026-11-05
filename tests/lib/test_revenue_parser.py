@@ -25,6 +25,7 @@ from sec_revenue.revenue.spec import (  # noqa: E402
     fact,
     Addend,
     minus,
+    one_of,
     sum_of,
     table_cell,
 )
@@ -1089,6 +1090,166 @@ class MultiFactSumTest(Fixture):
         self.assertEqual([(a["fact_id"], a["value"]) for a in marks[0]["listed_addends"]], [("c0", 35_000_000), ("c1", 29_000_000)])
 
 
+ALT_A = {AXIS: "x:AltAMember"}
+VARIANT_SPEC = CompanySpec(
+    ticker="TEST",
+    view="product",
+    categories=(Category("A", one_of(fact(REVENUE, A), fact(REVENUE, ALT_A))), Category("B", fact(REVENUE, B))),
+    total=Category("Total", fact(REVENUE)),
+)
+
+
+class TagVariantTest(Fixture):
+    """同一個分類在不同申報使用不同寫法：規格以 one_of 明列每種寫法，一份申報中找得到哪種就用哪種。"""
+
+    def filing(self, n, end, focus, rows, form="10-Q", filed=None, start=None):
+        """rows：[(id, concept, dims, start, end, value, table)]；B 與總營收由呼叫端列出。"""
+        items = [item(fid, concept, dims, s, e, str(v), table) for fid, concept, dims, s, e, v, table in rows]
+        accession = f"0000000001-25-00000{n}" if form == "10-Q" else "0000000001-26-000001"
+        self.add(accession, form, end, filed or f"2025-{int(end[5:7]) + 1:02d}-15", build_html(2025, focus, items))
+
+    def quarter(self, n, end, a_dims, a_value, b_value=40, extra=()):
+        focus, start = QUARTERS[end]
+        rows = [("qa", REVENUE, a_dims, start, end, a_value, 0), ("qb", REVENUE, B, start, end, b_value, 0),
+                ("qt", REVENUE, None, start, end, a_value + b_value, 0)] + list(extra)
+        return rows
+
+    def test_variants_alternate_between_filings_and_q4(self):
+        # Q1、Q3 用 x:AMember，Q2 與 10-K 用 x:AltAMember；Q4 年度與九個月累計各用各的寫法。
+        self.filing(1, "2025-03-31", "Q1", self.quarter(1, "2025-03-31", A, 60))
+        self.filing(2, "2025-06-30", "Q2", self.quarter(2, "2025-06-30", ALT_A, 70))
+        nine = [("na", REVENUE, A, "2025-01-01", "2025-09-30", 210, 1), ("nb", REVENUE, B, "2025-01-01", "2025-09-30", 120, 1),
+                ("nt", REVENUE, None, "2025-01-01", "2025-09-30", 330, 1)]
+        self.filing(3, "2025-09-30", "Q3", self.quarter(3, "2025-09-30", A, 80, extra=nine))
+        annual = [("ya", REVENUE, ALT_A, "2025-01-01", "2025-12-31", 300, 0), ("yb", REVENUE, B, "2025-01-01", "2025-12-31", 160, 0),
+                  ("yt", REVENUE, None, "2025-01-01", "2025-12-31", 460, 0)]
+        self.filing(4, "2025-12-31", "FY", annual, form="10-K", filed="2026-02-15")
+        parser = self.parser(VARIANT_SPEC)
+        self.assertTrue(parser.run(parser.periods())["complete"])
+        q2 = self.output("2025-06-30")
+        self.assertEqual(q2["operands"]["op1"]["dimensions"], ALT_A)
+        self.assertEqual(q2["categories"]["A"]["value"], 70_000_000)
+        q4 = self.output("2025-12-31")
+        operands = [q4["operands"][e["operand"]] for e in q4["categories"]["A"]["expression"]]
+        self.assertEqual([(o["role"], o["dimensions"]) for o in operands], [("annual", ALT_A), ("nine_months", A)])
+        self.assertEqual(q4["categories"]["A"]["value"], 90_000_000)
+        self.assertEqual(self.output("2025-12-31", "FY")["categories"]["A"]["value"], 300_000_000)
+
+    def test_concept_and_extra_dimension_variants(self):
+        consolidated = {**A, "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"}
+        spec = CompanySpec(
+            ticker="TEST",
+            view="product",
+            categories=(
+                Category("A", one_of(fact(REVENUE, A), fact(REVENUE, consolidated))),
+                Category("B", one_of(fact(REVENUE, B), fact("us-gaap:Revenues", B))),
+            ),
+            total=Category("Total", fact(REVENUE)),
+        )
+        rows = [("qa", REVENUE, consolidated, "2025-01-01", "2025-03-31", 60, 0), ("qb", "us-gaap:Revenues", B, "2025-01-01", "2025-03-31", 40, 0),
+                ("qt", REVENUE, None, "2025-01-01", "2025-03-31", 100, 0)]
+        self.filing(1, "2025-03-31", "Q1", rows)
+        result = self.composer(spec).compose("2025-03-31")
+        facts = {l.name: l.terms[0].operand.fact for l in result.lines}
+        self.assertEqual((facts["A"].fact_id, facts["B"].fact_id, facts["B"].concept), ("qa", "qb", "us-gaap:Revenues"))
+        self.assertEqual(result.sum_check["difference"], 0)
+
+    def test_both_variants_with_same_value_are_accepted(self):
+        rows = self.quarter(1, "2025-03-31", A, 60, extra=[("alt", REVENUE, ALT_A, "2025-01-01", "2025-03-31", 60, 1)])
+        self.filing(1, "2025-03-31", "Q1", rows)
+        operand = next(l for l in self.composer(VARIANT_SPEC).compose("2025-03-31").lines if l.name == "A").terms[0].operand
+        # 同精度時選所在表格含最多其他項目者：qa 與 B、總營收同表。
+        self.assertEqual((operand.fact.fact_id, [d.fact_id for d in operand.duplicates]), ("qa", ["alt"]))
+
+    def test_both_variants_with_different_values_fail(self):
+        rows = self.quarter(1, "2025-03-31", A, 60, extra=[("alt", REVENUE, ALT_A, "2025-01-01", "2025-03-31", 61, 1)])
+        self.filing(1, "2025-03-31", "Q1", rows)
+        with self.assertRaisesRegex(ParseError, r"fact 存在且唯一.*多種寫法同時出現且數值不一致"):
+            self.composer(VARIANT_SPEC).compose("2025-03-31")
+
+    def test_no_variant_found_fails_and_case_is_not_ignored(self):
+        self.filing(1, "2025-03-31", "Q1", self.quarter(1, "2025-03-31", {AXIS: "x:AltAmember"}, 60))
+        with self.assertRaisesRegex(ParseError, r"找不到 A：one_of\(.*x:AMember.*x:AltAMember"):
+            self.composer(VARIANT_SPEC).compose("2025-03-31")
+
+    def test_variant_inside_sum(self):
+        spec = CompanySpec(
+            ticker="TEST",
+            view="product",
+            categories=(Category("A", sum_of(one_of(fact(REVENUE, A1), fact(REVENUE, {AXIS: "x:AltA1Member"})), fact(REVENUE, A2))),),
+            total=Category("Total", fact(REVENUE)),
+        )
+        rows = [("q1", REVENUE, {AXIS: "x:AltA1Member"}, "2025-01-01", "2025-03-31", 35, 0), ("q2", REVENUE, A2, "2025-01-01", "2025-03-31", 25, 0),
+                ("qt", REVENUE, None, "2025-01-01", "2025-03-31", 60, 0)]
+        self.filing(1, "2025-03-31", "Q1", rows)
+        line = self.composer(spec).compose("2025-03-31").lines[0]
+        self.assertEqual(([t.operand.fact.fact_id for t in line.terms], line.value), (["q1", "q2"], 60_000_000))
+
+    def test_comparative_recognises_every_variant(self):
+        self.filing(1, "2025-03-31", "Q1", self.quarter(1, "2025-03-31", A, 60))
+        self.parser(VARIANT_SPEC).run(["2025-03-31"])
+        # 一年後的 10-Q 以另一種寫法列示去年同季：62 與已上線 60 不同；寫法不同不影響比對。
+        later = [("ca", REVENUE, ALT_A, "2025-01-01", "2025-03-31", 62, 1), ("cb", REVENUE, B, "2025-01-01", "2025-03-31", 40, 1),
+                 ("ct", REVENUE, None, "2025-01-01", "2025-03-31", 102, 1),
+                 ("qa", REVENUE, ALT_A, "2026-01-01", "2026-03-31", 1, 0), ("qb", REVENUE, B, "2026-01-01", "2026-03-31", 1, 0),
+                 ("qt", REVENUE, None, "2026-01-01", "2026-03-31", 2, 0)]
+        items = [item(fid, c, d, st, e, str(v), t) for fid, c, d, st, e, v, t in later]
+        self.add("0000000001-26-000002", "10-Q", "2026-03-31", "2026-04-15", build_html(2026, "Q1", items))
+        self.parser(VARIANT_SPEC).run([])
+        marks = self.status()["periods"]["Q"]["2025-03-31"]["differences"]
+        self.assertEqual([(m["category"], m["published_value"], m["listed_value"]) for m in marks], [("A", 60_000_000, 62_000_000), ("總營收", 100_000_000, 102_000_000)])
+        self.assertEqual(marks[0]["listed_addends"][0]["dimensions"], ALT_A)
+        self.assertEqual(marks[0]["published_addends"][0]["dimensions"], A)
+
+    def test_comparative_with_conflicting_variants_is_unparseable(self):
+        published = {
+            "categories": {"A": {"value": 60_000_000, "expression": [{"weight": 1, "operand": "op1"}]}},
+            "total": {"value": 60_000_000, "expression": []},
+            "operands": {"op1": {"kind": "xbrl_fact", "role": "quarter", "accession": "old", "concept": REVENUE, "dimensions": A,
+                                 "period": {"start": "2024-01-01", "end": "2024-03-31"}, "value": 60_000_000, "decimals": "-6"}},
+        }
+        items = [item("pa", REVENUE, A, "2024-01-01", "2024-03-31", "60"), item("palt", REVENUE, ALT_A, "2024-01-01", "2024-03-31", "64"),
+                 item("pt", REVENUE, None, "2024-01-01", "2024-03-31", "100")]
+        lookup = {"A": [Addend(VARIANT_SPEC.categories[0].definitions[0].addends[0].selector)], None: [Addend(fact(REVENUE))]}
+        found = comparatives(InlineDocument(build_html(2025, "Q1", items)), "new", [("Q", "2024-03-31", published)], lookup.get)
+        self.assertEqual((found[0]["result"], found[0]["listed_value"]), ("unparseable", None))
+        self.assertIn("數值不一致", found[0]["note"])
+        self.assertEqual(
+            [(a["fact_id"], a["dimensions"], a["value"]) for a in found[0]["listed_addends"]],
+            [("pa", A, 60_000_000), ("palt", ALT_A, 64_000_000)],
+        )
+
+    def conflicted_html(self, items):
+        """`y` 前綴在文件中對應兩個 namespace：根元素宣告為 x 的 URI，內文另宣告為別的 URI。"""
+        html = build_html(2025, "Q1", items, {**NAMESPACES, "y": NAMESPACES["x"]})
+        return html.replace(b"<body>", b'<body><span xmlns:y="http://example.com/other"></span>', 1)
+
+    def test_variant_with_conflicting_prefix_fails(self):
+        spec = CompanySpec(
+            ticker="TEST",
+            view="product",
+            categories=(Category("A", one_of(fact(REVENUE, A), fact(REVENUE, {AXIS: "y:AltAMember"}))), Category("B", fact(REVENUE, B))),
+            total=Category("Total", fact(REVENUE)),
+        )
+        items = [item(fid, REVENUE, d, "2025-01-01", "2025-03-31", str(v)) for fid, d, v in (("qa", A, 60), ("qb", B, 40), ("qt", None, 100))]
+        self.add("0000000001-25-000001", "10-Q", "2025-03-31", "2025-04-15", self.conflicted_html(items))
+        with self.assertRaisesRegex(ParseError, r"fact 存在且唯一.*y:AltAMember.*\['y'\] 在文件中宣告衝突"):
+            self.composer(spec).compose("2025-03-31")
+
+    def test_comparative_with_conflicting_prefix_is_unparseable(self):
+        published = {
+            "categories": {"A": {"value": 60_000_000, "expression": [{"weight": 1, "operand": "op1"}]}},
+            "total": {"value": 60_000_000, "expression": []},
+            "operands": {"op1": {"kind": "xbrl_fact", "role": "quarter", "accession": "old", "concept": REVENUE, "dimensions": A,
+                                 "period": {"start": "2024-01-01", "end": "2024-03-31"}, "value": 60_000_000, "decimals": "-6"}},
+        }
+        items = [item("pa", REVENUE, A, "2024-01-01", "2024-03-31", "60"), item("pt", REVENUE, None, "2024-01-01", "2024-03-31", "100")]
+        lookup = {"A": [Addend(one_of(fact(REVENUE, A), fact(REVENUE, {AXIS: "y:AltAMember"})))], None: [Addend(fact(REVENUE))]}
+        found = comparatives(InlineDocument(self.conflicted_html(items)), "new", [("Q", "2024-03-31", published)], lookup.get)
+        self.assertEqual((found[0]["result"], found[0]["listed_value"]), ("unparseable", None))
+        self.assertIn("宣告衝突", found[0]["note"])
+
+
 class DefaultStartTest(Fixture):
     START = "2025-10-01"
 
@@ -1415,8 +1576,20 @@ class SpecValidationTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "加數重複"):
             sum_of(fact(REVENUE, A), fact(REVENUE, A))
 
+    def test_one_of_rules(self):
+        with self.assertRaisesRegex(ValueError, "至少要有兩種寫法"):
+            one_of(fact(REVENUE, A))
+        with self.assertRaisesRegex(ValueError, "寫法重複"):
+            one_of(fact(REVENUE, A), fact(REVENUE, A))
+        with self.assertRaisesRegex(ValueError, "必須是 fact"):
+            one_of(fact(REVENUE, A), table_cell("ex99", "h", "r", "c"))
+        with self.assertRaisesRegex(ValueError, "加數重複"):
+            sum_of(one_of(fact(REVENUE, A), fact(REVENUE, B)), fact(REVENUE, B))
+
     def test_spec_rules(self):
         cases = [
+            (dict(categories=(Category("A", one_of(fact(REVENUE, A), fact(REVENUE, {AXIS: "x:AltMember"}))), Category("B", one_of(fact(REVENUE, B), fact(REVENUE, {AXIS: "x:AltMember"}))))), "同一個運算元 .*x:AltMember"),
+            (dict(categories=(Category("A", sum_of(one_of(fact(REVENUE, {GEO: "x:USMember"}), fact(REVENUE, {GEO: "x:UsMember"})), fact(REVENUE, {GEO: "x:NonUSMember"}))), SPEC.categories[1])), "地區軸的加數不可使用 one_of"),
             (dict(view="geography"), "view 必須是"),
             (dict(total=Category("A", fact(REVENUE))), "與分類重名"),
             (dict(categories=(Category("A", fact(REVENUE, {GEO: "x:USMember"})), SPEC.categories[1])), "地區軸只能以 sum_of"),
