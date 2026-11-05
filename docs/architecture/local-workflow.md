@@ -1,6 +1,6 @@
 # 本機分階段操作
 
-這條正式路徑將下載與萃取分開。`download` 不產生營收輸出；`extract` 不連網，只讀已下載的 SEC 原文；`viewer` 只讀萃取輸出。沒有前端編譯步驟，Python 3.11+ 與 lxml 即可執行。
+這條正式路徑將下載與萃取分開。`download` 不產生營收輸出；`extract` 不連網，只讀已下載的 SEC 原文；`evidence` 不連網，由萃取輸出回到 SEC 原文產生表格證據；`viewer` 只讀萃取輸出與證據。沒有前端編譯步驟，Python 3.11+ 與 lxml 即可執行；`evidence` 另需 Playwright 與 Chromium。
 
 ## 拉取與安裝
 
@@ -128,13 +128,48 @@ parser 文件組下載中斷時會明標未完成，萃取拒絕混用新舊附�
 .venv/bin/python scripts/sec_pipeline.py extract --tickers AAPL --start 2025-01-01 --end 2026-11-04 --force
 ```
 
-來源集合、filing metadata 與規則 fingerprint 相同且上次成功時，顯示 `cache_hit` 並跳過萃取。原文／accession／規則變動會失效，缺輸出會重建；hash 不符則拒絕。公司自己的規則指紋不包含其他公司的模組，改 AAPL 不會使 MSFT 的 cache 失效。共用引擎或該公司可用比較欄變動時可使該公司的既有萃取失效，避免沿用過時 Q4／重編口徑。下載程式（`download.py`、`tickers.py`）不在規則指紋內，修改下載流程不會使既有萃取失效。
+來源集合、filing metadata 與規則 fingerprint 相同且上次成功時，顯示 `cache_hit` 並跳過萃取。原文／accession／規則變動會失效，缺輸出會重建；hash 不符則拒絕。公司自己的規則指紋不包含其他公司的模組，改 AAPL 不會使 MSFT 的 cache 失效。共用引擎或該公司可用比較欄變動時可使該公司的既有萃取失效，避免沿用過時 Q4／重編口徑。下載程式（`download.py`、`tickers.py`）與證據程式（`evidence.py`）不在規則指紋內，修改這兩個流程不會使既有萃取失效。
 
 一家公司有多個 basis 時逐一產生。CVX 預設 net，gross 與抵銷另存。新原文流程的 XOM 固定使用可完整對帳的 all-income 分部及扣回欄，另存 `basis_description`；舊研究為參考網站 Q2 使用的 gross 欄位例外只留在歷史重播，不暗中套用於新的資料。
 
 CVX net 與 XOM all-income 另有明確成分對帳：差額只在所有 SEC 申報運算元的精度界限內接受，保留差額與允許精度，不修改原始數字。
 
 缺值、歧義、未知表頭／scope、缺 Q4 運算元或原文解析失敗時，輸出保留 null、錯誤與風險，不以舊研究答案或零補齊。CLI 回傳碼：`0` 成功或 cache hit；`1` 輸入或快取驗證失敗；`2` download 有公司失敗或未執行，或萃取已有可供檢查的部分結果，但仍有缺值或失敗。失敗結果不視為成功 cache，下一次仍會嘗試萃取。
+
+## SEC 表格證據
+
+```bash
+# 指定期別範圍；省略範圍時只處理最新一期
+.venv/bin/python scripts/sec_pipeline.py evidence --tickers AAPL --start 2024-01-01
+
+# 強制重新產生
+.venv/bin/python scripts/sec_pipeline.py evidence --tickers AAPL --start 2024-01-01 --force
+```
+
+目前只以 AAPL 驗證；程式只依 XBRL fact id 找表格，不含公司規則，其他有萃取輸出的公司也能執行。
+
+每個萃取欄位的運算元展開成 SEC fact：一般季度直接取該 fact；Q4 推算為「+ 年度 − 九個月累計」，兩個 fact 各自附證據；多表加總逐項列出。展開後的加權總和必須等於萃取值。每個 fact 以來源文件（sha256）與 fact id 在 SEC 原文找到節點，核對它是 `ix:nonFraction`，且 name、contextref、scale、顯示文字與依 sign 算出的數值都和運算元相同，再往上找所在的 `<table>`；表格編號須與萃取紀錄的 `table_index` 相同。
+
+| fact 狀態 | 意義 | 欄位結果 |
+|---|---|---|
+| `in_table` | 找到所在表格，產生 HTML 與 PNG | 正常 |
+| `not_in_table` | fact 在原文中但不在 HTML 表格內 | `not_in_table`，該運算元無證據，不產生替代證據 |
+| `fact_not_found` | 原文找不到 fact id，或運算元沒有 fact id | `failed` |
+| `fact_mismatch` | 節點不是 `ix:nonFraction`、屬性或數值與運算元不同，或所在表格與萃取紀錄不同 | `failed` |
+| `source_missing` | 申報包找不到運算元的 SEC 原文（sha256），或 `source_format` 不是 `original_html`（含缺值） | `failed` |
+| `evidence_failed` | 抽表格 HTML 或截圖失敗，包括瀏覽器中的表格與原文表格對不上 | `failed` |
+
+萃取值為空、權重與運算元數量不同，或運算式總和不等於萃取值時，欄位也是 `failed`，並附原因。任何欄位不是正常狀態時，這一期的證據不算完成，下一次會重新產生。錯誤只影響所在的期別，其他期照常產生。
+
+每期證據放在 `outputs/TICKER/PERIOD/evidence/`，同一期內同一張表只產生一份，該期引用這張表的所有 fact 一起標示。檔名 `ACCESSION-SHA12-tN` 中的 `SHA12` 是來源文件 sha256 的前 12 碼，同一申報包有多份 inline 文件時不會混淆：
+
+- `ACCESSION-SHA12-tN.html`：只含該表格的獨立 HTML。保留 inline style，移除 script、圖片、連結、外部資源與事件屬性；含 `url(`、`expression(`、`@import` 或反斜線的 style 屬性整個移除；XBRL 標籤改成一般 `span`，並加上 CSP。被引用的儲存格有紅框與編號，所在列有淡底色，頁首列出每個編號對應的欄位。
+- `ACCESSION-SHA12-tN.png`：headless Chromium 以 `set_content` 載入本機快取的 SEC 原文，沒有導覽請求。context 設為 offline、關閉頁面 script，所有資源請求都被中止；標示由 Playwright 的 evaluate 注入。截圖前核對瀏覽器中的表格文字與 lxml 的同一張表相同（忽略空白），保留 SEC 原排版，以 2 倍解析度截圖。表格高於 3000px 時只保留前 4 列表頭與標示列上下 600px 內的列，略過的列以紅色虛線的「✂ 已裁切」列標示，並記錄 `cropped: true`。
+- `evidence.json`：綁定的萃取輸出路徑與 sha256、各欄位的運算式（權重、角色、fact）與狀態、各 fact 的 SEC 原文 URL、XBRL viewer URL、filing index URL、期間與編號，以及各表格檔的 sha256、證據程式的 sha256 與 Playwright 版本。
+
+每期先在同一目錄下的暫存資料夾寫好全部表格檔與 `evidence.json`，完成後整組換上 `evidence/`，不會出現新舊檔案混用。產生過程發生未預期錯誤時，`evidence/` 只留一份 `status: failed` 並附原因的 `evidence.json`。
+
+萃取輸出不寫入證據欄位；運算元的來源文件與 fact id 就是對應 `evidence.json` 的鍵。萃取輸出 hash、運算元來源原文 hash 與其 SEC URL、`evidence.py` 與 Playwright 版本都沒變，且表格檔 hash 相符時，顯示 `cache_hit` 並跳過。證據可由 SEC 原文與萃取輸出重建，不進 Git。
 
 ## Viewer
 
@@ -143,6 +178,8 @@ CVX net 與 XOM all-income 另有明確成分對帳：差額只在所有 SEC 申
 ```
 
 從同一台本機瀏覽器開啟 <http://127.0.0.1:7290>。ticker、期間與 basis 選單來自現有輸出，不限制固定八期。未下載／未萃取的公司回報無資料；已有成功歷史期不因本次只萃取某一季而從索引消失。頁面可看完整 SEC 運算元、申報精度、風險及來源格式。
+
+已產生證據的期別，每個欄位下方列出運算式，例如「8,726,000,000 = ① 10-K 年度（2024-09-29～2025-09-27）33,708 百萬 − ② 10-Q 9M（2024-09-29～2025-06-28）24,982 百萬」，並逐一顯示各 fact 的表格截圖，以及 SEC 原文、XBRL viewer 與表格 HTML 連結。尚未產生證據、證據失敗、`evidence.json` 無法讀取，或證據過期（萃取輸出 hash、表格檔 hash 或證據程式版本與紀錄不同）時，欄位以紅色「無證據」區塊標示並附原因；部分運算元不在 HTML 表格內時以黃色區塊標示「部分運算元無證據」。萃取值為空的欄位不寫成「值 = 運算式」，只標「萃取值為空，替代式僅供參考」。表格檔只經 `/evidence/TICKER/PERIOD/ACCESSION-SHA12-tN.(png|html)` 提供，表格 HTML 以 CSP sandbox 開啟。
 
 可選 Playwright UI 測試（先安裝 `playwright`，並使用本機 Chromium 或執行 `python -m playwright install chromium`）：
 
@@ -166,5 +203,7 @@ CVX net 與 XOM all-income 另有明確成分對帳：差額只在所有 SEC 申
 | `data/pipeline/TICKER/extractions.json` | 各期 fingerprint、成功／失敗與輸出 hash |
 | `data/outputs/TICKER/PERIOD/TICKER_PERIOD_BASIS_revenue.json` | 固定命名的目前輸出 |
 | `data/outputs/TICKER/PERIOD/versions/FINGERPRINT/...` | 不同來源／規則的歷史萃取版本 |
+| `data/outputs/TICKER/PERIOD/evidence/evidence.json` | 該期證據：運算式、fact 狀態與 SEC URL、表格檔 hash |
+| `data/outputs/TICKER/PERIOD/evidence/ACCESSION-SHA12-tN.{html,png}` | 該期引用的 SEC 表格 HTML 與截圖 |
 
 以上產物皆不推 Git。一般 SEC 下載不依賴 `data/vendor/local`；不會拿第三方內容替代 SEC。舊 `replay_sec.py` 與 30 家／240 期凍結回歸繼續保留，與新原文流程分開測試；歷史重播請指定 `--out data/engine-check`，不要用相同 `data/outputs` 覆蓋新的原文萃取結果。先前「250 份缺 HTML」指雲端 checkout 沒有保存原文，不代表 SEC 沒有該申報；這個新 download 流程就是用來取得並持久保存原文。

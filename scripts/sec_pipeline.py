@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-"""download → extract → viewer；各階段可獨立執行。
+"""download → extract → evidence → viewer；各階段可獨立執行。
 
-download 接受任何 ticker，下載完整申報包；extract 只處理 registry 有 parser 的公司。
+download 接受任何 ticker，下載完整申報包；extract 只處理 registry 有 parser 的公司；
+evidence 由萃取輸出的每個 XBRL fact 回到 SEC 原文，產生表格 HTML 與截圖。
 """
 
 import argparse
@@ -14,6 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "libs"))
 from sec_revenue.dotenv import load_dotenv
 from sec_revenue.download import DownloadBatch, DownloadWorkflow
+from sec_revenue.evidence import EvidenceWorkflow
 from sec_revenue.tickers import DownloadTickers, SupportedTickers
 from sec_revenue.workflow import PeriodSelection, ExtractionWorkflow
 from sec_revenue.viewer import RevenueViewer
@@ -31,7 +33,7 @@ class WorkflowCli:
         commands = cli.add_subparsers(dest="command", required=True)
         listing = commands.add_parser("tickers", help="列出有 parser 的 ticker")
         listing.add_argument("--json", action="store_true")
-        for command in ("download", "extract"):
+        for command in ("download", "extract", "evidence"):
             sub = commands.add_parser(command)
             sub.add_argument(
                 "--tickers",
@@ -45,7 +47,7 @@ class WorkflowCli:
                 help=(
                     "download：tickers.csv 的全部公司"
                     if command == "download"
-                    else "extract：全部有 parser 的公司（省略 ticker 時同）"
+                    else f"{command}：全部有 parser 的公司（省略 ticker 時同）"
                 ),
             )
             sub.add_argument(
@@ -56,12 +58,12 @@ class WorkflowCli:
             sub.add_argument(
                 "--latest",
                 action="store_true",
-                help="download：刷新 SEC 清單；沒有日期範圍時只選最新一期；extract：最新已下載目標期",
+                help="download：刷新 SEC 清單；沒有日期範圍時只選最新一期；extract／evidence：最新一期",
             )
             sub.add_argument(
                 "--force",
                 action="store_true",
-                help="download 強制重抓；extract 強制重新萃取",
+                help="download 強制重抓；extract 強制重新萃取；evidence 強制重新產生",
             )
             sub.add_argument("--data", type=Path, default=data_root(), help="資料根目錄（預設 SEC_DATA_DIR 或 repo 的 data/）")
             if command == "download":
@@ -106,6 +108,11 @@ class WorkflowCli:
                 )
                 result = DownloadBatch(workflow).run(
                     tickers, periods, args.force, args.offline
+                )
+            elif args.command == "evidence":
+                tickers = roster.select(args.tickers, args.ticker_file, args.all_tickers)
+                result = EvidenceWorkflow(args.data, progress=self.progress).run(
+                    tickers, periods, args.force
                 )
             else:
                 tickers = roster.select(args.tickers, args.ticker_file, args.all_tickers)
