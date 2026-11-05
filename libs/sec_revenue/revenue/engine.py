@@ -1,10 +1,17 @@
-"""Parser 引擎：一家公司逐期組合數值、結構檢核、證據、跨期檢核，寫入正式輸出與 status.json。
+"""Parser 引擎：一家公司逐期組合數值、結構檢核、證據，寫入正式輸出；每次執行結束時以比較欄比對重建 status.json 的差異標記。
 
-正式輸出在 `data/revenue/<首字母>/<TICKER>/`。每期先寫暫存目錄，完成後整組換上。
+正式輸出在 `data/revenue/<首字母>/<TICKER>/`，分成兩個序列：`Q/<期末日>/`（Q1–Q4）與 `FY/<期末日>/`（10-K 全年）。
+每期先寫暫存目錄，完成後整組換上。
 
+- 預設起始日：沒有指定起日時，Q 與 FY 處理期末日不早於 `DEFAULT_START` 的期別。起日之前的申報照常讀取，
+  作為運算元（例如 Q4 的九個月）與比較欄比對的來源，只是這次不處理成期別。
+- Point in time：一期的主申報是該期最早的原申報；處理時只使用申報日不晚於它的申報。
 - 結構檢核不通過或任何例外：不寫入，已上線的該期輸出保留不動，status.json 記錄失敗原因。
-- 已上線期別不會被一般 parse 改動。重算結果與已上線輸出不同時，status.json 記錄差異並寫標註；
+- Q4 的年度分類集合與 Q1–Q3 不同：不推算，status.json 記為 `not_derived`。
+- 已上線期別不會被一般 parse 改動。重算結果與已上線輸出不同時，status.json 記錄差異；
   由人決定後以 `republish` 指定該期才覆寫，覆寫時 revenue.json 記錄原值與原因。
+- 差異標記：每份已下載申報（含修正申報）的比較欄，與它申報當時看得到的已上線輸出逐一比對；
+  不同時在舊期別記錄標記，已上線數字不改。標記每次以目前的已上線值重算，不存在 revenue.json。
 """
 
 from __future__ import annotations
@@ -20,17 +27,22 @@ from typing import Callable
 
 from ..engines import JsonCodec
 from ..evidence import TableScreenshotter
-from .compose import Operand, PeriodComposer, PeriodResult
+from .compose import NotDerived, Operand, PeriodComposer, PeriodResult
 from .filings import FilingSet, ParseError
-from .review import TOTAL_LABEL, comparatives, cross_period, resolve, same_quarter_last_year
-from .spec import CompanySpec, FactSelector, describe_definition
+from .review import comparatives
+from .spec import CompanySpec, FactSelector
 
 SCHEMA_VERSION = 1
+# 預設起始日（期末日，含）：所有公司共用，沒有指定起日時使用；要處理更早的期別時指定起日。
+DEFAULT_START = "2023-10-01"
 SCREENSHOT_SCALE = 1
+SERIES = ("Q", "FY")
 PERIOD_RE = re.compile(r"\d{4}-\d{2}-\d{2}")
 # 輸出中描述數值與其依據的欄位；這些不同代表數值或來源改變。其餘欄位（檢核紀錄、parser、運算元的證據 hash）
 # 不同只是中繼資料。
-VALUE_FIELDS = ("categories", "total", "reconciling", "operands", "filings", "fiscal_year", "fiscal_quarter", "view")
+VALUE_FIELDS = ("series", "categories", "total", "reconciling", "operands", "filings", "fiscal_year", "fiscal_quarter", "view")
+# 差異標記：比較欄比對中這些結果寫到舊期別。
+MARKED_RESULTS = ("different", "unparseable")
 PACKAGE = Path(__file__).resolve().parents[1]
 
 
@@ -49,9 +61,10 @@ def ticker_dir(root: Path, ticker: str) -> Path:
 
 
 class RevenueParser:
-    """`out` 是寫入的正式輸出根目錄；`baseline` 是跨期比較讀取的已上線輸出（一般與 `out` 相同）。
+    """`out` 是寫入的正式輸出根目錄；`reuse` 是沿用已提交 PNG 的輸出根目錄（一般與 `out` 相同）。
 
-    `screenshots=False` 時不啟動 Chromium，PNG 沿用 baseline 中已提交的檔案（供 `--check` 使用）。
+    `screenshots=False` 時不啟動 Chromium，PNG 只沿用已提交的檔案（供 `--check` 使用）。
+    `republish` 是允許覆寫的 (序列, 期末日)。`default_start` 是沒有指定起日時的起始日，預設為 `DEFAULT_START`。
     """
 
     def __init__(
@@ -60,15 +73,17 @@ class RevenueParser:
         out: Path,
         spec: CompanySpec,
         spec_sha256: str,
-        baseline: Path | None = None,
+        reuse: Path | None = None,
         screenshots: bool = True,
-        republish: set[str] | frozenset[str] = frozenset(),
+        republish: set[tuple[str, str]] | frozenset[tuple[str, str]] = frozenset(),
         progress: Callable[[dict], None] | None = None,
         screenshotter: Callable[[], TableScreenshotter] | None = None,
+        default_start: str = DEFAULT_START,
     ):
         self.spec = spec
+        self.default_start = default_start
         self.out = ticker_dir(out, spec.ticker)
-        self.baseline = ticker_dir(baseline or out, spec.ticker)
+        self.reuse = ticker_dir(reuse or out, spec.ticker)
         self.filings = FilingSet(data, spec.ticker)
         self.composer = PeriodComposer(spec, self.filings)
         self.screenshots = screenshots
@@ -78,61 +93,82 @@ class RevenueParser:
         self.active = None
         self.parser_info = {"spec_sha256": spec_sha256, "engine_sha256": engine_sha256()}
 
-    # ---- 期別與 baseline ----
+    # ---- 期別與已上線輸出 ----
 
     def periods(self, start: str | None = None, end: str | None = None) -> list[str]:
-        return [p for p in self.filings.periods() if (not start or p >= start) and (not end or p <= end)]
+        """期末日在 [start, end] 的已下載期別；沒有指定 `start` 時從預設起始日起。"""
+        start = start or self.default_start
+        return [p for p in self.filings.periods() if p >= start and (not end or p <= end)]
+
+    def series_of(self, period: str) -> list[str]:
+        """期末日是 10-K 的期別同時有 FY 與 Q4；FY 先處理。"""
+        return ["FY", "Q"] if self.filings.is_annual(period) else ["Q"]
 
     @staticmethod
-    def published(root: Path) -> dict[str, dict]:
-        """已上線輸出：只讀以期末日命名的目錄，暫存或殘留目錄不算。"""
+    def published(root: Path) -> dict[tuple[str, str], dict]:
+        """已上線輸出，以 (序列, 期末日) 為鍵：只讀以期末日命名的目錄，暫存或殘留目錄不算。"""
         found = {}
-        if root.exists():
-            for path in sorted(root.glob("*/revenue.json")):
-                if PERIOD_RE.fullmatch(path.parent.name):
-                    found[path.parent.name] = JsonCodec.read(path)
+        for series in SERIES:
+            directory = root / series
+            if directory.exists():
+                for path in sorted(directory.glob("*/revenue.json")):
+                    if PERIOD_RE.fullmatch(path.parent.name):
+                        found[(series, path.parent.name)] = JsonCodec.read(path)
         return found
+
+    @staticmethod
+    def visible(published: dict[tuple[str, str], dict], as_of: str) -> list[tuple[str, str, dict]]:
+        """Point in time：運算元全部來自申報日不晚於 `as_of` 的申報的已上線輸出。"""
+        return [
+            (series, period, output)
+            for (series, period), output in sorted(published.items(), key=lambda kv: (kv[0][1], kv[0][0]))
+            if all(o["filing_date"] <= as_of for o in output["operands"].values())
+        ]
 
     def recover(self) -> list[str]:
         """清理中斷的寫入：`.staging-*` 直接刪除；`.retired-<期別>-*` 在該期目錄不存在時還原，否則刪除。"""
         notes = []
-        if not self.out.exists():
-            return notes
-        for path in sorted(self.out.iterdir()):
-            if path.name.startswith(".staging-"):
-                shutil.rmtree(path)
-                notes.append(f"刪除中斷寫入的暫存目錄 {path.name}")
-            elif path.name.startswith(".retired-"):
-                period = path.name[len(".retired-") : len(".retired-") + 10]
-                final = self.out / period
-                if PERIOD_RE.fullmatch(period) and not final.exists():
-                    path.rename(final)
-                    notes.append(f"還原 {period} 的已上線輸出（{path.name}）")
-                else:
+        for series in SERIES:
+            directory = self.out / series
+            if not directory.exists():
+                continue
+            for path in sorted(directory.iterdir()):
+                if path.name.startswith(".staging-"):
                     shutil.rmtree(path)
-                    notes.append(f"刪除已被取代的舊輸出 {path.name}")
+                    notes.append(f"刪除中斷寫入的暫存目錄 {series}/{path.name}")
+                elif path.name.startswith(".retired-"):
+                    period = path.name[len(".retired-") : len(".retired-") + 10]
+                    final = directory / period
+                    if PERIOD_RE.fullmatch(period) and not final.exists():
+                        path.rename(final)
+                        notes.append(f"還原 {series} {period} 的已上線輸出（{path.name}）")
+                    else:
+                        shutil.rmtree(path)
+                        notes.append(f"刪除已被取代的舊輸出 {series}/{path.name}")
         return notes
 
     # ---- 執行 ----
 
     def run(self, periods: list[str]) -> dict:
+        """依期末日順序處理；每期只看得到先前已寫入、且符合 point in time 的輸出。"""
         report = {"ticker": self.spec.ticker, "periods": [], "complete": True}
         recovered = self.recover()
         if recovered:
             report["recovered"] = recovered
         status = self.read_status()
         try:
-            for period in periods:
-                try:
-                    entry = self.parse_period(period)
-                except Exception as error:
-                    # 單期的任何錯誤都記為該期失敗，繼續處理下一期。
-                    entry = self.failed(period, "例外", f"{type(error).__name__}: {error}")
-                status["periods"][period] = entry
-                report["periods"].append({"period_end": period, **entry})
-                report["complete"] &= entry["status"] != "failed"
-                if self.progress:
-                    self.progress({"ticker": self.spec.ticker, "period": period, "status": entry["status"]})
+            for period in sorted(periods):
+                for series in self.series_of(period):
+                    try:
+                        entry = self.parse_period(series, period)
+                    except Exception as error:
+                        # 單期的任何錯誤都記為該期失敗，繼續處理下一期。
+                        entry = self.failed(series, period, "例外", f"{type(error).__name__}: {error}")
+                    status["periods"][series][period] = entry
+                    report["periods"].append({"series": series, "period_end": period, **entry})
+                    report["complete"] &= entry["status"] != "failed"
+                    if self.progress:
+                        self.progress({"ticker": self.spec.ticker, "period": f"{series} {period}", "status": entry["status"]})
         finally:
             if self.active is not None:
                 try:
@@ -142,22 +178,44 @@ class RevenueParser:
             self.write_status(status)
         return report
 
-    def failed(self, period: str, check: str, reason: str) -> dict:
+    def failed(self, series: str, period: str, check: str, reason: str) -> dict:
+        return {"status": "failed", "check": check, "reason": reason, **self.kept(series, period)}
+
+    def not_derived(self, period: str, error: NotDerived) -> dict:
         return {
-            "status": "failed",
-            "check": check,
-            "reason": reason,
-            "published_output_kept": (self.out / period / "revenue.json").exists(),
+            "status": "not_derived",
+            "check": error.check,
+            "reason": error.message,
+            "fy_categories": error.annual,
+            "quarter_categories": error.quarters,
+            **self.kept("Q", period),
         }
 
-    def parse_period(self, period: str) -> dict:
+    def kept(self, series: str, period: str) -> dict:
+        """失敗或不推算時，該期若有先前上線的輸出，保留不動並記錄它的申報與數值。"""
+        path = self.out / series / period / "revenue.json"
+        if not path.exists():
+            return {"published_output_kept": False}
+        existing = JsonCodec.read(path)
+        return {
+            "published_output_kept": True,
+            "published_output": {
+                "accession": existing["filings"]["primary"]["accession"],
+                "categories": {n: c["value"] for n, c in existing["categories"].items()},
+                "total": existing["total"]["value"],
+                "note": "已上線輸出保留不動；以目前的申報與規格重算，此期不成立",
+            },
+        }
+
+    def parse_period(self, series: str, period: str) -> dict:
         try:
-            result = self.composer.compose(period)
-            baselines = {p: o for p, o in self.published(self.baseline).items() if p < period}
-            output, files = self.build(result, baselines)
+            result = self.composer.compose(period) if series == "Q" else self.composer.compose_annual(period)
+            output, files = self.build(result)
+        except NotDerived as error:
+            return self.not_derived(period, error)
         except ParseError as error:
-            return self.failed(period, error.check, error.message)
-        existing_path = self.out / period / "revenue.json"
+            return self.failed(series, period, error.check, error.message)
+        existing_path = self.out / series / period / "revenue.json"
         if existing_path.exists():
             existing = JsonCodec.read(existing_path)
             if "republished" in existing:
@@ -165,9 +223,9 @@ class RevenueParser:
             changes = published_differences(existing, output)
             if not changes["fields"]:
                 # 只有 parser（引擎與規格 hash）不同：輸出內容相同，不寫入也不算過時。
-                return self.unchanged_entry(existing, output, changes)
-            if period not in self.republish:
-                return self.unchanged_entry(existing, output, changes)
+                return self.unchanged_entry(existing, changes)
+            if (series, period) not in self.republish:
+                return self.unchanged_entry(existing, changes)
             output["republished"] = output.get("republished", []) + [
                 {
                     "reason": changes["reason"],
@@ -179,44 +237,29 @@ class RevenueParser:
                     },
                 }
             ]
-        self.write_period(period, output, files)
+        self.write_period(series, period, output, files)
         return self.entry(output)
 
     @staticmethod
     def entry(output: dict) -> dict:
-        return {
-            "status": "published",
-            "fiscal_year": output["fiscal_year"],
-            "fiscal_quarter": output["fiscal_quarter"],
-            "accession": output["filings"]["primary"]["accession"],
-            **({"annotations": brief(output["annotations"])} if output["annotations"] else {}),
-        }
+        found = {"status": "published", "fiscal_year": output["fiscal_year"]}
+        if "fiscal_quarter" in output:
+            found["fiscal_quarter"] = output["fiscal_quarter"]
+        found["accession"] = output["filings"]["primary"]["accession"]
+        return found
 
-    def unchanged_entry(self, existing: dict, output: dict, changes: dict) -> dict:
-        """已上線輸出不改。數值或依據不同時記錄 `differs_from_published` 並寫標註；只有中繼資料不同時記錄 `stale_fields`。
-
-        跨期檢核以目前已上線的資料重算（例如之後補上更早的期別，才有去年同季可比）；
-        重算出已上線輸出沒有的標註時，記在 status.json 的 `new_annotations`。
-        """
+    def unchanged_entry(self, existing: dict, changes: dict) -> dict:
+        """已上線輸出不改。數值或依據不同時記錄 `differs_from_published`；只有中繼資料不同時記錄 `stale_fields`。"""
         entry = self.entry(existing)
         if changes["value_changed"]:
             entry["differs_from_published"] = changes
-            entry["new_annotations"] = [
-                {
-                    "check": "與已上線不同",
-                    "message": f"重算結果與已上線輸出不同（{changes['reason']}）；確認後以 --republish {self.spec.ticker} {existing['period_end']} 覆寫",
-                }
-            ]
         elif changes["fields"]:
             entry["stale_fields"] = changes["fields"]
-        added = [a for a in brief(output["annotations"]) if a not in brief(existing.get("annotations", []))]
-        if added:
-            entry["new_annotations"] = entry.get("new_annotations", []) + added
         return entry
 
     # ---- 輸出內容 ----
 
-    def build(self, result: PeriodResult, baselines: dict[str, dict]) -> tuple[dict, dict[str, bytes]]:
+    def build(self, result: PeriodResult) -> tuple[dict, dict[str, bytes]]:
         operands = result.operands
         for number, operand in enumerate(operands, 1):
             operand.id = f"op{number}"
@@ -225,13 +268,21 @@ class RevenueParser:
             "schema_version": SCHEMA_VERSION,
             "ticker": self.spec.ticker,
             "view": self.spec.view,
+            "series": result.series,
             "period_end": result.period_end,
             "fiscal_year": result.fiscal_year,
-            "fiscal_quarter": result.fiscal_quarter,
+        }
+        if result.fiscal_quarter is not None:
+            output["fiscal_quarter"] = result.fiscal_quarter
+        output |= {
             "unit": "USD",
             "filings": self.filing_records(result),
             "categories": self.lines(result, "category"),
             "total": self.lines(result, "total")[self.spec.total.name],
+        }
+        if self.spec.reconciling:
+            output["reconciling"] = self.lines(result, "reconciling")
+        output |= {
             "operands": {op.id: self.operand_record(op, evidence[op.id]) for op in operands},
             "checks": {
                 "structural": result.structural + [{"check": "證據完整", "result": "pass"}],
@@ -239,127 +290,7 @@ class RevenueParser:
             },
             "parser": self.parser_info,
         }
-        if self.spec.reconciling:
-            output["reconciling"] = self.lines(result, "reconciling")
-        cross = cross_period(output, baselines)
-        compared = comparatives(
-            self.filings.document(result.primary), result.primary.accession, baselines, self.selector_for(result.period_end)
-        )
-        restated = [
-            {"kind": "comparative", "source_accession": result.primary.accession}
-            | {k: v for k, v in entry.items() if k not in ("category", "role", "period", "result")}
-            for entry in compared
-            if entry["result"] in ("restated", "unparseable")
-        ] + self.amendment_changes(result, output)
-        output["checks"]["cross_period"] = cross
-        output["checks"]["comparatives"] = compared
-        output["checks"]["restatements"] = restated
-        annotations = [
-            {"check": c["check"], "message": self.message(c), "detail": {k: v for k, v in c.items() if k not in ("check", "annotated")}}
-            for c in cross
-            if c["annotated"]
-        ]
-        annotations += [
-            {
-                "check": "重編",
-                "message": f"{r['period_end']} {r['operand']} 原為 {r['published_value']}（{r['published_accession']}），"
-                f"{r['source_accession']} 為 {r['restated_value']}" + (f"；{r['note']}" if r.get("note") else ""),
-                "detail": r,
-            }
-            for r in restated
-        ]
-        annotations += [
-            {
-                "check": "比較期找不到",
-                "message": f"{e['period_end']} {e['category']}（{e['role']}，{e['period']['start']}～{e['period']['end']}）在本期申報中找不到",
-                "detail": e,
-            }
-            for e in compared
-            if e["result"] == "not_found"
-        ]
-        annotations += self.required_comparative(output, baselines, compared)
-        if result.mixed_definitions:
-            output["checks"]["q4_definitions"] = self.q4_definitions(result, output)
-            annotations += [
-                {
-                    "check": "Q4 跨定義",
-                    "message": f"{item['category']} 年度用 {item['annual']['selector']}、九個月用 {item['nine_months']['selector']}；"
-                    + "輔助證據："
-                    + (
-                        f"{item['auxiliary']['accession']} 以年度定義標示的九個月值{'一致' if item['auxiliary']['consistent'] else '不一致'}"
-                        if item["auxiliary"]["found"]
-                        else "找不到"
-                    ),
-                    "detail": {"category": item["category"]},
-                }
-                for item in output["checks"]["q4_definitions"]
-            ]
-        output["annotations"] = annotations
         return output, files
-
-    def required_comparative(self, output: dict, baselines: dict[str, dict], compared: list[dict]) -> list[dict]:
-        """去年同季的總營收必須在本期申報中比得到：10-Q 比單季、10-K 比年度。沒有去年同季時不要求。"""
-        last_year, _ = same_quarter_last_year(output, baselines)
-        if last_year is None:
-            return []
-        role = "annual" if output["fiscal_quarter"] == 4 else "quarter"
-        required = [
-            term["operand"]
-            for term in last_year["total"]["expression"]
-            if last_year["operands"][term["operand"]].get("role") == role
-        ]
-        listed = {(e["period_end"], e["operand"]) for e in compared if e["category"] == TOTAL_LABEL and e["result"] != "not_found"}
-        return [
-            {
-                "check": "比較期總營收",
-                "message": f"本期申報沒有去年同季 {last_year['period_end']} 的總營收（{operand}）",
-                "detail": {"period_end": last_year["period_end"], "operand": operand},
-            }
-            for operand in required
-            if (last_year["period_end"], operand) not in listed
-        ]
-
-    def q4_definitions(self, result: PeriodResult, output: dict) -> list[dict]:
-        """Q4 年度與九個月運算元使用不同定義時，記錄兩個定義，並找輔助證據。
-
-        輔助證據：較晚的申報中，以年度的（新）定義找同一段九個月期間的 fact；找到時記錄其值與是否在精度內一致，
-        可據以判斷改名前後的範圍是否相同。
-        """
-        records = []
-        for name, annual_definition, nine_definition in result.mixed_definitions:
-            line = next(l for l in result.lines if l.name == name)
-            annual = next(t.operand for t in line.terms if t.operand.role == "annual")
-            nine = next(t.operand for t in line.terms if t.operand.role == "nine_months")
-            records.append(
-                {
-                    "category": name,
-                    "annual": {"operand": annual.id, **describe_definition(annual_definition)},
-                    "nine_months": {"operand": nine.id, **describe_definition(nine_definition)},
-                    "auxiliary": self.auxiliary_evidence(annual_definition.selector, nine),
-                }
-            )
-        return records
-
-    def auxiliary_evidence(self, selector, nine: Operand) -> dict:
-        span = (nine.fact.start, nine.fact.end)
-        for filing in self.filings.filings:
-            if filing.report_date <= nine.filing.report_date or filing.form not in ("10-Q", "10-K"):
-                continue
-            document = self.filings.document(filing)
-            keys = resolve(document, selector)
-            if keys is None:
-                continue
-            for fact in document.facts:
-                if (fact.concept_key, fact.dimension_keys) == keys and (fact.start, fact.end) == span:
-                    bound = (fact.error_bound() or 0) + (nine.fact.error_bound() or 0)
-                    return {
-                        "found": True,
-                        "accession": filing.accession,
-                        "fact_id": fact.fact_id,
-                        "value": fact.value,
-                        "consistent": fact.value is not None and abs(fact.value - nine.fact.value) <= bound,
-                    }
-        return {"found": False, "note": "較晚的申報中沒有以年度定義標示的同期間九個月 fact"}
 
     def selector_for(self, period: str):
         """回傳查詢函式：分類名稱（`None` 為總營收）→ 在 `period` 生效的 FactSelector；沒有或不是 fact 時為 None。"""
@@ -370,65 +301,19 @@ class RevenueParser:
             if item is None:
                 return None
             try:
-                selector = self.composer.definition(item, period).selector
+                definition = self.composer.definition(item, period)
             except ParseError:
                 return None
-            return selector if isinstance(selector, FactSelector) else None
+            return definition.selector if definition and isinstance(definition.selector, FactSelector) else None
 
         return lookup
-
-    def amendment_changes(self, result: PeriodResult, output: dict) -> list[dict]:
-        """主申報是修正申報時，逐一比對運算元與原申報中同一 fact；不同、無法比較或原申報沒有時記為重編。"""
-        if result.replaced is None:
-            return []
-        original = self.filings.document(result.replaced)
-        amended = {f.fact_id: f for f in self.filings.document(result.primary).facts}
-        found = []
-        for operand_id, operand in output["operands"].items():
-            if operand["accession"] != result.primary.accession:
-                continue
-            new = amended[operand["fact_id"]]
-            matches = original.matching(new.concept, new.dimensions, new.start, new.end)
-            entry = {
-                "kind": "amendment",
-                "period_end": result.period_end,
-                "operand": operand_id,
-                "concept": new.concept,
-                "dimensions": dict(new.dimensions),
-                "published_accession": result.replaced.accession,
-                "source_accession": result.primary.accession,
-                "restated_fact_id": new.fact_id,
-                "restated_value": new.value,
-            }
-            if not matches:
-                found.append({**entry, "published_value": None, "note": "原申報沒有此 fact"})
-                continue
-            old = matches[0]
-            if old.value is None or old.error_bound() is None:
-                found.append({**entry, "published_value": None, "note": f"原申報的 fact 無法比較：{old.value_error or '缺 decimals'}"})
-            elif abs(new.value - old.value) > old.error_bound() + new.error_bound():
-                found.append({**entry, "published_value": old.value})
-        return found
-
-    @staticmethod
-    def message(check: dict) -> str:
-        if check["check"] == "分類集合":
-            return f"分類集合與 {check['baseline_period']} 不同：新增 {check.get('added')}，移除 {check.get('removed')}"
-        if check["check"] == "占比變動" and "change_pp" in check:
-            return f"{check['category']} 占比較去年同季 {check['baseline_period']} 變動 {check['change_pp']} 個百分點"
-        if check["check"] == "YoY" and check.get("change") is not None:
-            return f"{check['category']} YoY {check['change']}，超過 ±{check['threshold']}"
-        return f"{check['check']}{(' ' + check['category']) if check.get('category') else ''}：{check.get('note', '異常')}"
 
     @staticmethod
     def filing_records(result: PeriodResult) -> dict:
         records = {"primary": result.primary.describe()}
-        if result.replaced:
-            records["primary"]["replaces"] = result.replaced.describe()
         if result.nine_month_filing:
             records["nine_months"] = result.nine_month_filing.describe()
         return records
-
     @staticmethod
     def lines(result: PeriodResult, group: str) -> dict:
         return {
@@ -507,7 +392,7 @@ class RevenueParser:
                 page = locator.table_html(index, items, header)
             except ValueError as error:
                 raise ParseError("證據完整", f"{key}：{error}") from error
-            png = self.png(result.period_end, key, page, filing, items, locator, index)
+            png = self.png(result.series, result.period_end, key, page, filing, items, locator, index)
             files[f"{key}.html"] = page
             if png is not None:
                 files[f"{key}.png"] = png
@@ -520,14 +405,18 @@ class RevenueParser:
                 }
         return records, files
 
-    def png(self, period, key, page, filing, items, locator, index) -> bytes | None:
-        """HTML 與已提交的相同、PNG hash 與截圖倍率都相符時沿用舊 PNG；`screenshots=False` 時只沿用、不截圖。"""
-        committed = self.baseline / period / "evidence"
-        old_page, old_png = committed / f"{key}.html", committed / f"{key}.png"
-        if old_page.is_file() and old_png.is_file() and old_page.read_bytes() == page:
-            recorded = self.recorded_png(period, key)
-            if recorded and recorded == (sha256(old_png.read_bytes()), SCREENSHOT_SCALE):
-                return old_png.read_bytes()
+    def png(self, series, period, key, page, filing, items, locator, index) -> bytes | None:
+        """HTML 與已提交的相同、PNG hash 與截圖倍率都相符時沿用舊 PNG；`screenshots=False` 時只沿用、不截圖。
+
+        同一期末日的 FY 與 Q4 都用到 10-K 的表格，先找本序列、再找另一個序列的已提交證據。
+        """
+        for source in [series] + [s for s in SERIES if s != series]:
+            committed = self.reuse / source / period / "evidence"
+            old_page, old_png = committed / f"{key}.html", committed / f"{key}.png"
+            if old_page.is_file() and old_png.is_file() and old_page.read_bytes() == page:
+                recorded = self.recorded_png(source, period, key)
+                if recorded and recorded == (sha256(old_png.read_bytes()), SCREENSHOT_SCALE):
+                    return old_png.read_bytes()
         if not self.screenshots:
             return None
         if self.active is None:
@@ -543,8 +432,8 @@ class RevenueParser:
             raise ParseError("證據完整", f"{key}：瀏覽器截到的表格與原文表格 #{index} 文字不同")
         return png
 
-    def recorded_png(self, period: str, key: str) -> tuple[str, int] | None:
-        path = self.baseline / period / "revenue.json"
+    def recorded_png(self, series: str, period: str, key: str) -> tuple[str, int] | None:
+        path = self.reuse / series / period / "revenue.json"
         if not path.exists():
             return None
         for operand in JsonCodec.read(path)["operands"].values():
@@ -554,18 +443,19 @@ class RevenueParser:
 
     # ---- 寫入 ----
 
-    def write_period(self, period: str, output: dict, files: dict[str, bytes]):
-        self.out.mkdir(parents=True, exist_ok=True)
-        staging = Path(tempfile.mkdtemp(prefix=f".staging-{period}-", dir=self.out))
+    def write_period(self, series: str, period: str, output: dict, files: dict[str, bytes]):
+        directory = self.out / series
+        directory.mkdir(parents=True, exist_ok=True)
+        staging = Path(tempfile.mkdtemp(prefix=f".staging-{period}-", dir=directory))
         try:
             (staging / "evidence").mkdir()
             for name, body in files.items():
                 (staging / "evidence" / name).write_bytes(body)
             JsonCodec.write(staging / "revenue.json", output)
-            final = self.out / period
+            final = directory / period
             retired = None
             if final.exists():
-                retired = self.out / f".retired-{period}-{secrets.token_hex(4)}"
+                retired = directory / f".retired-{period}-{secrets.token_hex(4)}"
                 final.rename(retired)
             try:
                 staging.rename(final)
@@ -583,27 +473,81 @@ class RevenueParser:
         path = self.out / "status.json"
         status = JsonCodec.read(path) if path.exists() else {}
         status.update(ticker=self.spec.ticker, view=self.spec.view)
-        status.setdefault("periods", {})
+        periods = status.get("periods", {})
+        status["periods"] = {series: dict(periods.get(series, {})) for series in SERIES}
         return status
 
     def write_status(self, status: dict):
-        """status.json 列出每個處理過的期別；被較新申報重編的期別另記 `restated_by`。"""
-        restated_by = {}
-        for period, output in self.published(self.out).items():
-            for item in output["checks"].get("restatements", []):
-                if item.get("kind") == "comparative":
-                    restated_by.setdefault(item["period_end"], set()).add(period)
-        for period, entry in status["periods"].items():
-            entry.pop("restated_by", None)
-            if period in restated_by:
-                entry["restated_by"] = sorted(restated_by[period])
+        """status.json 列出兩個序列每個處理過的期別，並以目前的已上線輸出重建差異標記（`differences`）。
+
+        已上線輸出在 status.json 沒有紀錄時（例如紀錄被手動刪除），由輸出補上紀錄，標記不會因此遺漏。
+        """
+        published = self.published(self.out)
+        for (series, period), output in published.items():
+            status["periods"][series].setdefault(period, self.entry(output))
+        markers, errors = self.differences(published)
+        for series, entries in status["periods"].items():
+            for period, entry in entries.items():
+                entry.pop("differences", None)
+                if (series, period) in markers:
+                    entry["differences"] = markers[(series, period)]
+        status.pop("comparison_errors", None)
+        if errors:
+            status["comparison_errors"] = errors
         status["parser"] = self.parser_info
         self.out.mkdir(parents=True, exist_ok=True)
         JsonCodec.write(self.out / "status.json", status)
 
+    def differences(self, published: dict[tuple[str, str], dict]) -> tuple[dict[tuple[str, str], list[dict]], list[dict]]:
+        """每份已下載的申報（依申報日順序），與它申報當時看得到的已上線輸出做比較欄比對，以目前的已上線值計算。
+
+        回傳（期別 → 差異標記, 無法讀取的申報）。比對使用申報期別生效的規格定義。
+        """
+        markers: dict[tuple[str, str], list[dict]] = {}
+        errors = []
+        for filing in self.filings.filings:
+            baselines = self.visible(published, filing.filing_date)
+            if not baselines:
+                continue
+            try:
+                document = self.filings.document(filing)
+            except ParseError as error:
+                errors.append({"accession": filing.accession, "check": error.check, "reason": error.message})
+                continue
+            for item in comparatives(document, filing.accession, baselines, self.selector_for(filing.report_date)):
+                if item["result"] not in MARKED_RESULTS:
+                    continue
+                markers.setdefault((item["series"], item["period_end"]), []).append(
+                    {
+                        "category": item["category"],
+                        "operand": item["operand"],
+                        "role": item["role"],
+                        "period": item["period"],
+                        "result": item["result"],
+                        "published_value": item["published_value"],
+                        "listed_value": item["listed_value"],
+                        "source": {
+                            "accession": filing.accession,
+                            "form": filing.form,
+                            "filing_date": filing.filing_date,
+                            "fact_id": item["listed_fact_id"],
+                        },
+                        **({"note": item["note"]} if item.get("note") else {}),
+                    }
+                )
+        return markers, errors
+
 
 def check_outputs(
-    data: Path, committed_root: Path, spec: CompanySpec, spec_sha256: str, periods: list[str] | None, start=None, end=None, progress=None
+    data: Path,
+    committed_root: Path,
+    spec: CompanySpec,
+    spec_sha256: str,
+    periods: list[str] | None,
+    start=None,
+    end=None,
+    progress=None,
+    default_start: str = DEFAULT_START,
 ) -> tuple[dict, list[str]]:
     """`--check`：在已提交輸出的副本上照一般 parse 執行（不啟動 Chromium），再與已提交的輸出比對。
 
@@ -613,58 +557,67 @@ def check_outputs(
     with tempfile.TemporaryDirectory() as temp:
         if committed.exists():
             shutil.copytree(committed, ticker_dir(Path(temp), spec.ticker))
-        parser = RevenueParser(data, Path(temp), spec, spec_sha256, screenshots=False, progress=progress)
+        parser = RevenueParser(data, Path(temp), spec, spec_sha256, screenshots=False, progress=progress, default_start=default_start)
         if periods is None:
             status = committed / "status.json"
-            periods = sorted(JsonCodec.read(status)["periods"]) if status.exists() and not (start or end) else parser.periods(start, end)
+            if status.exists() and not (start or end):
+                periods = sorted({p for entries in JsonCodec.read(status)["periods"].values() for p in entries})
+            else:
+                periods = parser.periods(start, end)
         report = parser.run(periods)
         return report, compare_outputs(committed, ticker_dir(Path(temp), spec.ticker), periods)
 
 
 def compare_outputs(expected_dir: Path, actual_dir: Path, periods: list[str]) -> list[str]:
-    """已提交的輸出（expected）與重跑結果（actual）逐欄比對。
+    """已提交的輸出（expected）與重跑結果（actual）逐欄比對，兩個序列都比。
 
     - revenue.json 逐欄比對；`parser` 欄位與 PNG hash、倍率不比（引擎重構或不同機器的字型會改變它們）。
-    - status.json 中這些期別的紀錄逐欄比對（含失敗原因、標註、restated_by、stale_fields），`published_output_kept` 除外。
+    - status.json 中這些期別的紀錄逐欄比對（含失敗原因、差異標記、stale_fields），`published_output_kept` 除外；
+      頂層的 `comparison_errors` 也比對。
     - 證據 HTML 比對 bytes；證據目錄中沒有被 revenue.json 引用的檔案列為差異。
     - 已提交的 PNG 核對檔案 hash 與 revenue.json 的紀錄一致。
     """
     differences = []
-    statuses = []
+    documents = []
     for directory in (expected_dir, actual_dir):
         path = directory / "status.json"
-        statuses.append(JsonCodec.read(path)["periods"] if path.exists() else {})
-    for period in periods:
-        expected_entry, actual_entry = (dict(s.get(period, {})) for s in statuses)
-        for entry in (expected_entry, actual_entry):
-            entry.pop("published_output_kept", None)
-        differences += [f"{period}: status.{d}" for d in diff(expected_entry, actual_entry)]
-        expected_path, actual_path = expected_dir / period / "revenue.json", actual_dir / period / "revenue.json"
-        if not expected_path.exists() and not actual_path.exists():
-            continue
-        if not expected_path.exists() or not actual_path.exists():
-            differences.append(f"{period}: 已提交 {expected_path.exists()}，重跑 {actual_path.exists()}")
-            continue
-        expected, actual = JsonCodec.read(expected_path), JsonCodec.read(actual_path)
-        for output in (expected, actual):
-            output.pop("parser", None)
-            for operand in output.get("operands", {}).values():
-                operand.get("evidence", {}).pop("png_sha256", None)
-                operand.get("evidence", {}).pop("png_scale", None)
-        differences += [f"{period}: {d}" for d in diff(expected, actual)]
-        for page in sorted((actual_dir / period / "evidence").glob("*.html")):
-            committed = expected_dir / period / "evidence" / page.name
-            if not committed.exists() or committed.read_bytes() != page.read_bytes():
-                differences.append(f"{period}: 證據 {page.name} 與已提交的不同")
-        recorded = JsonCodec.read(expected_path)["operands"]
-        referenced = {f"{o['evidence']['table']}.{kind}" for o in recorded.values() for kind in ("html", "png")}
-        for extra in sorted((expected_dir / period / "evidence").glob("*")):
-            if extra.name not in referenced:
-                differences.append(f"{period}: 證據目錄中的 {extra.name} 沒有被 revenue.json 引用")
-        for operand_id, operand in recorded.items():
-            png = expected_dir / period / "evidence" / f"{operand['evidence']['table']}.png"
-            if not png.is_file() or sha256(png.read_bytes()) != operand["evidence"]["png_sha256"]:
-                differences.append(f"{period}: {operand_id} 的 PNG 缺少或 hash 與紀錄不符")
+        documents.append(JsonCodec.read(path) if path.exists() else {})
+    statuses = [d.get("periods", {}) for d in documents]
+    differences += [f"status.{d}" for d in diff(*(d.get("comparison_errors", []) for d in documents), "comparison_errors")]
+    for series in SERIES:
+        for period in periods:
+            where = f"{series} {period}"
+            expected_entry, actual_entry = (dict(s.get(series, {}).get(period, {})) for s in statuses)
+            for entry in (expected_entry, actual_entry):
+                entry.pop("published_output_kept", None)
+            differences += [f"{where}: status.{d}" for d in diff(expected_entry, actual_entry)]
+            expected_path, actual_path = expected_dir / series / period / "revenue.json", actual_dir / series / period / "revenue.json"
+            if not expected_path.exists() and not actual_path.exists():
+                continue
+            if not expected_path.exists() or not actual_path.exists():
+                differences.append(f"{where}: 已提交 {expected_path.exists()}，重跑 {actual_path.exists()}")
+                continue
+            expected, actual = JsonCodec.read(expected_path), JsonCodec.read(actual_path)
+            for output in (expected, actual):
+                output.pop("parser", None)
+                for operand in output.get("operands", {}).values():
+                    operand.get("evidence", {}).pop("png_sha256", None)
+                    operand.get("evidence", {}).pop("png_scale", None)
+            differences += [f"{where}: {d}" for d in diff(expected, actual)]
+            evidence = expected_dir / series / period / "evidence"
+            for page in sorted((actual_dir / series / period / "evidence").glob("*.html")):
+                committed = evidence / page.name
+                if not committed.exists() or committed.read_bytes() != page.read_bytes():
+                    differences.append(f"{where}: 證據 {page.name} 與已提交的不同")
+            recorded = JsonCodec.read(expected_path)["operands"]
+            referenced = {f"{o['evidence']['table']}.{kind}" for o in recorded.values() for kind in ("html", "png")}
+            for extra in sorted(evidence.glob("*")):
+                if extra.name not in referenced:
+                    differences.append(f"{where}: 證據目錄中的 {extra.name} 沒有被 revenue.json 引用")
+            for operand_id, operand in recorded.items():
+                png = evidence / f"{operand['evidence']['table']}.png"
+                if not png.is_file() or sha256(png.read_bytes()) != operand["evidence"]["png_sha256"]:
+                    differences.append(f"{where}: {operand_id} 的 PNG 缺少或 hash 與紀錄不符")
     return differences
 
 
@@ -703,7 +656,7 @@ def published_differences(existing: dict, new: dict) -> dict:
         values = []
     old_primary, new_primary = existing["filings"]["primary"], new["filings"]["primary"]
     if new_primary["accession"] != old_primary["accession"]:
-        reason = "修正申報取代原申報" if new_primary.get("replaces") else f"選用的申報由 {old_primary['accession']} 改為 {new_primary['accession']}"
+        reason = f"選用的申報由 {old_primary['accession']} 改為 {new_primary['accession']}"
     elif values:
         reason = "規則或原文變更"
     else:
@@ -718,8 +671,3 @@ def published_differences(existing: dict, new: dict) -> dict:
 
 def without_evidence(operands: dict) -> dict:
     return {k: {f: v for f, v in o.items() if f != "evidence"} for k, o in operands.items()}
-
-
-def brief(annotations: list[dict]) -> list[dict]:
-    """status.json 用的標註摘要：只留 check 與 message。"""
-    return [{"check": a["check"], "message": a["message"]} for a in annotations]

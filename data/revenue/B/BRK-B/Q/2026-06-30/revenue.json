@@ -1,0 +1,460 @@
+{
+  "categories": {
+    "BHE": {
+      "expression": [
+        {
+          "operand": "op3",
+          "weight": 1
+        }
+      ],
+      "value": 6735000000
+    },
+    "BNSF": {
+      "expression": [
+        {
+          "operand": "op2",
+          "weight": 1
+        }
+      ],
+      "value": 6601000000
+    },
+    "Corporate, eliminations and other": {
+      "expression": [
+        {
+          "operand": "op8",
+          "weight": 1
+        }
+      ],
+      "value": 794000000
+    },
+    "Insurance": {
+      "expression": [
+        {
+          "operand": "op1",
+          "weight": 1
+        }
+      ],
+      "value": 26176000000
+    },
+    "Manufacturing": {
+      "expression": [
+        {
+          "operand": "op4",
+          "weight": 1
+        }
+      ],
+      "value": 22568000000
+    },
+    "McLane": {
+      "expression": [
+        {
+          "operand": "op5",
+          "weight": 1
+        }
+      ],
+      "value": 12118000000
+    },
+    "Pilot": {
+      "expression": [
+        {
+          "operand": "op6",
+          "weight": 1
+        }
+      ],
+      "value": 14932000000
+    },
+    "Service and retailing": {
+      "expression": [
+        {
+          "operand": "op7",
+          "weight": 1
+        }
+      ],
+      "value": 11884000000
+    }
+  },
+  "checks": {
+    "structural": [
+      {
+        "check": "定義唯一",
+        "result": "pass"
+      },
+      {
+        "check": "fact 存在且唯一",
+        "result": "pass"
+      },
+      {
+        "check": "單位與精度",
+        "result": "pass"
+      },
+      {
+        "check": "加總",
+        "result": "pass"
+      },
+      {
+        "check": "證據完整",
+        "result": "pass"
+      }
+    ],
+    "sum": {
+      "categories": 101808000000,
+      "difference": 0,
+      "tolerance": "4500000",
+      "total": 101808000000
+    }
+  },
+  "filings": {
+    "primary": {
+      "accession": "0001193125-26-341032",
+      "filing_date": "2026-08-10",
+      "form": "10-Q",
+      "report_date": "2026-06-30"
+    }
+  },
+  "fiscal_quarter": 2,
+  "fiscal_year": 2026,
+  "operands": {
+    "op1": {
+      "accession": "0001193125-26-341032",
+      "concept": "us-gaap:Revenues",
+      "context_id": "C_4975b1cd-5944-4e33-998d-91821ffb9b78",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "brka:BerkshireHathawayInsuranceGroupMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1067983/000119312526341032/brka-20260630.htm",
+        "name": "brka-20260630.htm",
+        "sha256": "dfa616c2f15819f4de2865cad3ee2009d8bd33aa7357396928550f6130123c06",
+        "url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526341032/brka-20260630.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "8f3a1e0a7752ea228c5356e68efb02558aff8759361f2cd7ebee392d74cfad36",
+        "png_scale": 1,
+        "png_sha256": "df91ef78dc078343edcf872ca5287e4466b8b9370192531bd805ba60a8dbf4e1",
+        "table": "0001193125-26-341032-dfa616c2f158-t52"
+      },
+      "fact_id": "F_a1ac170a-82b8-4253-b076-b35d881563ff",
+      "filing_date": "2026-08-10",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-06-30",
+        "start": "2026-04-01"
+      },
+      "raw": "26,176",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 26176000000
+    },
+    "op2": {
+      "accession": "0001193125-26-341032",
+      "concept": "us-gaap:Revenues",
+      "context_id": "C_ddfe964e-20d7-41c9-8d29-729949721f1c",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "brka:BurlingtonNorthernSantaFeCorporationMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1067983/000119312526341032/brka-20260630.htm",
+        "name": "brka-20260630.htm",
+        "sha256": "dfa616c2f15819f4de2865cad3ee2009d8bd33aa7357396928550f6130123c06",
+        "url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526341032/brka-20260630.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "00184a4eafef3ae0e06438be65707fb38242a421cac0581667fcef845ee4a51c",
+        "png_scale": 1,
+        "png_sha256": "01698c6a2557a8dd863baa988e880b6901a5531d81574a0d1b271f1aa505e7af",
+        "table": "0001193125-26-341032-dfa616c2f158-t56"
+      },
+      "fact_id": "F_c9639ab4-4fe1-442c-9d1a-1d3d702080f7",
+      "filing_date": "2026-08-10",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-06-30",
+        "start": "2026-04-01"
+      },
+      "raw": "6,601",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 6601000000
+    },
+    "op3": {
+      "accession": "0001193125-26-341032",
+      "concept": "us-gaap:Revenues",
+      "context_id": "C_d2c28415-6ee9-41e0-a42c-33efeaff456b",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "brka:BerkshireHathawayEnergyCompanyMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1067983/000119312526341032/brka-20260630.htm",
+        "name": "brka-20260630.htm",
+        "sha256": "dfa616c2f15819f4de2865cad3ee2009d8bd33aa7357396928550f6130123c06",
+        "url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526341032/brka-20260630.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "376c30fbb1b1b0703b37b3435258cd2a8f6e035998cdb5f8e19ed06f1f72128a",
+        "png_scale": 1,
+        "png_sha256": "9d0931fcdc4c81a274ab5abeec11082b70b5e78f1463bb73ae0e6d3a637a8dcd",
+        "table": "0001193125-26-341032-dfa616c2f158-t57"
+      },
+      "fact_id": "F_124dc8c1-64d3-4b81-bab8-75e93f806a68",
+      "filing_date": "2026-08-10",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-06-30",
+        "start": "2026-04-01"
+      },
+      "raw": "6,735",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 6735000000
+    },
+    "op4": {
+      "accession": "0001193125-26-341032",
+      "concept": "us-gaap:Revenues",
+      "context_id": "C_3d061a7b-7ec0-4843-b0c0-aea7a85ded5a",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "brka:ManufacturingBusinessesMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1067983/000119312526341032/brka-20260630.htm",
+        "name": "brka-20260630.htm",
+        "sha256": "dfa616c2f15819f4de2865cad3ee2009d8bd33aa7357396928550f6130123c06",
+        "url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526341032/brka-20260630.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "16750400d140a4a3527275937fbb78e4e7ae7cf6c703e628dd9bf9385c61a7e8",
+        "png_scale": 1,
+        "png_sha256": "63b44db3dd12679333c67f8e61607f18d4f93611a45431aa272eb910de9c14a2",
+        "table": "0001193125-26-341032-dfa616c2f158-t58"
+      },
+      "fact_id": "F_ee447030-e47a-4ea9-a122-91fcdbe47eb6",
+      "filing_date": "2026-08-10",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-06-30",
+        "start": "2026-04-01"
+      },
+      "raw": "22,568",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 22568000000
+    },
+    "op5": {
+      "accession": "0001193125-26-341032",
+      "concept": "us-gaap:Revenues",
+      "context_id": "C_75a9a5d5-f1cf-4005-b59d-247ee411e29c",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "brka:McLaneCompanyMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1067983/000119312526341032/brka-20260630.htm",
+        "name": "brka-20260630.htm",
+        "sha256": "dfa616c2f15819f4de2865cad3ee2009d8bd33aa7357396928550f6130123c06",
+        "url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526341032/brka-20260630.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "f40658c6d7c9a5893e37e8877c2bc87730bff0c2faf672cab5ae5400a5cde51f",
+        "png_scale": 1,
+        "png_sha256": "fe28e1a7a02aea5221de6e8cf3a95d6a7e5730684b3bfc21d9d9bf4afd1a68e8",
+        "table": "0001193125-26-341032-dfa616c2f158-t59"
+      },
+      "fact_id": "F_4d280bb1-b5ed-4a7c-8bad-db748d46f644",
+      "filing_date": "2026-08-10",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-06-30",
+        "start": "2026-04-01"
+      },
+      "raw": "12,118",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 12118000000
+    },
+    "op6": {
+      "accession": "0001193125-26-341032",
+      "concept": "us-gaap:Revenues",
+      "context_id": "C_3d037670-a61c-4619-9b59-f89c6f669e9c",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "brka:PilotTravelCentersLLCMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1067983/000119312526341032/brka-20260630.htm",
+        "name": "brka-20260630.htm",
+        "sha256": "dfa616c2f15819f4de2865cad3ee2009d8bd33aa7357396928550f6130123c06",
+        "url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526341032/brka-20260630.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "f40658c6d7c9a5893e37e8877c2bc87730bff0c2faf672cab5ae5400a5cde51f",
+        "png_scale": 1,
+        "png_sha256": "fe28e1a7a02aea5221de6e8cf3a95d6a7e5730684b3bfc21d9d9bf4afd1a68e8",
+        "table": "0001193125-26-341032-dfa616c2f158-t59"
+      },
+      "fact_id": "F_f37a2829-ad36-424d-883a-57ae95d743fc",
+      "filing_date": "2026-08-10",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-06-30",
+        "start": "2026-04-01"
+      },
+      "raw": "14,932",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 14932000000
+    },
+    "op7": {
+      "accession": "0001193125-26-341032",
+      "concept": "us-gaap:Revenues",
+      "context_id": "C_0ee95e0d-6ece-4263-a492-44a6137e107f",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "brka:ServiceAndRetailingBusinessesMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1067983/000119312526341032/brka-20260630.htm",
+        "name": "brka-20260630.htm",
+        "sha256": "dfa616c2f15819f4de2865cad3ee2009d8bd33aa7357396928550f6130123c06",
+        "url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526341032/brka-20260630.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "16750400d140a4a3527275937fbb78e4e7ae7cf6c703e628dd9bf9385c61a7e8",
+        "png_scale": 1,
+        "png_sha256": "63b44db3dd12679333c67f8e61607f18d4f93611a45431aa272eb910de9c14a2",
+        "table": "0001193125-26-341032-dfa616c2f158-t58"
+      },
+      "fact_id": "F_7ee2f401-db02-40b8-9249-81e19bb5d038",
+      "filing_date": "2026-08-10",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-06-30",
+        "start": "2026-04-01"
+      },
+      "raw": "11,884",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 11884000000
+    },
+    "op8": {
+      "accession": "0001193125-26-341032",
+      "concept": "us-gaap:Revenues",
+      "context_id": "C_b8160f24-d31c-44ad-9cf1-06c1447314c6",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "brka:CorporateReconcilingItemsAndEliminationsMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1067983/000119312526341032/brka-20260630.htm",
+        "name": "brka-20260630.htm",
+        "sha256": "dfa616c2f15819f4de2865cad3ee2009d8bd33aa7357396928550f6130123c06",
+        "url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526341032/brka-20260630.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "d17d81eade7295f7b00322f302db289b9e8ff80d325f35cb79444eeac3bcf457",
+        "png_scale": 1,
+        "png_sha256": "477c7bb51c4c98e0fbf0472a9aaa314bfb208d6aefec1a15bf74f3328d1d7c41",
+        "table": "0001193125-26-341032-dfa616c2f158-t60"
+      },
+      "fact_id": "F_b7ee21a2-a0bf-4cba-985a-9aad54aea78c",
+      "filing_date": "2026-08-10",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-06-30",
+        "start": "2026-04-01"
+      },
+      "raw": "794",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 794000000
+    },
+    "op9": {
+      "accession": "0001193125-26-341032",
+      "concept": "us-gaap:Revenues",
+      "context_id": "C_79cdcbeb-1f0d-4888-a27d-67c82bff9e76",
+      "decimals": "-6",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1067983/000119312526341032/brka-20260630.htm",
+        "name": "brka-20260630.htm",
+        "sha256": "dfa616c2f15819f4de2865cad3ee2009d8bd33aa7357396928550f6130123c06",
+        "url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526341032/brka-20260630.htm"
+      },
+      "duplicates": [
+        "F_2e79fbc2-2f0b-4729-afe3-a4d4855f0794",
+        "F_da08ed10-77a4-4835-8d03-69fe3406909b"
+      ],
+      "evidence": {
+        "html_sha256": "d17d81eade7295f7b00322f302db289b9e8ff80d325f35cb79444eeac3bcf457",
+        "png_scale": 1,
+        "png_sha256": "477c7bb51c4c98e0fbf0472a9aaa314bfb208d6aefec1a15bf74f3328d1d7c41",
+        "table": "0001193125-26-341032-dfa616c2f158-t60"
+      },
+      "fact_id": "F_2f7a99ca-0abb-420a-887d-8c57462e6a31",
+      "filing_date": "2026-08-10",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-06-30",
+        "start": "2026-04-01"
+      },
+      "raw": "101,808",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 101808000000
+    }
+  },
+  "parser": {
+    "engine_sha256": "886f9d7d7f21c98617d7547b599ce6243dd6f7ca1b47c0c233067bac16cefd60",
+    "spec_sha256": "aaf39d5a217936346b296ee6ba58d5c2c60f3e016e5b879365d8c22961add2aa"
+  },
+  "period_end": "2026-06-30",
+  "schema_version": 1,
+  "series": "Q",
+  "ticker": "BRK-B",
+  "total": {
+    "expression": [
+      {
+        "operand": "op9",
+        "weight": 1
+      }
+    ],
+    "value": 101808000000
+  },
+  "unit": "USD",
+  "view": "business_segment"
+}

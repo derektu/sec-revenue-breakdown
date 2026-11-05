@@ -1,0 +1,185 @@
+{
+  "categories": {
+    "Automotive": {
+      "expression": [
+        {
+          "operand": "op1",
+          "weight": 1
+        }
+      ],
+      "value": 87604000000
+    },
+    "Energy generation and storage": {
+      "expression": [
+        {
+          "operand": "op2",
+          "weight": 1
+        }
+      ],
+      "value": 10086000000
+    }
+  },
+  "checks": {
+    "structural": [
+      {
+        "check": "定義唯一",
+        "result": "pass"
+      },
+      {
+        "check": "fact 存在且唯一",
+        "result": "pass"
+      },
+      {
+        "check": "單位與精度",
+        "result": "pass"
+      },
+      {
+        "check": "加總",
+        "result": "pass"
+      },
+      {
+        "check": "證據完整",
+        "result": "pass"
+      }
+    ],
+    "sum": {
+      "categories": 97690000000,
+      "difference": 0,
+      "tolerance": "1500000",
+      "total": 97690000000
+    }
+  },
+  "filings": {
+    "primary": {
+      "accession": "0001628280-25-003063",
+      "filing_date": "2025-01-30",
+      "form": "10-K",
+      "report_date": "2024-12-31"
+    }
+  },
+  "fiscal_year": 2024,
+  "operands": {
+    "op1": {
+      "accession": "0001628280-25-003063",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-366",
+      "decimals": "-6",
+      "dimensions": {
+        "us-gaap:StatementBusinessSegmentsAxis": "tsla:AutomotiveSegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1318605/000162828025003063/tsla-20241231.htm",
+        "name": "tsla-20241231.htm",
+        "sha256": "8b73362798eddd69b05180ee8ac404ee20c9212e5d368fbe2d81e75acc3e3922",
+        "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828025003063/tsla-20241231.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "2d37a53ab4520c2aad03a7f8ad3674e743cf502a152f5c504f1caeaacfca7b7a",
+        "png_scale": 1,
+        "png_sha256": "9d080304129cd0659a2f583add82b93c239892ff9d30c98983653509320a71e1",
+        "table": "0001628280-25-003063-8b73362798ed-t66"
+      },
+      "fact_id": "f-1627",
+      "filing_date": "2025-01-30",
+      "form": "10-K",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-12-31",
+        "start": "2024-01-01"
+      },
+      "raw": "87,604",
+      "role": "annual",
+      "scale": "6",
+      "sign": null,
+      "value": 87604000000
+    },
+    "op2": {
+      "accession": "0001628280-25-003063",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-369",
+      "decimals": "-6",
+      "dimensions": {
+        "us-gaap:StatementBusinessSegmentsAxis": "tsla:EnergyGenerationAndStorageSegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1318605/000162828025003063/tsla-20241231.htm",
+        "name": "tsla-20241231.htm",
+        "sha256": "8b73362798eddd69b05180ee8ac404ee20c9212e5d368fbe2d81e75acc3e3922",
+        "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828025003063/tsla-20241231.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "2d37a53ab4520c2aad03a7f8ad3674e743cf502a152f5c504f1caeaacfca7b7a",
+        "png_scale": 1,
+        "png_sha256": "9d080304129cd0659a2f583add82b93c239892ff9d30c98983653509320a71e1",
+        "table": "0001628280-25-003063-8b73362798ed-t66"
+      },
+      "fact_id": "f-1636",
+      "filing_date": "2025-01-30",
+      "form": "10-K",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-12-31",
+        "start": "2024-01-01"
+      },
+      "raw": "10,086",
+      "role": "annual",
+      "scale": "6",
+      "sign": null,
+      "value": 10086000000
+    },
+    "op3": {
+      "accession": "0001628280-25-003063",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-1",
+      "decimals": "-6",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1318605/000162828025003063/tsla-20241231.htm",
+        "name": "tsla-20241231.htm",
+        "sha256": "8b73362798eddd69b05180ee8ac404ee20c9212e5d368fbe2d81e75acc3e3922",
+        "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828025003063/tsla-20241231.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "5a10116a50eefe96e57b8c19139d666ee22e00d69cfcff9d8ea39f278759c756",
+        "png_scale": 1,
+        "png_sha256": "0c75136a6f21db2013f17682da391440bd8522ecb3e3e6e6a8151465aa46c294",
+        "table": "0001628280-25-003063-8b73362798ed-t67"
+      },
+      "fact_id": "f-1661",
+      "filing_date": "2025-01-30",
+      "form": "10-K",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-12-31",
+        "start": "2024-01-01"
+      },
+      "raw": "97,690",
+      "role": "annual",
+      "scale": "6",
+      "sign": null,
+      "value": 97690000000
+    }
+  },
+  "parser": {
+    "engine_sha256": "886f9d7d7f21c98617d7547b599ce6243dd6f7ca1b47c0c233067bac16cefd60",
+    "spec_sha256": "7fe19f7eed509b0aa0f1706c484b4c2626486ca0820f10596a799b8b97fd56d4"
+  },
+  "period_end": "2024-12-31",
+  "schema_version": 1,
+  "series": "FY",
+  "ticker": "TSLA",
+  "total": {
+    "expression": [
+      {
+        "operand": "op3",
+        "weight": 1
+      }
+    ],
+    "value": 97690000000
+  },
+  "unit": "USD",
+  "view": "business_segment"
+}

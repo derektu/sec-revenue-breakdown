@@ -110,15 +110,6 @@ class Definition:
             raise ValueError(f"define 的第二個參數必須是 effective(...)，收到 {self.period!r}；權重請用 weight= 關鍵字")
 
 
-def describe_definition(definition: Definition) -> dict:
-    """輸出用的定義描述：運算元選擇條件、適用期間與權重。"""
-    return {
-        "selector": definition.selector.describe(),
-        "effective": {"start": definition.period.start, "end": definition.period.end},
-        "weight": definition.weight,
-    }
-
-
 def define(selector: Selector, period: Effective = ALWAYS, *, weight: int = 1) -> Definition:
     """宣告一個定義；`weight` 只能是 1 或 -1（以關鍵字傳入）。"""
     return Definition(selector, weight, period)
@@ -126,7 +117,7 @@ def define(selector: Selector, period: Effective = ALWAYS, *, weight: int = 1) -
 
 @dataclass(frozen=True)
 class Category:
-    """觀點中的一項。`definitions` 可有多個，但同一期只能有一個生效。"""
+    """觀點中的一項。`definitions` 可有多個，同一期最多一個生效；沒有生效的定義時該期沒有這一項（總營收除外，必須有）。"""
 
     name: str
     definitions: tuple[Definition, ...]

@@ -1,7 +1,9 @@
 """由下載的申報包（`pipeline/<TICKER>/packages.json`）選每一期的主申報並載入 inline XBRL 主文件。
 
-主申報是 reportDate 等於該期的第一份 10-Q 或 10-K。10-K/A、10-Q/A 只有含該期營收 facts
-（規格宣告的任一 concept、期末日等於該期）時才取代原申報；有多份時取最晚的一份。
+主申報是 reportDate 等於該期、申報日最早的 10-Q 或 10-K。修正申報（10-Q/A、10-K/A）不取代主申報：
+它在原申報之後才公開，只參與比較欄比對，與已上線數字不同時寫成差異標記。
+
+Point in time：選申報與列期別都可以指定 `as_of`（申報日），只考慮申報日當天或更早的申報。
 """
 
 from __future__ import annotations
@@ -51,12 +53,6 @@ class Filing:
         }
 
 
-@dataclass(frozen=True)
-class Selection:
-    filing: Filing
-    replaced: Filing | None = None
-
-
 class FilingSet:
     """一家公司已下載的 10-Q／10-K 申報與其主文件（讀取時核對 sha256）。"""
 
@@ -79,10 +75,17 @@ class FilingSet:
             )
         self.filings.sort(key=lambda f: (f.filing_date, f.accession))
         self.documents: dict[str, InlineDocument] = {}
-        self.selections: dict[tuple[str, frozenset], Selection] = {}
 
-    def periods(self) -> list[str]:
-        return sorted({f.report_date for f in self.filings if f.form in ORIGINAL_FORMS})
+    def visible(self, as_of: str | None) -> list[Filing]:
+        return [f for f in self.filings if as_of is None or f.filing_date <= as_of]
+
+    def periods(self, as_of: str | None = None) -> list[str]:
+        return sorted({f.report_date for f in self.visible(as_of) if f.form in ORIGINAL_FORMS})
+
+    def is_annual(self, period: str) -> bool:
+        """該期的第一份原申報是 10-K。"""
+        originals = [f for f in self.filings if f.report_date == period and f.form in ORIGINAL_FORMS]
+        return bool(originals) and originals[0].form == "10-K"
 
     def raw(self, filing: Filing) -> bytes:
         path = (self.root / filing.document["path"]).resolve()
@@ -98,25 +101,10 @@ class FilingSet:
             self.documents[filing.accession] = InlineDocument(self.raw(filing))
         return self.documents[filing.accession]
 
-    def select(self, period: str, concepts: set[str]) -> Selection:
-        key = (period, frozenset(concepts))
-        if key not in self.selections:
-            self.selections[key] = self.choose(period, concepts)
-        return self.selections[key]
-
-    def choose(self, period: str, concepts: set[str]) -> Selection:
-        """修正申報只要含該期任一營收 fact 就取代原申報；修正申報缺少的拆分會讓該期在組合時失敗，不回頭混用原申報。"""
-        originals = [f for f in self.filings if f.report_date == period and f.form in ORIGINAL_FORMS]
+    def select(self, period: str, as_of: str | None = None) -> Filing:
+        """該期申報日最早的原申報；`as_of` 限定只看申報日不晚於它的申報。"""
+        originals = [f for f in self.visible(as_of) if f.report_date == period and f.form in ORIGINAL_FORMS]
         if not originals:
-            raise ParseError("選申報", f"沒有期末日為 {period} 的 10-Q 或 10-K")
-        original = originals[0]
-        amendments = [
-            f
-            for f in self.filings
-            if f.report_date == period
-            and f.form in AMENDMENT_FORMS
-            and any(fact.concept in concepts and fact.end == period for fact in self.document(f).facts)
-        ]
-        if amendments:
-            return Selection(amendments[-1], original)
-        return Selection(original)
+            when = f"（申報日 {as_of} 以前）" if as_of else ""
+            raise ParseError("選申報", f"沒有期末日為 {period} 的 10-Q 或 10-K{when}")
+        return originals[0]

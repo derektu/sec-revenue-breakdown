@@ -1,0 +1,193 @@
+{
+  "categories": {
+    "Family of Apps": {
+      "expression": [
+        {
+          "operand": "op1",
+          "weight": 1
+        }
+      ],
+      "value": 133006000000
+    },
+    "Reality Labs": {
+      "expression": [
+        {
+          "operand": "op2",
+          "weight": 1
+        }
+      ],
+      "value": 1896000000
+    }
+  },
+  "checks": {
+    "structural": [
+      {
+        "check": "定義唯一",
+        "result": "pass"
+      },
+      {
+        "check": "fact 存在且唯一",
+        "result": "pass"
+      },
+      {
+        "check": "單位與精度",
+        "result": "pass"
+      },
+      {
+        "check": "加總",
+        "result": "pass"
+      },
+      {
+        "check": "證據完整",
+        "result": "pass"
+      }
+    ],
+    "sum": {
+      "categories": 134902000000,
+      "difference": 0,
+      "tolerance": "1500000",
+      "total": 134902000000
+    }
+  },
+  "filings": {
+    "primary": {
+      "accession": "0001326801-24-000012",
+      "filing_date": "2024-02-02",
+      "form": "10-K",
+      "report_date": "2023-12-31"
+    }
+  },
+  "fiscal_year": 2023,
+  "operands": {
+    "op1": {
+      "accession": "0001326801-24-000012",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-72",
+      "decimals": "-6",
+      "dimensions": {
+        "us-gaap:StatementBusinessSegmentsAxis": "meta:FamilyOfAppsMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1326801/000132680124000012/meta-20231231.htm",
+        "name": "meta-20231231.htm",
+        "sha256": "04fa291de3e9d53113daf350bff8facf00404d1b20c932fc077bbf379b669284",
+        "url": "https://www.sec.gov/Archives/edgar/data/1326801/000132680124000012/meta-20231231.htm"
+      },
+      "duplicates": [
+        "f-1256"
+      ],
+      "evidence": {
+        "html_sha256": "b37ee98edf8293c5a6627d3e83ca9083f7e53886555d3dd50d93f4f164b1484d",
+        "png_scale": 1,
+        "png_sha256": "60873a661a3e9a78f4969325d75411b0a89749162404b976a85b5d80d5510acb",
+        "table": "0001326801-24-000012-04fa291de3e9-t33"
+      },
+      "fact_id": "f-416",
+      "filing_date": "2024-02-02",
+      "form": "10-K",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2023-12-31",
+        "start": "2023-01-01"
+      },
+      "raw": "133,006",
+      "role": "annual",
+      "scale": "6",
+      "sign": null,
+      "value": 133006000000
+    },
+    "op2": {
+      "accession": "0001326801-24-000012",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-75",
+      "decimals": "-6",
+      "dimensions": {
+        "us-gaap:StatementBusinessSegmentsAxis": "meta:RealityLabsMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1326801/000132680124000012/meta-20231231.htm",
+        "name": "meta-20231231.htm",
+        "sha256": "04fa291de3e9d53113daf350bff8facf00404d1b20c932fc077bbf379b669284",
+        "url": "https://www.sec.gov/Archives/edgar/data/1326801/000132680124000012/meta-20231231.htm"
+      },
+      "duplicates": [
+        "f-1259"
+      ],
+      "evidence": {
+        "html_sha256": "b37ee98edf8293c5a6627d3e83ca9083f7e53886555d3dd50d93f4f164b1484d",
+        "png_scale": 1,
+        "png_sha256": "60873a661a3e9a78f4969325d75411b0a89749162404b976a85b5d80d5510acb",
+        "table": "0001326801-24-000012-04fa291de3e9-t33"
+      },
+      "fact_id": "f-419",
+      "filing_date": "2024-02-02",
+      "form": "10-K",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2023-12-31",
+        "start": "2023-01-01"
+      },
+      "raw": "1,896",
+      "role": "annual",
+      "scale": "6",
+      "sign": null,
+      "value": 1896000000
+    },
+    "op3": {
+      "accession": "0001326801-24-000012",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-1",
+      "decimals": "-6",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1326801/000132680124000012/meta-20231231.htm",
+        "name": "meta-20231231.htm",
+        "sha256": "04fa291de3e9d53113daf350bff8facf00404d1b20c932fc077bbf379b669284",
+        "url": "https://www.sec.gov/Archives/edgar/data/1326801/000132680124000012/meta-20231231.htm"
+      },
+      "duplicates": [
+        "f-1262",
+        "f-112",
+        "f-437"
+      ],
+      "evidence": {
+        "html_sha256": "b37ee98edf8293c5a6627d3e83ca9083f7e53886555d3dd50d93f4f164b1484d",
+        "png_scale": 1,
+        "png_sha256": "60873a661a3e9a78f4969325d75411b0a89749162404b976a85b5d80d5510acb",
+        "table": "0001326801-24-000012-04fa291de3e9-t33"
+      },
+      "fact_id": "f-422",
+      "filing_date": "2024-02-02",
+      "form": "10-K",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2023-12-31",
+        "start": "2023-01-01"
+      },
+      "raw": "134,902",
+      "role": "annual",
+      "scale": "6",
+      "sign": null,
+      "value": 134902000000
+    }
+  },
+  "parser": {
+    "engine_sha256": "886f9d7d7f21c98617d7547b599ce6243dd6f7ca1b47c0c233067bac16cefd60",
+    "spec_sha256": "8e55b7a1b60f68ac21c722c34b08edc0593e86fa9b51fcca2ddbc587e0e33b28"
+  },
+  "period_end": "2023-12-31",
+  "schema_version": 1,
+  "series": "FY",
+  "ticker": "META",
+  "total": {
+    "expression": [
+      {
+        "operand": "op3",
+        "weight": 1
+      }
+    ],
+    "value": 134902000000
+  },
+  "unit": "USD",
+  "view": "business_segment"
+}

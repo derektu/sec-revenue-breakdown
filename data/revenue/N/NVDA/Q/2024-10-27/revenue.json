@@ -1,0 +1,192 @@
+{
+  "categories": {
+    "Compute & Networking": {
+      "expression": [
+        {
+          "operand": "op1",
+          "weight": 1
+        }
+      ],
+      "value": 31036000000
+    },
+    "Graphics": {
+      "expression": [
+        {
+          "operand": "op2",
+          "weight": 1
+        }
+      ],
+      "value": 4046000000
+    }
+  },
+  "checks": {
+    "structural": [
+      {
+        "check": "定義唯一",
+        "result": "pass"
+      },
+      {
+        "check": "fact 存在且唯一",
+        "result": "pass"
+      },
+      {
+        "check": "單位與精度",
+        "result": "pass"
+      },
+      {
+        "check": "加總",
+        "result": "pass"
+      },
+      {
+        "check": "證據完整",
+        "result": "pass"
+      }
+    ],
+    "sum": {
+      "categories": 35082000000,
+      "difference": 0,
+      "tolerance": "1500000",
+      "total": 35082000000
+    }
+  },
+  "filings": {
+    "primary": {
+      "accession": "0001045810-24-000316",
+      "filing_date": "2024-11-20",
+      "form": "10-Q",
+      "report_date": "2024-10-27"
+    }
+  },
+  "fiscal_quarter": 3,
+  "fiscal_year": 2025,
+  "operands": {
+    "op1": {
+      "accession": "0001045810-24-000316",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-175",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "nvda:ComputeAndNetworkingMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1045810/000104581024000316/nvda-20241027.htm",
+        "name": "nvda-20241027.htm",
+        "sha256": "4d4f58458bf041635fe5acab43d97a374970dd2903e542a5b6f2196e3bfcb817",
+        "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000316/nvda-20241027.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "27857e6b40fdd7f49655a126161398a2505addfb07ccf31c6b8eb90b65c75a5b",
+        "png_scale": 1,
+        "png_sha256": "046f8918aa3d31edd79f0488a45442a4e8756ab0c73590ee177b16b979be7710",
+        "table": "0001045810-24-000316-4d4f58458bf0-t36"
+      },
+      "fact_id": "f-959",
+      "filing_date": "2024-11-20",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-10-27",
+        "start": "2024-07-29"
+      },
+      "raw": "31,036",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 31036000000
+    },
+    "op2": {
+      "accession": "0001045810-24-000316",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-176",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "nvda:GraphicsMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1045810/000104581024000316/nvda-20241027.htm",
+        "name": "nvda-20241027.htm",
+        "sha256": "4d4f58458bf041635fe5acab43d97a374970dd2903e542a5b6f2196e3bfcb817",
+        "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000316/nvda-20241027.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "27857e6b40fdd7f49655a126161398a2505addfb07ccf31c6b8eb90b65c75a5b",
+        "png_scale": 1,
+        "png_sha256": "046f8918aa3d31edd79f0488a45442a4e8756ab0c73590ee177b16b979be7710",
+        "table": "0001045810-24-000316-4d4f58458bf0-t36"
+      },
+      "fact_id": "f-960",
+      "filing_date": "2024-11-20",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-10-27",
+        "start": "2024-07-29"
+      },
+      "raw": "4,046",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 4046000000
+    },
+    "op3": {
+      "accession": "0001045810-24-000316",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-3",
+      "decimals": "-6",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1045810/000104581024000316/nvda-20241027.htm",
+        "name": "nvda-20241027.htm",
+        "sha256": "4d4f58458bf041635fe5acab43d97a374970dd2903e542a5b6f2196e3bfcb817",
+        "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000316/nvda-20241027.htm"
+      },
+      "duplicates": [
+        "f-30",
+        "f-1032",
+        "f-1074"
+      ],
+      "evidence": {
+        "html_sha256": "27857e6b40fdd7f49655a126161398a2505addfb07ccf31c6b8eb90b65c75a5b",
+        "png_scale": 1,
+        "png_sha256": "046f8918aa3d31edd79f0488a45442a4e8756ab0c73590ee177b16b979be7710",
+        "table": "0001045810-24-000316-4d4f58458bf0-t36"
+      },
+      "fact_id": "f-962",
+      "filing_date": "2024-11-20",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-10-27",
+        "start": "2024-07-29"
+      },
+      "raw": "35,082",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 35082000000
+    }
+  },
+  "parser": {
+    "engine_sha256": "886f9d7d7f21c98617d7547b599ce6243dd6f7ca1b47c0c233067bac16cefd60",
+    "spec_sha256": "89e8332bb5468deb54b9bec8bd02ef8f2546e2b74517d0193535d9bfd54a39b3"
+  },
+  "period_end": "2024-10-27",
+  "schema_version": 1,
+  "series": "Q",
+  "ticker": "NVDA",
+  "total": {
+    "expression": [
+      {
+        "operand": "op3",
+        "weight": 1
+      }
+    ],
+    "value": 35082000000
+  },
+  "unit": "USD",
+  "view": "business_segment"
+}
