@@ -1,0 +1,322 @@
+{
+  "categories": {
+    "Mac": {
+      "expression": [
+        {
+          "operand": "op2",
+          "weight": 1
+        }
+      ],
+      "value": 8987000000
+    },
+    "Services": {
+      "expression": [
+        {
+          "operand": "op5",
+          "weight": 1
+        }
+      ],
+      "value": 26340000000
+    },
+    "Wearables, Home and Accessories": {
+      "expression": [
+        {
+          "operand": "op4",
+          "weight": 1
+        }
+      ],
+      "value": 11747000000
+    },
+    "iPad": {
+      "expression": [
+        {
+          "operand": "op3",
+          "weight": 1
+        }
+      ],
+      "value": 8088000000
+    },
+    "iPhone": {
+      "expression": [
+        {
+          "operand": "op1",
+          "weight": 1
+        }
+      ],
+      "value": 69138000000
+    }
+  },
+  "checks": {
+    "structural": [
+      {
+        "check": "定義唯一",
+        "result": "pass"
+      },
+      {
+        "check": "fact 存在且唯一",
+        "result": "pass"
+      },
+      {
+        "check": "單位與精度",
+        "result": "pass"
+      },
+      {
+        "check": "加總",
+        "result": "pass"
+      },
+      {
+        "check": "證據完整",
+        "result": "pass"
+      }
+    ],
+    "sum": {
+      "categories": 124300000000,
+      "difference": 0,
+      "tolerance": "3000000",
+      "total": 124300000000
+    }
+  },
+  "filings": {
+    "primary": {
+      "accession": "0000320193-25-000008",
+      "filing_date": "2025-01-31",
+      "form": "10-Q",
+      "report_date": "2024-12-28"
+    }
+  },
+  "fiscal_quarter": 1,
+  "fiscal_year": 2025,
+  "operands": {
+    "op1": {
+      "accession": "0000320193-25-000008",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-39",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "aapl:IPhoneMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/320193/000032019325000008/aapl-20241228.htm",
+        "name": "aapl-20241228.htm",
+        "sha256": "03afd0003b3ef87ee4716dbfd6eb8695c1c82d94caefb8a3dcc91b276acb5720",
+        "url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000008/aapl-20241228.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "8a973c994d7505e927b33254c8c04ef20d278d68da4c2df4f1d1e9f6d0d7ca7a",
+        "png_scale": 1,
+        "png_sha256": "cd9f6fc6d7dd5aeef425a6dd40ca4bbd3f86cc83a5c267ca9aeca51ffbc4684c",
+        "table": "0000320193-25-000008-03afd0003b3e-t17"
+      },
+      "fact_id": "f-269",
+      "filing_date": "2025-01-31",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-12-28",
+        "start": "2024-09-29"
+      },
+      "raw": "69,138",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 69138000000
+    },
+    "op2": {
+      "accession": "0000320193-25-000008",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-41",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "aapl:MacMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/320193/000032019325000008/aapl-20241228.htm",
+        "name": "aapl-20241228.htm",
+        "sha256": "03afd0003b3ef87ee4716dbfd6eb8695c1c82d94caefb8a3dcc91b276acb5720",
+        "url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000008/aapl-20241228.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "8a973c994d7505e927b33254c8c04ef20d278d68da4c2df4f1d1e9f6d0d7ca7a",
+        "png_scale": 1,
+        "png_sha256": "cd9f6fc6d7dd5aeef425a6dd40ca4bbd3f86cc83a5c267ca9aeca51ffbc4684c",
+        "table": "0000320193-25-000008-03afd0003b3e-t17"
+      },
+      "fact_id": "f-271",
+      "filing_date": "2025-01-31",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-12-28",
+        "start": "2024-09-29"
+      },
+      "raw": "8,987",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 8987000000
+    },
+    "op3": {
+      "accession": "0000320193-25-000008",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-43",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "aapl:IPadMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/320193/000032019325000008/aapl-20241228.htm",
+        "name": "aapl-20241228.htm",
+        "sha256": "03afd0003b3ef87ee4716dbfd6eb8695c1c82d94caefb8a3dcc91b276acb5720",
+        "url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000008/aapl-20241228.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "8a973c994d7505e927b33254c8c04ef20d278d68da4c2df4f1d1e9f6d0d7ca7a",
+        "png_scale": 1,
+        "png_sha256": "cd9f6fc6d7dd5aeef425a6dd40ca4bbd3f86cc83a5c267ca9aeca51ffbc4684c",
+        "table": "0000320193-25-000008-03afd0003b3e-t17"
+      },
+      "fact_id": "f-273",
+      "filing_date": "2025-01-31",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-12-28",
+        "start": "2024-09-29"
+      },
+      "raw": "8,088",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 8088000000
+    },
+    "op4": {
+      "accession": "0000320193-25-000008",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-45",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "aapl:WearablesHomeandAccessoriesMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/320193/000032019325000008/aapl-20241228.htm",
+        "name": "aapl-20241228.htm",
+        "sha256": "03afd0003b3ef87ee4716dbfd6eb8695c1c82d94caefb8a3dcc91b276acb5720",
+        "url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000008/aapl-20241228.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "8a973c994d7505e927b33254c8c04ef20d278d68da4c2df4f1d1e9f6d0d7ca7a",
+        "png_scale": 1,
+        "png_sha256": "cd9f6fc6d7dd5aeef425a6dd40ca4bbd3f86cc83a5c267ca9aeca51ffbc4684c",
+        "table": "0000320193-25-000008-03afd0003b3e-t17"
+      },
+      "fact_id": "f-275",
+      "filing_date": "2025-01-31",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-12-28",
+        "start": "2024-09-29"
+      },
+      "raw": "11,747",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 11747000000
+    },
+    "op5": {
+      "accession": "0000320193-25-000008",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-14",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "us-gaap:ServiceMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/320193/000032019325000008/aapl-20241228.htm",
+        "name": "aapl-20241228.htm",
+        "sha256": "03afd0003b3ef87ee4716dbfd6eb8695c1c82d94caefb8a3dcc91b276acb5720",
+        "url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000008/aapl-20241228.htm"
+      },
+      "duplicates": [
+        "f-56"
+      ],
+      "evidence": {
+        "html_sha256": "8a973c994d7505e927b33254c8c04ef20d278d68da4c2df4f1d1e9f6d0d7ca7a",
+        "png_scale": 1,
+        "png_sha256": "cd9f6fc6d7dd5aeef425a6dd40ca4bbd3f86cc83a5c267ca9aeca51ffbc4684c",
+        "table": "0000320193-25-000008-03afd0003b3e-t17"
+      },
+      "fact_id": "f-277",
+      "filing_date": "2025-01-31",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-12-28",
+        "start": "2024-09-29"
+      },
+      "raw": "26,340",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 26340000000
+    },
+    "op6": {
+      "accession": "0000320193-25-000008",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-1",
+      "decimals": "-6",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/320193/000032019325000008/aapl-20241228.htm",
+        "name": "aapl-20241228.htm",
+        "sha256": "03afd0003b3ef87ee4716dbfd6eb8695c1c82d94caefb8a3dcc91b276acb5720",
+        "url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000008/aapl-20241228.htm"
+      },
+      "duplicates": [
+        "f-58"
+      ],
+      "evidence": {
+        "html_sha256": "8a973c994d7505e927b33254c8c04ef20d278d68da4c2df4f1d1e9f6d0d7ca7a",
+        "png_scale": 1,
+        "png_sha256": "cd9f6fc6d7dd5aeef425a6dd40ca4bbd3f86cc83a5c267ca9aeca51ffbc4684c",
+        "table": "0000320193-25-000008-03afd0003b3e-t17"
+      },
+      "fact_id": "f-279",
+      "filing_date": "2025-01-31",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-12-28",
+        "start": "2024-09-29"
+      },
+      "raw": "124,300",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 124300000000
+    }
+  },
+  "parser": {
+    "engine_sha256": "886f9d7d7f21c98617d7547b599ce6243dd6f7ca1b47c0c233067bac16cefd60",
+    "spec_sha256": "e93ec49768f01b33eaac003a94785305de290053959b68ff8310e5a6b7af0c6d"
+  },
+  "period_end": "2024-12-28",
+  "schema_version": 1,
+  "series": "Q",
+  "ticker": "AAPL",
+  "total": {
+    "expression": [
+      {
+        "operand": "op6",
+        "weight": 1
+      }
+    ],
+    "value": 124300000000
+  },
+  "unit": "USD",
+  "view": "product"
+}

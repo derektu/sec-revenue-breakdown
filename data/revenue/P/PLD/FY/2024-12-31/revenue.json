@@ -1,0 +1,189 @@
+{
+  "categories": {
+    "Real estate segment": {
+      "expression": [
+        {
+          "operand": "op1",
+          "weight": 1
+        }
+      ],
+      "value": 7529703000
+    },
+    "Strategic capital segment": {
+      "expression": [
+        {
+          "operand": "op2",
+          "weight": 1
+        }
+      ],
+      "value": 671907000
+    }
+  },
+  "checks": {
+    "structural": [
+      {
+        "check": "定義唯一",
+        "result": "pass"
+      },
+      {
+        "check": "fact 存在且唯一",
+        "result": "pass"
+      },
+      {
+        "check": "單位與精度",
+        "result": "pass"
+      },
+      {
+        "check": "加總",
+        "result": "pass"
+      },
+      {
+        "check": "證據完整",
+        "result": "pass"
+      }
+    ],
+    "sum": {
+      "categories": 8201610000,
+      "difference": 0,
+      "tolerance": "1500",
+      "total": 8201610000
+    }
+  },
+  "filings": {
+    "primary": {
+      "accession": "0000950170-25-021272",
+      "filing_date": "2025-02-14",
+      "form": "10-K",
+      "report_date": "2024-12-31"
+    }
+  },
+  "fiscal_year": 2024,
+  "operands": {
+    "op1": {
+      "accession": "0000950170-25-021272",
+      "concept": "us-gaap:Revenues",
+      "context_id": "C_4b8ed7ca-951b-4654-bee9-0203b8cf9e39",
+      "decimals": "-3",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "pld:RealEstateOperationsSegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1045609/000095017025021272/pld-20241231.htm",
+        "name": "pld-20241231.htm",
+        "sha256": "01cdfd47b9ca484bfb0b8e45377e796602d7bc63c72adb984697864ed1174b78",
+        "url": "https://www.sec.gov/Archives/edgar/data/1045609/000095017025021272/pld-20241231.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "4f7b31fcf9018e3fb781eb8ca0b1486fd1c959dc6dc1fb1da853a1544828d7e9",
+        "png_scale": 1,
+        "png_sha256": "842c52de9cda4cd25ee732337a26f1f6034a34fa3d19d1a60a762ca185e42ab8",
+        "table": "0000950170-25-021272-01cdfd47b9ca-t99"
+      },
+      "fact_id": "F_6ba1820a-086a-4280-974a-6540f21953ab",
+      "filing_date": "2025-02-14",
+      "form": "10-K",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-12-31",
+        "start": "2024-01-01"
+      },
+      "raw": "7,529,703",
+      "role": "annual",
+      "scale": "3",
+      "sign": null,
+      "value": 7529703000
+    },
+    "op2": {
+      "accession": "0000950170-25-021272",
+      "concept": "us-gaap:Revenues",
+      "context_id": "C_28a01cbc-fef5-4a9d-936d-1c8b55c42627",
+      "decimals": "-3",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "pld:StrategicCapitalSegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1045609/000095017025021272/pld-20241231.htm",
+        "name": "pld-20241231.htm",
+        "sha256": "01cdfd47b9ca484bfb0b8e45377e796602d7bc63c72adb984697864ed1174b78",
+        "url": "https://www.sec.gov/Archives/edgar/data/1045609/000095017025021272/pld-20241231.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "4f7b31fcf9018e3fb781eb8ca0b1486fd1c959dc6dc1fb1da853a1544828d7e9",
+        "png_scale": 1,
+        "png_sha256": "842c52de9cda4cd25ee732337a26f1f6034a34fa3d19d1a60a762ca185e42ab8",
+        "table": "0000950170-25-021272-01cdfd47b9ca-t99"
+      },
+      "fact_id": "F_816bbc23-e127-44aa-b9cf-7206a2be77cd",
+      "filing_date": "2025-02-14",
+      "form": "10-K",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-12-31",
+        "start": "2024-01-01"
+      },
+      "raw": "671,907",
+      "role": "annual",
+      "scale": "3",
+      "sign": null,
+      "value": 671907000
+    },
+    "op3": {
+      "accession": "0000950170-25-021272",
+      "concept": "us-gaap:Revenues",
+      "context_id": "C_6e687155-889e-4ec4-a4c4-038f136af862",
+      "decimals": "-3",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1045609/000095017025021272/pld-20241231.htm",
+        "name": "pld-20241231.htm",
+        "sha256": "01cdfd47b9ca484bfb0b8e45377e796602d7bc63c72adb984697864ed1174b78",
+        "url": "https://www.sec.gov/Archives/edgar/data/1045609/000095017025021272/pld-20241231.htm"
+      },
+      "duplicates": [
+        "F_dff7a844-52fe-4a82-9cbd-0bf53e64d7ea"
+      ],
+      "evidence": {
+        "html_sha256": "4f7b31fcf9018e3fb781eb8ca0b1486fd1c959dc6dc1fb1da853a1544828d7e9",
+        "png_scale": 1,
+        "png_sha256": "842c52de9cda4cd25ee732337a26f1f6034a34fa3d19d1a60a762ca185e42ab8",
+        "table": "0000950170-25-021272-01cdfd47b9ca-t99"
+      },
+      "fact_id": "F_2bed0701-81cb-40de-89fc-4b288d11ab25",
+      "filing_date": "2025-02-14",
+      "form": "10-K",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-12-31",
+        "start": "2024-01-01"
+      },
+      "raw": "8,201,610",
+      "role": "annual",
+      "scale": "3",
+      "sign": null,
+      "value": 8201610000
+    }
+  },
+  "parser": {
+    "engine_sha256": "886f9d7d7f21c98617d7547b599ce6243dd6f7ca1b47c0c233067bac16cefd60",
+    "spec_sha256": "ee7efe125e3986b3bf11389a4d0ed48145e2db7fc1501ea8671db3c774ce1fa5"
+  },
+  "period_end": "2024-12-31",
+  "schema_version": 1,
+  "series": "FY",
+  "ticker": "PLD",
+  "total": {
+    "expression": [
+      {
+        "operand": "op3",
+        "weight": 1
+      }
+    ],
+    "value": 8201610000
+  },
+  "unit": "USD",
+  "view": "business_segment"
+}

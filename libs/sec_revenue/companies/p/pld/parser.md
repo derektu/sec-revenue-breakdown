@@ -33,7 +33,8 @@ concept 是 `us-gaap:Revenues`。分部 fact 帶兩個維度：`srt:Consolidatio
 
 - 財年即曆年，季末日是 3、6、9、12 月的最後一天。
 - Q1–Q3：10-Q 中三個月期間的 fact。
-- Q4：10-K 年度減去同年 Q3 10-Q 的九個月累計。
+- Q4：10-K 年度減去同年 Q3 10-Q 的九個月累計。年度與 Q1–Q3 的分類相同，範圍內每個 Q4 都推算。
+- FY：10-K 的年度 fact，證據是 10-K 中與 Q4 年度運算元相同的表格。
 
 ## 數字在原文的位置
 
@@ -41,13 +42,14 @@ concept 是 `us-gaap:Revenues`。分部 fact 帶兩個維度：`srt:Consolidatio
 
 ## 驗證
 
-12 季（2023-12-31 至 2026-09-30）與對照資料逐期比對：
+11 季（2024-03-31 至 2026-09-30）與對照資料逐期比對：
 
-- TradingView：只有年度。FY2024、FY2025 的四季加總兩類都在顯示精度內；FY2023、FY2026 在範圍內不足四季。
+- TradingView：只有年度。FY2024、FY2025 的四季加總兩類都在顯示精度內；FY2026 在範圍內不足四季。
 - Stock Analysis、富途：沒有 PLD 的資料。
 - 舊流程輸出（`reported`）用的是損益表的營收類型。有輸出的 8 季（2024-12-31 起）：Rental 加 Development management and other 等於 Real estate segment，Strategic capital 等於 Strategic capital segment，總營收也相同，三者都完全一致。
+- FY 序列：每個 FY 的數值與同期 Q4 的年度運算元相同。
 
-## 跨期檢核
+## 比較欄
 
-- 10-K 有季度總營收（`us-gaap:Revenues` 的單季 fact），但沒有季度分部營收。因此 Q4 期別（2024-12-31、2025-12-31）會對同一年度與前一年度各季記錄 `比較期找不到` 標註。
-- Strategic capital 的營收含績效分成（`pld:RelatedPartyTransactionEarnedPromoteRevenue`），單季可能大幅跳動。2024Q4（+95%）與 2026Q2（+64%）有 YoY 標註。
+- 已下載的申報（含修正申報）列示的較早期間數字（去年同季、去年九個月累計、去年全年），與已上線輸出都在精度內相同，沒有差異標記。
+- 10-K 有季度總營收（`us-gaap:Revenues` 的單季 fact），但沒有季度分部營收。10-K 涵蓋同一年度與前一年度各季，這些季度的分部運算元比對結果是 `not_found`（找不到同期間的 fact），不是差異，不寫差異標記。

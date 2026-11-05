@@ -1,8 +1,16 @@
 # Parser 與正式輸出
 
-本文件定義 SEC 營收 parser 的架構：每家公司的規格怎麼寫、引擎怎麼從 SEC 申報算出每季的 by segment 營收、怎麼自我檢核，以及正式輸出與證據的格式。
+本文件定義 SEC 營收 parser 的架構：每家公司的規格怎麼寫、引擎怎麼從 SEC 申報算出每季與每年的 by segment 營收、怎麼自我檢核，以及正式輸出與證據的格式。
 
-parser 的輸出就是正式資料，連同證據進 Git。新的期別不需要對照資料：結構檢核通過就上線；跨期異常不擋上線，寫成標註（`annotations`），PM 看新財報時一併看到。對照資料只用在公司初次上線時選定觀點（#46），以及客戶反映問題時判斷原因。
+parser 的輸出就是正式資料，連同證據進 Git。新的期別不需要對照資料：結構檢核通過就上線。對照資料只用在公司初次上線時選定觀點（#46），以及客戶反映問題時判斷原因。
+
+parser 的範圍：
+
+- **只公布財報上寫的項目與數字**：不解讀財報內容、不追究差異原因、不自動修正。每一期照該期財報的項目與數字公布，項目與上一期不同也照列。
+- **兩個序列**：季度（Q）的 Q1–Q3 取自 10-Q，Q4 由 10-K 年度減九個月累計推算；年度（FY）直接取 10-K 的全年數字。Q4 只在年度與 Q1–Q3 的分類相同時推算，否則留空並記錄原因，不另做補救。
+- **預設起始日**：所有公司共用一個預設起始日（`revenue/engine.py` 的 `DEFAULT_START`，目前是 2024-01-01，隨 Git 版本控制）。parse 沒有指定 `--start` 時，Q 與 FY 處理期末日不早於預設起始日的期別；要處理更早的期別時以 `--start` 指定，照常處理並發布。起日之前已下載的申報照常讀取，作為運算元（例如第一個 Q4 的九個月累計來自起日之前的 Q3 10-Q）與比較欄比對的來源，只是這次不處理成期別。已上線的較早期別是正常的已上線資料：保留 `status.json` 紀錄、照常作為比較欄比對的對象、照常受已上線保護。
+- **Point in time**：一期的數字取自該期最早的原申報，處理時只使用申報日當天或更早公開的申報。例如處理 Q2 時，看得到今年 Q1、去年 FY 與去年各季，看不到之後的申報。之後的申報（包括修正申報）不改已上線的數字。
+- **差異標記**：較晚的申報（包括修正申報）列出的較早期間數字，例如去年同季、去年九個月累計、去年全年，或修正申報的本期數字，與已上線的同一期不同時，在舊期別記錄標記；已上線數字不改，由 PM 視需要請人查明。
 
 ## 名詞
 
@@ -10,9 +18,11 @@ parser 的輸出就是正式資料，連同證據進 Git。新的期別不需要
 |---|---|
 | 觀點（view） | 一種產品或業務別的營收拆分。同一家公司可能有多個面向或多層細項，例如業務群與其下的產品線；每家公司採用一個觀點。地區拆分不是觀點：AAPL 的營運分部是 Americas、Europe 等地區，不採用，採用的是產品別（iPhone、Mac…） |
 | 分類（category） | 觀點中的一項，例如 iPhone |
-| 期別 | 一個財務季度，以期末日（SEC context 的 endDate）識別，例如 `2025-09-27`。財年與季次取自該期申報的 `dei:DocumentFiscalYearFocus`、`dei:DocumentFiscalPeriodFocus` |
+| 序列 | `Q`（季度：Q1–Q4）或 `FY`（年度） |
+| 期別 | 一個序列中的一期，以期末日（SEC context 的 endDate）識別，例如 `2025-09-27`。10-K 的期末日同時有 FY 與 Q4 兩期。財年與季次取自該期申報的 `dei:DocumentFiscalYearFocus`、`dei:DocumentFiscalPeriodFocus` |
 | 運算元 | 一個 SEC 數字：inline XBRL fact（`xbrl_fact`），或沒有 XBRL 標記的 HTML 表格儲存格（`table_cell`） |
 | 運算式 | 分類數值由運算元加權相加而成，例如 Q4 = 年度 − 九個月累計 |
+| 比較欄 | 申報中與本期並列的較早期間數字，例如 10-Q 的去年同季、10-K 的去年全年 |
 
 ## 新增一家公司
 
@@ -31,7 +41,7 @@ libs/sec_revenue/revenue/              引擎
   xbrl.py          讀 inline XBRL：contexts、units、dei、fact 與所在表格
   filings.py       選主申報、讀原文並核對 sha256
   compose.py       組合數值與結構檢核
-  review.py        跨期檢核與重編偵測
+  review.py        比較欄比對
   engine.py        證據、寫入、status.json、--check 比對
 
 libs/sec_revenue/companies/<首字母>/<目錄>/
@@ -40,10 +50,13 @@ libs/sec_revenue/companies/<首字母>/<目錄>/
   parser.md        觀點、分類對應、tag、適用期間、推算邏輯、已知例外、驗證結果
 
 data/revenue/<首字母>/<TICKER>/
-  status.json      每一期的處理結果（含沒有輸出的期別與原因）
-  <period_end>/
-    revenue.json   正式數字、運算式、運算元、檢核結果、標註
+  status.json      兩個序列每一期的處理結果（含沒有輸出的期別與原因）與差異標記
+  Q/<period_end>/  季度序列（Q1–Q4）
+    revenue.json   正式數字、運算式、運算元、檢核結果
     evidence/      每張用到的 SEC 表格：<accession>-<sha12>-t<n>.html 與 .png
+  FY/<period_end>/ 年度序列，期末日與同財年的 Q4 相同
+    revenue.json
+    evidence/
 ```
 
 - 公司目錄名是 ticker 小寫，非英數字元改為底線，例如 `a/aapl`、`b/brk_b`；ticker 本身以 `SPEC.ticker` 為準。
@@ -79,7 +92,10 @@ SPEC = CompanySpec(
 - **分類**：`Category(名稱, 定義...)`。每個定義指定 concept 與完整的 dimensions，dimensions 用帶前綴的 QName（軸與成員都帶前綴）。比對是精確的：fact 的 dimensions 必須與規格完全相同，多一個或少一個都不算。`fact(concept)` 不帶 dimensions，代表合計。
 - **總營收**：`total` 是用於加總檢核的項目。分類加總與總營收之間若有合法差額（例如公司間抵銷、未分配項目），以 `reconciling=(Category(...),)` 宣告，參與加總但不輸出成分類。
 - **權重**：`define(selector, weight=-1)` 讓運算元以負號參與，例如抵銷項。`weight` 只能以關鍵字傳入，值只能是 1 或 -1。
-- **適用期間**：公司改 tag、改分類時，以 `define(selector, effective(start, end))` 宣告每個定義適用的申報期別（期末日，含首尾，`None` 不設限）；同一期別只能有一個定義生效。定義依運算元來源申報的期末日選取：Q1–Q3 與 Q4 的年度運算元是本期，Q4 的九個月運算元是 Q3 的期末日。公司在 10-K 才改名、同財年的 Q3 10-Q 仍用舊名時（例如 NVDA 的分部成員），Q4 的兩個運算元各用各的定義，`effective` 的界線寫在最後一份舊申報與第一份新申報的期末日之間。Q4 跨定義時該期寫標註（見跨期檢核），因為改名時若同時改了範圍，年度減九個月會錯，而加總檢核擋不住。分類的新增、合併或拆分，在 `parser.md` 記錄，並由跨期檢核在當期寫標註。
+- **適用期間**：公司改 tag、改分類時，以 `define(selector, effective(start, end))` 宣告每個定義適用的申報期別（期末日，含首尾，`None` 不設限）。
+  - 同一期別最多一個定義生效。分類在某期沒有生效的定義，代表該期沒有這個項目，輸出不列出；總營收每期都必須有定義。規格漏寫適用期間時，該期少了一個分類，加總檢核對不上而失敗，不會無聲少一個分類：調節項是指定的 fact，不會吸收漏掉的分類。
+  - 定義依運算元來源申報的期末日選取：Q1–Q3、FY 與 Q4 的年度運算元是本期，Q4 的九個月運算元是 Q3 的期末日。公司在 10-K 才改名、同財年的 Q3 10-Q 仍用舊名時（例如 NVDA 的分部成員），以同一個分類的兩個定義宣告，Q4 的兩個運算元各用各的定義，`effective` 的界線寫在最後一份舊申報與第一份新申報的期末日之間。
+  - 分類的新增、合併或拆分，以不同名稱的分類宣告，並在 `parser.md` 記錄。分類集合在財年中改變時，該年的 Q4 不推算（見引擎流程）。
 - **表格運算元**：沒有 XBRL 標記的數字（例如 8-K 新聞稿），以 `table_cell(文件, 表頭文字, 列標籤, 欄期間)` 宣告，表格定位用表頭文字與列標籤，不用表格編號。引擎目前不支援，規格用到時該期失敗並說明原因。
 - **hook**：規格無法表達時才用，例如需要從兩份申報組合。每個 hook 都要在 `parser.md` 寫明理由，並有對應的測試。
 
@@ -99,27 +115,30 @@ SPEC = CompanySpec(
 
 ## 引擎流程
 
-一家公司、一個期別：
+一家公司依期末日順序處理指定範圍內的每個期別。期末日的第一份原申報是 10-Q 時只有 Q 序列；是 10-K 時先處理 FY、再處理 Q4。每一期：
 
-1. **選申報**：該期的主申報是 reportDate 等於該期的第一份 10-Q 或 10-K。10-K/A、10-Q/A 只要含有該期任一營收 fact（規格宣告的 concept、期末日等於該期）就取代原申報，有多份時取最晚的一份；修正申報缺少某個拆分時該期失敗，不回頭混用原申報的數字。輸出記錄被取代的申報，並把修正前後不同的運算元記入 `restatements`。8-K 只在規格宣告了表格運算元時使用。主文件必須是 inline XBRL，讀取時核對 sha256。
+1. **選申報**：該期的主申報是 reportDate 等於該期、申報日最早的 10-Q 或 10-K。修正申報（10-K/A、10-Q/A）在原申報之後才公開，不取代主申報，只參與差異標記的比對。8-K 只在規格宣告了表格運算元時使用。主文件必須是 inline XBRL，讀取時核對 sha256。主申報的申報日是這一期的時點：之後的步驟只看申報日不晚於它的申報。
 2. **讀 facts**：解析主申報的 inline XBRL，建立 fact 索引：concept、dimensions、期間、單位、decimals、sign、scale、format 與所在表格。數值依 format（`num-dot-decimal`、`fixed-zero`、`zerodash`）、scale 與 sign 算成整數美元；正負號只由 `sign` 屬性決定，顯示文字帶負號或括號、或數值不是有限數時，這個 fact 視為無法解析。證據核對使用同一套規則（`evidence.ix_number`）。
-   - 規格與 fact 在同一份文件內以 namespace URI 比對：前綴依文件宣告的 `xmlns:*` 解析，所以文件用別的前綴指向同一個 namespace 也能對上；規格的前綴在文件中沒有宣告時該期失敗。重編比對以新申報期別生效的規格定義，在新申報內同樣以 namespace URI 查找同期間的 fact，不沿用已上線運算元的 QName：公司與 us-gaap 的 namespace URI 每年都帶不同日期，公司也可能改成員名稱。修正申報與原申報之間（同一期、同一定義）比對帶前綴的 QName。
+   - 規格與 fact 在同一份文件內以 namespace URI 比對：前綴依文件宣告的 `xmlns:*` 解析，所以文件用別的前綴指向同一個 namespace 也能對上；規格的前綴在文件中沒有宣告時該期失敗。比較欄比對以該申報期別生效的規格定義，在申報內同樣以 namespace URI 查找同期間的 fact，不沿用已上線運算元的 QName：公司與 us-gaap 的 namespace URI 每年都帶不同日期，公司也可能改成員名稱。
 3. **財年與季別**：主申報必須宣告 `DocumentFiscalYearFocus` 與 `DocumentFiscalPeriodFocus`（Q1、Q2、Q3、FY）；Q1–Q3 必須是 10-Q，FY 必須是 10-K。
 4. **期間分類**：依 context 天數（含首尾）判斷單季（84–98 天）、六個月（175–189 天）、九個月（266–280 天）、年度（357–378 天）。
-5. **組合數值**：
+5. **分類集合**：該期有生效定義的分類與調節項。
+6. **組合數值**：
    - Q1–Q3：主申報中期末日為該期的單季 fact。
-   - Q4：年度（10-K）減九個月累計。九個月取自年度期末前一季的 10-Q，它必須宣告同財年 Q3；九個月的起日必須等於年度起日，九個月迄日的隔天到年度期末必須是一個單季。
+   - FY：主申報（10-K）中期末日為該期的年度 fact。
+   - Q4：年度（10-K）減九個月累計。九個月取自年度期末前一季的原 10-Q（申報日不晚於 10-K），它必須宣告同財年 Q3；九個月的起日必須等於年度起日，九個月迄日的隔天到年度期末必須是一個單季。
+   - Q4 依據的各期：同期末日的 FY，以及同財年在範圍內有申報的 Q1–Q3，都必須通過結構檢核（含加總）。任一期不通過時 Q4 失敗，原因指向不通過的那一期。
+   - Q4 推算條件：依據的各期都通過時，年度期末的分類集合必須等於財年起日到 Q3 期末之間每一天的分類集合。判斷只依規格，不需要 Q1、Q2 的申報（範圍內第一個財年可能沒有）。不相同時 Q4 不推算，`status.json` 記為 `not_derived`，附年度與 Q1–Q3 期間的分類；FY 照常上線。同一個分類換定義（例如成員改名）不算不同。規格漏寫適用期間時，少了分類的那一期加總失敗，Q4 也跟著失敗，不會被當成分類集合不同。
    - 同一個值出現多次（同 concept、dimensions、期間）時，以精度最高（decimals 最大）的 fact 為準；其他重複值只需在自己的精度內與它一致。同精度時選所在表格含最多其他項目的 fact，再平手取文件順序第一個，其餘記在 `duplicates`。這讓同一期的運算元盡量落在同一張表，證據截圖較少。
-6. **結構檢核**：見下節。不通過就不寫入正式輸出，只在 `status.json` 記錄原因。
-7. **證據**：每個運算元找到所在的 SEC 表格，核對 fact 與運算元一致，存清理過的 HTML 片段與標示儲存格的截圖（1 倍解析度）。表格 HTML 與已提交的相同、PNG hash 與截圖倍率都相符時沿用舊 PNG，不重新截圖。表格運算元的證據就是該儲存格所在的表格。
-8. **跨期檢核**：與已上線的較早期別比較，異常時在 `revenue.json` 的 `annotations` 寫標註。
+7. **結構檢核**：見下節。不通過就不寫入正式輸出，只在 `status.json` 記錄原因。
+8. **證據**：每個運算元找到所在的 SEC 表格，核對 fact 與運算元一致，存清理過的 HTML 片段與標示儲存格的截圖（1 倍解析度）。表格 HTML 與已提交的相同、PNG hash 與截圖倍率都相符時沿用舊 PNG，不重新截圖；同一期末日的 FY 與 Q4 互相沿用。表格運算元的證據就是該儲存格所在的表格。
 9. **已上線保護**：該期已有上線輸出時，一般 parse 不改動它。
-   - 重算結果與已上線輸出完全相同：不寫入。
-   - 數值或依據（分類、總營收、運算元、選用的申報、財年季別、觀點）不同：不寫入，`status.json` 記錄 `differs_from_published`（差異的分類、舊值、新值，原因是修正申報、選用的申報不同或規則與原文變更），並寫標註。由人確認後以 `--republish TICKER PERIOD` 覆寫，覆寫時 `revenue.json` 的 `republished` 記錄原值與原因。
-   - 只有中繼資料不同（檢核紀錄、運算元的證據 hash）：不寫入，`status.json` 記錄 `stale_fields`。
-   - `parser`（引擎與規格的 hash）記錄的是產生該輸出的版本，不列入比較：引擎或規格改動而內容相同時，視為相同。代價是已上線 `revenue.json` 的 `parser` 停在上線當時的版本，不代表目前的引擎；目前引擎的版本看 `status.json` 的 `parser`，兩者不同不代表輸出過時。
-   - 跨期檢核每次都以目前已上線的資料重算。之後補上更早的期別時，已上線的期別才有去年同季可比；重算出已上線輸出沒有的標註時，記在 `status.json` 該期的 `new_annotations`。已上線的 `revenue.json` 仍保留上線當時的檢核結果與標註。
-10. **寫入**：先寫暫存目錄，全部完成才換上 `data/revenue/.../<period_end>/`；換上失敗時還原舊輸出。開始處理前清理中斷寫入留下的目錄：`.staging-*` 刪除，`.retired-<期別>-*` 在該期目錄不存在時還原、否則刪除。只有以期末日命名的目錄算已上線輸出。
+    - 重算結果與已上線輸出完全相同：不寫入。
+    - 數值或依據（序列、分類、總營收、運算元、選用的申報、財年季別、觀點）不同：不寫入，`status.json` 記錄 `differs_from_published`（差異的分類、舊值、新值，原因是選用的申報不同或規則與原文變更）。由人確認後以 `--republish TICKER SERIES PERIOD` 覆寫，覆寫時 `revenue.json` 的 `republished` 記錄原值與原因。
+    - 只有中繼資料不同（檢核紀錄、運算元的證據 hash）：不寫入，`status.json` 記錄 `stale_fields`。
+    - `parser`（引擎與規格的 hash）記錄的是產生該輸出的版本，不列入比較：引擎或規格改動而內容相同時，視為相同。代價是已上線 `revenue.json` 的 `parser` 停在上線當時的版本，不代表目前的引擎；目前引擎的版本看 `status.json` 的 `parser`，兩者不同不代表輸出過時。
+10. **寫入**：先寫暫存目錄，全部完成才換上 `data/revenue/.../<序列>/<period_end>/`；換上失敗時還原舊輸出。開始處理前清理中斷寫入留下的目錄：`.staging-*` 刪除，`.retired-<期別>-*` 在該期目錄不存在時還原、否則刪除。只有以期末日命名的目錄算已上線輸出。
+11. **差異標記**：每次執行結束時重建 `status.json` 的差異標記（見自我檢核的比較欄比對）。
 
 任何一期發生例外（包括非預期的程式錯誤）都記為該期失敗，附例外類型與訊息，繼續處理下一期；`status.json` 一定會寫入。
 
@@ -129,44 +148,37 @@ SPEC = CompanySpec(
 
 | 檢核 | 內容 |
 |---|---|
-| 選申報 | 該期有 10-Q 或 10-K |
+| 選申報 | 該期有 10-Q 或 10-K；Q4 的九個月只看申報日不晚於 10-K 的申報 |
 | 原文存在 | 主文件在共用資料目錄中，sha256 與申報包紀錄一致 |
-| 財年與季別 | 申報宣告財年與季別，且與表單種類相符 |
-| 定義唯一 | 每個分類在該期剛好有一個生效的定義；定義不是尚未支援的 `table_cell` |
+| 財年與季別 | 申報宣告財年與季別，且與表單種類相符；FY 序列的主申報是 10-K |
+| 定義唯一 | 每個分類在該期最多一個生效的定義，總營收剛好一個；定義不是尚未支援的 `table_cell` |
 | fact 存在且唯一 | 規格的前綴在文件中有宣告；每個運算元在原文中找得到、只有一個起日、數值可解析；重複出現時在各自精度內一致 |
 | 單位與精度 | 單位是 USD；`decimals` 有記錄且不低於 `-6`（百萬位），誤差上限由精度推得（`-6` 為 ±50 萬）。精度更粗的數字誤差過大，不上線 |
 | 加總 | 分類（含 `reconciling`）加總等於總營收，差距不超過所有運算元精度誤差的總和 |
-| Q4 期間 | 年度期末前一季剛好有一份 10-Q，且宣告同財年 Q3；年度與九個月運算元首尾相接 |
+| Q4 期間 | 年度期末前一季剛好有一份 10-Q，且宣告同財年 Q3；年度與九個月運算元首尾相接；Q4 依據的 FY 與 Q1–Q3 都通過結構檢核 |
 | 證據完整 | 每個運算元都在 HTML 表格內；原文節點是 `ix:nonFraction`，name、contextref、scale、顯示文字與數值等於運算元；瀏覽器截到的表格與原文表格文字相同 |
 
-跨期檢核（不擋上線，異常寫成標註）：
+Q4 推算條件（依據的各期都通過，但年度與 Q1–Q3 的分類集合不同）不成立時不是失敗：該期記為 `not_derived`，不輸出 Q4。
 
-| 檢核 | 內容 | 寫標註 |
-|---|---|---|
-| 期別連續 | 上一個已上線期別與本期相隔一個單季，且其 dei 財年季別是本期的前一季 | 不符時 |
-| 分類集合 | 與上一個已上線期別相同 | 不同時 |
-| 去年同季 | 以 dei 財年季別配對去年同季，且在已上線輸出中唯一、兩期期末日相隔一年 | 不唯一、相隔不是一年、去年同季沒有某分類，或已有一年以上的歷史卻缺去年同季 |
-| 占比變動 | 任一分類占總營收的比例，與去年同季相差超過 5 個百分點；任一期總營收為 0 時無法計算 | 是 |
-| YoY | 任一分類與去年同季相比變動超過 ±50%，或去年同季為 0 | 是 |
-| QoQ | 與上一個已上線期別相比的變動 | 只記錄 |
-| 比較期 | 本期主申報涵蓋的已上線期間（申報中有該段期間的總營收），每個運算元以本期生效的定義找同期間的 fact，逐一記入 `checks.comparatives`：`consistent`、`restated`、`unparseable` 或 `not_found` | `restated`、`unparseable`、`not_found` |
-| 比較期總營收 | 去年同季的總營收必須在本期主申報中比得到（10-Q 比單季、10-K 比年度）；沒有去年同季時不要求 | 比不到時 |
-| 重編 | `checks.comparatives` 中 `restated`、`unparseable` 的項目，以及主申報是修正申報時修正前後不同的運算元，記入 `checks.restatements` | 是 |
-| Q4 跨定義 | Q4 的年度與九個月運算元使用不同定義；`checks.q4_definitions` 記錄兩個定義，以及輔助證據：較晚的申報以年度定義標示的同一段九個月 fact，與九個月運算元是否在精度內一致 | 是，原因附輔助證據結果 |
+比較欄比對（不擋上線，不改已上線輸出）：
 
-- 占比與成長率都和去年同季比較：季節性強的公司（例如 AAPL 的 12 月季 iPhone 營收較前一季多七成以上）與上一季比較時，每年都會在相同季度觸發，無法分辨結構變化。完全沒有一年以上的歷史時只記錄。
-- 門檻全部公司共用（占比 5 個百分點、YoY ±50%），以未捨入的值比較，輸出的變動值才捨入。高成長或季節性強的公司會固定出現標註，標註只供 PM 閱讀，不擋上線。
-- 重編時本期照常上線並記錄 `restatements`（`kind` 為 `comparative` 或 `amendment`）；被重編的舊期 `revenue.json` 不改，`status.json` 在舊期記錄 `restated_by`。
+- 每次執行結束時，每一份已下載的 10-Q、10-K 與修正申報，都與它申報當時看得到的已上線輸出比對：運算元全部來自申報日不晚於它的申報。比對使用目前的已上線值，所以覆寫（`--republish`）或補上較早的期別後，標記隨之更新；比對結果不存在 `revenue.json`。
+- 申報有某段期間的總營收時，視為涵蓋該期間，已上線輸出中運算元期間相同者逐一比對：單季欄對 Q 輸出的單季運算元（去年同季，或修正申報的本期）；全年欄對 FY 與 Q4 的年度運算元；九個月欄對 Q4 的九個月運算元。運算元來自同一份申報時不比。
+- 已上線輸出沒有的期間長度（例如 10-Q 的六個月累計）不比對：把兩季相加再比屬於解讀。
+- 結果：`consistent`（在雙方精度內相同）、`different`（超出精度）、`unparseable`（申報中的 fact 無法解析）、`not_found`（申報期別沒有對應的規格定義，或以該定義找不到同期間的 fact）。
+- `different` 與 `unparseable` 寫成舊期別的差異標記（`status.json` 的 `differences`），列出申報列示值、已上線值與來源申報。`consistent` 與 `not_found` 不寫。
+- 已上線輸出在 `status.json` 沒有紀錄時（例如紀錄被手動刪除），由輸出補上該期的紀錄，標記照樣寫入。原文讀不到的申報不比對，列在 `status.json` 的 `comparison_errors`。
 
 ## 正式輸出
 
-`revenue.json`（AAPL 2025-09-27 節錄）：
+`Q/<period_end>/revenue.json`（AAPL 2025-09-27 的 Q4，節錄）：
 
 ```json
 {
   "schema_version": 1,
   "ticker": "AAPL",
   "view": "product",
+  "series": "Q",
   "period_end": "2025-09-27",
   "fiscal_year": 2025,
   "fiscal_quarter": 4,
@@ -201,61 +213,116 @@ SPEC = CompanySpec(
       "scale": "6",
       "decimals": "-6",
       "sign": null,
-      "evidence": { "table": "0000320193-25-000079-dceb82ec4e10-t27", "html_sha256": "...", "png_sha256": "..." }
+      "evidence": { "table": "0000320193-25-000079-dceb82ec4e10-t27", "html_sha256": "...", "png_sha256": "...", "png_scale": 1 }
     }
   },
   "checks": {
     "structural": [ { "check": "定義唯一", "result": "pass" }, "..." ],
-    "sum": { "categories": 102466000000, "total": 102466000000, "difference": 0, "tolerance": "6000000" },
-    "cross_period": [ { "check": "去年同季", "category": "Mac", "flagged": false, "note": "沒有去年同季可比" }, "..." ],
-    "restatements": []
+    "sum": { "categories": 102466000000, "total": 102466000000, "difference": 0, "tolerance": "6000000" }
   },
-  "annotations": [],
+  "parser": { "spec_sha256": "...", "engine_sha256": "..." }
+}
+```
+
+`FY/<period_end>/revenue.json`（AAPL FY2025，節錄）格式相同，差別是：`series` 為 `FY`；沒有 `fiscal_quarter`；`filings` 只有 `primary`；每個分類只有一個 `role` 為 `annual` 的運算元。
+
+```json
+{
+  "schema_version": 1,
+  "ticker": "AAPL",
+  "view": "product",
+  "series": "FY",
+  "period_end": "2025-09-27",
+  "fiscal_year": 2025,
+  "unit": "USD",
+  "filings": { "primary": { "accession": "0000320193-25-000079", "form": "10-K", "report_date": "2025-09-27", "filing_date": "2025-10-31" } },
+  "categories": { "Mac": { "value": 33708000000, "expression": [ { "weight": 1, "operand": "op2" } ] } },
+  "total": { "value": 416161000000, "expression": [ { "weight": 1, "operand": "op6" } ] },
+  "operands": { "op2": { "kind": "xbrl_fact", "role": "annual", "fact_id": "f-380", "...": "..." } },
+  "checks": { "structural": [ "..." ], "sum": { "...": "..." } },
   "parser": { "spec_sha256": "...", "engine_sha256": "..." }
 }
 ```
 
 - `role`：`quarter`、`annual` 或 `nine_months`。
 - 規格宣告 `reconciling` 時另有同格式的 `reconciling` 欄位。
-- 主申報是修正申報時，`filings.primary.replaces` 記錄被取代的原申報。
 - 證據圖上的編號就是運算元編號（`op3` 標成 3）；`evidence.png_scale` 是截圖倍率。
-- `annotations` 每筆有 `check`（檢核名稱）、`message`（說明）與 `detail`（相關數值，例如變動值、基準期別、比對結果）。
-- `checks.comparatives` 是比較期比對清單（期別、分類、運算元、期間、結果）；`checks.q4_definitions` 只在 Q4 跨定義時出現。
 - 以 `--republish` 覆寫過的期別有 `republished` 清單，每筆記錄原因與覆寫前的申報、分類數值、總營收與 `parser`。
 
-`status.json` 列出每個處理過的期別：
+`status.json` 依序列列出每個處理過的期別（節錄；`differences` 與 `not_derived` 兩筆是格式示意，不是 AAPL 的實際紀錄）：
+
+```json
+{
+  "ticker": "AAPL",
+  "view": "product",
+  "parser": { "spec_sha256": "...", "engine_sha256": "..." },
+  "periods": {
+    "Q": {
+      "2025-06-28": {
+        "status": "published", "fiscal_year": 2025, "fiscal_quarter": 3, "accession": "0000320193-25-000073",
+        "differences": [
+          {
+            "category": "Mac", "operand": "op2", "role": "quarter",
+            "period": { "start": "2025-03-30", "end": "2025-06-28" },
+            "result": "different", "published_value": "<已上線值>", "listed_value": "<申報列示值>",
+            "source": { "accession": "...", "form": "10-Q", "filing_date": "2026-07-31", "fact_id": "..." }
+          }
+        ]
+      },
+      "2025-09-27": { "status": "published", "fiscal_year": 2025, "fiscal_quarter": 4, "accession": "0000320193-25-000079" },
+      "2026-09-26": {
+        "status": "not_derived", "check": "Q4 推算條件", "reason": "...",
+        "fy_categories": [ "iPhone", "Mac", "..." ],
+        "quarter_categories": [ { "start": "2025-09-28", "end": "2026-06-27", "categories": [ "iPhone", "Mac", "..." ] } ],
+        "published_output_kept": true,
+        "published_output": {
+          "accession": "...", "categories": { "iPhone": "<已上線值>", "...": "..." }, "total": "<已上線值>",
+          "note": "已上線輸出保留不動；以目前的申報與規格重算，此期不成立"
+        }
+      }
+    },
+    "FY": {
+      "2025-09-27": { "status": "published", "fiscal_year": 2025, "accession": "0000320193-25-000079" }
+    }
+  }
+}
+```
 
 | 欄位 | 內容 |
 |---|---|
-| `status` | `published` 或 `failed` |
-| `check`、`reason` | 失敗時：不通過的檢核與原因 |
-| `published_output_kept` | 失敗時：該期是否仍有先前上線的輸出 |
-| `annotations` | 該期 `revenue.json` 標註的摘要（`check`、`message`） |
-| `new_annotations` | 已上線期別重算時出現、已上線輸出沒有的標註，以及與已上線不同的提示 |
+| `status` | `published`、`failed`，或 Q 序列的 `not_derived`（Q4 推算條件不成立） |
+| `check`、`reason` | 失敗或不推算時：檢核名稱與原因 |
+| `fy_categories`、`quarter_categories` | 不推算時：年度的分類，以及財年起日到 Q3 期末之間依日期分段的分類 |
+| `published_output_kept` | 失敗或不推算時：該期是否仍有先前上線的輸出 |
+| `published_output` | 失敗或不推算而仍有先前上線的輸出時：它的申報、分類數值與總營收，說明已上線值保留不動 |
+| `differences` | 差異標記：較晚申報的比較欄與此期已上線運算元不同（`different`）或無法解析（`unparseable`）；每筆有分類、運算元、期間、已上線值、申報列示值與來源申報 |
 | `differs_from_published` | 重算結果與已上線輸出的數值或依據不同：原因、差異的分類與新舊值、不同的欄位 |
 | `stale_fields` | 重算結果與已上線輸出只有中繼資料不同時，不同的欄位 |
-| `restated_by` | 哪些較新的期別記錄了此期的重編 |
+
+`status.json` 頂層另有 `comparison_errors`（只在有時出現）：原文讀不到、無法做比較欄比對的申報與原因。
 
 ## 指令
 
 ```bash
-npm run parse -- --tickers AAPL                     # 全部已下載的期別：解析、檢核、證據、寫入 data/revenue/
+npm run parse -- --tickers AAPL                     # 預設起始日起的全部已下載期別：解析、檢核、證據、寫入 data/revenue/（Q 與 FY）
 npm run parse -- --tickers AAPL --start 2025-01-01  # 只處理期末日在範圍內的期別
 npm run parse -- --tickers AAPL --check             # 重跑並與已提交的輸出比對，不寫入
-npm run parse -- --tickers AAPL --republish AAPL 2025-09-27   # 由人確認後覆寫已上線的期別
+npm run parse -- --tickers AAPL --republish AAPL Q 2025-09-27   # 由人確認後覆寫已上線的期別
 ```
 
 - `npm run parse` 即 `scripts/sec_pipeline.py parse`；省略 `--tickers` 或加 `--all` 處理全部有規格的公司。
 - parse 只讀共用資料目錄的 SEC 原文，不連網；缺原文時提示先執行 download。
+- `--start` 省略時用預設起始日；指定時可以早於預設值。`--end` 省略時不設上限。
+- 一次處理多期時依期末日順序執行，每期只看得到它的時點以前的申報與已上線輸出，與逐期分開執行的結果相同。
 - `--check` 不啟動 Chromium。它在已提交輸出的副本上照一般 parse 執行（同樣受已上線保護），再與已提交的輸出比對；一般 parse 不會改動任何檔案、也不會改變 `status.json` 時才算一致：
-  - `revenue.json` 逐欄比對（`parser` 欄位與 PNG hash、倍率除外）；
-  - `status.json` 中這些期別的紀錄逐欄比對，包括失敗原因、標註、`differs_from_published`、`stale_fields`、`restated_by`（`published_output_kept` 除外）；
+  - 兩個序列的 `revenue.json` 逐欄比對（`parser` 欄位與 PNG hash、倍率除外）；
+  - `status.json` 中這些期別的紀錄逐欄比對，包括失敗或不推算的原因、`differences`、`differs_from_published`、`stale_fields`（`published_output_kept` 除外），以及頂層的 `comparison_errors`；
   - 證據 HTML 比對 bytes，證據目錄中沒有被 `revenue.json` 引用的檔案列為差異；
   - 已提交的 PNG 核對檔案 hash 與紀錄一致。
 
   省略期別時比對 `status.json` 列出的期別。有差異時回傳碼為 2。`--check` 不能與 `--republish` 同時使用。
-- `--republish TICKER PERIOD` 可重複指定；ticker 與期別必須在這次處理的範圍內。
-- 回傳碼：`0` 全部期別上線（含有標註的期別）；`2` 有期別失敗或 `--check` 有差異；`1` 輸入錯誤。
+- `--republish TICKER SERIES PERIOD` 可重複指定；SERIES 是 `Q` 或 `FY`，ticker 與期別必須在這次處理的範圍內。
+- 回傳碼：`0` 沒有期別失敗（Q4 不推算不算失敗）；`2` 有期別失敗或 `--check` 有差異；`1` 輸入錯誤。
 
 ## 測試
 

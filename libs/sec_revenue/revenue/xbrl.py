@@ -183,11 +183,3 @@ class InlineDocument:
         """申報自己宣告的財年與期別（Q1、Q2、Q3、FY）。"""
         year = self.dei.get("dei:DocumentFiscalYearFocus")
         return (int(year) if year and year.isdigit() else None), self.dei.get("dei:DocumentFiscalPeriodFocus")
-
-    def matching(self, concept: str, dimensions: tuple, start: str | None, end: str) -> list[Fact]:
-        """以前綴 QName 比對（跨申報比較用；同一份文件內的規格比對見 `compose`）。"""
-        return [
-            f
-            for f in self.facts
-            if f.concept == concept and f.dimensions == dimensions and f.start == start and f.end == end
-        ]

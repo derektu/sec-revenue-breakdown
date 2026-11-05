@@ -21,7 +21,7 @@ from sec_revenue.tickers import DownloadTickers, SupportedTickers
 from sec_revenue.workflow import PeriodSelection, ExtractionWorkflow
 from sec_revenue.viewer import RevenueViewer
 from sec_revenue import companies
-from sec_revenue.revenue.engine import RevenueParser, check_outputs
+from sec_revenue.revenue.engine import DEFAULT_START, SERIES, RevenueParser, check_outputs
 from sec_revenue.tickers import parse_tickers
 
 REVENUE_ROOT = ROOT / "data" / "revenue"
@@ -86,7 +86,7 @@ class WorkflowCli:
         parse = commands.add_parser("parse", help="新版 parser：產生 data/revenue/ 的正式輸出")
         parse.add_argument("--tickers", nargs="+", help="AAPL MSFT 或 AAPL,MSFT；省略或 --all 為全部有規格的公司")
         parse.add_argument("--all", dest="all_tickers", action="store_true", help="全部有規格的公司")
-        parse.add_argument("--start", help="包含起日（期末日 YYYY-MM-DD）；省略為全部已下載期別")
+        parse.add_argument("--start", help=f"包含起日（期末日 YYYY-MM-DD）；省略時從預設起始日 {DEFAULT_START} 起，可以早於預設值")
         parse.add_argument("--end", help="包含迄日")
         parse.add_argument(
             "--check",
@@ -95,11 +95,11 @@ class WorkflowCli:
         )
         parse.add_argument(
             "--republish",
-            nargs=2,
+            nargs=3,
             action="append",
-            metavar=("TICKER", "PERIOD"),
+            metavar=("TICKER", "SERIES", "PERIOD"),
             default=[],
-            help="由人決定後覆寫已上線的期別；可重複指定。未指定時已上線期別不會被改動",
+            help="由人決定後覆寫已上線的期別；SERIES 是 Q 或 FY，可重複指定。未指定時已上線期別不會被改動",
         )
         parse.add_argument("--data", type=Path, default=data_root(), help="SEC 原文的資料根目錄（預設 SEC_DATA_DIR 或 repo 的 data/）")
         parse.add_argument("--out", type=Path, default=REVENUE_ROOT, help=argparse.SUPPRESS)
@@ -163,12 +163,14 @@ class WorkflowCli:
         if unknown:
             raise ValueError("沒有 parser 規格：" + ", ".join(unknown))
         republish = {}
-        for ticker, period in args.republish:
-            ticker = ticker.upper()
+        for ticker, series, period in args.republish:
+            ticker, series = ticker.upper(), series.upper()
             PeriodSelection(period, period)
             if ticker not in names:
                 raise ValueError(f"--republish 的 {ticker} 不在這次處理的 ticker 中")
-            republish.setdefault(ticker, set()).add(period)
+            if series not in SERIES:
+                raise ValueError(f"--republish 的序列必須是 {'、'.join(SERIES)}，收到 {series}")
+            republish.setdefault(ticker, set()).add((series, period))
         if args.check and republish:
             raise ValueError("--check 不寫入，不能與 --republish 同時使用")
         reports, differences = [], []
@@ -185,7 +187,7 @@ class WorkflowCli:
                     args.data, args.out, spec, spec_sha256, republish=republish.get(ticker, set()), progress=self.progress
                 )
                 periods = parser.periods(args.start, args.end)
-                missing = sorted(republish.get(ticker, set()) - set(periods))
+                missing = sorted(p for p in republish.get(ticker, set()) if p[1] not in periods or p[0] not in parser.series_of(p[1]))
                 if missing:
                     raise ValueError(f"--republish 的 {ticker} {missing} 不在這次處理的期別中")
                 report = parser.run(periods)

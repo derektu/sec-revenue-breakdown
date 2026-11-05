@@ -37,7 +37,7 @@
 | `data/universe/tickers.csv` | 使用者維護的 ticker 清單：CIK、狀態（`wip` 研究中、`ok` 上線、`drop` 放棄）、採用的來源觀點、穩定度評分 |
 | `data/universe/references/<首字母>/<TICKER>/` | 對照資料：`reference.json` 與每次擷取的證據 |
 | `libs/sec_revenue/companies/<首字母>/<ticker>/` | 每家公司的 parser 規格（`spec.py`）與說明（`parser.md`） |
-| `data/revenue/<首字母>/<TICKER>/` | parser 的正式輸出：每期的 `revenue.json` 與 SEC 表格證據，以及 `status.json` |
+| `data/revenue/<首字母>/<TICKER>/` | parser 的正式輸出：季度（`Q/`）與年度（`FY/`）兩個序列每期的 `revenue.json` 與 SEC 表格證據，以及 `status.json` |
 | `libs/sec_revenue/issuers/<首字母>/<ticker>/` | 先前實驗的 parser，只作參考 |
 
 格式規格見 [ticker 清單與對照資料格式](docs/architecture/universe.md)。
@@ -81,7 +81,7 @@
 | `npm run download -- ...` | 下載 SEC 申報包 |
 | `npm run extract -- ...` | 從下載快取萃取營收，不連網 |
 | `npm run evidence -- ...` | 由萃取輸出回到 SEC 原文，產生表格 HTML 與截圖，不連網（目前只驗證 AAPL） |
-| `npm run parse -- ...` | 新版 parser：依公司規格產生 `data/revenue/` 的正式輸出與證據，不連網；`--check` 與已提交的輸出比對 |
+| `npm run parse -- ...` | 新版 parser：依公司規格產生 `data/revenue/` 的正式輸出與證據，不連網；不指定 `--start` 時從預設起始日（2024-01-01）起；`--check` 與已提交的輸出比對 |
 | `npm run capture:setup` | 開啟擷取用的專用瀏覽器，檢查並等待登入 |
 | `npm run capture -- ...` | 擷取對照資料 |
 | `npm run viewer` | 本機唯讀 viewer，<http://127.0.0.1:7290> |
