@@ -1,0 +1,297 @@
+{
+  "annotations": [
+    {
+      "check": "YoY",
+      "detail": {
+        "baseline_period": "2025-06-30",
+        "category": "Strategic capital segment",
+        "change": 0.6419,
+        "threshold": 0.5
+      },
+      "message": "Strategic capital segment YoY 0.6419，超過 ±0.5"
+    }
+  ],
+  "categories": {
+    "Real estate segment": {
+      "expression": [
+        {
+          "operand": "op1",
+          "weight": 1
+        }
+      ],
+      "value": 2183833000
+    },
+    "Strategic capital segment": {
+      "expression": [
+        {
+          "operand": "op2",
+          "weight": 1
+        }
+      ],
+      "value": 241619000
+    }
+  },
+  "checks": {
+    "comparatives": [
+      {
+        "category": "Real estate segment",
+        "operand": "op1",
+        "period": {
+          "end": "2025-06-30",
+          "start": "2025-04-01"
+        },
+        "period_end": "2025-06-30",
+        "result": "consistent",
+        "role": "quarter"
+      },
+      {
+        "category": "Strategic capital segment",
+        "operand": "op2",
+        "period": {
+          "end": "2025-06-30",
+          "start": "2025-04-01"
+        },
+        "period_end": "2025-06-30",
+        "result": "consistent",
+        "role": "quarter"
+      },
+      {
+        "category": "總營收",
+        "operand": "op3",
+        "period": {
+          "end": "2025-06-30",
+          "start": "2025-04-01"
+        },
+        "period_end": "2025-06-30",
+        "result": "consistent",
+        "role": "quarter"
+      }
+    ],
+    "cross_period": [
+      {
+        "annotated": false,
+        "baseline_period": "2026-03-31",
+        "check": "期別連續"
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2026-03-31",
+        "check": "分類集合"
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2025-06-30",
+        "category": "Real estate segment",
+        "change_pp": -3.22,
+        "check": "占比變動",
+        "threshold_pp": 5.0
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2025-06-30",
+        "category": "Real estate segment",
+        "change": 0.0722,
+        "check": "YoY",
+        "threshold": 0.5
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2026-03-31",
+        "category": "Real estate segment",
+        "change": 0.022,
+        "check": "QoQ",
+        "note": "只記錄"
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2025-06-30",
+        "category": "Strategic capital segment",
+        "change_pp": 3.22,
+        "check": "占比變動",
+        "threshold_pp": 5.0
+      },
+      {
+        "annotated": true,
+        "baseline_period": "2025-06-30",
+        "category": "Strategic capital segment",
+        "change": 0.6419,
+        "check": "YoY",
+        "threshold": 0.5
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2026-03-31",
+        "category": "Strategic capital segment",
+        "change": 0.5025,
+        "check": "QoQ",
+        "note": "只記錄"
+      }
+    ],
+    "restatements": [],
+    "structural": [
+      {
+        "check": "定義唯一",
+        "result": "pass"
+      },
+      {
+        "check": "fact 存在且唯一",
+        "result": "pass"
+      },
+      {
+        "check": "單位與精度",
+        "result": "pass"
+      },
+      {
+        "check": "加總",
+        "result": "pass"
+      },
+      {
+        "check": "證據完整",
+        "result": "pass"
+      }
+    ],
+    "sum": {
+      "categories": 2425452000,
+      "difference": 0,
+      "tolerance": "1500",
+      "total": 2425452000
+    }
+  },
+  "filings": {
+    "primary": {
+      "accession": "0001193125-26-323746",
+      "filing_date": "2026-07-29",
+      "form": "10-Q",
+      "report_date": "2026-06-30"
+    }
+  },
+  "fiscal_quarter": 2,
+  "fiscal_year": 2026,
+  "operands": {
+    "op1": {
+      "accession": "0001193125-26-323746",
+      "concept": "us-gaap:Revenues",
+      "context_id": "C_d230617f-7472-4517-a227-c4b1dd0dbf09",
+      "decimals": "-3",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "pld:RealEstateOperationsSegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1045609/000119312526323746/pld-20260630.htm",
+        "name": "pld-20260630.htm",
+        "sha256": "7087dcd94651c7341c9a9aafff5a3311df0f60fd8f2b7c0c4f833dd67609dc23",
+        "url": "https://www.sec.gov/Archives/edgar/data/1045609/000119312526323746/pld-20260630.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "f2075ff0204d3a6061b5cab108fdf19f03a7084eed304d66c892a2fceeea56a1",
+        "png_scale": 1,
+        "png_sha256": "aa6fd196168b78d831afb71ee487bf476aec362240839981e261939671db3509",
+        "table": "0001193125-26-323746-7087dcd94651-t52"
+      },
+      "fact_id": "F_a9d5e57c-c38f-41ac-9f3c-29d79d732ddd",
+      "filing_date": "2026-07-29",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-06-30",
+        "start": "2026-04-01"
+      },
+      "raw": "2,183,833",
+      "role": "quarter",
+      "scale": "3",
+      "sign": null,
+      "value": 2183833000
+    },
+    "op2": {
+      "accession": "0001193125-26-323746",
+      "concept": "us-gaap:Revenues",
+      "context_id": "C_5c82b5f7-1c92-4251-9d69-359b0964207f",
+      "decimals": "-3",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "pld:StrategicCapitalSegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1045609/000119312526323746/pld-20260630.htm",
+        "name": "pld-20260630.htm",
+        "sha256": "7087dcd94651c7341c9a9aafff5a3311df0f60fd8f2b7c0c4f833dd67609dc23",
+        "url": "https://www.sec.gov/Archives/edgar/data/1045609/000119312526323746/pld-20260630.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "f2075ff0204d3a6061b5cab108fdf19f03a7084eed304d66c892a2fceeea56a1",
+        "png_scale": 1,
+        "png_sha256": "aa6fd196168b78d831afb71ee487bf476aec362240839981e261939671db3509",
+        "table": "0001193125-26-323746-7087dcd94651-t52"
+      },
+      "fact_id": "F_79e51191-6662-406f-b3c2-b5df7e6c69ad",
+      "filing_date": "2026-07-29",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-06-30",
+        "start": "2026-04-01"
+      },
+      "raw": "241,619",
+      "role": "quarter",
+      "scale": "3",
+      "sign": null,
+      "value": 241619000
+    },
+    "op3": {
+      "accession": "0001193125-26-323746",
+      "concept": "us-gaap:Revenues",
+      "context_id": "C_5727c6b9-7075-4274-a4f3-ba9ccc3cd2f8",
+      "decimals": "-3",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1045609/000119312526323746/pld-20260630.htm",
+        "name": "pld-20260630.htm",
+        "sha256": "7087dcd94651c7341c9a9aafff5a3311df0f60fd8f2b7c0c4f833dd67609dc23",
+        "url": "https://www.sec.gov/Archives/edgar/data/1045609/000119312526323746/pld-20260630.htm"
+      },
+      "duplicates": [
+        "F_3c02dd8d-f945-4c3c-8eae-1fbc8115cca4"
+      ],
+      "evidence": {
+        "html_sha256": "f2075ff0204d3a6061b5cab108fdf19f03a7084eed304d66c892a2fceeea56a1",
+        "png_scale": 1,
+        "png_sha256": "aa6fd196168b78d831afb71ee487bf476aec362240839981e261939671db3509",
+        "table": "0001193125-26-323746-7087dcd94651-t52"
+      },
+      "fact_id": "F_4a256a8e-7e95-46fa-b164-4b9ab7d01a87",
+      "filing_date": "2026-07-29",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-06-30",
+        "start": "2026-04-01"
+      },
+      "raw": "2,425,452",
+      "role": "quarter",
+      "scale": "3",
+      "sign": null,
+      "value": 2425452000
+    }
+  },
+  "parser": {
+    "engine_sha256": "caf97a96cdc63be1b492a230ae7d1fd78a1b9557af6fa867684a8ee1b90ec1fd",
+    "spec_sha256": "ee7efe125e3986b3bf11389a4d0ed48145e2db7fc1501ea8671db3c774ce1fa5"
+  },
+  "period_end": "2026-06-30",
+  "schema_version": 1,
+  "ticker": "PLD",
+  "total": {
+    "expression": [
+      {
+        "operand": "op3",
+        "weight": 1
+      }
+    ],
+    "value": 2425452000
+  },
+  "unit": "USD",
+  "view": "business_segment"
+}

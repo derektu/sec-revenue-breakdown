@@ -1,0 +1,286 @@
+{
+  "annotations": [],
+  "categories": {
+    "Real estate segment": {
+      "expression": [
+        {
+          "operand": "op1",
+          "weight": 1
+        }
+      ],
+      "value": 1998526000
+    },
+    "Strategic capital segment": {
+      "expression": [
+        {
+          "operand": "op2",
+          "weight": 1
+        }
+      ],
+      "value": 141139000
+    }
+  },
+  "checks": {
+    "comparatives": [
+      {
+        "category": "Real estate segment",
+        "operand": "op1",
+        "period": {
+          "end": "2024-03-31",
+          "start": "2024-01-01"
+        },
+        "period_end": "2024-03-31",
+        "result": "consistent",
+        "role": "quarter"
+      },
+      {
+        "category": "Strategic capital segment",
+        "operand": "op2",
+        "period": {
+          "end": "2024-03-31",
+          "start": "2024-01-01"
+        },
+        "period_end": "2024-03-31",
+        "result": "consistent",
+        "role": "quarter"
+      },
+      {
+        "category": "總營收",
+        "operand": "op3",
+        "period": {
+          "end": "2024-03-31",
+          "start": "2024-01-01"
+        },
+        "period_end": "2024-03-31",
+        "result": "consistent",
+        "role": "quarter"
+      }
+    ],
+    "cross_period": [
+      {
+        "annotated": false,
+        "baseline_period": "2024-12-31",
+        "check": "期別連續"
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2024-12-31",
+        "check": "分類集合"
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2024-03-31",
+        "category": "Real estate segment",
+        "change_pp": -0.03,
+        "check": "占比變動",
+        "threshold_pp": 5.0
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2024-03-31",
+        "category": "Real estate segment",
+        "change": 0.0932,
+        "check": "YoY",
+        "threshold": 0.5
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2024-12-31",
+        "category": "Real estate segment",
+        "change": 0.0263,
+        "check": "QoQ",
+        "note": "只記錄"
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2024-03-31",
+        "category": "Strategic capital segment",
+        "change_pp": 0.03,
+        "check": "占比變動",
+        "threshold_pp": 5.0
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2024-03-31",
+        "category": "Strategic capital segment",
+        "change": 0.0991,
+        "check": "YoY",
+        "threshold": 0.5
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2024-12-31",
+        "category": "Strategic capital segment",
+        "change": -0.443,
+        "check": "QoQ",
+        "note": "只記錄"
+      }
+    ],
+    "restatements": [],
+    "structural": [
+      {
+        "check": "定義唯一",
+        "result": "pass"
+      },
+      {
+        "check": "fact 存在且唯一",
+        "result": "pass"
+      },
+      {
+        "check": "單位與精度",
+        "result": "pass"
+      },
+      {
+        "check": "加總",
+        "result": "pass"
+      },
+      {
+        "check": "證據完整",
+        "result": "pass"
+      }
+    ],
+    "sum": {
+      "categories": 2139665000,
+      "difference": 0,
+      "tolerance": "1500",
+      "total": 2139665000
+    }
+  },
+  "filings": {
+    "primary": {
+      "accession": "0000950170-25-060107",
+      "filing_date": "2025-04-29",
+      "form": "10-Q",
+      "report_date": "2025-03-31"
+    }
+  },
+  "fiscal_quarter": 1,
+  "fiscal_year": 2025,
+  "operands": {
+    "op1": {
+      "accession": "0000950170-25-060107",
+      "concept": "us-gaap:Revenues",
+      "context_id": "C_a6c1072d-6985-463c-80d7-01d3ee5c2a1b",
+      "decimals": "-3",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "pld:RealEstateOperationsSegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1045609/000095017025060107/pld-20250331.htm",
+        "name": "pld-20250331.htm",
+        "sha256": "32eb5a0e0802e063ca16fd0909b402b03464872fb7d830c03d6ee8b5645a0bc1",
+        "url": "https://www.sec.gov/Archives/edgar/data/1045609/000095017025060107/pld-20250331.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "d54a2b1e05d5e6182bc7da71da2668bb09f93c5a8e935f010fd38d6d823fc271",
+        "png_scale": 1,
+        "png_sha256": "b078b3b3a4f8f1c0aab2e33166cb7a2b2fbbfacf545caec8e513f40bec939732",
+        "table": "0000950170-25-060107-32eb5a0e0802-t45"
+      },
+      "fact_id": "F_0ce6c681-28bd-429c-a582-f752f63a9500",
+      "filing_date": "2025-04-29",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-03-31",
+        "start": "2025-01-01"
+      },
+      "raw": "1,998,526",
+      "role": "quarter",
+      "scale": "3",
+      "sign": null,
+      "value": 1998526000
+    },
+    "op2": {
+      "accession": "0000950170-25-060107",
+      "concept": "us-gaap:Revenues",
+      "context_id": "C_a1b954b0-946e-49aa-bef2-73964fa5d1cf",
+      "decimals": "-3",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "pld:StrategicCapitalSegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1045609/000095017025060107/pld-20250331.htm",
+        "name": "pld-20250331.htm",
+        "sha256": "32eb5a0e0802e063ca16fd0909b402b03464872fb7d830c03d6ee8b5645a0bc1",
+        "url": "https://www.sec.gov/Archives/edgar/data/1045609/000095017025060107/pld-20250331.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "d54a2b1e05d5e6182bc7da71da2668bb09f93c5a8e935f010fd38d6d823fc271",
+        "png_scale": 1,
+        "png_sha256": "b078b3b3a4f8f1c0aab2e33166cb7a2b2fbbfacf545caec8e513f40bec939732",
+        "table": "0000950170-25-060107-32eb5a0e0802-t45"
+      },
+      "fact_id": "F_5f843d57-2f11-426e-bb28-a2650ff35fed",
+      "filing_date": "2025-04-29",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-03-31",
+        "start": "2025-01-01"
+      },
+      "raw": "141,139",
+      "role": "quarter",
+      "scale": "3",
+      "sign": null,
+      "value": 141139000
+    },
+    "op3": {
+      "accession": "0000950170-25-060107",
+      "concept": "us-gaap:Revenues",
+      "context_id": "C_9b4d6bf5-0863-41a9-8b33-3dc7d0e90755",
+      "decimals": "-3",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1045609/000095017025060107/pld-20250331.htm",
+        "name": "pld-20250331.htm",
+        "sha256": "32eb5a0e0802e063ca16fd0909b402b03464872fb7d830c03d6ee8b5645a0bc1",
+        "url": "https://www.sec.gov/Archives/edgar/data/1045609/000095017025060107/pld-20250331.htm"
+      },
+      "duplicates": [
+        "F_293cffba-1ad1-418f-83d6-624e2032aa80"
+      ],
+      "evidence": {
+        "html_sha256": "d54a2b1e05d5e6182bc7da71da2668bb09f93c5a8e935f010fd38d6d823fc271",
+        "png_scale": 1,
+        "png_sha256": "b078b3b3a4f8f1c0aab2e33166cb7a2b2fbbfacf545caec8e513f40bec939732",
+        "table": "0000950170-25-060107-32eb5a0e0802-t45"
+      },
+      "fact_id": "F_b1a332c5-c020-46e4-b4b8-dbda54c7e5b6",
+      "filing_date": "2025-04-29",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-03-31",
+        "start": "2025-01-01"
+      },
+      "raw": "2,139,665",
+      "role": "quarter",
+      "scale": "3",
+      "sign": null,
+      "value": 2139665000
+    }
+  },
+  "parser": {
+    "engine_sha256": "caf97a96cdc63be1b492a230ae7d1fd78a1b9557af6fa867684a8ee1b90ec1fd",
+    "spec_sha256": "ee7efe125e3986b3bf11389a4d0ed48145e2db7fc1501ea8671db3c774ce1fa5"
+  },
+  "period_end": "2025-03-31",
+  "schema_version": 1,
+  "ticker": "PLD",
+  "total": {
+    "expression": [
+      {
+        "operand": "op3",
+        "weight": 1
+      }
+    ],
+    "value": 2139665000
+  },
+  "unit": "USD",
+  "view": "business_segment"
+}
