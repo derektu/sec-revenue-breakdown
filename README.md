@@ -40,6 +40,18 @@
 
 格式規格見 [ticker 清單與對照資料格式](docs/architecture/universe.md)。
 
+## 擷取對照資料
+
+擷取工具使用 Playwright 內建的 Chromium。第一次使用先安裝瀏覽器，再開啟專用瀏覽器登入三個網站：
+
+```bash
+.venv/bin/playwright install chromium
+.venv/bin/python scripts/capture_references.py setup
+.venv/bin/python scripts/capture_references.py capture --source stockanalysis --tickers AAPL,MSFT
+```
+
+登入狀態保存在 repo 以外的專用 profile（預設 `~/.sec-revenue-capture/profile/`）。流程、登入判斷與證據規則見 [對照資料擷取工具](docs/architecture/capture.md)。
+
 ## 開發環境
 
 需要 Python 3.11 以上，依賴裝在 repo 根目錄的 `.venv`：
