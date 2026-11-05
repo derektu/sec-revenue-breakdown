@@ -1,0 +1,290 @@
+{
+  "annotations": [],
+  "categories": {
+    "Family of Apps": {
+      "expression": [
+        {
+          "operand": "op1",
+          "weight": 1
+        }
+      ],
+      "value": 47146000000
+    },
+    "Reality Labs": {
+      "expression": [
+        {
+          "operand": "op2",
+          "weight": 1
+        }
+      ],
+      "value": 370000000
+    }
+  },
+  "checks": {
+    "comparatives": [
+      {
+        "category": "Family of Apps",
+        "operand": "op1",
+        "period": {
+          "end": "2024-06-30",
+          "start": "2024-04-01"
+        },
+        "period_end": "2024-06-30",
+        "result": "consistent",
+        "role": "quarter"
+      },
+      {
+        "category": "Reality Labs",
+        "operand": "op2",
+        "period": {
+          "end": "2024-06-30",
+          "start": "2024-04-01"
+        },
+        "period_end": "2024-06-30",
+        "result": "consistent",
+        "role": "quarter"
+      },
+      {
+        "category": "總營收",
+        "operand": "op3",
+        "period": {
+          "end": "2024-06-30",
+          "start": "2024-04-01"
+        },
+        "period_end": "2024-06-30",
+        "result": "consistent",
+        "role": "quarter"
+      }
+    ],
+    "cross_period": [
+      {
+        "annotated": false,
+        "baseline_period": "2025-03-31",
+        "check": "期別連續"
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2025-03-31",
+        "check": "分類集合"
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2024-06-30",
+        "category": "Family of Apps",
+        "change_pp": 0.12,
+        "check": "占比變動",
+        "threshold_pp": 5.0
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2024-06-30",
+        "category": "Family of Apps",
+        "change": 0.2177,
+        "check": "YoY",
+        "threshold": 0.5
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2025-03-31",
+        "category": "Family of Apps",
+        "change": 0.1251,
+        "check": "QoQ",
+        "note": "只記錄"
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2024-06-30",
+        "category": "Reality Labs",
+        "change_pp": -0.12,
+        "check": "占比變動",
+        "threshold_pp": 5.0
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2024-06-30",
+        "category": "Reality Labs",
+        "change": 0.0482,
+        "check": "YoY",
+        "threshold": 0.5
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2025-03-31",
+        "category": "Reality Labs",
+        "change": -0.1019,
+        "check": "QoQ",
+        "note": "只記錄"
+      }
+    ],
+    "restatements": [],
+    "structural": [
+      {
+        "check": "定義唯一",
+        "result": "pass"
+      },
+      {
+        "check": "fact 存在且唯一",
+        "result": "pass"
+      },
+      {
+        "check": "單位與精度",
+        "result": "pass"
+      },
+      {
+        "check": "加總",
+        "result": "pass"
+      },
+      {
+        "check": "證據完整",
+        "result": "pass"
+      }
+    ],
+    "sum": {
+      "categories": 47516000000,
+      "difference": 0,
+      "tolerance": "1500000",
+      "total": 47516000000
+    }
+  },
+  "filings": {
+    "primary": {
+      "accession": "0001628280-25-036791",
+      "filing_date": "2025-07-31",
+      "form": "10-Q",
+      "report_date": "2025-06-30"
+    }
+  },
+  "fiscal_quarter": 2,
+  "fiscal_year": 2025,
+  "operands": {
+    "op1": {
+      "accession": "0001628280-25-036791",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-67",
+      "decimals": "-6",
+      "dimensions": {
+        "us-gaap:StatementBusinessSegmentsAxis": "meta:FamilyOfAppsMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1326801/000162828025036791/meta-20250630.htm",
+        "name": "meta-20250630.htm",
+        "sha256": "a5e2332cbf57dfe0d9c73df5a37c571a46b1a6631f3d252f90d3ea8930ce17b1",
+        "url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828025036791/meta-20250630.htm"
+      },
+      "duplicates": [
+        "f-804"
+      ],
+      "evidence": {
+        "html_sha256": "dc406bf85cebe90b1bb3628f550c2f4ad2cabd5521c7c2b34557a71f0cc8e87a",
+        "png_scale": 1,
+        "png_sha256": "d66527160628629e3b781f0895fff370343591c3c7ccaf7bebfe351ed6ff184b",
+        "table": "0001628280-25-036791-a5e2332cbf57-t11"
+      },
+      "fact_id": "f-395",
+      "filing_date": "2025-07-31",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-06-30",
+        "start": "2025-04-01"
+      },
+      "raw": "47,146",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 47146000000
+    },
+    "op2": {
+      "accession": "0001628280-25-036791",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-71",
+      "decimals": "-6",
+      "dimensions": {
+        "us-gaap:StatementBusinessSegmentsAxis": "meta:RealityLabsMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1326801/000162828025036791/meta-20250630.htm",
+        "name": "meta-20250630.htm",
+        "sha256": "a5e2332cbf57dfe0d9c73df5a37c571a46b1a6631f3d252f90d3ea8930ce17b1",
+        "url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828025036791/meta-20250630.htm"
+      },
+      "duplicates": [
+        "f-820"
+      ],
+      "evidence": {
+        "html_sha256": "dc406bf85cebe90b1bb3628f550c2f4ad2cabd5521c7c2b34557a71f0cc8e87a",
+        "png_scale": 1,
+        "png_sha256": "d66527160628629e3b781f0895fff370343591c3c7ccaf7bebfe351ed6ff184b",
+        "table": "0001628280-25-036791-a5e2332cbf57-t11"
+      },
+      "fact_id": "f-399",
+      "filing_date": "2025-07-31",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-06-30",
+        "start": "2025-04-01"
+      },
+      "raw": "370",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 370000000
+    },
+    "op3": {
+      "accession": "0001628280-25-036791",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-10",
+      "decimals": "-6",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1326801/000162828025036791/meta-20250630.htm",
+        "name": "meta-20250630.htm",
+        "sha256": "a5e2332cbf57dfe0d9c73df5a37c571a46b1a6631f3d252f90d3ea8930ce17b1",
+        "url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828025036791/meta-20250630.htm"
+      },
+      "duplicates": [
+        "f-836",
+        "f-99",
+        "f-423"
+      ],
+      "evidence": {
+        "html_sha256": "dc406bf85cebe90b1bb3628f550c2f4ad2cabd5521c7c2b34557a71f0cc8e87a",
+        "png_scale": 1,
+        "png_sha256": "d66527160628629e3b781f0895fff370343591c3c7ccaf7bebfe351ed6ff184b",
+        "table": "0001628280-25-036791-a5e2332cbf57-t11"
+      },
+      "fact_id": "f-403",
+      "filing_date": "2025-07-31",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-06-30",
+        "start": "2025-04-01"
+      },
+      "raw": "47,516",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 47516000000
+    }
+  },
+  "parser": {
+    "engine_sha256": "caf97a96cdc63be1b492a230ae7d1fd78a1b9557af6fa867684a8ee1b90ec1fd",
+    "spec_sha256": "8e55b7a1b60f68ac21c722c34b08edc0593e86fa9b51fcca2ddbc587e0e33b28"
+  },
+  "period_end": "2025-06-30",
+  "schema_version": 1,
+  "ticker": "META",
+  "total": {
+    "expression": [
+      {
+        "operand": "op3",
+        "weight": 1
+      }
+    ],
+    "value": 47516000000
+  },
+  "unit": "USD",
+  "view": "business_segment"
+}

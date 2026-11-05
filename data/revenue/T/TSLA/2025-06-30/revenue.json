@@ -1,0 +1,282 @@
+{
+  "annotations": [],
+  "categories": {
+    "Automotive": {
+      "expression": [
+        {
+          "operand": "op1",
+          "weight": 1
+        }
+      ],
+      "value": 19707000000
+    },
+    "Energy generation and storage": {
+      "expression": [
+        {
+          "operand": "op2",
+          "weight": 1
+        }
+      ],
+      "value": 2789000000
+    }
+  },
+  "checks": {
+    "comparatives": [
+      {
+        "category": "Automotive",
+        "operand": "op1",
+        "period": {
+          "end": "2024-06-30",
+          "start": "2024-04-01"
+        },
+        "period_end": "2024-06-30",
+        "result": "consistent",
+        "role": "quarter"
+      },
+      {
+        "category": "Energy generation and storage",
+        "operand": "op2",
+        "period": {
+          "end": "2024-06-30",
+          "start": "2024-04-01"
+        },
+        "period_end": "2024-06-30",
+        "result": "consistent",
+        "role": "quarter"
+      },
+      {
+        "category": "總營收",
+        "operand": "op3",
+        "period": {
+          "end": "2024-06-30",
+          "start": "2024-04-01"
+        },
+        "period_end": "2024-06-30",
+        "result": "consistent",
+        "role": "quarter"
+      }
+    ],
+    "cross_period": [
+      {
+        "annotated": false,
+        "baseline_period": "2025-03-31",
+        "check": "期別連續"
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2025-03-31",
+        "check": "分類集合"
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2024-06-30",
+        "category": "Automotive",
+        "change_pp": -0.58,
+        "check": "占比變動",
+        "threshold_pp": 5.0
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2024-06-30",
+        "category": "Automotive",
+        "change": -0.1236,
+        "check": "YoY",
+        "threshold": 0.5
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2025-03-31",
+        "category": "Automotive",
+        "change": 0.1868,
+        "check": "QoQ",
+        "note": "只記錄"
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2024-06-30",
+        "category": "Energy generation and storage",
+        "change_pp": 0.58,
+        "check": "占比變動",
+        "threshold_pp": 5.0
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2024-06-30",
+        "category": "Energy generation and storage",
+        "change": -0.0747,
+        "check": "YoY",
+        "threshold": 0.5
+      },
+      {
+        "annotated": false,
+        "baseline_period": "2025-03-31",
+        "category": "Energy generation and storage",
+        "change": 0.0216,
+        "check": "QoQ",
+        "note": "只記錄"
+      }
+    ],
+    "restatements": [],
+    "structural": [
+      {
+        "check": "定義唯一",
+        "result": "pass"
+      },
+      {
+        "check": "fact 存在且唯一",
+        "result": "pass"
+      },
+      {
+        "check": "單位與精度",
+        "result": "pass"
+      },
+      {
+        "check": "加總",
+        "result": "pass"
+      },
+      {
+        "check": "證據完整",
+        "result": "pass"
+      }
+    ],
+    "sum": {
+      "categories": 22496000000,
+      "difference": 0,
+      "tolerance": "1500000",
+      "total": 22496000000
+    }
+  },
+  "filings": {
+    "primary": {
+      "accession": "0001628280-25-035806",
+      "filing_date": "2025-07-24",
+      "form": "10-Q",
+      "report_date": "2025-06-30"
+    }
+  },
+  "fiscal_quarter": 2,
+  "fiscal_year": 2025,
+  "operands": {
+    "op1": {
+      "accession": "0001628280-25-035806",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-325",
+      "decimals": "-6",
+      "dimensions": {
+        "us-gaap:StatementBusinessSegmentsAxis": "tsla:AutomotiveSegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1318605/000162828025035806/tsla-20250630.htm",
+        "name": "tsla-20250630.htm",
+        "sha256": "072cf9307502cd42ee95acc718aa89fa78d677c89bfae16bd3e659434e0b2854",
+        "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828025035806/tsla-20250630.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "da7d3b0a086b8691326bb12ab42ef371e68479e14ddff945ee4239eec30dc8df",
+        "png_scale": 1,
+        "png_sha256": "3efbdf25d7dd0675e473aadea9fe41279aa5fb7e00aefe8b567a93ddff0dc138",
+        "table": "0001628280-25-035806-072cf9307502-t38"
+      },
+      "fact_id": "f-1129",
+      "filing_date": "2025-07-24",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-06-30",
+        "start": "2025-04-01"
+      },
+      "raw": "19,707",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 19707000000
+    },
+    "op2": {
+      "accession": "0001628280-25-035806",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-329",
+      "decimals": "-6",
+      "dimensions": {
+        "us-gaap:StatementBusinessSegmentsAxis": "tsla:EnergyGenerationAndStorageSegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1318605/000162828025035806/tsla-20250630.htm",
+        "name": "tsla-20250630.htm",
+        "sha256": "072cf9307502cd42ee95acc718aa89fa78d677c89bfae16bd3e659434e0b2854",
+        "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828025035806/tsla-20250630.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "da7d3b0a086b8691326bb12ab42ef371e68479e14ddff945ee4239eec30dc8df",
+        "png_scale": 1,
+        "png_sha256": "3efbdf25d7dd0675e473aadea9fe41279aa5fb7e00aefe8b567a93ddff0dc138",
+        "table": "0001628280-25-035806-072cf9307502-t38"
+      },
+      "fact_id": "f-1141",
+      "filing_date": "2025-07-24",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-06-30",
+        "start": "2025-04-01"
+      },
+      "raw": "2,789",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 2789000000
+    },
+    "op3": {
+      "accession": "0001628280-25-035806",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-33",
+      "decimals": "-6",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1318605/000162828025035806/tsla-20250630.htm",
+        "name": "tsla-20250630.htm",
+        "sha256": "072cf9307502cd42ee95acc718aa89fa78d677c89bfae16bd3e659434e0b2854",
+        "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828025035806/tsla-20250630.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "6ca90cfeae80b03a0912a64cab71e7a0042c8ca89ec726eca666f264961ddf22",
+        "png_scale": 1,
+        "png_sha256": "a1819d78f2f52c7f74699061fefd2320661474b3a73524f8ce08d490d9d41037",
+        "table": "0001628280-25-035806-072cf9307502-t39"
+      },
+      "fact_id": "f-1174",
+      "filing_date": "2025-07-24",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-06-30",
+        "start": "2025-04-01"
+      },
+      "raw": "22,496",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 22496000000
+    }
+  },
+  "parser": {
+    "engine_sha256": "caf97a96cdc63be1b492a230ae7d1fd78a1b9557af6fa867684a8ee1b90ec1fd",
+    "spec_sha256": "7fe19f7eed509b0aa0f1706c484b4c2626486ca0820f10596a799b8b97fd56d4"
+  },
+  "period_end": "2025-06-30",
+  "schema_version": 1,
+  "ticker": "TSLA",
+  "total": {
+    "expression": [
+      {
+        "operand": "op3",
+        "weight": 1
+      }
+    ],
+    "value": 22496000000
+  },
+  "unit": "USD",
+  "view": "business_segment"
+}
