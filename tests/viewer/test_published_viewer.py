@@ -9,11 +9,11 @@ import tempfile
 import threading
 import unittest
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "libs"))
 
-from sec_revenue.published import PublishedRevenue
-from sec_revenue.viewer import RevenueViewer
+from sec_revenue.viewer.published import PublishedRevenue
+from sec_revenue.viewer.server import RevenueViewer
 
 TABLE = "0000320193-25-000079-dceb82ec4e10-t27"
 

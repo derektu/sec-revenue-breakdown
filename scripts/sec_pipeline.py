@@ -15,9 +15,10 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "libs"))
 from sec_revenue.common.dotenv import load_dotenv
 from sec_revenue.common.periods import PeriodSelection
-from sec_revenue.download import DownloadBatch, DownloadWorkflow
-from sec_revenue.tickers import DownloadTickers, parse_tickers
-from sec_revenue.viewer import RevenueViewer
+from sec_revenue.download.workflow import DownloadBatch, DownloadWorkflow
+from sec_revenue.download.tickers import DownloadTickers
+from sec_revenue.universe import parse_tickers
+from sec_revenue.viewer.server import RevenueViewer
 from sec_revenue import companies
 from sec_revenue.revenue.engine import DEFAULT_START, SERIES, RevenueParser, check_outputs
 
@@ -53,7 +54,7 @@ class WorkflowCli:
         download.add_argument(
             "--dry-run",
             action="store_true",
-            help="只讀本機 catalog 與申報包，列出目標期別與 Q4 依賴期別中還沒下載完整的申報；不連網、不寫入",
+            help="只讀本機 catalog 與申報包，列出目標期別與 Q4 依賴期別中還沒下載完整的申報，以及 catalog 未涵蓋的範圍；不連網、不寫入，有缺漏時回傳 2",
         )
         download.add_argument("--data", type=Path, default=data_root(), help="資料根目錄（預設 SEC_DATA_DIR 或 repo 的 data/）")
         parse = commands.add_parser("parse", help="依公司規格產生 data/revenue/ 的正式輸出")
@@ -99,7 +100,7 @@ class WorkflowCli:
             if args.dry_run:
                 result = workflow.run(tickers, periods, dry_run=True)
                 print(json.dumps(result, ensure_ascii=False, indent=2))
-                return 0
+                return 0 if result["complete"] else 2
             result = DownloadBatch(workflow).run(tickers, periods, args.force, args.offline)
             print(json.dumps(result, ensure_ascii=False, indent=2))
             return 0 if result.get("complete", True) else 2
