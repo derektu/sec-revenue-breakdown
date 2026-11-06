@@ -7,7 +7,8 @@
   作為運算元（例如 Q4 的九個月）與比較欄比對的來源，只是這次不處理成期別。
 - Point in time：一期的主申報是該期最早的原申報；處理時只使用申報日不晚於它的申報。
 - 結構檢核不通過或任何例外：不寫入，已上線的該期輸出保留不動，status.json 記錄失敗原因。
-- Q4 的年度分類集合與 Q1–Q3 不同：不推算，status.json 記為 `not_derived`。
+- Q4 的年度分類集合與 Q1–Q3 不同，或年報改了分類口徑（年報列示的上一財年數字與先前申報不同）：不推算，
+  status.json 記為 `not_derived`。
 - 已上線期別不會被一般 parse 改動。重算結果與已上線輸出不同時，status.json 記錄差異；
   由人決定後以 `republish` 指定該期才覆寫，覆寫時 revenue.json 記錄原值與原因。
 - 差異標記：每份已下載申報（含修正申報）的比較欄，與它申報當時看得到的已上線輸出逐一比對；
@@ -16,6 +17,7 @@
 
 from __future__ import annotations
 
+import datetime as dt
 import hashlib
 import json
 from pathlib import Path
@@ -29,7 +31,7 @@ from ..engines import JsonCodec
 from ..evidence import TableScreenshotter
 from .compose import NotDerived, Operand, PeriodComposer, PeriodResult
 from .filings import FilingSet, ParseError
-from .review import comparatives
+from .review import TOTAL_LABEL, comparatives
 from .spec import CompanySpec, fact_variants
 
 SCHEMA_VERSION = 1
@@ -182,12 +184,15 @@ class RevenueParser:
         return {"status": "failed", "check": check, "reason": reason, **self.kept(series, period)}
 
     def not_derived(self, period: str, error: NotDerived) -> dict:
+        """Q4 不推算的紀錄；財年與季別取自主申報的宣告（不推算時主申報已通過財年與季別檢核）。"""
+        _, year, quarter = self.composer.primary(period)
         return {
             "status": "not_derived",
+            "fiscal_year": year,
+            "fiscal_quarter": quarter,
             "check": error.check,
             "reason": error.message,
-            "fy_categories": error.annual,
-            "quarter_categories": error.quarters,
+            **error.details,
             **self.kept("Q", period),
         }
 
@@ -208,13 +213,24 @@ class RevenueParser:
         }
 
     def parse_period(self, series: str, period: str) -> dict:
+        """一期的組合、檢核與寫入，回傳 status.json 的紀錄。Q4 口徑無法判斷時紀錄附 `q4_basis`。"""
+        basis = None
         try:
             result = self.composer.compose(period) if series == "Q" else self.composer.compose_annual(period)
+            if series == "Q" and result.fiscal_quarter == 4:
+                basis = self.check_basis(result)
             output, files = self.build(result)
         except NotDerived as error:
             return self.not_derived(period, error)
         except ParseError as error:
             return self.failed(series, period, error.check, error.message)
+        entry = self.write_or_keep(series, period, output, files)
+        if basis:
+            entry["q4_basis"] = basis
+        return entry
+
+    def write_or_keep(self, series: str, period: str, output: dict, files: dict[str, bytes]) -> dict:
+        """已上線輸出不同時依保護規則處理（不寫入或 `republish` 覆寫）；沒有已上線輸出時寫入。"""
         existing_path = self.out / series / period / "revenue.json"
         if existing_path.exists():
             existing = JsonCodec.read(existing_path)
@@ -310,6 +326,101 @@ class RevenueParser:
             return list(definition.addends)
 
         return lookup
+
+    # ---- Q4 口徑 ----
+
+    def check_basis(self, result: PeriodResult) -> dict | None:
+        """Q4 口徑一致：年報列示的上一財年數字，每個分類 × 年度角色都要與上一財年先前申報的值在精度內相同。
+
+        比對與比較欄同一套規則（`comparatives`，以年報期別生效的定義組出列示值）。任一分類不同代表公司在年報改了
+        分類口徑，年度與 Q1–Q3 的數字基礎不同，以 `NotDerived` 結束（Q4 不推算）。先前的值拿不到、年報沒有列示上一
+        財年，或有分類無法比較時無法判斷，Q4 照常推算，回傳註記；可以判斷且一致時回傳 None。
+        """
+        primary = result.primary
+        total = next(line for line in result.lines if line.group == "total")
+        start = next(t.operand.fact.start for t in total.terms if t.operand.role == "annual")
+        prior = (dt.date.fromisoformat(start) - dt.timedelta(days=1)).isoformat()
+        baseline, basis = self.prior_annual(prior, primary.filing_date)
+        if baseline is None:
+            return {"result": "undetermined", "reason": basis}
+        previous = {"basis": basis, "accession": baseline["filings"]["primary"]["accession"]}
+
+        def previous_addends(addends):
+            # 已上線依據：運算元編號對應上一財年 FY 的 revenue.json；上一份 10-K 依據：沒有輸出可對應，改列 fact_id。
+            if basis == "published":
+                return addends
+            return [
+                {"fact_id": baseline["operands"][a["operand"]]["fact_id"], **{k: a[k] for k in ("concept", "dimensions", "weight", "value")}}
+                for a in addends
+            ]
+
+        document = self.filings.document(primary)
+        active = set(self.composer.category_names(result.period_end)) | {TOTAL_LABEL}
+        found = [
+            c
+            for c in comparatives(document, primary.accession, [("FY", prior, baseline)], self.selector_for(result.period_end))
+            if c["role"] == "annual" and c["category"] in active
+        ]
+        if not any(c["category"] == TOTAL_LABEL for c in found):
+            return {"result": "undetermined", "reason": f"{primary.accession} 沒有列示上一財年（{prior} 止）的總營收"}
+        changes = [
+            {
+                "category": c["category"],
+                "period": c["period"],
+                "previous_value": c["published_value"],
+                "listed_value": c["listed_value"],
+                "previous": previous,
+                "listed": {"accession": primary.accession},
+                "previous_addends": previous_addends(c["published_addends"]),
+                "listed_addends": c["listed_addends"],
+            }
+            for c in found
+            if c["result"] == "different"
+        ]
+        if changes:
+            where = "已上線 FY" if basis == "published" else "上一份年報"
+            listed = "；".join(f"{c['category']} {where} {c['previous_value']}、年報 {c['listed_value']}" for c in changes)
+            raise NotDerived(
+                "Q4 口徑一致",
+                f"年報 {primary.accession} 列示的上一財年（{prior} 止）數字與先前申報（{where}，{previous['accession']}）不同："
+                f"{listed}；年報改了分類口徑，Q4 不推算",
+                {"basis_changes": changes},
+            )
+        unknown = [c for c in found if c["result"] != "consistent"]
+        if unknown:
+            listed = "；".join(f"{c['category']}：{c['result']}（{c.get('note', '')}）" for c in unknown)
+            return {"result": "undetermined", "reason": f"年報 {primary.accession} 的上一財年數字有分類無法比較：{listed}"}
+        return None
+
+    def prior_annual(self, prior: str, as_of: str) -> tuple[dict | None, str]:
+        """上一財年（期末 `prior`）先前申報的年度值，回傳（revenue.json 格式的值, 依據）。
+
+        依據是 `published`（已上線、且運算元都來自申報日不晚於 `as_of` 的申報的 FY 輸出）或 `filing`（沒有已上線
+        輸出時，上一份 10-K 本身依規格組出的值，只讀 fact，不寫入）。兩者都拿不到、或上一份 10-K 依規格組不出年度值時
+        回傳（None, 原因）。上一份 10-K 的原文缺檔或 sha256 不符是資料不完整，不是無法判斷：以 `ParseError` 結束，Q4 失敗。
+        """
+        path = self.out / "FY" / prior / "revenue.json"
+        if path.exists() and self.visible({("FY", prior): JsonCodec.read(path)}, as_of):
+            return JsonCodec.read(path), "published"
+        if not self.filings.is_annual(prior) or self.filings.select(prior).filing_date > as_of:
+            return None, f"上一財年（{prior} 止）沒有已上線的 FY，已下載的申報中也沒有申報日不晚於 {as_of} 的上一財年 10-K"
+        try:
+            result = self.composer.compose_annual(prior)
+        except ParseError as error:
+            if error.check == "原文存在":
+                accession = self.filings.select(prior).accession
+                raise ParseError(error.check, f"Q4 口徑一致所需的上一財年 10-K {accession} 原文不完整：{error.message}") from error
+            return None, f"上一財年（{prior} 止）沒有已上線的 FY，上一份 10-K 依規格組不出年度值：[{error.check}] {error.message}"
+        for number, operand in enumerate(result.operands, 1):
+            operand.id = f"op{number}"
+        summary = {
+            "filings": self.filing_records(result),
+            "categories": self.lines(result, "category"),
+            "reconciling": self.lines(result, "reconciling"),
+            "total": self.lines(result, "total")[self.spec.total.name],
+            "operands": {op.id: self.operand_record(op, {}) for op in result.operands},
+        }
+        return summary, "filing"
 
     @staticmethod
     def filing_records(result: PeriodResult) -> dict:

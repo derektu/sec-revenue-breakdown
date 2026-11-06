@@ -425,11 +425,21 @@
             dl.append(node("dt", "", span(q)), node("dd", "", q.categories.join("、")));
           why.append(dl);
         }
+        if (record.basis_changes) {
+          const dl = node("dl", "kv");
+          for (const c of record.basis_changes)
+            dl.append(
+              node("dt", "", `${c.category}（${span(c.period)}）`),
+              node("dd", "", `先前 ${amount(c.previous_value)}（${c.previous.basis === "published" ? "已上線 FY" : "上一份年報"} ${c.previous.accession}）→ 年報 ${amount(c.listed_value)}（${c.listed.accession}）`),
+            );
+          why.append(dl);
+        }
         why.append(
           node("div", "", record.published_output_kept ? `保留先前上線的輸出（${record.published_output?.accession ?? ""}），以下是它的內容。` : "沒有先前上線的輸出。"),
         );
         box.append(why);
       }
+      if (record.q4_basis) box.append(node("div", "box warn", `無法判斷 Q4 口徑，照常推算：${record.q4_basis.reason}`));
       const changed = record.differs_from_published;
       if (changed) {
         const warn = node("div", "box warn");
