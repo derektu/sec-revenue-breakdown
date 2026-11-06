@@ -1,0 +1,237 @@
+{
+  "categories": {
+    "International Package": {
+      "expression": [
+        {
+          "operand": "op2",
+          "weight": 1
+        }
+      ],
+      "value": 4540000000
+    },
+    "Other revenues": {
+      "expression": [
+        {
+          "operand": "op3",
+          "weight": 1
+        }
+      ],
+      "value": 2537000000
+    },
+    "U.S. Domestic Package": {
+      "expression": [
+        {
+          "operand": "op1",
+          "weight": 1
+        }
+      ],
+      "value": 14125000000
+    }
+  },
+  "checks": {
+    "structural": [
+      {
+        "check": "定義唯一",
+        "result": "pass"
+      },
+      {
+        "check": "fact 存在且唯一",
+        "result": "pass"
+      },
+      {
+        "check": "單位與精度",
+        "result": "pass"
+      },
+      {
+        "check": "加總",
+        "result": "pass"
+      },
+      {
+        "check": "證據完整",
+        "result": "pass"
+      }
+    ],
+    "sum": {
+      "categories": 21202000000,
+      "difference": 0,
+      "tolerance": "2000000",
+      "total": 21202000000
+    }
+  },
+  "filings": {
+    "primary": {
+      "accession": "0001628280-26-031154",
+      "filing_date": "2026-05-06",
+      "form": "10-Q",
+      "report_date": "2026-03-31"
+    }
+  },
+  "fiscal_quarter": 1,
+  "fiscal_year": 2026,
+  "operands": {
+    "op1": {
+      "accession": "0001628280-26-031154",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-236",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "ups:U.S.DomesticPackageSegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1090727/000162828026031154/ups-20260331.htm",
+        "name": "ups-20260331.htm",
+        "sha256": "888a96d69775351f1b40b9d52550df775281e1cd57410b46293f9cd37bbed463",
+        "url": "https://www.sec.gov/Archives/edgar/data/1090727/000162828026031154/ups-20260331.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "23d6018e98d035076a579dcedb2b85fb416cf8b72866a1cab7541d4f92c2988f",
+        "png_scale": 1,
+        "png_sha256": "1a8924432c2394d57852b9f08e41ded75fd49edc999d7eab912d7d98e878b03e",
+        "table": "0001628280-26-031154-888a96d69775-t23"
+      },
+      "fact_id": "f-748",
+      "filing_date": "2026-05-06",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-03-31",
+        "start": "2026-01-01"
+      },
+      "raw": "14,125",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 14125000000
+    },
+    "op2": {
+      "accession": "0001628280-26-031154",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-238",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "ups:InternationalSegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1090727/000162828026031154/ups-20260331.htm",
+        "name": "ups-20260331.htm",
+        "sha256": "888a96d69775351f1b40b9d52550df775281e1cd57410b46293f9cd37bbed463",
+        "url": "https://www.sec.gov/Archives/edgar/data/1090727/000162828026031154/ups-20260331.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "23d6018e98d035076a579dcedb2b85fb416cf8b72866a1cab7541d4f92c2988f",
+        "png_scale": 1,
+        "png_sha256": "1a8924432c2394d57852b9f08e41ded75fd49edc999d7eab912d7d98e878b03e",
+        "table": "0001628280-26-031154-888a96d69775-t23"
+      },
+      "fact_id": "f-758",
+      "filing_date": "2026-05-06",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-03-31",
+        "start": "2026-01-01"
+      },
+      "raw": "4,540",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 4540000000
+    },
+    "op3": {
+      "accession": "0001628280-26-031154",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-242",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:CorporateNonSegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1090727/000162828026031154/ups-20260331.htm",
+        "name": "ups-20260331.htm",
+        "sha256": "888a96d69775351f1b40b9d52550df775281e1cd57410b46293f9cd37bbed463",
+        "url": "https://www.sec.gov/Archives/edgar/data/1090727/000162828026031154/ups-20260331.htm"
+      },
+      "duplicates": [
+        "f-278"
+      ],
+      "evidence": {
+        "html_sha256": "23d6018e98d035076a579dcedb2b85fb416cf8b72866a1cab7541d4f92c2988f",
+        "png_scale": 1,
+        "png_sha256": "1a8924432c2394d57852b9f08e41ded75fd49edc999d7eab912d7d98e878b03e",
+        "table": "0001628280-26-031154-888a96d69775-t23"
+      },
+      "fact_id": "f-770",
+      "filing_date": "2026-05-06",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-03-31",
+        "start": "2026-01-01"
+      },
+      "raw": "2,537",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 2537000000
+    },
+    "op4": {
+      "accession": "0001628280-26-031154",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-1",
+      "decimals": "-6",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1090727/000162828026031154/ups-20260331.htm",
+        "name": "ups-20260331.htm",
+        "sha256": "888a96d69775351f1b40b9d52550df775281e1cd57410b46293f9cd37bbed463",
+        "url": "https://www.sec.gov/Archives/edgar/data/1090727/000162828026031154/ups-20260331.htm"
+      },
+      "duplicates": [
+        "f-280",
+        "f-113"
+      ],
+      "evidence": {
+        "html_sha256": "23d6018e98d035076a579dcedb2b85fb416cf8b72866a1cab7541d4f92c2988f",
+        "png_scale": 1,
+        "png_sha256": "1a8924432c2394d57852b9f08e41ded75fd49edc999d7eab912d7d98e878b03e",
+        "table": "0001628280-26-031154-888a96d69775-t23"
+      },
+      "fact_id": "f-772",
+      "filing_date": "2026-05-06",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-03-31",
+        "start": "2026-01-01"
+      },
+      "raw": "21,202",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 21202000000
+    }
+  },
+  "parser": {
+    "engine_sha256": "cef42e58f952c80715fda28bc15f98310ac69951641f5d0796f212ce1a6349f8",
+    "spec_sha256": "28058765c2bc44f3a5e1da3b3a2d3a968f0c7127608e870d5830c909093d1529"
+  },
+  "period_end": "2026-03-31",
+  "schema_version": 1,
+  "series": "Q",
+  "ticker": "UPS",
+  "total": {
+    "expression": [
+      {
+        "operand": "op4",
+        "weight": 1
+      }
+    ],
+    "value": 21202000000
+  },
+  "unit": "USD",
+  "view": "business_segment"
+}

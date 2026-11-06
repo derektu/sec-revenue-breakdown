@@ -1,0 +1,189 @@
+{
+  "categories": {
+    "Concentrate operations": {
+      "expression": [
+        {
+          "operand": "op1",
+          "weight": 1
+        }
+      ],
+      "value": 28462000000
+    },
+    "Finished product operations": {
+      "expression": [
+        {
+          "operand": "op2",
+          "weight": 1
+        }
+      ],
+      "value": 19479000000
+    }
+  },
+  "checks": {
+    "structural": [
+      {
+        "check": "定義唯一",
+        "result": "pass"
+      },
+      {
+        "check": "fact 存在且唯一",
+        "result": "pass"
+      },
+      {
+        "check": "單位與精度",
+        "result": "pass"
+      },
+      {
+        "check": "加總",
+        "result": "pass"
+      },
+      {
+        "check": "證據完整",
+        "result": "pass"
+      }
+    ],
+    "sum": {
+      "categories": 47941000000,
+      "difference": 0,
+      "tolerance": "1500000",
+      "total": 47941000000
+    }
+  },
+  "filings": {
+    "primary": {
+      "accession": "0001628280-26-010047",
+      "filing_date": "2026-02-20",
+      "form": "10-K",
+      "report_date": "2025-12-31"
+    }
+  },
+  "fiscal_year": 2025,
+  "operands": {
+    "op1": {
+      "accession": "0001628280-26-010047",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-114",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "ko:ConcentrateOperationsMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/21344/000162828026010047/ko-20251231.htm",
+        "name": "ko-20251231.htm",
+        "sha256": "12a3883592ec3292663285449e274bbb290c766a6514de70f3992fde7b8bbf69",
+        "url": "https://www.sec.gov/Archives/edgar/data/21344/000162828026010047/ko-20251231.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "21b1404550c7585bfb70801985d2ff8dff75eda7ae1d42a6bdcece7e53313204",
+        "png_scale": 1,
+        "png_sha256": "677bd6107eb744af0037c0752496da2e3376f0efad2a24540fc3159010cd8b38",
+        "table": "0001628280-26-010047-12a3883592ec-t32"
+      },
+      "fact_id": "f-680",
+      "filing_date": "2026-02-20",
+      "form": "10-K",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-12-31",
+        "start": "2025-01-01"
+      },
+      "raw": "28,462",
+      "role": "annual",
+      "scale": "6",
+      "sign": null,
+      "value": 28462000000
+    },
+    "op2": {
+      "accession": "0001628280-26-010047",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-117",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "ko:FinishedProductOperationsMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/21344/000162828026010047/ko-20251231.htm",
+        "name": "ko-20251231.htm",
+        "sha256": "12a3883592ec3292663285449e274bbb290c766a6514de70f3992fde7b8bbf69",
+        "url": "https://www.sec.gov/Archives/edgar/data/21344/000162828026010047/ko-20251231.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "21b1404550c7585bfb70801985d2ff8dff75eda7ae1d42a6bdcece7e53313204",
+        "png_scale": 1,
+        "png_sha256": "677bd6107eb744af0037c0752496da2e3376f0efad2a24540fc3159010cd8b38",
+        "table": "0001628280-26-010047-12a3883592ec-t32"
+      },
+      "fact_id": "f-683",
+      "filing_date": "2026-02-20",
+      "form": "10-K",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-12-31",
+        "start": "2025-01-01"
+      },
+      "raw": "19,479",
+      "role": "annual",
+      "scale": "6",
+      "sign": null,
+      "value": 19479000000
+    },
+    "op3": {
+      "accession": "0001628280-26-010047",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-1",
+      "decimals": "-6",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/21344/000162828026010047/ko-20251231.htm",
+        "name": "ko-20251231.htm",
+        "sha256": "12a3883592ec3292663285449e274bbb290c766a6514de70f3992fde7b8bbf69",
+        "url": "https://www.sec.gov/Archives/edgar/data/21344/000162828026010047/ko-20251231.htm"
+      },
+      "duplicates": [
+        "f-122",
+        "f-2504",
+        "f-2543"
+      ],
+      "evidence": {
+        "html_sha256": "21b1404550c7585bfb70801985d2ff8dff75eda7ae1d42a6bdcece7e53313204",
+        "png_scale": 1,
+        "png_sha256": "677bd6107eb744af0037c0752496da2e3376f0efad2a24540fc3159010cd8b38",
+        "table": "0001628280-26-010047-12a3883592ec-t32"
+      },
+      "fact_id": "f-686",
+      "filing_date": "2026-02-20",
+      "form": "10-K",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-12-31",
+        "start": "2025-01-01"
+      },
+      "raw": "47,941",
+      "role": "annual",
+      "scale": "6",
+      "sign": null,
+      "value": 47941000000
+    }
+  },
+  "parser": {
+    "engine_sha256": "cef42e58f952c80715fda28bc15f98310ac69951641f5d0796f212ce1a6349f8",
+    "spec_sha256": "ce649ed122b4e9e62bfc8a3faafc63ab8b9a288deb6b4a82feeedc6d1702520c"
+  },
+  "period_end": "2025-12-31",
+  "schema_version": 1,
+  "series": "FY",
+  "ticker": "KO",
+  "total": {
+    "expression": [
+      {
+        "operand": "op3",
+        "weight": 1
+      }
+    ],
+    "value": 47941000000
+  },
+  "unit": "USD",
+  "view": "product"
+}
