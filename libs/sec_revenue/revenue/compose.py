@@ -4,7 +4,7 @@
   不通過時 Q4 失敗；各期都通過而年度與 Q1–Q3 的分類集合不同時，Q4 不推算。
 - FY 序列：10-K 的年度 fact。
 
-每一期向來源（公司 parser 或規格，見 `source.py`）要主申報中該期間的組成：分類集合必須等於來源的
+每一期向公司 parser（見 `source.py`）要主申報中該期間的組成：分類集合必須等於來源的
 `categories(期末日)`，每一項由一個或多個運算元組成。框架補上每個運算元同 concept、dimensions、期間的重複 fact，
 檢查數值一致、單位與精度後選定一個。Q4 的每個運算元同樣是年度減九個月累計，運算式依來源列出的順序（Q4 為各項的
 年度、九個月累計交錯排列）。任何結構檢核不通過都以 `ParseError` 結束該期；訊息開頭的 `[檢核名稱]` 與設計文件的
@@ -20,8 +20,7 @@ from decimal import Decimal
 from .contract import Composition, Request
 from .contract import Term as ComposedTerm
 from .filings import Filing, FilingSet, ParseError
-from .source import SpecSource
-from .spec import CompanySpec
+from .source import ParserSource
 from .xbrl import USD, Fact, InlineDocument, classify_duration, decimals_rank
 
 QUARTER_FOCUS = {"Q1": 1, "Q2": 2, "Q3": 3, "FY": 4}
@@ -102,9 +101,8 @@ class Candidate:
 
 
 class PeriodComposer:
-    def __init__(self, source, filings: FilingSet):
-        # `source` 是 `ParserSource` 或 `SpecSource`；直接給規格時以 `SpecSource` 包裝。
-        self.source = SpecSource(source) if isinstance(source, CompanySpec) else source
+    def __init__(self, source: ParserSource, filings: FilingSet):
+        self.source = source
         self.filings = filings
         self.fact_sets: dict[int, set[Fact]] = {}
 
