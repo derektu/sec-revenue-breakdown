@@ -162,9 +162,11 @@ jq -r '.periods | to_entries[] | .key as $s | .value | to_entries[] | [$s, .key,
 
 | 檢核 | 訊息大意 | 多半是 | 怎麼查 |
 |---|---|---|---|
-| 定義唯一 | 找不到某個分類，或交回的分類與 `categories(期末日)` 不同 | dimensions 不完整、成員或 concept 在這份申報改名；`categories` 的切換日期與 `compose` 不一致 | 用第 2 步的程式看這份申報的 fact |
+| fact 存在且唯一 | 找不到某個分類或總營收（`put` 記在 `missing` 的項目） | dimensions 不完整、成員或 concept 在這份申報改名 | 用第 2 步的程式看這份申報的 fact |
+| 定義唯一 | 交回的分類順序或集合與 `categories(期末日)` 不同 | `categories` 的切換日期與 `compose` 不一致；漏列分類卻沒有記錄原因 | 對照 `categories` 與 `compose` 的切換條件 |
 | 加總 | 分類加總不等於總營收 | 漏了調節項（Corporate、Eliminations、All Other）；總營收選到分部合計；分類選到另一組分部 fact | 對照原文分部表的每一列 |
 | fact 存在且唯一 | 重複 fact 數值不一致，或前綴宣告衝突 | `one_of` 的兩種寫法其實是不同數字 | 看兩種寫法的 fact 各在哪張表 |
+| 地區成員完整 | 地區軸的成員沒有全部列入 | 運算式只列了部分地區成員 | 把該軸同 concept、同其他 dimensions 的全部成員列入運算式 |
 | 單位與精度 | decimals 缺漏或粗於百萬位 | 申報本身的標記 | 回報，不能在 parser 處理 |
 | Q4 期間、財年與季別、選申報 | 期間長度或財年宣告不合 | 非 13 週的季度、申報宣告錯財年 | 回報（框架的事） |
 
@@ -245,7 +247,7 @@ Refs #<issue>
 - <交給人判斷的事項，或「無」>
 ```
 
-寫 parser 的人不改 `tickers.csv`；`status` 等欄位由人在判斷能上線時填（見 [開發流程](dev-workflow.md)）。
+寫 parser 時不改 `tickers.csv`。`status` 等欄位的值由人在判斷能上線時決定，人核准後可以交辦 agent 寫入（見 [開發流程](dev-workflow.md) 第 9 步）。
 
 ## 常見陷阱
 
@@ -259,7 +261,7 @@ Refs #<issue>
 - **10-K/A、10-Q/A**：主申報取最早的原申報，修正申報只參與差異標記（TSLA 的 Part III 10-K/A）。parser 不需要特別處理。
 - **52／53 週制**：HD、NVDA、AAPL 的季末日不是月底，期別以實際期末日識別，不要改成曆季底。季度不是 13 週（COST 的 16 週 Q4）時框架不支援，回報。
 - **多個 CIK**：前身與繼受實體以 `tickers.csv` 的 `cik` 欄位 `;` 分隔，由人維護；parser 不處理 CIK。
-- **分部軸的成員是地區**：AAPL 的 `us-gaap:StatementBusinessSegmentsAxis` 是 Americas、Europe 等地區，不能用。用這個軸時，`parser.md` 必須寫明成員是業務別，否則 parse 會報錯。
+- **分部軸的成員是地區**：AAPL 的 `us-gaap:StatementBusinessSegmentsAxis` 是 Americas、Europe 等地區，不能用。用這個軸時，`parser.md` 必須寫明成員是業務別：`parser.md` 沒提到這個軸時 parse 會報錯，說明內容由 review 檢查。
 
 ## 停下來交給人
 
@@ -270,4 +272,4 @@ Refs #<issue>
 - **只能違反兩條硬原則才做得出來**：例如數字沒有 XBRL 標記（GOOGL 的避險損益列）、要用之後的申報決定早期期別怎麼組。不要繞過。
 - **差異解釋不了**：與對照來源的差異不是重編、也不是來源錯誤，或你無法確認是哪一種。
 - **已提交的輸出要改**：任何需要 `--republish` 的情況。
-- **上線**：`tickers.csv` 的 `status`、`adopted_source`、`stability_score` 由人填。
+- **上線**：`tickers.csv` 的 `status`、`adopted_source`、`stability_score` 的值由人決定。
