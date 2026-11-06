@@ -1,0 +1,487 @@
+{
+  "categories": {
+    "Membership and other income": {
+      "expression": [
+        {
+          "operand": "op7",
+          "weight": 1
+        },
+        {
+          "operand": "op8",
+          "weight": -1
+        }
+      ],
+      "value": 1474000000
+    },
+    "Sam's Club U.S.": {
+      "expression": [
+        {
+          "operand": "op5",
+          "weight": 1
+        },
+        {
+          "operand": "op6",
+          "weight": -1
+        }
+      ],
+      "value": 21852000000
+    },
+    "Walmart International": {
+      "expression": [
+        {
+          "operand": "op3",
+          "weight": 1
+        },
+        {
+          "operand": "op4",
+          "weight": -1
+        }
+      ],
+      "value": 32419000000
+    },
+    "Walmart U.S.": {
+      "expression": [
+        {
+          "operand": "op1",
+          "weight": 1
+        },
+        {
+          "operand": "op2",
+          "weight": -1
+        }
+      ],
+      "value": 117643000000
+    }
+  },
+  "checks": {
+    "structural": [
+      {
+        "check": "定義唯一",
+        "result": "pass"
+      },
+      {
+        "check": "fact 存在且唯一",
+        "result": "pass"
+      },
+      {
+        "check": "單位與精度",
+        "result": "pass"
+      },
+      {
+        "check": "Q4 期間",
+        "result": "pass"
+      },
+      {
+        "check": "加總",
+        "result": "pass"
+      },
+      {
+        "check": "證據完整",
+        "result": "pass"
+      }
+    ],
+    "sum": {
+      "categories": 173388000000,
+      "difference": 0,
+      "tolerance": "5000000",
+      "total": 173388000000
+    }
+  },
+  "filings": {
+    "nine_months": {
+      "accession": "0000104169-23-000132",
+      "filing_date": "2023-11-30",
+      "form": "10-Q",
+      "report_date": "2023-10-31"
+    },
+    "primary": {
+      "accession": "0000104169-24-000056",
+      "filing_date": "2024-03-15",
+      "form": "10-K",
+      "report_date": "2024-01-31"
+    }
+  },
+  "fiscal_quarter": 4,
+  "fiscal_year": 2024,
+  "operands": {
+    "op1": {
+      "accession": "0000104169-24-000056",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-93",
+      "decimals": "-6",
+      "dimensions": {
+        "us-gaap:StatementBusinessSegmentsAxis": "wmt:WalmartUSMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/104169/000010416924000056/wmt-20240131.htm",
+        "name": "wmt-20240131.htm",
+        "sha256": "a9d5c9540359a3e153ad2abf70b40bf12fd6b61721d5438ae4d33185eab810d3",
+        "url": "https://www.sec.gov/Archives/edgar/data/104169/000010416924000056/wmt-20240131.htm"
+      },
+      "duplicates": [
+        "f-1342"
+      ],
+      "evidence": {
+        "html_sha256": "cbd58f0082ed314226a433caf0f0860be26535d6939c60ee24970dcc649c5ad7",
+        "png_scale": 1,
+        "png_sha256": "75996becafdfb95be21df5e83f9c4a2b3b524c968fec4b0d063ebceb67f6e6cd",
+        "table": "0000104169-24-000056-a9d5c9540359-t84"
+      },
+      "fact_id": "f-1225",
+      "filing_date": "2024-03-15",
+      "form": "10-K",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-01-31",
+        "start": "2023-02-01"
+      },
+      "raw": "441,817",
+      "role": "annual",
+      "scale": "6",
+      "sign": null,
+      "value": 441817000000
+    },
+    "op10": {
+      "accession": "0000104169-23-000132",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-1",
+      "decimals": "-6",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/104169/000010416923000132/wmt-20231031.htm",
+        "name": "wmt-20231031.htm",
+        "sha256": "d3df772ea2e1f4711f6792e64c596bba79099e018e7e52625a29045c832ab29b",
+        "url": "https://www.sec.gov/Archives/edgar/data/104169/000010416923000132/wmt-20231031.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "f70c9ebd61c2c22d3b339555fb1b964a907dfdc522ec986334028af342234f6b",
+        "png_scale": 1,
+        "png_sha256": "2179e04619a4340dbba237db21b8dd5bcbdb2f2cd82b18a78f34ac1352bc973c",
+        "table": "0000104169-23-000132-d3df772ea2e1-t6"
+      },
+      "fact_id": "f-67",
+      "filing_date": "2023-11-30",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2023-10-31",
+        "start": "2023-02-01"
+      },
+      "raw": "474,737",
+      "role": "nine_months",
+      "scale": "6",
+      "sign": null,
+      "value": 474737000000
+    },
+    "op2": {
+      "accession": "0000104169-23-000132",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-229",
+      "decimals": "-6",
+      "dimensions": {
+        "us-gaap:StatementBusinessSegmentsAxis": "wmt:WalmartUSSegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/104169/000010416923000132/wmt-20231031.htm",
+        "name": "wmt-20231031.htm",
+        "sha256": "d3df772ea2e1f4711f6792e64c596bba79099e018e7e52625a29045c832ab29b",
+        "url": "https://www.sec.gov/Archives/edgar/data/104169/000010416923000132/wmt-20231031.htm"
+      },
+      "duplicates": [
+        "f-902"
+      ],
+      "evidence": {
+        "html_sha256": "12872a1b0f558343c4a1262107cb305e06a8f5142d6512baeb0e88d4424e7935",
+        "png_scale": 1,
+        "png_sha256": "078f284ee2e5808c95084621524bc6a9a928569698d5ac6f1eae406ff8f5b465",
+        "table": "0000104169-23-000132-d3df772ea2e1-t21"
+      },
+      "fact_id": "f-836",
+      "filing_date": "2023-11-30",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2023-10-31",
+        "start": "2023-02-01"
+      },
+      "raw": "324,174",
+      "role": "nine_months",
+      "scale": "6",
+      "sign": null,
+      "value": 324174000000
+    },
+    "op3": {
+      "accession": "0000104169-24-000056",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-94",
+      "decimals": "-6",
+      "dimensions": {
+        "us-gaap:StatementBusinessSegmentsAxis": "wmt:WalmartInternationalMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/104169/000010416924000056/wmt-20240131.htm",
+        "name": "wmt-20240131.htm",
+        "sha256": "a9d5c9540359a3e153ad2abf70b40bf12fd6b61721d5438ae4d33185eab810d3",
+        "url": "https://www.sec.gov/Archives/edgar/data/104169/000010416924000056/wmt-20240131.htm"
+      },
+      "duplicates": [
+        "f-1364"
+      ],
+      "evidence": {
+        "html_sha256": "cbd58f0082ed314226a433caf0f0860be26535d6939c60ee24970dcc649c5ad7",
+        "png_scale": 1,
+        "png_sha256": "75996becafdfb95be21df5e83f9c4a2b3b524c968fec4b0d063ebceb67f6e6cd",
+        "table": "0000104169-24-000056-a9d5c9540359-t84"
+      },
+      "fact_id": "f-1226",
+      "filing_date": "2024-03-15",
+      "form": "10-K",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-01-31",
+        "start": "2023-02-01"
+      },
+      "raw": "114,641",
+      "role": "annual",
+      "scale": "6",
+      "sign": null,
+      "value": 114641000000
+    },
+    "op4": {
+      "accession": "0000104169-23-000132",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-233",
+      "decimals": "-6",
+      "dimensions": {
+        "us-gaap:StatementBusinessSegmentsAxis": "wmt:WalmartInternationalSegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/104169/000010416923000132/wmt-20231031.htm",
+        "name": "wmt-20231031.htm",
+        "sha256": "d3df772ea2e1f4711f6792e64c596bba79099e018e7e52625a29045c832ab29b",
+        "url": "https://www.sec.gov/Archives/edgar/data/104169/000010416923000132/wmt-20231031.htm"
+      },
+      "duplicates": [
+        "f-927"
+      ],
+      "evidence": {
+        "html_sha256": "12872a1b0f558343c4a1262107cb305e06a8f5142d6512baeb0e88d4424e7935",
+        "png_scale": 1,
+        "png_sha256": "078f284ee2e5808c95084621524bc6a9a928569698d5ac6f1eae406ff8f5b465",
+        "table": "0000104169-23-000132-d3df772ea2e1-t21"
+      },
+      "fact_id": "f-840",
+      "filing_date": "2023-11-30",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2023-10-31",
+        "start": "2023-02-01"
+      },
+      "raw": "82,222",
+      "role": "nine_months",
+      "scale": "6",
+      "sign": null,
+      "value": 82222000000
+    },
+    "op5": {
+      "accession": "0000104169-24-000056",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-95",
+      "decimals": "-6",
+      "dimensions": {
+        "us-gaap:StatementBusinessSegmentsAxis": "wmt:SamsClubMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/104169/000010416924000056/wmt-20240131.htm",
+        "name": "wmt-20240131.htm",
+        "sha256": "a9d5c9540359a3e153ad2abf70b40bf12fd6b61721d5438ae4d33185eab810d3",
+        "url": "https://www.sec.gov/Archives/edgar/data/104169/000010416924000056/wmt-20240131.htm"
+      },
+      "duplicates": [
+        "f-1386"
+      ],
+      "evidence": {
+        "html_sha256": "cbd58f0082ed314226a433caf0f0860be26535d6939c60ee24970dcc649c5ad7",
+        "png_scale": 1,
+        "png_sha256": "75996becafdfb95be21df5e83f9c4a2b3b524c968fec4b0d063ebceb67f6e6cd",
+        "table": "0000104169-24-000056-a9d5c9540359-t84"
+      },
+      "fact_id": "f-1227",
+      "filing_date": "2024-03-15",
+      "form": "10-K",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-01-31",
+        "start": "2023-02-01"
+      },
+      "raw": "86,179",
+      "role": "annual",
+      "scale": "6",
+      "sign": null,
+      "value": 86179000000
+    },
+    "op6": {
+      "accession": "0000104169-23-000132",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-237",
+      "decimals": "-6",
+      "dimensions": {
+        "us-gaap:StatementBusinessSegmentsAxis": "wmt:SamsClubSegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/104169/000010416923000132/wmt-20231031.htm",
+        "name": "wmt-20231031.htm",
+        "sha256": "d3df772ea2e1f4711f6792e64c596bba79099e018e7e52625a29045c832ab29b",
+        "url": "https://www.sec.gov/Archives/edgar/data/104169/000010416923000132/wmt-20231031.htm"
+      },
+      "duplicates": [
+        "f-956"
+      ],
+      "evidence": {
+        "html_sha256": "12872a1b0f558343c4a1262107cb305e06a8f5142d6512baeb0e88d4424e7935",
+        "png_scale": 1,
+        "png_sha256": "078f284ee2e5808c95084621524bc6a9a928569698d5ac6f1eae406ff8f5b465",
+        "table": "0000104169-23-000132-d3df772ea2e1-t21"
+      },
+      "fact_id": "f-844",
+      "filing_date": "2023-11-30",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2023-10-31",
+        "start": "2023-02-01"
+      },
+      "raw": "64,327",
+      "role": "nine_months",
+      "scale": "6",
+      "sign": null,
+      "value": 64327000000
+    },
+    "op7": {
+      "accession": "0000104169-24-000056",
+      "concept": "us-gaap:OtherIncome",
+      "context_id": "c-1",
+      "decimals": "-6",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/104169/000010416924000056/wmt-20240131.htm",
+        "name": "wmt-20240131.htm",
+        "sha256": "a9d5c9540359a3e153ad2abf70b40bf12fd6b61721d5438ae4d33185eab810d3",
+        "url": "https://www.sec.gov/Archives/edgar/data/104169/000010416924000056/wmt-20240131.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "800779d394271509d56a9925b93778f1c0ccf5ab6030204d792b5e5e3e36e906",
+        "png_scale": 1,
+        "png_sha256": "711b044f0b5d61b8c1575212b117b447fa9f44551a7f05efba0d329509a57e4a",
+        "table": "0000104169-24-000056-a9d5c9540359-t49"
+      },
+      "fact_id": "f-69",
+      "filing_date": "2024-03-15",
+      "form": "10-K",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-01-31",
+        "start": "2023-02-01"
+      },
+      "raw": "5,488",
+      "role": "annual",
+      "scale": "6",
+      "sign": null,
+      "value": 5488000000
+    },
+    "op8": {
+      "accession": "0000104169-23-000132",
+      "concept": "us-gaap:OtherIncome",
+      "context_id": "c-1",
+      "decimals": "-6",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/104169/000010416923000132/wmt-20231031.htm",
+        "name": "wmt-20231031.htm",
+        "sha256": "d3df772ea2e1f4711f6792e64c596bba79099e018e7e52625a29045c832ab29b",
+        "url": "https://www.sec.gov/Archives/edgar/data/104169/000010416923000132/wmt-20231031.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "f70c9ebd61c2c22d3b339555fb1b964a907dfdc522ec986334028af342234f6b",
+        "png_scale": 1,
+        "png_sha256": "2179e04619a4340dbba237db21b8dd5bcbdb2f2cd82b18a78f34ac1352bc973c",
+        "table": "0000104169-23-000132-d3df772ea2e1-t6"
+      },
+      "fact_id": "f-63",
+      "filing_date": "2023-11-30",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2023-10-31",
+        "start": "2023-02-01"
+      },
+      "raw": "4,014",
+      "role": "nine_months",
+      "scale": "6",
+      "sign": null,
+      "value": 4014000000
+    },
+    "op9": {
+      "accession": "0000104169-24-000056",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-1",
+      "decimals": "-6",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/104169/000010416924000056/wmt-20240131.htm",
+        "name": "wmt-20240131.htm",
+        "sha256": "a9d5c9540359a3e153ad2abf70b40bf12fd6b61721d5438ae4d33185eab810d3",
+        "url": "https://www.sec.gov/Archives/edgar/data/104169/000010416924000056/wmt-20240131.htm"
+      },
+      "duplicates": [
+        "f-1317"
+      ],
+      "evidence": {
+        "html_sha256": "800779d394271509d56a9925b93778f1c0ccf5ab6030204d792b5e5e3e36e906",
+        "png_scale": 1,
+        "png_sha256": "711b044f0b5d61b8c1575212b117b447fa9f44551a7f05efba0d329509a57e4a",
+        "table": "0000104169-24-000056-a9d5c9540359-t49"
+      },
+      "fact_id": "f-72",
+      "filing_date": "2024-03-15",
+      "form": "10-K",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-01-31",
+        "start": "2023-02-01"
+      },
+      "raw": "648,125",
+      "role": "annual",
+      "scale": "6",
+      "sign": null,
+      "value": 648125000000
+    }
+  },
+  "parser": {
+    "engine_sha256": "cef42e58f952c80715fda28bc15f98310ac69951641f5d0796f212ce1a6349f8",
+    "spec_sha256": "c69856264bdd8b628ada841df156f719f1478bdd1788b8b9853f69a5c7c465f5"
+  },
+  "period_end": "2024-01-31",
+  "schema_version": 1,
+  "series": "Q",
+  "ticker": "WMT",
+  "total": {
+    "expression": [
+      {
+        "operand": "op9",
+        "weight": 1
+      },
+      {
+        "operand": "op10",
+        "weight": -1
+      }
+    ],
+    "value": 173388000000
+  },
+  "unit": "USD",
+  "view": "business_segment"
+}

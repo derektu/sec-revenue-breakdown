@@ -1,0 +1,370 @@
+{
+  "categories": {
+    "Corporate and eliminations": {
+      "expression": [
+        {
+          "operand": "op5",
+          "weight": 1
+        }
+      ],
+      "value": -38927000000
+    },
+    "Optum Health": {
+      "expression": [
+        {
+          "operand": "op2",
+          "weight": 1
+        }
+      ],
+      "value": 25309000000
+    },
+    "Optum Insight": {
+      "expression": [
+        {
+          "operand": "op3",
+          "weight": 1
+        }
+      ],
+      "value": 4630000000
+    },
+    "Optum Rx": {
+      "expression": [
+        {
+          "operand": "op4",
+          "weight": 1
+        }
+      ],
+      "value": 35132000000
+    },
+    "UnitedHealthcare": {
+      "expression": [
+        {
+          "operand": "op1",
+          "weight": 1
+        }
+      ],
+      "value": 84617000000
+    }
+  },
+  "checks": {
+    "structural": [
+      {
+        "check": "定義唯一",
+        "result": "pass"
+      },
+      {
+        "check": "fact 存在且唯一",
+        "result": "pass"
+      },
+      {
+        "check": "單位與精度",
+        "result": "pass"
+      },
+      {
+        "check": "加總",
+        "result": "pass"
+      },
+      {
+        "check": "證據完整",
+        "result": "pass"
+      }
+    ],
+    "sum": {
+      "categories": 109575000000,
+      "difference": 0,
+      "tolerance": "3500000",
+      "total": 109575000000
+    }
+  },
+  "filings": {
+    "primary": {
+      "accession": "0000731766-25-000131",
+      "filing_date": "2025-05-07",
+      "form": "10-Q",
+      "report_date": "2025-03-31"
+    }
+  },
+  "fiscal_quarter": 1,
+  "fiscal_year": 2025,
+  "operands": {
+    "op1": {
+      "accession": "0000731766-25-000131",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-149",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "unh:UnitedhealthcareMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/731766/000073176625000131/unh-20250331.htm",
+        "name": "unh-20250331.htm",
+        "sha256": "517f77416614a99089c5f3ec3529d69f830a74f6d7e8a5641925633b4b3f4344",
+        "url": "https://www.sec.gov/Archives/edgar/data/731766/000073176625000131/unh-20250331.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "9fba35763a4eae6678ba07d8cfec0a263473583358bddf36a0c912b8494aa96a",
+        "png_scale": 1,
+        "png_sha256": "48280f7e7304554b5d1c225640aec53f17d95cebba32d7fc5e887bd229d559d9",
+        "table": "0000731766-25-000131-517f77416614-t20"
+      },
+      "fact_id": "f-746",
+      "filing_date": "2025-05-07",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-03-31",
+        "start": "2025-01-01"
+      },
+      "raw": "84,617",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 84617000000
+    },
+    "op2": {
+      "accession": "0000731766-25-000131",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-150",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "unh:OptumHealthMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/731766/000073176625000131/unh-20250331.htm",
+        "name": "unh-20250331.htm",
+        "sha256": "517f77416614a99089c5f3ec3529d69f830a74f6d7e8a5641925633b4b3f4344",
+        "url": "https://www.sec.gov/Archives/edgar/data/731766/000073176625000131/unh-20250331.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "9fba35763a4eae6678ba07d8cfec0a263473583358bddf36a0c912b8494aa96a",
+        "png_scale": 1,
+        "png_sha256": "48280f7e7304554b5d1c225640aec53f17d95cebba32d7fc5e887bd229d559d9",
+        "table": "0000731766-25-000131-517f77416614-t20"
+      },
+      "fact_id": "f-747",
+      "filing_date": "2025-05-07",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-03-31",
+        "start": "2025-01-01"
+      },
+      "raw": "25,309",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 25309000000
+    },
+    "op3": {
+      "accession": "0000731766-25-000131",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-151",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "unh:OptumInsightMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/731766/000073176625000131/unh-20250331.htm",
+        "name": "unh-20250331.htm",
+        "sha256": "517f77416614a99089c5f3ec3529d69f830a74f6d7e8a5641925633b4b3f4344",
+        "url": "https://www.sec.gov/Archives/edgar/data/731766/000073176625000131/unh-20250331.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "9fba35763a4eae6678ba07d8cfec0a263473583358bddf36a0c912b8494aa96a",
+        "png_scale": 1,
+        "png_sha256": "48280f7e7304554b5d1c225640aec53f17d95cebba32d7fc5e887bd229d559d9",
+        "table": "0000731766-25-000131-517f77416614-t20"
+      },
+      "fact_id": "f-748",
+      "filing_date": "2025-05-07",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-03-31",
+        "start": "2025-01-01"
+      },
+      "raw": "4,630",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 4630000000
+    },
+    "op4": {
+      "accession": "0000731766-25-000131",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-152",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "unh:OptumRxMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/731766/000073176625000131/unh-20250331.htm",
+        "name": "unh-20250331.htm",
+        "sha256": "517f77416614a99089c5f3ec3529d69f830a74f6d7e8a5641925633b4b3f4344",
+        "url": "https://www.sec.gov/Archives/edgar/data/731766/000073176625000131/unh-20250331.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "9fba35763a4eae6678ba07d8cfec0a263473583358bddf36a0c912b8494aa96a",
+        "png_scale": 1,
+        "png_sha256": "48280f7e7304554b5d1c225640aec53f17d95cebba32d7fc5e887bd229d559d9",
+        "table": "0000731766-25-000131-517f77416614-t20"
+      },
+      "fact_id": "f-749",
+      "filing_date": "2025-05-07",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-03-31",
+        "start": "2025-01-01"
+      },
+      "raw": "35,132",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 35132000000
+    },
+    "op5": {
+      "accession": "0000731766-25-000131",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-155",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:CorporateNonSegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/731766/000073176625000131/unh-20250331.htm",
+        "name": "unh-20250331.htm",
+        "sha256": "517f77416614a99089c5f3ec3529d69f830a74f6d7e8a5641925633b4b3f4344",
+        "url": "https://www.sec.gov/Archives/edgar/data/731766/000073176625000131/unh-20250331.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "9fba35763a4eae6678ba07d8cfec0a263473583358bddf36a0c912b8494aa96a",
+        "png_scale": 1,
+        "png_sha256": "48280f7e7304554b5d1c225640aec53f17d95cebba32d7fc5e887bd229d559d9",
+        "table": "0000731766-25-000131-517f77416614-t20"
+      },
+      "fact_id": "f-752",
+      "filing_date": "2025-05-07",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-03-31",
+        "start": "2025-01-01"
+      },
+      "raw": "38,927",
+      "role": "quarter",
+      "scale": "6",
+      "sign": "-",
+      "value": -38927000000
+    },
+    "op6": {
+      "accession": "0000731766-25-000131",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-153",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:IntersegmentEliminationMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/731766/000073176625000131/unh-20250331.htm",
+        "name": "unh-20250331.htm",
+        "sha256": "517f77416614a99089c5f3ec3529d69f830a74f6d7e8a5641925633b4b3f4344",
+        "url": "https://www.sec.gov/Archives/edgar/data/731766/000073176625000131/unh-20250331.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "9fba35763a4eae6678ba07d8cfec0a263473583358bddf36a0c912b8494aa96a",
+        "png_scale": 1,
+        "png_sha256": "48280f7e7304554b5d1c225640aec53f17d95cebba32d7fc5e887bd229d559d9",
+        "table": "0000731766-25-000131-517f77416614-t20"
+      },
+      "fact_id": "f-750",
+      "filing_date": "2025-05-07",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-03-31",
+        "start": "2025-01-01"
+      },
+      "raw": "1,186",
+      "role": "quarter",
+      "scale": "6",
+      "sign": "-",
+      "value": -1186000000
+    },
+    "op7": {
+      "accession": "0000731766-25-000131",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-1",
+      "decimals": "-6",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/731766/000073176625000131/unh-20250331.htm",
+        "name": "unh-20250331.htm",
+        "sha256": "517f77416614a99089c5f3ec3529d69f830a74f6d7e8a5641925633b4b3f4344",
+        "url": "https://www.sec.gov/Archives/edgar/data/731766/000073176625000131/unh-20250331.htm"
+      },
+      "duplicates": [
+        "f-120"
+      ],
+      "evidence": {
+        "html_sha256": "9fba35763a4eae6678ba07d8cfec0a263473583358bddf36a0c912b8494aa96a",
+        "png_scale": 1,
+        "png_sha256": "48280f7e7304554b5d1c225640aec53f17d95cebba32d7fc5e887bd229d559d9",
+        "table": "0000731766-25-000131-517f77416614-t20"
+      },
+      "fact_id": "f-753",
+      "filing_date": "2025-05-07",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-03-31",
+        "start": "2025-01-01"
+      },
+      "raw": "109,575",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 109575000000
+    }
+  },
+  "parser": {
+    "engine_sha256": "cef42e58f952c80715fda28bc15f98310ac69951641f5d0796f212ce1a6349f8",
+    "spec_sha256": "16d93bcb0473453c69f5c6b04f0cdba9cf4ada9c90a8f1375581d7dcbfa4022f"
+  },
+  "period_end": "2025-03-31",
+  "reconciling": {
+    "Optum eliminations": {
+      "expression": [
+        {
+          "operand": "op6",
+          "weight": 1
+        }
+      ],
+      "value": -1186000000
+    }
+  },
+  "schema_version": 1,
+  "series": "Q",
+  "ticker": "UNH",
+  "total": {
+    "expression": [
+      {
+        "operand": "op7",
+        "weight": 1
+      }
+    ],
+    "value": 109575000000
+  },
+  "unit": "USD",
+  "view": "business_segment"
+}
