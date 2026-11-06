@@ -78,12 +78,11 @@ class PeriodResult:
 
 
 class NotDerived(ParseError):
-    """Q4 年度的分類集合與 Q1–Q3 不同，不推算；不是失敗，status.json 記為 `not_derived`。"""
+    """Q4 不推算：不是失敗，status.json 記為 `not_derived`，附檢核名稱、原因與 `details` 的欄位。"""
 
-    def __init__(self, message: str, annual: list[str], quarters: list[dict]):
-        super().__init__("Q4 推算條件", message)
-        self.annual = annual
-        self.quarters = quarters
+    def __init__(self, check: str, message: str, details: dict):
+        super().__init__(check, message)
+        self.details = details
 
 
 @dataclass
@@ -206,7 +205,11 @@ class PeriodComposer:
         different = [s for s in segments if s["categories"] != annual]
         if different:
             ranges = "；".join(f"{s['start']}～{s['end']} 為 {s['categories']}" for s in different)
-            raise NotDerived(f"年度 {period} 的分類為 {annual}，Q1–Q3 期間 {ranges}；Q4 不推算", annual, segments)
+            raise NotDerived(
+                "Q4 推算條件",
+                f"年度 {period} 的分類為 {annual}，Q1–Q3 期間 {ranges}；Q4 不推算",
+                {"fy_categories": annual, "quarter_categories": segments},
+            )
 
     def finish(self, series, period, year, quarter, primary, nine_filing, items, candidates) -> PeriodResult:
         structural = [

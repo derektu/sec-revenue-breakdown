@@ -463,6 +463,7 @@ class FourthQuarterTest(Fixture):
         status = self.status()["periods"]
         entry = status["Q"]["2025-12-31"]
         self.assertEqual((entry["status"], entry["check"], entry["published_output_kept"]), ("not_derived", "Q4 推算條件", False))
+        self.assertEqual((entry["fiscal_year"], entry["fiscal_quarter"]), (2025, 4))
         self.assertEqual(entry["fy_categories"], ["B", "A2"])
         self.assertEqual(entry["quarter_categories"], [{"start": "2025-01-01", "end": "2025-09-30", "categories": ["A", "B"]}])
         self.assertFalse((ticker_dir(self.out, "TEST") / "Q" / "2025-12-31").exists())
@@ -548,6 +549,235 @@ class FourthQuarterTest(Fixture):
         with self.assertRaisesRegex(ParseError, r"\[Q4 期間\] 2025-12-31 前一季應剛好有一個 10-Q 期別"):
             self.composer().compose("2025-12-31")
 
+
+class Q4BasisTest(Fixture):
+    """Q4 口徑一致：年報列示的上一財年數字與上一財年先前申報的值比對。"""
+
+    PRIOR_10K = "0000000001-25-000000"
+    ANNUAL_10K = "0000000001-26-000001"
+
+    def prior_report(self, values=(100, 100)):
+        a, b = values
+        self.add(
+            self.PRIOR_10K, "10-K", "2024-12-31", "2025-02-10",
+            build_html(2024, "FY", [
+                item("ya", REVENUE, A, "2024-01-01", "2024-12-31", str(a)),
+                item("yb", REVENUE, B, "2024-01-01", "2024-12-31", str(b)),
+                item("yt", REVENUE, None, "2024-01-01", "2024-12-31", str(a + b)),
+            ]),
+        )
+
+    def annual_report(self, listed, total=None, omit=()):
+        """standard_year 的 10-K（年度 A 300、B 100），另列示上一財年的 A、B 與總營收（預設為 A + B）；`omit` 的分類不列示。"""
+        self.standard_year()
+        a, b = listed
+        prior = [
+            item("pa", REVENUE, A, "2024-01-01", "2024-12-31", str(a), 1),
+            item("pb", REVENUE, B, "2024-01-01", "2024-12-31", str(b), 1),
+            item("pt", REVENUE, None, "2024-01-01", "2024-12-31", str(total if total is not None else a + b), 1),
+        ]
+        self.add(
+            self.ANNUAL_10K, "10-K", "2025-12-31", "2026-02-15",
+            build_html(2025, "FY", [
+                item("ya", REVENUE, A, "2025-01-01", "2025-12-31", "300"),
+                item("yb", REVENUE, B, "2025-01-01", "2025-12-31", "100"),
+                item("yt", REVENUE, None, "2025-01-01", "2025-12-31", "400"),
+            ] + [i for i in prior if i["id"][1:].upper() not in omit]),
+        )
+
+    def run_all(self, **options):
+        parser = self.parser(**options)
+        parser.run(parser.periods())
+        return self.status()["periods"]
+
+    def test_same_basis_derives_q4(self):
+        self.prior_report()
+        self.annual_report((100, 100))
+        status = self.run_all()
+        self.assertEqual(status["FY"]["2024-12-31"]["status"], "published")
+        q4 = status["Q"]["2025-12-31"]
+        self.assertEqual(q4["status"], "published")
+        self.assertNotIn("q4_basis", q4)
+
+    def test_reclassified_prior_year_leaves_q4_blank(self):
+        # 年報把上一財年 A、B 之間重分類（總營收相同）：Q4 不推算，FY 照常上線。
+        self.prior_report()
+        self.annual_report((110, 90))
+        status = self.run_all()
+        q4 = status["Q"]["2025-12-31"]
+        self.assertEqual((q4["status"], q4["check"], q4["published_output_kept"]), ("not_derived", "Q4 口徑一致", False))
+        self.assertEqual((q4["fiscal_year"], q4["fiscal_quarter"]), (2025, 4))
+        self.assertEqual(
+            [(c["category"], c["previous_value"], c["listed_value"]) for c in q4["basis_changes"]],
+            [("A", 100_000_000, 110_000_000), ("B", 100_000_000, 90_000_000)],
+        )
+        change = q4["basis_changes"][0]
+        self.assertEqual(change["previous"], {"basis": "published", "accession": self.PRIOR_10K})
+        self.assertEqual(change["listed"], {"accession": self.ANNUAL_10K})
+        self.assertEqual(change["period"], {"start": "2024-01-01", "end": "2024-12-31"})
+        self.assertEqual([a["fact_id"] for a in change["listed_addends"]], ["pa"])
+        self.assertEqual([a["operand"] for a in change["previous_addends"]], ["op1"])
+        for text in ("A 已上線 FY 100000000、年報 110000000", self.PRIOR_10K, self.ANNUAL_10K):
+            self.assertIn(text, q4["reason"])
+        self.assertFalse((ticker_dir(self.out, "TEST") / "Q" / "2025-12-31").exists())
+        self.assertEqual(status["FY"]["2025-12-31"]["status"], "published")
+        # 上一財年的已上線 FY 也照比較欄規則得到差異標記。
+        self.assertEqual([m["category"] for m in status["FY"]["2024-12-31"]["differences"]], ["A", "B"])
+
+    def test_prior_year_before_start_uses_its_own_annual_report(self):
+        # 上一財年在起始日之前、沒有上線：以上一份 10-K 本身依規格組出的值比對。
+        self.prior_report()
+        self.annual_report((110, 90))
+        status = self.run_all(default_start="2025-01-01")
+        self.assertNotIn("2024-12-31", status["FY"])
+        q4 = status["Q"]["2025-12-31"]
+        self.assertEqual((q4["status"], q4["check"]), ("not_derived", "Q4 口徑一致"))
+        self.assertEqual(q4["basis_changes"][0]["previous"], {"basis": "filing", "accession": self.PRIOR_10K})
+        # 上一份 10-K 依據沒有 revenue.json 可對應，previous_addends 列 fact_id。
+        self.assertEqual(
+            q4["basis_changes"][0]["previous_addends"],
+            [{"fact_id": "ya", "concept": REVENUE, "dimensions": A, "weight": 1, "value": 100_000_000}],
+        )
+        self.assertIn("A 上一份年報 100000000、年報 110000000", q4["reason"])
+
+    def test_prior_year_before_start_with_same_basis(self):
+        self.prior_report()
+        self.annual_report((100, 100))
+        q4 = self.run_all(default_start="2025-01-01")["Q"]["2025-12-31"]
+        self.assertEqual(q4["status"], "published")
+        self.assertNotIn("q4_basis", q4)
+
+    def test_undetermined_basis_derives_q4_with_note(self):
+        # 沒有上一份 10-K：無法判斷，Q4 照常推算並註記。
+        self.annual_report((110, 90))
+        q4 = self.run_all()["Q"]["2025-12-31"]
+        self.assertEqual(q4["status"], "published")
+        self.assertEqual(q4["q4_basis"]["result"], "undetermined")
+        self.assertIn("沒有已上線的 FY", q4["q4_basis"]["reason"])
+        # 年報沒有列示上一財年：同樣無法判斷。
+        self.prior_report()
+        self.standard_year()
+        q4 = self.run_all()["Q"]["2025-12-31"]
+        self.assertEqual(q4["status"], "published")
+        self.assertIn("沒有列示上一財年", q4["q4_basis"]["reason"])
+
+    def test_prior_year_that_cannot_be_composed_is_undetermined(self):
+        # 上一份 10-K 加總不通過（組不出年度值）：無法判斷，Q4 照常推算。
+        self.add(
+            self.PRIOR_10K, "10-K", "2024-12-31", "2025-02-10",
+            build_html(2024, "FY", [
+                item("ya", REVENUE, A, "2024-01-01", "2024-12-31", "100"),
+                item("yb", REVENUE, B, "2024-01-01", "2024-12-31", "100"),
+                item("yt", REVENUE, None, "2024-01-01", "2024-12-31", "250"),
+            ]),
+        )
+        self.annual_report((110, 90))
+        q4 = self.run_all(default_start="2025-01-01")["Q"]["2025-12-31"]
+        self.assertEqual(q4["status"], "published")
+        self.assertIn("[加總]", q4["q4_basis"]["reason"])
+
+    def test_unparseable_category_is_undetermined(self):
+        self.prior_report()
+        self.annual_report((100, 100))
+        html = build_html(2025, "FY", [
+            item("ya", REVENUE, A, "2025-01-01", "2025-12-31", "300"),
+            item("yb", REVENUE, B, "2025-01-01", "2025-12-31", "100"),
+            item("yt", REVENUE, None, "2025-01-01", "2025-12-31", "400"),
+            item("pa", REVENUE, A, "2024-01-01", "2024-12-31", "100", 1),
+            item("pa2", REVENUE, A, "2024-01-01", "2024-12-31", "120", 2),
+            item("pb", REVENUE, B, "2024-01-01", "2024-12-31", "100", 1),
+            item("pt", REVENUE, None, "2024-01-01", "2024-12-31", "200", 1),
+        ])
+        self.add(self.ANNUAL_10K, "10-K", "2025-12-31", "2026-02-15", html)
+        q4 = self.run_all()["Q"]["2025-12-31"]
+        self.assertEqual(q4["status"], "published")
+        self.assertEqual(q4["q4_basis"]["result"], "undetermined")
+        self.assertIn("A：unparseable", q4["q4_basis"]["reason"])
+
+    def test_prior_report_filed_after_annual_report_is_not_used(self):
+        # Point in time：上一財年的 10-K 晚於本年報才申報。它的 FY 照常上線，但本年報判斷時看不到，也不讀那份 10-K。
+        self.add(
+            self.PRIOR_10K, "10-K", "2024-12-31", "2026-03-01",
+            build_html(2024, "FY", [
+                item("ya", REVENUE, A, "2024-01-01", "2024-12-31", "100"),
+                item("yb", REVENUE, B, "2024-01-01", "2024-12-31", "100"),
+                item("yt", REVENUE, None, "2024-01-01", "2024-12-31", "200"),
+            ]),
+        )
+        self.annual_report((110, 90))
+        status = self.run_all()
+        self.assertEqual(status["FY"]["2024-12-31"]["status"], "published")
+        q4 = status["Q"]["2025-12-31"]
+        self.assertEqual((q4["status"], q4["q4_basis"]["result"]), ("published", "undetermined"))
+        self.assertIn("已下載的申報中也沒有申報日不晚於 2026-02-15 的上一財年 10-K", q4["q4_basis"]["reason"])
+
+    def test_only_total_differs(self):
+        self.prior_report()
+        self.annual_report((100, 100), total=210)
+        q4 = self.run_all()["Q"]["2025-12-31"]
+        self.assertEqual((q4["status"], q4["check"]), ("not_derived", "Q4 口徑一致"))
+        self.assertEqual([(c["category"], c["previous_value"], c["listed_value"]) for c in q4["basis_changes"]], [("總營收", 200_000_000, 210_000_000)])
+
+    def test_only_reconciling_item_differs(self):
+        spec = CompanySpec(ticker="TEST", view="product", categories=(SPEC.categories[0],), reconciling=(SPEC.categories[1],), total=SPEC.total)
+        self.prior_report()
+        self.annual_report((100, 90), total=200)
+        q4 = self.run_all(spec=spec)["Q"]["2025-12-31"]
+        self.assertEqual((q4["status"], q4["check"]), ("not_derived", "Q4 口徑一致"))
+        self.assertEqual([c["category"] for c in q4["basis_changes"]], ["B"])
+
+    def test_difference_with_missing_category_is_not_derived(self):
+        # A 不同、B 在年報沒有列示上一財年：有分類可判定不同，Q4 不推算，不因 B 找不到而降為無法判斷。
+        self.prior_report()
+        self.annual_report((110, 90), total=200, omit=("B",))
+        q4 = self.run_all()["Q"]["2025-12-31"]
+        self.assertEqual((q4["status"], q4["check"]), ("not_derived", "Q4 口徑一致"))
+        self.assertEqual([c["category"] for c in q4["basis_changes"]], ["A"])
+
+    def test_corrupted_prior_report_fails_q4(self):
+        # 上一份 10-K 原文與申報包紀錄不符：資料不完整，Q4 失敗並指出那份 10-K，不照常推算。
+        self.prior_report()
+        self.annual_report((100, 100))
+        (self.data / self.packages[self.PRIOR_10K]["documents"]["test-2024-12-31.htm"]["path"]).write_bytes(b"tampered")
+        q4 = self.run_all(default_start="2025-01-01")["Q"]["2025-12-31"]
+        self.assertEqual((q4["status"], q4["check"]), ("failed", "原文存在"))
+        self.assertIn(f"上一財年 10-K {self.PRIOR_10K}", q4["reason"])
+
+    def test_prior_year_of_52_53_week_fiscal_year(self):
+        # 財年結束於 9 月最後一個週六：上一財年期末是本財年年度 fact 起日的前一天（2024-09-28），不是曆年。
+        def year_items(prefix, start, end, values, table=0):
+            a, b = values
+            return [
+                item(f"{prefix}a", REVENUE, A, start, end, str(a), table),
+                item(f"{prefix}b", REVENUE, B, start, end, str(b), table),
+                item(f"{prefix}t", REVENUE, None, start, end, str(a + b), table),
+            ]
+
+        self.add("0000000001-24-000009", "10-K", "2024-09-28", "2024-11-01", build_html(2024, "FY", year_items("y", "2023-10-01", "2024-09-28", (100, 100))))
+        self.add("0000000001-25-000001", "10-Q", "2024-12-28", "2025-01-31", build_html(2025, "Q1", year_items("q", "2024-09-29", "2024-12-28", (60, 40))))
+        self.add("0000000001-25-000002", "10-Q", "2025-03-29", "2025-05-01", build_html(2025, "Q2", year_items("q", "2024-12-29", "2025-03-29", (70, 30))))
+        self.add(
+            "0000000001-25-000003", "10-Q", "2025-06-28", "2025-08-01",
+            build_html(2025, "Q3", year_items("q", "2025-03-30", "2025-06-28", (80, 20)) + year_items("n", "2024-09-29", "2025-06-28", (210, 90), 1)),
+        )
+        self.add(
+            "0000000001-25-000004", "10-K", "2025-09-27", "2025-10-31",
+            build_html(2025, "FY", year_items("y", "2024-09-29", "2025-09-27", (300, 100)) + year_items("p", "2023-10-01", "2024-09-28", (110, 90), 1)),
+        )
+        q4 = self.run_all(default_start="2024-12-01")["Q"]["2025-09-27"]
+        self.assertEqual((q4["status"], q4["check"]), ("not_derived", "Q4 口徑一致"))
+        self.assertEqual(q4["basis_changes"][0]["period"], {"start": "2023-10-01", "end": "2024-09-28"})
+        self.assertEqual(q4["basis_changes"][0]["previous"], {"basis": "filing", "accession": "0000000001-24-000009"})
+
+    def test_published_q4_is_kept_when_basis_change_is_found_later(self):
+        # 先在沒有上一份 10-K 時上線 Q4；之後補下載上一份 10-K，發現口徑變更：已上線 Q4 保留不動。
+        self.annual_report((110, 90))
+        self.run_all()
+        self.prior_report()
+        q4 = self.run_all()["Q"]["2025-12-31"]
+        self.assertEqual((q4["status"], q4["check"], q4["published_output_kept"]), ("not_derived", "Q4 口徑一致", True))
+        self.assertEqual(q4["published_output"]["categories"], {"A": 90_000_000, "B": 10_000_000})
+        self.assertTrue((ticker_dir(self.out, "TEST") / "Q" / "2025-12-31" / "revenue.json").exists())
 
 class ParserOutputTest(Fixture):
     def test_publishes_outputs_with_evidence_and_status(self):
