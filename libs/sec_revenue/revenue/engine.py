@@ -322,7 +322,7 @@ class RevenueParser:
     def check_basis(self, result: PeriodResult) -> dict | None:
         """Q4 口徑一致：年報列示的上一財年數字，每個分類 × 年度角色都要與上一財年先前申報的值在精度內相同。
 
-        比對與比較欄同一套規則（`comparatives`，以年報期別生效的定義組出列示值）。任一分類不同代表公司在年報改了
+        比對與比較欄同一套規則（`comparatives`，由來源從年報組出列示值）。任一分類不同代表公司在年報改了
         分類口徑，年度與 Q1–Q3 的數字基礎不同，以 `NotDerived` 結束（Q4 不推算）。先前的值拿不到、年報沒有列示上一
         財年，或有分類無法比較時無法判斷，Q4 照常推算，回傳註記；可以判斷且一致時回傳 None。
         """
@@ -348,7 +348,7 @@ class RevenueParser:
         active = set(self.source.categories(result.period_end)) | {TOTAL_LABEL}
         found = [
             c
-            for c in comparatives(document, primary.accession, [("FY", prior, baseline)], self.compose_for(primary))
+            for c in comparatives(document, primary.accession, [("FY", prior, baseline)], self.compose_for(primary), self.source.total_name)
             if c["role"] == "annual" and c["category"] in active
         ]
         if not any(c["category"] == TOTAL_LABEL for c in found):
@@ -386,7 +386,7 @@ class RevenueParser:
         """上一財年（期末 `prior`）先前申報的年度值，回傳（revenue.json 格式的值, 依據）。
 
         依據是 `published`（已上線、且運算元都來自申報日不晚於 `as_of` 的申報的 FY 輸出）或 `filing`（沒有已上線
-        輸出時，上一份 10-K 本身依規格組出的值，只讀 fact，不寫入）。兩者都拿不到、或上一份 10-K 依規格組不出年度值時
+        輸出時，來源從上一份 10-K 組出的值，只讀 fact，不寫入）。兩者都拿不到、或上一份 10-K 組不出年度值時
         回傳（None, 原因）。上一份 10-K 的原文缺檔或 sha256 不符是資料不完整，不是無法判斷：以 `ParseError` 結束，Q4 失敗。
         """
         path = self.out / "FY" / prior / "revenue.json"
@@ -400,7 +400,7 @@ class RevenueParser:
             if error.check == "原文存在":
                 accession = self.filings.select(prior).accession
                 raise ParseError(error.check, f"Q4 口徑一致所需的上一財年 10-K {accession} 原文不完整：{error.message}") from error
-            return None, f"上一財年（{prior} 止）沒有已上線的 FY，上一份 10-K 依規格組不出年度值：[{error.check}] {error.message}"
+            return None, f"上一財年（{prior} 止）沒有已上線的 FY，上一份 10-K 組不出年度值：[{error.check}] {error.message}"
         for number, operand in enumerate(result.operands, 1):
             operand.id = f"op{number}"
         summary = {
@@ -653,7 +653,7 @@ class RevenueParser:
             except ParseError as error:
                 errors.append({"accession": filing.accession, "check": error.check, "reason": error.message})
                 continue
-            for item in comparatives(document, filing.accession, baselines, self.compose_for(filing)):
+            for item in comparatives(document, filing.accession, baselines, self.compose_for(filing), self.source.total_name):
                 if item["result"] not in MARKED_RESULTS:
                     continue
                 markers.setdefault((item["series"], item["period_end"]), []).append(

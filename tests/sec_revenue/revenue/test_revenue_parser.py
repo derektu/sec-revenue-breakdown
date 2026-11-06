@@ -44,7 +44,11 @@ def comparatives(document, accession, baselines, addends_for):
             result.total = None if isinstance(found, str) else found
         names = [n for n in ("A", "B") if addends_for(n)]
         for name in names:
-            found = addend_terms(document, accession, name, addends_for(name), request)
+            try:
+                found = addend_terms(document, accession, name, addends_for(name), request)
+            except ParseError as error:
+                result.unparseable[name] = error.message
+                continue
             if isinstance(found, str):
                 result.missing[name] = found
             else:
@@ -1545,7 +1549,7 @@ class TagVariantTest(Fixture):
         with self.assertRaisesRegex(ParseError, r"fact 存在且唯一.*y:AltAMember.*\['y'\] 在文件中宣告衝突"):
             self.composer(spec).compose("2025-03-31")
 
-    def test_comparative_with_conflicting_prefix_is_skipped(self):
+    def test_comparative_with_conflicting_prefix_is_unparseable(self):
         published = {
             "categories": {"A": {"value": 60_000_000, "expression": [{"weight": 1, "operand": "op1"}]}},
             "total": {"value": 60_000_000, "expression": []},
@@ -1554,9 +1558,9 @@ class TagVariantTest(Fixture):
         }
         items = [item("pa", REVENUE, A, "2024-01-01", "2024-03-31", "60"), item("pt", REVENUE, None, "2024-01-01", "2024-03-31", "100")]
         lookup = {"A": [Addend(one_of(fact(REVENUE, A), fact(REVENUE, {AXIS: "y:AltAMember"})))], None: [Addend(fact(REVENUE))]}
-        # 前綴宣告衝突時組不出這份申報，整段期間不比對（不產生標記）。
         found = comparatives(InlineDocument(self.conflicted_html(items)), "new", [("Q", "2024-03-31", published)], lookup.get)
-        self.assertEqual(found, [])
+        self.assertEqual((found[0]["result"], found[0]["listed_value"]), ("unparseable", None))
+        self.assertIn("宣告衝突", found[0]["note"])
 
 
 class DefaultStartTest(Fixture):

@@ -17,11 +17,11 @@ TOTAL_LABEL = "總營收"
 ROLE_SIGN = {"nine_months": -1}
 
 
-def comparatives(document: InlineDocument, accession: str, baselines: list[tuple[str, str, dict]], compose_for) -> list[dict]:
+def comparatives(document: InlineDocument, accession: str, baselines: list[tuple[str, str, dict]], compose_for, total_name: str | None = None) -> list[dict]:
     """新申報涵蓋的已上線期間，逐一比對每個分類在每個角色的值，回傳比對清單。
 
     `baselines` 是 (序列, 期末日, 已上線的 revenue.json)；`compose_for(request)` 回傳新申報中該期間的組成
-    （`Composition`），來源組不出來時丟出 `ParseError`。
+    （`Composition`），來源組不出來時丟出 `ParseError`。`total_name` 是組成中總營收的名稱（`unparseable` 的鍵）。
 
     比對單位是「分類 × 角色」：角色是已上線運算元的 `role`（季、年度、九個月累計），已上線值是該角色運算元的加權和；
     申報列示值是來源從新申報組出的同一期間運算式的加權和。加數的個數、順序或成員可以與已上線不同，只比分類值。
@@ -29,19 +29,23 @@ def comparatives(document: InlineDocument, accession: str, baselines: list[tuple
 
     來源能從新申報組出某段期間的總營收時，視為涵蓋該期間。結果是 `consistent`（差距不超過雙方所有運算元的
     誤差上限總和；每個 fact 的誤差上限取 decimals 與顯示文字精度中較粗者）、`different`（超出）、`unparseable`
-    （新申報或已上線的 fact 無法比較）或 `not_found`（組成中沒有這個分類）。沒有涵蓋的期間不列入；
-    已上線輸出沒有的期間長度（例如六個月累計）因此不比對。
+    （新申報或已上線的 fact 無法比較，包括來源組不出這段期間、或無法確定某一項是哪些 fact）或 `not_found`
+    （組成中沒有這個分類）。沒有涵蓋的期間不列入；已上線輸出沒有的期間長度（例如六個月累計）因此不比對。
     """
-    compositions: dict[tuple[str, str], Composition | None] = {}
+    compositions: dict[tuple[str, str], tuple[Composition | None, str | None]] = {}
 
-    def composed(span: tuple[str, str]) -> Composition | None:
+    def composed(span: tuple[str, str]) -> tuple[Composition | None, str | None]:
+        """（組成, 無法比較的原因）；兩者都是 None 代表新申報沒有涵蓋這段期間。"""
         if span not in compositions:
             duration = classify_duration(*span)
-            try:
-                found = compose_for(Request(span[1], duration, span[0])) if duration else None
-            except ParseError:
-                found = None
-            compositions[span] = found if found is not None and found.total is not None else None
+            found, error = None, None
+            if duration:
+                try:
+                    found = compose_for(Request(span[1], duration, span[0]))
+                except ParseError as failure:
+                    error = f"[{failure.check}] {failure.message}"
+            covered = found is not None and (found.total is not None or (total_name is not None and total_name in found.unparseable))
+            compositions[span] = (found if covered else None, error)
         return compositions[span]
 
     found = []
@@ -57,8 +61,8 @@ def comparatives(document: InlineDocument, accession: str, baselines: list[tuple
                 if len(spans) != 1 or any(o["kind"] != "xbrl_fact" or o["accession"] == accession for _, _, o in terms):
                     continue
                 span = spans.pop()
-                composition = composed(span)
-                if composition is None:
+                composition, error = composed(span)
+                if composition is None and error is None:
                     continue
                 sign = ROLE_SIGN.get(role, 1)
                 published = [
@@ -75,8 +79,13 @@ def comparatives(document: InlineDocument, accession: str, baselines: list[tuple
                     "published_value": sum(a["weight"] * a["value"] for a in published),
                     "published_addends": [{k: a[k] for k in ("operand", "concept", "dimensions", "weight", "value")} for a in published],
                 }
-                terms = composition.total if name is None else composition.categories.get(name, composition.reconciling.get(name))
-                entry.update(listed_value(document, terms, span, published, composition.missing.get(name)))
+                key = total_name if name is None else name
+                if error is not None or key in composition.unparseable:
+                    reason = error if error is not None else composition.unparseable[key]
+                    entry.update({"result": "unparseable", "listed_value": None, "listed_addends": [], "note": f"無法比較：{reason}"})
+                else:
+                    terms = composition.total if name is None else composition.categories.get(name, composition.reconciling.get(name))
+                    entry.update(listed_value(document, terms, span, published, composition.missing.get(key)))
                 found.append(entry)
     return found
 

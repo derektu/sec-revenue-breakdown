@@ -47,7 +47,7 @@ parser 依申報期末日（`filing.report_date`）切換寫法：
 | 總營收（Total consolidated revenue） | 不帶維度 | 不帶維度 |
 
 - 2024 年 Q1（0001166691-24-000031，期末 2024-03-31）以前，公司層級與 Content & Experiences 事業群內的總部、抵銷各自是一個 fact，所以相加成一類。從 2024 年 Q2（0001166691-24-000048，期末 2024-06-30）起各自只有一個 fact。
-- FY2023 10-K（0001166691-24-000011，期末 2023-12-31）的分部、公司層級與總營收 fact 是 `us-gaap:Revenues`，分部另帶 `cmcsa:BusinessUnitAxis`。parser 對這一份申報用這種寫法；FY2024 年報的 Q4 口徑一致也讀這份申報的上一財年數字。
+- FY2023 10-K（0001166691-24-000011，期末 2023-12-31）的分部、公司層級與總營收 fact 是 `us-gaap:Revenues`，分部另帶 `cmcsa:BusinessUnitAxis`。parser 對這一份申報用這種寫法。FY2023 不在上線範圍，FY2024 Q4 的口徑一致以這份申報組出的年度值作為上一財年先前申報的值。
 - `categories` 每一天都是這六類加 Eliminations。
 - 六類加上 Eliminations 等於總營收。
 - 分類名稱取自 2024 年分部表的列標籤。總營收取自分部表的 `Total consolidated revenue`（2024 年 Q1 為 `Comcast Consolidated`）。

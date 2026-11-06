@@ -52,6 +52,10 @@ def spec(ticker: str) -> tuple[ParserSource | CompanySpec, str]:
     uses_segment_axis = loaded.uses_axis(SEGMENT_AXIS) if isinstance(loaded, CompanySpec) else SEGMENT_AXIS in source.read_text()
     check_notes(ticker, uses_segment_axis, notes.read_text())
     digest = hashlib.sha256(source.name.encode() + source.read_bytes())
+    if source.name == "parser.py":
+        # 公司 parser 的結果也取決於它呼叫的 utility。
+        for path in sorted((ROOT.parent / "parser_utils").glob("*.py")):
+            digest.update(path.name.encode() + path.read_bytes())
     return loaded, digest.hexdigest()
 
 

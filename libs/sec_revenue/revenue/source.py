@@ -6,7 +6,7 @@
 
 from __future__ import annotations
 
-from types import ModuleType
+from types import MappingProxyType, ModuleType
 
 from .contract import Composition, FilingFacts, ParserFailure, Request, Term
 from .filings import Filing, ParseError
@@ -15,14 +15,14 @@ from .xbrl import InlineDocument
 
 
 def facts_only(document: InlineDocument) -> InlineDocument:
-    """只有 fact、namespaces 與 dei 的文件副本：交給公司 parser，不含 HTML 解析樹與表格。"""
+    """只有 fact、namespaces 與 dei 的唯讀副本：交給公司 parser，不含 HTML 解析樹與表格，改動它不影響框架的文件。"""
     stripped = InlineDocument.__new__(InlineDocument)
     stripped.locator = None
-    stripped.namespaces = document.namespaces
-    stripped.conflicts = document.conflicts
-    stripped.contexts, stripped.units = {}, {}
-    stripped.dei = document.dei
-    stripped.facts = document.facts
+    stripped.namespaces = MappingProxyType(dict(document.namespaces))
+    stripped.conflicts = frozenset(document.conflicts)
+    stripped.contexts, stripped.units = MappingProxyType({}), MappingProxyType({})
+    stripped.dei = MappingProxyType(dict(document.dei))
+    stripped.facts = tuple(document.facts)
     return stripped
 
 
@@ -93,7 +93,7 @@ class SpecSource:
         """申報期末日生效的定義，每個加數在申報中找期間相符的 fact（`one_of` 的每種寫法都找）。
 
         任一加數找不到時該項目不列出，原因記在 `missing`。寫法的前綴在文件中沒有宣告時視為不存在；
-        前綴宣告衝突時無法確定寫法對應哪些 fact，以 `ParserFailure` 結束。
+        前綴宣告衝突時無法確定寫法對應哪些 fact，原因記在 `unparseable`。
         """
         result = Composition()
         for group, item in self.items():
@@ -102,7 +102,11 @@ class SpecSource:
                 if group == "total":
                     raise ParseError("定義唯一", f"總營收 {item.name} 在 {filing.report_date} 沒有生效的定義")
                 continue
-            terms = addend_terms(document, filing.accession, item.name, definition.addends, request)
+            try:
+                terms = addend_terms(document, filing.accession, item.name, definition.addends, request)
+            except ParserFailure as error:
+                result.unparseable[item.name] = error.message
+                continue
             if isinstance(terms, str):
                 result.missing[item.name] = terms
                 continue

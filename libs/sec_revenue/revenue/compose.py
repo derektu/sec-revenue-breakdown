@@ -109,8 +109,10 @@ class PeriodComposer:
         self.fact_sets: dict[int, set[Fact]] = {}
 
     def request(self, filing: Filing, request: Request) -> Composition:
-        """向來源要一份申報中一段期間的組成。"""
-        return self.source.compose(self.filings.document(filing), filing, request)
+        """向來源要一份申報中一段期間的組成；fact 清單的集合在交給來源之前建立，供核對交回的 fact。"""
+        document = self.filings.document(filing)
+        self.facts_of(document)
+        return self.source.compose(document, filing, request)
 
     def compose(self, period: str) -> PeriodResult:
         """Q 序列的一期：Q1–Q3 或推算的 Q4。"""
@@ -191,19 +193,27 @@ class PeriodComposer:
         found = {}
         for name in expected:
             if name not in groups:
-                if name in composition.missing:
-                    raise ParseError("fact 存在且唯一", f"找不到 {composition.missing[name]}")
-                raise ParseError("定義唯一", f"{name} 在 {filing.report_date} 的分類中，但 {filing.accession} 的組成沒有它")
-            terms = composition.categories.get(name) or composition.reconciling.get(name)
+                self.absent(composition, name, filing, request)
+            terms = composition.categories[name] if name in composition.categories else composition.reconciling[name]
+            if not terms:
+                raise ParseError("定義唯一", f"{name}：{filing.accession} 的組成沒有任何運算元")
             found[name] = self.candidates(document, filing, name, terms, request, role, sign)
-        if composition.total is None:
-            name = self.source.total_name
-            if name in composition.missing:
-                raise ParseError("fact 存在且唯一", f"找不到 {composition.missing[name]}")
-            raise ParseError("fact 存在且唯一", f"找不到總營收 {name}：{filing.accession} {request.duration} 期末 {request.end}")
+        if list(groups) != expected:
+            raise ParseError("定義唯一", f"{filing.accession} 的組成順序 {list(groups)} 與 {filing.report_date} 的分類 {expected} 不同")
+        if not composition.total:
+            self.absent(composition, self.source.total_name, filing, request)
         total = self.candidates(document, filing, self.source.total_name, composition.total, request, role, sign)
         ordered = [(groups[name], name, found[name]) for name in groups]
         return ordered + [("total", self.source.total_name, total)]
+
+    @staticmethod
+    def absent(composition: Composition, name: str, filing: Filing, request: Request):
+        """主申報的組成沒有某一項：依來源記錄的原因結束該期。"""
+        if name in composition.unparseable:
+            raise ParseError("fact 存在且唯一", f"{name}：{composition.unparseable[name]}")
+        if name in composition.missing:
+            raise ParseError("fact 存在且唯一", f"找不到 {composition.missing[name]}")
+        raise ParseError("定義唯一", f"{name} 在 {filing.report_date} 的分類中，但 {filing.accession} {request.duration} 期末 {request.end} 的組成沒有它")
 
     def check_categories(self, items, start: str, nine_end: str, period: str):
         """年度期末的分類集合，必須等於財年起日到 Q3 期末之間每一天的分類集合（依來源的 `categories`，不需要 Q1、Q2 的申報）。"""
@@ -232,7 +242,7 @@ class PeriodComposer:
             {"check": "fact 存在且唯一", "result": "pass"},
             {"check": "單位與精度", "result": "pass"},
         ]
-        if any(self.geographic(c.facts[0]) for _, _, candidates in items for c in candidates):
+        if any(self.geographic(f) for _, _, candidates in items for c in candidates for f in c.facts):
             structural.append({"check": "地區成員完整", "result": "pass"})
         if nine_filing is not None:
             structural.append({"check": "Q4 期間", "result": "pass"})
@@ -267,21 +277,26 @@ class PeriodComposer:
         self.check_geography(document, filing, name, found, request)
         return found
 
+    @staticmethod
+    def geographic_axis(dimension_key: str) -> bool:
+        """地區軸以 namespace URI 判斷：srt taxonomy（每年不同日期）的 StatementGeographicalAxis，與文件用的前綴無關。"""
+        return dimension_key.startswith("{http://fasb.org/srt/") and dimension_key.endswith("}" + GEOGRAPHIC_AXIS.split(":")[1])
+
     def geographic(self, fact: Fact) -> bool:
-        return any(axis == GEOGRAPHIC_AXIS for axis, _ in fact.dimensions)
+        return fact.dimension_keys is not None and any(self.geographic_axis(axis) for axis, _ in fact.dimension_keys)
 
     def check_geography(self, document: InlineDocument, filing: Filing, name: str, found: list[Candidate], request: Request):
         """使用地區軸的運算元必須涵蓋申報中該軸的全部成員：同 concept、同其他 dimensions、同期間的 fact，地區成員都要在運算式中。"""
-        axis_key = document.resolve(GEOGRAPHIC_AXIS)
         shapes: dict[tuple, set[str]] = {}
         for candidate in found:
-            fact = candidate.facts[0]
-            if axis_key is None or not self.geographic(fact) or fact.dimension_keys is None:
-                continue
-            dims = dict(fact.dimension_keys)
-            others = tuple(sorted((a, m) for a, m in fact.dimension_keys if a != axis_key))
-            shapes.setdefault((fact.concept_key, others, fact.start, fact.end, fact.concept), set()).add(dims[axis_key])
-        for (concept_key, others, start, end, concept), listed in shapes.items():
+            for fact in candidate.facts:
+                if not self.geographic(fact):
+                    continue
+                axis_key = next(axis for axis, _ in fact.dimension_keys if self.geographic_axis(axis))
+                dims = dict(fact.dimension_keys)
+                others = tuple(sorted((a, m) for a, m in fact.dimension_keys if a != axis_key))
+                shapes.setdefault((fact.concept_key, axis_key, others, fact.start, fact.end), set()).add(dims[axis_key])
+        for (concept_key, axis_key, others, start, end), listed in shapes.items():
             present = {}
             for f in document.facts:
                 if f.concept_key != concept_key or f.end != end or f.start != start:
@@ -324,6 +339,9 @@ class PeriodComposer:
                 raise ParseError("fact 存在且唯一", f"{label}：{f.fact_id} 的前綴在文件中沒有宣告或宣告衝突")
             if not request.matches(f):
                 raise ParseError("fact 存在且唯一", f"{label}：{f.fact_id} 的期間 {f.start}～{f.end} 不是要求的期間")
+        geographic = [self.geographic(f) for f in term.facts]
+        if any(geographic) and (not all(geographic) or term.weight != 1):
+            raise ParseError("地區成員完整", f"{label}：地區軸的 fact 只能以權重 1、不與其他寫法混合的方式相加")
         keys = {(f.concept_key, f.dimension_keys) for f in term.facts}
         facts = [f for f in document.facts if (f.concept_key, f.dimension_keys) in keys and request.matches(f)]
         forms = {(f.concept_key, f.dimension_keys) for f in facts}

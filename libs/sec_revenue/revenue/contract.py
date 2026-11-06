@@ -70,13 +70,16 @@ class Composition:
     """一份申報中一段期間的組成。
 
     `categories`、`reconciling` 依輸出順序列出；這份申報沒有的分類不列出。`total` 為 None 代表組不出總營收。
-    `missing` 記錄沒有列出的項目與原因（名稱 → 原因），框架用於錯誤訊息。
+    `missing` 記錄申報中找不到的項目與原因（名稱 → 原因）；`unparseable` 記錄申報中有、但無法確定是哪些 fact 的項目
+    與原因（例如前綴宣告衝突）。總營收以 `TOTAL` 的名稱為鍵。主申報的呼叫兩者都是失敗；比較欄比對時前者記為
+    `not_found`，後者記為 `unparseable`。
     """
 
     categories: dict[str, list[Term]] = field(default_factory=dict)
     reconciling: dict[str, list[Term]] = field(default_factory=dict)
     total: list[Term] | None = None
     missing: dict[str, str] = field(default_factory=dict)
+    unparseable: dict[str, str] = field(default_factory=dict)
 
 
 class ParserFailure(ParseError):
