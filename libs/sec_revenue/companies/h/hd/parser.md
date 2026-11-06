@@ -33,19 +33,20 @@ concept 是 `us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax`。
 |---|---|
 | Hardlines | `srt:ProductOrServiceAxis=hd:MajorProductLineHardlinesMember`（兩分部期間另帶 Primary 分部，見下） |
 | Building Materials | `srt:ProductOrServiceAxis=hd:MajorProductLineBuildingMaterialsMember` |
-| Décor | `srt:ProductOrServiceAxis=hd:MajorProductLineDcorMember`；FY2023 10-K 是 `hd:MajorProductLineDecorMember`（`one_of`） |
-| Other | `one_of`：分部 `us-gaap:AllOtherSegmentsMember`、`hd:OtherSegmentMember`（FY2024 Q3 10-Q 以前） |
+| Décor | `srt:ProductOrServiceAxis=hd:MajorProductLineDcorMember`；單一分部期間另有寫法 `hd:MajorProductLineDecorMember`（FY2023 10-K），兩種寫法都找 |
+| Other | 分部 `us-gaap:AllOtherSegmentsMember`；FY2024 Q3 10-Q 以前的寫法是 `hd:OtherSegmentMember`，兩種寫法都找 |
 | 總營收（Net sales） | 不帶維度 |
 
-商品類別的定義以申報期末日分段，相鄰的生效期間首尾相接：
+parser 依申報期末日（`filing.report_date`）切換商品類別 fact 的分部維度：
 
 | 期末日 | 申報 | 商品類別 fact 的分部維度 |
 |---|---|---|
-| 2024-04-28 以前 | FY2024 Q1 10-Q 以前（單一分部，沒有 Other） | 不帶分部軸 |
-| 2024-04-29 至 2025-02-01 | FY2024 Q2、Q3 10-Q | `one_of`：分部 `hd:PrimarySegmentMember`，帶或不帶 `srt:ConsolidationItemsAxis=us-gaap:OperatingSegmentsMember` |
-| 2025-02-02 | FY2024 10-K | 分部 `us-gaap:ReportableSegmentAggregationBeforeOtherOperatingSegmentMember` |
-| 2025-02-03 起 | FY2025 10-Q 起 | 同 FY2024 Q2、Q3 的 `one_of` |
+| 2024-04-28 以前 | 到 FY2024 Q1 10-Q（0000354950-24-000152，期末 2024-04-28）為止：單一分部，沒有 Other | 不帶分部軸 |
+| 2024-04-29 至 2025-02-01 | FY2024 Q2 10-Q（0000354950-24-000201，期末 2024-07-28）起：分成 Primary 與 Other 兩個分部 | 分部 `hd:PrimarySegmentMember`；帶或不帶 `srt:ConsolidationItemsAxis=us-gaap:OperatingSegmentsMember` 兩種寫法都找 |
+| 2025-02-02 | FY2024 10-K（0000354950-25-000085） | 分部 `us-gaap:ReportableSegmentAggregationBeforeOtherOperatingSegmentMember` |
+| 2025-02-03 起 | FY2025 Q1 10-Q（0000354950-25-000165，期末 2025-05-04）起 | 同 FY2024 Q2、Q3 |
 
+- Other 從 FY2024 Q2 10-Q 起才有：`categories` 在 2024-04-28 以前是三個商品類別，2024-04-29 起加上 Other。
 - FY2024 10-K 以報告分部合計成員標示 Primary。這個成員是全部報告分部的合計，只在 Primary 是唯一報告分部時等於 Primary，所以只用於這一期。
 - FY2024 Q2、Q3 10-Q 與 FY2025 10-K 起的商品類別 fact 帶 `ConsolidationItemsAxis`，FY2025 各 10-Q 不帶。
 

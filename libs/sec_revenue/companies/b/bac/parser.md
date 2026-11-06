@@ -12,7 +12,7 @@
 
 分部取自 `us-gaap:StatementBusinessSegmentsAxis`。BAC 這個軸的成員是業務別：消費金融、財富管理、企業金融、交易業務。它們不是地區，所以採用。
 
-All Other 是公司層級的調節項與抵銷（`bac:CorporateReconcilingItemsAndEliminationsMember`），數值常為負。兩個對照來源把它列成一類，所以它是分類，不是 `reconciling`。
+All Other 是公司層級的調節項與抵銷（`bac:CorporateReconcilingItemsAndEliminationsMember`），數值常為負。兩個對照來源把它列成一類，所以它是分類，不是調節項。
 
 ## 分類與 tag
 
@@ -27,7 +27,7 @@ concept 是 `bac:RevenuesNetOfInterestExpenseFullTaxEquivalentBasis`（扣除利
 | All Other | `srt:ConsolidationItemsAxis=bac:CorporateReconcilingItemsAndEliminationsMember` |
 | 總營收（Total revenue, net of interest expense） | 不帶維度 |
 
-- 所有期別都使用同一組定義，沒有 `effective` 分段。
+- 所有期別都使用同一組寫法，parser 不依期末日切換。
 - 五類加總等於總營收，沒有調節項。
 - 總營收是 FTE 口徑：分部表的 Total Corporation 欄。它比損益表的 GAAP 總營收多出 FTE 調整（2024 年 Q1 為 1.58 億美元）。分部營收只有 FTE 口徑，所以總營收也取 FTE，加總才一致。
 - 分類名稱取自分部表的欄名；總營收取自同表的列標籤 `Total revenue, net of interest expense`。

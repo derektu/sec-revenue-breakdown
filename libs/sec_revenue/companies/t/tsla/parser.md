@@ -16,7 +16,7 @@ concept 是 `us-gaap:Revenues`，分部 fact 只帶分部軸。Automotive 含汽
 | Energy generation and storage | `tsla:EnergyGenerationAndStorageSegmentMember` |
 | 總營收（Total revenues） | `us-gaap:Revenues` 不帶維度 |
 
-FY2024 Q1（2024-03-31）到 FY2026 Q3（2026-09-30）的 11 季使用同一組定義，兩類加總等於總營收。
+FY2024 Q1（2024-03-31）到 FY2026 Q3（2026-09-30）的 11 季使用同一組寫法，兩類加總等於總營收。
 
 ## 期別與推算
 
