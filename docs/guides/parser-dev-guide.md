@@ -106,13 +106,15 @@ EOF
 | 要減掉的項目 | `find(..., weight=-1)` | |
 | 分類加總與總營收之間的合法差額 | `put(result, "reconciling", 名稱, ...)` | CMCSA 的 Eliminations、JPM 的 Reconciling items |
 | 總營收 | `put(result, "total", TOTAL, find(filing, request, concept))` | 每個 ticker |
-| 寫法在某份申報改變 | 優先用 `one_of` 讓兩種寫法在任何申報都成立；非依日期不可時，以 `filing.report_date` 切換 | CMCSA、UPS、JPM |
+| 寫法在某份申報改變 | 優先用 `one_of` 讓兩種寫法在任何申報都成立；分類集合也不同時，依這份申報在該期間有沒有某一結構的 fact 選擇（見表下說明）；非依日期不可時，以 `filing.report_date` 切換 | CMCSA、UPS、JPM、MSFT、DIS |
+
+依申報內容選結構時，用 `isinstance(find(filing, request, concept, {軸: 成員}), Missing)` 判斷（MSFT 查新結構的成員、DIS 查舊結構的成員）。`find` 經 namespace URI 比對；不要直接比 concept 或成員字串。
 
 寫的時候注意：
 
 - 檔頭 docstring 一句話說明觀點與分類；用到 `us-gaap:StatementBusinessSegmentsAxis` 時，寫明它的成員是業務別。
 - 找不到的項目交給 `put` 記到 `missing`，不要自己補值、不要回傳 0。
-- `categories(day)` 回答「這一天這個 ticker 有哪些分類與調節項，依輸出順序」。它和 `compose` 對主申報交回的分類必須一致。分類集合改變的日期，就是 `categories` 切換的日期：取新結構第一份主申報所涵蓋那一季的**起日**，也就是最後一份舊結構主申報期末日的隔天（UPS 的 `2025-01-01` 是 Q1 10-Q；JPM 的 `2024-04-01` 是 Q2 10-Q；CAT 新結構第一份是 FY2025 10-K，取 Q4 起日 `2025-10-01`）。不要用那份申報的期末日：框架判斷 Q4 推算條件時，逐日問財年起日到 Q3 期末的 `categories`；新結構從財年第一季開始時，切在期末日會讓第一季期末日之前的日子仍回答舊分類，那一年的 Q4 被誤判為不推算。
+- `categories(day)` 回答「這一天這個 ticker 有哪些分類與調節項，依輸出順序」。它和 `compose` 對主申報交回的分類必須一致。分類集合改變的日期，就是 `categories` 切換的日期：取新結構第一份主申報所涵蓋那一季的**起日**，也就是最後一份舊結構主申報期末日的隔天（UPS 的 `2025-01-01` 是 Q1 10-Q；JPM 的 `2024-04-01` 是 Q2 10-Q；CAT 新結構第一份是 FY2025 10-K，取 Q4 起日 `2025-10-01`）。不要用那份申報的期末日：框架判斷 Q4 推算條件時，逐日問財年起日到 Q3 期末的 `categories`；新結構從財年第一季開始時，切在期末日會讓第一季期末日之前的日子仍回答舊分類，那一年的 Q4 被誤判為不推算。`categories` 至少要涵蓋範圍內第一期所在財年的**上一財年期末日**以後：Q4 推算條件從財年起日問起；第一個財年沒有已上線的上一財年 FY 時，Q4 口徑一致以上一份 10-K 組年度值，並核對 `categories(上一財年期末日)`。更早的日期框架不會問，`parser.md` 寫明涵蓋的下限（例如更早的分部結構不在涵蓋範圍）。
 - 依日期切換時，常數旁註明是哪一份申報開始改變（accession 與期末日），`parser.md` 也寫。
 - 不寫死 fact id、數值與沒有理由的特定期別例外；每一期照該期申報自己的分類結構與名稱組。詳見 `parser.md` 的「時點與寫 parser 的人的知識」。這條管的是 `parser.py`：`parser.md` 的查證與差異說明可以引用 accession、fact id 與數值作為證據。
 - 不 import 其他 ticker 的 parser；寫法相近也各寫各的。
@@ -135,7 +137,7 @@ EOF
 財年與季末日（52／53 週制要寫）；Q1–Q3、Q4、FY 各自怎麼來；哪些 Q4 不推算與原因。
 
 ## 數字在原文的位置
-10-Q、10-K 中是哪張表。
+10-Q、10-K 中是哪張表。同一個 fact 常標在多張表，框架選來當證據的表格（`data/revenue/` 各期 evidence 檔名的 `-t<編號>`）不一定是分部表；寫證據實際取自的表格。
 
 ## 已知的重複 fact（有的話）
 
@@ -175,7 +177,7 @@ jq -r '.periods | to_entries[] | .key as $s | .value | to_entries[] | [$s, .key,
 | fact 存在且唯一 | 重複 fact 數值不一致，或前綴宣告衝突 | `one_of` 的兩種寫法其實是不同數字 | 看兩種寫法的 fact 各在哪張表 |
 | 地區成員完整 | 地區軸的成員沒有全部列入 | 運算式只列了部分地區成員 | 把該軸同 concept、同其他 dimensions 的全部成員列入運算式 |
 | 單位與精度 | decimals 缺漏或粗於百萬位 | 申報本身的標記 | 回報，不能在 parser 處理 |
-| Q4 期間、財年與季別、選申報 | 期間長度或財年宣告不合 | 非 13 週的季度、申報宣告錯財年 | 回報（框架的事） |
+| Q4 期間、財年與季別、選申報 | 期間長度或財年宣告不合 | 單季不在 84–98 天、九個月累計不在 266–280 天，或申報宣告錯財年 | 回報（框架的事） |
 
 `not_derived` 不是失敗：Q4 推算條件或 Q4 口徑一致不成立時，Q4 依規則留空，FY 照常輸出（規則見 `parser.md` 的「框架流程」）。你要做的是在 `parser.md` 寫明是哪一份申報、哪些分類造成的。
 
@@ -271,8 +273,8 @@ Refs #<issue>
 - **一個分類由多個分部相加**：LIN 的 Industrial Gases ＝ Americas ＋ EMEA ＋ APAC。地區軸 `srt:StatementGeographicalAxis` 只能以該軸全部成員相加出現（規則見 `parser.md` 的「公司 parser 的介面」）。
 - **總營收的口徑**：BAC 用 FTE、JPM 的分部是 managed basis。總營收跟著分類口徑；分類與報告總營收之間的調整列為調節項。
 - **年報改了分類口徑**：UPS 2024 年、BAC 2025 年、HD 每年的 10-K 重列上一財年，Q4 因口徑一致不成立而 `not_derived`，這是預期結果。年報沒有重列、新口徑要到之後的 10-Q 才看得出來時（KO 2025 年），Q4 照常推算，之後的差異標記會揭露。口徑在 10-Q 就改了、同財年的 10-Q 與年報都重列上一財年時（MSFT FY2025），年度與九個月累計雖然同口徑，Q4 仍因口徑一致不成立而 `not_derived`；這是規則的結果，不是 parser 錯，不要自己算 Q4 補值。
-- **10-K/A、10-Q/A**：主申報取最早的原申報，修正申報只參與差異標記（TSLA 的 Part III 10-K/A）。parser 不需要特別處理。
-- **52／53 週制**：HD、NVDA、AAPL 的季末日不是月底，期別以實際期末日識別，不要改成曆季底。季度不是 13 週（COST 的 16 週 Q4）時框架不支援，回報。
+- **10-K/A、10-Q/A**：主申報取同一期末日申報日最早的原申報，修正申報只參與差異標記（TSLA、DIS 的 Part III 10-K/A；DIS 2024-01-24 那份沒有營收 fact）。parser 不需要特別處理。
+- **52／53 週制**：HD、NVDA、AAPL 的季末日不是月底，期別以實際期末日識別，不要改成曆季底。框架以天數判斷期間：單季 84–98 天（12–14 週，含 53 週年度的 14 週 Q4，例如 DIS FY2026）、九個月 266–280 天、年度 357–378 天。超出時（COST 的 16 週 Q4）框架不支援，回報。
 - **多個 CIK**：前身與繼受實體以 `tickers.csv` 的 `cik` 欄位 `;` 分隔，由人維護；parser 不處理 CIK。
 - **分部軸的成員是地區**：AAPL 的 `us-gaap:StatementBusinessSegmentsAxis` 是 Americas、Europe 等地區，不能用。用這個軸時，`parser.md` 必須寫明成員是業務別：`parser.md` 沒提到這個軸時 parse 會報錯，說明內容由 review 檢查。
 
