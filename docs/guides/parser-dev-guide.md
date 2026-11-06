@@ -203,7 +203,7 @@ CI 以快照對全部 ticker 跑 `parse --check`，所以新的 ticker 要連同
 
 ### 8. 自我驗收
 
-全部通過才送 review：
+全部通過才送 review（還沒 commit 的改動，見 [從寫完到合併](dev-workflow.md#從寫完到合併)）：
 
 ```bash
 .venv/bin/python scripts/sec_pipeline.py parse --tickers MSFT --check               # 以原文重跑，與輸出逐欄比對
@@ -225,7 +225,7 @@ npm run check                                                                   
 
 ### 9. PR
 
-一個 ticker 一個 PR，獨立 review 後由人合併。PR 說明：
+一個 ticker 一個 PR。獨立 review 修完、人核准後才 commit 並開 PR，CI 通過後合併（見 [從寫完到合併](dev-workflow.md#從寫完到合併)）。PR 說明附 review 摘要：
 
 ```markdown
 Refs #<issue>
@@ -243,11 +243,14 @@ Refs #<issue>
 - parse --check（原文）、parse --check --snapshots：沒有差異
 - npm run check：通過
 
-## 需要決定
-- <交給人判斷的事項，或「無」>
+## 獨立 review
+- 結論：<通過>；修正的問題：<清單，或「無」>
+
+## 人的決定
+- <核准前人決定的事項，或「無」>
 ```
 
-寫 parser 時不改 `tickers.csv`。`status` 等欄位的值由人在判斷能上線時決定，人核准後可以交辦 agent 寫入（見 [開發流程](dev-workflow.md) 第 9 步）。
+寫 parser 時不改 `tickers.csv`。`status` 等欄位的值由人在判斷能上線時決定，人核准後由 agent 寫入，與 parser 在同一個 commit（見 [開發流程](dev-workflow.md) 第 9 步）。
 
 ## 常見陷阱
 
