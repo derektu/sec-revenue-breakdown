@@ -1,6 +1,6 @@
-# PM 指南：營收拆分資料怎麼來、怎麼看、怎麼處理問題
+# 資料使用指南
 
-這份文件寫給檢視資料、決定對外發布哪些公司、遇到問題時請 agent 調查的 PM。看懂這份文件不需要讀程式碼；想了解技術細節，可以看 `docs/architecture/parser.md`（引擎與輸出格式）與各公司的 `libs/sec_revenue/companies/<首字母>/<代號>/parser.md`（該公司的分類與例外）。
+這份文件寫給使用這份資料做後續開發的 RD 與 PM：資料怎麼來、狀態與標記代表什麼、輸出檔案長什麼樣子、遇到問題怎麼請人調查。看懂這份文件不需要讀引擎程式碼；技術細節見 [`docs/architecture/parser.md`](architecture/parser.md)（引擎與輸出格式），各公司的分類與例外見 `libs/sec_revenue/companies/<首字母>/<代號>/parser.md`。
 
 ## 這套系統做什麼
 
@@ -19,16 +19,14 @@
 
 ## 一家公司怎麼上線
 
-1. **擷取參考資料**：從 Stock Analysis、富途、TradingView 擷取該公司的營收拆分，存在 `data/universe/references/`。參考資料只用來選觀點和首次比對，不當作數字來源。
-2. **選觀點**：比較各來源的拆分方式（例如產品線或業務分部），選一個申報能重現、多數來源採用的拆分。各來源不一致時，開發者提出建議與理由，由使用者決定。
-3. **分類還是調節項**：分類加總和總營收之間的差額項目（例如公司間抵銷、未分配項目），參考資料多數列出的就列成分類，多數沒列的就列成調節項。
-4. **寫規格並驗證**：規格寫明每個分類對應哪個 XBRL 標記、從哪一期起適用。系統依規格產生每一期的數字，與參考資料逐期比對，每個差異都在該公司的 `parser.md` 說明原因。
-5. **獨立 review**：另一個 agent 檢查規格、說明與輸出。review 通過、開發者判斷沒有問題就合併。觀點選擇等有爭議的決定由使用者決定。
-6. **標為 ok**：`data/universe/tickers.csv` 的 `status` 設為 `ok`，公司就出現在 viewer 的搜尋清單。
+摘要（完整的操作流程見[開發流程指南](dev-workflow.md)）：
 
-viewer 是 PM 的工作台，`ok` 代表這家公司是對外發布的候選，不代表已經對外發布。
+- **選觀點**：擷取 Stock Analysis、富途、TradingView 的營收拆分（參考資料，存在 `data/universe/references/`），選一個申報能重現、多數來源採用的拆分。各來源不一致等有爭議的決定，由使用者決定。
+- **分類還是調節項**：分類加總和總營收之間的差額項目（例如公司間抵銷），參考資料多數列出的就列成分類，多數沒列的列成調節項。
+- **規格與驗證**：規格寫明每個分類對應哪個 XBRL 標記、適用哪些期別；產生的數字與參考資料逐期比對，差異在該公司的 `parser.md` 說明。
+- **review 與上線**：另一個 agent 獨立 review；通過、開發者判斷沒有問題就合併，並把 `data/universe/tickers.csv` 的 `status` 設為 `ok`，公司就出現在 viewer。
 
-上線後的新期別不比對參考資料：系統自己的檢核（例如分類加總等於總營收）通過就發布。
+參考資料只用來選觀點、首次比對與解釋差異，不當作數字來源。`ok` 代表這家公司是對外發布的候選，不代表已經對外發布。上線後的新期別不比對參考資料：系統自己的檢核（例如分類加總等於總營收）通過就發布。
 
 ## 兩個序列：季度與年度
 
@@ -106,6 +104,153 @@ viewer 在本機執行，用瀏覽器開啟 <http://127.0.0.1:7290>。它只讀�
 | CAT 2025 年 Q4 | 灰底「留空」 | 前三季是 Energy & Transportation，年報改名 Power & Energy，分類不同。表上兩列各自只在部分期別有值 |
 | KO 2025 年 Q4 | 有數字，帶橘底標記 | 年報沒有重列上一年，看不出口徑變更，照常推算；2026 年的 10-Q 以新口徑重列 2025 年，所以 2025 年 Q1–Q4 都有標記 |
 | HD 各期 | 很多橘底標記，FY2025 的 Q4 留空 | HD 每年依新的部門歸類重列商品類別（Hardlines、Building Materials、Décor），總營收不受影響 |
+
+## 輸出檔案格式速覽
+
+完整欄位定義以 [`docs/architecture/parser.md`](architecture/parser.md) 的「正式輸出」一節為準，這裡只列後續開發最常用的部分。
+
+```
+data/revenue/<首字母>/<TICKER>/
+  status.json                      兩個序列每一期的處理結果與差異標記
+  Q/<期末日>/revenue.json           季度（Q1–Q4），已發布的期別才有
+  Q/<期末日>/evidence/              每個運算元所在的 SEC 表格（HTML 與截圖）
+  FY/<期末日>/revenue.json          年度，期末日與同財年的 Q4 相同
+  FY/<期末日>/evidence/
+```
+
+金額一律是整數美元（`unit` 為 `USD`）。
+
+### revenue.json
+
+一個期別一份。以下是 JPM 2025 年 Q3（`data/revenue/J/JPM/Q/2025-09-30/revenue.json`）的節錄：
+
+```json
+{
+  "schema_version": 1,
+  "ticker": "JPM",
+  "view": "business_segment",
+  "series": "Q",
+  "period_end": "2025-09-30",
+  "fiscal_year": 2025,
+  "fiscal_quarter": 3,
+  "unit": "USD",
+  "filings": {
+    "primary": { "accession": "0001628280-25-048859", "form": "10-Q", "report_date": "2025-09-30", "filing_date": "2025-11-04" }
+  },
+  "categories": {
+    "Consumer & Community Banking": { "value": 19473000000, "expression": [ { "operand": "op1", "weight": 1 } ] },
+    "...": "..."
+  },
+  "reconciling": {
+    "Reconciling items": { "value": -693000000, "expression": [ { "operand": "op5", "weight": 1 } ] }
+  },
+  "total": { "value": 46427000000, "expression": [ { "operand": "op6", "weight": 1 } ] },
+  "operands": {
+    "op1": {
+      "kind": "xbrl_fact",
+      "role": "quarter",
+      "accession": "0001628280-25-048859",
+      "form": "10-Q",
+      "filing_date": "2025-11-04",
+      "document": { "name": "jpm-20250930.htm", "url": "https://www.sec.gov/Archives/edgar/data/19617/000162828025048859/jpm-20250930.htm", "...": "..." },
+      "concept": "us-gaap:RevenuesNetOfInterestExpense",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "jpm:ConsumerCommunityBankingMember"
+      },
+      "period": { "start": "2025-07-01", "end": "2025-09-30" },
+      "value": 19473000000,
+      "raw": "19,473",
+      "decimals": "-6",
+      "evidence": { "table": "0001628280-25-048859-ae38be24dc28-t269", "...": "..." },
+      "...": "..."
+    }
+  },
+  "checks": {
+    "structural": [ "..." ],
+    "sum": { "categories": 46427000000, "total": 46427000000, "difference": 0, "tolerance": "3000000" }
+  }
+}
+```
+
+| 欄位 | 內容 |
+|---|---|
+| `series`、`period_end`、`fiscal_year`、`fiscal_quarter` | 序列（`Q`／`FY`）、期末日、申報宣告的財年與季別（FY 沒有季別） |
+| `view` | 觀點：`product`（產品別）或 `business_segment`（業務分部） |
+| `categories` | 各分類的值（`value`）與運算式（`expression`：運算元編號與正負號） |
+| `reconciling` | 調節項，格式同分類；公司沒有調節項時沒有這個欄位 |
+| `total` | 總營收。分類加調節項的總和等於總營收，誤差在精度範圍內 |
+| `operands` | 每個運算元：來源申報、SEC 原文連結、XBRL concept 與維度、期間、值、證據表格。`role` 是 `quarter`、`annual` 或 `nine_months`；Q4 的每個分類有 `annual` 與 `nine_months` 兩個運算元 |
+| `filings` | 主申報；Q4 另有 `nine_months`（Q3 10-Q） |
+| `checks` | 結構檢核與加總檢核的結果 |
+
+### status.json
+
+一家公司一份，`periods.Q` 與 `periods.FY` 列出每個處理過的期別。`status` 有三種：
+
+| `status` | 意思 | 有沒有 revenue.json |
+|---|---|---|
+| `published` | 已發布 | 有 |
+| `not_derived` | Q4 留空；`check` 是「Q4 推算條件」或「Q4 口徑一致」，`reason` 說明原因 | 沒有（見下方說明） |
+| `failed` | 沒通過檢核；`check`、`reason` 說明原因 | 沒有（見下方說明） |
+
+先前已發布的期別重算後變成 `not_derived` 或 `failed` 時，已發布的 `revenue.json` 保留不動，`published_output_kept` 為 `true`。
+
+已發布的期別可能帶 `differences`（差異標記），每筆是一個分類在一個角色的比對結果：已發布值（`published_value`）、後來申報列出的值（`listed_value`）、來源申報（`source`），以及雙方的加數明細。
+
+以下是 UPS（`data/revenue/U/UPS/status.json`）的兩筆節錄。2024 年 Q4 因年報重列上一年而留空（`basis_changes` 只列第一筆）：
+
+```json
+"2024-12-31": {
+  "status": "not_derived",
+  "check": "Q4 口徑一致",
+  "fiscal_year": 2024,
+  "fiscal_quarter": 4,
+  "reason": "年報 0001090727-25-000019 列示的上一財年（2023-12-31 止）數字與先前申報（上一份年報，0001090727-24-000008）不同：U.S. Domestic Package 上一份年報 59958000000、年報 60205000000；Supply Chain Solutions 上一份年報 13169000000、年報 12922000000；年報改了分類口徑，Q4 不推算",
+  "basis_changes": [
+    {
+      "category": "U.S. Domestic Package",
+      "period": { "start": "2023-01-01", "end": "2023-12-31" },
+      "previous_value": 59958000000,
+      "listed_value": 60205000000,
+      "previous": { "basis": "filing", "accession": "0001090727-24-000008" },
+      "listed": { "accession": "0001090727-25-000019" },
+      "...": "..."
+    }
+  ],
+  "published_output_kept": false
+}
+```
+
+2024 年 Q2 已發布，2025 年 Q2 的 10-Q 列出的去年同季數字不同，留下差異標記（加數明細省略）：
+
+```json
+"2024-06-30": {
+  "status": "published",
+  "fiscal_year": 2024,
+  "fiscal_quarter": 2,
+  "accession": "0001090727-24-000045",
+  "differences": [
+    {
+      "category": "U.S. Domestic Package",
+      "role": "quarter",
+      "period": { "start": "2024-04-01", "end": "2024-06-30" },
+      "result": "different",
+      "published_value": 14119000000,
+      "listed_value": 14201000000,
+      "source": { "accession": "0001090727-25-000064", "form": "10-Q", "filing_date": "2025-08-06" },
+      "published_addends": [ "..." ],
+      "listed_addends": [ "..." ]
+    }
+  ]
+}
+```
+
+使用這份資料時：
+
+- 讀數字從 `revenue.json` 讀；判斷某一期為什麼沒有數字、有沒有標記，從 `status.json` 讀。
+- 分類集合可能隨期別不同（公司新增、合併或改名分類），不要假設每期都有同一組分類。
+- 差異標記不改已發布值；要不要對外揭露、怎麼呈現，由後續產品決定。
 
 ## 遇到標記或客戶問題時
 
