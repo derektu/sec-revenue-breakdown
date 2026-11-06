@@ -12,7 +12,7 @@ from dataclasses import dataclass
 import hashlib
 from pathlib import Path
 
-from ..engines import JsonCodec
+from ..common.jsonio import JsonCodec
 from .xbrl import InlineDocument
 
 ORIGINAL_FORMS = {"10-Q", "10-K"}

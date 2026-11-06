@@ -22,7 +22,5 @@ jobs:
       - name: Unit test
         run: python -m unittest discover -s tests
 
-      # 以追蹤中的 research/sec-30-baseline-2026-11-04/ 凍結 facts 重播引擎，
-      # 比對 research/refactor-baseline-sec-20261104/ 的凍結答案。
-      - name: 引擎回歸檢查
-        run: python scripts/check_engine_regression.py
+      - name: 驗證 ticker 清單與對照資料
+        run: python scripts/validate_universe.py

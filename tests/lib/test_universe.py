@@ -83,7 +83,7 @@ def reference(ticker="AAPL"):
             },
             "futu": {
                 "captures": {
-                    FUTU: {"captured_at": "2026-07-30T08:00:00Z", "method": "legacy_import"},
+                    FUTU: {"captured_at": "2026-07-30T08:00:00Z", "method": "manual"},
                 },
                 "periods": [
                     {
@@ -225,16 +225,6 @@ class PathHelperTests(unittest.TestCase):
 class RepoUniverseTests(unittest.TestCase):
     def test_repo_universe_passes(self):
         self.assertEqual(validate_universe(ROOT / "data" / "universe"), [])
-
-    def test_csv_cik_matches_registry_submission_ciks(self):
-        # registry.json 移除後（T3）刪除此測試。
-        registry = json.loads((ROOT / "libs" / "sec_revenue" / "registry.json").read_text(encoding="utf-8"))
-        entries = {e.ticker: e for e in load_tickers(ROOT / "data" / "universe" / "tickers.csv")}
-        shared = sorted(set(entries) & set(registry))
-        self.assertTrue(shared)
-        for ticker in shared:
-            with self.subTest(ticker=ticker):
-                self.assertEqual(list(entries[ticker].ciks), registry[ticker]["submission_ciks"])
 
 
 class ValidUniverseTests(UniverseTestCase):
@@ -593,7 +583,7 @@ class ReferenceErrorTests(UniverseTestCase):
         def mutate(d):
             futu(d)["captures"][FUTU]["files"] = files_entry("futu", FUTU)
         self.write_aapl(mutate)
-        self.assertReported("method 為 legacy_import 時不得有 files")
+        self.assertReported("method 為 manual 時不得有 files")
 
     def test_evidence_path_hash_and_presence(self):
         def mutate(d):

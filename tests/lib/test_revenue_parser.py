@@ -11,8 +11,8 @@ import unittest
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "libs"))
 from sec_revenue import companies  # noqa: E402
-from sec_revenue.engines import JsonCodec  # noqa: E402
-from sec_revenue.evidence import TableLocator  # noqa: E402
+from sec_revenue.common.jsonio import JsonCodec  # noqa: E402
+from sec_revenue.revenue.evidence import TableLocator  # noqa: E402
 from sec_revenue.revenue.compose import PeriodComposer  # noqa: E402
 from sec_revenue.revenue.engine import RevenueParser, check_outputs, ticker_dir  # noqa: E402
 from sec_revenue.revenue.filings import FilingSet, ParseError  # noqa: E402
@@ -1730,7 +1730,7 @@ class StrictnessTest(Fixture):
                     self.compose_q1(items)
 
     def test_evidence_and_reader_share_number_rule(self):
-        from sec_revenue.evidence import ix_number
+        from sec_revenue.revenue.evidence import ix_number
 
         self.assertEqual(ix_number("1,234", "num-dot-decimal", "3", "-"), (-1234000, None))
         self.assertIsNone(ix_number("-1,234", "num-dot-decimal", "3", None)[0])

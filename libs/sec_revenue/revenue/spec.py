@@ -5,7 +5,7 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 import datetime as dt
 
 # 觀點只取產品或業務別的拆分；地區拆分不是觀點。

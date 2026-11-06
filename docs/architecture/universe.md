@@ -124,9 +124,9 @@ BRK-B,1067983,Berkshire Hathaway Inc.,ok,stockanalysis,4,分部 tag 八季一致
 | 來源 | `periods` | 非空陣列 | 該來源呈現的期間 |
 | 擷取 | `url` | `https://` 開頭 | 擷取頁面；`browser_dom` 必填，其他方法選填 |
 | 擷取 | `captured_at` | UTC 的 ISO 8601 時間 | 擷取時間，見「時間格式」 |
-| 擷取 | `method` | `browser_dom`、`legacy_import`、`manual` | 取得方式 |
+| 擷取 | `method` | `browser_dom`、`manual` | 取得方式 |
 | 擷取 | `display_unit` | 選填；`K`、`M`、`B`、`萬`、`億` | 表格表頭標示的單位，例如表頭寫「Millions」、儲存格只有 `57,583` 時填 `M` |
-| 擷取 | `files` | `{png, html, txt}`，各為 `{path, sha256}` | 證據檔；`browser_dom` 必填且三個都要，`legacy_import`、`manual` 不得有 |
+| 擷取 | `files` | `{png, html, txt}`，各為 `{path, sha256}` | 證據檔；`browser_dom` 必填且三個都要，`manual` 不得有 |
 | 期間 | `label` | 非空字串 | 來源上的期間標籤原文，例如 `Q3 2026`、`2026/Q3` |
 | 期間 | `period_end` | 選填；`YYYY-MM-DD` | 來源顯示的日期，不保證是公司的期末日（例如 Stock Analysis 把非曆年季底的公司對齊到曆年季底）；來源沒有日期時省略，不自行推算。與 SEC 期間的對齊由比對工具處理 |
 | 期間 | `kind` | `Q`、`FY` | 單季或會計年度 |
@@ -149,7 +149,7 @@ capture_id 是擷取時間取到秒的 UTC 時間 `YYYYMMDDTHHMMSSZ`，例如 `2
 
 三者都只涵蓋表格區塊，不保存整頁，以免存入登入帳號資訊、廣告與 script。`sha256` 是檔案 bytes 的 sha256，用來確認數值與證據屬於同一次擷取；驗證只比對雜湊與檔案是否存在，不解碼圖片。
 
-`legacy_import` 與 `manual` 沒有證據檔。`captures/` 下每個 capture 目錄與證據檔都須被 `reference.json` 引用，未被引用的視為錯誤。
+`manual` 沒有證據檔。`captures/` 下每個 capture 目錄與證據檔都須被 `reference.json` 引用，未被引用的視為錯誤。
 
 ### 時間格式
 

@@ -13,7 +13,7 @@ from dataclasses import dataclass
 import datetime as dt
 from decimal import Decimal
 
-from ..evidence import TableLocator, clean_text, ix_number
+from .evidence import TableLocator, clean_text, ix_number
 
 # 期間長度（含首尾日）分類；不在任何範圍內的期間不使用。
 DURATIONS = (

@@ -14,7 +14,7 @@ import json
 from pathlib import Path
 import re
 
-from .evidence import FILE_NAME_RE
+from .revenue.evidence import FILE_NAME_RE
 from .universe import TICKER_RE, UniverseError, load_tickers
 
 SERIES = ("Q", "FY")

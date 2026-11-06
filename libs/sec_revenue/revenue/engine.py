@@ -27,8 +27,8 @@ import shutil
 import tempfile
 from typing import Callable
 
-from ..engines import JsonCodec
-from ..evidence import TableScreenshotter
+from ..common.jsonio import JsonCodec
+from .evidence import TableScreenshotter
 from .compose import NotDerived, Operand, PeriodComposer, PeriodResult
 from .filings import FilingSet, ParseError
 from .review import TOTAL_LABEL, comparatives
@@ -53,8 +53,8 @@ def sha256(raw: bytes) -> str:
 
 
 def engine_sha256() -> str:
-    """引擎程式（`revenue/` 與證據元件）的 hash，記錄在每份輸出。"""
-    files = sorted((PACKAGE / "revenue").glob("*.py")) + [PACKAGE / "evidence.py"]
+    """引擎程式（`revenue/*.py`，含證據元件）的 hash，記錄在每份輸出。"""
+    files = sorted((PACKAGE / "revenue").glob("*.py"))
     return sha256(b"".join(f.name.encode() + sha256(f.read_bytes()).encode() for f in files))
 
 

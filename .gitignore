@@ -1,4 +1,4 @@
-# Never commit credentials, browser state, restricted reference data or caches.
+# Never commit credentials, browser state or caches.
 .env
 .env.*
 !.env.example
@@ -14,28 +14,17 @@ __pycache__/
 .pytest_cache/
 .DS_Store
 node_modules/
-data/cache/
-data/restricted/
-data/staging/
-data/archives/
-research/imports/
-scratch/
+
+# 受限研究資料，永遠不進 repo
 /data/vendor/local/
+# 早期研究流程留在本機的產物
+/data/engine-check/
 /research/recovered-sec/data/
 /research/recovered-sec/outputs/
-/research/recovered-sec/eight_quarter_eval/data/
-/research/recovered-sec/eight_quarter_eval/outputs/
 
-# 可重跑的新引擎產物
+# SEC_DATA_DIR 未設定時，下載的 SEC 原文與索引放在 repo 的 data/
 /data/sec/
-/data/outputs/
-/data/engine-check/
-
-/data/references/
-/data/engine-ui/
-
 /data/pipeline/
-/data/workflow-smoke/
 
 /tickers.local.txt
 /tickers.local.json

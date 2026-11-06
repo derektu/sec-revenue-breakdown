@@ -9,7 +9,6 @@ import json
 from pathlib import Path
 import re
 
-from .service import ParserRegistry
 from .universe import TICKER_RE, load_tickers
 
 
@@ -37,27 +36,6 @@ def parse_tickers(tickers: list[str] | None = None, file: Path | None = None) ->
     if invalid:
         raise ValueError("ticker 格式不符：" + ", ".join(invalid))
     return list(dict.fromkeys(names))
-
-
-class SupportedTickers:
-    """萃取用：只接受 registry 有 parser 的公司；省略 ticker 或 `--all` 代表全部支援公司。"""
-
-    def __init__(self, registry: ParserRegistry | None = None):
-        self.registry = registry or ParserRegistry()
-
-    def select(
-        self,
-        tickers: list[str] | None = None,
-        file: Path | None = None,
-        all_tickers: bool = False,
-    ) -> list[str]:
-        names = parse_tickers(tickers, file)
-        if all_tickers or (not names and file is None):
-            names = list(dict.fromkeys(list(self.registry.entries) + names))
-        unknown = [name for name in names if name not in self.registry.entries]
-        if unknown:
-            raise ValueError("不支援 ticker（registry 沒有 parser）：" + ", ".join(unknown))
-        return names
 
 
 class DownloadTickers:
