@@ -21,9 +21,9 @@ KO 的營運分部除了 Bottling Investments、Global Ventures 與 Corporate，
 | 總營收（Net operating revenues） | `us-gaap:Revenues` 不帶維度 | 同左 |
 
 - 兩類加總等於總營收，沒有調節項。
-- FY2023 10-K（期末 2023-12-31）以公司自訂 concept 標示兩類營收，所以每個分類有三個 `effective` 定義。
-- 相鄰定義的生效期間首尾相接。Q4 推算條件逐日比對財年起日到 Q3 期末的分類集合，生效期間中間若有空檔，會被判為分類不同。
-- 範圍內（2024-01-01 起）的期別與運算元都用 `us-gaap:Revenues` 的定義。自訂 concept 的定義供 `--start` 指定更早的期別時使用。
+- parser 依申報期末日（`filing.report_date`）切換寫法：FY2023 10-K（0000021344-24-000009，期末 2023-12-31）以公司自訂 concept 標示兩類營收，前一份申報（2023 年 Q3 10-Q，0000021344-23-000060，期末 2023-09-29）與之後的申報都用 `us-gaap:Revenues` × `srt:ProductOrServiceAxis`。
+- 兩類在每一天都有，`categories` 每天都是這兩類。
+- 範圍內（2024-01-01 起）的期別與運算元都用 `us-gaap:Revenues` 的寫法。自訂 concept 的寫法供 `--start` 指定更早的期別時使用。
 - 分類名稱取自營收附註表的列標籤；總營收取自同表的 `Total`，即損益表的 `Net operating revenues`。
 
 ## 期別與推算

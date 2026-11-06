@@ -16,7 +16,7 @@ concept 是 `us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax`，分�
 | Reality Labs | `meta:RealityLabsMember` |
 | 總營收（Revenue） | 不帶維度 |
 
-FY2024 Q1（2024-03-31）到 FY2026 Q3（2026-09-30）的 11 季使用同一組定義。兩類加總等於總營收，沒有調節項。
+FY2024 Q1（2024-03-31）到 FY2026 Q3（2026-09-30）的 11 季使用同一組寫法。兩類加總等於總營收，沒有調節項。
 
 Family of Apps 另有 `srt:ProductOrServiceAxis` 的細項（Advertising、`us-gaap:ServiceOtherMember`），fact 多帶一個維度，不會被選到。
 
