@@ -1,0 +1,321 @@
+{
+  "categories": {
+    "All Other": {
+      "expression": [
+        {
+          "operand": "op5",
+          "weight": 1
+        }
+      ],
+      "value": -3054000000
+    },
+    "Consumer Banking": {
+      "expression": [
+        {
+          "operand": "op1",
+          "weight": 1
+        }
+      ],
+      "value": 43673000000
+    },
+    "Global Banking": {
+      "expression": [
+        {
+          "operand": "op3",
+          "weight": 1
+        }
+      ],
+      "value": 24108000000
+    },
+    "Global Markets": {
+      "expression": [
+        {
+          "operand": "op4",
+          "weight": 1
+        }
+      ],
+      "value": 24096000000
+    },
+    "Global Wealth & Investment Management": {
+      "expression": [
+        {
+          "operand": "op2",
+          "weight": 1
+        }
+      ],
+      "value": 24883000000
+    }
+  },
+  "checks": {
+    "structural": [
+      {
+        "check": "定義唯一",
+        "result": "pass"
+      },
+      {
+        "check": "fact 存在且唯一",
+        "result": "pass"
+      },
+      {
+        "check": "單位與精度",
+        "result": "pass"
+      },
+      {
+        "check": "加總",
+        "result": "pass"
+      },
+      {
+        "check": "證據完整",
+        "result": "pass"
+      }
+    ],
+    "sum": {
+      "categories": 113706000000,
+      "difference": 0,
+      "tolerance": "3000000",
+      "total": 113706000000
+    }
+  },
+  "filings": {
+    "primary": {
+      "accession": "0000070858-26-000157",
+      "filing_date": "2026-02-25",
+      "form": "10-K",
+      "report_date": "2025-12-31"
+    }
+  },
+  "fiscal_year": 2025,
+  "operands": {
+    "op1": {
+      "accession": "0000070858-26-000157",
+      "concept": "bac:RevenuesNetOfInterestExpenseFullTaxEquivalentBasis",
+      "context_id": "c-2137",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "bac:ConsumerBankingSegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/70858/000007085826000157/bac-20251231.htm",
+        "name": "bac-20251231.htm",
+        "sha256": "a477df6b64f6fcdc3bb0ec71e041374f6591692803c484094bcf5d8e443e0a0b",
+        "url": "https://www.sec.gov/Archives/edgar/data/70858/000007085826000157/bac-20251231.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "b3f752911f97c09d7c131fb574b662236a246f26a34cae0c868b68127100e72b",
+        "png_scale": 1,
+        "png_sha256": "a09a5f176916e8137440d803fd2ba4e326f9b838e2b3348e697e5c2ad2ddb44a",
+        "table": "0000070858-26-000157-a477df6b64f6-t334"
+      },
+      "fact_id": "f-7550",
+      "filing_date": "2026-02-25",
+      "form": "10-K",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-12-31",
+        "start": "2025-01-01"
+      },
+      "raw": "43,673",
+      "role": "annual",
+      "scale": "6",
+      "sign": null,
+      "value": 43673000000
+    },
+    "op2": {
+      "accession": "0000070858-26-000157",
+      "concept": "bac:RevenuesNetOfInterestExpenseFullTaxEquivalentBasis",
+      "context_id": "c-2140",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "bac:GlobalWealthAndInvestmentManagementSegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/70858/000007085826000157/bac-20251231.htm",
+        "name": "bac-20251231.htm",
+        "sha256": "a477df6b64f6fcdc3bb0ec71e041374f6591692803c484094bcf5d8e443e0a0b",
+        "url": "https://www.sec.gov/Archives/edgar/data/70858/000007085826000157/bac-20251231.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "b3f752911f97c09d7c131fb574b662236a246f26a34cae0c868b68127100e72b",
+        "png_scale": 1,
+        "png_sha256": "a09a5f176916e8137440d803fd2ba4e326f9b838e2b3348e697e5c2ad2ddb44a",
+        "table": "0000070858-26-000157-a477df6b64f6-t334"
+      },
+      "fact_id": "f-7611",
+      "filing_date": "2026-02-25",
+      "form": "10-K",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-12-31",
+        "start": "2025-01-01"
+      },
+      "raw": "24,883",
+      "role": "annual",
+      "scale": "6",
+      "sign": null,
+      "value": 24883000000
+    },
+    "op3": {
+      "accession": "0000070858-26-000157",
+      "concept": "bac:RevenuesNetOfInterestExpenseFullTaxEquivalentBasis",
+      "context_id": "c-2143",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "bac:GlobalBankingSegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/70858/000007085826000157/bac-20251231.htm",
+        "name": "bac-20251231.htm",
+        "sha256": "a477df6b64f6fcdc3bb0ec71e041374f6591692803c484094bcf5d8e443e0a0b",
+        "url": "https://www.sec.gov/Archives/edgar/data/70858/000007085826000157/bac-20251231.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "b3f752911f97c09d7c131fb574b662236a246f26a34cae0c868b68127100e72b",
+        "png_scale": 1,
+        "png_sha256": "a09a5f176916e8137440d803fd2ba4e326f9b838e2b3348e697e5c2ad2ddb44a",
+        "table": "0000070858-26-000157-a477df6b64f6-t334"
+      },
+      "fact_id": "f-7614",
+      "filing_date": "2026-02-25",
+      "form": "10-K",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-12-31",
+        "start": "2025-01-01"
+      },
+      "raw": "24,108",
+      "role": "annual",
+      "scale": "6",
+      "sign": null,
+      "value": 24108000000
+    },
+    "op4": {
+      "accession": "0000070858-26-000157",
+      "concept": "bac:RevenuesNetOfInterestExpenseFullTaxEquivalentBasis",
+      "context_id": "c-2146",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "bac:GlobalMarketsSegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/70858/000007085826000157/bac-20251231.htm",
+        "name": "bac-20251231.htm",
+        "sha256": "a477df6b64f6fcdc3bb0ec71e041374f6591692803c484094bcf5d8e443e0a0b",
+        "url": "https://www.sec.gov/Archives/edgar/data/70858/000007085826000157/bac-20251231.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "b3f752911f97c09d7c131fb574b662236a246f26a34cae0c868b68127100e72b",
+        "png_scale": 1,
+        "png_sha256": "a09a5f176916e8137440d803fd2ba4e326f9b838e2b3348e697e5c2ad2ddb44a",
+        "table": "0000070858-26-000157-a477df6b64f6-t334"
+      },
+      "fact_id": "f-7675",
+      "filing_date": "2026-02-25",
+      "form": "10-K",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-12-31",
+        "start": "2025-01-01"
+      },
+      "raw": "24,096",
+      "role": "annual",
+      "scale": "6",
+      "sign": null,
+      "value": 24096000000
+    },
+    "op5": {
+      "accession": "0000070858-26-000157",
+      "concept": "bac:RevenuesNetOfInterestExpenseFullTaxEquivalentBasis",
+      "context_id": "c-2149",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "bac:CorporateReconcilingItemsAndEliminationsMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/70858/000007085826000157/bac-20251231.htm",
+        "name": "bac-20251231.htm",
+        "sha256": "a477df6b64f6fcdc3bb0ec71e041374f6591692803c484094bcf5d8e443e0a0b",
+        "url": "https://www.sec.gov/Archives/edgar/data/70858/000007085826000157/bac-20251231.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "b3f752911f97c09d7c131fb574b662236a246f26a34cae0c868b68127100e72b",
+        "png_scale": 1,
+        "png_sha256": "a09a5f176916e8137440d803fd2ba4e326f9b838e2b3348e697e5c2ad2ddb44a",
+        "table": "0000070858-26-000157-a477df6b64f6-t334"
+      },
+      "fact_id": "f-7678",
+      "filing_date": "2026-02-25",
+      "form": "10-K",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-12-31",
+        "start": "2025-01-01"
+      },
+      "raw": "3,054",
+      "role": "annual",
+      "scale": "6",
+      "sign": "-",
+      "value": -3054000000
+    },
+    "op6": {
+      "accession": "0000070858-26-000157",
+      "concept": "bac:RevenuesNetOfInterestExpenseFullTaxEquivalentBasis",
+      "context_id": "c-1",
+      "decimals": "-6",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/70858/000007085826000157/bac-20251231.htm",
+        "name": "bac-20251231.htm",
+        "sha256": "a477df6b64f6fcdc3bb0ec71e041374f6591692803c484094bcf5d8e443e0a0b",
+        "url": "https://www.sec.gov/Archives/edgar/data/70858/000007085826000157/bac-20251231.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "b3f752911f97c09d7c131fb574b662236a246f26a34cae0c868b68127100e72b",
+        "png_scale": 1,
+        "png_sha256": "a09a5f176916e8137440d803fd2ba4e326f9b838e2b3348e697e5c2ad2ddb44a",
+        "table": "0000070858-26-000157-a477df6b64f6-t334"
+      },
+      "fact_id": "f-7547",
+      "filing_date": "2026-02-25",
+      "form": "10-K",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-12-31",
+        "start": "2025-01-01"
+      },
+      "raw": "113,706",
+      "role": "annual",
+      "scale": "6",
+      "sign": null,
+      "value": 113706000000
+    }
+  },
+  "parser": {
+    "engine_sha256": "cef42e58f952c80715fda28bc15f98310ac69951641f5d0796f212ce1a6349f8",
+    "spec_sha256": "3d180f691f2db8fb1b6c888bcb26a074f992d19cee9c03809bc71f4b4ef59cbc"
+  },
+  "period_end": "2025-12-31",
+  "schema_version": 1,
+  "series": "FY",
+  "ticker": "BAC",
+  "total": {
+    "expression": [
+      {
+        "operand": "op6",
+        "weight": 1
+      }
+    ],
+    "value": 113706000000
+  },
+  "unit": "USD",
+  "view": "business_segment"
+}

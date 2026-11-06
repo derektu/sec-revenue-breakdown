@@ -1,0 +1,294 @@
+{
+  "parser": {
+    "engine_sha256": "cef42e58f952c80715fda28bc15f98310ac69951641f5d0796f212ce1a6349f8",
+    "spec_sha256": "28058765c2bc44f3a5e1da3b3a2d3a968f0c7127608e870d5830c909093d1529"
+  },
+  "periods": {
+    "FY": {
+      "2024-12-31": {
+        "accession": "0001090727-25-000019",
+        "fiscal_year": 2024,
+        "status": "published"
+      },
+      "2025-12-31": {
+        "accession": "0001628280-26-008432",
+        "fiscal_year": 2025,
+        "status": "published"
+      }
+    },
+    "Q": {
+      "2024-03-31": {
+        "accession": "0001090727-24-000028",
+        "differences": [
+          {
+            "category": "U.S. Domestic Package",
+            "listed_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "ups:U.S.DomesticPackageSegmentMember"
+                },
+                "fact_id": "f-988",
+                "value": 14266000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": 14266000000,
+            "period": {
+              "end": "2024-03-31",
+              "start": "2024-01-01"
+            },
+            "published_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "ups:USDomesticPackageMember"
+                },
+                "operand": "op1",
+                "value": 14234000000,
+                "weight": 1
+              }
+            ],
+            "published_value": 14234000000,
+            "result": "different",
+            "role": "quarter",
+            "source": {
+              "accession": "0001090727-25-000049",
+              "filing_date": "2025-05-07",
+              "form": "10-Q"
+            }
+          }
+        ],
+        "fiscal_quarter": 1,
+        "fiscal_year": 2024,
+        "status": "published"
+      },
+      "2024-06-30": {
+        "accession": "0001090727-24-000045",
+        "differences": [
+          {
+            "category": "U.S. Domestic Package",
+            "listed_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "ups:U.S.DomesticPackageSegmentMember"
+                },
+                "fact_id": "f-1233",
+                "value": 14201000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": 14201000000,
+            "period": {
+              "end": "2024-06-30",
+              "start": "2024-04-01"
+            },
+            "published_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "ups:USDomesticPackageMember"
+                },
+                "operand": "op1",
+                "value": 14119000000,
+                "weight": 1
+              }
+            ],
+            "published_value": 14119000000,
+            "result": "different",
+            "role": "quarter",
+            "source": {
+              "accession": "0001090727-25-000064",
+              "filing_date": "2025-08-06",
+              "form": "10-Q"
+            }
+          }
+        ],
+        "fiscal_quarter": 2,
+        "fiscal_year": 2024,
+        "status": "published"
+      },
+      "2024-09-30": {
+        "accession": "0001090727-24-000064",
+        "differences": [
+          {
+            "category": "U.S. Domestic Package",
+            "listed_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "ups:U.S.DomesticPackageSegmentMember"
+                },
+                "fact_id": "f-1227",
+                "value": 14597000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": 14597000000,
+            "period": {
+              "end": "2024-09-30",
+              "start": "2024-07-01"
+            },
+            "published_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "ups:USDomesticPackageMember"
+                },
+                "operand": "op1",
+                "value": 14450000000,
+                "weight": 1
+              }
+            ],
+            "published_value": 14450000000,
+            "result": "different",
+            "role": "quarter",
+            "source": {
+              "accession": "0001628280-25-049661",
+              "filing_date": "2025-11-05",
+              "form": "10-Q"
+            }
+          }
+        ],
+        "fiscal_quarter": 3,
+        "fiscal_year": 2024,
+        "status": "published"
+      },
+      "2024-12-31": {
+        "basis_changes": [
+          {
+            "category": "U.S. Domestic Package",
+            "listed": {
+              "accession": "0001090727-25-000019"
+            },
+            "listed_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "ups:USDomesticPackageMember"
+                },
+                "fact_id": "f-410",
+                "value": 60205000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": 60205000000,
+            "period": {
+              "end": "2023-12-31",
+              "start": "2023-01-01"
+            },
+            "previous": {
+              "accession": "0001090727-24-000008",
+              "basis": "filing"
+            },
+            "previous_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "ups:USDomesticPackageMember"
+                },
+                "fact_id": "f-2767",
+                "value": 59958000000,
+                "weight": 1
+              }
+            ],
+            "previous_value": 59958000000
+          },
+          {
+            "category": "Supply Chain Solutions",
+            "listed": {
+              "accession": "0001090727-25-000019"
+            },
+            "listed_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "ups:SupplyChainSolutionsMember"
+                },
+                "fact_id": "f-434",
+                "value": 12922000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": 12922000000,
+            "period": {
+              "end": "2023-12-31",
+              "start": "2023-01-01"
+            },
+            "previous": {
+              "accession": "0001090727-24-000008",
+              "basis": "filing"
+            },
+            "previous_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "ups:SupplyChainSolutionsMember"
+                },
+                "fact_id": "f-416",
+                "value": 13169000000,
+                "weight": 1
+              }
+            ],
+            "previous_value": 13169000000
+          }
+        ],
+        "check": "Q4 口徑一致",
+        "fiscal_quarter": 4,
+        "fiscal_year": 2024,
+        "published_output_kept": false,
+        "reason": "年報 0001090727-25-000019 列示的上一財年（2023-12-31 止）數字與先前申報（上一份年報，0001090727-24-000008）不同：U.S. Domestic Package 上一份年報 59958000000、年報 60205000000；Supply Chain Solutions 上一份年報 13169000000、年報 12922000000；年報改了分類口徑，Q4 不推算",
+        "status": "not_derived"
+      },
+      "2025-03-31": {
+        "accession": "0001090727-25-000049",
+        "fiscal_quarter": 1,
+        "fiscal_year": 2025,
+        "status": "published"
+      },
+      "2025-06-30": {
+        "accession": "0001090727-25-000064",
+        "fiscal_quarter": 2,
+        "fiscal_year": 2025,
+        "status": "published"
+      },
+      "2025-09-30": {
+        "accession": "0001628280-25-049661",
+        "fiscal_quarter": 3,
+        "fiscal_year": 2025,
+        "status": "published"
+      },
+      "2025-12-31": {
+        "accession": "0001628280-26-008432",
+        "fiscal_quarter": 4,
+        "fiscal_year": 2025,
+        "status": "published"
+      },
+      "2026-03-31": {
+        "accession": "0001628280-26-031154",
+        "fiscal_quarter": 1,
+        "fiscal_year": 2026,
+        "status": "published"
+      },
+      "2026-06-30": {
+        "accession": "0001628280-26-053249",
+        "fiscal_quarter": 2,
+        "fiscal_year": 2026,
+        "status": "published"
+      },
+      "2026-09-30": {
+        "accession": "0001628280-26-070246",
+        "fiscal_quarter": 3,
+        "fiscal_year": 2026,
+        "status": "published"
+      }
+    }
+  },
+  "ticker": "UPS",
+  "view": "business_segment"
+}

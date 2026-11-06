@@ -1,0 +1,189 @@
+{
+  "categories": {
+    "Concentrate operations": {
+      "expression": [
+        {
+          "operand": "op1",
+          "weight": 1
+        }
+      ],
+      "value": 7058000000
+    },
+    "Finished product operations": {
+      "expression": [
+        {
+          "operand": "op2",
+          "weight": 1
+        }
+      ],
+      "value": 4796000000
+    }
+  },
+  "checks": {
+    "structural": [
+      {
+        "check": "定義唯一",
+        "result": "pass"
+      },
+      {
+        "check": "fact 存在且唯一",
+        "result": "pass"
+      },
+      {
+        "check": "單位與精度",
+        "result": "pass"
+      },
+      {
+        "check": "加總",
+        "result": "pass"
+      },
+      {
+        "check": "證據完整",
+        "result": "pass"
+      }
+    ],
+    "sum": {
+      "categories": 11854000000,
+      "difference": 0,
+      "tolerance": "1500000",
+      "total": 11854000000
+    }
+  },
+  "filings": {
+    "primary": {
+      "accession": "0000021344-24-000060",
+      "filing_date": "2024-10-24",
+      "form": "10-Q",
+      "report_date": "2024-09-27"
+    }
+  },
+  "fiscal_quarter": 3,
+  "fiscal_year": 2024,
+  "operands": {
+    "op1": {
+      "accession": "0000021344-24-000060",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-41",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "ko:ConcentrateOperationsMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/21344/000002134424000060/ko-20240927.htm",
+        "name": "ko-20240927.htm",
+        "sha256": "b5b6b8b2b356ac7109d02d0f123c57da0a7d068a2424e72d6c7eec3bb1e5e897",
+        "url": "https://www.sec.gov/Archives/edgar/data/21344/000002134424000060/ko-20240927.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "5f86b06311e35bb53824f83ff24c6037dd7228d95b884767f9fc90b2f19ef84d",
+        "png_scale": 1,
+        "png_sha256": "834fcb689564a7e766dde48d43c3dbce0a56aee19e6fa18bf227244e5bdce686",
+        "table": "0000021344-24-000060-b5b6b8b2b356-t12"
+      },
+      "fact_id": "f-409",
+      "filing_date": "2024-10-24",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-09-27",
+        "start": "2024-06-29"
+      },
+      "raw": "7,058",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 7058000000
+    },
+    "op2": {
+      "accession": "0000021344-24-000060",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-44",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "ko:FinishedProductOperationsMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/21344/000002134424000060/ko-20240927.htm",
+        "name": "ko-20240927.htm",
+        "sha256": "b5b6b8b2b356ac7109d02d0f123c57da0a7d068a2424e72d6c7eec3bb1e5e897",
+        "url": "https://www.sec.gov/Archives/edgar/data/21344/000002134424000060/ko-20240927.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "5f86b06311e35bb53824f83ff24c6037dd7228d95b884767f9fc90b2f19ef84d",
+        "png_scale": 1,
+        "png_sha256": "834fcb689564a7e766dde48d43c3dbce0a56aee19e6fa18bf227244e5bdce686",
+        "table": "0000021344-24-000060-b5b6b8b2b356-t12"
+      },
+      "fact_id": "f-412",
+      "filing_date": "2024-10-24",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-09-27",
+        "start": "2024-06-29"
+      },
+      "raw": "4,796",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 4796000000
+    },
+    "op3": {
+      "accession": "0000021344-24-000060",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-22",
+      "decimals": "-6",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/21344/000002134424000060/ko-20240927.htm",
+        "name": "ko-20240927.htm",
+        "sha256": "b5b6b8b2b356ac7109d02d0f123c57da0a7d068a2424e72d6c7eec3bb1e5e897",
+        "url": "https://www.sec.gov/Archives/edgar/data/21344/000002134424000060/ko-20240927.htm"
+      },
+      "duplicates": [
+        "f-84",
+        "f-1475"
+      ],
+      "evidence": {
+        "html_sha256": "5f86b06311e35bb53824f83ff24c6037dd7228d95b884767f9fc90b2f19ef84d",
+        "png_scale": 1,
+        "png_sha256": "834fcb689564a7e766dde48d43c3dbce0a56aee19e6fa18bf227244e5bdce686",
+        "table": "0000021344-24-000060-b5b6b8b2b356-t12"
+      },
+      "fact_id": "f-415",
+      "filing_date": "2024-10-24",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-09-27",
+        "start": "2024-06-29"
+      },
+      "raw": "11,854",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 11854000000
+    }
+  },
+  "parser": {
+    "engine_sha256": "cef42e58f952c80715fda28bc15f98310ac69951641f5d0796f212ce1a6349f8",
+    "spec_sha256": "ce649ed122b4e9e62bfc8a3faafc63ab8b9a288deb6b4a82feeedc6d1702520c"
+  },
+  "period_end": "2024-09-27",
+  "schema_version": 1,
+  "series": "Q",
+  "ticker": "KO",
+  "total": {
+    "expression": [
+      {
+        "operand": "op3",
+        "weight": 1
+      }
+    ],
+    "value": 11854000000
+  },
+  "unit": "USD",
+  "view": "product"
+}

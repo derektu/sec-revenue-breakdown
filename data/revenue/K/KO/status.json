@@ -1,0 +1,402 @@
+{
+  "parser": {
+    "engine_sha256": "cef42e58f952c80715fda28bc15f98310ac69951641f5d0796f212ce1a6349f8",
+    "spec_sha256": "ce649ed122b4e9e62bfc8a3faafc63ab8b9a288deb6b4a82feeedc6d1702520c"
+  },
+  "periods": {
+    "FY": {
+      "2024-12-31": {
+        "accession": "0000021344-25-000011",
+        "fiscal_year": 2024,
+        "status": "published"
+      },
+      "2025-12-31": {
+        "accession": "0001628280-26-010047",
+        "fiscal_year": 2025,
+        "status": "published"
+      }
+    },
+    "Q": {
+      "2024-03-29": {
+        "accession": "0000021344-24-000017",
+        "fiscal_quarter": 1,
+        "fiscal_year": 2024,
+        "status": "published"
+      },
+      "2024-06-28": {
+        "accession": "0000021344-24-000044",
+        "fiscal_quarter": 2,
+        "fiscal_year": 2024,
+        "status": "published"
+      },
+      "2024-09-27": {
+        "accession": "0000021344-24-000060",
+        "fiscal_quarter": 3,
+        "fiscal_year": 2024,
+        "status": "published"
+      },
+      "2024-12-31": {
+        "accession": "0000021344-25-000011",
+        "fiscal_quarter": 4,
+        "fiscal_year": 2024,
+        "status": "published"
+      },
+      "2025-03-28": {
+        "accession": "0000021344-25-000029",
+        "differences": [
+          {
+            "category": "Concentrate operations",
+            "listed_addends": [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "srt:ProductOrServiceAxis": "ko:ConcentrateOperationsMember"
+                },
+                "fact_id": "f-371",
+                "value": 6594000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": 6594000000,
+            "period": {
+              "end": "2025-03-28",
+              "start": "2025-01-01"
+            },
+            "published_addends": [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "srt:ProductOrServiceAxis": "ko:ConcentrateOperationsMember"
+                },
+                "operand": "op1",
+                "value": 7183000000,
+                "weight": 1
+              }
+            ],
+            "published_value": 7183000000,
+            "result": "different",
+            "role": "quarter",
+            "source": {
+              "accession": "0001628280-26-028802",
+              "filing_date": "2026-04-30",
+              "form": "10-Q"
+            }
+          },
+          {
+            "category": "Finished product operations",
+            "listed_addends": [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "srt:ProductOrServiceAxis": "ko:FinishedProductOperationsMember"
+                },
+                "fact_id": "f-374",
+                "value": 4535000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": 4535000000,
+            "period": {
+              "end": "2025-03-28",
+              "start": "2025-01-01"
+            },
+            "published_addends": [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "srt:ProductOrServiceAxis": "ko:FinishedProductOperationsMember"
+                },
+                "operand": "op2",
+                "value": 3946000000,
+                "weight": 1
+              }
+            ],
+            "published_value": 3946000000,
+            "result": "different",
+            "role": "quarter",
+            "source": {
+              "accession": "0001628280-26-028802",
+              "filing_date": "2026-04-30",
+              "form": "10-Q"
+            }
+          }
+        ],
+        "fiscal_quarter": 1,
+        "fiscal_year": 2025,
+        "status": "published"
+      },
+      "2025-06-27": {
+        "accession": "0000021344-25-000061",
+        "differences": [
+          {
+            "category": "Concentrate operations",
+            "listed_addends": [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "srt:ProductOrServiceAxis": "ko:ConcentrateOperationsMember"
+                },
+                "fact_id": "f-432",
+                "value": 7618000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": 7618000000,
+            "period": {
+              "end": "2025-06-27",
+              "start": "2025-03-29"
+            },
+            "published_addends": [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "srt:ProductOrServiceAxis": "ko:ConcentrateOperationsMember"
+                },
+                "operand": "op1",
+                "value": 8289000000,
+                "weight": 1
+              }
+            ],
+            "published_value": 8289000000,
+            "result": "different",
+            "role": "quarter",
+            "source": {
+              "accession": "0001628280-26-050503",
+              "filing_date": "2026-07-29",
+              "form": "10-Q"
+            }
+          },
+          {
+            "category": "Finished product operations",
+            "listed_addends": [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "srt:ProductOrServiceAxis": "ko:FinishedProductOperationsMember"
+                },
+                "fact_id": "f-435",
+                "value": 4917000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": 4917000000,
+            "period": {
+              "end": "2025-06-27",
+              "start": "2025-03-29"
+            },
+            "published_addends": [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "srt:ProductOrServiceAxis": "ko:FinishedProductOperationsMember"
+                },
+                "operand": "op2",
+                "value": 4246000000,
+                "weight": 1
+              }
+            ],
+            "published_value": 4246000000,
+            "result": "different",
+            "role": "quarter",
+            "source": {
+              "accession": "0001628280-26-050503",
+              "filing_date": "2026-07-29",
+              "form": "10-Q"
+            }
+          }
+        ],
+        "fiscal_quarter": 2,
+        "fiscal_year": 2025,
+        "status": "published"
+      },
+      "2025-09-26": {
+        "accession": "0001628280-25-046054",
+        "differences": [
+          {
+            "category": "Concentrate operations",
+            "listed_addends": [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "srt:ProductOrServiceAxis": "ko:ConcentrateOperationsMember"
+                },
+                "fact_id": "f-429",
+                "value": 7499000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": 7499000000,
+            "period": {
+              "end": "2025-09-26",
+              "start": "2025-06-28"
+            },
+            "published_addends": [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "srt:ProductOrServiceAxis": "ko:ConcentrateOperationsMember"
+                },
+                "operand": "op1",
+                "value": 8198000000,
+                "weight": 1
+              }
+            ],
+            "published_value": 8198000000,
+            "result": "different",
+            "role": "quarter",
+            "source": {
+              "accession": "0001628280-26-067844",
+              "filing_date": "2026-10-28",
+              "form": "10-Q"
+            }
+          },
+          {
+            "category": "Finished product operations",
+            "listed_addends": [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "srt:ProductOrServiceAxis": "ko:FinishedProductOperationsMember"
+                },
+                "fact_id": "f-432",
+                "value": 4956000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": 4956000000,
+            "period": {
+              "end": "2025-09-26",
+              "start": "2025-06-28"
+            },
+            "published_addends": [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "srt:ProductOrServiceAxis": "ko:FinishedProductOperationsMember"
+                },
+                "operand": "op2",
+                "value": 4257000000,
+                "weight": 1
+              }
+            ],
+            "published_value": 4257000000,
+            "result": "different",
+            "role": "quarter",
+            "source": {
+              "accession": "0001628280-26-067844",
+              "filing_date": "2026-10-28",
+              "form": "10-Q"
+            }
+          }
+        ],
+        "fiscal_quarter": 3,
+        "fiscal_year": 2025,
+        "status": "published"
+      },
+      "2025-12-31": {
+        "accession": "0001628280-26-010047",
+        "differences": [
+          {
+            "category": "Concentrate operations",
+            "listed_addends": [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "srt:ProductOrServiceAxis": "ko:ConcentrateOperationsMember"
+                },
+                "fact_id": "f-447",
+                "value": 21711000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": 21711000000,
+            "period": {
+              "end": "2025-09-26",
+              "start": "2025-01-01"
+            },
+            "published_addends": [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "srt:ProductOrServiceAxis": "ko:ConcentrateOperationsMember"
+                },
+                "operand": "op2",
+                "value": 23670000000,
+                "weight": 1
+              }
+            ],
+            "published_value": 23670000000,
+            "result": "different",
+            "role": "nine_months",
+            "source": {
+              "accession": "0001628280-26-067844",
+              "filing_date": "2026-10-28",
+              "form": "10-Q"
+            }
+          },
+          {
+            "category": "Finished product operations",
+            "listed_addends": [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "srt:ProductOrServiceAxis": "ko:FinishedProductOperationsMember"
+                },
+                "fact_id": "f-450",
+                "value": 14408000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": 14408000000,
+            "period": {
+              "end": "2025-09-26",
+              "start": "2025-01-01"
+            },
+            "published_addends": [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "srt:ProductOrServiceAxis": "ko:FinishedProductOperationsMember"
+                },
+                "operand": "op4",
+                "value": 12449000000,
+                "weight": 1
+              }
+            ],
+            "published_value": 12449000000,
+            "result": "different",
+            "role": "nine_months",
+            "source": {
+              "accession": "0001628280-26-067844",
+              "filing_date": "2026-10-28",
+              "form": "10-Q"
+            }
+          }
+        ],
+        "fiscal_quarter": 4,
+        "fiscal_year": 2025,
+        "status": "published"
+      },
+      "2026-04-03": {
+        "accession": "0001628280-26-028802",
+        "fiscal_quarter": 1,
+        "fiscal_year": 2026,
+        "status": "published"
+      },
+      "2026-07-03": {
+        "accession": "0001628280-26-050503",
+        "fiscal_quarter": 2,
+        "fiscal_year": 2026,
+        "status": "published"
+      },
+      "2026-10-02": {
+        "accession": "0001628280-26-067844",
+        "fiscal_quarter": 3,
+        "fiscal_year": 2026,
+        "status": "published"
+      }
+    }
+  },
+  "ticker": "KO",
+  "view": "product"
+}
