@@ -51,11 +51,15 @@ def encode(payload: dict) -> bytes:
 
 def decode(data: bytes) -> dict:
     """`encode` 的反向：表頭的欄位加上 `facts`（原文讀不到的申報沒有 fact）。"""
-    lines = data.decode().splitlines()
+    # 只以 \n 分行：JSON 字串中的其他 Unicode 換行字元（例如 U+2028）不是行界。
+    lines = [line for line in data.decode().split("\n") if line]
     if not lines:
         raise ValueError("快照是空檔")
     payload = json.loads(lines[0])
-    if "error" not in payload:
+    if "error" in payload:
+        if len(lines) > 1:
+            raise ValueError("記錄錯誤的快照只有表頭一行")
+    else:
         payload["facts"] = [json.loads(line) for line in lines[1:]]
     return payload
 
@@ -147,7 +151,10 @@ class SnapshotFilingSet(FilingSet):
             if not path.exists():
                 problems.append(f"申報清單列出的 {accession} 沒有快照")
                 continue
-            self.payloads[accession] = decode(path.read_bytes())
+            try:
+                self.payloads[accession] = decode(path.read_bytes())
+            except ValueError as error:
+                problems.append(f"{path.name} 無法讀取（{error}）")
         extra = [p.name for p in snapshot_files(directory) if p.suffix != SUFFIX or p.stem not in accessions]
         if extra:
             problems.append(f"快照 {'、'.join(extra)} 不在申報清單中")

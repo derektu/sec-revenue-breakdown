@@ -96,7 +96,7 @@ SEC 原文（`sec/`）與下載索引（`pipeline/`）放在資料根目錄。�
 .venv/bin/python scripts/sec_pipeline.py snapshot --all --check            # 核對已提交的快照與原文一致
 ```
 
-快照是每份申報主文件的全部數值 fact，與公司 parser 無關：每份申報一個 `<accession>.jsonl`，第一行是申報資訊、namespaces 與 dei，之後一行一個 fact。
+快照是每份申報主文件的全部數值 fact，與公司 parser 無關：每份申報一個 `<accession>.jsonl`，第一行是表頭（快照格式版本、解析器 hash、申報資訊、namespaces 與衝突的前綴、dei；原文讀不到時是錯誤原因），之後一行一個 fact。
 
 以下改動要產生快照，並和改動放在同一個 PR：
 
