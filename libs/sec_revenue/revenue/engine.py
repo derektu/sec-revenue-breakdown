@@ -33,7 +33,8 @@ from .compose import NotDerived, Operand, PeriodComposer, PeriodResult
 from .filings import FilingSet, ParseError
 from .review import TOTAL_LABEL, comparatives
 from .snapshot import SnapshotFilingSet
-from .spec import CompanySpec, fact_variants
+from .source import SpecSource
+from .spec import CompanySpec
 
 SCHEMA_VERSION = 1
 # 預設起始日（期末日，含）：所有公司共用，沒有指定起日時使用；要處理更早的期別時指定起日。
@@ -74,7 +75,7 @@ class RevenueParser:
         self,
         data: Path,
         out: Path,
-        spec: CompanySpec,
+        spec,
         spec_sha256: str,
         reuse: Path | None = None,
         screenshots: bool = True,
@@ -84,13 +85,14 @@ class RevenueParser:
         default_start: str = DEFAULT_START,
         filings: FilingSet | None = None,
     ):
-        self.spec = spec
+        # `spec` 是公司 parser（`ParserSource`）或宣告式規格；規格由 `SpecSource` 轉成同一組介面。
+        self.source = SpecSource(spec) if isinstance(spec, CompanySpec) else spec
         self.default_start = default_start
-        self.out = ticker_dir(out, spec.ticker)
-        self.reuse = ticker_dir(reuse or out, spec.ticker)
+        self.out = ticker_dir(out, self.source.ticker)
+        self.reuse = ticker_dir(reuse or out, self.source.ticker)
         # 預設讀 `data` 下載的原文；`--check --snapshots` 改用快照建立的 FilingSet。
-        self.filings = filings or FilingSet(data, spec.ticker)
-        self.composer = PeriodComposer(spec, self.filings)
+        self.filings = filings or FilingSet(data, self.source.ticker)
+        self.composer = PeriodComposer(self.source, self.filings)
         self.screenshots = screenshots
         self.republish = set(republish)
         self.progress = progress
@@ -156,7 +158,7 @@ class RevenueParser:
 
     def run(self, periods: list[str]) -> dict:
         """依期末日順序處理；每期只看得到先前已寫入、且符合 point in time 的輸出。"""
-        report = {"ticker": self.spec.ticker, "periods": [], "complete": True}
+        report = {"ticker": self.source.ticker, "periods": [], "complete": True}
         recovered = self.recover()
         if recovered:
             report["recovered"] = recovered
@@ -173,7 +175,7 @@ class RevenueParser:
                     report["periods"].append({"series": series, "period_end": period, **entry})
                     report["complete"] &= entry["status"] != "failed"
                     if self.progress:
-                        self.progress({"ticker": self.spec.ticker, "period": f"{series} {period}", "status": entry["status"]})
+                        self.progress({"ticker": self.source.ticker, "period": f"{series} {period}", "status": entry["status"]})
         finally:
             if self.active is not None:
                 try:
@@ -285,8 +287,8 @@ class RevenueParser:
         evidence, files = self.evidence(result, operands)
         output = {
             "schema_version": SCHEMA_VERSION,
-            "ticker": self.spec.ticker,
-            "view": self.spec.view,
+            "ticker": self.source.ticker,
+            "view": self.source.view,
             "series": result.series,
             "period_end": result.period_end,
             "fiscal_year": result.fiscal_year,
@@ -297,9 +299,9 @@ class RevenueParser:
             "unit": "USD",
             "filings": self.filing_records(result),
             "categories": self.lines(result, "category"),
-            "total": self.lines(result, "total")[self.spec.total.name],
+            "total": self.lines(result, "total")[self.source.total_name],
         }
-        if self.spec.reconciling:
+        if self.source.always_reconciling or any(line.group == "reconciling" for line in result.lines):
             output["reconciling"] = self.lines(result, "reconciling")
         output |= {
             "operands": {op.id: self.operand_record(op, evidence[op.id]) for op in operands},
@@ -311,31 +313,16 @@ class RevenueParser:
         }
         return output, files
 
-    def selector_for(self, period: str):
-        """回傳查詢函式：分類名稱（`None` 為總營收）→ 在 `period` 生效定義的加數（`Addend`，依規格順序）；
-        沒有生效的定義或有加數不是 fact 時為 None。"""
-        items = {c.name: c for c in self.spec.categories + self.spec.reconciling}
-
-        def lookup(name):
-            item = self.spec.total if name is None else items.get(name)
-            if item is None:
-                return None
-            try:
-                definition = self.composer.definition(item, period)
-            except ParseError:
-                return None
-            if definition is None or not all(fact_variants(a.selector) for a in definition.addends):
-                return None
-            return list(definition.addends)
-
-        return lookup
+    def compose_for(self, filing):
+        """回傳查詢函式：期間（`Request`）→ 來源從 `filing` 組出的組成。"""
+        return lambda request: self.composer.request(filing, request)
 
     # ---- Q4 口徑 ----
 
     def check_basis(self, result: PeriodResult) -> dict | None:
         """Q4 口徑一致：年報列示的上一財年數字，每個分類 × 年度角色都要與上一財年先前申報的值在精度內相同。
 
-        比對與比較欄同一套規則（`comparatives`，以年報期別生效的定義組出列示值）。任一分類不同代表公司在年報改了
+        比對與比較欄同一套規則（`comparatives`，由來源從年報組出列示值）。任一分類不同代表公司在年報改了
         分類口徑，年度與 Q1–Q3 的數字基礎不同，以 `NotDerived` 結束（Q4 不推算）。先前的值拿不到、年報沒有列示上一
         財年，或有分類無法比較時無法判斷，Q4 照常推算，回傳註記；可以判斷且一致時回傳 None。
         """
@@ -358,10 +345,10 @@ class RevenueParser:
             ]
 
         document = self.filings.document(primary)
-        active = set(self.composer.category_names(result.period_end)) | {TOTAL_LABEL}
+        active = set(self.source.categories(result.period_end)) | {TOTAL_LABEL}
         found = [
             c
-            for c in comparatives(document, primary.accession, [("FY", prior, baseline)], self.selector_for(result.period_end))
+            for c in comparatives(document, primary.accession, [("FY", prior, baseline)], self.compose_for(primary), self.source.total_name)
             if c["role"] == "annual" and c["category"] in active
         ]
         if not any(c["category"] == TOTAL_LABEL for c in found):
@@ -399,7 +386,7 @@ class RevenueParser:
         """上一財年（期末 `prior`）先前申報的年度值，回傳（revenue.json 格式的值, 依據）。
 
         依據是 `published`（已上線、且運算元都來自申報日不晚於 `as_of` 的申報的 FY 輸出）或 `filing`（沒有已上線
-        輸出時，上一份 10-K 本身依規格組出的值，只讀 fact，不寫入）。兩者都拿不到、或上一份 10-K 依規格組不出年度值時
+        輸出時，來源從上一份 10-K 組出的值，只讀 fact，不寫入）。兩者都拿不到、或上一份 10-K 組不出年度值時
         回傳（None, 原因）。上一份 10-K 的原文缺檔或 sha256 不符是資料不完整，不是無法判斷：以 `ParseError` 結束，Q4 失敗。
         """
         path = self.out / "FY" / prior / "revenue.json"
@@ -413,14 +400,14 @@ class RevenueParser:
             if error.check == "原文存在":
                 accession = self.filings.select(prior).accession
                 raise ParseError(error.check, f"Q4 口徑一致所需的上一財年 10-K {accession} 原文不完整：{error.message}") from error
-            return None, f"上一財年（{prior} 止）沒有已上線的 FY，上一份 10-K 依規格組不出年度值：[{error.check}] {error.message}"
+            return None, f"上一財年（{prior} 止）沒有已上線的 FY，上一份 10-K 組不出年度值：[{error.check}] {error.message}"
         for number, operand in enumerate(result.operands, 1):
             operand.id = f"op{number}"
         summary = {
             "filings": self.filing_records(result),
             "categories": self.lines(result, "category"),
             "reconciling": self.lines(result, "reconciling"),
-            "total": self.lines(result, "total")[self.spec.total.name],
+            "total": self.lines(result, "total")[self.source.total_name],
             "operands": {op.id: self.operand_record(op, {}) for op in result.operands},
         }
         return summary, "filing"
@@ -506,7 +493,7 @@ class RevenueParser:
                 }
                 for op in members
             ]
-            header = {"ticker": self.spec.ticker, "form": filing.form, "accession": filing.accession, "source_url": filing.document["source_url"]}
+            header = {"ticker": self.source.ticker, "form": filing.form, "accession": filing.accession, "source_url": filing.document["source_url"]}
             try:
                 page = locator.table_html(index, items, header)
             except ValueError as error:
@@ -624,7 +611,7 @@ class RevenueParser:
     def read_status(self) -> dict:
         path = self.out / "status.json"
         status = JsonCodec.read(path) if path.exists() else {}
-        status.update(ticker=self.spec.ticker, view=self.spec.view)
+        status.update(ticker=self.source.ticker, view=self.source.view)
         periods = status.get("periods", {})
         status["periods"] = {series: dict(periods.get(series, {})) for series in SERIES}
         return status
@@ -666,7 +653,7 @@ class RevenueParser:
             except ParseError as error:
                 errors.append({"accession": filing.accession, "check": error.check, "reason": error.message})
                 continue
-            for item in comparatives(document, filing.accession, baselines, self.selector_for(filing.report_date)):
+            for item in comparatives(document, filing.accession, baselines, self.compose_for(filing), self.source.total_name):
                 if item["result"] not in MARKED_RESULTS:
                     continue
                 markers.setdefault((item["series"], item["period_end"]), []).append(

@@ -4,10 +4,11 @@
   不通過時 Q4 失敗；各期都通過而年度與 Q1–Q3 的分類集合不同時，Q4 不推算。
 - FY 序列：10-K 的年度 fact。
 
-每期的分類集合是規格中在該期有生效定義的分類；沒有生效定義的分類該期不列出。
-一個定義可以有多個加數（`sum_of`）：每個加數各是一個運算元，任一加數找不到時該期失敗；Q4 的每個加數同樣是
-年度減九個月累計。分類的運算式依規格的加數順序列出（Q4 為各加數的年度、九個月累計交錯排列）。
-任何結構檢核不通過都以 `ParseError` 結束該期；訊息開頭的 `[檢核名稱]` 與設計文件的檢核表一致。
+每一期向來源（公司 parser 或規格，見 `source.py`）要主申報中該期間的組成：分類集合必須等於來源的
+`categories(期末日)`，每一項由一個或多個運算元組成。框架補上每個運算元同 concept、dimensions、期間的重複 fact，
+檢查數值一致、單位與精度後選定一個。Q4 的每個運算元同樣是年度減九個月累計，運算式依來源列出的順序（Q4 為各項的
+年度、九個月累計交錯排列）。任何結構檢核不通過都以 `ParseError` 結束該期；訊息開頭的 `[檢核名稱]` 與設計文件的
+檢核表一致。
 """
 
 from __future__ import annotations
@@ -16,18 +17,23 @@ from dataclasses import dataclass, field
 import datetime as dt
 from decimal import Decimal
 
+from .contract import Composition, Request
+from .contract import Term as ComposedTerm
 from .filings import Filing, FilingSet, ParseError
-from .spec import Category, CompanySpec, Definition, Selector, TableCellSelector, fact_variants
-from .xbrl import USD, Fact, classify_duration, decimals_rank
+from .source import SpecSource
+from .spec import CompanySpec
+from .xbrl import USD, Fact, InlineDocument, classify_duration, decimals_rank
 
 QUARTER_FOCUS = {"Q1": 1, "Q2": 2, "Q3": 3, "FY": 4}
+# 地區軸只能以「該軸全部成員相加」出現在運算式中；觀點只取產品或業務別。
+GEOGRAPHIC_AXIS = "srt:StatementGeographicalAxis"
 # 運算元精度下限：decimals 小於 -6（例如 -8 代表百萬位以上四捨五入）時誤差過大，該期不上線。
 MIN_DECIMALS = -6
 
 
 @dataclass
 class Operand:
-    """一個 SEC 數字；`kind` 為 `xbrl_fact`，HTML 表格儲存格的 `table_cell` 保留給沒有 XBRL 標記的文件。"""
+    """一個 SEC 數字；`kind` 一定是 `xbrl_fact`。"""
 
     kind: str
     filing: Filing
@@ -87,7 +93,7 @@ class NotDerived(ParseError):
 
 @dataclass
 class Candidate:
-    """一個規格項目在某份申報中的候選 fact 群（同 concept、dimensions、期間，值必須一致）。"""
+    """一個運算元在某份申報中的候選 fact 群（同 concept、dimensions、期間，值必須一致）。"""
 
     filing: Filing
     facts: list[Fact]
@@ -96,58 +102,55 @@ class Candidate:
 
 
 class PeriodComposer:
-    def __init__(self, spec: CompanySpec, filings: FilingSet):
-        self.spec = spec
+    def __init__(self, source, filings: FilingSet):
+        # `source` 是 `ParserSource` 或 `SpecSource`；直接給規格時以 `SpecSource` 包裝。
+        self.source = SpecSource(source) if isinstance(source, CompanySpec) else source
         self.filings = filings
+        self.fact_sets: dict[int, set[Fact]] = {}
 
-    def items(self) -> list[tuple[str, Category]]:
-        return (
-            [("category", c) for c in self.spec.categories]
-            + [("reconciling", c) for c in self.spec.reconciling]
-            + [("total", self.spec.total)]
-        )
+    def request(self, filing: Filing, request: Request) -> Composition:
+        """向來源要一份申報中一段期間的組成；fact 清單的集合在交給來源之前建立，供核對交回的 fact。"""
+        document = self.filings.document(filing)
+        self.facts_of(document)
+        return self.source.compose(document, filing, request)
 
     def compose(self, period: str) -> PeriodResult:
         """Q 序列的一期：Q1–Q3 或推算的 Q4。"""
         primary, year, quarter = self.primary(period)
         if quarter != 4:
-            items = self.active_items(period)
-            candidates = {
-                item.name: self.addends(primary, definition, period, "quarter", None, item.name) for group, item, definition in items
-            }
-            return self.finish("Q", period, year, quarter, primary, None, items, candidates)
+            items = self.collect(primary, Request(period, "quarter"), "quarter")
+            return self.finish("Q", period, year, quarter, primary, None, items)
 
         # Point in time：九個月與 Q1–Q3 都來自申報日不晚於本期主申報的申報。
         nine_filing = self.third_quarter(period, year, primary.filing_date)
         start = self.dependencies(period, primary.filing_date, nine_filing.report_date)
-        items = self.active_items(period)
-        annual = {item.name: self.addends(primary, definition, period, "annual", None, item.name) for group, item, definition in items}
-        self.check_categories(items, start, nine_filing.report_date, period)
-        # 定義依運算元來源申報的期末日選取：年度運算元是本期，九個月運算元是 Q3 期末日。
-        # 公司在財年中途改 tag 時（例如 10-K 起換新成員、同財年 Q3 10-Q 仍是舊成員），兩個運算元各用各的定義。
-        # 年度與九個月累計的加數個數可以不同（兩者的定義各自選取）；Q4 = 年度各加數之和 − 九個月各加數之和。
-        candidates = {}
-        for group, item, definition in items:
-            nine_definition = self.definition(item, nine_filing.report_date)
-            if nine_definition is None:
-                raise ParseError("定義唯一", f"{item.name} 在 {nine_filing.report_date} 沒有生效的定義")
-            annual_start = annual[item.name][0].facts[0].start
-            nine = self.addends(nine_filing, nine_definition, nine_filing.report_date, "nine_months", annual_start, item.name, sign=-1)
-            for found in annual[item.name] + nine:
-                self.check_q4(item.name, annual_start, found.facts[0], period)
-            candidates[item.name] = interleave(annual[item.name], nine)
-        return self.finish("Q", period, year, quarter, primary, nine_filing, items, candidates)
+        annual = self.collect(primary, Request(period, "annual"), "annual")
+        self.check_categories(annual, start, nine_filing.report_date, period)
+        # 年度與九個月累計各自向來源要，加數個數可以不同；Q4 = 年度各加數之和 − 九個月各加數之和。
+        total_start = annual[-1][2][0].facts[0].start
+        nine = {
+            name: candidates
+            for group, name, candidates in self.collect(
+                nine_filing, Request(nine_filing.report_date, "nine_months", total_start), "nine_months", sign=-1
+            )
+        }
+        items = []
+        for group, name, candidates in annual:
+            if name not in nine:
+                raise ParseError("定義唯一", f"{name} 在 {nine_filing.report_date} 沒有九個月累計的組成")
+            annual_start = candidates[0].facts[0].start
+            for found in candidates + nine[name]:
+                self.check_q4(name, annual_start, found.facts[0], period)
+            items.append((group, name, interleave(candidates, nine[name])))
+        return self.finish("Q", period, year, quarter, primary, nine_filing, items)
 
     def compose_annual(self, period: str) -> PeriodResult:
         """FY 序列的一期：10-K 的年度 fact。"""
         primary, year, quarter = self.primary(period)
         if quarter != 4:
             raise ParseError("財年與季別", f"{primary.accession} 宣告的期別是 Q{quarter}，FY 序列只取 10-K")
-        items = self.active_items(period)
-        candidates = {
-            item.name: self.addends(primary, definition, period, "annual", None, item.name) for group, item, definition in items
-        }
-        return self.finish("FY", period, year, None, primary, None, items, candidates)
+        items = self.collect(primary, Request(period, "annual"), "annual")
+        return self.finish("FY", period, year, None, primary, None, items)
 
     def dependencies(self, period: str, as_of: str, nine_end: str) -> str:
         """Q4 依據的 FY 與同財年 Q1–Q3（範圍內有申報者）都必須通過結構檢核；不通過時 Q4 以該期的原因失敗。回傳財年起日。"""
@@ -175,28 +178,52 @@ class PeriodComposer:
             raise ParseError("財年與季別", f"{primary.accession} 是 {primary.form}，但宣告的期別是 {focus}")
         return primary, year, quarter
 
-    def active_items(self, period: str) -> list[tuple[str, Category, Definition]]:
-        """在 `period` 有生效定義的分類、調節項與總營收；總營收必須有定義。"""
-        found = []
-        for group, item in self.items():
-            definition = self.definition(item, period)
-            if definition is None:
-                if group == "total":
-                    raise ParseError("定義唯一", f"總營收 {item.name} 在 {period} 沒有生效的定義")
-                continue
-            found.append((group, item, definition))
-        return found
+    def collect(self, filing: Filing, request: Request, role: str, sign: int = 1) -> list[tuple[str, str, list[Candidate]]]:
+        """主申報中一段期間的組成，依輸出順序回傳（群組, 名稱, 各運算元的候選 fact 群），總營收在最後。
 
-    def category_names(self, date: str) -> list[str]:
-        return [item.name for group, item in self.items() if group != "total" and self.definition(item, date) is not None]
+        分類與調節項的集合必須等於來源的 `categories(申報期末日)`；總營收一定要有。
+        """
+        composition = self.request(filing, request)
+        document = self.filings.document(filing)
+        expected = self.source.categories(filing.report_date)
+        groups = {name: "category" for name in composition.categories} | {name: "reconciling" for name in composition.reconciling}
+        extra = [name for name in groups if name not in expected]
+        if extra:
+            raise ParseError("定義唯一", f"{filing.accession} 的組成有 {extra}，不在 {filing.report_date} 的分類 {expected} 中")
+        found = {}
+        for name in expected:
+            if name not in groups:
+                self.absent(composition, name, filing, request)
+            terms = composition.categories[name] if name in composition.categories else composition.reconciling[name]
+            if not terms:
+                raise ParseError("定義唯一", f"{name}：{filing.accession} 的組成沒有任何運算元")
+            found[name] = self.candidates(document, filing, name, terms, request, role, sign)
+        if list(groups) != expected:
+            raise ParseError("定義唯一", f"{filing.accession} 的組成順序 {list(groups)} 與 {filing.report_date} 的分類 {expected} 不同")
+        if composition.total is None:
+            self.absent(composition, self.source.total_name, filing, request)
+        if not composition.total:
+            raise ParseError("定義唯一", f"{self.source.total_name}：{filing.accession} 的組成沒有任何運算元")
+        total = self.candidates(document, filing, self.source.total_name, composition.total, request, role, sign)
+        ordered = [(groups[name], name, found[name]) for name in groups]
+        return ordered + [("total", self.source.total_name, total)]
+
+    @staticmethod
+    def absent(composition: Composition, name: str, filing: Filing, request: Request):
+        """主申報的組成沒有某一項：依來源記錄的原因結束該期。"""
+        if name in composition.unparseable:
+            raise ParseError("fact 存在且唯一", f"{name}：{composition.unparseable[name]}")
+        if name in composition.missing:
+            raise ParseError("fact 存在且唯一", f"找不到 {composition.missing[name]}")
+        raise ParseError("定義唯一", f"{name} 在 {filing.report_date} 的分類中，但 {filing.accession} {request.duration} 期末 {request.end} 的組成沒有它")
 
     def check_categories(self, items, start: str, nine_end: str, period: str):
-        """年度期末生效的分類集合，必須等於財年起日到 Q3 期末之間每一天生效的分類集合（依規格判斷，不需要 Q1、Q2 的申報）。"""
-        annual = [item.name for group, item, _ in items if group != "total"]
+        """年度期末的分類集合，必須等於財年起日到 Q3 期末之間每一天的分類集合（依來源的 `categories`，不需要 Q1、Q2 的申報）。"""
+        annual = [name for group, name, _ in items if group != "total"]
         segments = []
         day = dt.date.fromisoformat(start)
         while day.isoformat() <= nine_end:
-            names = self.category_names(day.isoformat())
+            names = self.source.categories(day.isoformat())
             if segments and segments[-1]["categories"] == names:
                 segments[-1]["end"] = day.isoformat()
             else:
@@ -211,42 +238,22 @@ class PeriodComposer:
                 {"fy_categories": annual, "quarter_categories": segments},
             )
 
-    def finish(self, series, period, year, quarter, primary, nine_filing, items, candidates) -> PeriodResult:
+    def finish(self, series, period, year, quarter, primary, nine_filing, items) -> PeriodResult:
         structural = [
             {"check": "定義唯一", "result": "pass"},
             {"check": "fact 存在且唯一", "result": "pass"},
             {"check": "單位與精度", "result": "pass"},
         ]
-        if any(definition.geographic_sum() for _, _, definition in items):
+        if any(self.geographic(f) for _, _, candidates in items for c in candidates for f in c.facts):
             structural.append({"check": "地區成員完整", "result": "pass"})
         if nine_filing is not None:
             structural.append({"check": "Q4 期間", "result": "pass"})
-        groups = {item.name: group for group, item, _ in items}
-        chosen = self.choose(candidates)
-        lines = [
-            Line(name, groups[name], [Term(c.weight, op) for c, op in zip(candidates[name], chosen[name])])
-            for name in candidates
-        ]
+        chosen = self.choose({name: candidates for _, name, candidates in items})
+        lines = [Line(name, group, [Term(c.weight, op) for c, op in zip(candidates, chosen[name])]) for group, name, candidates in items]
         result = PeriodResult(series, period, year, quarter, primary, nine_filing, lines, structural)
         result.sum_check = self.check_sum(result)
         structural.append({"check": "加總", "result": "pass"})
         return result
-
-    @staticmethod
-    def definition(item: Category, source_period: str) -> Definition | None:
-        """`source_period` 是運算元來源申報的期末日；沒有生效的定義時回傳 None（該期沒有這個項目）。
-
-        生效的定義最多一個，且不是尚未支援的 table_cell。
-        """
-        active = [d for d in item.definitions if d.period.covers(source_period)]
-        if not active:
-            return None
-        if len(active) > 1:
-            raise ParseError("定義唯一", f"{item.name} 在 {source_period} 有 {len(active)} 個生效的定義")
-        for addend in active[0].addends:
-            if isinstance(addend.selector, TableCellSelector):
-                raise ParseError("定義唯一", f"{item.name} 使用 {addend.selector.describe()}：table_cell 運算元尚未支援")
-        return active[0]
 
     def third_quarter(self, period: str, year: int, as_of: str) -> Filing:
         """Q4 的九個月累計來自前一季的 10-Q：期末日在年度期末前一個單季內，且宣告同財年 Q3；只看申報日不晚於 `as_of` 的申報。"""
@@ -261,71 +268,84 @@ class PeriodComposer:
             raise ParseError("Q4 期間", f"{filing.accession}（{earlier[0]}）宣告 {found}，不是財年 {year} 的 Q3")
         return filing
 
-    def addends(self, filing, definition: Definition, end: str, duration: str, start: str | None, name: str, sign: int = 1) -> list[Candidate]:
-        """定義的每個加數各找一個候選 fact 群；任一加數找不到時該期失敗。地區軸的加總另檢查成員完整。"""
-        found = [self.candidate(filing, a.selector, end, duration, start, name, sign * a.weight) for a in definition.addends]
+    def candidates(
+        self, document: InlineDocument, filing: Filing, name: str, terms: list[ComposedTerm], request: Request, role: str, sign: int
+    ) -> list[Candidate]:
+        """一項的每個運算元各一個候選 fact 群；同一份申報中各運算元的起日必須相同，使用地區軸時檢查成員完整。"""
+        found = [self.candidate(document, filing, name, term, request, role, sign * term.weight) for term in terms]
         starts = sorted({c.facts[0].start for c in found})
         if len(starts) != 1:
-            raise ParseError("fact 存在且唯一", f"{name}：{filing.accession} 各加數的 {duration} 起日不同：{starts}")
-        self.check_geography(filing, definition, end, duration, found[0].facts[0].start, name)
+            raise ParseError("fact 存在且唯一", f"{name}：{filing.accession} 各加數的 {request.duration} 起日不同：{starts}")
+        self.check_geography(document, filing, name, found, request)
         return found
 
-    def check_geography(self, filing, definition: Definition, end: str, duration: str, start: str, name: str):
-        """地區軸的加總必須涵蓋申報中該軸的全部成員：同 concept、同其他 dimensions、同期間的 fact，地區成員不得有規格沒列的。"""
-        geographic = definition.geographic_sum()
-        if geographic is None:
-            return
-        axis, concept, others, members = geographic
-        document = self.filings.document(filing)
-        axis_key, concept_key = document.resolve(axis), document.resolve(concept)
-        other_keys = document.resolve_dimensions(others)
-        listed = document.resolve_dimensions(tuple((axis, m) for m in members))
-        listed = {member for _, member in listed}
-        present = {}
-        for f in document.facts:
-            if f.concept_key != concept_key or f.end != end or f.start != start:
-                continue
-            if f.dimension_keys is None:
-                # dimensions 解析不了時無法判斷是不是該軸的其他成員，不能當成沒有。
-                raise ParseError("地區成員完整", f"{name}：{filing.accession} 的 {f.fact_id} dimensions 前綴無法解析（{dict(f.dimensions)}），無法確認地區成員完整")
-            dims = dict(f.dimension_keys)
-            if axis_key in dims and tuple(sorted((a, m) for a, m in f.dimension_keys if a != axis_key)) == other_keys:
-                present[dims[axis_key]] = next((m for a, m in f.dimensions if document.resolve(a) == axis_key), dims[axis_key])
-        missing = sorted(shown for key, shown in present.items() if key not in listed)
-        if missing:
-            raise ParseError(
-                "地區成員完整",
-                f"{name}：{filing.accession} 的 {axis} 在 {duration} 期末 {end} 有規格沒有列出的成員 {missing}；地區軸只能以全部成員相加",
-            )
+    @staticmethod
+    def geographic_axis(dimension_key: str) -> bool:
+        """地區軸以 namespace URI 判斷：srt taxonomy（每年不同日期）的 StatementGeographicalAxis，與文件用的前綴無關。"""
+        return dimension_key.startswith("{http://fasb.org/srt/") and dimension_key.endswith("}" + GEOGRAPHIC_AXIS.split(":")[1])
 
-    def candidate(self, filing, selector: Selector, end: str, duration: str, start: str | None, name: str, weight: int = 1) -> Candidate:
+    def geographic(self, fact: Fact) -> bool:
+        return fact.dimension_keys is not None and any(self.geographic_axis(axis) for axis, _ in fact.dimension_keys)
+
+    def check_geography(self, document: InlineDocument, filing: Filing, name: str, found: list[Candidate], request: Request):
+        """使用地區軸的運算元必須涵蓋申報中該軸的全部成員：同 concept、同其他 dimensions、同期間的 fact，地區成員都要在運算式中。"""
+        shapes: dict[tuple, set[str]] = {}
+        for candidate in found:
+            for fact in candidate.facts:
+                if not self.geographic(fact):
+                    continue
+                axis_key = next(axis for axis, _ in fact.dimension_keys if self.geographic_axis(axis))
+                dims = dict(fact.dimension_keys)
+                others = tuple(sorted((a, m) for a, m in fact.dimension_keys if a != axis_key))
+                shapes.setdefault((fact.concept_key, axis_key, others, fact.start, fact.end), set()).add(dims[axis_key])
+        for (concept_key, axis_key, others, start, end), listed in shapes.items():
+            present = {}
+            for f in document.facts:
+                if f.concept_key != concept_key or f.end != end or f.start != start:
+                    continue
+                if f.dimension_keys is None:
+                    # dimensions 解析不了時無法判斷是不是該軸的其他成員，不能當成沒有。
+                    raise ParseError("地區成員完整", f"{name}：{filing.accession} 的 {f.fact_id} dimensions 前綴無法解析（{dict(f.dimensions)}），無法確認地區成員完整")
+                dims = dict(f.dimension_keys)
+                if axis_key in dims and tuple(sorted((a, m) for a, m in f.dimension_keys if a != axis_key)) == others:
+                    present[dims[axis_key]] = next((m for a, m in f.dimensions if document.resolve(a) == axis_key), dims[axis_key])
+            missing = sorted(shown for key, shown in present.items() if key not in listed)
+            if missing:
+                raise ParseError(
+                    "地區成員完整",
+                    f"{name}：{filing.accession} 的 {GEOGRAPHIC_AXIS} 在 {request.duration} 期末 {end} 有運算式沒有列出的成員 {missing}；地區軸只能以全部成員相加",
+                )
+
+    def facts_of(self, document: InlineDocument) -> set[Fact]:
+        key = id(document)
+        if key not in self.fact_sets:
+            self.fact_sets[key] = set(document.facts)
+        return self.fact_sets[key]
+
+    def candidate(self, document: InlineDocument, filing: Filing, name: str, term: ComposedTerm, request: Request, role: str, weight: int) -> Candidate:
         """一個運算元在申報中的候選 fact 群。
 
-        `one_of` 的每種寫法都找；找到多種寫法時，所有 fact 合成一群，照重複 fact 的規則處理：數值必須在各自精度內一致，
-        選精度最高、所在表格含最多其他項目的那一個，其餘記在 duplicates。寫法的前綴在文件中沒有宣告時，該寫法視為不存在；
-        前綴宣告衝突時無法確定該寫法對應哪些 fact，該期失敗；所有寫法都無法解析時該期失敗。
+        `term.facts` 是來源找到的 fact（多種寫法時每種寫法各有）；框架補上同 concept、dimensions、期間的重複 fact，
+        合成一群：數值必須在各自精度內一致，選精度最高、所在表格含最多其他項目的那一個，其餘記在 duplicates。
         """
-        document = self.filings.document(filing)
-        label = f"{name}：{selector.describe()} {duration} 期末 {end}（{filing.accession}）"
-        variants = fact_variants(selector)
-        for variant in variants:
-            conflicts = document.conflicting_prefixes(variant.concept, variant.dimensions)
-            if conflicts:
-                raise ParseError("fact 存在且唯一", f"{label}：{variant.describe()} 的前綴 {conflicts} 在文件中宣告衝突")
-        resolved = [(document.resolve(v.concept), document.resolve_dimensions(v.dimensions)) for v in variants]
-        resolved = [keys for keys in resolved if None not in keys]
-        if not resolved:
-            raise ParseError("fact 存在且唯一", f"{label}：規格使用的前綴在文件中沒有宣告或宣告衝突")
-        facts = [
-            f
-            for f in document.facts
-            if (f.concept_key, f.dimension_keys) in resolved
-            and f.end == end
-            and classify_duration(f.start, f.end) == duration
-            and (start is None or f.start == start)
-        ]
-        if not facts:
+        label = f"{name}：{term.label or '、'.join(f.fact_id or '?' for f in term.facts)} {request.duration} 期末 {request.end}（{filing.accession}）"
+        if term.weight not in (1, -1):
+            raise ParseError("定義唯一", f"{label} 的權重是 {term.weight}，只能是 1 或 -1")
+        if not term.facts:
             raise ParseError("fact 存在且唯一", f"找不到 {label}")
+        known = self.facts_of(document)
+        for f in term.facts:
+            if f not in known:
+                raise ParseError("fact 存在且唯一", f"{label}：{f.fact_id} 不在這份申報的 fact 清單中")
+            if f.concept_key is None or f.dimension_keys is None:
+                raise ParseError("fact 存在且唯一", f"{label}：{f.fact_id} 的前綴在文件中沒有宣告或宣告衝突")
+            if not request.matches(f):
+                raise ParseError("fact 存在且唯一", f"{label}：{f.fact_id} 的期間 {f.start}～{f.end} 不是要求的期間")
+        geographic = [self.geographic(f) for f in term.facts]
+        if any(geographic) and (not all(geographic) or term.weight != 1):
+            raise ParseError("地區成員完整", f"{label}：地區軸的 fact 只能以權重 1、不與其他寫法混合的方式相加")
+        keys = {(f.concept_key, f.dimension_keys) for f in term.facts}
+        facts = [f for f in document.facts if (f.concept_key, f.dimension_keys) in keys and request.matches(f)]
         forms = {(f.concept_key, f.dimension_keys) for f in facts}
         if len({f.start for f in facts}) != 1:
             raise ParseError("fact 存在且唯一", f"{label} 有多個起日：{sorted({f.start for f in facts})}")
@@ -345,7 +365,7 @@ class PeriodComposer:
             values = ", ".join(f"{f.fact_id} {f.concept} {dict(f.dimensions)}={f.value}（decimals {f.decimals}）" for f in facts)
             kind = "多種寫法同時出現且數值不一致" if len(forms) > 1 else "重複 fact 的數值不一致"
             raise ParseError("fact 存在且唯一", f"{label} {kind}：{values}")
-        return Candidate(filing, facts, duration, weight)
+        return Candidate(filing, facts, role, weight)
 
     @staticmethod
     def check_q4(name: str, annual_start: str, found: Fact, period: str):

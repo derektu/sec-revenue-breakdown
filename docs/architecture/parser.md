@@ -43,7 +43,7 @@ parser 分三層。每家公司的 parser 各自獨立，新增或修改一家�
 框架只做三件事，與任何一家公司的揭露方式無關：
 
 1. **提供資料**：框架每次只把一份申報的 fact 清單交給公司 parser，請它組出一段期間的運算式。公司 parser 拿不到 HTML 原文，也拿不到其他申報。交給它哪一份申報由框架依時點選定（見框架流程的選申報），所以每個運算元都出自框架選定的一份申報：不會用到之後申報的數字，也不會用到 XBRL fact 以外的數字。寫 parser 的人在動手前看過的申報與對照資料，資料限制擋不住，由「時點與寫 parser 的人的知識」的規則與 review 處理。
-2. **檢核**：公司 parser 交回的是「每個分類用了哪幾個 fact、權重多少」，不交數字。框架依 accession 與 fact id 找到 fact，自己算出數值，再做結構檢核。公司 parser 沒辦法交出 fact 清單以外的數字。
+2. **檢核**：公司 parser 交回的是「每個分類用了哪幾個 fact、權重多少」，不交數字。框架核對這些 fact 都在該申報的 fact 清單中，依 fact 自己算出數值，再做結構檢核。公司 parser 沒辦法交出 fact 清單以外的數字。
 3. **寫入**：證據、正式輸出、`status.json`、已上線保護與差異標記。HTML 原文只有框架讀，用來找出 fact 所在的表格、截圖存證。
 
 新增一家公司永遠不需要改框架。開發一家公司時覺得非改框架不可，代表要改的是所有公司共用的規則：停下來回報，由人決定。
@@ -119,18 +119,32 @@ data/snapshots/<首字母>/<TICKER>/
 ```python
 TICKER = "AAPL"
 VIEW = "product"                      # product 或 business_segment
+TOTAL = "Total net sales"             # 總營收的名稱
 
-def compose(filing, start, end):
-    """filing：一份申報的 fact 清單（facts、namespaces、dei）；start、end：要組的期間。
-    回傳分類、調節項與總營收的運算式。"""
+def compose(filing, request):
+    """filing：一份申報的 fact 清單（FilingFacts）；request：要組的期間（Request）。
+    回傳 Composition：分類、調節項與總營收的運算式。"""
 
 def categories(day):
-    """這家公司在 day 這一天有哪些分類與調節項。"""
+    """這家公司在 day 這一天有哪些分類與調節項，依輸出順序。"""
 ```
 
-- **`compose` 的回傳**：分類、調節項與總營收各一個運算式，每個運算式是一串（fact id、權重），fact id 是這份申報中的 id，accession 由框架補上。權重只能是 1 或 -1，依公司 parser 列出的順序輸出。分類加總與總營收之間的合法差額（例如公司間抵銷、未分配項目）列為調節項：參與加總檢核，不輸出成分類。回傳與失敗的型別由框架提供。
-- **沒有這個分類**：這份申報沒有某個分類時，回傳中不列出它。比較欄比對時記為 `not_found`。總營收一定要有。
-- **組不出來**：找不到總營收或需要的 fact 時，丟出 `ParserFailure(檢核名稱, 原因)`，檢核名稱用自我檢核表中的名稱，找不到或無法確定 fact 時用「fact 存在且唯一」。框架把它記為該期失敗，`status.json` 的格式與其他失敗相同；比較欄比對時記為 `not_found`。
+介面的型別由框架提供（`revenue/contract.py`）：
+
+| 型別 | 內容 |
+|---|---|
+| `FilingFacts` | 申報的 `accession`、`form`、`report_date`，與主文件的 `facts`、`namespaces`、`dei`；沒有 HTML 原文與表格 |
+| `Request` | `end`（期末日）、`duration`（`quarter`、`nine_months`、`annual`）與選用的 `start`；`matches(fact)` 判斷 fact 的期間是否相符 |
+| `Term` | 運算式的一項：`facts`（這個數字在申報中的 fact，多種寫法時每種寫法各有）、`weight`（1 或 -1）、`label`（錯誤訊息用的描述） |
+| `Composition` | `categories`、`reconciling`（名稱 → 各項，依輸出順序，必須與 `categories(期末日)` 相同）、`total`（各項，組不出時為 None）、`missing`（申報中找不到的項目 → 原因）、`unparseable`（申報中有、但無法確定是哪些 fact 的項目 → 原因，例如前綴宣告衝突） |
+| `ParserFailure` | 組不出這份申報時丟出，帶檢核名稱與原因 |
+
+- **`compose` 的回傳**：分類、調節項與總營收各一個運算式，每一項指定 fact 與權重，數值由框架依 fact 計算。權重只能是 1 或 -1，依公司 parser 列出的順序輸出。分類加總與總營收之間的合法差額（例如公司間抵銷、未分配項目）列為調節項：參與加總檢核，不輸出成分類；組成有調節項的期別，`revenue.json` 有 `reconciling` 欄位。
+- **框架核對交回的 fact**：交給公司 parser 的 fact 清單是唯讀副本；交回的每個 fact 必須在這份申報的 fact 清單中、期間與 `request` 相符；框架另外補上同 concept、同 dimensions、同期間的重複 fact，檢查數值一致後依重複值的規則選定運算元。
+- **沒有這個分類**：這份申報沒有某個分類時，回傳中不列出它，原因記在 `missing`。比較欄比對時記為 `not_found`。總營收一定要有。
+- **無法確定是哪些 fact**：某一項在申報中有、但無法確定（例如前綴宣告衝突）時記在 `unparseable`；整份申報都組不出來時丟出 `ParserFailure(檢核名稱, 原因)`，檢核名稱用自我檢核表中的名稱，無法確定 fact 時用「fact 存在且唯一」。主申報的呼叫記為該期失敗，`status.json` 的格式與其他失敗相同；比較欄比對時，該項（`ParserFailure` 時為這段期間的每一項）記為 `unparseable`，寫成差異標記；申報沒有起訖相同的 fact、也就是沒有列示這段期間時，不比對。
+- **utility**：`parser_utils` 的 `find`（一種寫法的 fact）、`one_of`（多種寫法）與 `put`（放進組成，找不到時記在 `missing`）涵蓋依 concept 與 dimensions 精確查找的寫法；比對以 namespace URI 進行，前綴沒有宣告的寫法視為不存在。
+- **依申報期末日切換寫法**：`FilingFacts.report_date` 是申報的期末日。依日期切換時，`parser.md` 寫明是哪一份申報開始改變（見「時點與寫 parser 的人的知識」）。
 - **`categories`**：框架用來判斷 Q4 推算條件（年度期末的分類集合是否等於財年起日到 Q3 期末之間每一天的分類集合），不需要 Q1、Q2 的申報。框架向主申報要運算式時（Q1–Q3 的單季、FY 與 Q4 的年度、Q4 的九個月累計），核對回傳的分類與 `categories(該運算式的期末日)` 相同，不同時該期失敗：不列出的分類也必須不在 `categories` 中。比較欄比對與 Q4 口徑一致是用較晚的申報組較早的期間，較晚的申報可能已用新的分類結構重新列示，所以這兩種呼叫不核對。核對只發生在各期的期末日，期間中間的日子與範圍內沒有申報的 Q1、Q2，`categories` 的回答沒有被核對到，由 review 檢查。新申報出現 parser 不認得的分類時，parser 不會列出它，通常是加總對不上而失敗，由人更新那一家的 parser。`categories` 本身依日期回答，每個分類集合改變的日期同樣要在 `parser.md` 寫明是哪一份申報開始改變（見「時點與寫 parser 的人的知識」）。
 - **公司 parser 自己處理的事**，寫在自己的程式碼並記錄在 `parser.md`：
   - 用哪個 concept、哪些 dimensions。
@@ -139,7 +153,7 @@ def categories(day):
   - 分類的新增、合併與拆分。
   - 文件用不同前綴指向同一個 namespace，或公司與 us-gaap 的 namespace URI 每年帶不同日期：以 namespace URI 辨認 concept 與成員，fact 清單附有文件宣告的 namespaces。
 - **規則**：
-  - 觀點只取產品或業務別。地區軸 `srt:StatementGeographicalAxis` 的 fact 只能以「該軸全部成員相加」出現在運算式中，例如 XOM、CVX、LLY 的分部營收只以美國＋非美國揭露。框架以「地區成員完整」檢核。
+  - 觀點只取產品或業務別。地區軸 `srt:StatementGeographicalAxis` 的 fact 只能以「該軸全部成員相加」出現在運算式中，每一項權重 1、不與其他寫法混合，例如 XOM、CVX、LLY 的分部營收只以美國＋非美國揭露。框架以 namespace URI 辨認地區軸，以「地區成員完整」檢核。
   - 使用 `us-gaap:StatementBusinessSegmentsAxis` 時，`parser.md` 寫明這個軸的成員是業務別而不是地區：公司常把這個軸用於地區分部，例如 AAPL 的 Americas、Europe。
   - 分類名稱不重複，總營收不與分類重名。
   - 每家公司都有 `parser.md`。
@@ -150,7 +164,7 @@ def categories(day):
 
 1. **選申報**：該期的主申報是 reportDate 等於該期、申報日最早的 10-Q 或 10-K。修正申報（10-K/A、10-Q/A）在原申報之後才公開，不取代主申報，只參與差異標記的比對。框架不讀 8-K。主文件必須是 inline XBRL，讀取時核對 sha256。主申報的申報日是這一期的時點：之後的步驟只看申報日不晚於它的申報。
 2. **讀 facts**：解析主申報的 inline XBRL，建立 fact 清單：concept、dimensions、期間、單位、decimals、sign、scale、format 與所在表格。數值依 format（`num-dot-decimal`、`fixed-zero`、`zerodash`）、scale 與 sign 算成整數美元；正負號只由 `sign` 屬性決定，顯示文字帶負號或括號、或數值不是有限數時，這個 fact 視為無法解析。證據核對使用同一套規則（`evidence.ix_number`）。
-   - 公司 parser 交回 fact id，框架補上 accession 識別運算元，不以 QName 比對 fact。
+   - 公司 parser 交回的是 fact 清單中的 fact，框架核對它屬於這份申報，不以 QName 比對 fact。
 3. **財年與季別**：主申報必須宣告 `DocumentFiscalYearFocus` 與 `DocumentFiscalPeriodFocus`（Q1、Q2、Q3、FY）；Q1–Q3 必須是 10-Q，FY 必須是 10-K。
 4. **期間分類**：依 context 天數（含首尾）判斷單季（84–98 天）、六個月（175–189 天）、九個月（266–280 天）、年度（357–378 天）。
 5. **分類集合**：公司 parser 對主申報與該期間交回的分類與調節項，必須與 `categories(期末日)` 相同。Q4 推算條件用的是 `categories`。

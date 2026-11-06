@@ -8,35 +8,55 @@ from __future__ import annotations
 
 from decimal import Decimal
 
-from .spec import fact_variants
-from .xbrl import InlineDocument, comparison_bound, decimals_rank
+from .contract import Composition, Request
+from .filings import ParseError
+from .xbrl import InlineDocument, classify_duration, comparison_bound, decimals_rank
 
 TOTAL_LABEL = "總營收"
 # 已上線運算式中，九個月累計以負號參與 Q4；比對時換回定義本身的符號，與申報列示的九個月累計同號。
 ROLE_SIGN = {"nine_months": -1}
 
 
-def comparatives(document: InlineDocument, accession: str, baselines: list[tuple[str, str, dict]], addends_for) -> list[dict]:
+def comparatives(document: InlineDocument, accession: str, baselines: list[tuple[str, str, dict]], compose_for, total_name: str | None = None) -> list[dict]:
     """新申報涵蓋的已上線期間，逐一比對每個分類在每個角色的值，回傳比對清單。
 
-    `baselines` 是 (序列, 期末日, 已上線的 revenue.json)；`addends_for(名稱)` 回傳該分類（`None` 為總營收）在新申報期別
-    生效定義的加數清單（`Addend`，selector 都是 fact），沒有時回傳 None。
+    `baselines` 是 (序列, 期末日, 已上線的 revenue.json)；`compose_for(request)` 回傳新申報中該期間的組成
+    （`Composition`），來源組不出來時丟出 `ParseError`。`total_name` 是組成中總營收的名稱（`unparseable` 的鍵）。
 
     比對單位是「分類 × 角色」：角色是已上線運算元的 `role`（季、年度、九個月累計），已上線值是該角色運算元的加權和；
-    申報列示值是新申報中同一期間、以新申報期別生效的定義組出的加權和。加數的個數、順序或成員可以與已上線不同，
-    只比分類值。以規格定義而不是已上線運算元的 QName 查找，公司改 tag 或改成員名稱後仍比得到；查找在新申報內以
-    namespace URI 比對。
+    申報列示值是來源從新申報組出的同一期間運算式的加權和。加數的個數、順序或成員可以與已上線不同，只比分類值。
+    列示值由來源從新申報重新組出，不沿用已上線運算元的 QName，公司改 tag 或改成員名稱後仍比得到。
 
-    新申報有某段期間的總營收（總營收的每個加數都有該期間的 fact）時，視為涵蓋該期間。結果是 `consistent`
-    （差距不超過雙方所有運算元的誤差上限總和；每個 fact 的誤差上限取 decimals 與顯示文字精度中較粗者）、`different`（超出）、`unparseable`（新申報或已上線的 fact 無法比較）或
-    `not_found`（新申報期別沒有這個分類的定義，或有加數在新申報中找不到該期間的 fact）。沒有涵蓋的期間不列入；
-    已上線輸出沒有的期間長度（例如六個月累計）因此不比對。
+    來源能從新申報組出某段期間的總營收時，視為涵蓋該期間。結果是 `consistent`（差距不超過雙方所有運算元的
+    誤差上限總和；每個 fact 的誤差上限取 decimals 與顯示文字精度中較粗者）、`different`（超出）、`unparseable`
+    （新申報或已上線的 fact 無法比較，包括來源組不出這段期間、或無法確定某一項是哪些 fact）或 `not_found`
+    （組成中沒有這個分類）。沒有涵蓋的期間不列入；已上線輸出沒有的期間長度（例如六個月累計）因此不比對。
     """
-    covered = set()
-    total_addends = addends_for(None)
-    if total_addends:
-        spans = [{(f.start, f.end) for f in facts_of(document, a.selector)[0]} for a in total_addends]
-        covered = set.intersection(*spans)
+    compositions: dict[tuple[str, str], tuple[Composition | None, str | None]] = {}
+    spans_listed = {(f.start, f.end) for f in document.facts}
+
+    def listed(span: tuple[str, str]) -> bool:
+        return span in spans_listed
+
+    def composed(span: tuple[str, str]) -> tuple[Composition | None, str | None]:
+        """（組成, 無法比較的原因）；兩者都是 None 代表新申報沒有涵蓋這段期間。"""
+        if span not in compositions:
+            duration = classify_duration(*span)
+            found, error = None, None
+            if duration:
+                try:
+                    found = compose_for(Request(span[1], duration, span[0]))
+                except ParseError as failure:
+                    error = f"[{failure.check}] {failure.message}"
+            if found is not None and found.total is not None:
+                compositions[span] = (found, None)
+            elif (error is not None or (found is not None and total_name is not None and total_name in found.unparseable)) and listed(span):
+                # 組不出或無法確定總營收時，只在申報確實列示這段期間（有起訖相同的 fact）才記為無法比較。
+                compositions[span] = (found, error)
+            else:
+                compositions[span] = (None, None)
+        return compositions[span]
+
     found = []
     for series, period, output in baselines:
         lines = list(output["categories"].items()) + list(output.get("reconciling", {}).items()) + [(None, output["total"])]
@@ -50,7 +70,8 @@ def comparatives(document: InlineDocument, accession: str, baselines: list[tuple
                 if len(spans) != 1 or any(o["kind"] != "xbrl_fact" or o["accession"] == accession for _, _, o in terms):
                     continue
                 span = spans.pop()
-                if span not in covered:
+                composition, error = composed(span)
+                if composition is None and error is None:
                     continue
                 sign = ROLE_SIGN.get(role, 1)
                 published = [
@@ -67,33 +88,34 @@ def comparatives(document: InlineDocument, accession: str, baselines: list[tuple
                     "published_value": sum(a["weight"] * a["value"] for a in published),
                     "published_addends": [{k: a[k] for k in ("operand", "concept", "dimensions", "weight", "value")} for a in published],
                 }
-                entry.update(listed_value(document, addends_for(name), span, published))
+                key = total_name if name is None else name
+                if error is not None or key in composition.unparseable:
+                    reason = error if error is not None else composition.unparseable[key]
+                    entry.update({"result": "unparseable", "listed_value": None, "listed_addends": [], "note": f"無法比較：{reason}"})
+                else:
+                    terms = composition.total if name is None else composition.categories.get(name, composition.reconciling.get(name))
+                    entry.update(listed_value(document, terms, span, published, composition.missing.get(key)))
                 found.append(entry)
     return found
 
 
-def listed_value(document: InlineDocument, addends, span: tuple[str, str], published: list[dict]) -> dict:
-    """以新申報期別生效的定義，組出新申報中 `span` 期間的分類值，並與已上線值比較。"""
-    if addends is None:
-        return {"result": "not_found", "note": "新申報期別沒有這個分類的規格定義"}
-    listed, missing, conflicts, ambiguous, prefixes = [], [], [], [], []
-    for addend in addends:
-        found, conflicted = facts_of(document, addend.selector)
-        if conflicted:
-            prefixes.append(f"{addend.selector.describe()} 的前綴 {conflicted} 在新申報中宣告衝突")
-            continue
-        matches = [f for f in found if (f.start, f.end) == span]
+def listed_value(document: InlineDocument, terms, span: tuple[str, str], published: list[dict], missing: str | None = None) -> dict:
+    """新申報中 `span` 期間的分類值（來源組出的運算式），並與已上線值比較；`missing` 是組成沒有這個分類的原因。"""
+    if terms is None:
+        return {"result": "not_found", "note": f"新申報找不到該期間的加數：{missing}" if missing else "新申報的組成沒有這個分類"}
+    listed, missing, conflicts, ambiguous = [], [], [], []
+    for term in terms:
+        keys = {(f.concept_key, f.dimension_keys) for f in term.facts}
+        matches = [f for f in document.facts if (f.concept_key, f.dimension_keys) in keys and (f.start, f.end) == span]
         if not matches:
-            missing.append(addend.selector.describe())
+            missing.append(term.label)
             continue
         fact = max(matches, key=lambda f: decimals_rank(f.decimals))
         # 同一個加數的重複 fact（含多種寫法同時出現）數值必須在各自精度內一致，否則無法判斷申報列示的是哪個數字。
         if any(f.value is None or f.error_bound() is None or fact.value is None or abs(f.value - fact.value) > f.error_bound() for f in matches if f is not fact):
             conflicts.append("、".join(f"{f.fact_id}={f.value}" for f in matches))
-            ambiguous += [listing(f, addend.weight) for f in matches]
-        listed.append(listing(fact, addend.weight) | {"fact": fact})
-    if prefixes:
-        return {"result": "unparseable", "listed_value": None, "listed_addends": [], "note": "無法比較：" + "；".join(prefixes)}
+            ambiguous += [listing(f, term.weight) for f in matches]
+        listed.append(listing(fact, term.weight) | {"fact": fact})
     if missing:
         return {"result": "not_found", "note": f"新申報找不到該期間的加數：{'；'.join(missing)}"}
     if conflicts:
@@ -114,18 +136,3 @@ def listed_value(document: InlineDocument, addends, span: tuple[str, str], publi
 
 def listing(fact, weight: int) -> dict:
     return {"fact_id": fact.fact_id, "concept": fact.concept, "dimensions": dict(fact.dimensions), "weight": weight, "value": fact.value}
-
-
-def facts_of(document: InlineDocument, selector) -> tuple[list, list[str]]:
-    """運算元（含 `one_of` 的每種寫法）在申報中的所有 fact，以及宣告衝突的前綴。
-
-    以 namespace URI 比對；前綴未宣告的寫法視為不存在。前綴宣告衝突時無法確定寫法對應哪些 fact，回傳衝突的前綴，
-    由呼叫端記為無法比較。
-    """
-    keys, conflicted = set(), []
-    for variant in fact_variants(selector):
-        conflicted += document.conflicting_prefixes(variant.concept, variant.dimensions)
-        concept, dimensions = document.resolve(variant.concept), document.resolve_dimensions(variant.dimensions)
-        if concept is not None and dimensions is not None:
-            keys.add((concept, dimensions))
-    return [f for f in document.facts if (f.concept_key, f.dimension_keys) in keys], sorted(set(conflicted))

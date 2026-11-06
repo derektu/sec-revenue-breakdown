@@ -36,7 +36,7 @@
 |---|---|
 | `data/universe/tickers.csv` | 使用者維護的 ticker 清單：CIK、狀態（`wip` 研究中、`ok` 上線、`drop` 放棄）、採用的來源觀點、穩定度評分 |
 | `data/universe/references/<首字母>/<TICKER>/` | 對照資料：`reference.json` 與每次擷取的證據 |
-| `libs/sec_revenue/companies/<首字母>/<ticker>/` | 每家公司的 parser 規格（`spec.py`）與說明（`parser.md`） |
+| `libs/sec_revenue/companies/<首字母>/<ticker>/` | 每家公司的 parser（`parser.py` 程式碼，或宣告式規格 `spec.py`）與說明（`parser.md`） |
 | `data/revenue/<首字母>/<TICKER>/` | parser 的正式輸出：季度（`Q/`）與年度（`FY/`）兩個序列每期的 `revenue.json` 與 SEC 表格證據，以及 `status.json` |
 | `data/snapshots/<首字母>/<TICKER>/` | 由 SEC 原文產生的 XBRL fact 快照（每份申報一個 JSON Lines 檔，主文件的全部數值 fact、一行一個，與公司 parser 無關）與申報清單（`manifest.json`，每個檔案的 sha256）；沒有原文時以快照驗證正式輸出，需要原文時依清單重新下載 |
 
@@ -49,8 +49,9 @@
 | `scripts/` | CLI 入口：`sec_pipeline.py`（tickers、download、parse、viewer）、`capture_references.py`、`validate_universe.py` |
 | `libs/sec_revenue/common/` | 跨子套件共用、不依賴其他子套件的小工具：JSON 讀寫、`.env`、期間範圍 |
 | `libs/sec_revenue/download/` | SEC 下載：HTTP、快取、CIK 與申報清單、要下載的申報、申報包、download 的 ticker 選擇 |
-| `libs/sec_revenue/revenue/` | parser 引擎：規格結構、讀 inline XBRL、組數值、檢核、比較欄比對、證據、寫入 |
-| `libs/sec_revenue/companies/` | 公司規格 |
+| `libs/sec_revenue/revenue/` | parser 框架：讀 inline XBRL、與公司 parser 的介面、組數值、檢核、比較欄比對、證據、寫入 |
+| `libs/sec_revenue/companies/` | 公司 parser |
+| `libs/sec_revenue/parser_utils/` | 公司 parser 可呼叫的 utility，只增不改 |
 | `libs/sec_revenue/capture/` | 對照資料擷取 |
 | `libs/sec_revenue/universe/` | `tickers.csv` 與對照資料的格式（`model`）、讀取與驗證（`tickers`、`references`、`validate`），以及 CLI 的 ticker 解析 |
 | `libs/sec_revenue/viewer/` | 正式輸出的唯讀 viewer |
@@ -93,9 +94,9 @@
 | `npm run validate` | 驗證 `tickers.csv` 與對照資料 |
 | `npm run regression` | 以 `data/snapshots/` 的快照對全部上線公司跑 `parse --check`，不需要 SEC 原文 |
 | `npm run check` | 依序執行以上三項（CI 在每個 PR 執行同樣三項） |
-| `npm run tickers` | 列出有公司規格的 ticker |
+| `npm run tickers` | 列出有公司 parser 的 ticker |
 | `npm run download -- ...` | 下載 SEC 申報包；目標期別有 10-K 時一併下載推算 Q4 所需的申報；`--dry-run` 只列出還沒下載的申報；`--from-manifest` 依申報清單重新下載並逐檔核對 |
-| `npm run parse -- ...` | 依公司規格產生 `data/revenue/` 的正式輸出與證據，不連網；不指定 `--start` 時從預設起始日（2024-01-01）起；`--check` 與已提交的輸出比對，加 `--snapshots` 時不讀原文 |
+| `npm run parse -- ...` | 依公司 parser 產生 `data/revenue/` 的正式輸出與證據，不連網；不指定 `--start` 時從預設起始日（2024-01-01）起；`--check` 與已提交的輸出比對，加 `--snapshots` 時不讀原文 |
 | `npm run snapshot -- ...` | 由 SEC 原文產生 `data/snapshots/` 的快照與申報清單；`--check` 核對已提交的快照與原文一致 |
 | `npm run capture:setup` | 開啟擷取用的專用瀏覽器，檢查並等待登入 |
 | `npm run capture -- ...` | 擷取對照資料 |
