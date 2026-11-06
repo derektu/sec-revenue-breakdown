@@ -1,0 +1,237 @@
+{
+  "categories": {
+    "Company-owned and operated restaurants": {
+      "expression": [
+        {
+          "operand": "op2",
+          "weight": 1
+        }
+      ],
+      "value": 2458000000
+    },
+    "Franchised restaurants": {
+      "expression": [
+        {
+          "operand": "op1",
+          "weight": 1
+        }
+      ],
+      "value": 4213000000
+    },
+    "Other revenues": {
+      "expression": [
+        {
+          "operand": "op3",
+          "weight": 1
+        }
+      ],
+      "value": 172000000
+    }
+  },
+  "checks": {
+    "structural": [
+      {
+        "check": "定義唯一",
+        "result": "pass"
+      },
+      {
+        "check": "fact 存在且唯一",
+        "result": "pass"
+      },
+      {
+        "check": "單位與精度",
+        "result": "pass"
+      },
+      {
+        "check": "加總",
+        "result": "pass"
+      },
+      {
+        "check": "證據完整",
+        "result": "pass"
+      }
+    ],
+    "sum": {
+      "categories": 6843000000,
+      "difference": 0,
+      "tolerance": "2000000",
+      "total": 6843000000
+    }
+  },
+  "filings": {
+    "primary": {
+      "accession": "0000063908-25-000039",
+      "filing_date": "2025-08-06",
+      "form": "10-Q",
+      "report_date": "2025-06-30"
+    }
+  },
+  "fiscal_quarter": 2,
+  "fiscal_year": 2025,
+  "operands": {
+    "op1": {
+      "accession": "0000063908-25-000039",
+      "concept": "mcd:Revenuesfromfranchisedrestaurants",
+      "context_id": "c-4",
+      "decimals": "-6",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/63908/000006390825000039/mcd-20250630.htm",
+        "name": "mcd-20250630.htm",
+        "sha256": "85dac66ac56175f0dfc46e11fcc429c02ef99a8e55e60e2fef49981fab2c6df9",
+        "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390825000039/mcd-20250630.htm"
+      },
+      "duplicates": [
+        "f-869",
+        "f-721"
+      ],
+      "evidence": {
+        "html_sha256": "daf3f6c780aa743c1fdeedfc0ff4997186923ffae6538482d0ea541e05f04cd3",
+        "png_scale": 1,
+        "png_sha256": "bb25f1a8cba1cf3976ab7da2d6fb0a2c3e3a333ae2e5a17362e4ab64a8c7b2e5",
+        "table": "0000063908-25-000039-85dac66ac561-t9"
+      },
+      "fact_id": "f-117",
+      "filing_date": "2025-08-06",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-06-30",
+        "start": "2025-04-01"
+      },
+      "raw": "4,213",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 4213000000
+    },
+    "op2": {
+      "accession": "0000063908-25-000039",
+      "concept": "mcd:SalesByCompanyOwnedAndOperatedRestaurants",
+      "context_id": "c-4",
+      "decimals": "-6",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/63908/000006390825000039/mcd-20250630.htm",
+        "name": "mcd-20250630.htm",
+        "sha256": "85dac66ac56175f0dfc46e11fcc429c02ef99a8e55e60e2fef49981fab2c6df9",
+        "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390825000039/mcd-20250630.htm"
+      },
+      "duplicates": [
+        "f-871"
+      ],
+      "evidence": {
+        "html_sha256": "daf3f6c780aa743c1fdeedfc0ff4997186923ffae6538482d0ea541e05f04cd3",
+        "png_scale": 1,
+        "png_sha256": "bb25f1a8cba1cf3976ab7da2d6fb0a2c3e3a333ae2e5a17362e4ab64a8c7b2e5",
+        "table": "0000063908-25-000039-85dac66ac561-t9"
+      },
+      "fact_id": "f-121",
+      "filing_date": "2025-08-06",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-06-30",
+        "start": "2025-04-01"
+      },
+      "raw": "2,458",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 2458000000
+    },
+    "op3": {
+      "accession": "0000063908-25-000039",
+      "concept": "mcd:OtherRevenues",
+      "context_id": "c-4",
+      "decimals": "-6",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/63908/000006390825000039/mcd-20250630.htm",
+        "name": "mcd-20250630.htm",
+        "sha256": "85dac66ac56175f0dfc46e11fcc429c02ef99a8e55e60e2fef49981fab2c6df9",
+        "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390825000039/mcd-20250630.htm"
+      },
+      "duplicates": [
+        "f-873",
+        "f-973"
+      ],
+      "evidence": {
+        "html_sha256": "daf3f6c780aa743c1fdeedfc0ff4997186923ffae6538482d0ea541e05f04cd3",
+        "png_scale": 1,
+        "png_sha256": "bb25f1a8cba1cf3976ab7da2d6fb0a2c3e3a333ae2e5a17362e4ab64a8c7b2e5",
+        "table": "0000063908-25-000039-85dac66ac561-t9"
+      },
+      "fact_id": "f-125",
+      "filing_date": "2025-08-06",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-06-30",
+        "start": "2025-04-01"
+      },
+      "raw": "172",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 172000000
+    },
+    "op4": {
+      "accession": "0000063908-25-000039",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-4",
+      "decimals": "-6",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/63908/000006390825000039/mcd-20250630.htm",
+        "name": "mcd-20250630.htm",
+        "sha256": "85dac66ac56175f0dfc46e11fcc429c02ef99a8e55e60e2fef49981fab2c6df9",
+        "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390825000039/mcd-20250630.htm"
+      },
+      "duplicates": [
+        "f-875",
+        "f-975",
+        "f-742",
+        "f-945"
+      ],
+      "evidence": {
+        "html_sha256": "daf3f6c780aa743c1fdeedfc0ff4997186923ffae6538482d0ea541e05f04cd3",
+        "png_scale": 1,
+        "png_sha256": "bb25f1a8cba1cf3976ab7da2d6fb0a2c3e3a333ae2e5a17362e4ab64a8c7b2e5",
+        "table": "0000063908-25-000039-85dac66ac561-t9"
+      },
+      "fact_id": "f-129",
+      "filing_date": "2025-08-06",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-06-30",
+        "start": "2025-04-01"
+      },
+      "raw": "6,843",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 6843000000
+    }
+  },
+  "parser": {
+    "engine_sha256": "cef42e58f952c80715fda28bc15f98310ac69951641f5d0796f212ce1a6349f8",
+    "spec_sha256": "588e4528822313f70586d85984ca300b7b3580d0a92444aeed19fd01b4dd0aa3"
+  },
+  "period_end": "2025-06-30",
+  "schema_version": 1,
+  "series": "Q",
+  "ticker": "MCD",
+  "total": {
+    "expression": [
+      {
+        "operand": "op4",
+        "weight": 1
+      }
+    ],
+    "value": 6843000000
+  },
+  "unit": "USD",
+  "view": "product"
+}
