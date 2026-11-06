@@ -25,16 +25,16 @@ concept 是 `us-gaap:Revenues`。
 |---|---|
 | Construction Industries | `srt:ConsolidationItemsAxis=us-gaap:OperatingSegmentsMember`＋分部 `cat:ConstructionIndustriesMember` |
 | Resource Industries | 同上，分部 `cat:ResourceIndustriesMember` |
-| Energy & Transportation | 同上，分部 `cat:EnergyandTransportationMember`（期末日 2025-09-30 以前） |
-| Power & Energy | 同上，分部 `cat:PowerEnergyMember`（期末日 2025-10-01 起） |
+| Energy & Transportation | 同上，分部 `cat:EnergyandTransportationMember`（申報期末日 2025-09-30 以前） |
+| Power & Energy | 同上，分部 `cat:PowerEnergyMember`（申報期末日 2025-10-01 起） |
 | Financial Products | 同上，分部 `cat:FinancialProductsSegmentMember` |
 | All Other | 同上，分部 `us-gaap:AllOtherSegmentsMember` |
-| Corporate Items and Eliminations | `srt:ConsolidationItemsAxis` 的 `one_of`：`cat:EliminationsAndReconcilingItemsMember`、`cat:CorporateReconcilingItemsAndEliminationsMember`（FY2023 10-K 至 2024 年 Q3 10-Q） |
+| Corporate Items and Eliminations | `srt:ConsolidationItemsAxis=cat:EliminationsAndReconcilingItemsMember` 或 `cat:CorporateReconcilingItemsAndEliminationsMember`（2024 年 Q3 10-Q 以前），兩種寫法都找 |
 | 總營收（Total sales and revenues） | 不帶維度 |
 
-- 分類名稱照各期申報的列名：2025 年 Q3 10-Q 以前的申報只有 `cat:EnergyandTransportationMember`、列名 Energy & Transportation；FY2025 10-K 起是 `cat:PowerEnergyMember`、列名 Power & Energy。兩類以申報期末日分段，相鄰的生效期間首尾相接。
-- Corporate Items and Eliminations 的兩個成員是分部表的同一列，2024 年 Q4 的年度與九個月累計分別在兩種寫法的申報中，所以以 `one_of` 列出。
-- 分部 fact 另有 `us-gaap:OperatingSegmentsExcludingIntersegmentEliminationMember`（對外營收）與 `us-gaap:IntersegmentEliminationMember`（分部間營收）的拆分，規格用 `OperatingSegmentsMember` 的合計。
+- 分類名稱照各期申報的列名，parser 依申報期末日（`filing.report_date`）切換：2025 年 Q3 10-Q（0000018230-25-000048，期末 2025-09-30）以前的申報只有 `cat:EnergyandTransportationMember`、列名 Energy & Transportation；FY2025 10-K（0000018230-26-000008，期末 2025-12-31）起是 `cat:PowerEnergyMember`、列名 Power & Energy。`categories` 在 2025-09-30 以前列 Energy & Transportation，2025-10-01 起列 Power & Energy，兩段首尾相接。
+- Corporate Items and Eliminations 的兩個成員是分部表的同一列：2024 年 Q3 10-Q（0000018230-24-000053）以前的申報用 `cat:CorporateReconcilingItemsAndEliminationsMember`，FY2024 10-K（0000018230-25-000008，期末 2024-12-31）起用 `cat:EliminationsAndReconcilingItemsMember`。2024 年 Q4 的年度與九個月累計分別在兩種寫法的申報中，所以 parser 在每份申報都找這兩種寫法。
+- 分部 fact 另有 `us-gaap:OperatingSegmentsExcludingIntersegmentEliminationMember`（對外營收）與 `us-gaap:IntersegmentEliminationMember`（分部間營收）的拆分，parser 用 `OperatingSegmentsMember` 的合計。
 - 六類加總等於總營收，沒有調節項。
 - 分類名稱取自分部營收表的列標籤（去掉 Segment 字樣）；總營收取自同表的 `Total Sales and Revenues`。
 
@@ -59,7 +59,7 @@ CAT 的申報多次在分部之間重分類，並重列比較數字（單位百�
 | FY2025 10-K | FY2024 | Resource Industries 12,389 → 12,471、All Other 425 → 344 |
 | 2026 年 Q1–Q3 10-Q | 2025 年各季與九個月 | 每季約 800 由 Energy & Transportation（重列時稱 Power & Energy）移到 Resource Industries，例如 2025 年 Q1 6,568 → 5,783、Resource Industries 2,884 → 3,661 |
 
-- 已上線的各期保留申報當時的數字，重列寫成差異標記。2025 年各季 Energy & Transportation 的重列不寫標記：2026 年申報期別沒有這個分類的定義（比對結果是 `not_found`），只有 Resource Industries 等分類的變動寫成標記。
+- 已上線的各期保留申報當時的數字，重列寫成差異標記。2025 年各季 Energy & Transportation 的重列不寫標記：parser 對 2026 年的申報不列這個分類（比對結果是 `not_found`），只有 Resource Industries 等分類的變動寫成標記。
 - 2025 年 Q4 不推算：FY2025 的分類是 Power & Energy，2025 年 Q1–Q3 是 Energy & Transportation，分類不同。FY2025 10-K 也重列了 FY2024，口徑一致的條件同樣不成立。
 
 ## 驗證

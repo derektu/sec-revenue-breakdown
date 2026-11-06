@@ -22,12 +22,12 @@ concept 是 `us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax`。分�
 
 | 分類 | 加數 |
 |---|---|
-| Industrial Gases | `lin:AmericasSegmentMember` ＋ `lin:EMEASegmentMember` ＋ `lin:APACSegmentMember`（`sum_of`） |
+| Industrial Gases | `lin:AmericasSegmentMember` ＋ `lin:EMEASegmentMember` ＋ `lin:APACSegmentMember`（三個 fact 相加） |
 | Engineering | `lin:EngineeringSegmentMember` |
 | Other | `us-gaap:CorporateAndOtherMember` |
 | 總營收（Sales） | 不帶維度 |
 
-- 所有期別都使用同一組定義，沒有 `effective` 分段。
+- 所有申報用同一種寫法，parser 不依申報期末日切換；`categories` 每一天都是這三類。
 - 三類加總等於總營收，沒有調節項。
 - 分類名稱：Industrial Gases 沿用 TradingView 的名稱。Engineering、Other 取自分部表的欄名；總營收取自損益表的 `Sales`。
 

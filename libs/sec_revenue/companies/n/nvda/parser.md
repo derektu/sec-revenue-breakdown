@@ -17,13 +17,14 @@ NVDA 另有兩種營收拆分，都不採用：
 
 concept 是 `us-gaap:Revenues`。分部 fact 帶兩個維度：`srt:ConsolidationItemsAxis=us-gaap:OperatingSegmentsMember` 與分部成員。
 
-| 分類 | 成員（期末日至 2024-10-27 的申報） | 成員（期末日 2025-01-26 起的申報） |
+| 分類 | 成員（申報期末日 2024-10-27 以前） | 成員（申報期末日 2025-01-26 起） |
 |---|---|---|
 | Compute & Networking | `nvda:ComputeAndNetworkingMember` | `nvda:ComputeAndNetworkingSegmentMember` |
 | Graphics | `nvda:GraphicsMember` | `nvda:GraphicsSegmentMember` |
 | 總營收（Revenue） | 不帶維度 | 不帶維度 |
 
-- 成員在 FY2025 10-K（期末 2025-01-26）改名，以兩個 `effective` 定義宣告。定義依運算元來源申報的期末日選取，所以 FY2025 Q4 的年度運算元（10-K）用新成員、九個月運算元（2024-10-27 的 Q3 10-Q）用舊成員。兩個定義屬於同一個分類，Q4 照常推算。
+- parser 依申報期末日（`filing.report_date`）切換成員：2025 財年 Q3 10-Q（0001045810-24-000316，期末 2024-10-27）以前的申報用舊成員，FY2025 10-K（0001045810-25-000023，期末 2025-01-26）起用 `...SegmentMember`。所以 FY2025 Q4 的年度運算元（10-K）用新成員、九個月運算元（Q3 10-Q）用舊成員。兩種成員屬於同一個分類，Q4 照常推算。
+- `categories` 在 2024-10-27 以前與 2025-01-26 起都是這兩類；兩者之間的日子不是任何申報的期末日，`categories` 回答空清單。
 - 「All Other」欄（`srt:ConsolidationItemsAxis=us-gaap:CorporateNonSegmentMember`，部分申報才有）營收為 0，兩個分部加總等於總營收，沒有調節項。FY2026 Q2 起的申報改以 `OperatingSegmentsMember` 標示分部合計，不影響選取。
 
 ## 期別與推算
