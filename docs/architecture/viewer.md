@@ -10,7 +10,7 @@
 
 ## 數字表
 
-一家公司一張表：列是分類，規格宣告調節項（`reconciling`，例如公司間抵銷）時接在分類之後，以斜體加「調節」標記區隔，最後一列是總營收；欄是期別，由舊到新。表上方的按鈕切換季度 Q 與年度 FY 兩個序列。期別取自 `status.json` 的 `periods`（格式見 [parser.md](parser.md)）與 `Q/`、`FY/` 下有 `revenue.json` 的目錄。
+一家公司一張表：列是分類，公司 parser 交回調節項（`reconciling`，例如公司間抵銷）時接在分類之後，以斜體加「調節」標記區隔，最後一列是總營收；欄是期別，由舊到新。表上方的按鈕切換季度 Q 與年度 FY 兩個序列。期別取自 `status.json` 的 `periods`（格式見 [parser.md](parser.md)）與 `Q/`、`FY/` 下有 `revenue.json` 的目錄。
 
 `status.json` 有 `comparison_errors` 時，表上方列出讀不到原文、沒有做比較欄比對的申報與原因。
 
