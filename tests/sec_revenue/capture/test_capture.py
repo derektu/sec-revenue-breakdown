@@ -8,7 +8,7 @@ import sys
 import tempfile
 import unittest
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / "libs"))
 sys.path.insert(0, str(ROOT / "scripts"))
 from PIL import Image

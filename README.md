@@ -53,7 +53,7 @@
 | `libs/sec_revenue/capture/` | 對照資料擷取 |
 | `libs/sec_revenue/universe/` | `tickers.csv` 與對照資料的格式（`model`）、讀取與驗證（`tickers`、`references`、`validate`），以及 CLI 的 ticker 解析 |
 | `libs/sec_revenue/viewer/` | 正式輸出的唯讀 viewer |
-| `tests/` | unit test，子目錄對應 `libs/sec_revenue/` 與 `scripts/` |
+| `tests/` | unit test：`tests/sec_revenue/` 對應 `libs/sec_revenue/`，`tests/scripts/` 對應 `scripts/`。以 repo 根目錄為 top-level 執行：`python -m unittest discover -s tests -t .`，測試模組以 `tests.sec_revenue.*` 載入，不會蓋掉 `libs/` 的 `sec_revenue` 套件 |
 | `docs/architecture/` | 系統規格：parser 與正式輸出、SEC 下載、viewer、對照資料格式、擷取工具 |
 | `docs/guides/` | 操作手冊：[資料使用指南](docs/guides/data-guide.md)（給使用資料的 RD 與 PM）、[本機操作](docs/guides/local-workflow.md) |
 
@@ -88,7 +88,7 @@
 | 指令 | 用途 |
 |---|---|
 | `npm run setup` | 建立 `.venv`，安裝 `requirements.txt` 與擷取、截圖用的 Chromium |
-| `npm run test` | unit test |
+| `npm run test` | unit test（`unittest discover -s tests -t .`） |
 | `npm run validate` | 驗證 `tickers.csv` 與對照資料 |
 | `npm run check` | 依序執行以上兩項（CI 在每個 PR 執行同樣兩項） |
 | `npm run tickers` | 列出有公司規格的 ticker |
