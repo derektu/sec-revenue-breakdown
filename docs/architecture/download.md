@@ -54,7 +54,7 @@ parse 推算 Q4 需要年度減去同財年 Q1–Q3，「Q4 口徑一致」檢�
 
 另記 `type`、`description`、`primary`（是否為主文件）與 `inline_xbrl`。單一檔案下載失敗只記在該申報包的 `failures`，其他檔案照常下載，申報包標示 `complete: false`；之後重跑只補抓缺的檔案。packages.json 在每個申報包結束或中斷時寫入一次；中斷（SEC 拒絕、Ctrl-C 等）時也保存已下載檔案的收據。
 
-申報包的申報資訊（`filing`）記錄 SEC 的實際表單：`form` 與 `original_form` 都是 10-K、10-Q、10-K/A 或 10-Q/A，parse 以此區分原申報與修正申報。catalog 的 `form` 則是表單類別（10-K、10-Q、8-K，修正申報歸入原表單），供選期別與依賴期別使用，實際表單在 `original_form`。申報包的申報資訊在每次線上下載時依 catalog 重寫；`--offline` 不改寫。
+申報包的申報資訊（`filing`）記錄 SEC 的實際表單：`form` 與 `original_form` 都是 10-K、10-Q、10-K/A 或 10-Q/A，parse 以此區分原申報與修正申報。catalog 的 `form` 則是表單類別（10-K、10-Q、8-K，修正申報歸入原表單），供選期別與依賴期別使用，實際表單在 `original_form`。申報包的申報資訊在每次線上下載時依 catalog 重寫（`--from-manifest` 時依申報清單）；`--offline` 不改寫。
 
 `--offline` 只驗證快取 hash，不補抓：申報包未完成（`complete: false`），或加了 `--include-r-pages` 但 R 頁面尚未下載時，狀態為 `offline_incomplete`，該公司列為失敗。
 
