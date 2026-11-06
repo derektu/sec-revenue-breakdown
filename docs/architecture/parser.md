@@ -414,7 +414,7 @@ npm run snapshot -- --all --check            # 核對已提交的快照與原文
 - **格式**：一行一個 fact（JSON Lines）。縮排的 JSON 約大一倍，Git 壓縮後兩者相近，一行一個 fact 讓工作目錄小一半。
 - **快照只由申報與抽取程式決定**：一份申報公開後內容不會變，快照只隨從原文抽資料的程式（抽取程式，`revenue/extract.py`）的行為改變。
   - 抽取程式涵蓋 HTML 解析與表格編號、xmlns 宣告與衝突的前綴、context 與 unit、dei、`ix:nonFraction` 的文字與屬性，以及申報篩選用到的申報包欄位。數字規則與 `format` 的正規化（`ixbrl.py`）、QName 解析、期間分類（`xbrl.py`）與申報篩選（`filings.py`）在讀快照時執行，不在其中。
-  - 快照記錄抽取程式的 hash，依 `extract.py` 的語法樹計算，不含註解、docstring 與排版。hash 不同時快照模式直接報錯，不以過期的快照計算。
+  - 快照記錄抽取程式的 hash，依 `extract.py` 的語法樹計算，不含註解、docstring 與排版。hash 不同時快照模式直接報錯，不以過期的快照計算。`extract.py` 只 import lxml 與標準函式庫，不 import 本 repo 的模組，hash 才涵蓋全部抽取行為；測試檢查這一點。
   - 快照檔的編排由快照格式版本表示；版本不同時同樣報錯。
   - 抽取結果也取決於 lxml 的 HTML 解析，lxml 在 `requirements.txt` 鎖定確切版本，不在 hash 內。升級 lxml 時，在有原文的環境跑 `snapshot --all --check`；有差異就重產全部快照，與升級放在同一個 PR。
   - 快照與申報清單的申報不一致時直接報錯，包括快照檔名與記錄的 accession 不同、申報資訊（表單、日期）與清單不同。

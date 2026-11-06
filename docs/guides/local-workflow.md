@@ -104,6 +104,7 @@ SEC 原文（`sec/`）與下載索引（`pipeline/`）放在資料根目錄。�
 |---|---|---|
 | 下載了新的申報 | `snapshot --tickers <該公司>` | 多出該份申報的快照；既有申報的快照內容不變 |
 | 抽取程式（`revenue/extract.py`）的行為改動；只改註解、docstring 或排版不算 | `snapshot --all` | 全部公司重產 |
+| 升級 lxml（`requirements.txt`） | 先 `snapshot --all --check`；有差異再 `snapshot --all` | 沒有差異時快照不變；有差異時全部公司重產 |
 
 修改公司 parser（分類、concept、寫法切換）、框架，或數字規則、期間分類、申報篩選，都不需要重產快照：快照模式以目前的程式重算。
 

@@ -1,5 +1,6 @@
 """XBRL fact 快照：JSON Lines 格式、往返等價、只存原始欄位、快照模式不讀原文、抽取程式 hash、申報清單與反向測試。"""
 
+import ast
 import json
 from pathlib import Path
 import shutil
@@ -274,6 +275,21 @@ class ExtractHashTest(unittest.TestCase):
         self.assertNotEqual(edited, self.SOURCE)
         self.assertEqual(snapshot.source_sha256(edited), snapshot.source_sha256(self.SOURCE))
         self.assertEqual(snapshot.extract_sha256(), snapshot.source_sha256(self.SOURCE))
+
+    def test_extract_imports_nothing_from_this_repo(self):
+        # hash 只算 extract.py：它用到的程式都必須在檔內，或來自 lxml 與標準函式庫，否則那些程式改動時 hash 不變。
+        tree = ast.parse(self.SOURCE)
+        for node in ast.walk(tree):
+            if isinstance(node, ast.ImportFrom):
+                self.assertEqual(node.level, 0, f"extract.py 不可相對 import：{ast.unparse(node)}")
+                names = [node.module]
+            elif isinstance(node, ast.Import):
+                names = [alias.name for alias in node.names]
+            else:
+                continue
+            for name in names:
+                top = name.split(".")[0]
+                self.assertTrue(top in ("__future__", "lxml") or top in sys.stdlib_module_names, f"extract.py 不可 import {name}")
 
     def test_behavior_change_changes_the_hash(self):
         edited = self.SOURCE.replace('return " ".join(text.split())', 'return " ".join(text.split()).strip()', 1)
