@@ -55,36 +55,41 @@ parser 目錄名是 ticker 小寫、非英數字元改為底線，例如 `b/brk_
 
 交辦時已指定觀點，就直接確認它能從申報重現；不能時同樣回報。
 
-分類名稱以 SEC 原文的列標籤或欄標題為準（去掉 `Total`、`(SCS)` 這類修飾），與對照來源的名稱對應寫在 `parser.md`。
+分類名稱以 SEC 原文的列標籤或欄標題為準（去掉 `Total`、`(SCS)` 這類修飾）；10-K 的列標籤全大寫時，用 10-Q 的寫法。名稱可以讀原文表格的文字確認：「數字只來自 XBRL fact」管的是數值，不管名稱。分類的輸出順序照採用的對照來源。名稱與對照來源的對應寫在 `parser.md`。
 
 ### 2. 在申報裡找 fact
 
-先列出申報中跟營收有關的 fact，看清每個 fact 的**完整 dimensions**。下面的程式只讀已下載的原文，不寫入任何檔案（參數：ticker、accession、concept 要包含的字）：
+先列出申報中跟營收有關的 fact，看清每個 fact 的**完整 dimensions**。下面的程式只讀已下載的原文，不寫入任何檔案（參數：ticker、accession、concept 要包含的字）。它列出申報中每個期間的 fact，包括比較欄（上一年度、去年同季、九個月累計）：Q4 口徑一致與比較欄比對會用 parser 組這些期間，重列也要從比較欄看。
 
 ```bash
-.venv/bin/python - UPS 0001628280-26-008432 Revenue <<'EOF'
+SEC_DATA_DIR=~/sec-revenue-data .venv/bin/python - UPS 0001628280-26-008432 Revenue <<'EOF'
 import os, sys
 from pathlib import Path
 sys.path.insert(0, "libs")
-from sec_revenue.common.dotenv import load_dotenv
 from sec_revenue.revenue.filings import FilingSet
 
 ticker, accession, word = sys.argv[1:4]
-load_dotenv(Path(".env"))
-filings = FilingSet(Path(os.environ.get("SEC_DATA_DIR") or "data").expanduser(), ticker)
+root = os.environ.get("SEC_DATA_DIR", "").strip()
+if not root:
+    sys.exit("請設定 SEC_DATA_DIR：已下載 SEC 原文的資料根目錄")
+filings = FilingSet(Path(root).expanduser(), ticker)
 filing = next(f for f in filings.filings if f.accession == accession)
-for fact in filings.document(filing).facts:
-    if word in fact.concept and fact.end == filing.report_date and fact.duration:
-        dims = " ".join(f"{a}={m}" for a, m in fact.dimensions) or "（無維度）"
-        print(fact.duration, fact.concept, dims, fact.value, f"表格 {fact.table_index}", sep="\t")
+facts = [f for f in filings.document(filing).facts if word in f.concept and f.duration]
+for fact in sorted(facts, key=lambda f: (f.end != filing.report_date, f.end, f.start or "", f.order)):
+    dims = " ".join(f"{a}={m}" for a, m in fact.dimensions) or "（無維度）"
+    column = "本期" if fact.end == filing.report_date else "比較期"
+    print(column, f"{fact.start}~{fact.end}", fact.duration, fact.concept, dims, fact.value, f"表格 {fact.table_index}", sep="\t")
 EOF
 ```
+
+`SEC_DATA_DIR` 是 SEC 原文的資料根目錄，換成你 `.env` 中設定的路徑；程式不讀 `.env`，沒有設定時直接結束。
 
 每份申報的 accession、表單、期末日與申報日，可以把最後的迴圈換成 `for f in filings.filings: print(f.accession, f.form, f.report_date, f.filing_date)` 列出。
 
 找 fact 的要點：
 
 - **每一份申報都要看，包括 10-K**。只看最新一份 10-Q 選出的寫法，常在某一份 10-K 或較早的 10-Q 找不到。
+- **範圍以前的上一份 10-K 也要組得出來**：判斷範圍內第一個 Q4 的口徑時，框架用 parser 從上一財年的 10-K 組出年度值（見 `parser.md` 的「Q4 口徑一致」）。那份 10-K 的寫法也要涵蓋；組不出來時口徑判斷為「無法判斷」，Q4 照常推算並註記，不會報錯，所以要自己確認。
 - **dimensions 要完全相同**：`find` 是精確比對，fact 多一個或少一個維度都不算。例如 NVDA 的分部 fact 另帶 `srt:ConsolidationItemsAxis=us-gaap:OperatingSegmentsMember`；UPS FY2025 10-K 的 `ups:SupplyChainSolutionsMember` 只出現在帶 `srt:ProductOrServiceAxis` 的細項 fact 上。
 - **用表格編號對照原文**：同一個數字常在多張表各標一次；分類的 fact 與總營收的 fact 最好在同一張表，證據截圖較少。在 SEC 的 XBRL viewer（`revenue.json` 運算元的 `ixviewer_url`）可以看 fact 在原文中的位置。
 - **總營收用不帶維度的合併 fact**，不是只帶 `ConsolidationItemsAxis=OperatingSegmentsMember` 的分部合計；申報有分部以外的營收時兩者不同。分類採用特殊口徑時，總營收跟著分類的口徑走（例如 BAC 的 FTE），與 GAAP 的差額寫在 `parser.md`。
@@ -183,11 +188,14 @@ rm -rf data/revenue/M/MSFT
 
 ### 6. 與對照資料逐期比對
 
-把每一期每個分類的值與採用來源的值比，差異逐筆寫進 `parser.md` 的「驗證」。比對工具（#46）完成前由開發者自己比對。
+把每一期每個分類的值與**採用的來源**比，差異逐筆寫進 `parser.md` 的「驗證」。其他來源不必比對。比對工具（#46）完成前由開發者自己比對。對照資料的格式（來源、期別、`display` 與 `usd`）見 [對照資料格式](../architecture/universe.md#referencejson)。
 
-- **期別對齊**：Stock Analysis 用期末日（季底不是曆年季底的 ticker 會對齊到曆年季底）；富途用申報宣告的財年與季別；TradingView 用財年多數月份所在的曆年（NVDA FY2026 標 2025）。
+- **在顯示精度內**：對照來源只顯示到某一位（例如 `7.39B` 到 0.01B、`202M` 到 1M）。我們的值與來源的 `usd` 相差不超過該顯示單位的一半，加上我們運算元的精度誤差（每個運算元 decimals 單位的一半；Q4 的每個加數有年度與九個月兩個運算元），就是一致；超過就是差異，要寫原因。
+
+- **期別對齊**：Stock Analysis 用期末日（季底不是曆年季底的 ticker 會對齊到曆年季底）；富途用申報宣告的財年與季別；TradingView 用財年多數月份所在的曆年（NVDA FY2026 標 2025、ORCL FY2026 標 2025），財年在 6 月底結束、兩個曆年各占 6 個月時標結束的那一年（MSFT、PG 的 FY2026 標 2026）。
 - **差異多半是重編**：對照來源常用事後重編的數字，我們用申報當時的原值。先查較晚的申報有沒有重列這一期（差異標記的申報列示值與對照來源相同，就是重編），再判斷是不是 parser 錯了。例子：UPS 2024 年 Q4、BAC 2025 年 Q1–Q3、CMCSA 2025 年各季。
 - **對照來源本身的錯**：富途的 Q4 偶有錯值（UPS 2024 年 Q4 是負數），Stock Analysis 偶有期別錯置（CMCSA 2026 年 Q1、Q2 對調）。寫明是來源錯誤，不追。
+- **用其他 SEC 文件解釋差異**：差異的原因有時在業績新聞稿（8-K 附件 99.1）或同一份申報沒有 XBRL 標記的表格。`download` 不下載 8-K，直接在 sec.gov 讀原文。這些文件只用來解釋差異，不提供輸出的數字，也不存檔；在 `parser.md` 記 accession、附件與所列的數值。
 - **不要為了對上對照資料改 parser**：差異照實記錄。
 
 ### 7. 產生快照
