@@ -25,11 +25,9 @@ from sec_revenue.download import (  # noqa: E402
     is_blocking,
     is_inline_xbrl,
 )
-from sec_revenue.engines import JsonCodec  # noqa: E402
-from sec_revenue.service import ParserRegistry  # noqa: E402
-from sec_revenue.tickers import DownloadTickers, SupportedTickers  # noqa: E402
-from sec_revenue.universe import load_tickers  # noqa: E402
-from sec_revenue.workflow import PeriodSelection  # noqa: E402
+from sec_revenue.common.jsonio import JsonCodec  # noqa: E402
+from sec_revenue.common.periods import PeriodSelection  # noqa: E402
+from sec_revenue.tickers import DownloadTickers  # noqa: E402
 
 ARCHIVES = "https://www.sec.gov/Archives/edgar/data"
 INLINE = (
@@ -144,7 +142,6 @@ class SecFixture(unittest.TestCase):
         return base
 
     def workflow(self, **options):
-        options.setdefault("packages", True)
         return DownloadWorkflow(ROOT, self.data, self.http, tickers_csv=self.csv, **options)
 
 
@@ -156,14 +153,11 @@ class AnyTickerPackageTests(SecFixture):
         self.submissions("999001", [self.q])
         self.base = self.package("999001", self.q)
 
-    def test_unregistered_ticker_downloads_full_package_with_urls(self):
-        self.assertNotIn("ZZZQ", ParserRegistry().entries)
+    def test_any_ticker_downloads_full_package_with_urls(self):
         report = self.workflow().run(["ZZZQ"], PeriodSelection())
         company = report["companies"][0]
         self.assertEqual(company["cik"]["source"], "sec_company_tickers")
         self.assertIn("company_tickers_fetched_at_utc", company["cik"])
-        self.assertNotIn("filings", company)
-        self.assertFalse((self.data / "pipeline/ZZZQ/downloads.json").exists())
 
         package = JsonCodec.read(self.data / "pipeline/ZZZQ/packages.json")["packages"][self.q["accessionNumber"]]
         self.assertTrue(package["complete"])
@@ -285,12 +279,6 @@ class CikResolutionTests(SecFixture):
             self.workflow().run(["NOPE"], PeriodSelection())
         self.assertEqual(self.http.requests.count("https://www.sec.gov/files/company_tickers.json"), 2)
 
-    def test_registry_ciks_match_tickers_csv(self):
-        listed = {entry.ticker: list(entry.ciks) for entry in load_tickers()}
-        for ticker, entry in ParserRegistry().entries.items():
-            self.assertEqual(listed[ticker], [str(int(c)) for c in entry["submission_ciks"]], ticker)
-
-
 class EarningsReleaseTests(SecFixture):
     def test_only_item_202_within_target_window(self):
         q1 = self.filing("5", "2027-03-31", sequence=1, filed="2027-05-01")
@@ -365,7 +353,7 @@ class BatchTests(SecFixture):
 
     def test_missing_identity_stops_batch(self):
         workflow = DownloadWorkflow(
-            ROOT, self.data, SecHttpClient(user_agent=""), packages=True, tickers_csv=self.csv
+            ROOT, self.data, SecHttpClient(user_agent=""), tickers_csv=self.csv
         )
         report = DownloadBatch(workflow).run(["AAA", "CCC"], PeriodSelection())
         self.assertEqual(report["not_attempted"], ["CCC"])
@@ -373,38 +361,6 @@ class BatchTests(SecFixture):
 
     def test_rate_limit_is_at_most_eight_per_second(self):
         self.assertEqual(SecHttpClient("Unit test unit@test.invalid", interval=0.01).interval, 0.125)
-
-
-class RegisteredTickerTests(SecFixture):
-    """有 parser 的公司：parser 文件取自申報包，downloads.json 與單獨下載時相同。"""
-
-    def setUp(self):
-        super().setUp()
-        self.write_csv([("AAPL", "320193")])
-        self.q = dict(self.filing("320193", "2027-03-31"), primaryDocument="aapl-20270331.htm")
-        self.submissions("320193", [self.q])
-        self.base = self.package("320193", self.q)
-
-    def downloads(self, data):
-        saved = JsonCodec.read(data / "pipeline/AAPL/downloads.json")
-        return {
-            accession: (entry["filing"], {role: r["sha256"] for role, r in entry["documents"].items()})
-            for accession, entry in saved["filings"].items()
-        }
-
-    def test_parser_documents_reuse_package_and_match_parser_only_download(self):
-        self.workflow().run(["AAPL"], PeriodSelection())
-        primary = self.base + "aapl-20270331.htm"
-        self.assertEqual(self.http.requests.count(primary), 1)
-        with_packages = self.downloads(self.data)
-
-        parser_only = Path(self.temp.name) / "parser-only"
-        DownloadWorkflow(ROOT, parser_only, self.http, tickers_csv=self.csv).run(["AAPL"], PeriodSelection())
-        self.assertEqual(self.downloads(parser_only), with_packages)
-        saved = JsonCodec.read(self.data / "pipeline/AAPL/downloads.json")
-        receipt = saved["filings"][self.q["accessionNumber"]]["documents"]["primary"]
-        self.assertEqual(set(receipt), {"source_url", "path", "sha256", "source_format", "bytes"})
-        self.assertEqual(receipt["source_url"], primary)
 
 
 class FilingIndexPageTests(unittest.TestCase):
@@ -435,8 +391,6 @@ class TickerSelectionTests(SecFixture):
             selection.select()
         with self.assertRaises(ValueError):
             selection.select(["../AAPL"])
-        with self.assertRaises(ValueError):
-            SupportedTickers().select(["ALL"])
 
 
 class ReviewFixTests(SecFixture):
@@ -646,80 +600,6 @@ class RateLimitTests(unittest.TestCase):
         for gap in gaps:
             self.assertGreaterEqual(gap, 0.125 - 1e-9)
         self.assertLessEqual(len(started) / (started[-1] - started[0] + 0.125), 8 + 1e-9)
-
-
-class ParserPackageParityTests(SecFixture):
-    """PGR 經 filing index 取 Exhibit 13、CAT／UPS 財報 8-K exhibit：申報包模式與只下載 parser 文件一致。"""
-
-    def downloads(self, data, ticker):
-        saved = JsonCodec.read(data / f"pipeline/{ticker}/downloads.json")
-        return {
-            accession: (entry["filing"], {role: r["sha256"] for role, r in entry["documents"].items()})
-            for accession, entry in saved["filings"].items()
-        }
-
-    def assert_parity(self, ticker):
-        self.workflow().run([ticker], PeriodSelection())
-        with_packages = self.downloads(self.data, ticker)
-        parser_only = Path(self.temp.name) / "parser-only"
-        DownloadWorkflow(ROOT, parser_only, self.http, tickers_csv=self.csv).run([ticker], PeriodSelection())
-        self.assertEqual(self.downloads(parser_only, ticker), with_packages)
-        return with_packages
-
-    def test_pgr_exhibit_13_from_filing_index(self):
-        self.write_csv([("PGR", "80661")])
-        annual = dict(self.filing("80661", "2026-12-31", "10-K", 1, filed="2027-02-25"), primaryDocument="pgr-20261231.htm")
-        self.submissions("80661", [annual])
-        exhibit = "pgr-20261231_d2.htm"
-        base = self.package("80661", annual, extra={exhibit: b"<html>consolidated exhibit 13</html>"})
-        result = self.assert_parity("PGR")
-        roles = result[annual["accessionNumber"]][1]
-        self.assertEqual(set(roles), {"primary", "consolidated"})
-        self.assertEqual(roles["consolidated"], hashlib.sha256(b"<html>consolidated exhibit 13</html>").hexdigest())
-        self.assertEqual(self.http.requests.count(base + exhibit), 2)  # 兩個模式各抓一次，申報包模式不重複
-
-    def test_amendment_packages_both_but_parser_keeps_its_single_choice(self):
-        self.write_csv([("AAPL", "320193")])
-        original = dict(self.filing("320193", "2026-12-31", "10-K", 1, filed="2027-02-20"), primaryDocument="a.htm")
-        amended = dict(self.filing("320193", "2026-12-31", "10-K/A", 2, filed="2027-04-20"), primaryDocument="b.htm")
-        self.submissions("320193", [original, amended])
-        self.package("320193", original)
-        self.package("320193", amended)
-        result = self.assert_parity("AAPL")
-        self.assertEqual(list(result), [amended["accessionNumber"]])
-        packages = JsonCodec.read(self.data / "pipeline/AAPL/packages.json")["packages"]
-        self.assertEqual(set(packages), {original["accessionNumber"], amended["accessionNumber"]})
-
-    def test_cat_and_ups_earnings_exhibit_from_package(self):
-        cases = {
-            "CAT": ("18230", "0000018230-26-000052", "ex991toformcat3q2026earnin.htm"),
-            "UPS": ("1090727", "0001628280-26-067381", "exhibit991-earningspressre.htm"),
-        }
-        for ticker, (cik, accession, exhibit) in cases.items():
-            with self.subTest(ticker=ticker):
-                self.data = Path(self.temp.name) / ("data-" + ticker)
-                self.write_csv([(ticker, cik)])
-                event = {
-                    "accessionNumber": accession,
-                    "reportDate": "2026-10-28",
-                    "filingDate": "2026-10-28",
-                    "form": "8-K",
-                    "primaryDocument": "form8k.htm",
-                    "items": "2.02,9.01",
-                }
-                self.submissions(cik, [event])
-                base = self.package(cik, event, extra={exhibit: f"<html>{ticker} release</html>".encode()}, inline=False)
-                result = self.assert_parity(ticker)
-                filing, roles = result[accession]
-                self.assertEqual((filing["reportDate"], filing["primaryDocument"]), ("2026-09-30", exhibit))
-                self.assertEqual(roles["primary"], hashlib.sha256(f"<html>{ticker} release</html>".encode()).hexdigest())
-                package = JsonCodec.read(self.data / f"pipeline/{ticker}/packages.json")["packages"][accession]
-                self.assertEqual(package["filing"]["primaryDocument"], "form8k.htm")
-                self.assertTrue(package["documents"]["form8k.htm"]["primary"])
-                self.assertEqual(self.http.requests.count(base + exhibit), 2)
-                import shutil
-
-                shutil.rmtree(Path(self.temp.name) / "parser-only")
 
 
 if __name__ == "__main__":

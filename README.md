@@ -10,7 +10,7 @@
 
 - **數字只來自 SEC**：營收的擷取與計算只用 SEC 申報（10-K、10-Q、8-K 附件）。Stock Analysis、富途、TradingView 等對照資料只用於比對與選擇分類觀點。
 - **只做 by segment**，不做地區拆分。
-- **每個數字有證據**：萃取結果連到 SEC 原文表格（HTML 與截圖）；推算的欄位附每個運算元的證據與運算式。
+- **每個數字有證據**：正式輸出的每個數字連到 SEC 原文表格（HTML 與截圖）；推算的欄位附每個運算元的證據與運算式。
 - **不補值**：缺值、歧義或驗證不過時輸出 null 與原因，不當作零，也不拿對照資料補。
 - **公司互相隔離**：每家公司的 parser 在自己的資料夾，新增或修改一家不影響其他公司；測試範圍由改動推得。
 
@@ -20,7 +20,7 @@
 擷取對照資料（瀏覽器）──┐
                          ├─→ 開發 parser ─→ 驗證關卡 ─→ 上線
 下載 SEC 財報 ───────────┘                       │
-                    新一期財報 ─→ 萃取 ─→ 跨期比對 ─→ 標註
+                    新一期財報 ─→ parse ─→ 跨期比對 ─→ 標註
 ```
 
 1. **擷取對照資料**：專用瀏覽器確認 Stock Analysis、富途、TradingView 都已登入後，擷取指定股票的 by segment 營收，並保存表格截圖、HTML 片段與文字作為證據。擷取不依賴 parser，可以先大量進行；多次擷取累積保存，逐步拉長期間。
@@ -38,7 +38,6 @@
 | `data/universe/references/<首字母>/<TICKER>/` | 對照資料：`reference.json` 與每次擷取的證據 |
 | `libs/sec_revenue/companies/<首字母>/<ticker>/` | 每家公司的 parser 規格（`spec.py`）與說明（`parser.md`） |
 | `data/revenue/<首字母>/<TICKER>/` | parser 的正式輸出：季度（`Q/`）與年度（`FY/`）兩個序列每期的 `revenue.json` 與 SEC 表格證據，以及 `status.json` |
-| `libs/sec_revenue/issuers/<首字母>/<ticker>/` | 先前實驗的 parser，只作參考 |
 
 格式規格見 [ticker 清單與對照資料格式](docs/architecture/universe.md)。
 
@@ -54,7 +53,7 @@
 
 2. 設定 `.env`：複製 `.env.example` 為 `.env`，填入兩項設定。`.env` 不進 Git，主 repo 與每個 worktree 各放一份。
    - `SEC_USER_AGENT`：姓名或組織加上聯絡 email。SEC 要求自動化請求註明身分，email 須是聯絡得到的真實地址；只讀本機快取（`--offline`）時不需要。
-   - `SEC_DATA_DIR`：SEC 原文與萃取產物的共用目錄，放在 repo 以外，例如 `~/sec-revenue-data`。原文可依記錄的 SEC URL 與 sha256 重建，不進 Git。
+   - `SEC_DATA_DIR`：SEC 原文與下載索引的共用目錄，放在 repo 以外，例如 `~/sec-revenue-data`。原文可依記錄的 SEC URL 與 sha256 重建，不進 Git。
 
    ```bash
    cp .env.example .env
@@ -74,17 +73,14 @@
 |---|---|
 | `npm run setup` | 建立 `.venv`，安裝 `requirements.txt` 與擷取、截圖用的 Chromium |
 | `npm run test` | unit test |
-| `npm run regression` | 三十家凍結資料的引擎回歸 |
 | `npm run validate` | 驗證 `tickers.csv` 與對照資料 |
-| `npm run check` | 依序執行以上三項（CI 在每個 PR 執行前兩項） |
-| `npm run tickers` | 列出有 parser 的 ticker |
-| `npm run download -- ...` | 下載 SEC 申報包 |
-| `npm run extract -- ...` | 從下載快取萃取營收，不連網 |
-| `npm run evidence -- ...` | 由萃取輸出回到 SEC 原文，產生表格 HTML 與截圖，不連網（目前只驗證 AAPL） |
-| `npm run parse -- ...` | 新版 parser：依公司規格產生 `data/revenue/` 的正式輸出與證據，不連網；不指定 `--start` 時從預設起始日（2024-01-01）起；`--check` 與已提交的輸出比對 |
+| `npm run check` | 依序執行以上兩項（CI 在每個 PR 執行同樣兩項） |
+| `npm run tickers` | 列出有公司規格的 ticker |
+| `npm run download -- ...` | 下載 SEC 申報包；目標期別有 10-K 時一併下載推算 Q4 所需的申報；`--dry-run` 只列出還沒下載的申報 |
+| `npm run parse -- ...` | 依公司規格產生 `data/revenue/` 的正式輸出與證據，不連網；不指定 `--start` 時從預設起始日（2024-01-01）起；`--check` 與已提交的輸出比對 |
 | `npm run capture:setup` | 開啟擷取用的專用瀏覽器，檢查並等待登入 |
 | `npm run capture -- ...` | 擷取對照資料 |
-| `npm run viewer` | 本機唯讀 viewer，<http://127.0.0.1:7290>：正式輸出（`data/revenue/`）的 Q／FY 數字與 SEC 證據；舊流程輸出在 `/legacy` |
+| `npm run viewer` | 本機唯讀 viewer，<http://127.0.0.1:7290>：正式輸出（`data/revenue/`）的 Q／FY 數字與 SEC 證據 |
 
 範例：
 
@@ -98,18 +94,15 @@ npm run download -- --all --start 2025-01-01 --offline
 # 一併下載 XBRL R 頁面（預設略過）
 npm run download -- --tickers AAPL --start 2025-01-01 --include-r-pages
 
-# 萃取有 parser 的公司
-npm run extract -- --tickers AAPL --start 2025-01-01
+# 列出 tickers.csv 全部公司在範圍內還沒下載的申報，不連網
+npm run download -- --all --start 2024-01-01 --dry-run
 
-# 為萃取結果產生 SEC 表格證據
-npm run evidence -- --tickers AAPL --start 2025-01-01
-
-# 新版 parser：產生正式輸出，或與已提交的輸出比對
+# 產生正式輸出，或與已提交的輸出比對
 npm run parse -- --tickers AAPL
 npm run parse -- --tickers AAPL --check
 ```
 
-`ALL` 是 Allstate 的 ticker；全部公司用 `--all`。下載、萃取、證據的完整參數、快取與回傳碼見 [本機分階段操作](docs/architecture/local-workflow.md)；新版 parser 的規格、檢核與輸出格式見 [Parser 與正式輸出](docs/architecture/parser.md)。
+`ALL` 是 Allstate 的 ticker；全部公司用 `--all`。下載與 viewer 的完整參數、快取與回傳碼見 [本機操作](docs/architecture/local-workflow.md)；parser 的規格、檢核與輸出格式見 [Parser 與正式輸出](docs/architecture/parser.md)。
 
 ## 擷取對照資料
 
@@ -121,7 +114,3 @@ npm run capture -- --source stockanalysis --tickers AAPL,MSFT
 ```
 
 登入狀態保存在 repo 以外的專用 profile（預設 `~/.sec-revenue-capture/profile/`）。流程、登入判斷與證據規則見 [對照資料擷取工具](docs/architecture/capture.md)。
-
-## 先前的研究
-
-先前研究階段的程式、操作方式與三十家公司的結果，整理在 [先前研究階段總覽](docs/legacy/overview.md)。這些內容尚未依上述流程驗證，僅供參考。

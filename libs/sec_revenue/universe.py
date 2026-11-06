@@ -38,7 +38,7 @@ COLUMNS = (
 )
 STATUSES = ("wip", "ok", "drop")
 SOURCES = ("stockanalysis", "futu", "tradingview", "manual")
-METHODS = ("browser_dom", "legacy_import", "manual")
+METHODS = ("browser_dom", "manual")
 KINDS = ("Q", "FY")
 SCORE_RANGE = range(1, 6)
 
@@ -452,7 +452,7 @@ def _check_capture(
         errors.append(f"{at}: display_unit {unit!r} 須為 {'/'.join(DISPLAY_UNITS)}")
         unit = None
     if "files" in capture:
-        if method in ("legacy_import", "manual"):
+        if method == "manual":
             errors.append(f"{at}: method 為 {method} 時不得有 files")
         else:
             _check_files(folder, source, cid, at, capture["files"], evidence, errors)

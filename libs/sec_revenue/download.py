@@ -1,12 +1,7 @@
-"""SEC 下載：CIK 查詢、申報清單、完整申報包，以及 parser 指定文件。
+"""SEC 下載：CIK 查詢、申報清單與完整申報包。
 
-下載與 parser 分成兩層：
-- 申報包層不需要 parser，任何 ticker 都能下載；每份文件保存 sha256、filing index、
-  文件原址與 inline XBRL viewer URL，記錄在 `data/pipeline/TICKER/packages.json`。
-- parser 層只處理 registry 有 parser 的公司，把萃取需要的文件以 role 記在
-  `downloads.json`；申報包已有的檔案直接沿用，不重複請求 SEC。
-
-萃取只讀 `downloads.json`，本模組不在萃取規則指紋內。
+任何 ticker 都能下載；每份文件保存 sha256、filing index、文件原址與 inline XBRL viewer URL，記錄在
+`pipeline/<TICKER>/packages.json`。parser 只讀申報包，不需要另外的下載清單。
 """
 
 from __future__ import annotations
@@ -28,10 +23,9 @@ import http.client
 from lxml import etree, html as lxml_html
 from lxml.etree import LxmlError
 
-from .engines import JsonCodec
-from .service import ParserRegistry
+from .common.jsonio import JsonCodec
+from .common.periods import PeriodSelection
 from .universe import load_tickers
-from .workflow import PeriodSelection, WorkflowCache
 
 SEC_ARCHIVES = "https://www.sec.gov/Archives/edgar/data"
 COMPANY_TICKERS_URL = "https://www.sec.gov/files/company_tickers.json"
@@ -128,8 +122,100 @@ def utc_now() -> str:
     return dt.datetime.now(dt.timezone.utc).isoformat()
 
 
+class SecFileStore:
+    """以 sha256 命名保存 SEC 原始檔（HTML 與 JSON），收據與檔案同目錄；同名而內容不同時拒絕寫入。"""
+
+    def __init__(self, root: Path):
+        self.root = root
+
+    def capture(
+        self,
+        ticker: str,
+        period: str,
+        accession: str,
+        body: bytes,
+        kind: str,
+        metadata: dict,
+    ) -> dict:
+        digest = hashlib.sha256(body).hexdigest()
+        directory = self.root / ticker / period / accession
+        path = directory / (
+            digest
+            + "."
+            + {
+                "original_html": "html",
+                "sec_json": "json",
+            }[kind]
+        )
+        directory.mkdir(parents=True, exist_ok=True)
+        if path.exists() and path.read_bytes() != body:
+            raise ValueError("Evidence collision")
+        if not path.exists():
+            with path.open("xb") as stream:
+                stream.write(body)
+        receipt = dict(
+            metadata, path=str(path), sha256=digest, source_format=kind, bytes=len(body)
+        )
+        # 收據與原文同目錄，只記檔名，資料目錄整個搬移後仍正確。
+        JsonCodec.write(
+            path.with_suffix(path.suffix + ".receipt.json"), dict(receipt, path=path.name)
+        )
+        return receipt
+
+
+class WorkflowCache:
+    """資料根目錄下的下載快取：`sec/` 保存 SEC 原始檔，`pipeline/<TICKER>/<name>.json` 保存索引。"""
+
+    def __init__(self, root: Path):
+        self.root = root.resolve()
+        self.store = SecFileStore(self.root / "sec")
+
+    def path(self, ticker: str, name: str) -> Path:
+        return self.root / "pipeline" / ticker / (name + ".json")
+
+    def read(self, ticker: str, name: str, default=None):
+        path = self.path(ticker, name)
+        return JsonCodec.read(path) if path.exists() else default
+
+    def write(self, ticker: str, name: str, value: object):
+        JsonCodec.write(self.path(ticker, name), value)
+
+    def capture(
+        self, ticker: str, period: str, accession: str, raw: bytes, kind: str, url: str
+    ) -> dict:
+        receipt = self.store.capture(
+            ticker, period, accession, raw, kind, {"source_url": url}
+        )
+        receipt["path"] = str(Path(receipt["path"]).relative_to(self.root))
+        return receipt
+
+    def body(self, receipt: dict) -> bytes:
+        path = (self.root / receipt["path"]).resolve()
+        if not path.is_relative_to(self.root):
+            raise ValueError("快取路徑超出 data 目錄")
+        raw = path.read_bytes()
+        if (
+            hashlib.sha256(raw).hexdigest() != receipt["sha256"]
+            or len(raw) != receipt["bytes"]
+        ):
+            raise ValueError("SEC cache hash／bytes 不符：" + receipt["path"])
+        return raw
+
+    def index_catalog(self, ticker: str, filings: list[dict], receipts: list[dict]):
+        self.write(
+            ticker,
+            "catalog",
+            {
+                "filings": filings,
+                "receipts": receipts,
+                "filings_sha256": hashlib.sha256(JsonCodec.encode(filings)).hexdigest(),
+                "fetched_at_utc": dt.datetime.now(dt.timezone.utc).isoformat(),
+            },
+        )
+
+
 class RawFileStore:
-    """依原副檔名保存 SEC 檔案；HTML 與 JSON 走 EvidenceStore，與既有快取同路徑去重。"""
+    """依原副檔名保存 SEC 檔案；HTML 與 JSON 走 SecFileStore，與既有快取同路徑去重。"""
 
     def __init__(self, cache: WorkflowCache):
         self.cache = cache
@@ -413,10 +499,34 @@ def earnings_releases(
     ]
 
 
-def package_filings(filings: list[dict], targets: list[dict]) -> list[dict]:
-    """目標期別的所有 10-K／10-Q 申報，原始與修訂版都包含。"""
-    periods = {f["reportDate"] for f in targets}
+def package_filings(filings: list[dict], targets: list[dict], dependency_periods: list[str] = ()) -> list[dict]:
+    """目標期別與依賴期別的所有 10-K／10-Q 申報，原始與修訂版都包含。"""
+    periods = {f["reportDate"] for f in targets} | set(dependency_periods)
     return [f for f in filings if f["form"] in PERIODIC_FORMS and f["reportDate"] in periods]
+
+
+def q4_dependencies(filings: list[dict], targets: list[dict]) -> dict:
+    """目標 10-K 推算 Q4 與檢查 Q4 口徑所需、但不在目標中的期別。
+
+    每份目標 10-K 需要同財年的 10-Q（Q1–Q3）與上一份 10-K。上一份 10-K 是期末早於目標、最晚的一期 10-K；
+    同財年的 10-Q 是期末介於上一份 10-K 與目標之間的各期。catalog 中沒有上一份 10-K 時，取目標前 370 天內的 10-Q，
+    並把該期列在 `unresolved`。
+    """
+    periodic = [f for f in filings if f["form"] in PERIODIC_FORMS]
+    annual = sorted({f["reportDate"] for f in periodic if f["form"] == "10-K"})
+    quarterly = sorted({f["reportDate"] for f in periodic if f["form"] == "10-Q"})
+    chosen = {f["reportDate"] for f in targets}
+    needed, unresolved = set(), []
+    for end in sorted({f["reportDate"] for f in targets if f["form"] == "10-K"}):
+        prior = [d for d in annual if d < end]
+        if prior:
+            start = prior[-1]
+            needed.add(start)
+        else:
+            start = (dt.date.fromisoformat(end) - dt.timedelta(days=370)).isoformat()
+            unresolved.append(f"{end} 的上一份 10-K 不在 SEC catalog 中")
+        needed.update(d for d in quarterly if start < d < end)
+    return {"periods": sorted(needed - chosen), "unresolved": unresolved}
 
 
 class FilingIndexPage:
@@ -624,10 +734,10 @@ class FilingPackages:
 
 
 class DownloadWorkflow:
-    """下載一組 ticker；任一錯誤直接拋出，批次隔離由 DownloadBatch 負責。
+    """下載一組 ticker 的完整申報包；任一錯誤直接拋出，批次隔離由 DownloadBatch 負責。
 
-    `packages=True` 時下載完整申報包（任何 ticker）；registry 有 parser 的公司另外
-    寫入 parser 指定文件的 `downloads.json`。`packages=False` 時只下載 parser 指定文件。
+    每家公司下載目標期別、Q4 依賴期別與財報新聞稿 8-K 的申報包。`dry_run=True` 只讀本機 catalog 與 packages.json，
+    列出還沒下載完整的申報，不發網路請求、不寫入任何檔案。
     """
 
     initial_status = "loading_catalog"
@@ -637,20 +747,17 @@ class DownloadWorkflow:
         repository: Path,
         data: Path,
         http: SecHttpClient | None = None,
-        registry: ParserRegistry | None = None,
         progress: Callable[[dict], None] | None = None,
-        packages: bool = False,
         include_r_pages: bool = False,
         tickers_csv: Path | None = None,
     ):
         self.repository = repository
         self.progress = progress
-        self.registry = registry or ParserRegistry()
         self.cache = WorkflowCache(data)
         self.http = http or SecHttpClient()
         self.catalog = SecFilingCatalog(self.cache, self.http)
         self.ciks = CikResolver(self.cache, self.http, tickers_csv)
-        self.packages = FilingPackages(self.cache, self.http) if packages else None
+        self.packages = FilingPackages(self.cache, self.http)
         self.include_r_pages = include_r_pages
 
     def notify(self, ticker: str, status: str, period: str = ""):
@@ -663,171 +770,102 @@ class DownloadWorkflow:
         selection: PeriodSelection,
         force: bool = False,
         offline: bool = False,
+        dry_run: bool = False,
     ) -> dict:
         if force and offline:
             raise ValueError("--force 與 --offline 不可同時使用")
         report = {"stage": "download", "companies": []}
         for ticker in tickers:
-            report["companies"].append(self.company(ticker, selection, force, offline))
+            report["companies"].append(self.company(ticker, selection, force, offline, dry_run))
         return report
 
-    def company(self, ticker: str, selection: PeriodSelection, force: bool, offline: bool) -> dict:
-        registered = ticker in self.registry.entries
-        if not registered and self.packages is None:
-            raise ValueError(ticker + " 沒有 parser；只能下載完整申報包")
-        parser = self.registry.create(ticker, self.repository, self.cache.root) if registered else None
+    def company(self, ticker: str, selection: PeriodSelection, force: bool, offline: bool, dry_run: bool = False) -> dict:
+        if dry_run:
+            return self.missing(ticker, selection)
         self.notify(ticker, self.initial_status)
         cik = self.ciks.resolve(ticker, offline)
-        load = dict(refresh=force or selection.latest, offline=offline, need_items=self.packages is not None)
+        load = dict(refresh=force or selection.latest, offline=offline, need_items=True)
         filings = self.catalog.load(ticker, cik["ciks"], selection, **load)
-        targets, plan = self.plan(parser, filings, selection)
+        targets = self.targets(filings, selection)
+        items = self.catalog.items(ticker)
+        unknown = [f for f in release_window(filings, targets, selection) if f["accessionNumber"] not in items]
+        if unknown and not offline:
+            # 舊 catalog 的歷史分頁沒有 item 代碼：補抓全部歷史分頁，不把缺資料當成非 2.02。
+            filings = self.catalog.load(ticker, cik["ciks"], selection, **dict(load, full_history=True))
+            targets = self.targets(filings, selection)
+            items = self.catalog.items(ticker)
+            unknown = [f for f in release_window(filings, targets, selection) if f["accessionNumber"] not in items]
+        dependencies = q4_dependencies(filings, targets)
         company = {
             "ticker": ticker,
             "cik": cik,
             "catalog_source": self.catalog.last_source,
             "target_periods": [f["reportDate"] for f in targets],
+            "dependency_periods": dependencies["periods"],
         }
-        packages = {}
-        if self.packages is not None:
-            items = self.catalog.items(ticker)
-            unknown = [f for f in release_window(filings, targets, selection) if f["accessionNumber"] not in items]
-            if unknown and not offline:
-                # 舊 catalog 的歷史分頁沒有 item 代碼：補抓全部歷史分頁，不把缺資料當成非 2.02。
-                filings = self.catalog.load(ticker, cik["ciks"], selection, **dict(load, full_history=True))
-                targets, plan = self.plan(parser, filings, selection)
-                items = self.catalog.items(ticker)
-                unknown = [f for f in release_window(filings, targets, selection) if f["accessionNumber"] not in items]
-            if unknown:
-                company["eight_k_items_missing"] = sorted(f["accessionNumber"] for f in unknown)
-            catalog_rows = {f["accessionNumber"]: f for f in filings}
-            wanted = {}
-            for filing in package_filings(filings, targets) + earnings_releases(filings, items, targets, selection):
-                wanted[filing["accessionNumber"]] = filing
-            for accession in plan:
-                # 申報包以 SEC 原始 catalog 列為準；parser 為 8-K exhibit 改寫的期別與文件只用在 parser 層。
-                wanted.setdefault(accession, catalog_rows.get(accession, plan[accession]))
-            for accession, filing in sorted(wanted.items(), key=lambda p: (p[1]["filingDate"], p[0])):
-                package = self.packages.download(ticker, filing, self.include_r_pages, force, offline)
-                packages[accession] = package
-                self.notify(ticker, "package_" + package["status"], filing["reportDate"])
-            company["packages"] = [self.packages.summary(p) for p in packages.values()]
-        if parser:
-            company["filings"] = self.parser_documents(
-                ticker, parser, targets, plan, packages, force, offline
-            )
+        if dependencies["unresolved"]:
+            company["dependencies_unresolved"] = dependencies["unresolved"]
+        if unknown:
+            company["eight_k_items_missing"] = sorted(f["accessionNumber"] for f in unknown)
+        wanted = package_filings(filings, targets, dependencies["periods"]) + earnings_releases(filings, items, targets, selection)
+        packages = []
+        for filing in sorted({f["accessionNumber"]: f for f in wanted}.values(), key=lambda f: (f["filingDate"], f["accessionNumber"])):
+            package = self.packages.download(ticker, filing, self.include_r_pages, force, offline)
+            packages.append(package)
+            self.notify(ticker, "package_" + package["status"], filing["reportDate"])
+        company["packages"] = [self.packages.summary(p) for p in packages]
         return company
 
+    def missing(self, ticker: str, selection: PeriodSelection) -> dict:
+        """只讀本機資料，列出目標期別與 Q4 依賴期別中沒有完整申報包的 10-K／10-Q。"""
+        cached = self.cache.read(ticker, "catalog")
+        if not cached:
+            return {"ticker": ticker, "dry_run": True, "error": "沒有本機 catalog；先線上 download"}
+        filings = cached["filings"]
+        try:
+            targets = self.targets(filings, selection)
+        except ValueError as error:
+            return {"ticker": ticker, "dry_run": True, "error": str(error)}
+        dependencies = q4_dependencies(filings, targets)
+        saved = self.packages.read(ticker)["packages"]
+        target_periods = {f["reportDate"] for f in targets}
+
+        def absent(periods) -> list[dict]:
+            rows = []
+            for filing in package_filings(filings, targets if periods is None else [], periods or []):
+                package = saved.get(filing["accessionNumber"])
+                if package and package["complete"]:
+                    continue
+                rows.append(
+                    {
+                        "accession": filing["accessionNumber"],
+                        "form": filing.get("original_form", filing["form"]),
+                        "period_end": filing["reportDate"],
+                        "filing_date": filing["filingDate"],
+                        "state": "incomplete" if package else "not_downloaded",
+                    }
+                )
+            return rows
+
+        result = {
+            "ticker": ticker,
+            "dry_run": True,
+            "target_periods": sorted(target_periods),
+            "dependency_periods": dependencies["periods"],
+            "missing_targets": absent(None),
+            "missing_dependencies": absent(dependencies["periods"]),
+        }
+        if dependencies["unresolved"]:
+            result["dependencies_unresolved"] = dependencies["unresolved"]
+        return result
+
     @staticmethod
-    def plan(parser, filings: list[dict], selection: PeriodSelection) -> tuple[list[dict], dict]:
-        """目標期別（每期一份，修訂版優先）與 parser 需要的依賴申報。"""
-        if parser:
-            candidates = parser.catalog_filings(filings)
-        else:
-            candidates = [f for f in filings if f["form"] in PERIODIC_FORMS]
-        targets = selection.choose(candidates)
+    def targets(filings: list[dict], selection: PeriodSelection) -> list[dict]:
+        """目標期別：範圍內每期一份 10-K／10-Q（修訂版優先）。"""
+        targets = selection.choose([f for f in filings if f["form"] in PERIODIC_FORMS])
         if not targets:
             raise ValueError("指定期間沒有 SEC 10-K／10-Q")
-        plan = {f["accessionNumber"]: f for f in targets}
-        if parser:
-            for filing in targets:
-                for dependency in parser.download_dependencies(filing, filings):
-                    plan[dependency["accessionNumber"]] = dependency
-        return targets, plan
-
-    def parser_documents(
-        self,
-        ticker: str,
-        parser,
-        targets: list[dict],
-        plan: dict,
-        packages: dict,
-        force: bool,
-        offline: bool,
-    ) -> list[dict]:
-        saved = self.cache.read(ticker, "downloads", {"filings": {}, "target_periods": []})
-        result = []
-        for accession, filing in sorted(plan.items(), key=lambda pair: pair[1]["filingDate"]):
-            existing = saved["filings"].get(accession)
-            roles = parser.required_document_roles(filing)
-            package = packages.get(accession)
-            if (
-                existing
-                and not force
-                and existing.get("download_complete", True)
-                and set(roles).issubset(existing["documents"])
-            ):
-                for receipt in existing["documents"].values():
-                    self.cache.body(receipt)
-                status = "cache_hit"
-            else:
-                if offline:
-                    raise ValueError(ticker + " 缺原文 cache：" + accession)
-                base = FilingPackages.base_url(filing)
-                names = [filing["primaryDocument"]]
-                if parser.needs_filing_index(filing):
-                    if package:
-                        names = list(package["directory"])
-                    else:
-                        index_url = base + "index.json"
-                        raw = self.http.get(index_url, "json")
-                        self.cache.capture(
-                            ticker, filing["reportDate"], accession, raw, "sec_json", index_url
-                        )
-                        names = [item["name"] for item in json.loads(raw)["directory"]["item"]]
-                selected = parser.document_names(filing, names)
-                documents = dict(existing["documents"]) if existing and not force else {}
-                saved["filings"][accession] = {
-                    "filing": filing,
-                    "documents": documents,
-                    "download_complete": False,
-                }
-                self.cache.write(ticker, "downloads", saved)
-                for role, name in selected.items():
-                    if not re.fullmatch(r"[A-Za-z0-9_.-]+\.(?:htm|html)", name, re.I):
-                        raise ValueError("附件檔名不符")
-                    url = base + quote(name)
-                    if role in documents and not force:
-                        self.cache.body(documents[role])
-                        continue
-                    packaged = (package or {}).get("documents", {}).get(name)
-                    if packaged and packaged["source_format"] == "original_html":
-                        self.cache.body(packaged)
-                        documents[role] = {
-                            "source_url": url,
-                            "path": packaged["path"],
-                            "sha256": packaged["sha256"],
-                            "source_format": "original_html",
-                            "bytes": packaged["bytes"],
-                        }
-                    else:
-                        raw = self.http.get(url, "html")
-                        documents[role] = self.cache.capture(
-                            ticker, filing["reportDate"], accession, raw, "original_html", url
-                        )
-                    # 每個成功檔案立即存收據；下一檔失敗也不丟失已取得 bytes。
-                    saved["filings"][accession] = {
-                        "filing": filing,
-                        "documents": documents,
-                        "download_complete": False,
-                    }
-                    self.cache.write(ticker, "downloads", saved)
-                saved["filings"][accession]["download_complete"] = True
-                self.cache.write(ticker, "downloads", saved)
-                status = "downloaded"
-            self.notify(ticker, status, filing["reportDate"])
-            result.append(
-                {
-                    "accession": accession,
-                    "period_end": filing["reportDate"],
-                    "status": status,
-                    "dependency": filing not in targets,
-                }
-            )
-        saved["target_periods"] = sorted(
-            set(saved["target_periods"]) | {f["reportDate"] for f in targets}
-        )
-        self.cache.write(ticker, "downloads", saved)
-        return result
+        return targets
 
 
 class DownloadBatch:

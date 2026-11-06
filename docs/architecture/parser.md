@@ -42,6 +42,7 @@ libs/sec_revenue/revenue/              引擎
   filings.py       選主申報、讀原文並核對 sha256
   compose.py       組合數值與結構檢核
   review.py        比較欄比對
+  evidence.py      證據元件：找表、核對 fact、抽出表格 HTML、截圖
   engine.py        證據、寫入、status.json、--check 比對
 
 libs/sec_revenue/companies/<首字母>/<目錄>/
@@ -61,7 +62,7 @@ data/revenue/<首字母>/<TICKER>/
 
 - 公司目錄名是 ticker 小寫，非英數字元改為底線，例如 `a/aapl`、`b/brk_b`；ticker 本身以 `SPEC.ticker` 為準。
 - `companies/` 與 `data/revenue/` 都進 Git。SEC 原文在共用資料目錄（`SEC_DATA_DIR`），不進 Git；正式輸出記錄每份原文的 URL 與 sha256，可以重新下載核對。
-- 下載（`download.py`）與證據元件（`evidence.py` 的找表、核對、清理、截圖）沿用既有程式。
+- SEC 原文由 `download.py` 下載成申報包（見 [local-workflow.md](local-workflow.md)），parser 只讀申報包。`engine_sha256` 是 `revenue/*.py` 的 hash，證據元件在其中。
 
 ## 公司規格
 
@@ -367,8 +368,4 @@ npm run parse -- --tickers AAPL --republish AAPL Q 2025-09-27   # 由人確認�
 ## 測試
 
 - 引擎：`tests/lib/test_revenue_parser.py` 以合成的 inline XBRL 申報測試每個流程步驟與每項檢核，不連網、不啟動 Chromium。
-- 公司：`data/revenue/` 中已提交的輸出就是回歸基準。`--check` 重跑 parser，與已提交的輸出逐欄比對；改某家公司的規格只重跑該家，改引擎則重跑所有上線公司（#49）。
-
-## 與既有程式的關係
-
-`issuers/` 的舊 parser、`workflow.py` 的萃取流程、`data/outputs/` 的輸出，以及它們的測試，都是先前的實驗。新程式依實際看到的 SEC 原文寫成，舊規則只作參考。新流程涵蓋全部 30 家後，舊程式與其測試刪除。
+- 公司：`data/revenue/` 中已提交的輸出就是回歸基準。`--check` 重跑 parser，與已提交的輸出逐欄比對；改某家公司的規格只重跑該家，改引擎則重跑所有上線公司（#49）。`--check` 需要本機的 SEC 原文，CI 不執行，只跑 unit test 與 `validate_universe.py`。

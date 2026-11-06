@@ -133,7 +133,7 @@ class PublishedViewerTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         self.root = Path(self.temp.name)
-        self.viewer = RevenueViewer(self.root / "legacy", self.root)
+        self.viewer = RevenueViewer(self.root)
 
     def tearDown(self):
         self.temp.cleanup()
@@ -216,7 +216,6 @@ class PublishedViewerTests(unittest.TestCase):
             self.assertEqual(self.viewer.request(url)[0], 400, url)
         self.assertEqual(self.viewer.request("/api/company?ticker=MSFT")[0], 404)
         self.assertEqual(self.viewer.request("/")[0], 200)
-        self.assertEqual(self.viewer.request("/legacy")[0], 200)
 
 
 class ViewerHeaderTests(unittest.TestCase):
@@ -226,11 +225,8 @@ class ViewerHeaderTests(unittest.TestCase):
         self.temp = tempfile.TemporaryDirectory()
         root = Path(self.temp.name)
         write_fixture(root)
-        legacy = root / "legacy" / "outputs" / "AAPL" / "2025-06-28" / "evidence"
-        legacy.mkdir(parents=True)
-        (legacy / f"{TABLE}.html").write_bytes(b"<p>t</p>")
         # port 0：由系統指派一個暫用 port，測試結束即關閉。
-        self.server = RevenueViewer(root / "legacy", root).server("127.0.0.1", 0)
+        self.server = RevenueViewer(root).server("127.0.0.1", 0)
         threading.Thread(target=self.server.serve_forever, daemon=True).start()
 
     def tearDown(self):
@@ -242,9 +238,7 @@ class ViewerHeaderTests(unittest.TestCase):
         host, port = self.server.server_address[:2]
         for path, policy in [
             (f"/revenue-evidence/AAPL/FY/2025-09-27/{TABLE}.html", "sandbox"),
-            (f"/evidence/AAPL/2025-06-28/{TABLE}.html", "sandbox"),
             ("/", "default-src 'none'"),
-            ("/legacy", "default-src 'none'"),
         ]:
             for target in (path, f"http://{host}:{port}{path}"):
                 connection = http.client.HTTPConnection(host, port)
@@ -269,7 +263,7 @@ class PublishedViewerPageTests(unittest.TestCase):
         root = Path(cls.temp.name)
         write_fixture(root)
         # port 0：由系統指派一個暫用 port，測試結束即關閉。
-        cls.server = RevenueViewer(root / "legacy", root).server("127.0.0.1", 0)
+        cls.server = RevenueViewer(root).server("127.0.0.1", 0)
         threading.Thread(target=cls.server.serve_forever, daemon=True).start()
         cls.url = f"http://127.0.0.1:{cls.server.server_address[1]}/"
         cls.playwright = sync_playwright().start()
