@@ -4,7 +4,12 @@
 
 對照資料只用於與 SEC 萃取結果比對、選擇採用的來源觀點；營收數字的擷取與計算仍只用 SEC 申報（見 `AGENTS.md`）。
 
-兩者的生命週期互相獨立：對照資料可以先大量擷取，不需要該公司已有 parser；parser 寫好並驗證通過後，公司才列入 `tickers.csv`（從 `wip` 開始）。因此有對照目錄的 ticker 不一定列在 `tickers.csv`，列在 `tickers.csv` 的 ticker 也不一定有對照目錄。
+兩者的生命週期互相獨立：
+
+- 對照資料可以先大量擷取，不需要該 ticker 已列入 `tickers.csv` 或已有 parser。
+- 決定新增一個 ticker 時，就以 `wip` 列入 `tickers.csv`；`wip` 代表研究中，包括還沒有 parser 的 ticker。判斷能上線時改為 `ok`，放棄時改為 `drop`。流程見 [開發流程](../guides/dev-workflow.md)。
+
+因此有對照目錄的 ticker 不一定列在 `tickers.csv`（例如只擷取、還沒決定要做），列在 `tickers.csv` 的 ticker 也不一定有對照目錄或 parser。
 
 ## 目錄結構
 
