@@ -1,0 +1,185 @@
+{
+  "categories": {
+    "Innovative Medicine": {
+      "expression": [
+        {
+          "operand": "op1",
+          "weight": 1
+        }
+      ],
+      "value": 13562000000
+    },
+    "MedTech": {
+      "expression": [
+        {
+          "operand": "op2",
+          "weight": 1
+        }
+      ],
+      "value": 7821000000
+    }
+  },
+  "checks": {
+    "structural": [
+      {
+        "check": "定義唯一",
+        "result": "pass"
+      },
+      {
+        "check": "fact 存在且唯一",
+        "result": "pass"
+      },
+      {
+        "check": "單位與精度",
+        "result": "pass"
+      },
+      {
+        "check": "加總",
+        "result": "pass"
+      },
+      {
+        "check": "證據完整",
+        "result": "pass"
+      }
+    ],
+    "sum": {
+      "categories": 21383000000,
+      "difference": 0,
+      "tolerance": "1500000",
+      "total": 21383000000
+    }
+  },
+  "filings": {
+    "primary": {
+      "accession": "0000200406-24-000049",
+      "filing_date": "2024-05-01",
+      "form": "10-Q",
+      "report_date": "2024-03-31"
+    }
+  },
+  "fiscal_quarter": 1,
+  "fiscal_year": 2024,
+  "operands": {
+    "op1": {
+      "accession": "0000200406-24-000049",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-45",
+      "decimals": "-6",
+      "dimensions": {
+        "us-gaap:StatementBusinessSegmentsAxis": "jnj:InnovativeMedicineMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/200406/000020040624000049/jnj-20240331.htm",
+        "name": "jnj-20240331.htm",
+        "sha256": "ddf0289399a79c68b6990c8329e2bd7179bd1565229bbe0fed9d0dd30dd05e84",
+        "url": "https://www.sec.gov/Archives/edgar/data/200406/000020040624000049/jnj-20240331.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "814a0441e4edceda20645cb8c5dcc86ad2a89476bd8f1d8be2af10f74a7b76a4",
+        "png_scale": 1,
+        "png_sha256": "cddca69aef3acde64fc193f7e128a8011e42a56b1c21496b1f0405f36a11e5d2",
+        "table": "0000200406-24-000049-ddf0289399a7-t62"
+      },
+      "fact_id": "f-1157",
+      "filing_date": "2024-05-01",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-03-31",
+        "start": "2024-01-01"
+      },
+      "raw": "13,562",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 13562000000
+    },
+    "op2": {
+      "accession": "0000200406-24-000049",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-46",
+      "decimals": "-6",
+      "dimensions": {
+        "us-gaap:StatementBusinessSegmentsAxis": "jnj:MedTechMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/200406/000020040624000049/jnj-20240331.htm",
+        "name": "jnj-20240331.htm",
+        "sha256": "ddf0289399a79c68b6990c8329e2bd7179bd1565229bbe0fed9d0dd30dd05e84",
+        "url": "https://www.sec.gov/Archives/edgar/data/200406/000020040624000049/jnj-20240331.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "8a77b34121bef622b0c9a810758b57f60c18e03bb81e632b69b62ce67915a461",
+        "png_scale": 1,
+        "png_sha256": "3e669f4cd98543a4ae5a10b4adb4ee3c7ac070527988f8efae12f7f0181c1670",
+        "table": "0000200406-24-000049-ddf0289399a7-t64"
+      },
+      "fact_id": "f-1301",
+      "filing_date": "2024-05-01",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-03-31",
+        "start": "2024-01-01"
+      },
+      "raw": "7,821",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 7821000000
+    },
+    "op3": {
+      "accession": "0000200406-24-000049",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-1",
+      "decimals": "-6",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/200406/000020040624000049/jnj-20240331.htm",
+        "name": "jnj-20240331.htm",
+        "sha256": "ddf0289399a79c68b6990c8329e2bd7179bd1565229bbe0fed9d0dd30dd05e84",
+        "url": "https://www.sec.gov/Archives/edgar/data/200406/000020040624000049/jnj-20240331.htm"
+      },
+      "duplicates": [
+        "f-121",
+        "f-1350"
+      ],
+      "evidence": {
+        "html_sha256": "8a77b34121bef622b0c9a810758b57f60c18e03bb81e632b69b62ce67915a461",
+        "png_scale": 1,
+        "png_sha256": "3e669f4cd98543a4ae5a10b4adb4ee3c7ac070527988f8efae12f7f0181c1670",
+        "table": "0000200406-24-000049-ddf0289399a7-t64"
+      },
+      "fact_id": "f-1310",
+      "filing_date": "2024-05-01",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-03-31",
+        "start": "2024-01-01"
+      },
+      "raw": "21,383",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 21383000000
+    }
+  },
+  "period_end": "2024-03-31",
+  "schema_version": 1,
+  "series": "Q",
+  "ticker": "JNJ",
+  "total": {
+    "expression": [
+      {
+        "operand": "op3",
+        "weight": 1
+      }
+    ],
+    "value": 21383000000
+  },
+  "unit": "USD",
+  "view": "business_segment"
+}
