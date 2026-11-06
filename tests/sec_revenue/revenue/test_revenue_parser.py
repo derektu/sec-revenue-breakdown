@@ -432,9 +432,12 @@ class CompositionAndSumTest(Fixture):
         result = self.composer(source).compose("2025-03-31")
         self.assertEqual(result.sum_check["difference"], 0)
 
-    def test_category_named_like_total_is_rejected(self):
-        with self.assertRaisesRegex(ParseError, "重複的分類名稱"):
-            self.composer(company(categories=(("Total", fact(REVENUE, A)), COMPANY_CATEGORIES[1]))).compose("2025-03-31")
+    def test_duplicate_names_are_rejected(self):
+        same_as_total = company(categories=(("Total", fact(REVENUE, A)), COMPANY_CATEGORIES[1]))
+        same_as_category = company(categories=COMPANY_CATEGORIES, reconciling=(("A", fact(REVENUE, A)),))
+        for source in (same_as_total, same_as_category):
+            with self.assertRaisesRegex(ParseError, "重複的分類名稱"):
+                self.composer(source).compose("2025-03-31")
 
 
 class FourthQuarterTest(Fixture):
