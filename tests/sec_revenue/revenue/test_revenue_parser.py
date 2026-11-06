@@ -16,7 +16,9 @@ from sec_revenue.revenue.evidence import TableLocator  # noqa: E402
 from sec_revenue.revenue.compose import PeriodComposer  # noqa: E402
 from sec_revenue.revenue.engine import RevenueParser, check_outputs, ticker_dir  # noqa: E402
 from sec_revenue.revenue.filings import FilingSet, ParseError  # noqa: E402
-from sec_revenue.revenue.review import comparatives  # noqa: E402
+from sec_revenue.revenue.review import comparatives as review_comparatives  # noqa: E402
+from sec_revenue.revenue.contract import Composition  # noqa: E402
+from sec_revenue.revenue.source import addend_terms  # noqa: E402
 from sec_revenue.revenue.spec import (  # noqa: E402
     Category,
     CompanySpec,
@@ -30,6 +32,27 @@ from sec_revenue.revenue.spec import (  # noqa: E402
     table_cell,
 )
 from sec_revenue.revenue.xbrl import InlineDocument, classify_duration  # noqa: E402
+
+def comparatives(document, accession, baselines, addends_for):
+    """以「名稱 → 規格加數」的查詢函式（`None` 為總營收）組出新申報的組成，做比較欄比對。"""
+
+    def compose_for(request):
+        result = Composition()
+        total = addends_for(None)
+        if total:
+            found = addend_terms(document, accession, "總營收", total, request)
+            result.total = None if isinstance(found, str) else found
+        names = [n for n in ("A", "B") if addends_for(n)]
+        for name in names:
+            found = addend_terms(document, accession, name, addends_for(name), request)
+            if isinstance(found, str):
+                result.missing[name] = found
+            else:
+                result.categories[name] = found
+        return result
+
+    return review_comparatives(document, accession, baselines, compose_for)
+
 
 REVENUE = "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax"
 AXIS = "srt:ProductOrServiceAxis"
@@ -1144,8 +1167,6 @@ class ComparativeTest(Fixture):
         self.assertEqual((status["FY"]["2026-12-31"]["status"], status["Q"]["2026-12-31"]["status"]), ("published", "failed"))
 
     def test_unparseable_comparative_fact_is_listed(self):
-        from sec_revenue.revenue.review import comparatives
-        from sec_revenue.revenue.xbrl import InlineDocument
 
         published = {
             "categories": {"A": {"value": 60_000_000, "expression": [{"weight": 1, "operand": "op1"}]}},
@@ -1524,7 +1545,7 @@ class TagVariantTest(Fixture):
         with self.assertRaisesRegex(ParseError, r"fact 存在且唯一.*y:AltAMember.*\['y'\] 在文件中宣告衝突"):
             self.composer(spec).compose("2025-03-31")
 
-    def test_comparative_with_conflicting_prefix_is_unparseable(self):
+    def test_comparative_with_conflicting_prefix_is_skipped(self):
         published = {
             "categories": {"A": {"value": 60_000_000, "expression": [{"weight": 1, "operand": "op1"}]}},
             "total": {"value": 60_000_000, "expression": []},
@@ -1533,9 +1554,9 @@ class TagVariantTest(Fixture):
         }
         items = [item("pa", REVENUE, A, "2024-01-01", "2024-03-31", "60"), item("pt", REVENUE, None, "2024-01-01", "2024-03-31", "100")]
         lookup = {"A": [Addend(one_of(fact(REVENUE, A), fact(REVENUE, {AXIS: "y:AltAMember"})))], None: [Addend(fact(REVENUE))]}
+        # 前綴宣告衝突時組不出這份申報，整段期間不比對（不產生標記）。
         found = comparatives(InlineDocument(self.conflicted_html(items)), "new", [("Q", "2024-03-31", published)], lookup.get)
-        self.assertEqual((found[0]["result"], found[0]["listed_value"]), ("unparseable", None))
-        self.assertIn("宣告衝突", found[0]["note"])
+        self.assertEqual(found, [])
 
 
 class DefaultStartTest(Fixture):
@@ -1903,20 +1924,20 @@ class SpecValidationTest(unittest.TestCase):
             total=SPEC.total,
         )
         with self.assertRaisesRegex(ValueError, "業務別而不是地區"):
-            companies.check_notes(spec, "# notes")
-        companies.check_notes(spec, "us-gaap:StatementBusinessSegmentsAxis 的成員是業務群")
+            companies.check_notes(spec.ticker, spec.uses_axis("us-gaap:StatementBusinessSegmentsAxis"), "# notes")
+        companies.check_notes(spec.ticker, True, "us-gaap:StatementBusinessSegmentsAxis 的成員是業務群")
 
 
 class CompanySpecTest(unittest.TestCase):
-    def test_aapl_spec_loads_with_product_view(self):
+    def test_aapl_parser_loads_with_product_view(self):
         self.assertIn("AAPL", companies.tickers())
-        spec, digest = companies.spec("AAPL")
-        self.assertEqual(spec.view, "product")
-        self.assertEqual([c.name for c in spec.categories], ["iPhone", "Mac", "iPad", "Wearables, Home and Accessories", "Services"])
+        parser, digest = companies.spec("AAPL")
+        self.assertEqual(parser.view, "product")
+        self.assertEqual(parser.categories("2025-06-28"), ["iPhone", "Mac", "iPad", "Wearables, Home and Accessories", "Services"])
         self.assertEqual(len(digest), 64)
 
     def test_unknown_ticker(self):
-        with self.assertRaisesRegex(ValueError, "沒有 parser 規格"):
+        with self.assertRaisesRegex(ValueError, "沒有公司 parser"):
             companies.spec("ZZZZ")
 
 

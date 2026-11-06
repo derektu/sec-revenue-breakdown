@@ -17,7 +17,7 @@
 
 Corporate and Other 與 Eliminations 的處理：
 - Corporate and Other 有兩個對照來源列出，所以列成分類。
-- Eliminations 只有富途列出，所以宣告為 `reconciling`，參與加總但不輸出成分類。
+- Eliminations 只有富途列出，所以列為調節項，參與加總但不輸出成分類。
 - Stock Analysis 的 Connectivity and Platforms 等於前兩個分部相加。Content and Experiences 另含事業群內的總部與抵銷，與我們的分類不能直接對照。
 
 ## 分類與 tag
@@ -38,17 +38,17 @@ concept 是 `us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax`。
 
 **Corporate and Other、Eliminations 與總營收**
 
-依申報期末日切換定義：
+parser 依申報期末日（`filing.report_date`）切換寫法：
 
 | 項目 | 期末日 2024-03-31 以前 | 期末日 2024-04-01 起 |
 |---|---|---|
-| Corporate and Other | `srt:ConsolidationItemsAxis=us-gaap:CorporateNonSegmentMember` ＋ 同成員再帶 `cmcsa:BusinessUnitAxis=cmcsa:ContentAndExperiencesMember`（`sum_of`） | `srt:ConsolidationItemsAxis=us-gaap:CorporateNonSegmentMember` |
-| Eliminations（調節項） | `IntersegmentEliminationMember` 帶 `ContentAndExperiencesMember` ＋ 帶 `cmcsa:InterBusinessUnitEliminationsMember`（`sum_of`） | `srt:ConsolidationItemsAxis=srt:ConsolidationEliminationsMember` |
+| Corporate and Other | `srt:ConsolidationItemsAxis=us-gaap:CorporateNonSegmentMember` ＋ 同成員再帶 `cmcsa:BusinessUnitAxis=cmcsa:ContentAndExperiencesMember`（兩個 fact 相加） | `srt:ConsolidationItemsAxis=us-gaap:CorporateNonSegmentMember` |
+| Eliminations（調節項） | `IntersegmentEliminationMember` 帶 `ContentAndExperiencesMember` ＋ 帶 `cmcsa:InterBusinessUnitEliminationsMember`（兩個 fact 相加） | `srt:ConsolidationItemsAxis=srt:ConsolidationEliminationsMember` |
 | 總營收（Total consolidated revenue） | 不帶維度 | 不帶維度 |
 
-- 2024 年 Q1 以前，公司層級與 Content & Experiences 事業群內的總部、抵銷各自是一個 fact，所以相加成一類。之後的申報各自只有一個 fact。
-- FY2023 10-K（期末 2023-12-31）的分部、公司層級與總營收 fact 是 `us-gaap:Revenues`，分部另帶 `cmcsa:BusinessUnitAxis`。規格為這一期另有定義，供 `--start` 指定更早的期別時使用。
-- 相鄰定義的生效期間首尾相接。
+- 2024 年 Q1（0001166691-24-000031，期末 2024-03-31）以前，公司層級與 Content & Experiences 事業群內的總部、抵銷各自是一個 fact，所以相加成一類。從 2024 年 Q2（0001166691-24-000048，期末 2024-06-30）起各自只有一個 fact。
+- FY2023 10-K（0001166691-24-000011，期末 2023-12-31）的分部、公司層級與總營收 fact 是 `us-gaap:Revenues`，分部另帶 `cmcsa:BusinessUnitAxis`。parser 對這一份申報用這種寫法；FY2024 年報的 Q4 口徑一致也讀這份申報的上一財年數字。
+- `categories` 每一天都是這六類加 Eliminations。
 - 六類加上 Eliminations 等於總營收。
 - 分類名稱取自 2024 年分部表的列標籤。總營收取自分部表的 `Total consolidated revenue`（2024 年 Q1 為 `Comcast Consolidated`）。
 
