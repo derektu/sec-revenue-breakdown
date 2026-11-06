@@ -1,0 +1,503 @@
+{
+  "categories": {
+    "Entertainment": {
+      "expression": [
+        {
+          "operand": "op1",
+          "weight": 1
+        },
+        {
+          "operand": "op2",
+          "weight": -1
+        }
+      ],
+      "value": 10208000000
+    },
+    "Experiences": {
+      "expression": [
+        {
+          "operand": "op3",
+          "weight": 1
+        },
+        {
+          "operand": "op4",
+          "weight": -1
+        }
+      ],
+      "value": 8766000000
+    },
+    "Sports": {
+      "expression": [
+        {
+          "operand": "op5",
+          "weight": 1
+        },
+        {
+          "operand": "op6",
+          "weight": -1
+        }
+      ],
+      "value": 3980000000
+    }
+  },
+  "checks": {
+    "structural": [
+      {
+        "check": "定義唯一",
+        "result": "pass"
+      },
+      {
+        "check": "fact 存在且唯一",
+        "result": "pass"
+      },
+      {
+        "check": "單位與精度",
+        "result": "pass"
+      },
+      {
+        "check": "Q4 期間",
+        "result": "pass"
+      },
+      {
+        "check": "加總",
+        "result": "pass"
+      },
+      {
+        "check": "證據完整",
+        "result": "pass"
+      }
+    ],
+    "sum": {
+      "categories": 22464000000,
+      "difference": 0,
+      "tolerance": "5000000",
+      "total": 22464000000
+    }
+  },
+  "filings": {
+    "nine_months": {
+      "accession": "0001744489-25-000136",
+      "filing_date": "2025-08-06",
+      "form": "10-Q",
+      "report_date": "2025-06-28"
+    },
+    "primary": {
+      "accession": "0001744489-25-000155",
+      "filing_date": "2025-11-13",
+      "form": "10-K",
+      "report_date": "2025-09-27"
+    }
+  },
+  "fiscal_quarter": 4,
+  "fiscal_year": 2025,
+  "operands": {
+    "op1": {
+      "accession": "0001744489-25-000155",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-14",
+      "decimals": "-6",
+      "dimensions": {
+        "us-gaap:StatementBusinessSegmentsAxis": "dis:EntertainmentSegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1744489/000174448925000155/dis-20250927.htm",
+        "name": "dis-20250927.htm",
+        "sha256": "6fedf9f7d405ba5c9c9439cdab2f956f19bea1813a8d17f5a0ad921a753af2a3",
+        "url": "https://www.sec.gov/Archives/edgar/data/1744489/000174448925000155/dis-20250927.htm"
+      },
+      "duplicates": [
+        "f-870",
+        "f-955"
+      ],
+      "evidence": {
+        "html_sha256": "8e19f1a01f83ba8da3ddecc4be9283f94cf21cf6822784310f972723d32ecb79",
+        "png_scale": 1,
+        "png_sha256": "224abd15160468f690dc30e140b23dc38a0e16a485286f4c6bb330289b86d335",
+        "table": "0001744489-25-000155-6fedf9f7d405-t73"
+      },
+      "fact_id": "f-542",
+      "filing_date": "2025-11-13",
+      "form": "10-K",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-09-27",
+        "start": "2024-09-29"
+      },
+      "raw": "42,466",
+      "role": "annual",
+      "scale": "6",
+      "sign": null,
+      "value": 42466000000
+    },
+    "op10": {
+      "accession": "0001744489-25-000136",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-1",
+      "decimals": "-6",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1744489/000174448925000136/dis-20250628.htm",
+        "name": "dis-20250628.htm",
+        "sha256": "aee4cbc224512735fc1c3832ee8e8273b4d90960b367f65c6d8e47816933b1b0",
+        "url": "https://www.sec.gov/Archives/edgar/data/1744489/000174448925000136/dis-20250628.htm"
+      },
+      "duplicates": [
+        "f-787",
+        "f-40"
+      ],
+      "evidence": {
+        "html_sha256": "29a40ccdd70c058eb8fb675a3a889e0a89fa89acb9c7a4db7530f196ae98493f",
+        "png_scale": 1,
+        "png_sha256": "af38cc6b890f806a01ad8d94e1a6077f3bf27c6faadc9150d51e895342b5337d",
+        "table": "0001744489-25-000136-aee4cbc22451-t20"
+      },
+      "fact_id": "f-692",
+      "filing_date": "2025-08-06",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-06-28",
+        "start": "2024-09-29"
+      },
+      "raw": "71,961",
+      "role": "nine_months",
+      "scale": "6",
+      "sign": null,
+      "value": 71961000000
+    },
+    "op2": {
+      "accession": "0001744489-25-000136",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-98",
+      "decimals": "-6",
+      "dimensions": {
+        "us-gaap:StatementBusinessSegmentsAxis": "dis:EntertainmentSegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1744489/000174448925000136/dis-20250628.htm",
+        "name": "dis-20250628.htm",
+        "sha256": "aee4cbc224512735fc1c3832ee8e8273b4d90960b367f65c6d8e47816933b1b0",
+        "url": "https://www.sec.gov/Archives/edgar/data/1744489/000174448925000136/dis-20250628.htm"
+      },
+      "duplicates": [
+        "f-783",
+        "f-457"
+      ],
+      "evidence": {
+        "html_sha256": "29a40ccdd70c058eb8fb675a3a889e0a89fa89acb9c7a4db7530f196ae98493f",
+        "png_scale": 1,
+        "png_sha256": "af38cc6b890f806a01ad8d94e1a6077f3bf27c6faadc9150d51e895342b5337d",
+        "table": "0001744489-25-000136-aee4cbc22451-t20"
+      },
+      "fact_id": "f-688",
+      "filing_date": "2025-08-06",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-06-28",
+        "start": "2024-09-29"
+      },
+      "raw": "32,258",
+      "role": "nine_months",
+      "scale": "6",
+      "sign": null,
+      "value": 32258000000
+    },
+    "op3": {
+      "accession": "0001744489-25-000155",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-24",
+      "decimals": "-6",
+      "dimensions": {
+        "us-gaap:StatementBusinessSegmentsAxis": "dis:ExperiencesSegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1744489/000174448925000155/dis-20250927.htm",
+        "name": "dis-20250927.htm",
+        "sha256": "6fedf9f7d405ba5c9c9439cdab2f956f19bea1813a8d17f5a0ad921a753af2a3",
+        "url": "https://www.sec.gov/Archives/edgar/data/1744489/000174448925000155/dis-20250927.htm"
+      },
+      "duplicates": [
+        "f-872",
+        "f-957"
+      ],
+      "evidence": {
+        "html_sha256": "8e19f1a01f83ba8da3ddecc4be9283f94cf21cf6822784310f972723d32ecb79",
+        "png_scale": 1,
+        "png_sha256": "224abd15160468f690dc30e140b23dc38a0e16a485286f4c6bb330289b86d335",
+        "table": "0001744489-25-000155-6fedf9f7d405-t73"
+      },
+      "fact_id": "f-554",
+      "filing_date": "2025-11-13",
+      "form": "10-K",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-09-27",
+        "start": "2024-09-29"
+      },
+      "raw": "36,156",
+      "role": "annual",
+      "scale": "6",
+      "sign": null,
+      "value": 36156000000
+    },
+    "op4": {
+      "accession": "0001744489-25-000136",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-114",
+      "decimals": "-6",
+      "dimensions": {
+        "us-gaap:StatementBusinessSegmentsAxis": "dis:ExperiencesSegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1744489/000174448925000136/dis-20250628.htm",
+        "name": "dis-20250628.htm",
+        "sha256": "aee4cbc224512735fc1c3832ee8e8273b4d90960b367f65c6d8e47816933b1b0",
+        "url": "https://www.sec.gov/Archives/edgar/data/1744489/000174448925000136/dis-20250628.htm"
+      },
+      "duplicates": [
+        "f-785",
+        "f-473"
+      ],
+      "evidence": {
+        "html_sha256": "29a40ccdd70c058eb8fb675a3a889e0a89fa89acb9c7a4db7530f196ae98493f",
+        "png_scale": 1,
+        "png_sha256": "af38cc6b890f806a01ad8d94e1a6077f3bf27c6faadc9150d51e895342b5337d",
+        "table": "0001744489-25-000136-aee4cbc22451-t20"
+      },
+      "fact_id": "f-690",
+      "filing_date": "2025-08-06",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-06-28",
+        "start": "2024-09-29"
+      },
+      "raw": "27,390",
+      "role": "nine_months",
+      "scale": "6",
+      "sign": null,
+      "value": 27390000000
+    },
+    "op5": {
+      "accession": "0001744489-25-000155",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-16",
+      "decimals": "-6",
+      "dimensions": {
+        "us-gaap:StatementBusinessSegmentsAxis": "dis:SportsSegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1744489/000174448925000155/dis-20250927.htm",
+        "name": "dis-20250927.htm",
+        "sha256": "6fedf9f7d405ba5c9c9439cdab2f956f19bea1813a8d17f5a0ad921a753af2a3",
+        "url": "https://www.sec.gov/Archives/edgar/data/1744489/000174448925000155/dis-20250927.htm"
+      },
+      "duplicates": [
+        "f-871",
+        "f-956"
+      ],
+      "evidence": {
+        "html_sha256": "8e19f1a01f83ba8da3ddecc4be9283f94cf21cf6822784310f972723d32ecb79",
+        "png_scale": 1,
+        "png_sha256": "224abd15160468f690dc30e140b23dc38a0e16a485286f4c6bb330289b86d335",
+        "table": "0001744489-25-000155-6fedf9f7d405-t73"
+      },
+      "fact_id": "f-551",
+      "filing_date": "2025-11-13",
+      "form": "10-K",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-09-27",
+        "start": "2024-09-29"
+      },
+      "raw": "17,672",
+      "role": "annual",
+      "scale": "6",
+      "sign": null,
+      "value": 17672000000
+    },
+    "op6": {
+      "accession": "0001744489-25-000136",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-110",
+      "decimals": "-6",
+      "dimensions": {
+        "us-gaap:StatementBusinessSegmentsAxis": "dis:SportsSegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1744489/000174448925000136/dis-20250628.htm",
+        "name": "dis-20250628.htm",
+        "sha256": "aee4cbc224512735fc1c3832ee8e8273b4d90960b367f65c6d8e47816933b1b0",
+        "url": "https://www.sec.gov/Archives/edgar/data/1744489/000174448925000136/dis-20250628.htm"
+      },
+      "duplicates": [
+        "f-784",
+        "f-469"
+      ],
+      "evidence": {
+        "html_sha256": "29a40ccdd70c058eb8fb675a3a889e0a89fa89acb9c7a4db7530f196ae98493f",
+        "png_scale": 1,
+        "png_sha256": "af38cc6b890f806a01ad8d94e1a6077f3bf27c6faadc9150d51e895342b5337d",
+        "table": "0001744489-25-000136-aee4cbc22451-t20"
+      },
+      "fact_id": "f-689",
+      "filing_date": "2025-08-06",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-06-28",
+        "start": "2024-09-29"
+      },
+      "raw": "13,692",
+      "role": "nine_months",
+      "scale": "6",
+      "sign": null,
+      "value": 13692000000
+    },
+    "op7": {
+      "accession": "0001744489-25-000155",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-109",
+      "decimals": "-6",
+      "dimensions": {
+        "us-gaap:StatementBusinessSegmentsAxis": "dis:SegmentEliminationsMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1744489/000174448925000155/dis-20250927.htm",
+        "name": "dis-20250927.htm",
+        "sha256": "6fedf9f7d405ba5c9c9439cdab2f956f19bea1813a8d17f5a0ad921a753af2a3",
+        "url": "https://www.sec.gov/Archives/edgar/data/1744489/000174448925000155/dis-20250927.htm"
+      },
+      "duplicates": [
+        "f-958"
+      ],
+      "evidence": {
+        "html_sha256": "8e19f1a01f83ba8da3ddecc4be9283f94cf21cf6822784310f972723d32ecb79",
+        "png_scale": 1,
+        "png_sha256": "224abd15160468f690dc30e140b23dc38a0e16a485286f4c6bb330289b86d335",
+        "table": "0001744489-25-000155-6fedf9f7d405-t73"
+      },
+      "fact_id": "f-557",
+      "filing_date": "2025-11-13",
+      "form": "10-K",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-09-27",
+        "start": "2024-09-29"
+      },
+      "raw": "1,869",
+      "role": "annual",
+      "scale": "6",
+      "sign": "-",
+      "value": -1869000000
+    },
+    "op8": {
+      "accession": "0001744489-25-000136",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-118",
+      "decimals": "-6",
+      "dimensions": {
+        "us-gaap:StatementBusinessSegmentsAxis": "dis:SegmentEliminationsMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1744489/000174448925000136/dis-20250628.htm",
+        "name": "dis-20250628.htm",
+        "sha256": "aee4cbc224512735fc1c3832ee8e8273b4d90960b367f65c6d8e47816933b1b0",
+        "url": "https://www.sec.gov/Archives/edgar/data/1744489/000174448925000136/dis-20250628.htm"
+      },
+      "duplicates": [
+        "f-786",
+        "f-477"
+      ],
+      "evidence": {
+        "html_sha256": "29a40ccdd70c058eb8fb675a3a889e0a89fa89acb9c7a4db7530f196ae98493f",
+        "png_scale": 1,
+        "png_sha256": "af38cc6b890f806a01ad8d94e1a6077f3bf27c6faadc9150d51e895342b5337d",
+        "table": "0001744489-25-000136-aee4cbc22451-t20"
+      },
+      "fact_id": "f-691",
+      "filing_date": "2025-08-06",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-06-28",
+        "start": "2024-09-29"
+      },
+      "raw": "1,379",
+      "role": "nine_months",
+      "scale": "6",
+      "sign": "-",
+      "value": -1379000000
+    },
+    "op9": {
+      "accession": "0001744489-25-000155",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-1",
+      "decimals": "-6",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1744489/000174448925000155/dis-20250927.htm",
+        "name": "dis-20250927.htm",
+        "sha256": "6fedf9f7d405ba5c9c9439cdab2f956f19bea1813a8d17f5a0ad921a753af2a3",
+        "url": "https://www.sec.gov/Archives/edgar/data/1744489/000174448925000155/dis-20250927.htm"
+      },
+      "duplicates": [
+        "f-158"
+      ],
+      "evidence": {
+        "html_sha256": "a0ef7a9e2bf3ee4bdc1284b8b63886a307726c5c722e845eb7a8f878619e92d7",
+        "png_scale": 1,
+        "png_sha256": "2f2d5db012932bdfe4f3dcfe420d83a24c1dc0951b4356fecc5662388a24e442",
+        "table": "0001744489-25-000155-6fedf9f7d405-t84"
+      },
+      "fact_id": "f-874",
+      "filing_date": "2025-11-13",
+      "form": "10-K",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-09-27",
+        "start": "2024-09-29"
+      },
+      "raw": "94,425",
+      "role": "annual",
+      "scale": "6",
+      "sign": null,
+      "value": 94425000000
+    }
+  },
+  "period_end": "2025-09-27",
+  "reconciling": {
+    "Eliminations": {
+      "expression": [
+        {
+          "operand": "op7",
+          "weight": 1
+        },
+        {
+          "operand": "op8",
+          "weight": -1
+        }
+      ],
+      "value": -490000000
+    }
+  },
+  "schema_version": 1,
+  "series": "Q",
+  "ticker": "DIS",
+  "total": {
+    "expression": [
+      {
+        "operand": "op9",
+        "weight": 1
+      },
+      {
+        "operand": "op10",
+        "weight": -1
+      }
+    ],
+    "value": 22464000000
+  },
+  "unit": "USD",
+  "view": "business_segment"
+}
