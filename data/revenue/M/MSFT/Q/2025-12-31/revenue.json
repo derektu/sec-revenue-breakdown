@@ -1,0 +1,230 @@
+{
+  "categories": {
+    "Intelligent Cloud": {
+      "expression": [
+        {
+          "operand": "op1",
+          "weight": 1
+        }
+      ],
+      "value": 32907000000
+    },
+    "More Personal Computing": {
+      "expression": [
+        {
+          "operand": "op2",
+          "weight": 1
+        }
+      ],
+      "value": 14250000000
+    },
+    "Productivity and Business Processes": {
+      "expression": [
+        {
+          "operand": "op3",
+          "weight": 1
+        }
+      ],
+      "value": 34116000000
+    }
+  },
+  "checks": {
+    "structural": [
+      {
+        "check": "定義唯一",
+        "result": "pass"
+      },
+      {
+        "check": "fact 存在且唯一",
+        "result": "pass"
+      },
+      {
+        "check": "單位與精度",
+        "result": "pass"
+      },
+      {
+        "check": "加總",
+        "result": "pass"
+      },
+      {
+        "check": "證據完整",
+        "result": "pass"
+      }
+    ],
+    "sum": {
+      "categories": 81273000000,
+      "difference": 0,
+      "tolerance": "2000000",
+      "total": 81273000000
+    }
+  },
+  "filings": {
+    "primary": {
+      "accession": "0001193125-26-027207",
+      "filing_date": "2026-01-28",
+      "form": "10-Q",
+      "report_date": "2025-12-31"
+    }
+  },
+  "fiscal_quarter": 2,
+  "fiscal_year": 2026,
+  "operands": {
+    "op1": {
+      "accession": "0001193125-26-027207",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "C_404ed259-8a3c-4973-84c1-b605a56018e9",
+      "decimals": "-6",
+      "dimensions": {
+        "us-gaap:StatementBusinessSegmentsAxis": "msft:IntelligentCloudMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/789019/000119312526027207/msft-20251231.htm",
+        "name": "msft-20251231.htm",
+        "sha256": "db78ba3a82278d08526e28f71cd62801d58e90b09c655bfb040fef7c57f50261",
+        "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526027207/msft-20251231.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "40ba8acadc20e21ef28abe75602d7c98e697b89d38b32c5fa3f7172daf8dad8a",
+        "png_scale": 1,
+        "png_sha256": "86ab6f044908ce35efc9c98569863acebc60e708c24827e5e6e59c482764a724",
+        "table": "0001193125-26-027207-db78ba3a8227-t40"
+      },
+      "fact_id": "F_177f5276-5aa0-4a79-92c4-1f3f39265cf6",
+      "filing_date": "2026-01-28",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-12-31",
+        "start": "2025-10-01"
+      },
+      "raw": "32,907",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 32907000000
+    },
+    "op2": {
+      "accession": "0001193125-26-027207",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "C_2f134020-a080-47f0-9c39-4c6cceae4f25",
+      "decimals": "-6",
+      "dimensions": {
+        "us-gaap:StatementBusinessSegmentsAxis": "msft:MorePersonalComputingMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/789019/000119312526027207/msft-20251231.htm",
+        "name": "msft-20251231.htm",
+        "sha256": "db78ba3a82278d08526e28f71cd62801d58e90b09c655bfb040fef7c57f50261",
+        "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526027207/msft-20251231.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "40ba8acadc20e21ef28abe75602d7c98e697b89d38b32c5fa3f7172daf8dad8a",
+        "png_scale": 1,
+        "png_sha256": "86ab6f044908ce35efc9c98569863acebc60e708c24827e5e6e59c482764a724",
+        "table": "0001193125-26-027207-db78ba3a8227-t40"
+      },
+      "fact_id": "F_d95703cb-6b4d-447c-a0b1-12bb9b45d574",
+      "filing_date": "2026-01-28",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-12-31",
+        "start": "2025-10-01"
+      },
+      "raw": "14,250",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 14250000000
+    },
+    "op3": {
+      "accession": "0001193125-26-027207",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "C_46d3b263-06e9-47e5-8fca-c8dda9364651",
+      "decimals": "-6",
+      "dimensions": {
+        "us-gaap:StatementBusinessSegmentsAxis": "msft:ProductivityAndBusinessProcessesMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/789019/000119312526027207/msft-20251231.htm",
+        "name": "msft-20251231.htm",
+        "sha256": "db78ba3a82278d08526e28f71cd62801d58e90b09c655bfb040fef7c57f50261",
+        "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526027207/msft-20251231.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "40ba8acadc20e21ef28abe75602d7c98e697b89d38b32c5fa3f7172daf8dad8a",
+        "png_scale": 1,
+        "png_sha256": "86ab6f044908ce35efc9c98569863acebc60e708c24827e5e6e59c482764a724",
+        "table": "0001193125-26-027207-db78ba3a8227-t40"
+      },
+      "fact_id": "F_acf8897c-1441-40b1-b005-4ec1ffeaec45",
+      "filing_date": "2026-01-28",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-12-31",
+        "start": "2025-10-01"
+      },
+      "raw": "34,116",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 34116000000
+    },
+    "op4": {
+      "accession": "0001193125-26-027207",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "C_0641e570-0e18-4add-8c73-cc64b54d1f88",
+      "decimals": "-6",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/789019/000119312526027207/msft-20251231.htm",
+        "name": "msft-20251231.htm",
+        "sha256": "db78ba3a82278d08526e28f71cd62801d58e90b09c655bfb040fef7c57f50261",
+        "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526027207/msft-20251231.htm"
+      },
+      "duplicates": [
+        "F_98b2de65-42c6-4ae5-a372-805a791b90dc",
+        "F_5ebfacbd-2dc4-4dfd-89ce-aca509c410df",
+        "F_9d3865ed-9cbd-4c43-8bc8-7f46c2848083"
+      ],
+      "evidence": {
+        "html_sha256": "40ba8acadc20e21ef28abe75602d7c98e697b89d38b32c5fa3f7172daf8dad8a",
+        "png_scale": 1,
+        "png_sha256": "86ab6f044908ce35efc9c98569863acebc60e708c24827e5e6e59c482764a724",
+        "table": "0001193125-26-027207-db78ba3a8227-t40"
+      },
+      "fact_id": "F_1bda4038-d7fa-44bb-9c47-61bd6836a311",
+      "filing_date": "2026-01-28",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-12-31",
+        "start": "2025-10-01"
+      },
+      "raw": "81,273",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 81273000000
+    }
+  },
+  "period_end": "2025-12-31",
+  "schema_version": 1,
+  "series": "Q",
+  "ticker": "MSFT",
+  "total": {
+    "expression": [
+      {
+        "operand": "op4",
+        "weight": 1
+      }
+    ],
+    "value": 81273000000
+  },
+  "unit": "USD",
+  "view": "business_segment"
+}
