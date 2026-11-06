@@ -1,0 +1,570 @@
+{
+  "parser": {
+    "engine_sha256": "cef42e58f952c80715fda28bc15f98310ac69951641f5d0796f212ce1a6349f8",
+    "spec_sha256": "16d93bcb0473453c69f5c6b04f0cdba9cf4ada9c90a8f1375581d7dcbfa4022f"
+  },
+  "periods": {
+    "FY": {
+      "2024-12-31": {
+        "accession": "0000731766-25-000063",
+        "fiscal_year": 2024,
+        "status": "published"
+      },
+      "2025-12-31": {
+        "accession": "0000731766-26-000062",
+        "fiscal_year": 2025,
+        "status": "published"
+      }
+    },
+    "Q": {
+      "2024-03-31": {
+        "accession": "0000731766-24-000155",
+        "fiscal_quarter": 1,
+        "fiscal_year": 2024,
+        "status": "published"
+      },
+      "2024-06-30": {
+        "accession": "0000731766-24-000262",
+        "fiscal_quarter": 2,
+        "fiscal_year": 2024,
+        "status": "published"
+      },
+      "2024-09-30": {
+        "accession": "0000731766-24-000323",
+        "fiscal_quarter": 3,
+        "fiscal_year": 2024,
+        "status": "published"
+      },
+      "2024-12-31": {
+        "accession": "0000731766-25-000063",
+        "fiscal_quarter": 4,
+        "fiscal_year": 2024,
+        "status": "published"
+      },
+      "2025-03-31": {
+        "accession": "0000731766-25-000131",
+        "differences": [
+          {
+            "category": "Optum Health",
+            "listed_addends": [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "unh:OptumHealthMember"
+                },
+                "fact_id": "f-939",
+                "value": 24837000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": 24837000000,
+            "period": {
+              "end": "2025-03-31",
+              "start": "2025-01-01"
+            },
+            "published_addends": [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "unh:OptumHealthMember"
+                },
+                "operand": "op2",
+                "value": 25309000000,
+                "weight": 1
+              }
+            ],
+            "published_value": 25309000000,
+            "result": "different",
+            "role": "quarter",
+            "source": {
+              "accession": "0000731766-26-000127",
+              "filing_date": "2026-05-05",
+              "form": "10-Q"
+            }
+          },
+          {
+            "category": "Optum Insight",
+            "listed_addends": [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "unh:OptumInsightMember"
+                },
+                "fact_id": "f-940",
+                "value": 5027000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": 5027000000,
+            "period": {
+              "end": "2025-03-31",
+              "start": "2025-01-01"
+            },
+            "published_addends": [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "unh:OptumInsightMember"
+                },
+                "operand": "op3",
+                "value": 4630000000,
+                "weight": 1
+              }
+            ],
+            "published_value": 4630000000,
+            "result": "different",
+            "role": "quarter",
+            "source": {
+              "accession": "0000731766-26-000127",
+              "filing_date": "2026-05-05",
+              "form": "10-Q"
+            }
+          },
+          {
+            "category": "Optum eliminations",
+            "listed_addends": [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:IntersegmentEliminationMember"
+                },
+                "fact_id": "f-942",
+                "value": -1111000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": -1111000000,
+            "period": {
+              "end": "2025-03-31",
+              "start": "2025-01-01"
+            },
+            "published_addends": [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:IntersegmentEliminationMember"
+                },
+                "operand": "op6",
+                "value": -1186000000,
+                "weight": 1
+              }
+            ],
+            "published_value": -1186000000,
+            "result": "different",
+            "role": "quarter",
+            "source": {
+              "accession": "0000731766-26-000127",
+              "filing_date": "2026-05-05",
+              "form": "10-Q"
+            }
+          }
+        ],
+        "fiscal_quarter": 1,
+        "fiscal_year": 2025,
+        "status": "published"
+      },
+      "2025-06-30": {
+        "accession": "0000731766-25-000236",
+        "differences": [
+          {
+            "category": "Optum Health",
+            "listed_addends": [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "unh:OptumHealthMember"
+                },
+                "fact_id": "f-1115",
+                "value": 24725000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": 24725000000,
+            "period": {
+              "end": "2025-06-30",
+              "start": "2025-04-01"
+            },
+            "published_addends": [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "unh:OptumHealthMember"
+                },
+                "operand": "op2",
+                "value": 25205000000,
+                "weight": 1
+              }
+            ],
+            "published_value": 25205000000,
+            "result": "different",
+            "role": "quarter",
+            "source": {
+              "accession": "0000731766-26-000197",
+              "filing_date": "2026-08-10",
+              "form": "10-Q"
+            }
+          },
+          {
+            "category": "Optum Insight",
+            "listed_addends": [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "unh:OptumInsightMember"
+                },
+                "fact_id": "f-1116",
+                "value": 5232000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": 5232000000,
+            "period": {
+              "end": "2025-06-30",
+              "start": "2025-04-01"
+            },
+            "published_addends": [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "unh:OptumInsightMember"
+                },
+                "operand": "op3",
+                "value": 4828000000,
+                "weight": 1
+              }
+            ],
+            "published_value": 4828000000,
+            "result": "different",
+            "role": "quarter",
+            "source": {
+              "accession": "0000731766-26-000197",
+              "filing_date": "2026-08-10",
+              "form": "10-Q"
+            }
+          },
+          {
+            "category": "Optum eliminations",
+            "listed_addends": [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:IntersegmentEliminationMember"
+                },
+                "fact_id": "f-1118",
+                "value": -1191000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": -1191000000,
+            "period": {
+              "end": "2025-06-30",
+              "start": "2025-04-01"
+            },
+            "published_addends": [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:IntersegmentEliminationMember"
+                },
+                "operand": "op6",
+                "value": -1267000000,
+                "weight": 1
+              }
+            ],
+            "published_value": -1267000000,
+            "result": "different",
+            "role": "quarter",
+            "source": {
+              "accession": "0000731766-26-000197",
+              "filing_date": "2026-08-10",
+              "form": "10-Q"
+            }
+          }
+        ],
+        "fiscal_quarter": 2,
+        "fiscal_year": 2025,
+        "status": "published"
+      },
+      "2025-09-30": {
+        "accession": "0000731766-25-000305",
+        "differences": [
+          {
+            "category": "Optum Health",
+            "listed_addends": [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "unh:OptumHealthMember"
+                },
+                "fact_id": "f-1123",
+                "value": 25422000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": 25422000000,
+            "period": {
+              "end": "2025-09-30",
+              "start": "2025-07-01"
+            },
+            "published_addends": [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "unh:OptumHealthMember"
+                },
+                "operand": "op2",
+                "value": 25900000000,
+                "weight": 1
+              }
+            ],
+            "published_value": 25900000000,
+            "result": "different",
+            "role": "quarter",
+            "source": {
+              "accession": "0000731766-26-000266",
+              "filing_date": "2026-11-03",
+              "form": "10-Q"
+            }
+          },
+          {
+            "category": "Optum Insight",
+            "listed_addends": [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "unh:OptumInsightMember"
+                },
+                "fact_id": "f-1124",
+                "value": 5320000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": 5320000000,
+            "period": {
+              "end": "2025-09-30",
+              "start": "2025-07-01"
+            },
+            "published_addends": [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "unh:OptumInsightMember"
+                },
+                "operand": "op3",
+                "value": 4915000000,
+                "weight": 1
+              }
+            ],
+            "published_value": 4915000000,
+            "result": "different",
+            "role": "quarter",
+            "source": {
+              "accession": "0000731766-26-000266",
+              "filing_date": "2026-11-03",
+              "form": "10-Q"
+            }
+          },
+          {
+            "category": "Optum eliminations",
+            "listed_addends": [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:IntersegmentEliminationMember"
+                },
+                "fact_id": "f-1126",
+                "value": -1244000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": -1244000000,
+            "period": {
+              "end": "2025-09-30",
+              "start": "2025-07-01"
+            },
+            "published_addends": [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:IntersegmentEliminationMember"
+                },
+                "operand": "op6",
+                "value": -1317000000,
+                "weight": 1
+              }
+            ],
+            "published_value": -1317000000,
+            "result": "different",
+            "role": "quarter",
+            "source": {
+              "accession": "0000731766-26-000266",
+              "filing_date": "2026-11-03",
+              "form": "10-Q"
+            }
+          }
+        ],
+        "fiscal_quarter": 3,
+        "fiscal_year": 2025,
+        "status": "published"
+      },
+      "2025-12-31": {
+        "accession": "0000731766-26-000062",
+        "differences": [
+          {
+            "category": "Optum Health",
+            "listed_addends": [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "unh:OptumHealthMember"
+                },
+                "fact_id": "f-1363",
+                "value": 74984000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": 74984000000,
+            "period": {
+              "end": "2025-09-30",
+              "start": "2025-01-01"
+            },
+            "published_addends": [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "unh:OptumHealthMember"
+                },
+                "operand": "op4",
+                "value": 76414000000,
+                "weight": 1
+              }
+            ],
+            "published_value": 76414000000,
+            "result": "different",
+            "role": "nine_months",
+            "source": {
+              "accession": "0000731766-26-000266",
+              "filing_date": "2026-11-03",
+              "form": "10-Q"
+            }
+          },
+          {
+            "category": "Optum Insight",
+            "listed_addends": [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "unh:OptumInsightMember"
+                },
+                "fact_id": "f-1364",
+                "value": 15579000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": 15579000000,
+            "period": {
+              "end": "2025-09-30",
+              "start": "2025-01-01"
+            },
+            "published_addends": [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "unh:OptumInsightMember"
+                },
+                "operand": "op6",
+                "value": 14373000000,
+                "weight": 1
+              }
+            ],
+            "published_value": 14373000000,
+            "result": "different",
+            "role": "nine_months",
+            "source": {
+              "accession": "0000731766-26-000266",
+              "filing_date": "2026-11-03",
+              "form": "10-Q"
+            }
+          },
+          {
+            "category": "Optum eliminations",
+            "listed_addends": [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:IntersegmentEliminationMember"
+                },
+                "fact_id": "f-1366",
+                "value": -3546000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": -3546000000,
+            "period": {
+              "end": "2025-09-30",
+              "start": "2025-01-01"
+            },
+            "published_addends": [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:IntersegmentEliminationMember"
+                },
+                "operand": "op12",
+                "value": -3770000000,
+                "weight": 1
+              }
+            ],
+            "published_value": -3770000000,
+            "result": "different",
+            "role": "nine_months",
+            "source": {
+              "accession": "0000731766-26-000266",
+              "filing_date": "2026-11-03",
+              "form": "10-Q"
+            }
+          }
+        ],
+        "fiscal_quarter": 4,
+        "fiscal_year": 2025,
+        "status": "published"
+      },
+      "2026-03-31": {
+        "accession": "0000731766-26-000127",
+        "fiscal_quarter": 1,
+        "fiscal_year": 2026,
+        "status": "published"
+      },
+      "2026-06-30": {
+        "accession": "0000731766-26-000197",
+        "fiscal_quarter": 2,
+        "fiscal_year": 2026,
+        "status": "published"
+      },
+      "2026-09-30": {
+        "accession": "0000731766-26-000266",
+        "fiscal_quarter": 3,
+        "fiscal_year": 2026,
+        "status": "published"
+      }
+    }
+  },
+  "ticker": "UNH",
+  "view": "business_segment"
+}

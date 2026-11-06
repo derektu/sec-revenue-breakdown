@@ -1,0 +1,325 @@
+{
+  "categories": {
+    "Asset & Wealth Management": {
+      "expression": [
+        {
+          "operand": "op3",
+          "weight": 1
+        }
+      ],
+      "value": 6851000000
+    },
+    "Commercial & Investment Bank": {
+      "expression": [
+        {
+          "operand": "op2",
+          "weight": 1
+        }
+      ],
+      "value": 24853000000
+    },
+    "Consumer & Community Banking": {
+      "expression": [
+        {
+          "operand": "op1",
+          "weight": 1
+        }
+      ],
+      "value": 20272000000
+    },
+    "Corporate": {
+      "expression": [
+        {
+          "operand": "op4",
+          "weight": 1
+        }
+      ],
+      "value": 6046000000
+    }
+  },
+  "checks": {
+    "structural": [
+      {
+        "check": "定義唯一",
+        "result": "pass"
+      },
+      {
+        "check": "fact 存在且唯一",
+        "result": "pass"
+      },
+      {
+        "check": "單位與精度",
+        "result": "pass"
+      },
+      {
+        "check": "加總",
+        "result": "pass"
+      },
+      {
+        "check": "證據完整",
+        "result": "pass"
+      }
+    ],
+    "sum": {
+      "categories": 57347000000,
+      "difference": 0,
+      "tolerance": "3000000",
+      "total": 57347000000
+    }
+  },
+  "filings": {
+    "primary": {
+      "accession": "0001628280-26-054343",
+      "filing_date": "2026-08-06",
+      "form": "10-Q",
+      "report_date": "2026-06-30"
+    }
+  },
+  "fiscal_quarter": 2,
+  "fiscal_year": 2026,
+  "operands": {
+    "op1": {
+      "accession": "0001628280-26-054343",
+      "concept": "us-gaap:RevenuesNetOfInterestExpense",
+      "context_id": "c-2028",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "jpm:ConsumerCommunityBankingMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/19617/000162828026054343/jpm-20260630.htm",
+        "name": "jpm-20260630.htm",
+        "sha256": "e5782d471398fbf067098b76fd258e3a816f974c9e3b5c56a34d9f434e254379",
+        "url": "https://www.sec.gov/Archives/edgar/data/19617/000162828026054343/jpm-20260630.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "89f11ed6f579da14e5bf0cb0d2c0cbc4d100d1bd5f5dbb6348af8e16ac8160f1",
+        "png_scale": 1,
+        "png_sha256": "e028e4267f082b5af8409cb1009d029f29b9a8481e752216ea5d9ceaecda22f8",
+        "table": "0001628280-26-054343-e5782d471398-t265"
+      },
+      "fact_id": "f-7318",
+      "filing_date": "2026-08-06",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-06-30",
+        "start": "2026-04-01"
+      },
+      "raw": "20,272",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 20272000000
+    },
+    "op2": {
+      "accession": "0001628280-26-054343",
+      "concept": "us-gaap:RevenuesNetOfInterestExpense",
+      "context_id": "c-1240",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "jpm:CommercialAndInvestmentBankMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/19617/000162828026054343/jpm-20260630.htm",
+        "name": "jpm-20260630.htm",
+        "sha256": "e5782d471398fbf067098b76fd258e3a816f974c9e3b5c56a34d9f434e254379",
+        "url": "https://www.sec.gov/Archives/edgar/data/19617/000162828026054343/jpm-20260630.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "89f11ed6f579da14e5bf0cb0d2c0cbc4d100d1bd5f5dbb6348af8e16ac8160f1",
+        "png_scale": 1,
+        "png_sha256": "e028e4267f082b5af8409cb1009d029f29b9a8481e752216ea5d9ceaecda22f8",
+        "table": "0001628280-26-054343-e5782d471398-t265"
+      },
+      "fact_id": "f-7320",
+      "filing_date": "2026-08-06",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-06-30",
+        "start": "2026-04-01"
+      },
+      "raw": "24,853",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 24853000000
+    },
+    "op3": {
+      "accession": "0001628280-26-054343",
+      "concept": "us-gaap:RevenuesNetOfInterestExpense",
+      "context_id": "c-2031",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "jpm:AssetandWealthManagementSegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/19617/000162828026054343/jpm-20260630.htm",
+        "name": "jpm-20260630.htm",
+        "sha256": "e5782d471398fbf067098b76fd258e3a816f974c9e3b5c56a34d9f434e254379",
+        "url": "https://www.sec.gov/Archives/edgar/data/19617/000162828026054343/jpm-20260630.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "89f11ed6f579da14e5bf0cb0d2c0cbc4d100d1bd5f5dbb6348af8e16ac8160f1",
+        "png_scale": 1,
+        "png_sha256": "e028e4267f082b5af8409cb1009d029f29b9a8481e752216ea5d9ceaecda22f8",
+        "table": "0001628280-26-054343-e5782d471398-t265"
+      },
+      "fact_id": "f-7322",
+      "filing_date": "2026-08-06",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-06-30",
+        "start": "2026-04-01"
+      },
+      "raw": "6,851",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 6851000000
+    },
+    "op4": {
+      "accession": "0001628280-26-054343",
+      "concept": "us-gaap:RevenuesNetOfInterestExpense",
+      "context_id": "c-1238",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:CorporateNonSegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/19617/000162828026054343/jpm-20260630.htm",
+        "name": "jpm-20260630.htm",
+        "sha256": "e5782d471398fbf067098b76fd258e3a816f974c9e3b5c56a34d9f434e254379",
+        "url": "https://www.sec.gov/Archives/edgar/data/19617/000162828026054343/jpm-20260630.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "eaaab10aeb7dbbb273691ab1aa069fc98f90519f3084220cb21e26b8a3dddc55",
+        "png_scale": 1,
+        "png_sha256": "6315419e08836988469c6c84f88dc4153d1a7f9426ccd5d95d30956d3c08333f",
+        "table": "0001628280-26-054343-e5782d471398-t266"
+      },
+      "fact_id": "f-7402",
+      "filing_date": "2026-08-06",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-06-30",
+        "start": "2026-04-01"
+      },
+      "raw": "6,046",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 6046000000
+    },
+    "op5": {
+      "accession": "0001628280-26-054343",
+      "concept": "us-gaap:RevenuesNetOfInterestExpense",
+      "context_id": "c-2037",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:MaterialReconcilingItemsMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/19617/000162828026054343/jpm-20260630.htm",
+        "name": "jpm-20260630.htm",
+        "sha256": "e5782d471398fbf067098b76fd258e3a816f974c9e3b5c56a34d9f434e254379",
+        "url": "https://www.sec.gov/Archives/edgar/data/19617/000162828026054343/jpm-20260630.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "eaaab10aeb7dbbb273691ab1aa069fc98f90519f3084220cb21e26b8a3dddc55",
+        "png_scale": 1,
+        "png_sha256": "6315419e08836988469c6c84f88dc4153d1a7f9426ccd5d95d30956d3c08333f",
+        "table": "0001628280-26-054343-e5782d471398-t266"
+      },
+      "fact_id": "f-7404",
+      "filing_date": "2026-08-06",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-06-30",
+        "start": "2026-04-01"
+      },
+      "raw": "675",
+      "role": "quarter",
+      "scale": "6",
+      "sign": "-",
+      "value": -675000000
+    },
+    "op6": {
+      "accession": "0001628280-26-054343",
+      "concept": "us-gaap:RevenuesNetOfInterestExpense",
+      "context_id": "c-13",
+      "decimals": "-6",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/19617/000162828026054343/jpm-20260630.htm",
+        "name": "jpm-20260630.htm",
+        "sha256": "e5782d471398fbf067098b76fd258e3a816f974c9e3b5c56a34d9f434e254379",
+        "url": "https://www.sec.gov/Archives/edgar/data/19617/000162828026054343/jpm-20260630.htm"
+      },
+      "duplicates": [
+        "f-109"
+      ],
+      "evidence": {
+        "html_sha256": "eaaab10aeb7dbbb273691ab1aa069fc98f90519f3084220cb21e26b8a3dddc55",
+        "png_scale": 1,
+        "png_sha256": "6315419e08836988469c6c84f88dc4153d1a7f9426ccd5d95d30956d3c08333f",
+        "table": "0001628280-26-054343-e5782d471398-t266"
+      },
+      "fact_id": "f-7406",
+      "filing_date": "2026-08-06",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-06-30",
+        "start": "2026-04-01"
+      },
+      "raw": "57,347",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 57347000000
+    }
+  },
+  "parser": {
+    "engine_sha256": "cef42e58f952c80715fda28bc15f98310ac69951641f5d0796f212ce1a6349f8",
+    "spec_sha256": "f89e6f641f0830c9144d37bdb362bf852d36bc10df1c36865306a35422e3bc8d"
+  },
+  "period_end": "2026-06-30",
+  "reconciling": {
+    "Reconciling items": {
+      "expression": [
+        {
+          "operand": "op5",
+          "weight": 1
+        }
+      ],
+      "value": -675000000
+    }
+  },
+  "schema_version": 1,
+  "series": "Q",
+  "ticker": "JPM",
+  "total": {
+    "expression": [
+      {
+        "operand": "op6",
+        "weight": 1
+      }
+    ],
+    "value": 57347000000
+  },
+  "unit": "USD",
+  "view": "business_segment"
+}

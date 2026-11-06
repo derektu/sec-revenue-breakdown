@@ -1,0 +1,572 @@
+{
+  "categories": {
+    "Asset & Wealth Management": {
+      "expression": [
+        {
+          "operand": "op5",
+          "weight": 1
+        },
+        {
+          "operand": "op6",
+          "weight": -1
+        }
+      ],
+      "value": 6516000000
+    },
+    "Commercial & Investment Bank": {
+      "expression": [
+        {
+          "operand": "op3",
+          "weight": 1
+        },
+        {
+          "operand": "op4",
+          "weight": -1
+        }
+      ],
+      "value": 19375000000
+    },
+    "Consumer & Community Banking": {
+      "expression": [
+        {
+          "operand": "op1",
+          "weight": 1
+        },
+        {
+          "operand": "op2",
+          "weight": -1
+        }
+      ],
+      "value": 19396000000
+    },
+    "Corporate": {
+      "expression": [
+        {
+          "operand": "op7",
+          "weight": 1
+        },
+        {
+          "operand": "op8",
+          "weight": -1
+        }
+      ],
+      "value": 1480000000
+    }
+  },
+  "checks": {
+    "structural": [
+      {
+        "check": "定義唯一",
+        "result": "pass"
+      },
+      {
+        "check": "fact 存在且唯一",
+        "result": "pass"
+      },
+      {
+        "check": "單位與精度",
+        "result": "pass"
+      },
+      {
+        "check": "Q4 期間",
+        "result": "pass"
+      },
+      {
+        "check": "加總",
+        "result": "pass"
+      },
+      {
+        "check": "證據完整",
+        "result": "pass"
+      }
+    ],
+    "sum": {
+      "categories": 45798000000,
+      "difference": 0,
+      "tolerance": "6000000",
+      "total": 45798000000
+    }
+  },
+  "filings": {
+    "nine_months": {
+      "accession": "0001628280-25-048859",
+      "filing_date": "2025-11-04",
+      "form": "10-Q",
+      "report_date": "2025-09-30"
+    },
+    "primary": {
+      "accession": "0001628280-26-008131",
+      "filing_date": "2026-02-13",
+      "form": "10-K",
+      "report_date": "2025-12-31"
+    }
+  },
+  "fiscal_quarter": 4,
+  "fiscal_year": 2025,
+  "operands": {
+    "op1": {
+      "accession": "0001628280-26-008131",
+      "concept": "us-gaap:RevenuesNetOfInterestExpense",
+      "context_id": "c-2154",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "jpm:ConsumerCommunityBankingMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/19617/000162828026008131/jpm-20251231.htm",
+        "name": "jpm-20251231.htm",
+        "sha256": "31c4ac9034ae9d8f7310b7bc2ed88be0dcf4912bfd4302a10f3873c535c72bbe",
+        "url": "https://www.sec.gov/Archives/edgar/data/19617/000162828026008131/jpm-20251231.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "cae75826e04d3692b3fc37c13efee90826da3cbee1de195dcaa106aa71b29663",
+        "png_scale": 1,
+        "png_sha256": "f4e89e5fcddd92b55b0a7ca384ef5c568d448ee2d22f01979c78bed5550cb08f",
+        "table": "0001628280-26-008131-31c4ac9034ae-t643"
+      },
+      "fact_id": "f-7998",
+      "filing_date": "2026-02-13",
+      "form": "10-K",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-12-31",
+        "start": "2025-01-01"
+      },
+      "raw": "76,029",
+      "role": "annual",
+      "scale": "6",
+      "sign": null,
+      "value": 76029000000
+    },
+    "op10": {
+      "accession": "0001628280-25-048859",
+      "concept": "us-gaap:RevenuesNetOfInterestExpense",
+      "context_id": "c-2118",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:MaterialReconcilingItemsMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/19617/000162828025048859/jpm-20250930.htm",
+        "name": "jpm-20250930.htm",
+        "sha256": "ae38be24dc28e19e509395602f64d9eaa39d5de3cdfa4122c87cb88fdc09e9fa",
+        "url": "https://www.sec.gov/Archives/edgar/data/19617/000162828025048859/jpm-20250930.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "0d46aa647a1ba2f817c594638d16b080cbf6ca06accb3f211d5bacb5edf54a9e",
+        "png_scale": 1,
+        "png_sha256": "71b734e5cd6ca9145c0a2f277a11e71261e29c0eea77cb3235464e3b8b3ee776",
+        "table": "0001628280-25-048859-ae38be24dc28-t272"
+      },
+      "fact_id": "f-7583",
+      "filing_date": "2025-11-04",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-09-30",
+        "start": "2025-01-01"
+      },
+      "raw": "2,165",
+      "role": "nine_months",
+      "scale": "6",
+      "sign": "-",
+      "value": -2165000000
+    },
+    "op11": {
+      "accession": "0001628280-26-008131",
+      "concept": "us-gaap:RevenuesNetOfInterestExpense",
+      "context_id": "c-1",
+      "decimals": "-6",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/19617/000162828026008131/jpm-20251231.htm",
+        "name": "jpm-20251231.htm",
+        "sha256": "31c4ac9034ae9d8f7310b7bc2ed88be0dcf4912bfd4302a10f3873c535c72bbe",
+        "url": "https://www.sec.gov/Archives/edgar/data/19617/000162828026008131/jpm-20251231.htm"
+      },
+      "duplicates": [
+        "f-188"
+      ],
+      "evidence": {
+        "html_sha256": "2fecc83beaebaceb8427baa2823bca946ba3638ee37f0a02b27ead7863da847f",
+        "png_scale": 1,
+        "png_sha256": "f457184f70308386eb1024a25f3eded4b34ebfa4977c20fccfd665e80a1de80f",
+        "table": "0001628280-26-008131-31c4ac9034ae-t645"
+      },
+      "fact_id": "f-8130",
+      "filing_date": "2026-02-13",
+      "form": "10-K",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-12-31",
+        "start": "2025-01-01"
+      },
+      "raw": "182,447",
+      "role": "annual",
+      "scale": "6",
+      "sign": null,
+      "value": 182447000000
+    },
+    "op12": {
+      "accession": "0001628280-25-048859",
+      "concept": "us-gaap:RevenuesNetOfInterestExpense",
+      "context_id": "c-1",
+      "decimals": "-6",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/19617/000162828025048859/jpm-20250930.htm",
+        "name": "jpm-20250930.htm",
+        "sha256": "ae38be24dc28e19e509395602f64d9eaa39d5de3cdfa4122c87cb88fdc09e9fa",
+        "url": "https://www.sec.gov/Archives/edgar/data/19617/000162828025048859/jpm-20250930.htm"
+      },
+      "duplicates": [
+        "f-111"
+      ],
+      "evidence": {
+        "html_sha256": "0d46aa647a1ba2f817c594638d16b080cbf6ca06accb3f211d5bacb5edf54a9e",
+        "png_scale": 1,
+        "png_sha256": "71b734e5cd6ca9145c0a2f277a11e71261e29c0eea77cb3235464e3b8b3ee776",
+        "table": "0001628280-25-048859-ae38be24dc28-t272"
+      },
+      "fact_id": "f-7585",
+      "filing_date": "2025-11-04",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-09-30",
+        "start": "2025-01-01"
+      },
+      "raw": "136,649",
+      "role": "nine_months",
+      "scale": "6",
+      "sign": null,
+      "value": 136649000000
+    },
+    "op2": {
+      "accession": "0001628280-25-048859",
+      "concept": "us-gaap:RevenuesNetOfInterestExpense",
+      "context_id": "c-2110",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "jpm:ConsumerCommunityBankingMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/19617/000162828025048859/jpm-20250930.htm",
+        "name": "jpm-20250930.htm",
+        "sha256": "ae38be24dc28e19e509395602f64d9eaa39d5de3cdfa4122c87cb88fdc09e9fa",
+        "url": "https://www.sec.gov/Archives/edgar/data/19617/000162828025048859/jpm-20250930.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "838705757129f8416b64eeb9abd8eba23a7f8fa30afb8b3a59c1e28c33ccc218",
+        "png_scale": 1,
+        "png_sha256": "94123e9a3c3a2d09e67d0df64d124aee21b2cfc049a1e1355e15d3a1a2ca1d16",
+        "table": "0001628280-25-048859-ae38be24dc28-t271"
+      },
+      "fact_id": "f-7497",
+      "filing_date": "2025-11-04",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-09-30",
+        "start": "2025-01-01"
+      },
+      "raw": "56,633",
+      "role": "nine_months",
+      "scale": "6",
+      "sign": null,
+      "value": 56633000000
+    },
+    "op3": {
+      "accession": "0001628280-26-008131",
+      "concept": "us-gaap:RevenuesNetOfInterestExpense",
+      "context_id": "c-2157",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "jpm:CommercialAndInvestmentBankMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/19617/000162828026008131/jpm-20251231.htm",
+        "name": "jpm-20251231.htm",
+        "sha256": "31c4ac9034ae9d8f7310b7bc2ed88be0dcf4912bfd4302a10f3873c535c72bbe",
+        "url": "https://www.sec.gov/Archives/edgar/data/19617/000162828026008131/jpm-20251231.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "cae75826e04d3692b3fc37c13efee90826da3cbee1de195dcaa106aa71b29663",
+        "png_scale": 1,
+        "png_sha256": "f4e89e5fcddd92b55b0a7ca384ef5c568d448ee2d22f01979c78bed5550cb08f",
+        "table": "0001628280-26-008131-31c4ac9034ae-t643"
+      },
+      "fact_id": "f-8001",
+      "filing_date": "2026-02-13",
+      "form": "10-K",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-12-31",
+        "start": "2025-01-01"
+      },
+      "raw": "78,454",
+      "role": "annual",
+      "scale": "6",
+      "sign": null,
+      "value": 78454000000
+    },
+    "op4": {
+      "accession": "0001628280-25-048859",
+      "concept": "us-gaap:RevenuesNetOfInterestExpense",
+      "context_id": "c-2112",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "jpm:CommercialAndInvestmentBankMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/19617/000162828025048859/jpm-20250930.htm",
+        "name": "jpm-20250930.htm",
+        "sha256": "ae38be24dc28e19e509395602f64d9eaa39d5de3cdfa4122c87cb88fdc09e9fa",
+        "url": "https://www.sec.gov/Archives/edgar/data/19617/000162828025048859/jpm-20250930.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "838705757129f8416b64eeb9abd8eba23a7f8fa30afb8b3a59c1e28c33ccc218",
+        "png_scale": 1,
+        "png_sha256": "94123e9a3c3a2d09e67d0df64d124aee21b2cfc049a1e1355e15d3a1a2ca1d16",
+        "table": "0001628280-25-048859-ae38be24dc28-t271"
+      },
+      "fact_id": "f-7499",
+      "filing_date": "2025-11-04",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-09-30",
+        "start": "2025-01-01"
+      },
+      "raw": "59,079",
+      "role": "nine_months",
+      "scale": "6",
+      "sign": null,
+      "value": 59079000000
+    },
+    "op5": {
+      "accession": "0001628280-26-008131",
+      "concept": "us-gaap:RevenuesNetOfInterestExpense",
+      "context_id": "c-2160",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "jpm:AssetandWealthManagementSegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/19617/000162828026008131/jpm-20251231.htm",
+        "name": "jpm-20251231.htm",
+        "sha256": "31c4ac9034ae9d8f7310b7bc2ed88be0dcf4912bfd4302a10f3873c535c72bbe",
+        "url": "https://www.sec.gov/Archives/edgar/data/19617/000162828026008131/jpm-20251231.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "cae75826e04d3692b3fc37c13efee90826da3cbee1de195dcaa106aa71b29663",
+        "png_scale": 1,
+        "png_sha256": "f4e89e5fcddd92b55b0a7ca384ef5c568d448ee2d22f01979c78bed5550cb08f",
+        "table": "0001628280-26-008131-31c4ac9034ae-t643"
+      },
+      "fact_id": "f-8004",
+      "filing_date": "2026-02-13",
+      "form": "10-K",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-12-31",
+        "start": "2025-01-01"
+      },
+      "raw": "24,073",
+      "role": "annual",
+      "scale": "6",
+      "sign": null,
+      "value": 24073000000
+    },
+    "op6": {
+      "accession": "0001628280-25-048859",
+      "concept": "us-gaap:RevenuesNetOfInterestExpense",
+      "context_id": "c-2114",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "jpm:AssetandWealthManagementSegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/19617/000162828025048859/jpm-20250930.htm",
+        "name": "jpm-20250930.htm",
+        "sha256": "ae38be24dc28e19e509395602f64d9eaa39d5de3cdfa4122c87cb88fdc09e9fa",
+        "url": "https://www.sec.gov/Archives/edgar/data/19617/000162828025048859/jpm-20250930.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "838705757129f8416b64eeb9abd8eba23a7f8fa30afb8b3a59c1e28c33ccc218",
+        "png_scale": 1,
+        "png_sha256": "94123e9a3c3a2d09e67d0df64d124aee21b2cfc049a1e1355e15d3a1a2ca1d16",
+        "table": "0001628280-25-048859-ae38be24dc28-t271"
+      },
+      "fact_id": "f-7501",
+      "filing_date": "2025-11-04",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-09-30",
+        "start": "2025-01-01"
+      },
+      "raw": "17,557",
+      "role": "nine_months",
+      "scale": "6",
+      "sign": null,
+      "value": 17557000000
+    },
+    "op7": {
+      "accession": "0001628280-26-008131",
+      "concept": "us-gaap:RevenuesNetOfInterestExpense",
+      "context_id": "c-2163",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:CorporateNonSegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/19617/000162828026008131/jpm-20251231.htm",
+        "name": "jpm-20251231.htm",
+        "sha256": "31c4ac9034ae9d8f7310b7bc2ed88be0dcf4912bfd4302a10f3873c535c72bbe",
+        "url": "https://www.sec.gov/Archives/edgar/data/19617/000162828026008131/jpm-20251231.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "2fecc83beaebaceb8427baa2823bca946ba3638ee37f0a02b27ead7863da847f",
+        "png_scale": 1,
+        "png_sha256": "f457184f70308386eb1024a25f3eded4b34ebfa4977c20fccfd665e80a1de80f",
+        "table": "0001628280-26-008131-31c4ac9034ae-t645"
+      },
+      "fact_id": "f-8124",
+      "filing_date": "2026-02-13",
+      "form": "10-K",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-12-31",
+        "start": "2025-01-01"
+      },
+      "raw": "7,025",
+      "role": "annual",
+      "scale": "6",
+      "sign": null,
+      "value": 7025000000
+    },
+    "op8": {
+      "accession": "0001628280-25-048859",
+      "concept": "us-gaap:RevenuesNetOfInterestExpense",
+      "context_id": "c-2116",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:CorporateNonSegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/19617/000162828025048859/jpm-20250930.htm",
+        "name": "jpm-20250930.htm",
+        "sha256": "ae38be24dc28e19e509395602f64d9eaa39d5de3cdfa4122c87cb88fdc09e9fa",
+        "url": "https://www.sec.gov/Archives/edgar/data/19617/000162828025048859/jpm-20250930.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "0d46aa647a1ba2f817c594638d16b080cbf6ca06accb3f211d5bacb5edf54a9e",
+        "png_scale": 1,
+        "png_sha256": "71b734e5cd6ca9145c0a2f277a11e71261e29c0eea77cb3235464e3b8b3ee776",
+        "table": "0001628280-25-048859-ae38be24dc28-t272"
+      },
+      "fact_id": "f-7581",
+      "filing_date": "2025-11-04",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-09-30",
+        "start": "2025-01-01"
+      },
+      "raw": "5,545",
+      "role": "nine_months",
+      "scale": "6",
+      "sign": null,
+      "value": 5545000000
+    },
+    "op9": {
+      "accession": "0001628280-26-008131",
+      "concept": "us-gaap:RevenuesNetOfInterestExpense",
+      "context_id": "c-2166",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:MaterialReconcilingItemsMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/19617/000162828026008131/jpm-20251231.htm",
+        "name": "jpm-20251231.htm",
+        "sha256": "31c4ac9034ae9d8f7310b7bc2ed88be0dcf4912bfd4302a10f3873c535c72bbe",
+        "url": "https://www.sec.gov/Archives/edgar/data/19617/000162828026008131/jpm-20251231.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "2fecc83beaebaceb8427baa2823bca946ba3638ee37f0a02b27ead7863da847f",
+        "png_scale": 1,
+        "png_sha256": "f457184f70308386eb1024a25f3eded4b34ebfa4977c20fccfd665e80a1de80f",
+        "table": "0001628280-26-008131-31c4ac9034ae-t645"
+      },
+      "fact_id": "f-8127",
+      "filing_date": "2026-02-13",
+      "form": "10-K",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-12-31",
+        "start": "2025-01-01"
+      },
+      "raw": "3,134",
+      "role": "annual",
+      "scale": "6",
+      "sign": "-",
+      "value": -3134000000
+    }
+  },
+  "parser": {
+    "engine_sha256": "cef42e58f952c80715fda28bc15f98310ac69951641f5d0796f212ce1a6349f8",
+    "spec_sha256": "f89e6f641f0830c9144d37bdb362bf852d36bc10df1c36865306a35422e3bc8d"
+  },
+  "period_end": "2025-12-31",
+  "reconciling": {
+    "Reconciling items": {
+      "expression": [
+        {
+          "operand": "op9",
+          "weight": 1
+        },
+        {
+          "operand": "op10",
+          "weight": -1
+        }
+      ],
+      "value": -969000000
+    }
+  },
+  "schema_version": 1,
+  "series": "Q",
+  "ticker": "JPM",
+  "total": {
+    "expression": [
+      {
+        "operand": "op11",
+        "weight": 1
+      },
+      {
+        "operand": "op12",
+        "weight": -1
+      }
+    ],
+    "value": 45798000000
+  },
+  "unit": "USD",
+  "view": "business_segment"
+}

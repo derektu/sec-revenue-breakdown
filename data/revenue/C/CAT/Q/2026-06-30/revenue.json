@@ -1,0 +1,378 @@
+{
+  "categories": {
+    "All Other": {
+      "expression": [
+        {
+          "operand": "op5",
+          "weight": 1
+        }
+      ],
+      "value": 84000000
+    },
+    "Construction Industries": {
+      "expression": [
+        {
+          "operand": "op1",
+          "weight": 1
+        }
+      ],
+      "value": 8346000000
+    },
+    "Corporate Items and Eliminations": {
+      "expression": [
+        {
+          "operand": "op6",
+          "weight": 1
+        }
+      ],
+      "value": -1918000000
+    },
+    "Financial Products": {
+      "expression": [
+        {
+          "operand": "op4",
+          "weight": 1
+        }
+      ],
+      "value": 1145000000
+    },
+    "Power & Energy": {
+      "expression": [
+        {
+          "operand": "op3",
+          "weight": 1
+        }
+      ],
+      "value": 8238000000
+    },
+    "Resource Industries": {
+      "expression": [
+        {
+          "operand": "op2",
+          "weight": 1
+        }
+      ],
+      "value": 4648000000
+    }
+  },
+  "checks": {
+    "structural": [
+      {
+        "check": "定義唯一",
+        "result": "pass"
+      },
+      {
+        "check": "fact 存在且唯一",
+        "result": "pass"
+      },
+      {
+        "check": "單位與精度",
+        "result": "pass"
+      },
+      {
+        "check": "加總",
+        "result": "pass"
+      },
+      {
+        "check": "證據完整",
+        "result": "pass"
+      }
+    ],
+    "sum": {
+      "categories": 20543000000,
+      "difference": 0,
+      "tolerance": "3500000",
+      "total": 20543000000
+    }
+  },
+  "filings": {
+    "primary": {
+      "accession": "0000018230-26-000046",
+      "filing_date": "2026-08-05",
+      "form": "10-Q",
+      "report_date": "2026-06-30"
+    }
+  },
+  "fiscal_quarter": 2,
+  "fiscal_year": 2026,
+  "operands": {
+    "op1": {
+      "accession": "0000018230-26-000046",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-249",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cat:ConstructionIndustriesMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/18230/000001823026000046/cat-20260630.htm",
+        "name": "cat-20260630.htm",
+        "sha256": "a27ac53385beccf83c272f78f916fa0f03b80f81cf8f29d410b2300c6879a9cc",
+        "url": "https://www.sec.gov/Archives/edgar/data/18230/000001823026000046/cat-20260630.htm"
+      },
+      "duplicates": [
+        "f-1500"
+      ],
+      "evidence": {
+        "html_sha256": "a5f1c2fcdc3d0b9200a17a949b5f896eeb92e6247f3f5e5d98c776d3b984a125",
+        "png_scale": 1,
+        "png_sha256": "a5a27a73f757f4cc7f80ee9037f538f1b26c27faf90b643236f3837bdf00a39b",
+        "table": "0000018230-26-000046-a27ac53385be-t56"
+      },
+      "fact_id": "f-1259",
+      "filing_date": "2026-08-05",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-06-30",
+        "start": "2026-04-01"
+      },
+      "raw": "8,346",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 8346000000
+    },
+    "op2": {
+      "accession": "0000018230-26-000046",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-256",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cat:ResourceIndustriesMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/18230/000001823026000046/cat-20260630.htm",
+        "name": "cat-20260630.htm",
+        "sha256": "a27ac53385beccf83c272f78f916fa0f03b80f81cf8f29d410b2300c6879a9cc",
+        "url": "https://www.sec.gov/Archives/edgar/data/18230/000001823026000046/cat-20260630.htm"
+      },
+      "duplicates": [
+        "f-1501"
+      ],
+      "evidence": {
+        "html_sha256": "a5f1c2fcdc3d0b9200a17a949b5f896eeb92e6247f3f5e5d98c776d3b984a125",
+        "png_scale": 1,
+        "png_sha256": "a5a27a73f757f4cc7f80ee9037f538f1b26c27faf90b643236f3837bdf00a39b",
+        "table": "0000018230-26-000046-a27ac53385be-t56"
+      },
+      "fact_id": "f-1266",
+      "filing_date": "2026-08-05",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-06-30",
+        "start": "2026-04-01"
+      },
+      "raw": "4,648",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 4648000000
+    },
+    "op3": {
+      "accession": "0000018230-26-000046",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-242",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cat:PowerEnergyMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/18230/000001823026000046/cat-20260630.htm",
+        "name": "cat-20260630.htm",
+        "sha256": "a27ac53385beccf83c272f78f916fa0f03b80f81cf8f29d410b2300c6879a9cc",
+        "url": "https://www.sec.gov/Archives/edgar/data/18230/000001823026000046/cat-20260630.htm"
+      },
+      "duplicates": [
+        "f-1499"
+      ],
+      "evidence": {
+        "html_sha256": "a5f1c2fcdc3d0b9200a17a949b5f896eeb92e6247f3f5e5d98c776d3b984a125",
+        "png_scale": 1,
+        "png_sha256": "a5a27a73f757f4cc7f80ee9037f538f1b26c27faf90b643236f3837bdf00a39b",
+        "table": "0000018230-26-000046-a27ac53385be-t56"
+      },
+      "fact_id": "f-1252",
+      "filing_date": "2026-08-05",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-06-30",
+        "start": "2026-04-01"
+      },
+      "raw": "8,238",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 8238000000
+    },
+    "op4": {
+      "accession": "0000018230-26-000046",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-263",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cat:FinancialProductsSegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/18230/000001823026000046/cat-20260630.htm",
+        "name": "cat-20260630.htm",
+        "sha256": "a27ac53385beccf83c272f78f916fa0f03b80f81cf8f29d410b2300c6879a9cc",
+        "url": "https://www.sec.gov/Archives/edgar/data/18230/000001823026000046/cat-20260630.htm"
+      },
+      "duplicates": [
+        "f-1502"
+      ],
+      "evidence": {
+        "html_sha256": "a5f1c2fcdc3d0b9200a17a949b5f896eeb92e6247f3f5e5d98c776d3b984a125",
+        "png_scale": 1,
+        "png_sha256": "a5a27a73f757f4cc7f80ee9037f538f1b26c27faf90b643236f3837bdf00a39b",
+        "table": "0000018230-26-000046-a27ac53385be-t56"
+      },
+      "fact_id": "f-1273",
+      "filing_date": "2026-08-05",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-06-30",
+        "start": "2026-04-01"
+      },
+      "raw": "1,145",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 1145000000
+    },
+    "op5": {
+      "accession": "0000018230-26-000046",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-277",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "us-gaap:AllOtherSegmentsMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/18230/000001823026000046/cat-20260630.htm",
+        "name": "cat-20260630.htm",
+        "sha256": "a27ac53385beccf83c272f78f916fa0f03b80f81cf8f29d410b2300c6879a9cc",
+        "url": "https://www.sec.gov/Archives/edgar/data/18230/000001823026000046/cat-20260630.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "a5f1c2fcdc3d0b9200a17a949b5f896eeb92e6247f3f5e5d98c776d3b984a125",
+        "png_scale": 1,
+        "png_sha256": "a5a27a73f757f4cc7f80ee9037f538f1b26c27faf90b643236f3837bdf00a39b",
+        "table": "0000018230-26-000046-a27ac53385be-t56"
+      },
+      "fact_id": "f-1287",
+      "filing_date": "2026-08-05",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-06-30",
+        "start": "2026-04-01"
+      },
+      "raw": "84",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 84000000
+    },
+    "op6": {
+      "accession": "0000018230-26-000046",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-284",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "cat:EliminationsAndReconcilingItemsMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/18230/000001823026000046/cat-20260630.htm",
+        "name": "cat-20260630.htm",
+        "sha256": "a27ac53385beccf83c272f78f916fa0f03b80f81cf8f29d410b2300c6879a9cc",
+        "url": "https://www.sec.gov/Archives/edgar/data/18230/000001823026000046/cat-20260630.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "a5f1c2fcdc3d0b9200a17a949b5f896eeb92e6247f3f5e5d98c776d3b984a125",
+        "png_scale": 1,
+        "png_sha256": "a5a27a73f757f4cc7f80ee9037f538f1b26c27faf90b643236f3837bdf00a39b",
+        "table": "0000018230-26-000046-a27ac53385be-t56"
+      },
+      "fact_id": "f-1294",
+      "filing_date": "2026-08-05",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-06-30",
+        "start": "2026-04-01"
+      },
+      "raw": "1,918",
+      "role": "quarter",
+      "scale": "6",
+      "sign": "-",
+      "value": -1918000000
+    },
+    "op7": {
+      "accession": "0000018230-26-000046",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-9",
+      "decimals": "-6",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/18230/000001823026000046/cat-20260630.htm",
+        "name": "cat-20260630.htm",
+        "sha256": "a27ac53385beccf83c272f78f916fa0f03b80f81cf8f29d410b2300c6879a9cc",
+        "url": "https://www.sec.gov/Archives/edgar/data/18230/000001823026000046/cat-20260630.htm"
+      },
+      "duplicates": [
+        "f-1300",
+        "f-38"
+      ],
+      "evidence": {
+        "html_sha256": "a5f1c2fcdc3d0b9200a17a949b5f896eeb92e6247f3f5e5d98c776d3b984a125",
+        "png_scale": 1,
+        "png_sha256": "a5a27a73f757f4cc7f80ee9037f538f1b26c27faf90b643236f3837bdf00a39b",
+        "table": "0000018230-26-000046-a27ac53385be-t56"
+      },
+      "fact_id": "f-1299",
+      "filing_date": "2026-08-05",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-06-30",
+        "start": "2026-04-01"
+      },
+      "raw": "20,543",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 20543000000
+    }
+  },
+  "parser": {
+    "engine_sha256": "cef42e58f952c80715fda28bc15f98310ac69951641f5d0796f212ce1a6349f8",
+    "spec_sha256": "222a0a8ef92c4eea4baa72af528c8ff358c44e59769019062ebdd4af479cdb4f"
+  },
+  "period_end": "2026-06-30",
+  "schema_version": 1,
+  "series": "Q",
+  "ticker": "CAT",
+  "total": {
+    "expression": [
+      {
+        "operand": "op7",
+        "weight": 1
+      }
+    ],
+    "value": 20543000000
+  },
+  "unit": "USD",
+  "view": "business_segment"
+}
