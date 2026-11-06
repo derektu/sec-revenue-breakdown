@@ -58,6 +58,15 @@ def is_inline_xbrl(raw: bytes) -> bool:
     return next(root.iter(f"{{{INLINE_XBRL_NAMESPACE}}}header"), None) is not None
 
 
+def package_filing(filing: dict) -> dict:
+    """申報包記錄的申報資訊：`form` 是 SEC 實際表單（修正申報為 10-K/A、10-Q/A）。
+
+    catalog 的 `form` 是表單類別（10-K、10-Q、8-K），供選期別與依賴期別使用；實際表單在 `original_form`。
+    parse 以申報包的 `form` 區分原申報與修正申報，所以申報包記錄實際表單。
+    """
+    return dict(filing, form=filing.get("original_form", filing["form"]))
+
+
 class FilingPackages:
     """下載並保存完整申報包；一份檔案失敗只記錄在 failures，其餘照常下載。
 
@@ -155,7 +164,7 @@ class FilingPackages:
             subdirectories = [item["name"] for item in items if item.get("type") == "dir"]
             types = FilingIndexPage.document_types(page)
         package = {
-            "filing": filing,
+            "filing": package_filing(filing),
             "filing_index_url": index_url,
             "index_receipts": index_receipts,
             "directory": directory,
