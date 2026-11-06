@@ -18,11 +18,11 @@
 | 分類 | concept |
 |---|---|
 | Franchised restaurants | `mcd:Revenuesfromfranchisedrestaurants` |
-| Company-owned and operated restaurants | `one_of`：`mcd:SalesbyCompanyoperatedrestaurants`、`mcd:SalesByCompanyOwnedAndOperatedRestaurants` |
+| Company-owned and operated restaurants | `mcd:SalesbyCompanyoperatedrestaurants` 或 `mcd:SalesByCompanyOwnedAndOperatedRestaurants`（兩種寫法都找） |
 | Other revenues | `mcd:OtherRevenues` |
 | 總營收（Total revenues） | `us-gaap:Revenues` |
 
-- 直營餐廳營收在申報之間來回使用兩個自訂 concept：10-K 與 Q1 10-Q 用 `mcd:SalesbyCompanyoperatedrestaurants`，Q2、Q3 10-Q 用 `mcd:SalesByCompanyOwnedAndOperatedRestaurants`。兩者是損益表同一列，所以以 `one_of` 列出。
+- 直營餐廳營收在申報之間來回使用兩個自訂 concept：10-K 與 Q1 10-Q 用 `mcd:SalesbyCompanyoperatedrestaurants`，Q2、Q3 10-Q 用 `mcd:SalesByCompanyOwnedAndOperatedRestaurants`。兩者是損益表同一列，所以兩種寫法都找；同一份申報兩種寫法都有時，數值必須在精度內一致。
 - 三類加總等於總營收，沒有調節項。各期差距在 1 百萬美元以內（各列分別四捨五入）。
 - 分類名稱取自損益表的列標籤，`Revenues from franchised restaurants` 與 `Sales by Company-owned and operated restaurants` 去掉前綴；總營收取自 `Total revenues`。
 
