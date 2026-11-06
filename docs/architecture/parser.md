@@ -43,7 +43,7 @@ parser 分三層。每家公司的 parser 各自獨立，新增或修改一家�
 框架只做三件事，與任何一家公司的揭露方式無關：
 
 1. **提供資料**：框架每次只把一份申報的 fact 清單交給公司 parser，請它組出一段期間的運算式。公司 parser 拿不到 HTML 原文，也拿不到其他申報。交給它哪一份申報由框架依時點選定（見框架流程的選申報），所以每個運算元都出自框架選定的一份申報：不會用到之後申報的數字，也不會用到 XBRL fact 以外的數字。寫 parser 的人在動手前看過的申報與對照資料，資料限制擋不住，由「時點與寫 parser 的人的知識」的規則與 review 處理。
-2. **檢核**：公司 parser 交回的是「每個分類用了哪幾個 fact、權重多少」，不交數字。框架依 accession 與 fact id 找到 fact，自己算出數值，再做結構檢核。公司 parser 沒辦法交出 fact 清單以外的數字。
+2. **檢核**：公司 parser 交回的是「每個分類用了哪幾個 fact、權重多少」，不交數字。框架核對這些 fact 都在該申報的 fact 清單中，依 fact 自己算出數值，再做結構檢核。公司 parser 沒辦法交出 fact 清單以外的數字。
 3. **寫入**：證據、正式輸出、`status.json`、已上線保護與差異標記。HTML 原文只有框架讀，用來找出 fact 所在的表格、截圖存證。
 
 新增一家公司永遠不需要改框架。開發一家公司時覺得非改框架不可，代表要改的是所有公司共用的規則：停下來回報，由人決定。
@@ -164,7 +164,7 @@ def categories(day):
 
 1. **選申報**：該期的主申報是 reportDate 等於該期、申報日最早的 10-Q 或 10-K。修正申報（10-K/A、10-Q/A）在原申報之後才公開，不取代主申報，只參與差異標記的比對。框架不讀 8-K。主文件必須是 inline XBRL，讀取時核對 sha256。主申報的申報日是這一期的時點：之後的步驟只看申報日不晚於它的申報。
 2. **讀 facts**：解析主申報的 inline XBRL，建立 fact 清單：concept、dimensions、期間、單位、decimals、sign、scale、format 與所在表格。數值依 format（`num-dot-decimal`、`fixed-zero`、`zerodash`）、scale 與 sign 算成整數美元；正負號只由 `sign` 屬性決定，顯示文字帶負號或括號、或數值不是有限數時，這個 fact 視為無法解析。證據核對使用同一套規則（`evidence.ix_number`）。
-   - 公司 parser 交回 fact id，框架補上 accession 識別運算元，不以 QName 比對 fact。
+   - 公司 parser 交回的是 fact 清單中的 fact，框架核對它屬於這份申報，不以 QName 比對 fact。
 3. **財年與季別**：主申報必須宣告 `DocumentFiscalYearFocus` 與 `DocumentFiscalPeriodFocus`（Q1、Q2、Q3、FY）；Q1–Q3 必須是 10-Q，FY 必須是 10-K。
 4. **期間分類**：依 context 天數（含首尾）判斷單季（84–98 天）、六個月（175–189 天）、九個月（266–280 天）、年度（357–378 天）。
 5. **分類集合**：公司 parser 對主申報與該期間交回的分類與調節項，必須與 `categories(期末日)` 相同。Q4 推算條件用的是 `categories`。
