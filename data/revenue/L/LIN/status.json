@@ -1,0 +1,334 @@
+{
+  "parser": {
+    "engine_sha256": "cef42e58f952c80715fda28bc15f98310ac69951641f5d0796f212ce1a6349f8",
+    "spec_sha256": "79d2d7576d7fd015af58802c6e96cfa9031d9bf52bd5383651d021149b303908"
+  },
+  "periods": {
+    "FY": {
+      "2024-12-31": {
+        "accession": "0001628280-25-007990",
+        "fiscal_year": 2024,
+        "status": "published"
+      },
+      "2025-12-31": {
+        "accession": "0001628280-26-011430",
+        "fiscal_year": 2025,
+        "status": "published"
+      }
+    },
+    "Q": {
+      "2024-03-31": {
+        "accession": "0001707925-24-000090",
+        "fiscal_quarter": 1,
+        "fiscal_year": 2024,
+        "status": "published"
+      },
+      "2024-06-30": {
+        "accession": "0001628280-24-034299",
+        "fiscal_quarter": 2,
+        "fiscal_year": 2024,
+        "status": "published"
+      },
+      "2024-09-30": {
+        "accession": "0001628280-24-044457",
+        "fiscal_quarter": 3,
+        "fiscal_year": 2024,
+        "status": "published"
+      },
+      "2024-12-31": {
+        "accession": "0001628280-25-007990",
+        "fiscal_quarter": 4,
+        "fiscal_year": 2024,
+        "status": "published"
+      },
+      "2025-03-31": {
+        "accession": "0001628280-25-021379",
+        "fiscal_quarter": 1,
+        "fiscal_year": 2025,
+        "status": "published"
+      },
+      "2025-06-30": {
+        "accession": "0001628280-25-037164",
+        "fiscal_quarter": 2,
+        "fiscal_year": 2025,
+        "status": "published"
+      },
+      "2025-09-30": {
+        "accession": "0001628280-25-047710",
+        "differences": [
+          {
+            "category": "Industrial Gases",
+            "listed_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "lin:AmericasSegmentMember"
+                },
+                "fact_id": "f-724",
+                "value": 3253000000,
+                "weight": 1
+              },
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "lin:EMEASegmentMember"
+                },
+                "fact_id": "f-725",
+                "value": 2178000000,
+                "weight": 1
+              },
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "lin:APACSegmentMember"
+                },
+                "fact_id": "f-726",
+                "value": 1741000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": 7172000000,
+            "period": {
+              "end": "2025-09-30",
+              "start": "2025-07-01"
+            },
+            "published_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "lin:AmericasSegmentMember"
+                },
+                "operand": "op1",
+                "value": 3846000000,
+                "weight": 1
+              },
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "lin:EMEASegmentMember"
+                },
+                "operand": "op2",
+                "value": 2178000000,
+                "weight": 1
+              },
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "lin:APACSegmentMember"
+                },
+                "operand": "op3",
+                "value": 1741000000,
+                "weight": 1
+              }
+            ],
+            "published_value": 7765000000,
+            "result": "different",
+            "role": "quarter",
+            "source": {
+              "accession": "0001628280-26-068079",
+              "filing_date": "2026-10-29",
+              "form": "10-Q"
+            }
+          },
+          {
+            "category": "Other",
+            "listed_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "us-gaap:CorporateAndOtherMember"
+                },
+                "fact_id": "f-728",
+                "value": 924000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": 924000000,
+            "period": {
+              "end": "2025-09-30",
+              "start": "2025-07-01"
+            },
+            "published_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "us-gaap:CorporateAndOtherMember"
+                },
+                "operand": "op5",
+                "value": 331000000,
+                "weight": 1
+              }
+            ],
+            "published_value": 331000000,
+            "result": "different",
+            "role": "quarter",
+            "source": {
+              "accession": "0001628280-26-068079",
+              "filing_date": "2026-10-29",
+              "form": "10-Q"
+            }
+          }
+        ],
+        "fiscal_quarter": 3,
+        "fiscal_year": 2025,
+        "status": "published"
+      },
+      "2025-12-31": {
+        "accession": "0001628280-26-011430",
+        "differences": [
+          {
+            "category": "Industrial Gases",
+            "listed_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "lin:AmericasSegmentMember"
+                },
+                "fact_id": "f-784",
+                "value": 9557000000,
+                "weight": 1
+              },
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "lin:EMEASegmentMember"
+                },
+                "fact_id": "f-785",
+                "value": 6371000000,
+                "weight": 1
+              },
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "lin:APACSegmentMember"
+                },
+                "fact_id": "f-786",
+                "value": 4935000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": 20863000000,
+            "period": {
+              "end": "2025-09-30",
+              "start": "2025-01-01"
+            },
+            "published_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "lin:AmericasSegmentMember"
+                },
+                "operand": "op2",
+                "value": 11324000000,
+                "weight": 1
+              },
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "lin:EMEASegmentMember"
+                },
+                "operand": "op4",
+                "value": 6371000000,
+                "weight": 1
+              },
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "lin:APACSegmentMember"
+                },
+                "operand": "op6",
+                "value": 4935000000,
+                "weight": 1
+              }
+            ],
+            "published_value": 22630000000,
+            "result": "different",
+            "role": "nine_months",
+            "source": {
+              "accession": "0001628280-26-068079",
+              "filing_date": "2026-10-29",
+              "form": "10-Q"
+            }
+          },
+          {
+            "category": "Other",
+            "listed_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "us-gaap:CorporateAndOtherMember"
+                },
+                "fact_id": "f-788",
+                "value": 2724000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": 2724000000,
+            "period": {
+              "end": "2025-09-30",
+              "start": "2025-01-01"
+            },
+            "published_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "us-gaap:CorporateAndOtherMember"
+                },
+                "operand": "op10",
+                "value": 957000000,
+                "weight": 1
+              }
+            ],
+            "published_value": 957000000,
+            "result": "different",
+            "role": "nine_months",
+            "source": {
+              "accession": "0001628280-26-068079",
+              "filing_date": "2026-10-29",
+              "form": "10-Q"
+            }
+          }
+        ],
+        "fiscal_quarter": 4,
+        "fiscal_year": 2025,
+        "status": "published"
+      },
+      "2026-03-31": {
+        "accession": "0001628280-26-029165",
+        "fiscal_quarter": 1,
+        "fiscal_year": 2026,
+        "status": "published"
+      },
+      "2026-06-30": {
+        "accession": "0001628280-26-051289",
+        "fiscal_quarter": 2,
+        "fiscal_year": 2026,
+        "status": "published"
+      },
+      "2026-09-30": {
+        "accession": "0001628280-26-068079",
+        "fiscal_quarter": 3,
+        "fiscal_year": 2026,
+        "status": "published"
+      }
+    }
+  },
+  "ticker": "LIN",
+  "view": "business_segment"
+}

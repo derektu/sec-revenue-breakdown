@@ -1,0 +1,722 @@
+{
+  "parser": {
+    "engine_sha256": "cef42e58f952c80715fda28bc15f98310ac69951641f5d0796f212ce1a6349f8",
+    "spec_sha256": "2932a5048e71dad570f89157e416b4f248045a12150ed06e9125ac132c1e0c1d"
+  },
+  "periods": {
+    "FY": {
+      "2024-12-31": {
+        "accession": "0001166691-25-000011",
+        "fiscal_year": 2024,
+        "status": "published"
+      },
+      "2025-12-31": {
+        "accession": "0001628280-26-004994",
+        "fiscal_year": 2025,
+        "status": "published"
+      }
+    },
+    "Q": {
+      "2024-03-31": {
+        "accession": "0001166691-24-000031",
+        "fiscal_quarter": 1,
+        "fiscal_year": 2024,
+        "status": "published"
+      },
+      "2024-06-30": {
+        "accession": "0001166691-24-000048",
+        "fiscal_quarter": 2,
+        "fiscal_year": 2024,
+        "status": "published"
+      },
+      "2024-09-30": {
+        "accession": "0001166691-24-000056",
+        "fiscal_quarter": 3,
+        "fiscal_year": 2024,
+        "status": "published"
+      },
+      "2024-12-31": {
+        "accession": "0001166691-25-000011",
+        "fiscal_quarter": 4,
+        "fiscal_year": 2024,
+        "status": "published"
+      },
+      "2025-03-31": {
+        "accession": "0001166691-25-000021",
+        "differences": [
+          {
+            "category": "Corporate and Other",
+            "listed_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:CorporateNonSegmentMember"
+                },
+                "fact_id": "f-415",
+                "value": 917000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": 917000000,
+            "period": {
+              "end": "2025-03-31",
+              "start": "2025-01-01"
+            },
+            "published_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:CorporateNonSegmentMember"
+                },
+                "operand": "op6",
+                "value": 752000000,
+                "weight": 1
+              }
+            ],
+            "published_value": 752000000,
+            "result": "different",
+            "role": "quarter",
+            "source": {
+              "accession": "0001628280-26-026805",
+              "filing_date": "2026-04-23",
+              "form": "10-Q"
+            }
+          },
+          {
+            "category": "Media",
+            "listed_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "cmcsa:MediaSegmentMember"
+                },
+                "fact_id": "f-410",
+                "value": 4527000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": 4527000000,
+            "period": {
+              "end": "2025-03-31",
+              "start": "2025-01-01"
+            },
+            "published_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "cmcsa:MediaSegmentMember"
+                },
+                "operand": "op3",
+                "value": 6440000000,
+                "weight": 1
+              }
+            ],
+            "published_value": 6440000000,
+            "result": "different",
+            "role": "quarter",
+            "source": {
+              "accession": "0001628280-26-026805",
+              "filing_date": "2026-04-23",
+              "form": "10-Q"
+            }
+          },
+          {
+            "category": "Residential Connectivity & Platforms",
+            "listed_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "cmcsa:ResidentialConnectivityAndPlatformsSegmentMember"
+                },
+                "fact_id": "f-408",
+                "value": 17665000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": 17665000000,
+            "period": {
+              "end": "2025-03-31",
+              "start": "2025-01-01"
+            },
+            "published_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "cmcsa:ResidentialConnectivityAndPlatformsSegmentMember"
+                },
+                "operand": "op1",
+                "value": 17642000000,
+                "weight": 1
+              }
+            ],
+            "published_value": 17642000000,
+            "result": "different",
+            "role": "quarter",
+            "source": {
+              "accession": "0001628280-26-026805",
+              "filing_date": "2026-04-23",
+              "form": "10-Q"
+            }
+          },
+          {
+            "category": "Eliminations",
+            "listed_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "srt:ConsolidationEliminationsMember"
+                },
+                "fact_id": "f-416",
+                "value": -2189000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": -2189000000,
+            "period": {
+              "end": "2025-03-31",
+              "start": "2025-01-01"
+            },
+            "published_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "srt:ConsolidationEliminationsMember"
+                },
+                "operand": "op7",
+                "value": -2146000000,
+                "weight": 1
+              }
+            ],
+            "published_value": -2146000000,
+            "result": "different",
+            "role": "quarter",
+            "source": {
+              "accession": "0001628280-26-026805",
+              "filing_date": "2026-04-23",
+              "form": "10-Q"
+            }
+          }
+        ],
+        "fiscal_quarter": 1,
+        "fiscal_year": 2025,
+        "status": "published"
+      },
+      "2025-06-30": {
+        "accession": "0001166691-25-000036",
+        "differences": [
+          {
+            "category": "Corporate and Other",
+            "listed_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:CorporateNonSegmentMember"
+                },
+                "fact_id": "f-543",
+                "value": 885000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": 885000000,
+            "period": {
+              "end": "2025-06-30",
+              "start": "2025-04-01"
+            },
+            "published_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:CorporateNonSegmentMember"
+                },
+                "operand": "op6",
+                "value": 717000000,
+                "weight": 1
+              }
+            ],
+            "published_value": 717000000,
+            "result": "different",
+            "role": "quarter",
+            "source": {
+              "accession": "0001628280-26-049360",
+              "filing_date": "2026-07-23",
+              "form": "10-Q"
+            }
+          },
+          {
+            "category": "Media",
+            "listed_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "cmcsa:MediaSegmentMember"
+                },
+                "fact_id": "f-538",
+                "value": 4543000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": 4543000000,
+            "period": {
+              "end": "2025-06-30",
+              "start": "2025-04-01"
+            },
+            "published_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "cmcsa:MediaSegmentMember"
+                },
+                "operand": "op3",
+                "value": 6440000000,
+                "weight": 1
+              }
+            ],
+            "published_value": 6440000000,
+            "result": "different",
+            "role": "quarter",
+            "source": {
+              "accession": "0001628280-26-049360",
+              "filing_date": "2026-07-23",
+              "form": "10-Q"
+            }
+          },
+          {
+            "category": "Residential Connectivity & Platforms",
+            "listed_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "cmcsa:ResidentialConnectivityAndPlatformsSegmentMember"
+                },
+                "fact_id": "f-536",
+                "value": 17839000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": 17839000000,
+            "period": {
+              "end": "2025-06-30",
+              "start": "2025-04-01"
+            },
+            "published_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "cmcsa:ResidentialConnectivityAndPlatformsSegmentMember"
+                },
+                "operand": "op1",
+                "value": 17814000000,
+                "weight": 1
+              }
+            ],
+            "published_value": 17814000000,
+            "result": "different",
+            "role": "quarter",
+            "source": {
+              "accession": "0001628280-26-049360",
+              "filing_date": "2026-07-23",
+              "form": "10-Q"
+            }
+          },
+          {
+            "category": "Eliminations",
+            "listed_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "srt:ConsolidationEliminationsMember"
+                },
+                "fact_id": "f-544",
+                "value": -2081000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": -2081000000,
+            "period": {
+              "end": "2025-06-30",
+              "start": "2025-04-01"
+            },
+            "published_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "srt:ConsolidationEliminationsMember"
+                },
+                "operand": "op7",
+                "value": -2015000000,
+                "weight": 1
+              }
+            ],
+            "published_value": -2015000000,
+            "result": "different",
+            "role": "quarter",
+            "source": {
+              "accession": "0001628280-26-049360",
+              "filing_date": "2026-07-23",
+              "form": "10-Q"
+            }
+          }
+        ],
+        "fiscal_quarter": 2,
+        "fiscal_year": 2025,
+        "status": "published"
+      },
+      "2025-09-30": {
+        "accession": "0001166691-25-000054",
+        "differences": [
+          {
+            "category": "Corporate and Other",
+            "listed_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:CorporateNonSegmentMember"
+                },
+                "fact_id": "f-540",
+                "value": 898000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": 898000000,
+            "period": {
+              "end": "2025-09-30",
+              "start": "2025-07-01"
+            },
+            "published_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:CorporateNonSegmentMember"
+                },
+                "operand": "op6",
+                "value": 752000000,
+                "weight": 1
+              }
+            ],
+            "published_value": 752000000,
+            "result": "different",
+            "role": "quarter",
+            "source": {
+              "accession": "0001628280-26-066863",
+              "filing_date": "2026-10-22",
+              "form": "10-Q"
+            }
+          },
+          {
+            "category": "Media",
+            "listed_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "cmcsa:MediaSegmentMember"
+                },
+                "fact_id": "f-535",
+                "value": 4744000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": 4744000000,
+            "period": {
+              "end": "2025-09-30",
+              "start": "2025-07-01"
+            },
+            "published_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "cmcsa:MediaSegmentMember"
+                },
+                "operand": "op3",
+                "value": 6589000000,
+                "weight": 1
+              }
+            ],
+            "published_value": 6589000000,
+            "result": "different",
+            "role": "quarter",
+            "source": {
+              "accession": "0001628280-26-066863",
+              "filing_date": "2026-10-22",
+              "form": "10-Q"
+            }
+          },
+          {
+            "category": "Residential Connectivity & Platforms",
+            "listed_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "cmcsa:ResidentialConnectivityAndPlatformsSegmentMember"
+                },
+                "fact_id": "f-533",
+                "value": 17636000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": 17636000000,
+            "period": {
+              "end": "2025-09-30",
+              "start": "2025-07-01"
+            },
+            "published_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "cmcsa:ResidentialConnectivityAndPlatformsSegmentMember"
+                },
+                "operand": "op1",
+                "value": 17601000000,
+                "weight": 1
+              }
+            ],
+            "published_value": 17601000000,
+            "result": "different",
+            "role": "quarter",
+            "source": {
+              "accession": "0001628280-26-066863",
+              "filing_date": "2026-10-22",
+              "form": "10-Q"
+            }
+          },
+          {
+            "category": "Eliminations",
+            "listed_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "srt:ConsolidationEliminationsMember"
+                },
+                "fact_id": "f-541",
+                "value": -2104000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": -2104000000,
+            "period": {
+              "end": "2025-09-30",
+              "start": "2025-07-01"
+            },
+            "published_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "srt:ConsolidationEliminationsMember"
+                },
+                "operand": "op7",
+                "value": -2036000000,
+                "weight": 1
+              }
+            ],
+            "published_value": -2036000000,
+            "result": "different",
+            "role": "quarter",
+            "source": {
+              "accession": "0001628280-26-066863",
+              "filing_date": "2026-10-22",
+              "form": "10-Q"
+            }
+          }
+        ],
+        "fiscal_quarter": 3,
+        "fiscal_year": 2025,
+        "status": "published"
+      },
+      "2025-12-31": {
+        "accession": "0001628280-26-004994",
+        "differences": [
+          {
+            "category": "Corporate and Other",
+            "listed_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:CorporateNonSegmentMember"
+                },
+                "fact_id": "f-632",
+                "value": 2700000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": 2700000000,
+            "period": {
+              "end": "2025-09-30",
+              "start": "2025-01-01"
+            },
+            "published_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:CorporateNonSegmentMember"
+                },
+                "operand": "op12",
+                "value": 2221000000,
+                "weight": 1
+              }
+            ],
+            "published_value": 2221000000,
+            "result": "different",
+            "role": "nine_months",
+            "source": {
+              "accession": "0001628280-26-066863",
+              "filing_date": "2026-10-22",
+              "form": "10-Q"
+            }
+          },
+          {
+            "category": "Media",
+            "listed_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "cmcsa:MediaSegmentMember"
+                },
+                "fact_id": "f-627",
+                "value": 13813000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": 13813000000,
+            "period": {
+              "end": "2025-09-30",
+              "start": "2025-01-01"
+            },
+            "published_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "cmcsa:MediaSegmentMember"
+                },
+                "operand": "op6",
+                "value": 19470000000,
+                "weight": 1
+              }
+            ],
+            "published_value": 19470000000,
+            "result": "different",
+            "role": "nine_months",
+            "source": {
+              "accession": "0001628280-26-066863",
+              "filing_date": "2026-10-22",
+              "form": "10-Q"
+            }
+          },
+          {
+            "category": "Residential Connectivity & Platforms",
+            "listed_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "cmcsa:ResidentialConnectivityAndPlatformsSegmentMember"
+                },
+                "fact_id": "f-625",
+                "value": 53140000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": 53140000000,
+            "period": {
+              "end": "2025-09-30",
+              "start": "2025-01-01"
+            },
+            "published_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "cmcsa:ResidentialConnectivityAndPlatformsSegmentMember"
+                },
+                "operand": "op2",
+                "value": 53057000000,
+                "weight": 1
+              }
+            ],
+            "published_value": 53057000000,
+            "result": "different",
+            "role": "nine_months",
+            "source": {
+              "accession": "0001628280-26-066863",
+              "filing_date": "2026-10-22",
+              "form": "10-Q"
+            }
+          },
+          {
+            "category": "Eliminations",
+            "listed_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "srt:ConsolidationEliminationsMember"
+                },
+                "fact_id": "f-633",
+                "value": -6374000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": -6374000000,
+            "period": {
+              "end": "2025-09-30",
+              "start": "2025-01-01"
+            },
+            "published_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "srt:ConsolidationEliminationsMember"
+                },
+                "operand": "op14",
+                "value": -6198000000,
+                "weight": 1
+              }
+            ],
+            "published_value": -6198000000,
+            "result": "different",
+            "role": "nine_months",
+            "source": {
+              "accession": "0001628280-26-066863",
+              "filing_date": "2026-10-22",
+              "form": "10-Q"
+            }
+          }
+        ],
+        "fiscal_quarter": 4,
+        "fiscal_year": 2025,
+        "status": "published"
+      },
+      "2026-03-31": {
+        "accession": "0001628280-26-026805",
+        "fiscal_quarter": 1,
+        "fiscal_year": 2026,
+        "status": "published"
+      },
+      "2026-06-30": {
+        "accession": "0001628280-26-049360",
+        "fiscal_quarter": 2,
+        "fiscal_year": 2026,
+        "status": "published"
+      },
+      "2026-09-30": {
+        "accession": "0001628280-26-066863",
+        "fiscal_quarter": 3,
+        "fiscal_year": 2026,
+        "status": "published"
+      }
+    }
+  },
+  "ticker": "CMCSA",
+  "view": "business_segment"
+}
