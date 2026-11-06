@@ -14,20 +14,13 @@ from urllib.error import HTTPError
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "libs"))
-from sec_revenue.download import (  # noqa: E402
-    DownloadBatch,
-    DownloadWorkflow,
-    FilingIndexPage,
-    FilingPackages,
-    SecHttpClient,
-    SecIdentityError,
-    earnings_releases,
-    is_blocking,
-    is_inline_xbrl,
-)
+from sec_revenue.download.http import SecHttpClient, SecIdentityError, is_blocking  # noqa: E402
+from sec_revenue.download.packages import FilingIndexPage, FilingPackages, is_inline_xbrl  # noqa: E402
+from sec_revenue.download.plan import earnings_releases  # noqa: E402
+from sec_revenue.download.workflow import DownloadBatch, DownloadWorkflow  # noqa: E402
 from sec_revenue.common.jsonio import JsonCodec  # noqa: E402
 from sec_revenue.common.periods import PeriodSelection  # noqa: E402
-from sec_revenue.tickers import DownloadTickers  # noqa: E402
+from sec_revenue.download.tickers import DownloadTickers  # noqa: E402
 
 ARCHIVES = "https://www.sec.gov/Archives/edgar/data"
 INLINE = (
@@ -392,6 +385,12 @@ class TickerSelectionTests(SecFixture):
         with self.assertRaises(ValueError):
             selection.select(["../AAPL"])
 
+    def test_empty_ticker_file_is_rejected(self):
+        path = Path(self.temp.name) / "empty.txt"
+        path.write_text("# no tickers\n")
+        with self.assertRaisesRegex(ValueError, "ticker 清單檔為空"):
+            DownloadTickers(self.csv).select(file=path)
+
 
 class ReviewFixTests(SecFixture):
     """中斷、離線、修訂版、CIK 變更、8-K item、命名規則與 inline XBRL 判定。"""
@@ -590,8 +589,8 @@ class RateLimitTests(unittest.TestCase):
         def sleep(seconds):
             clock["now"] += seconds
 
-        with patch("sec_revenue.download.time.monotonic", side_effect=lambda: clock["now"]), patch(
-            "sec_revenue.download.time.sleep", side_effect=sleep
+        with patch("sec_revenue.download.http.time.monotonic", side_effect=lambda: clock["now"]), patch(
+            "sec_revenue.download.http.time.sleep", side_effect=sleep
         ), patch.object(client.opener, "open", side_effect=open_request):
             for i in range(5):
                 client.get(f"{ARCHIVES}/1/2/f{i}.xml", "file")
@@ -600,6 +599,163 @@ class RateLimitTests(unittest.TestCase):
         for gap in gaps:
             self.assertGreaterEqual(gap, 0.125 - 1e-9)
         self.assertLessEqual(len(started) / (started[-1] - started[0] + 0.125), 8 + 1e-9)
+
+
+class HistoryAndDependencyTests(SecFixture):
+    """歷史分頁、Q4 依賴期別與離線沿用。"""
+
+    CIK = "999003"
+
+    def setUp(self):
+        super().setUp()
+        self.company_tickers({"ZZZH": self.CIK})
+
+    def submissions_with_history(self, recent, older):
+        """recent 分頁只含 `recent`，較舊的申報放在一個歷史分頁。"""
+        keys = ["accessionNumber", "reportDate", "filingDate", "form", "primaryDocument", "items"]
+        page = f"CIK{int(self.CIK):010d}-submissions-001.json"
+        columns = {key: [f[key] for f in recent] for key in keys}
+        url = f"https://data.sec.gov/submissions/CIK{int(self.CIK):010d}.json"
+        self.http.responses[url] = json.dumps({"filings": {"recent": columns, "files": [{"name": page}]}}).encode()
+        self.http.responses["https://data.sec.gov/submissions/" + page] = json.dumps(
+            {key: [f[key] for f in older] for key in keys}
+        ).encode()
+        return "https://data.sec.gov/submissions/" + page
+
+    def fiscal_year(self):
+        prior = self.filing(self.CIK, "2026-12-31", "10-K", 1, filed="2027-02-20")
+        quarters = [
+            self.filing(self.CIK, period, "10-Q", n, filed=filed)
+            for n, (period, filed) in enumerate(
+                [("2027-03-31", "2027-05-01"), ("2027-06-30", "2027-08-01"), ("2027-09-30", "2027-11-01")], start=2
+            )
+        ]
+        annual = self.filing(self.CIK, "2027-12-31", "10-K", 5, filed="2028-02-20")
+        for filing in [prior, *quarters, annual]:
+            self.package(self.CIK, filing)
+        return prior, quarters, annual
+
+    def test_history_pages_are_loaded_for_older_range(self):
+        recent = self.filing(self.CIK, "2027-03-31", sequence=2)
+        old = self.filing(self.CIK, "2024-03-31", sequence=1)
+        page = self.submissions_with_history([recent], [old])
+        self.package(self.CIK, old)
+        result = self.workflow().run(["ZZZH"], PeriodSelection("2024-01-01", "2024-06-30"))
+        self.assertEqual(result["companies"][0]["target_periods"], ["2024-03-31"])
+        self.assertIn(page, self.http.requests)
+
+    def test_refresh_keeps_downloaded_history_for_offline_use(self):
+        recent = self.filing(self.CIK, "2027-03-31", sequence=2)
+        old = self.filing(self.CIK, "2024-03-31", sequence=1)
+        self.submissions_with_history([recent], [old])
+        self.package(self.CIK, old)
+        self.package(self.CIK, recent)
+        self.workflow().run(["ZZZH"], PeriodSelection("2024-01-01", "2024-06-30"))
+        self.workflow().run(["ZZZH"], PeriodSelection(latest=True))
+        before = len(self.http.requests)
+        cached = self.workflow().run(["ZZZH"], PeriodSelection("2024-01-01", "2024-06-30"), offline=True)
+        self.assertEqual(cached["companies"][0]["target_periods"], ["2024-03-31"])
+        self.assertEqual(len(self.http.requests), before)
+
+    def test_offline_and_force_conflict(self):
+        with self.assertRaisesRegex(ValueError, "--force"):
+            self.workflow().run(["ZZZH"], PeriodSelection(), force=True, offline=True)
+        with self.assertRaisesRegex(ValueError, "--force"):
+            DownloadBatch(self.workflow()).run(["ZZZH"], PeriodSelection(), force=True, offline=True)
+        self.assertEqual(self.http.requests, [])
+
+    def test_annual_target_downloads_same_year_quarters_and_prior_10k(self):
+        prior, quarters, annual = self.fiscal_year()
+        self.submissions(self.CIK, [prior, *quarters, annual])
+        company = self.workflow().run(["ZZZH"], PeriodSelection("2027-12-01", "2027-12-31"))["companies"][0]
+        self.assertEqual(company["target_periods"], ["2027-12-31"])
+        self.assertEqual(company["dependency_periods"], ["2026-12-31", "2027-03-31", "2027-06-30", "2027-09-30"])
+        packaged = set(JsonCodec.read(self.data / "pipeline/ZZZH/packages.json")["packages"])
+        self.assertEqual(packaged, {f["accessionNumber"] for f in [prior, *quarters, annual]})
+
+    def test_prior_10k_outside_recent_page_reloads_full_history(self):
+        prior, quarters, annual = self.fiscal_year()
+        page = self.submissions_with_history([*quarters, annual], [prior])
+        company = self.workflow().run(["ZZZH"], PeriodSelection("2027-12-01", "2027-12-31"))["companies"][0]
+        self.assertIn(page, self.http.requests)
+        self.assertNotIn("dependencies_unresolved", company)
+        self.assertIn("2026-12-31", company["dependency_periods"])
+        self.assertIn(prior["accessionNumber"], JsonCodec.read(self.data / "pipeline/ZZZH/packages.json")["packages"])
+
+    def test_unresolved_dependency_fails_the_company(self):
+        _, quarters, annual = self.fiscal_year()
+        self.submissions(self.CIK, [*quarters, annual])
+        report = DownloadBatch(self.workflow()).run(["ZZZH"], PeriodSelection("2027-12-01", "2027-12-31"))
+        self.assertEqual(report["succeeded"], [])
+        self.assertIn("Q4 依賴期別無法確定", report["failed"][0]["error"])
+        self.assertFalse(report["complete"])
+
+
+class DryRunTests(SecFixture):
+    """`--dry-run`：只讀本機 catalog 與 packages.json。"""
+
+    CIK = "999004"
+
+    def setUp(self):
+        super().setUp()
+        self.company_tickers({"ZZZD": self.CIK})
+        self.prior = self.filing(self.CIK, "2026-12-31", "10-K", 1, filed="2027-02-20")
+        self.q3 = self.filing(self.CIK, "2027-09-30", "10-Q", 2, filed="2027-11-01")
+        self.annual = self.filing(self.CIK, "2027-12-31", "10-K", 3, filed="2028-02-20")
+        self.submissions(self.CIK, [self.prior, self.q3, self.annual])
+        for filing in (self.prior, self.q3, self.annual):
+            self.package(self.CIK, filing)
+
+    def snapshot(self):
+        return {p: p.read_bytes() for p in sorted(self.data.rglob("*")) if p.is_file()}
+
+    def dry_run(self, selection):
+        offline_http = FakeHttp()
+        workflow = DownloadWorkflow(ROOT, self.data, offline_http, tickers_csv=self.csv)
+        before = self.snapshot()
+        report = workflow.run(["ZZZD"], selection, dry_run=True)
+        self.assertEqual(offline_http.requests, [])
+        self.assertEqual(self.snapshot(), before)
+        return report
+
+    def test_lists_missing_dependency_without_network_or_writes(self):
+        self.workflow().run(["ZZZD"], PeriodSelection("2027-12-01", "2027-12-31"))
+        packages_path = self.data / "pipeline/ZZZD/packages.json"
+        saved = JsonCodec.read(packages_path)
+        del saved["packages"][self.q3["accessionNumber"]]
+        JsonCodec.write(packages_path, saved)
+        report = self.dry_run(PeriodSelection("2027-12-01", "2027-12-31"))
+        company = report["companies"][0]
+        self.assertEqual(company["missing_targets"], [])
+        self.assertEqual(
+            [(m["accession"], m["state"]) for m in company["missing_dependencies"]],
+            [(self.q3["accessionNumber"], "not_downloaded")],
+        )
+        self.assertFalse(report["complete"])
+
+    def test_complete_when_everything_is_downloaded(self):
+        self.workflow().run(["ZZZD"], PeriodSelection("2027-12-01", "2027-12-31"))
+        report = self.dry_run(PeriodSelection("2027-12-01", "2027-12-31"))
+        self.assertTrue(report["complete"])
+        self.assertNotIn("catalog_incomplete", report["companies"][0])
+
+    def test_catalog_not_covering_range_is_catalog_incomplete(self):
+        recent = self.filing(self.CIK, "2027-03-31", sequence=5)
+        url = f"https://data.sec.gov/submissions/CIK{int(self.CIK):010d}.json"
+        columns = {k: [recent[k]] for k in ["accessionNumber", "reportDate", "filingDate", "form", "primaryDocument", "items"]}
+        page = f"CIK{int(self.CIK):010d}-submissions-001.json"
+        self.http.responses[url] = json.dumps({"filings": {"recent": columns, "files": [{"name": page}]}}).encode()
+        self.package(self.CIK, recent)
+        self.workflow().run(["ZZZD"], PeriodSelection())
+        report = self.dry_run(PeriodSelection("2025-01-01"))
+        company = report["companies"][0]
+        self.assertIn("2025-01-01", company["catalog_incomplete"][0])
+        self.assertFalse(report["complete"])
+
+    def test_missing_catalog_is_an_error(self):
+        report = self.dry_run(PeriodSelection())
+        self.assertIn("沒有本機 catalog", report["companies"][0]["error"])
+        self.assertFalse(report["complete"])
 
 
 if __name__ == "__main__":

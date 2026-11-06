@@ -12,11 +12,11 @@ from pathlib import Path
 import re
 from urllib.parse import parse_qs, urlsplit
 
-from .common.jsonio import JsonCodec
+from ..common.jsonio import JsonCodec
 from .published import PublishedRevenue
 
 REVENUE_EVIDENCE_RE = re.compile(r"/revenue-evidence/([A-Z0-9\-]{1,10})/(Q|FY)/(\d{4}-\d{2}-\d{2})/([^/]+)")
-DEFAULT_REVENUE_ROOT = Path(__file__).resolve().parents[2] / "data" / "revenue"
+DEFAULT_REVENUE_ROOT = Path(__file__).resolve().parents[3] / "data" / "revenue"
 # 證據 HTML 由 SEC 原文抽出，以 sandbox 隔離，不執行 script、不載入任何資源。
 EVIDENCE_HTML_CSP = "default-src 'none'; style-src 'unsafe-inline'; sandbox"
 # 頁面只載入自身的 inline script、樣式與同源圖片，不連外。

@@ -75,6 +75,27 @@ class TableHtmlTest(unittest.TestCase):
         self.assertEqual(locator.locate("missing"), ("fact_not_found", None))
 
 
+class FactVerifyTest(unittest.TestCase):
+    """`TableLocator.verify`：原文節點的 name、contextref、scale、顯示文字與數值都要與運算元相同。"""
+
+    LEAF = {"fact_id": "f-2", "concept": CONCEPT, "context_id": "c-f-2", "scale": "6", "raw": "24,982", "value": 24982000000}
+
+    def test_matching_fact_passes(self):
+        self.assertIsNone(TableLocator(TEN_Q).verify(self.LEAF))
+
+    def test_fact_attributes_must_match_operand(self):
+        cases = {
+            "contextref": dict(self.LEAF, context_id="c-other"),
+            "顯示文字": dict(self.LEAF, raw="24,983"),
+            "數值": dict(self.LEAF, value=24983000000),
+            "name": dict(self.LEAF, concept="us-gaap:Revenues"),
+            "scale": dict(self.LEAF, scale="3"),
+        }
+        for name, leaf in cases.items():
+            with self.subTest(name):
+                self.assertIn(f"{name} 不符", TableLocator(TEN_Q).verify(leaf))
+
+
 def chromium_available() -> bool:
     try:
         with TableScreenshotter():

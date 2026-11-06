@@ -5,7 +5,7 @@ import tempfile
 import unittest
 from unittest import mock
 
-SCRIPT = Path(__file__).resolve().parents[1] / "scripts" / "sec_pipeline.py"
+SCRIPT = Path(__file__).resolve().parents[2] / "scripts" / "sec_pipeline.py"
 spec = importlib.util.spec_from_file_location("sec_pipeline_cli", SCRIPT)
 cli = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(cli)

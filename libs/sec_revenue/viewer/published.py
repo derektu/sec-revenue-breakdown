@@ -14,8 +14,8 @@ import json
 from pathlib import Path
 import re
 
-from .revenue.evidence import FILE_NAME_RE
-from .universe import TICKER_RE, UniverseError, load_tickers
+from ..revenue.evidence import FILE_NAME_RE
+from ..universe import TICKER_RE, UniverseError, load_tickers
 
 SERIES = ("Q", "FY")
 DATE_RE = re.compile(r"\d{4}-\d{2}-\d{2}")

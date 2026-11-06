@@ -1640,7 +1640,7 @@ class PublishedProtectionTest(Fixture):
         self.assertNotIn("stale_fields", entry)
 
     def test_metadata_only_change_is_recorded_as_stale_fields(self):
-        published = self.publish_q1()
+        self.publish_q1()
         path = ticker_dir(self.out, "TEST") / "Q" / "2025-03-31" / "revenue.json"
         output = JsonCodec.read(path)
         output["checks"]["structural"].append({"check": "舊版檢核", "result": "pass"})

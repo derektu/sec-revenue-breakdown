@@ -41,6 +41,22 @@
 
 格式規格見 [ticker 清單與對照資料格式](docs/architecture/universe.md)。
 
+## 程式結構
+
+| 路徑 | 內容 |
+|---|---|
+| `scripts/` | CLI 入口：`sec_pipeline.py`（tickers、download、parse、viewer）、`capture_references.py`、`validate_universe.py` |
+| `libs/sec_revenue/common/` | 跨子套件共用、不依賴其他子套件的小工具：JSON 讀寫、`.env`、期間範圍 |
+| `libs/sec_revenue/download/` | SEC 下載：HTTP、快取、CIK 與申報清單、要下載的申報、申報包、download 的 ticker 選擇 |
+| `libs/sec_revenue/revenue/` | parser 引擎：規格結構、讀 inline XBRL、組數值、檢核、比較欄比對、證據、寫入 |
+| `libs/sec_revenue/companies/` | 公司規格 |
+| `libs/sec_revenue/capture/` | 對照資料擷取 |
+| `libs/sec_revenue/universe/` | `tickers.csv` 與對照資料的格式（`model`）、讀取與驗證（`tickers`、`references`、`validate`），以及 CLI 的 ticker 解析 |
+| `libs/sec_revenue/viewer/` | 正式輸出的唯讀 viewer |
+| `tests/` | unit test，子目錄對應 `libs/sec_revenue/` 與 `scripts/` |
+| `docs/architecture/` | 系統規格：parser 與正式輸出、SEC 下載、viewer、對照資料格式、擷取工具 |
+| `docs/guides/` | 操作手冊：[資料使用指南](docs/guides/data-guide.md)（給使用資料的 RD 與 PM）、[本機操作](docs/guides/local-workflow.md) |
+
 ## Setup
 
 需要 Python 3.11 以上與 Node.js（只用 `npm run` 執行常用指令，沒有 Node 依賴）。
@@ -102,7 +118,7 @@ npm run parse -- --tickers AAPL
 npm run parse -- --tickers AAPL --check
 ```
 
-`ALL` 是 Allstate 的 ticker；全部公司用 `--all`。下載與 viewer 的完整參數、快取與回傳碼見 [本機操作](docs/architecture/local-workflow.md)；parser 的規格、檢核與輸出格式見 [Parser 與正式輸出](docs/architecture/parser.md)。
+`ALL` 是 Allstate 的 ticker；全部公司用 `--all`。操作步驟見 [本機操作](docs/guides/local-workflow.md)；下載規則、快取與回傳碼見 [SEC 下載](docs/architecture/download.md)；parser 的規格、檢核與輸出格式見 [Parser 與正式輸出](docs/architecture/parser.md)；頁面與 API 見 [Viewer](docs/architecture/viewer.md)。
 
 ## 擷取對照資料
 
