@@ -1,0 +1,171 @@
+{
+  "periods": {
+    "FY": {
+      "2024-06-30": {
+        "accession": "0000080424-24-000083",
+        "fiscal_year": 2024,
+        "status": "published"
+      },
+      "2025-06-30": {
+        "accession": "0000080424-25-000076",
+        "fiscal_year": 2025,
+        "status": "published"
+      },
+      "2026-06-30": {
+        "accession": "0000080424-26-000103",
+        "fiscal_year": 2026,
+        "status": "published"
+      }
+    },
+    "Q": {
+      "2024-03-31": {
+        "accession": "0000080424-24-000051",
+        "fiscal_quarter": 3,
+        "fiscal_year": 2024,
+        "status": "published"
+      },
+      "2024-06-30": {
+        "accession": "0000080424-24-000083",
+        "fiscal_quarter": 4,
+        "fiscal_year": 2024,
+        "status": "published"
+      },
+      "2024-09-30": {
+        "accession": "0000080424-24-000113",
+        "fiscal_quarter": 1,
+        "fiscal_year": 2025,
+        "status": "published"
+      },
+      "2024-12-31": {
+        "accession": "0000080424-25-000013",
+        "fiscal_quarter": 2,
+        "fiscal_year": 2025,
+        "status": "published"
+      },
+      "2025-03-31": {
+        "accession": "0000080424-25-000037",
+        "fiscal_quarter": 3,
+        "fiscal_year": 2025,
+        "status": "published"
+      },
+      "2025-06-30": {
+        "accession": "0000080424-25-000076",
+        "fiscal_quarter": 4,
+        "fiscal_year": 2025,
+        "status": "published"
+      },
+      "2025-09-30": {
+        "accession": "0000080424-25-000245",
+        "differences": [
+          {
+            "category": "Corporate",
+            "listed_addends": [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:CorporateNonSegmentMember"
+                },
+                "fact_id": "f-442",
+                "value": 165000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": 165000000,
+            "period": {
+              "end": "2025-09-30",
+              "start": "2025-07-01"
+            },
+            "published_addends": [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:CorporateNonSegmentMember"
+                },
+                "operand": "op6",
+                "value": 242000000,
+                "weight": 1
+              }
+            ],
+            "published_value": 242000000,
+            "result": "different",
+            "role": "quarter",
+            "source": {
+              "accession": "0000080424-26-000256",
+              "filing_date": "2026-10-22",
+              "form": "10-Q"
+            }
+          },
+          {
+            "category": "Fabric & Home Care",
+            "listed_addends": [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "pg:FabricHomeCareSegmentMember"
+                },
+                "fact_id": "f-440",
+                "value": 7870000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": 7870000000,
+            "period": {
+              "end": "2025-09-30",
+              "start": "2025-07-01"
+            },
+            "published_addends": [
+              {
+                "concept": "us-gaap:Revenues",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "pg:FabricHomeCareSegmentMember"
+                },
+                "operand": "op1",
+                "value": 7793000000,
+                "weight": 1
+              }
+            ],
+            "published_value": 7793000000,
+            "result": "different",
+            "role": "quarter",
+            "source": {
+              "accession": "0000080424-26-000256",
+              "filing_date": "2026-10-22",
+              "form": "10-Q"
+            }
+          }
+        ],
+        "fiscal_quarter": 1,
+        "fiscal_year": 2026,
+        "status": "published"
+      },
+      "2025-12-31": {
+        "accession": "0000080424-26-000011",
+        "fiscal_quarter": 2,
+        "fiscal_year": 2026,
+        "status": "published"
+      },
+      "2026-03-31": {
+        "accession": "0000080424-26-000060",
+        "fiscal_quarter": 3,
+        "fiscal_year": 2026,
+        "status": "published"
+      },
+      "2026-06-30": {
+        "accession": "0000080424-26-000103",
+        "fiscal_quarter": 4,
+        "fiscal_year": 2026,
+        "status": "published"
+      },
+      "2026-09-30": {
+        "accession": "0000080424-26-000256",
+        "fiscal_quarter": 1,
+        "fiscal_year": 2027,
+        "status": "published"
+      }
+    }
+  },
+  "ticker": "PG",
+  "view": "business_segment"
+}

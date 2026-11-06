@@ -1,0 +1,361 @@
+{
+  "categories": {
+    "Baby, Feminine & Family Care": {
+      "expression": [
+        {
+          "operand": "op2",
+          "weight": 1
+        }
+      ],
+      "value": 4936000000
+    },
+    "Beauty": {
+      "expression": [
+        {
+          "operand": "op3",
+          "weight": 1
+        }
+      ],
+      "value": 3550000000
+    },
+    "Corporate": {
+      "expression": [
+        {
+          "operand": "op6",
+          "weight": 1
+        }
+      ],
+      "value": 128000000
+    },
+    "Fabric & Home Care": {
+      "expression": [
+        {
+          "operand": "op1",
+          "weight": 1
+        }
+      ],
+      "value": 7169000000
+    },
+    "Grooming": {
+      "expression": [
+        {
+          "operand": "op5",
+          "weight": 1
+        }
+      ],
+      "value": 1539000000
+    },
+    "Health Care": {
+      "expression": [
+        {
+          "operand": "op4",
+          "weight": 1
+        }
+      ],
+      "value": 2873000000
+    }
+  },
+  "checks": {
+    "structural": [
+      {
+        "check": "定義唯一",
+        "result": "pass"
+      },
+      {
+        "check": "fact 存在且唯一",
+        "result": "pass"
+      },
+      {
+        "check": "單位與精度",
+        "result": "pass"
+      },
+      {
+        "check": "加總",
+        "result": "pass"
+      },
+      {
+        "check": "證據完整",
+        "result": "pass"
+      }
+    ],
+    "sum": {
+      "categories": 20195000000,
+      "difference": 0,
+      "tolerance": "3500000",
+      "total": 20195000000
+    }
+  },
+  "filings": {
+    "primary": {
+      "accession": "0000080424-24-000051",
+      "filing_date": "2024-04-19",
+      "form": "10-Q",
+      "report_date": "2024-03-31"
+    }
+  },
+  "fiscal_quarter": 3,
+  "fiscal_year": 2024,
+  "operands": {
+    "op1": {
+      "accession": "0000080424-24-000051",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-161",
+      "decimals": "-6",
+      "dimensions": {
+        "us-gaap:StatementBusinessSegmentsAxis": "pg:FabricandHomeCareMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/80424/000008042424000051/pg-20240331.htm",
+        "name": "pg-20240331.htm",
+        "sha256": "5522f561d6ac5fd725c5b4b83b0ac7db9e60faeb76958737383dd8beb713126b",
+        "url": "https://www.sec.gov/Archives/edgar/data/80424/000008042424000051/pg-20240331.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "b18529d9b7b5594c087c5a6b0d3597bda0f8439d080a35ddab3105e6aff08b3f",
+        "png_scale": 1,
+        "png_sha256": "0238b3826a0fa8ea8e902db2b8eb6aa00e6df4970787e00fbd0ddb749d761870",
+        "table": "0000080424-24-000051-5522f561d6ac-t19"
+      },
+      "fact_id": "f-574",
+      "filing_date": "2024-04-19",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-03-31",
+        "start": "2024-01-01"
+      },
+      "raw": "7,169",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 7169000000
+    },
+    "op2": {
+      "accession": "0000080424-24-000051",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-165",
+      "decimals": "-6",
+      "dimensions": {
+        "us-gaap:StatementBusinessSegmentsAxis": "pg:BabyFeminineandFamilyCareSegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/80424/000008042424000051/pg-20240331.htm",
+        "name": "pg-20240331.htm",
+        "sha256": "5522f561d6ac5fd725c5b4b83b0ac7db9e60faeb76958737383dd8beb713126b",
+        "url": "https://www.sec.gov/Archives/edgar/data/80424/000008042424000051/pg-20240331.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "b18529d9b7b5594c087c5a6b0d3597bda0f8439d080a35ddab3105e6aff08b3f",
+        "png_scale": 1,
+        "png_sha256": "0238b3826a0fa8ea8e902db2b8eb6aa00e6df4970787e00fbd0ddb749d761870",
+        "table": "0000080424-24-000051-5522f561d6ac-t19"
+      },
+      "fact_id": "f-586",
+      "filing_date": "2024-04-19",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-03-31",
+        "start": "2024-01-01"
+      },
+      "raw": "4,936",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 4936000000
+    },
+    "op3": {
+      "accession": "0000080424-24-000051",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-149",
+      "decimals": "-6",
+      "dimensions": {
+        "us-gaap:StatementBusinessSegmentsAxis": "pg:BeautySegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/80424/000008042424000051/pg-20240331.htm",
+        "name": "pg-20240331.htm",
+        "sha256": "5522f561d6ac5fd725c5b4b83b0ac7db9e60faeb76958737383dd8beb713126b",
+        "url": "https://www.sec.gov/Archives/edgar/data/80424/000008042424000051/pg-20240331.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "b18529d9b7b5594c087c5a6b0d3597bda0f8439d080a35ddab3105e6aff08b3f",
+        "png_scale": 1,
+        "png_sha256": "0238b3826a0fa8ea8e902db2b8eb6aa00e6df4970787e00fbd0ddb749d761870",
+        "table": "0000080424-24-000051-5522f561d6ac-t19"
+      },
+      "fact_id": "f-538",
+      "filing_date": "2024-04-19",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-03-31",
+        "start": "2024-01-01"
+      },
+      "raw": "3,550",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 3550000000
+    },
+    "op4": {
+      "accession": "0000080424-24-000051",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-157",
+      "decimals": "-6",
+      "dimensions": {
+        "us-gaap:StatementBusinessSegmentsAxis": "pg:HealthCareSegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/80424/000008042424000051/pg-20240331.htm",
+        "name": "pg-20240331.htm",
+        "sha256": "5522f561d6ac5fd725c5b4b83b0ac7db9e60faeb76958737383dd8beb713126b",
+        "url": "https://www.sec.gov/Archives/edgar/data/80424/000008042424000051/pg-20240331.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "b18529d9b7b5594c087c5a6b0d3597bda0f8439d080a35ddab3105e6aff08b3f",
+        "png_scale": 1,
+        "png_sha256": "0238b3826a0fa8ea8e902db2b8eb6aa00e6df4970787e00fbd0ddb749d761870",
+        "table": "0000080424-24-000051-5522f561d6ac-t19"
+      },
+      "fact_id": "f-562",
+      "filing_date": "2024-04-19",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-03-31",
+        "start": "2024-01-01"
+      },
+      "raw": "2,873",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 2873000000
+    },
+    "op5": {
+      "accession": "0000080424-24-000051",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-153",
+      "decimals": "-6",
+      "dimensions": {
+        "us-gaap:StatementBusinessSegmentsAxis": "pg:GroomingSegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/80424/000008042424000051/pg-20240331.htm",
+        "name": "pg-20240331.htm",
+        "sha256": "5522f561d6ac5fd725c5b4b83b0ac7db9e60faeb76958737383dd8beb713126b",
+        "url": "https://www.sec.gov/Archives/edgar/data/80424/000008042424000051/pg-20240331.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "b18529d9b7b5594c087c5a6b0d3597bda0f8439d080a35ddab3105e6aff08b3f",
+        "png_scale": 1,
+        "png_sha256": "0238b3826a0fa8ea8e902db2b8eb6aa00e6df4970787e00fbd0ddb749d761870",
+        "table": "0000080424-24-000051-5522f561d6ac-t19"
+      },
+      "fact_id": "f-550",
+      "filing_date": "2024-04-19",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-03-31",
+        "start": "2024-01-01"
+      },
+      "raw": "1,539",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 1539000000
+    },
+    "op6": {
+      "accession": "0000080424-24-000051",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-169",
+      "decimals": "-6",
+      "dimensions": {
+        "us-gaap:StatementBusinessSegmentsAxis": "us-gaap:CorporateMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/80424/000008042424000051/pg-20240331.htm",
+        "name": "pg-20240331.htm",
+        "sha256": "5522f561d6ac5fd725c5b4b83b0ac7db9e60faeb76958737383dd8beb713126b",
+        "url": "https://www.sec.gov/Archives/edgar/data/80424/000008042424000051/pg-20240331.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "b18529d9b7b5594c087c5a6b0d3597bda0f8439d080a35ddab3105e6aff08b3f",
+        "png_scale": 1,
+        "png_sha256": "0238b3826a0fa8ea8e902db2b8eb6aa00e6df4970787e00fbd0ddb749d761870",
+        "table": "0000080424-24-000051-5522f561d6ac-t19"
+      },
+      "fact_id": "f-598",
+      "filing_date": "2024-04-19",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-03-31",
+        "start": "2024-01-01"
+      },
+      "raw": "128",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 128000000
+    },
+    "op7": {
+      "accession": "0000080424-24-000051",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-21",
+      "decimals": "-6",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/80424/000008042424000051/pg-20240331.htm",
+        "name": "pg-20240331.htm",
+        "sha256": "5522f561d6ac5fd725c5b4b83b0ac7db9e60faeb76958737383dd8beb713126b",
+        "url": "https://www.sec.gov/Archives/edgar/data/80424/000008042424000051/pg-20240331.htm"
+      },
+      "duplicates": [
+        "f-78",
+        "f-878"
+      ],
+      "evidence": {
+        "html_sha256": "b18529d9b7b5594c087c5a6b0d3597bda0f8439d080a35ddab3105e6aff08b3f",
+        "png_scale": 1,
+        "png_sha256": "0238b3826a0fa8ea8e902db2b8eb6aa00e6df4970787e00fbd0ddb749d761870",
+        "table": "0000080424-24-000051-5522f561d6ac-t19"
+      },
+      "fact_id": "f-610",
+      "filing_date": "2024-04-19",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-03-31",
+        "start": "2024-01-01"
+      },
+      "raw": "20,195",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 20195000000
+    }
+  },
+  "period_end": "2024-03-31",
+  "schema_version": 1,
+  "series": "Q",
+  "ticker": "PG",
+  "total": {
+    "expression": [
+      {
+        "operand": "op7",
+        "weight": 1
+      }
+    ],
+    "value": 20195000000
+  },
+  "unit": "USD",
+  "view": "business_segment"
+}
