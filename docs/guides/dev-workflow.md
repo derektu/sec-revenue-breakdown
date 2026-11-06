@@ -64,7 +64,7 @@ MSFT 用 Stock Analysis 的觀點，照 docs/guides/dev-workflow.md 第 7 步寫
 **agent**：對每個候選 ticker，先下載申報（第 3 步），用 [開發指南](parser-dev-guide.md) 第 2 步的程式看最新 10-K 與 10-Q 的營收 fact，回報：
 
 - 申報中有哪些產品別或業務別的營收 fact，是不是地區。
-- 有沒有框架不支援的情形：非 13 週的季度、財報在附件、需要的數字沒有 XBRL 標記、申報宣告的財年錯誤。已知的例子見 [資料使用指南](data-guide.md) 的「目前狀態」。
+- 有沒有框架不支援的情形：單季不在 84–98 天（12–14 週）的季度、財報在附件、需要的數字沒有 XBRL 標記、申報宣告的財年錯誤。已知的例子見 [資料使用指南](data-guide.md) 的「目前狀態」。
 - 建議做或不做，與理由。
 
 **人**：決定要做哪些 ticker。
@@ -158,6 +158,8 @@ MSFT 用 Stock Analysis 的觀點，照 docs/guides/dev-workflow.md 第 7 步寫
 - 「時點與寫 parser 的人的知識」的三條規則（見 [parser.md](../architecture/parser.md)）。
 - 只改了這個 ticker 的目錄；新增的 utility 不含任何 ticker 的知識，既有 utility 沒有改。
 - 開發指南的驗收清單。
+
+範圍外的較早期別可以用 `parse --tickers <TICKER> --check --start <較早日期>` 試跑，從輸出的 JSON 看各期的狀態，驗證切換日與 `not_derived`。較早期別沒有已提交的輸出，回報為差異是預期的；範圍內已提交的期別若也出現差異（例如第一個 Q4 的口徑依據改由較早的已上線 FY 提供），逐筆看原因。`--check` 不寫入輸出。
 
 回報發現的問題，依嚴重程度排列。
 
