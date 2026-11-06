@@ -1,6 +1,6 @@
 # 資料使用指南
 
-這份文件寫給使用這份資料做後續開發的 RD 與 PM：資料怎麼來、狀態與標記代表什麼、輸出檔案長什麼樣子、遇到問題怎麼請人調查。看懂這份文件不需要讀引擎程式碼；技術細節見 [`docs/architecture/parser.md`](../architecture/parser.md)（引擎與輸出格式），各公司的分類與例外見 `libs/sec_revenue/companies/<首字母>/<代號>/parser.md`。
+這份文件寫給使用這份資料做後續開發的 RD 與 PM：資料怎麼來、狀態與標記代表什麼、輸出檔案長什麼樣子、遇到問題怎麼請人調查。看懂這份文件不需要讀程式碼；技術細節見 [`docs/architecture/parser.md`](../architecture/parser.md)（架構與輸出格式），各公司的分類與例外見 `libs/sec_revenue/companies/<首字母>/<代號>/parser.md`。
 
 ## 這套系統做什麼
 
