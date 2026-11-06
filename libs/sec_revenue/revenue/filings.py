@@ -53,13 +53,11 @@ class Filing:
         }
 
 
-# 申報篩選用到的申報包欄位；快照保存這些欄位，以同一個函式篩選。
-FILING_FIELDS = ("form", "reportDate", "filingDate")
-PRIMARY_FIELDS = ("name", "primary", "inline_xbrl", "sha256", "source_url", "ixviewer_url")
-
-
 def periodic_filing(accession: str, package: dict) -> Filing | None:
-    """申報包是否為 parser 讀取的申報：10-Q、10-K 或其修訂版，申報包完整，且只有一份主文件、是 inline XBRL。"""
+    """申報包是否為 parser 讀取的申報：10-Q、10-K 或其修訂版，申報包完整，且只有一份主文件、是 inline XBRL。
+
+    快照模式以同一個函式篩選；它讀的申報包欄位由 `extract.package_record` 存進快照。
+    """
     filing = package.get("filing", {})
     form = filing.get("form")
     if form not in ORIGINAL_FORMS | AMENDMENT_FORMS or not package.get("complete"):
@@ -68,17 +66,6 @@ def periodic_filing(accession: str, package: dict) -> Filing | None:
     if len(primary) != 1 or not primary[0].get("inline_xbrl"):
         return None
     return Filing(accession, form, filing["reportDate"], filing["filingDate"], primary[0])
-
-
-def package_record(package: dict) -> dict:
-    """`periodic_filing` 需要的申報包欄位：申報資訊、是否完整、主文件。"""
-    return {
-        "filing": {k: package.get("filing", {}).get(k) for k in FILING_FIELDS},
-        "complete": bool(package.get("complete")),
-        "documents": {
-            name: {k: d.get(k) for k in PRIMARY_FIELDS} for name, d in sorted(package["documents"].items()) if d.get("primary")
-        },
-    }
 
 
 class FilingSet:

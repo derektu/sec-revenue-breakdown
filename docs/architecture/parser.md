@@ -102,7 +102,7 @@ data/revenue/<首字母>/<TICKER>/
     evidence/
 
 data/snapshots/<首字母>/<TICKER>/
-  <accession>.jsonl 每份申報的 fact 清單快照，一行一個 fact
+  <accession>.jsonl 每份申報從原文抽出的內容：表頭一行，之後一行一個 fact 的原始欄位
   manifest.json    申報清單：正式輸出依賴的每份 10-K／10-Q 的申報資訊與申報包內每個檔案的 sha256、bytes
 ```
 
@@ -396,7 +396,7 @@ npm run parse -- --tickers AAPL --republish AAPL Q 2025-09-27   # 由人確認�
 
 ## 快照
 
-快照是 fact 清單加上申報篩選所需的申報資訊，存成檔案，讓沒有 SEC 原文的環境（例如 GitHub 的 CI、剛 clone repo 的人）也能對上線公司跑 `--check`。框架在原文模式下由原文解析出的 fact 清單，與快照的內容相同。
+快照保存每份申報一定要有 SEC 原文才拿得到的資料，讓沒有原文的環境（例如 GitHub 的 CI、剛 clone repo 的人）也能對上線公司跑 `--check`。能由這些資料算出來的（數值、QName 解析、期間分類、申報篩選），讀快照時以目前的程式重算，不存在快照中。
 
 ```bash
 npm run snapshot -- --tickers AAPL           # 由原文產生 data/snapshots/A/AAPL/ 的快照與申報清單
@@ -408,14 +408,17 @@ npm run snapshot -- --all --check            # 核對已提交的快照與原文
 - **內容**：每份申報（每份 10-K、10-Q，含修正申報與 Q4 依賴的較早申報）一個檔案：
   - 申報篩選用到的申報包欄位：表單、期末日、申報日、申報包是否完整，以及主文件的檔名、是否為 inline XBRL、sha256、URL。
   - 文件宣告的 namespaces 與衝突的前綴、全部 dei。
-  - 主文件的全部數值 fact（`ix:nonFraction`），不依任何公司 parser 篩選。每個 fact 保留全部欄位，包括決定重複值選擇的 `table_index` 與 `order`。
+  - 主文件的全部數值 fact（`ix:nonFraction`），不依任何公司 parser 篩選。每個 fact 保留 XBRL 原始欄位（fact id、concept、dimensions、期間、unit、顯示文字 `raw`、`scale`、`decimals`、`sign`、`format` 屬性原文、context id），以及決定重複值選擇的 HTML 位置 `table_index` 與 `order`；nil fact 另有 `nil: true`。換算後的數值（`value`、`value_error`）不存，讀快照時以目前的數字規則算出。
 
   原文讀不到的申報記錄錯誤原因，快照模式重現同一個 `comparison_errors`。
 - **格式**：一行一個 fact（JSON Lines）。縮排的 JSON 約大一倍，Git 壓縮後兩者相近，一行一個 fact 讓工作目錄小一半。
-- **快照不隨公司 parser 變動**：一份申報公開後，它的 fact 不會變，快照只由申報與框架讀 fact 的程式決定。
-  - 快照記錄產生它的框架程式 hash（fact 解析、HTML 解析與表格編號、數值規則、申報篩選、快照讀寫）。hash 不同時快照模式直接報錯，不以過期的快照計算。
+- **快照只由申報與抽取程式決定**：一份申報公開後內容不會變，快照只隨從原文抽資料的程式（抽取程式，`revenue/extract.py`）的行為改變。
+  - 抽取程式涵蓋 HTML 解析與表格編號、xmlns 宣告與衝突的前綴、context 與 unit、dei、`ix:nonFraction` 的文字與屬性，以及申報篩選用到的申報包欄位。數字規則與 `format` 的正規化（`ixbrl.py`）、QName 解析、期間分類（`xbrl.py`）與申報篩選（`filings.py`）在讀快照時執行，不在其中。
+  - 快照記錄抽取程式的 hash，依 `extract.py` 的語法樹計算，不含註解、docstring 與排版。hash 不同時快照模式直接報錯，不以過期的快照計算。
+  - 快照檔的編排由快照格式版本表示；版本不同時同樣報錯。
+  - 抽取結果也取決於 lxml 的 HTML 解析，lxml 在 `requirements.txt` 鎖定確切版本，不在 hash 內。升級 lxml 時，在有原文的環境跑 `snapshot --all --check`；有差異就重產全部快照，與升級放在同一個 PR。
   - 快照與申報清單的申報不一致時直接報錯，包括快照檔名與記錄的 accession 不同、申報資訊（表單、日期）與清單不同。
-- **同一條程式路徑**：快照模式與原文模式以同一段程式篩選申報、產生 fact 清單；之後的選申報、期別、公司 parser、檢核、比較欄比對與 Q4 口徑都相同。
+- **同一條程式路徑**：快照模式與原文模式以同一段程式篩選申報，並由同樣的抽取內容建立 fact 清單（換算數值、解析 QName）；之後的選申報、期別、公司 parser、檢核、比較欄比對與 Q4 口徑都相同。
 - **驗得到與驗不到**：
   - 快照模式驗得到 `revenue.json` 的數字、運算式、運算元與表格鍵（accession、文件 hash、表格編號），以及 `status.json` 的全部紀錄。
   - 快照沒有原文。證據以 fact 的 `table_index` 算出表格鍵，沿用已提交的表格 HTML 與 PNG，所以驗不到表格 HTML 的內容，也驗不到 fact 在原文中的節點核對。
@@ -423,10 +426,17 @@ npm run snapshot -- --all --check            # 核對已提交的快照與原文
   - 快照模式不能寫入正式輸出，只能 `--check`。
 - **何時產生與重產**：需要在有原文的環境執行，產生的快照與造成它的改動放在同一個 PR。
   - 下載了新的申報：產生該份申報的快照。
-  - 框架讀 fact 的程式改動：重產全部公司。
-  - 修改公司 parser 不重產快照。
+  - 改動抽取程式的行為（抽哪些欄位、怎麼抽）：重產全部公司。這類改動本來就只能對照原文驗證。
   - 改動證據元件時，另以原文跑 `--check` 驗證表格 HTML。
-- **容量**：以 33 家公司、470 份 10-K／10-Q 實測，每份申報平均約 1,700 個 fact（AAPL 約 750，JPM、BAC 約 7,000），一行一個 fact 約 0.5 MB，Git 壓縮後約 50 KB。每家約十幾份申報時，1500 家的工作目錄約 10 GB，Git 壓縮後約 1 GB，每年新增約 3 GB（壓縮後 0.3 GB）。
+
+  | 改動 | 是否重產快照 |
+  |---|---|
+  | 公司 parser、utility | 不需要 |
+  | 框架（組數值、流程、檢核、證據） | 不需要 |
+  | 數字規則與 `format` 的正規化、QName 解析、期間分類、申報篩選 | 不需要；快照模式以新規則重算 |
+  | 抽取程式的註解、docstring、排版 | 不需要 |
+  | 抽取程式的行為 | 全部公司 |
+- **容量**：以 18 家上線公司、243 份 10-K／10-Q 實測，每份申報平均約 1,900 個 fact（HD、AAPL 約 700，JPM、BAC 約 7,000），一個快照檔平均約 0.76 MB，zlib 壓縮後約 50 KB。每家約 13 份申報、約 10 MB（壓縮後約 0.7 MB）；1500 家的工作目錄約 15 GB，Git 壓縮後約 1 GB，每家每年 4 份申報，每年新增約 4.6 GB（壓縮後約 0.3 GB）。
 
 ### 兩種 CI 環境
 
@@ -442,7 +452,7 @@ npm run snapshot -- --all --check            # 核對已提交的快照與原文
 ## 測試
 
 - 框架：以合成的 inline XBRL 申報與合成的公司 parser，測試每個流程步驟與每項檢核，不連網、不啟動 Chromium。
-- 快照：測試快照往返等價、快照模式不讀原文、申報篩選與地區成員檢查走同一段程式、框架程式 hash 檢查、申報清單一致性、新上線期別沒有快照與缺已提交證據會被抓到，以及改動快照中的一個值會被 `--check` 抓到。
+- 快照：測試快照往返等價、快照不存換算後的數值、快照模式不讀原文、數字規則在讀快照時套用、申報篩選與地區成員檢查走同一段程式、抽取程式 hash 不隨註解與排版改變且隨行為改變、申報清單一致性、新上線期別沒有快照與缺已提交證據會被抓到，以及改動快照中的一個值會被 `--check` 抓到。
 - utility：每個 utility 有自己的測試。既有 utility 的測試不修改，測試要改代表行為變了，等於修改框架。CI 以此判斷：PR 修改或刪除 `tests/sec_revenue/parser_utils/` 中既有的測試檔時，重跑全部上線公司；只新增測試檔時不在此限。
 - 公司：`data/revenue/` 中已提交的輸出就是回歸基準。`--check` 重跑 parser，與已提交的輸出逐欄比對。檢查範圍依改動而定：
 

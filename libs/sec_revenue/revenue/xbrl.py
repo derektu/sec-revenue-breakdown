@@ -1,19 +1,21 @@
-"""讀 inline XBRL 主文件：namespace、contexts、units、dei 與每個 `ix:nonFraction` fact。
+"""inline XBRL 主文件的 fact 索引：namespace、dei 與每個 `ix:nonFraction` fact。
 
-HTML 解析、表格編號與數值規則都來自 `ixbrl.py`，與證據元件（`evidence.TableLocator`）共用。
+文件內容由 `extract.py` 從原文抽出，或由快照讀回；兩者都經過 `InlineDocument.load`，以目前的數字規則（`ixbrl.py`）
+算出數值、依 namespaces 解析 QName。證據元件（`evidence.TableLocator`）用同一棵 HTML 解析樹。
 
-規格與 fact 在同一份文件內以 namespace URI 比對：規格的前綴與 fact 的 QName 都依文件宣告的
-`xmlns:*` 解析成 `{URI}名稱`。不同申報之間不比 URI，因為公司與 us-gaap 的 namespace 每年都帶不同日期。
+公司 parser 指定的 concept 與 fact 在同一份文件內以 namespace URI 比對：公司 parser 的前綴與 fact 的 QName 都依文件
+宣告的 `xmlns:*` 解析成 `{URI}名稱`。不同申報之間不比 URI，因為公司與 us-gaap 的 namespace 每年都帶不同日期。
 """
 
 from __future__ import annotations
 
-from dataclasses import dataclass, fields
+from dataclasses import dataclass
 import datetime as dt
 from decimal import Decimal
 
 from .evidence import TableLocator
-from .ixbrl import clean_text, ix_number, numbered_tables, parse_html
+from .extract import extract, parse_html
+from .ixbrl import ix_number, transform_name
 
 # 期間長度（含首尾日）分類；不在任何範圍內的期間不使用。
 DURATIONS = (
@@ -98,83 +100,61 @@ class Fact:
         return comparison_bound(self.decimals, self.raw, self.scale)
 
 
-# 快照中每個 fact 保存的欄位；concept_key 與 dimension_keys 由 namespaces 重算。
-SNAPSHOT_FACT_FIELDS = tuple(f.name for f in fields(Fact) if f.name not in ("concept_key", "dimension_keys"))
-
-
 class InlineDocument:
     """一份 inline XBRL HTML 文件的 fact 索引。
 
-    `to_snapshot` 把解析結果的全部 fact 連同 namespaces、dei 存成 JSON 可序列化的內容；
-    `from_snapshot` 由快照重建同一個索引，之後的查找（`resolve`、`facts`、`fiscal`）與原文解析的結果相同。
-    快照沒有原文，`locator` 為 None，不能找表格或產生證據。
+    由原文建立時，`extract` 抽出的內容與 HTML 解析樹交給證據元件（`locator`）；`from_snapshot` 由快照的同一份內容
+    重建索引，之後的查找（`resolve`、`facts`、`fiscal`）與原文的結果相同。快照沒有原文，`locator` 為 None，
+    不能找表格或產生證據。
     """
 
     def __init__(self, raw: bytes):
-        # 解析樹與表格編號只來自 `ixbrl.py`；fact 全部讀完後，才把同一棵樹交給證據元件。
+        # 解析樹只來自 `extract.parse_html`；fact 全部讀完後，才把同一棵樹交給證據元件。
         root = parse_html(raw)
-        # lxml 的元素物件只在有人持有時保持同一個 id，所以保留表格串列。
-        self.tables = numbered_tables(root)
-        self.table_numbers = {id(table): i for i, table in enumerate(self.tables)}
-        self.namespaces, self.conflicts = {}, set()
-        for node in root.iter():
-            if not isinstance(node.tag, str):
-                continue
-            for name, uri in node.attrib.items():
-                if name.startswith("xmlns:"):
-                    prefix = name[len("xmlns:") :]
-                    if self.namespaces.setdefault(prefix, uri) != uri:
-                        self.conflicts.add(prefix)
-        self.contexts, self.units, self.dei, self.facts = {}, {}, {}, []
-        for node in root.iter():
-            name = str(node.tag).lower()
-            if name == "xbrli:context":
-                self.contexts[node.get("id")] = self.read_context(node)
-            elif name == "xbrli:unit":
-                self.units[node.get("id")] = self.read_unit(node)
-        for order, node in enumerate(root.iter()):
-            name = str(node.tag).lower()
-            if name == "ix:nonnumeric" and node.get("name", "").startswith("dei:"):
-                self.dei.setdefault(node.get("name"), clean_text(node.text_content()))
-            elif name == "ix:nonfraction":
-                self.facts.append(self.read_fact(node, order))
+        self.load(extract(root))
         self.locator = TableLocator.from_root(root)
 
     @classmethod
     def from_snapshot(cls, payload: dict) -> InlineDocument:
         document = cls.__new__(cls)
         document.locator = None
-        document.namespaces = dict(payload["namespaces"])
-        document.conflicts = set(payload["conflicts"])
-        document.contexts, document.units = {}, {}
-        document.dei = dict(payload["dei"])
-        document.facts = []
-        for row in payload["facts"]:
-            dimensions = tuple((axis, member) for axis, member in row["dimensions"])
-            document.facts.append(
-                Fact(
-                    **{name: row[name] for name in SNAPSHOT_FACT_FIELDS if name != "dimensions"},
-                    dimensions=dimensions,
-                    concept_key=document.resolve(row["concept"]),
-                    dimension_keys=document.resolve_dimensions(dimensions),
-                )
-            )
+        document.load(payload)
         return document
 
-    def to_snapshot(self) -> dict:
-        """本文件的全部數值 fact，依文件順序，與公司 parser 無關。"""
-        return {
-            "namespaces": dict(sorted(self.namespaces.items())),
-            "conflicts": sorted(self.conflicts),
-            "dei": dict(sorted(self.dei.items())),
-            "facts": [
-                {
-                    name: [list(pair) for pair in fact.dimensions] if name == "dimensions" else getattr(fact, name)
-                    for name in SNAPSHOT_FACT_FIELDS
-                }
-                for fact in self.facts
-            ],
-        }
+    def load(self, content: dict):
+        """由 `extract` 的內容建立索引：`format` 正規化、數值換算依目前的數字規則，QName 依 namespaces 解析。"""
+        self.namespaces = dict(content["namespaces"])
+        self.conflicts = set(content["conflicts"])
+        self.dei = dict(content["dei"])
+        self.facts = [self.fact(row) for row in content["facts"]]
+
+    def fact(self, row: dict) -> Fact:
+        transform = transform_name(row["format"])
+        if row.get("nil"):
+            value, error = None, "fact 為 nil"
+        else:
+            value, error = ix_number(row["raw"], transform, row["scale"], row["sign"])
+        dimensions = tuple((axis, member) for axis, member in row["dimensions"])
+        return Fact(
+            fact_id=row["fact_id"],
+            concept=row["concept"],
+            dimensions=dimensions,
+            concept_key=self.resolve(row["concept"]),
+            dimension_keys=self.resolve_dimensions(dimensions),
+            start=row["start"],
+            end=row["end"],
+            unit=row["unit"],
+            raw=row["raw"],
+            scale=row["scale"],
+            decimals=row["decimals"],
+            sign=row["sign"],
+            format=transform,
+            value=value,
+            value_error=error,
+            context_id=row["context_id"],
+            table_index=row["table_index"],
+            order=row["order"],
+        )
 
     def resolve(self, qname: str) -> str | None:
         """前綴 QName 轉成 `{URI}名稱`；前綴未宣告或宣告衝突時回傳 None。"""
@@ -196,59 +176,6 @@ class InlineDocument:
                 return None
             resolved.append(keys)
         return tuple(sorted(resolved))
-
-    @staticmethod
-    def read_context(node) -> dict:
-        context = {"dimensions": {}, "start": None, "end": None}
-        for child in node.iter():
-            kind = str(child.tag).split(":")[-1].lower()
-            text = clean_text(child.text_content())
-            if kind == "startdate":
-                context["start"] = text
-            elif kind in ("enddate", "instant"):
-                context["end"] = text
-            elif kind == "explicitmember":
-                context["dimensions"][child.get("dimension")] = text
-            elif kind == "typedmember":
-                # typed 維度以完整內容參與比對；規格不會宣告 typed 維度，因此這類 fact 不會被選中。
-                context["dimensions"][child.get("dimension")] = "typed:" + text
-        return context
-
-    @staticmethod
-    def read_unit(node) -> str:
-        measures = [clean_text(m.text_content()) for m in node.iter() if str(m.tag).lower().endswith("measure")]
-        return measures[0] if len(measures) == 1 else "/".join(measures)
-
-    def read_fact(self, node, order: int) -> Fact:
-        context = self.contexts.get(node.get("contextref"), {"dimensions": {}, "start": None, "end": None})
-        raw = clean_text(node.text_content())
-        transform = node.get("format", "").split(":")[-1].lower()
-        if str(node.get("xsi:nil", node.get("nil", "false"))).lower() == "true":
-            value, error = None, "fact 為 nil"
-        else:
-            value, error = ix_number(raw, transform, node.get("scale", "0"), node.get("sign"))
-        table = next((a for a in node.iterancestors() if a.tag == "table"), None)
-        dimensions = tuple(sorted(context["dimensions"].items()))
-        return Fact(
-            fact_id=node.get("id"),
-            concept=node.get("name", ""),
-            dimensions=dimensions,
-            concept_key=self.resolve(node.get("name", "")),
-            dimension_keys=self.resolve_dimensions(dimensions),
-            start=context["start"],
-            end=context["end"],
-            unit=self.units.get(node.get("unitref")),
-            raw=raw,
-            scale=node.get("scale", "0"),
-            decimals=node.get("decimals"),
-            sign=node.get("sign"),
-            format=transform,
-            value=value,
-            value_error=error,
-            context_id=node.get("contextref"),
-            table_index=self.table_numbers[id(table)] if table is not None else None,
-            order=order,
-        )
 
     def fiscal(self) -> tuple[int | None, str | None]:
         """申報自己宣告的財年與期別（Q1、Q2、Q3、FY）。"""

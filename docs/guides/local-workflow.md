@@ -96,18 +96,18 @@ SEC 原文（`sec/`）與下載索引（`pipeline/`）放在資料根目錄。�
 .venv/bin/python scripts/sec_pipeline.py snapshot --all --check            # 核對已提交的快照與原文一致
 ```
 
-快照是每份申報主文件的全部數值 fact，與公司 parser 無關：每份申報一個 `<accession>.jsonl`，第一行是表頭（快照格式版本、解析器 hash、申報資訊、namespaces 與衝突的前綴、dei；原文讀不到時是錯誤原因），之後一行一個 fact。
+快照是每份申報從原文抽出的內容，與公司 parser 無關：每份申報一個 `<accession>.jsonl`，第一行是表頭（快照格式版本、抽取程式 hash、申報資訊、namespaces 與衝突的前綴、dei；原文讀不到時是錯誤原因），之後一行一個數值 fact 的原始欄位。數值由讀快照時的數字規則算出，不存在快照中。
 
 以下改動要產生快照，並和改動放在同一個 PR：
 
 | 改動 | 執行 | 結果 |
 |---|---|---|
 | 下載了新的申報 | `snapshot --tickers <該公司>` | 多出該份申報的快照；既有申報的快照內容不變 |
-| 決定快照內容的程式（`revenue/xbrl.py`、`ixbrl.py`、`filings.py`、`snapshot.py`）改動 | `snapshot --all` | 全部公司重產 |
+| 抽取程式（`revenue/extract.py`）的行為改動；只改註解、docstring 或排版不算 | `snapshot --all` | 全部公司重產 |
 
-修改公司 parser（分類、concept、寫法切換）不需要重產快照。
+修改公司 parser（分類、concept、寫法切換）、框架，或數字規則、期間分類、申報篩選，都不需要重產快照：快照模式以目前的程式重算。
 
-快照與申報清單不一致或由不同版本的程式產生時，`--snapshots` 直接報錯並指出要重產的公司。`snapshot` 寫入時若有原文讀不到的申報，快照記錄為錯誤並回傳 2，先補下載再重產。快照模式驗得到與驗不到的內容見 [parser.md](../architecture/parser.md) 的「快照」。
+快照與申報清單不一致，或由不同版本的抽取程式產生時，`--snapshots` 直接報錯並指出要重產的公司。`snapshot` 寫入時若有原文讀不到的申報，快照記錄為錯誤並回傳 2，先補下載再重產。快照模式驗得到與驗不到的內容見 [parser.md](../architecture/parser.md) 的「快照」。
 
 ## Viewer
 

@@ -22,7 +22,6 @@ def facts_only(document: InlineDocument) -> InlineDocument:
     stripped.locator = None
     stripped.namespaces = MappingProxyType(dict(document.namespaces))
     stripped.conflicts = frozenset(document.conflicts)
-    stripped.contexts, stripped.units = MappingProxyType({}), MappingProxyType({})
     stripped.dei = MappingProxyType(dict(document.dei))
     stripped.facts = tuple(document.facts)
     return stripped

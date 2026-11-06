@@ -1,4 +1,4 @@
-"""XBRL fact 快照：JSON Lines 格式、往返等價、快照模式不讀原文、解析器版本檢查、申報清單與反向測試。"""
+"""XBRL fact 快照：JSON Lines 格式、往返等價、只存原始欄位、快照模式不讀原文、抽取程式 hash、申報清單與反向測試。"""
 
 import json
 from pathlib import Path
@@ -10,7 +10,7 @@ from unittest.mock import patch
 ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / "libs"))
 from sec_revenue.common.jsonio import JsonCodec  # noqa: E402
-from sec_revenue.revenue import snapshot  # noqa: E402
+from sec_revenue.revenue import extract, snapshot  # noqa: E402
 from sec_revenue.revenue.compose import PeriodComposer  # noqa: E402
 from sec_revenue.revenue.engine import check_outputs, ticker_dir  # noqa: E402
 from sec_revenue.revenue.filings import FilingSet, ParseError  # noqa: E402
@@ -56,8 +56,8 @@ class RoundTripTest(SnapshotFixture):
         for filing in filings.filings:
             with self.subTest(filing.accession):
                 original = filings.document(filing)
-                # 經過快照檔的編碼再讀回。
-                payload = snapshot.decode(snapshot.encode(original.to_snapshot()))
+                # 抽取的內容經過快照檔的編碼再讀回。
+                payload = snapshot.decode(snapshot.encode(extract.extract(extract.parse_html(filings.raw(filing)))))
                 rebuilt = InlineDocument.from_snapshot(payload)
                 self.assertEqual(rebuilt.facts, original.facts)
                 self.assertEqual(rebuilt.fiscal(), original.fiscal())
@@ -86,6 +86,32 @@ class RoundTripTest(SnapshotFixture):
         self.assertEqual(len(lines) - 1, len(self.load("0000000001-25-000001")["facts"]))
         self.assertTrue(all("fact_id" in json.loads(line) for line in lines[1:]))
 
+    def test_snapshot_keeps_raw_fields_without_computed_values(self):
+        self.standard_year()
+        snapshot.write(self.data, self.snapshots, "TEST")
+        facts = self.load("0000000001-25-000001")["facts"]
+        self.assertTrue(facts)
+        for fact in facts:
+            self.assertNotIn("value", fact)
+            self.assertNotIn("value_error", fact)
+            self.assertIn("raw", fact)
+
+    def test_nil_fact_is_marked_and_has_no_value(self):
+        page = (
+            b'<html><body><div style="display:none"><xbrli:context id="c"><xbrli:period><xbrli:startDate>2025-01-01'
+            b'</xbrli:startDate><xbrli:endDate>2025-03-31</xbrli:endDate></xbrli:period></xbrli:context></div>'
+            b'<ix:nonFraction id="n" name="us-gaap:Revenues" contextRef="c" xsi:nil="true"></ix:nonFraction>'
+            b'<ix:nonFraction id="v" name="us-gaap:Revenues" contextRef="c" scale="6" format="ixt:num-dot-decimal">5</ix:nonFraction>'
+            b"</body></html>"
+        )
+        content = extract.extract(extract.parse_html(page))
+        self.assertEqual([f.get("nil") for f in content["facts"]], [True, None])
+        facts = InlineDocument.from_snapshot(snapshot.decode(snapshot.encode(content))).facts
+        self.assertEqual([(f.value, f.value_error) for f in facts], [(None, "fact 為 nil"), (5_000_000, None)])
+        # 快照存 format 屬性原文，正規化在讀取時進行。
+        self.assertEqual([f["format"] for f in content["facts"]], [None, "ixt:num-dot-decimal"])
+        self.assertEqual([f.format for f in facts], ["", "num-dot-decimal"])
+
 
 class SnapshotModeTest(SnapshotFixture):
     def test_check_runs_without_any_sec_original(self):
@@ -99,7 +125,7 @@ class SnapshotModeTest(SnapshotFixture):
         self.publish()
         payload = self.load("0000000001-25-000001")
         changed = next(f for f in payload["facts"] if f["fact_id"] == "qa")
-        changed["value"] += 1_000_000
+        changed["raw"] = str(int(changed["raw"]) + 1)
         self.save("0000000001-25-000001", payload)
         found = self.check_from_snapshots()
         self.assertTrue(any(d.startswith("Q 2025-03-31") for d in found), found)
@@ -172,12 +198,22 @@ class SnapshotPathTest(SnapshotFixture):
 
 
 class ConsistencyTest(SnapshotFixture):
-    def test_parser_change_makes_snapshots_stale(self):
+    def test_extract_change_makes_snapshots_stale(self):
         self.standard_year()
         self.publish()
-        with patch("sec_revenue.revenue.snapshot.parser_sha256", return_value="changed"):
-            with self.assertRaisesRegex(ValueError, "不同版本的解析器"):
+        with patch("sec_revenue.revenue.snapshot.extract_sha256", return_value="changed"):
+            with self.assertRaisesRegex(ValueError, "不同版本的抽取程式"):
                 snapshot.SnapshotFilingSet(self.snapshots, "TEST")
+
+    def test_number_rule_is_applied_when_reading_snapshots(self):
+        # 數字規則不在快照中：讀快照時以目前的規則換算，改規則不需要重產。
+        self.standard_year()
+        self.publish()
+        filings = snapshot.SnapshotFilingSet(self.snapshots, "TEST")
+        with patch("sec_revenue.revenue.xbrl.ix_number", return_value=(7, None)):
+            facts = filings.document(filings.filings[0]).facts
+        self.assertTrue(facts)
+        self.assertEqual({f.value for f in facts}, {7})
 
     def test_snapshot_files_must_match_manifest(self):
         self.standard_year()
@@ -201,7 +237,7 @@ class ConsistencyTest(SnapshotFixture):
             snapshot.SnapshotFilingSet(self.snapshots, "TEST")
 
     def test_evidence_component_cannot_change_parsed_facts(self):
-        # evidence.py 不在解析器 hash 內：它的解析入口與交給它的解析樹都不能影響 fact。
+        # evidence.py 不在抽取程式 hash 內：它的解析入口與交給它的解析樹都不能影響 fact。
         self.standard_year()
         filings = FilingSet(self.data, "TEST")
         raw = filings.raw(filings.filings[-1])
@@ -226,6 +262,23 @@ class ConsistencyTest(SnapshotFixture):
     def test_missing_snapshots_point_to_the_command(self):
         with self.assertRaisesRegex(ValueError, "沒有快照"):
             snapshot.SnapshotFilingSet(self.snapshots, "TEST")
+
+
+class ExtractHashTest(unittest.TestCase):
+    SOURCE = Path(extract.__file__).read_text(encoding="utf-8")
+
+    def test_comments_docstrings_and_layout_do_not_change_the_hash(self):
+        edited = self.SOURCE.replace('"""從 SEC 原文抽取快照的內容', '"""另一段說明。\n\n從 SEC 原文抽取快照的內容', 1)
+        edited = edited.replace("def clean_text(text: str) -> str:\n", "def clean_text(text: str) -> str:\n    # 註解\n    \"\"\"說明。\"\"\"\n\n", 1)
+        edited = edited.replace('FILING_FIELDS = ("form", "reportDate", "filingDate")', 'FILING_FIELDS = (\n    "form",\n    "reportDate",\n    "filingDate",\n)  # 欄位', 1)
+        self.assertNotEqual(edited, self.SOURCE)
+        self.assertEqual(snapshot.source_sha256(edited), snapshot.source_sha256(self.SOURCE))
+        self.assertEqual(snapshot.extract_sha256(), snapshot.source_sha256(self.SOURCE))
+
+    def test_behavior_change_changes_the_hash(self):
+        edited = self.SOURCE.replace('return " ".join(text.split())', 'return " ".join(text.split()).strip()', 1)
+        self.assertNotEqual(edited, self.SOURCE)
+        self.assertNotEqual(snapshot.source_sha256(edited), snapshot.source_sha256(self.SOURCE))
 
 
 class ManifestTest(SnapshotFixture):
