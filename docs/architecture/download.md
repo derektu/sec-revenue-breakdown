@@ -80,7 +80,7 @@ parse 推算 Q4 需要年度減去同財年 Q1–Q3，「Q4 口徑一致」檢�
 
 ## 依申報清單下載（`--from-manifest`）
 
-`data/snapshots/<首字母>/<TICKER>/manifest.json` 是 `snapshot` 子命令產生的申報清單（見 [parser.md](parser.md) 的「快照」），列出正式輸出依賴的每份 10-K／10-Q（引擎不讀 8-K，所以 8-K 不在清單內）：
+`data/snapshots/<首字母>/<TICKER>/manifest.json` 是 `snapshot` 子命令產生的申報清單（見 [parser.md](parser.md) 的「快照」），列出正式輸出依賴的每份 10-K／10-Q（框架不讀 8-K，所以 8-K 不在清單內）：
 
 - 申報資訊：accession、表單、期末日、申報日、CIK、主文件名。
 - 申報包內每個檔案的 sha256 與 bytes。

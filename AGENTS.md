@@ -4,7 +4,8 @@
 - 每筆程式輸出須保留 SEC 文件 URL、期間、單位、完整分類 scope，以及推算的所有運算元。保存實際來源格式及雜湊；頁面文字快照不可冒稱原始 HTML bytes，公司網站副本不可直接改標 SEC。
 - Parser 的兩條硬原則，細節見 [`docs/architecture/parser.md`](docs/architecture/parser.md)。做法只能靠違反其中一條才行得通時，停下來回報，不要繞過：
   - 一期一期往下看，不偷看：處理一份申報只能用它申報日（含）之前已公開的申報。
-  - 數字只來自公司規格列出的 XBRL fact，不解析 HTML 或其他文件的文字。
+  - 數字只來自公司 parser 指定的 XBRL fact，不解析 HTML 或其他文件的文字。
+- 每家公司的 parser 各自獨立：開發一家公司只改該公司的目錄，需要時新增 utility；既有 utility 與框架不改，非改不可時停下來回報。分工見 `docs/architecture/parser.md` 的「架構」。
 - 上線狀態以 `data/universe/tickers.csv` 的 `status` 與 `data/revenue/` 的正式輸出為準。
 - 有數值差異須明列理由與證據。缺季、人工補值、未確認口徑及未完成 SEC 來源不得標 OK。空值不當作零。公司申報副本與 SEC 有共同上游，不當作獨立資料商驗證。
 - 對照資料（Stock Analysis、富途、TradingView、手動輸入等來源的 by segment 營收）以統一格式存於 `data/universe/references/<首字母>/<TICKER>/`（`reference.json` 與各來源的表格快照）並進 Git，作為比對與測試依據。

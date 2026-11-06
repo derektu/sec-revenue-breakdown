@@ -1,6 +1,6 @@
 # 本機操作
 
-流程分三個階段，各自獨立執行：`download` 下載 SEC 申報包，不產生營收輸出；`parse` 不連網，只讀已下載的申報包，依公司規格產生 `data/revenue/` 的正式輸出與證據；`viewer` 唯讀顯示正式輸出。`snapshot` 由原文產生 `data/snapshots/` 的 XBRL fact 快照與申報清單，讓沒有原文的人也能驗證正式輸出。沒有前端編譯步驟，Python 3.11+ 與 lxml 即可執行；`parse` 截圖另需 Playwright 與 Chromium。
+流程分三個階段，各自獨立執行：`download` 下載 SEC 申報包，不產生營收輸出；`parse` 不連網，只讀已下載的申報包，依公司 parser 產生 `data/revenue/` 的正式輸出與證據；`viewer` 唯讀顯示正式輸出。`snapshot` 由原文產生 `data/snapshots/` 的 fact 清單快照與申報清單，讓沒有原文的人也能驗證正式輸出。沒有前端編譯步驟，Python 3.11+ 與 lxml 即可執行；`parse` 截圖另需 Playwright 與 Chromium。
 
 ## 拉取與安裝
 
@@ -25,7 +25,7 @@ npm run setup
 npm run check        # unit test、對照資料驗證，以及以快照對全部上線公司跑 parse --check
 ```
 
-需要原文時（產生證據、修改規格或解析器、處理新一期財報），先設定 `.env` 的 `SEC_USER_AGENT` 與 `SEC_DATA_DIR`，再依申報清單下載並逐檔核對 sha256：
+需要原文時（產生證據、修改公司 parser 或框架、處理新一期財報），先設定 `.env` 的 `SEC_USER_AGENT` 與 `SEC_DATA_DIR`，再依申報清單下載並逐檔核對 sha256：
 
 ```bash
 .venv/bin/python scripts/sec_pipeline.py download --all --from-manifest
@@ -38,10 +38,10 @@ download 與 parse 都接受 `--tickers AAPL MSFT CVX`、`--tickers AAPL,MSFT`�
 
 | 階段 | 接受的 ticker | `--all` | 省略 ticker |
 |---|---|---|---|
-| download | 任何格式正確的 ticker，不需要公司規格 | `data/universe/tickers.csv` 的全部公司 | 報錯，避免意外下載整份清單 |
-| parse | 只有 `libs/sec_revenue/companies/` 有規格的公司 | 全部有規格的公司 | 同 `--all` |
+| download | 任何格式正確的 ticker，不需要公司 parser | `data/universe/tickers.csv` 的全部公司 | 報錯，避免意外下載整份清單 |
+| parse | 只有 `libs/sec_revenue/companies/` 有 parser 的公司 | 全部有 parser 的公司 | 同 `--all` |
 
-`tickers` 子命令列出有公司規格的 ticker：
+`tickers` 子命令列出有公司 parser 的 ticker：
 
 ```bash
 .venv/bin/python scripts/sec_pipeline.py tickers
@@ -86,7 +86,7 @@ SEC 原文（`sec/`）與下載索引（`pipeline/`）放在資料根目錄。�
 .venv/bin/python scripts/sec_pipeline.py parse --tickers AAPL --check
 ```
 
-規格、檢核、證據、正式輸出格式與參數見 [parser.md](../architecture/parser.md)。
+架構、公司 parser 的介面、檢核、證據、正式輸出格式與參數見 [parser.md](../architecture/parser.md)。
 
 ## 快照
 
@@ -96,15 +96,14 @@ SEC 原文（`sec/`）與下載索引（`pipeline/`）放在資料根目錄。�
 .venv/bin/python scripts/sec_pipeline.py snapshot --all --check            # 核對已提交的快照與原文一致
 ```
 
-以下改動要重產快照，並和改動放在同一個 PR：
+快照只由申報與框架讀 fact 的程式決定，修改公司 parser 不重產快照。以下改動要產生或重產快照，並和改動放在同一個 PR：
 
-| 改動 | 重產範圍 |
+| 改動 | 範圍 |
 |---|---|
-| 規格新增或更換 concept | 該公司 |
-| 下載了新的申報 | 該公司 |
-| 決定快照內容的程式（`revenue/xbrl.py`、`ixbrl.py`、`filings.py`、`snapshot.py`）改動 | 全部公司 |
+| 下載了新的申報 | 該份申報 |
+| 框架讀 fact 的程式改動 | 全部公司 |
 
-快照不足或過期時，`--snapshots` 直接報錯並指出要重產的公司。`snapshot` 寫入時若有原文讀不到的申報，快照記錄為錯誤並回傳 2，先補下載再重產。快照模式驗得到與驗不到的內容見 [parser.md](../architecture/parser.md) 的「快照」。
+快照不足或過期時，`--snapshots` 直接報錯並指出要重產的公司。`snapshot` 寫入時若有原文讀不到的申報，快照記錄為錯誤並回傳 2，先補下載再重產。快照模式驗得到與驗不到的內容，以及快照進 Git 與自架 runner 兩種 CI 環境，見 [parser.md](../architecture/parser.md) 的「快照」。
 
 ## Viewer
 
