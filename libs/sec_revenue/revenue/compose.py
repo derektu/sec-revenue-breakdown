@@ -200,8 +200,10 @@ class PeriodComposer:
             found[name] = self.candidates(document, filing, name, terms, request, role, sign)
         if list(groups) != expected:
             raise ParseError("定義唯一", f"{filing.accession} 的組成順序 {list(groups)} 與 {filing.report_date} 的分類 {expected} 不同")
-        if not composition.total:
+        if composition.total is None:
             self.absent(composition, self.source.total_name, filing, request)
+        if not composition.total:
+            raise ParseError("定義唯一", f"{self.source.total_name}：{filing.accession} 的組成沒有任何運算元")
         total = self.candidates(document, filing, self.source.total_name, composition.total, request, role, sign)
         ordered = [(groups[name], name, found[name]) for name in groups]
         return ordered + [("total", self.source.total_name, total)]

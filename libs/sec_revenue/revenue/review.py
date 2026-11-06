@@ -33,6 +33,10 @@ def comparatives(document: InlineDocument, accession: str, baselines: list[tuple
     （組成中沒有這個分類）。沒有涵蓋的期間不列入；已上線輸出沒有的期間長度（例如六個月累計）因此不比對。
     """
     compositions: dict[tuple[str, str], tuple[Composition | None, str | None]] = {}
+    spans_listed = {(f.start, f.end) for f in document.facts}
+
+    def listed(span: tuple[str, str]) -> bool:
+        return span in spans_listed
 
     def composed(span: tuple[str, str]) -> tuple[Composition | None, str | None]:
         """（組成, 無法比較的原因）；兩者都是 None 代表新申報沒有涵蓋這段期間。"""
@@ -44,8 +48,13 @@ def comparatives(document: InlineDocument, accession: str, baselines: list[tuple
                     found = compose_for(Request(span[1], duration, span[0]))
                 except ParseError as failure:
                     error = f"[{failure.check}] {failure.message}"
-            covered = found is not None and (found.total is not None or (total_name is not None and total_name in found.unparseable))
-            compositions[span] = (found if covered else None, error)
+            if found is not None and found.total is not None:
+                compositions[span] = (found, None)
+            elif (error is not None or (found is not None and total_name is not None and total_name in found.unparseable)) and listed(span):
+                # 組不出或無法確定總營收時，只在申報確實列示這段期間（有起訖相同的 fact）才記為無法比較。
+                compositions[span] = (found, error)
+            else:
+                compositions[span] = (None, None)
         return compositions[span]
 
     found = []

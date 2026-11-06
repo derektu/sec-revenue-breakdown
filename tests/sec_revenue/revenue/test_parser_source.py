@@ -176,6 +176,9 @@ class ParserSourceTest(Fixture):
         found = comparatives(document, "new", [("Q", "2024-03-31", published)], fail, "Total")
         self.assertEqual((found[0]["result"], found[0]["listed_value"]), ("unparseable", None))
         self.assertIn("前綴宣告衝突", found[0]["note"])
+        # 申報沒有列示這段期間時，組不出來不算無法比較，不產生標記。
+        other = InlineDocument(build_html(2025, "Q1", [item("qa", REVENUE, A, "2025-01-01", "2025-03-31", "60")]))
+        self.assertEqual(comparatives(other, "new", [("Q", "2024-03-31", published)], fail, "Total"), [])
 
     def test_geography_is_recognized_by_namespace_uri(self):
         # 文件以別的前綴指向 srt 的 namespace；只列美國成員時，非美國成員沒有列出，地區成員完整不通過。
