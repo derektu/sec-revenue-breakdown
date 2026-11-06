@@ -43,7 +43,7 @@ FY2024、FY2025 的 Q4 均通過分類與口徑一致檢核，依年度減九個
 
 ## 數字在原文的位置
 
-兩個分部的 fact 在 MD&A「Analysis of sales by business segments」下的分部銷售表，各分部的 `Worldwide` 列。這張表跨頁分成兩段，各有表格編號：前段（10-Q 如 t62）含 Innovative Medicine 與 MedTech 的前幾列，後段（10-Q 如 t64）含 MedTech 其餘列、`TOTAL MEDTECH` 與末尾的無維度 `WORLDWIDE` 合計；10-K 的 t171、t175 結構相同。這些 fact 只有分部維度；同表的 `U.S.` 與 `International` 列另有地區維度，不採用。10-Q 的表同時列單季與累計欄；10-K 列年度欄。
+兩個分部的 fact 在 MD&A「Analysis of sales by business segments」下的分部銷售表，各分部的 `Worldwide` 列。這張表跨數頁，每頁一個表格編號，編號每份申報不同：Innovative Medicine 的 `Worldwide` 列在其中一段（2024 年 Q1 10-Q 為 t62），MedTech 的 `Worldwide` 列、`TOTAL MEDTECH` 與末尾的無維度 `WORLDWIDE` 合計在後面一段（同一份為 t64）；10-K 結構相同（FY2024 10-K 為 t171、t175）。這些 fact 只有分部維度；同表的 `U.S.` 與 `International` 列另有地區維度，不採用。10-Q 的表同時列單季與累計欄；10-K 列年度欄。
 
 以下為正式 `revenue.json` 運算元的 `evidence.table` 實際記錄的表格，編號取自證據檔名 `<accession>-<sha12>-t<編號>.html` 與同名 `.png`。總營收證據均取自 MedTech 銷售表末尾的無維度合併總計，而非合併損益表或地區銷售表中的重複 fact。
 
