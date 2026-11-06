@@ -57,7 +57,7 @@
 | `libs/sec_revenue/viewer/` | 正式輸出的唯讀 viewer |
 | `tests/` | unit test：`tests/sec_revenue/` 對應 `libs/sec_revenue/`，`tests/scripts/` 對應 `scripts/`。以 repo 根目錄為 top-level 執行：`python -m unittest discover -s tests -t .`，測試模組以 `tests.sec_revenue.*` 載入，不會蓋掉 `libs/` 的 `sec_revenue` 套件 |
 | `docs/architecture/` | 系統規格：parser 與正式輸出、SEC 下載、viewer、對照資料格式、擷取工具 |
-| `docs/guides/` | 操作手冊：[資料使用指南](docs/guides/data-guide.md)（給使用資料的 RD 與 PM）、[本機操作](docs/guides/local-workflow.md) |
+| `docs/guides/` | 操作手冊：[資料使用指南](docs/guides/data-guide.md)（給使用資料的 RD 與 PM）、[本機操作](docs/guides/local-workflow.md)、[開發流程](docs/guides/dev-workflow.md)（新增 ticker 到上線的每一步，RD 與受交辦的 agent 各做什麼）、[Parser 開發指南](docs/guides/parser-dev-guide.md)（寫 parser 的開發者與 agent） |
 
 ## Setup
 
