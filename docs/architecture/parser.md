@@ -367,5 +367,5 @@ npm run parse -- --tickers AAPL --republish AAPL Q 2025-09-27   # 由人確認�
 
 ## 測試
 
-- 引擎：`tests/revenue/test_revenue_parser.py` 以合成的 inline XBRL 申報測試每個流程步驟與每項檢核，不連網、不啟動 Chromium。
+- 引擎：`tests/sec_revenue/revenue/test_revenue_parser.py` 以合成的 inline XBRL 申報測試每個流程步驟與每項檢核，不連網、不啟動 Chromium。
 - 公司：`data/revenue/` 中已提交的輸出就是回歸基準。`--check` 重跑 parser，與已提交的輸出逐欄比對；改某家公司的規格只重跑該家，改引擎則重跑所有上線公司（#49）。`--check` 需要本機的 SEC 原文，CI 不執行，只跑 unit test 與 `validate_universe.py`。

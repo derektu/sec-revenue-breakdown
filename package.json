@@ -4,7 +4,7 @@
   "description": "常用指令；以 npm run <名稱> 執行，額外參數接在 -- 之後",
   "scripts": {
     "setup": "python3 -m venv .venv && .venv/bin/python -m pip install -r requirements.txt && .venv/bin/playwright install chromium",
-    "test": ".venv/bin/python -m unittest discover -s tests",
+    "test": ".venv/bin/python -m unittest discover -s tests -t .",
     "validate": ".venv/bin/python scripts/validate_universe.py",
     "check": "npm run test && npm run validate",
     "tickers": ".venv/bin/python scripts/sec_pipeline.py tickers",

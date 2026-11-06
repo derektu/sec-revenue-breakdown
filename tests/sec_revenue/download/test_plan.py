@@ -4,7 +4,7 @@ from pathlib import Path
 import sys
 import unittest
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / "libs"))
 from sec_revenue.download.plan import q4_dependencies  # noqa: E402
 

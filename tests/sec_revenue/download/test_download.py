@@ -12,7 +12,7 @@ import unittest
 from unittest.mock import MagicMock, patch
 from urllib.error import HTTPError
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / "libs"))
 from sec_revenue.download.http import SecHttpClient, SecIdentityError, is_blocking  # noqa: E402
 from sec_revenue.download.packages import FilingIndexPage, FilingPackages, is_inline_xbrl  # noqa: E402

@@ -133,4 +133,4 @@
 | `libs/sec_revenue/capture/evidence.py` | 截圖壓縮、`table.html`、`table.txt`、證據檔寫入 |
 | `libs/sec_revenue/capture/merge.py` | 累積合併與寫入 |
 | `libs/sec_revenue/capture/model.py` | adapter 與外殼交換的資料結構 |
-| `tests/capture/test_capture.py` | 離線測試（不開瀏覽器、不連網） |
+| `tests/sec_revenue/capture/test_capture.py` | 離線測試（不開瀏覽器、不連網） |
