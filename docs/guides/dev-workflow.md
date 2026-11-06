@@ -22,8 +22,8 @@
 | 5. 觀點建議 | 比較各來源、對照 SEC 申報，提出建議 | |
 | 6. 決定觀點 | | 決定觀點與分類 |
 | 7. 寫 parser | 寫 `parser.py`、`parser.md`，驗證、比對 | 決定 agent 回報的待決事項 |
-| 8. 獨立 review | 另一個 agent review | 指派 reviewer |
-| 9. 判斷上線 | 整理上線條件的證據、重跑檢查；人核准後改 `tickers.csv` | 判斷能不能上線、核准、合併 |
+| 8. 獨立 review | 另一個 agent review 還沒 commit 的改動；修完 review 的問題 | 在第 9 步一併決定需要人判斷的 review 問題 |
+| 9. 判斷上線 | 整理上線條件的證據、重跑檢查，請人核准；核准後寫入 `tickers.csv`，commit、開 PR、等 CI、合併 | 判斷能不能上線、核准 |
 | 10. 上線之後 | 下載新申報、產生快照、parse、回報結果 | 處理失敗與標記的後續決定 |
 
 交辦的例子：
@@ -35,13 +35,26 @@ MSFT 用 Stock Analysis 的觀點，照 docs/guides/dev-workflow.md 第 7 步寫
 新一期財報出來了，照 docs/guides/dev-workflow.md 第 10 步更新全部上線的 ticker。
 ```
 
+## 從寫完到合併
+
+所有改動（parser、utility、框架、文件）都照這個順序：
+
+1. 寫完，停在 commit 之前。
+2. 沒參與開發的 agent 對還沒 commit 的 diff 做獨立 review。
+3. 修完 review 的問題，必要時再 review。
+4. orchestrator（負責交辦與整合的 agent）判斷可以合併時，停下來請人核准。
+5. 人核准後：commit 一次、push、開 PR（附 review 摘要）、等 CI 通過、squash 合併，回到 main。
+
+開發者自己就是合併的人，所以 review 放在 commit 之前，問題在 commit 前就修完：每個 PR 只有一個 commit，CI 只跑一次。CI 沒通過不合併。
+
 ## agent 的共通規則
 
 - 遵守 [`AGENTS.md`](../../AGENTS.md)：數字只來自 SEC 申報；空值不當作零；不讀、不印 `.env` 的內容。
 - 一次只跑一個下載或擷取，不平行執行。
 - 不經手任何網站的帳密、cookie 或 token；網站需要登入時，請人在專用瀏覽器中登入。
 - 不改框架（`libs/sec_revenue/revenue/`）與既有 utility，非改不可時停下來回報。
-- 沒有人明確指示時不 commit、不 push、不合併；做完停下來回報。
+- 沒有人核准時不 commit、不 push、不合併；做完停下來回報。
+- 任何改動從寫完到合併都照這個順序（[從寫完到合併](#從寫完到合併)）：寫完 → 獨立 review → 修完 → 人核准 → commit、開 PR、CI 通過、合併。
 - 每一步做完回報：做了什麼、結果、遇到的問題、需要人決定的事項（附選項與建議）。
 
 ## 1. 選 ticker
@@ -135,11 +148,11 @@ MSFT 用 Stock Analysis 的觀點，照 docs/guides/dev-workflow.md 第 7 步寫
 
 做完停在 commit 之前，回報：各期結果（`published`、`not_derived`、`failed` 的期別與原因）、與對照來源的比對與差異、差異標記、需要人決定的事項。
 
-**人**：決定回報中的待決事項；決定 commit 與開 PR。
+**人**：決定回報中的待決事項。
 
 ## 8. 獨立 review
 
-**agent**（沒參與開發的另一個 agent）：review PR，必看項目：
+**agent**（沒參與開發的另一個 agent）：review 還沒 commit 的改動，必看項目：
 
 - `parser.md` 與程式一致；每個依日期的切換都能在那份申報裡看到。
 - 「時點與寫 parser 的人的知識」的三條規則（見 [parser.md](../architecture/parser.md)）。
@@ -148,7 +161,9 @@ MSFT 用 Stock Analysis 的觀點，照 docs/guides/dev-workflow.md 第 7 步寫
 
 回報發現的問題，依嚴重程度排列。
 
-**人**：指派 reviewer，決定問題怎麼處理。
+**agent**（orchestrator）：修完 review 的問題，必要時再 review，接著做第 9 步。需要人決定的 review 問題，放進第 9 步請人核准時的回報。
+
+**人**：決定 review 問題怎麼處理。
 
 ## 9. 判斷上線
 
@@ -161,7 +176,7 @@ MSFT 用 Stock Analysis 的觀點，照 docs/guides/dev-workflow.md 第 7 步寫
 | 與採用的對照來源逐期比對，每一筆差異都有原因與證據；沒有「原因未確認」卻當作一致的 | `parser.md` 的「驗證」 |
 | 差異標記都有說明 | `parser.md` 的「比較欄」 |
 | 兩種 `--check` 與 `npm run check` 都通過 | 下面的指令 |
-| 獨立 review 通過，需要人決定的事項都已決定 | PR |
+| 獨立 review 通過，需要人決定的事項都已決定 | 第 8 步的 review 結果 |
 
 **agent**：逐條整理上表的證據並重跑檢查，回報每一條是否成立，並建議穩定度評分與理由：
 
@@ -171,9 +186,9 @@ MSFT 用 Stock Analysis 的觀點，照 docs/guides/dev-workflow.md 第 7 步寫
 npm run check
 ```
 
-人核准上線後，在 `tickers.csv` 把 `status` 改為 `ok`，填人決定的 `adopted_source`、`stability_score` 與 `stability_note`，執行 `validate_universe.py`。
+整理完停下來請人核准，附上改動摘要、review 結果、驗證結果與上表每一條的證據。人核准上線時，在 `tickers.csv` 把 `status` 改為 `ok`，填人決定的 `adopted_source`、`stability_score` 與 `stability_note`，執行 `validate_universe.py`；人決定先不上線時維持 `wip`。接著照[從寫完到合併](#從寫完到合併)的第 5 步完成：一個 ticker 一個 PR，parser 與 `tickers.csv` 在同一個 commit。寫入 `tickers.csv` 的是人決定的值，由 `validate_universe.py` 檢查，不另外 review。
 
-**人**：判斷能不能上線、核准、合併。數字與證據可以在 viewer 檢視：
+**人**：判斷能不能上線、核准。數字與證據可以在 viewer 檢視：
 
 ```bash
 .venv/bin/python scripts/sec_pipeline.py viewer --host 127.0.0.1 --port 7290
