@@ -71,15 +71,14 @@ parser 分三層。每家公司的 parser 各自獨立，新增或修改一家�
 
 程式檢查不了這些規則，所以列為獨立 review 的必看項目。
 
-## 新增一家公司
+## 新增一個 ticker
 
-1. **確認對照資料**：擷取該公司的對照資料（Stock Analysis、富途、TradingView）。
-2. **選定觀點**：比較各來源的分類。
-   - 各來源一致：直接採用該觀點。
-   - 各來源不一致（面向不同、細項層級不同、分類名稱或範圍不同）：開發者對照 SEC 原文能重現哪些分類，提出建議與理由，由人判斷後才開始寫 parser。
-3. **寫公司 parser 與 `parser.md`**，以已下載的 SEC 原文跑 parse。只寫這家公司的目錄；需要的 utility 不存在時新增一個，不改既有的 utility 與框架。
-4. **與對照資料逐期比對**（#46），差異逐筆說明。
-5. **獨立 review**：除了程式與 `parser.md`，必看「時點與寫 parser 的人的知識」的三條規則與 utility 只增不改；通過後由人核准，`tickers.csv` 標為 `ok`。
+完整流程（選 ticker、列入 `tickers.csv`、下載、擷取對照資料、觀點、寫 parser、review、上線）與每一步由 agent 或人負責，見 [開發流程](../guides/dev-workflow.md)；寫 parser 的做法見 [Parser 開發指南](../guides/parser-dev-guide.md)。與本文件規則相關的幾點：
+
+- **觀點由人決定**：開發者（人或 agent）比較各對照來源的分類、對照 SEC 原文能重現哪些分類，提出建議與理由；人決定後才開始寫 parser。
+- **只寫這個 ticker 的目錄**：需要的 utility 不存在時新增一個，不改既有的 utility 與框架。
+- **與對照資料逐期比對**（#46），差異逐筆說明。
+- **獨立 review**：除了程式與 `parser.md`，必看「時點與寫 parser 的人的知識」的三條規則與 utility 只增不改；通過後由人核准，`tickers.csv` 標為 `ok`。
 
 ## 目錄
 
