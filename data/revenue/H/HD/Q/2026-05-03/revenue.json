@@ -1,0 +1,287 @@
+{
+  "categories": {
+    "Building Materials": {
+      "expression": [
+        {
+          "operand": "op2",
+          "weight": 1
+        }
+      ],
+      "value": 12971000000
+    },
+    "Décor": {
+      "expression": [
+        {
+          "operand": "op3",
+          "weight": 1
+        }
+      ],
+      "value": 12605000000
+    },
+    "Hardlines": {
+      "expression": [
+        {
+          "operand": "op1",
+          "weight": 1
+        }
+      ],
+      "value": 12187000000
+    },
+    "Other": {
+      "expression": [
+        {
+          "operand": "op4",
+          "weight": 1
+        }
+      ],
+      "value": 4002000000
+    }
+  },
+  "checks": {
+    "structural": [
+      {
+        "check": "定義唯一",
+        "result": "pass"
+      },
+      {
+        "check": "fact 存在且唯一",
+        "result": "pass"
+      },
+      {
+        "check": "單位與精度",
+        "result": "pass"
+      },
+      {
+        "check": "加總",
+        "result": "pass"
+      },
+      {
+        "check": "證據完整",
+        "result": "pass"
+      }
+    ],
+    "sum": {
+      "categories": 41765000000,
+      "difference": 0,
+      "tolerance": "2500000",
+      "total": 41765000000
+    }
+  },
+  "filings": {
+    "primary": {
+      "accession": "0001628280-26-038247",
+      "filing_date": "2026-05-27",
+      "form": "10-Q",
+      "report_date": "2026-05-03"
+    }
+  },
+  "fiscal_quarter": 1,
+  "fiscal_year": 2026,
+  "operands": {
+    "op1": {
+      "accession": "0001628280-26-038247",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-53",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "srt:ProductOrServiceAxis": "hd:MajorProductLineHardlinesMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "hd:PrimarySegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/354950/000162828026038247/hd-20260503.htm",
+        "name": "hd-20260503.htm",
+        "sha256": "7a1eebecc089a6a8a7b97ce500d3950822e2963eb587feb92dafd77f3f1f3dac",
+        "url": "https://www.sec.gov/Archives/edgar/data/354950/000162828026038247/hd-20260503.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "a0dc3708716c5b94f803f3a7d9d8865b60b9af9f1501f26a7a1fd82bb556e6ff",
+        "png_scale": 1,
+        "png_sha256": "bdaec7db9c47ded9314f36ba370940c354f06e17dbf8cef2a007f83f34836330",
+        "table": "0001628280-26-038247-7a1eebecc089-t27"
+      },
+      "fact_id": "f-318",
+      "filing_date": "2026-05-27",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-05-03",
+        "start": "2026-02-02"
+      },
+      "raw": "12,187",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 12187000000
+    },
+    "op2": {
+      "accession": "0001628280-26-038247",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-49",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "srt:ProductOrServiceAxis": "hd:MajorProductLineBuildingMaterialsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "hd:PrimarySegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/354950/000162828026038247/hd-20260503.htm",
+        "name": "hd-20260503.htm",
+        "sha256": "7a1eebecc089a6a8a7b97ce500d3950822e2963eb587feb92dafd77f3f1f3dac",
+        "url": "https://www.sec.gov/Archives/edgar/data/354950/000162828026038247/hd-20260503.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "a0dc3708716c5b94f803f3a7d9d8865b60b9af9f1501f26a7a1fd82bb556e6ff",
+        "png_scale": 1,
+        "png_sha256": "bdaec7db9c47ded9314f36ba370940c354f06e17dbf8cef2a007f83f34836330",
+        "table": "0001628280-26-038247-7a1eebecc089-t27"
+      },
+      "fact_id": "f-314",
+      "filing_date": "2026-05-27",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-05-03",
+        "start": "2026-02-02"
+      },
+      "raw": "12,971",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 12971000000
+    },
+    "op3": {
+      "accession": "0001628280-26-038247",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-51",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "srt:ProductOrServiceAxis": "hd:MajorProductLineDcorMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "hd:PrimarySegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/354950/000162828026038247/hd-20260503.htm",
+        "name": "hd-20260503.htm",
+        "sha256": "7a1eebecc089a6a8a7b97ce500d3950822e2963eb587feb92dafd77f3f1f3dac",
+        "url": "https://www.sec.gov/Archives/edgar/data/354950/000162828026038247/hd-20260503.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "a0dc3708716c5b94f803f3a7d9d8865b60b9af9f1501f26a7a1fd82bb556e6ff",
+        "png_scale": 1,
+        "png_sha256": "bdaec7db9c47ded9314f36ba370940c354f06e17dbf8cef2a007f83f34836330",
+        "table": "0001628280-26-038247-7a1eebecc089-t27"
+      },
+      "fact_id": "f-316",
+      "filing_date": "2026-05-27",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-05-03",
+        "start": "2026-02-02"
+      },
+      "raw": "12,605",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 12605000000
+    },
+    "op4": {
+      "accession": "0001628280-26-038247",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-47",
+      "decimals": "-6",
+      "dimensions": {
+        "us-gaap:StatementBusinessSegmentsAxis": "us-gaap:AllOtherSegmentsMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/354950/000162828026038247/hd-20260503.htm",
+        "name": "hd-20260503.htm",
+        "sha256": "7a1eebecc089a6a8a7b97ce500d3950822e2963eb587feb92dafd77f3f1f3dac",
+        "url": "https://www.sec.gov/Archives/edgar/data/354950/000162828026038247/hd-20260503.htm"
+      },
+      "duplicates": [
+        "f-283"
+      ],
+      "evidence": {
+        "html_sha256": "a0dc3708716c5b94f803f3a7d9d8865b60b9af9f1501f26a7a1fd82bb556e6ff",
+        "png_scale": 1,
+        "png_sha256": "bdaec7db9c47ded9314f36ba370940c354f06e17dbf8cef2a007f83f34836330",
+        "table": "0001628280-26-038247-7a1eebecc089-t27"
+      },
+      "fact_id": "f-322",
+      "filing_date": "2026-05-27",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-05-03",
+        "start": "2026-02-02"
+      },
+      "raw": "4,002",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 4002000000
+    },
+    "op5": {
+      "accession": "0001628280-26-038247",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-1",
+      "decimals": "-6",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/354950/000162828026038247/hd-20260503.htm",
+        "name": "hd-20260503.htm",
+        "sha256": "7a1eebecc089a6a8a7b97ce500d3950822e2963eb587feb92dafd77f3f1f3dac",
+        "url": "https://www.sec.gov/Archives/edgar/data/354950/000162828026038247/hd-20260503.htm"
+      },
+      "duplicates": [
+        "f-284",
+        "f-108",
+        "f-333",
+        "f-339"
+      ],
+      "evidence": {
+        "html_sha256": "a0dc3708716c5b94f803f3a7d9d8865b60b9af9f1501f26a7a1fd82bb556e6ff",
+        "png_scale": 1,
+        "png_sha256": "bdaec7db9c47ded9314f36ba370940c354f06e17dbf8cef2a007f83f34836330",
+        "table": "0001628280-26-038247-7a1eebecc089-t27"
+      },
+      "fact_id": "f-324",
+      "filing_date": "2026-05-27",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-05-03",
+        "start": "2026-02-02"
+      },
+      "raw": "41,765",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 41765000000
+    }
+  },
+  "parser": {
+    "engine_sha256": "cef42e58f952c80715fda28bc15f98310ac69951641f5d0796f212ce1a6349f8",
+    "spec_sha256": "4350884e53df71458d480cc1349459c9edfffb11598637dab82ada1cf152e797"
+  },
+  "period_end": "2026-05-03",
+  "schema_version": 1,
+  "series": "Q",
+  "ticker": "HD",
+  "total": {
+    "expression": [
+      {
+        "operand": "op5",
+        "weight": 1
+      }
+    ],
+    "value": 41765000000
+  },
+  "unit": "USD",
+  "view": "product"
+}

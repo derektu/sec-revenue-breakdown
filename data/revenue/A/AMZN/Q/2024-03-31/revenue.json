@@ -1,0 +1,409 @@
+{
+  "categories": {
+    "AWS": {
+      "expression": [
+        {
+          "operand": "op6",
+          "weight": 1
+        }
+      ],
+      "value": 25037000000
+    },
+    "Advertising services": {
+      "expression": [
+        {
+          "operand": "op4",
+          "weight": 1
+        }
+      ],
+      "value": 11824000000
+    },
+    "Online stores": {
+      "expression": [
+        {
+          "operand": "op1",
+          "weight": 1
+        }
+      ],
+      "value": 54670000000
+    },
+    "Other": {
+      "expression": [
+        {
+          "operand": "op7",
+          "weight": 1
+        }
+      ],
+      "value": 1262000000
+    },
+    "Physical stores": {
+      "expression": [
+        {
+          "operand": "op2",
+          "weight": 1
+        }
+      ],
+      "value": 5202000000
+    },
+    "Subscription services": {
+      "expression": [
+        {
+          "operand": "op5",
+          "weight": 1
+        }
+      ],
+      "value": 10722000000
+    },
+    "Third-party seller services": {
+      "expression": [
+        {
+          "operand": "op3",
+          "weight": 1
+        }
+      ],
+      "value": 34596000000
+    }
+  },
+  "checks": {
+    "structural": [
+      {
+        "check": "定義唯一",
+        "result": "pass"
+      },
+      {
+        "check": "fact 存在且唯一",
+        "result": "pass"
+      },
+      {
+        "check": "單位與精度",
+        "result": "pass"
+      },
+      {
+        "check": "加總",
+        "result": "pass"
+      },
+      {
+        "check": "證據完整",
+        "result": "pass"
+      }
+    ],
+    "sum": {
+      "categories": 143313000000,
+      "difference": 0,
+      "tolerance": "4000000",
+      "total": 143313000000
+    }
+  },
+  "filings": {
+    "primary": {
+      "accession": "0001018724-24-000083",
+      "filing_date": "2024-05-01",
+      "form": "10-Q",
+      "report_date": "2024-03-31"
+    }
+  },
+  "fiscal_quarter": 1,
+  "fiscal_year": 2024,
+  "operands": {
+    "op1": {
+      "accession": "0001018724-24-000083",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-163",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "amzn:OnlineStoresMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1018724/000101872424000083/amzn-20240331.htm",
+        "name": "amzn-20240331.htm",
+        "sha256": "9e987e05df496b752684ff69f5827fb9ddb2e4b468d87566ba07015a345c0e92",
+        "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872424000083/amzn-20240331.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "2b219cc4ff8218d20245734986a89b2ba49df734c984376898583c9b5da591a7",
+        "png_scale": 1,
+        "png_sha256": "383f6f29dc67933358c25cffa3ae742c69331b205dfebc58fc73c2f5355a78fa",
+        "table": "0001018724-24-000083-9e987e05df49-t31"
+      },
+      "fact_id": "f-846",
+      "filing_date": "2024-05-01",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-03-31",
+        "start": "2024-01-01"
+      },
+      "raw": "54,670",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 54670000000
+    },
+    "op2": {
+      "accession": "0001018724-24-000083",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-165",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "amzn:PhysicalStoresMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1018724/000101872424000083/amzn-20240331.htm",
+        "name": "amzn-20240331.htm",
+        "sha256": "9e987e05df496b752684ff69f5827fb9ddb2e4b468d87566ba07015a345c0e92",
+        "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872424000083/amzn-20240331.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "2b219cc4ff8218d20245734986a89b2ba49df734c984376898583c9b5da591a7",
+        "png_scale": 1,
+        "png_sha256": "383f6f29dc67933358c25cffa3ae742c69331b205dfebc58fc73c2f5355a78fa",
+        "table": "0001018724-24-000083-9e987e05df49-t31"
+      },
+      "fact_id": "f-848",
+      "filing_date": "2024-05-01",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-03-31",
+        "start": "2024-01-01"
+      },
+      "raw": "5,202",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 5202000000
+    },
+    "op3": {
+      "accession": "0001018724-24-000083",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-167",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "amzn:ThirdPartySellerServicesMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1018724/000101872424000083/amzn-20240331.htm",
+        "name": "amzn-20240331.htm",
+        "sha256": "9e987e05df496b752684ff69f5827fb9ddb2e4b468d87566ba07015a345c0e92",
+        "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872424000083/amzn-20240331.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "2b219cc4ff8218d20245734986a89b2ba49df734c984376898583c9b5da591a7",
+        "png_scale": 1,
+        "png_sha256": "383f6f29dc67933358c25cffa3ae742c69331b205dfebc58fc73c2f5355a78fa",
+        "table": "0001018724-24-000083-9e987e05df49-t31"
+      },
+      "fact_id": "f-850",
+      "filing_date": "2024-05-01",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-03-31",
+        "start": "2024-01-01"
+      },
+      "raw": "34,596",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 34596000000
+    },
+    "op4": {
+      "accession": "0001018724-24-000083",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-169",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "amzn:AdvertisingServicesMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1018724/000101872424000083/amzn-20240331.htm",
+        "name": "amzn-20240331.htm",
+        "sha256": "9e987e05df496b752684ff69f5827fb9ddb2e4b468d87566ba07015a345c0e92",
+        "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872424000083/amzn-20240331.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "2b219cc4ff8218d20245734986a89b2ba49df734c984376898583c9b5da591a7",
+        "png_scale": 1,
+        "png_sha256": "383f6f29dc67933358c25cffa3ae742c69331b205dfebc58fc73c2f5355a78fa",
+        "table": "0001018724-24-000083-9e987e05df49-t31"
+      },
+      "fact_id": "f-852",
+      "filing_date": "2024-05-01",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-03-31",
+        "start": "2024-01-01"
+      },
+      "raw": "11,824",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 11824000000
+    },
+    "op5": {
+      "accession": "0001018724-24-000083",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-171",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "amzn:SubscriptionServicesMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1018724/000101872424000083/amzn-20240331.htm",
+        "name": "amzn-20240331.htm",
+        "sha256": "9e987e05df496b752684ff69f5827fb9ddb2e4b468d87566ba07015a345c0e92",
+        "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872424000083/amzn-20240331.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "2b219cc4ff8218d20245734986a89b2ba49df734c984376898583c9b5da591a7",
+        "png_scale": 1,
+        "png_sha256": "383f6f29dc67933358c25cffa3ae742c69331b205dfebc58fc73c2f5355a78fa",
+        "table": "0001018724-24-000083-9e987e05df49-t31"
+      },
+      "fact_id": "f-854",
+      "filing_date": "2024-05-01",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-03-31",
+        "start": "2024-01-01"
+      },
+      "raw": "10,722",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 10722000000
+    },
+    "op6": {
+      "accession": "0001018724-24-000083",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-173",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "amzn:AmazonWebServicesMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1018724/000101872424000083/amzn-20240331.htm",
+        "name": "amzn-20240331.htm",
+        "sha256": "9e987e05df496b752684ff69f5827fb9ddb2e4b468d87566ba07015a345c0e92",
+        "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872424000083/amzn-20240331.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "2b219cc4ff8218d20245734986a89b2ba49df734c984376898583c9b5da591a7",
+        "png_scale": 1,
+        "png_sha256": "383f6f29dc67933358c25cffa3ae742c69331b205dfebc58fc73c2f5355a78fa",
+        "table": "0001018724-24-000083-9e987e05df49-t31"
+      },
+      "fact_id": "f-856",
+      "filing_date": "2024-05-01",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-03-31",
+        "start": "2024-01-01"
+      },
+      "raw": "25,037",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 25037000000
+    },
+    "op7": {
+      "accession": "0001018724-24-000083",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-175",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "amzn:OtherServicesMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1018724/000101872424000083/amzn-20240331.htm",
+        "name": "amzn-20240331.htm",
+        "sha256": "9e987e05df496b752684ff69f5827fb9ddb2e4b468d87566ba07015a345c0e92",
+        "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872424000083/amzn-20240331.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "2b219cc4ff8218d20245734986a89b2ba49df734c984376898583c9b5da591a7",
+        "png_scale": 1,
+        "png_sha256": "383f6f29dc67933358c25cffa3ae742c69331b205dfebc58fc73c2f5355a78fa",
+        "table": "0001018724-24-000083-9e987e05df49-t31"
+      },
+      "fact_id": "f-858",
+      "filing_date": "2024-05-01",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-03-31",
+        "start": "2024-01-01"
+      },
+      "raw": "1,262",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 1262000000
+    },
+    "op8": {
+      "accession": "0001018724-24-000083",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-1",
+      "decimals": "-6",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1018724/000101872424000083/amzn-20240331.htm",
+        "name": "amzn-20240331.htm",
+        "sha256": "9e987e05df496b752684ff69f5827fb9ddb2e4b468d87566ba07015a345c0e92",
+        "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872424000083/amzn-20240331.htm"
+      },
+      "duplicates": [
+        "f-155",
+        "f-831"
+      ],
+      "evidence": {
+        "html_sha256": "2b219cc4ff8218d20245734986a89b2ba49df734c984376898583c9b5da591a7",
+        "png_scale": 1,
+        "png_sha256": "383f6f29dc67933358c25cffa3ae742c69331b205dfebc58fc73c2f5355a78fa",
+        "table": "0001018724-24-000083-9e987e05df49-t31"
+      },
+      "fact_id": "f-860",
+      "filing_date": "2024-05-01",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-03-31",
+        "start": "2024-01-01"
+      },
+      "raw": "143,313",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 143313000000
+    }
+  },
+  "parser": {
+    "engine_sha256": "cef42e58f952c80715fda28bc15f98310ac69951641f5d0796f212ce1a6349f8",
+    "spec_sha256": "bdeb429e68722e16bbe68ae8818fa6efb7228cf8fc6ba8d74807241318564b33"
+  },
+  "period_end": "2024-03-31",
+  "schema_version": 1,
+  "series": "Q",
+  "ticker": "AMZN",
+  "total": {
+    "expression": [
+      {
+        "operand": "op8",
+        "weight": 1
+      }
+    ],
+    "value": 143313000000
+  },
+  "unit": "USD",
+  "view": "product"
+}
