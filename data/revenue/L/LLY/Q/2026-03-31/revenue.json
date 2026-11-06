@@ -1,0 +1,318 @@
+{
+  "categories": {
+    "Cardiometabolic Health": {
+      "expression": [
+        {
+          "operand": "op1",
+          "weight": 1
+        }
+      ],
+      "value": 15760000000
+    },
+    "Immunology": {
+      "expression": [
+        {
+          "operand": "op3",
+          "weight": 1
+        }
+      ],
+      "value": 1203000000
+    },
+    "Neuroscience": {
+      "expression": [
+        {
+          "operand": "op4",
+          "weight": 1
+        }
+      ],
+      "value": 382000000
+    },
+    "Oncology": {
+      "expression": [
+        {
+          "operand": "op2",
+          "weight": 1
+        }
+      ],
+      "value": 2268000000
+    },
+    "Other": {
+      "expression": [
+        {
+          "operand": "op5",
+          "weight": 1
+        }
+      ],
+      "value": 187000000
+    }
+  },
+  "checks": {
+    "structural": [
+      {
+        "check": "定義唯一",
+        "result": "pass"
+      },
+      {
+        "check": "fact 存在且唯一",
+        "result": "pass"
+      },
+      {
+        "check": "單位與精度",
+        "result": "pass"
+      },
+      {
+        "check": "加總",
+        "result": "pass"
+      },
+      {
+        "check": "證據完整",
+        "result": "pass"
+      }
+    ],
+    "sum": {
+      "categories": 19800000000,
+      "difference": 1000000,
+      "tolerance": "3000000",
+      "total": 19799000000
+    }
+  },
+  "filings": {
+    "primary": {
+      "accession": "0000059478-26-000045",
+      "filing_date": "2026-04-30",
+      "form": "10-Q",
+      "report_date": "2026-03-31"
+    }
+  },
+  "fiscal_quarter": 1,
+  "fiscal_year": 2026,
+  "operands": {
+    "op1": {
+      "accession": "0000059478-26-000045",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-56",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "lly:CardiometabolicHealthMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/59478/000005947826000045/lly-20260331.htm",
+        "name": "lly-20260331.htm",
+        "sha256": "59cfa4a893e7baaa97e6abde5f6f790025a745a95d6a322db4abc3207245ce83",
+        "url": "https://www.sec.gov/Archives/edgar/data/59478/000005947826000045/lly-20260331.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "24e8a06d5bce7ed8d9a3565c62cb87a2d634052637f53e7e8b4412c89dd43e96",
+        "png_scale": 1,
+        "png_sha256": "47c525995e22ec1fd66f301d9229e70f3519d6de79e21ff7a95e3c0b5aad62a9",
+        "table": "0000059478-26-000045-59cfa4a893e7-t12"
+      },
+      "fact_id": "f-253",
+      "filing_date": "2026-04-30",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-03-31",
+        "start": "2026-01-01"
+      },
+      "raw": "15,760",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 15760000000
+    },
+    "op2": {
+      "accession": "0000059478-26-000045",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-74",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "lly:OncologyMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/59478/000005947826000045/lly-20260331.htm",
+        "name": "lly-20260331.htm",
+        "sha256": "59cfa4a893e7baaa97e6abde5f6f790025a745a95d6a322db4abc3207245ce83",
+        "url": "https://www.sec.gov/Archives/edgar/data/59478/000005947826000045/lly-20260331.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "24e8a06d5bce7ed8d9a3565c62cb87a2d634052637f53e7e8b4412c89dd43e96",
+        "png_scale": 1,
+        "png_sha256": "47c525995e22ec1fd66f301d9229e70f3519d6de79e21ff7a95e3c0b5aad62a9",
+        "table": "0000059478-26-000045-59cfa4a893e7-t12"
+      },
+      "fact_id": "f-271",
+      "filing_date": "2026-04-30",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-03-31",
+        "start": "2026-01-01"
+      },
+      "raw": "2,268",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 2268000000
+    },
+    "op3": {
+      "accession": "0000059478-26-000045",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-92",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "lly:ImmunologyMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/59478/000005947826000045/lly-20260331.htm",
+        "name": "lly-20260331.htm",
+        "sha256": "59cfa4a893e7baaa97e6abde5f6f790025a745a95d6a322db4abc3207245ce83",
+        "url": "https://www.sec.gov/Archives/edgar/data/59478/000005947826000045/lly-20260331.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "24e8a06d5bce7ed8d9a3565c62cb87a2d634052637f53e7e8b4412c89dd43e96",
+        "png_scale": 1,
+        "png_sha256": "47c525995e22ec1fd66f301d9229e70f3519d6de79e21ff7a95e3c0b5aad62a9",
+        "table": "0000059478-26-000045-59cfa4a893e7-t12"
+      },
+      "fact_id": "f-289",
+      "filing_date": "2026-04-30",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-03-31",
+        "start": "2026-01-01"
+      },
+      "raw": "1,203",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 1203000000
+    },
+    "op4": {
+      "accession": "0000059478-26-000045",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-98",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "lly:NeuroscienceMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/59478/000005947826000045/lly-20260331.htm",
+        "name": "lly-20260331.htm",
+        "sha256": "59cfa4a893e7baaa97e6abde5f6f790025a745a95d6a322db4abc3207245ce83",
+        "url": "https://www.sec.gov/Archives/edgar/data/59478/000005947826000045/lly-20260331.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "24e8a06d5bce7ed8d9a3565c62cb87a2d634052637f53e7e8b4412c89dd43e96",
+        "png_scale": 1,
+        "png_sha256": "47c525995e22ec1fd66f301d9229e70f3519d6de79e21ff7a95e3c0b5aad62a9",
+        "table": "0000059478-26-000045-59cfa4a893e7-t12"
+      },
+      "fact_id": "f-295",
+      "filing_date": "2026-04-30",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-03-31",
+        "start": "2026-01-01"
+      },
+      "raw": "382",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 382000000
+    },
+    "op5": {
+      "accession": "0000059478-26-000045",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-104",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "us-gaap:ProductAndServiceOtherMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/59478/000005947826000045/lly-20260331.htm",
+        "name": "lly-20260331.htm",
+        "sha256": "59cfa4a893e7baaa97e6abde5f6f790025a745a95d6a322db4abc3207245ce83",
+        "url": "https://www.sec.gov/Archives/edgar/data/59478/000005947826000045/lly-20260331.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "24e8a06d5bce7ed8d9a3565c62cb87a2d634052637f53e7e8b4412c89dd43e96",
+        "png_scale": 1,
+        "png_sha256": "47c525995e22ec1fd66f301d9229e70f3519d6de79e21ff7a95e3c0b5aad62a9",
+        "table": "0000059478-26-000045-59cfa4a893e7-t12"
+      },
+      "fact_id": "f-301",
+      "filing_date": "2026-04-30",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-03-31",
+        "start": "2026-01-01"
+      },
+      "raw": "187",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 187000000
+    },
+    "op6": {
+      "accession": "0000059478-26-000045",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-1",
+      "decimals": "-6",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/59478/000005947826000045/lly-20260331.htm",
+        "name": "lly-20260331.htm",
+        "sha256": "59cfa4a893e7baaa97e6abde5f6f790025a745a95d6a322db4abc3207245ce83",
+        "url": "https://www.sec.gov/Archives/edgar/data/59478/000005947826000045/lly-20260331.htm"
+      },
+      "duplicates": [
+        "f-57",
+        "f-217",
+        "f-321"
+      ],
+      "evidence": {
+        "html_sha256": "24e8a06d5bce7ed8d9a3565c62cb87a2d634052637f53e7e8b4412c89dd43e96",
+        "png_scale": 1,
+        "png_sha256": "47c525995e22ec1fd66f301d9229e70f3519d6de79e21ff7a95e3c0b5aad62a9",
+        "table": "0000059478-26-000045-59cfa4a893e7-t12"
+      },
+      "fact_id": "f-307",
+      "filing_date": "2026-04-30",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-03-31",
+        "start": "2026-01-01"
+      },
+      "raw": "19,799",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 19799000000
+    }
+  },
+  "period_end": "2026-03-31",
+  "schema_version": 1,
+  "series": "Q",
+  "ticker": "LLY",
+  "total": {
+    "expression": [
+      {
+        "operand": "op6",
+        "weight": 1
+      }
+    ],
+    "value": 19799000000
+  },
+  "unit": "USD",
+  "view": "product"
+}
