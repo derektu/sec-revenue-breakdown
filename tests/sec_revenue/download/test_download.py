@@ -21,6 +21,7 @@ from sec_revenue.download.workflow import DownloadBatch, DownloadWorkflow  # noq
 from sec_revenue.common.jsonio import JsonCodec  # noqa: E402
 from sec_revenue.common.periods import PeriodSelection  # noqa: E402
 from sec_revenue.download.tickers import DownloadTickers  # noqa: E402
+from sec_revenue.revenue.filings import FilingSet  # noqa: E402
 
 ARCHIVES = "https://www.sec.gov/Archives/edgar/data"
 INLINE = (
@@ -487,6 +488,26 @@ class ReviewFixTests(SecFixture):
         report = self.workflow().run(["AMD1"], PeriodSelection())
         forms = sorted(p["form"] for p in report["companies"][0]["packages"])
         self.assertEqual(forms, ["10-K", "10-K/A"])
+
+    def test_package_records_the_actual_form_of_an_amendment(self):
+        # catalog 的 form 是表單類別；申報包記錄實際表單，parse 才分得出修正申報。
+        self.company_tickers({"AMD2": "999006"})
+        original = self.filing("999006", "2026-12-31", "10-K", 1, filed="2027-02-20")
+        amended = dict(self.filing("999006", "2026-12-31", "10-K/A", 2, filed="2027-04-20"), primaryDocument="doc-2.htm")
+        self.submissions("999006", [original, amended])
+        self.package("999006", original)
+        self.package("999006", amended)
+        self.workflow().run(["AMD2"], PeriodSelection())
+        catalog = {f["accessionNumber"]: f["form"] for f in JsonCodec.read(self.data / "pipeline/AMD2/catalog.json")["filings"]}
+        self.assertEqual(catalog[amended["accessionNumber"]], "10-K")
+        packages = JsonCodec.read(self.data / "pipeline/AMD2/packages.json")["packages"]
+        self.assertEqual(
+            {a: (p["filing"]["form"], p["filing"]["original_form"]) for a, p in packages.items()},
+            {original["accessionNumber"]: ("10-K", "10-K"), amended["accessionNumber"]: ("10-K/A", "10-K/A")},
+        )
+        filings = FilingSet(self.data, "AMD2")
+        self.assertEqual([f.form for f in filings.filings], ["10-K", "10-K/A"])
+        self.assertEqual(filings.select("2026-12-31").accession, original["accessionNumber"])
 
     def test_changed_cik_list_refetches_catalog(self):
         self.write_csv([("XYZ", "100")])
