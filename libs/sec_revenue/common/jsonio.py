@@ -19,13 +19,17 @@ class JsonCodec:
 
     @classmethod
     def write(cls, path: Path, value: object) -> None:
+        cls.write_bytes(path, cls.encode(value))
+
+    @staticmethod
+    def write_bytes(path: Path, data: bytes) -> None:
         path.parent.mkdir(parents=True, exist_ok=True)
         with tempfile.NamedTemporaryFile(
             dir=path.parent, prefix=path.name + ".", delete=False
         ) as stream:
             temporary = Path(stream.name)
             try:
-                stream.write(cls.encode(value))
+                stream.write(data)
                 stream.flush()
                 os.fsync(stream.fileno())
             except BaseException:

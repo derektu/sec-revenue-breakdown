@@ -161,11 +161,11 @@ class WorkflowCli:
         for ticker in names:
             spec, _ = companies.spec(ticker)
             if args.check:
-                found = snapshot.check(args.data, args.out, spec)
+                found = snapshot.check(args.data, args.out, spec.ticker)
                 differences += found
                 results.append({"ticker": ticker, "differences": found})
             else:
-                results.append(snapshot.write(args.data, args.out, spec))
+                results.append(snapshot.write(args.data, args.out, spec.ticker))
             self.progress({"ticker": ticker, "status": "snapshot_checked" if args.check else "snapshot_written"})
         print(json.dumps({"stage": "snapshot", "check": args.check, "companies": results}, ensure_ascii=False, indent=2))
         if differences:
