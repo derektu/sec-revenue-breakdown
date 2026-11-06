@@ -1,34 +1,21 @@
-"""inline XBRL 原文的共用讀取規則：HTML 解析、表格編號、文字正規化與數值換算。
+"""iXBRL 數字規則：由 fact 的顯示文字、format、scale 與 sign 算出整數美元，以及 `format` 屬性的正規化。
 
-fact 解析（`xbrl.py`）與證據元件（`evidence.py`）都用這裡的規則，兩者的表格編號與數值因此一致。
-這些規則決定 XBRL fact 快照的內容，列入快照的解析器 hash（見 `snapshot.py`）。
+fact 索引（`xbrl.py`）與證據元件（`evidence.py`）都用這個規則，兩者的數值因此一致。讀快照時也以這個規則
+重算數值，快照不保存換算結果，改規則不需要重產快照。
 """
 
 from __future__ import annotations
 
 from decimal import Decimal, InvalidOperation
 
-from lxml import html
-
-
-def parse_html(raw: bytes):
-    """以 lxml HTML parser 解析原文，不載入任何外部資源。"""
-    return html.fromstring(raw, parser=html.HTMLParser(no_network=True))
-
-
-def numbered_tables(root) -> list:
-    """依文件順序列舉 `<table>`；串列位置就是表格編號。"""
-    return list(root.iter("table"))
-
-
-def clean_text(text: str) -> str:
-    return " ".join(text.split())
-
-
-
 SUPPORTED_FORMATS = {"", "num-dot-decimal", "numdotdecimal", "fixed-zero", "zerodash"}
 ZERO_FORMATS = {"fixed-zero", "zerodash"}
 NEGATIVE_MARKS = ("-", "−", "(", ")")
+
+
+def transform_name(attribute: str | None) -> str:
+    """`format` 屬性的 transform 本地名稱，小寫；沒有 format 屬性時為空字串。"""
+    return (attribute or "").split(":")[-1].lower()
 
 
 def ix_number(raw: str, transform: str, scale: str, sign: str | None) -> tuple[int | None, str | None]:

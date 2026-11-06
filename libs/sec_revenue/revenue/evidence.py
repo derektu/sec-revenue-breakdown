@@ -1,7 +1,7 @@
 """SEC 表格證據元件：以 fact id 在 inline XBRL 原文中找到 fact 與所在表格，核對 fact，抽出單一表格 HTML，並以
 headless Chromium 截圖。
 
-表格編號與數值規則來自 `ixbrl.py`，與 `xbrl.InlineDocument` 相同。只讀呼叫端給的原文 bytes，不發網路請求。
+HTML 解析與表格編號來自 `extract.py`、數值規則來自 `ixbrl.py`，與 `xbrl.InlineDocument` 相同。只讀呼叫端給的原文 bytes，不發網路請求。
 """
 
 from __future__ import annotations
@@ -12,7 +12,8 @@ import re
 
 from lxml import html
 
-from .ixbrl import clean_text, ix_number, numbered_tables, parse_html
+from .extract import clean_text, numbered_tables, parse_html
+from .ixbrl import ix_number, transform_name
 
 # 截圖高度超過門檻時只保留表頭與標示列附近的列，並以裁切列標出略過的位置。
 SCREENSHOT_MAX_HEIGHT = 3000
@@ -118,8 +119,7 @@ HIGHLIGHT_SCRIPT = """
 
 def fact_value(node, raw: str) -> int | None:
     """`ix:nonFraction` 的整數美元；規則與 `ix_number` 相同，無法解析時回傳 None。"""
-    transform = node.get("format", "").split(":")[-1].lower()
-    return ix_number(raw, transform, node.get("scale", "0"), node.get("sign"))[0]
+    return ix_number(raw, transform_name(node.get("format")), node.get("scale", "0"), node.get("sign"))[0]
 
 
 class TableLocator:
@@ -130,7 +130,7 @@ class TableLocator:
 
     @classmethod
     def from_root(cls, root) -> TableLocator:
-        """以 `ixbrl.parse_html` 解析好的樹建立，不重新解析原文。"""
+        """以 `extract.parse_html` 解析好的樹建立，不重新解析原文。"""
         locator = cls.__new__(cls)
         locator.attach(root)
         return locator

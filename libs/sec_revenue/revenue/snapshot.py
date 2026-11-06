@@ -1,41 +1,55 @@
 """XBRL fact 快照與申報清單：沒有 SEC 原文時，以快照重跑 parse 的 `--check`。
 
-快照（`data/snapshots/<首字母>/<TICKER>/<accession>.jsonl`）是 FilingSet 讀到的每份申報的解析結果，與公司 parser
-無關。JSON Lines 格式：第一行是表頭（格式版本、解析器 hash、accession、申報篩選用到的申報包欄位、namespaces、
-衝突的前綴、dei；原文讀不到時是錯誤原因），之後一行一個主文件的數值 fact（`ix:nonFraction`），依文件順序。
-一份申報公開後 fact 不會變，所以快照只由申報與決定快照內容的程式（`PARSER_FILES`）決定；快照模式先檢查解析器
-hash，不同時直接報錯，不以過期的快照計算。
+快照（`data/snapshots/<首字母>/<TICKER>/<accession>.jsonl`）只保存一定要有原文才拿得到的資料，也就是 `extract.py`
+從每份申報抽出的內容，與公司 parser 無關。JSON Lines 格式：第一行是表頭（格式版本、抽取程式 hash、accession、
+申報篩選用到的申報包欄位、namespaces、衝突的前綴、dei；原文讀不到時是錯誤原因），之後一行一個主文件的數值 fact
+（`ix:nonFraction`）的原始欄位與 HTML 位置，依文件順序。數值、QName 解析、期間分類與申報篩選由讀快照時的程式
+重算，不存在快照中。
 
-申報清單（同目錄的 `manifest.json`）列出正式輸出依賴的每份 10-K／10-Q（引擎不讀 8-K，所以不在清單內）的申報資訊，
+一份申報公開後內容不會變，所以快照只由申報與抽取程式的行為決定。抽取程式 hash（`extract_sha256`）依
+`extract.py` 的語法樹計算，不含註解、docstring 與排版；快照模式先檢查 hash，不同時直接報錯，不以過期的快照計算。
+快照檔的編排（`encode`）改變時，`SNAPSHOT_FORMAT` 隨之改變。
+
+申報清單（同目錄的 `manifest.json`）列出正式輸出依賴的每份 10-K／10-Q（框架不讀 8-K，所以不在清單內）的申報資訊，
 與申報包內每個檔案的 sha256、bytes；download 可依清單重新下載並逐檔核對。
 
 快照模式走與原文相同的程式路徑：`SnapshotFilingSet` 以同一個 `periodic_filing` 篩選申報，文件由
-`InlineDocument.from_snapshot` 重建。沒有原文，所以 `raw()` 不可用，證據沿用已提交的表格檔（見 `engine.py`）。
+`InlineDocument.from_snapshot` 以與原文相同的 `InlineDocument.load` 重建。沒有原文，所以 `raw()` 不可用，證據沿用
+已提交的表格檔（見 `engine.py`）。
 """
 
 from __future__ import annotations
 
+import ast
 import hashlib
 import json
 from pathlib import Path
 
 from ..common.jsonio import JsonCodec
-from .filings import Filing, FilingSet, ParseError, package_record, periodic_filing
+from . import extract
+from .filings import Filing, FilingSet, ParseError, periodic_filing
 from .xbrl import InlineDocument
 
-SNAPSHOT_FORMAT = 2
-PACKAGE = Path(__file__).resolve().parent
-# 決定快照內容的程式：fact 解析、HTML 解析與表格編號、數值規則、申報篩選，以及快照本身的產生與讀取。
-PARSER_FILES = ("xbrl.py", "ixbrl.py", "filings.py", "snapshot.py")
+SNAPSHOT_FORMAT = 3
 MANIFEST = "manifest.json"
 SUFFIX = ".jsonl"
+DOCSTRING_OWNERS = (ast.Module, ast.ClassDef, ast.FunctionDef, ast.AsyncFunctionDef)
 
 
-def parser_sha256() -> str:
-    digest = hashlib.sha256()
-    for name in PARSER_FILES:
-        digest.update(name.encode() + hashlib.sha256((PACKAGE / name).read_bytes()).hexdigest().encode())
-    return digest.hexdigest()
+def source_sha256(source: str) -> str:
+    """原始碼語法樹的 sha256：去掉 docstring 後以 `ast.unparse` 正規化，註解與排版不影響結果。"""
+    tree = ast.parse(source)
+    for node in ast.walk(tree):
+        if isinstance(node, DOCSTRING_OWNERS) and node.body:
+            first = node.body[0]
+            if isinstance(first, ast.Expr) and isinstance(first.value, ast.Constant) and isinstance(first.value.value, str):
+                node.body = node.body[1:] or [ast.Pass()]
+    return hashlib.sha256(ast.unparse(tree).encode()).hexdigest()
+
+
+def extract_sha256() -> str:
+    """決定快照內容的抽取程式（`extract.py`）的 hash。"""
+    return source_sha256(Path(extract.__file__).read_text(encoding="utf-8"))
 
 
 def snapshot_dir(root: Path, ticker: str) -> Path:
@@ -74,18 +88,18 @@ def snapshot_files(directory: Path) -> list[Path]:
 def build(data: Path, ticker: str) -> tuple[dict[str, dict], dict]:
     """由原文產生（accession → 快照, 申報清單）；原文讀不到的申報記成錯誤，快照模式照樣重現。"""
     filings = FilingSet(data, ticker)
-    parser = parser_sha256()
+    extractor = extract_sha256()
     packages = JsonCodec.read(filings.root / "pipeline" / ticker / "packages.json")["packages"]
     snapshots, listed = {}, []
     for filing in filings.filings:
         payload = {
             "format": SNAPSHOT_FORMAT,
-            "parser_sha256": parser,
+            "extract_sha256": extractor,
             "accession": filing.accession,
-            "package": package_record(packages[filing.accession]),
+            "package": extract.package_record(packages[filing.accession]),
         }
         try:
-            payload.update(filings.document(filing).to_snapshot())
+            payload.update(extract.extract(extract.parse_html(filings.raw(filing))))
         except ParseError as error:
             payload["error"] = {"check": error.check, "message": error.message}
         snapshots[filing.accession] = payload
@@ -132,7 +146,7 @@ def check(data: Path, root: Path, ticker: str) -> list[str]:
 class SnapshotFilingSet(FilingSet):
     """由快照建立的 FilingSet：申報、選申報、期別與原文模式相同，文件由快照重建。
 
-    建立時檢查快照與申報清單一致、解析器 hash 相同；不符時丟出 ValueError，指出要重產的公司與原因。
+    建立時檢查快照與申報清單一致、抽取程式 hash 相同；不符時丟出 ValueError，指出要重產的公司與原因。
     """
 
     snapshot = True
@@ -168,10 +182,10 @@ class SnapshotFilingSet(FilingSet):
                 problems.append(f"快照檔 {accession}{SUFFIX} 記錄的 accession 是 {payload.get('accession')}")
             elif any(listed.get(k) != entry["filing"].get(k) for k in ("form", "reportDate", "filingDate")):
                 problems.append(f"{accession} 的申報資訊與申報清單不同")
-        current = parser_sha256()
-        stale = sorted(a for a, p in self.payloads.items() if p.get("format") != SNAPSHOT_FORMAT or p.get("parser_sha256") != current)
+        current = extract_sha256()
+        stale = sorted(a for a, p in self.payloads.items() if p.get("format") != SNAPSHOT_FORMAT or p.get("extract_sha256") != current)
         if stale:
-            problems.append(f"{len(stale)} 份快照由不同版本的解析器產生（例如 {stale[0]}）")
+            problems.append(f"{len(stale)} 份快照由不同版本的抽取程式產生（例如 {stale[0]}）")
         if problems:
             raise ValueError(f"{ticker} 的快照需要重產：{'；'.join(problems)}；請在有原文的環境執行 snapshot --tickers {ticker}")
         self.root = None
