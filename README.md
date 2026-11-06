@@ -36,7 +36,7 @@
 |---|---|
 | `data/universe/tickers.csv` | 使用者維護的 ticker 清單：CIK、狀態（`wip` 研究中、`ok` 上線、`drop` 放棄）、採用的來源觀點、穩定度評分 |
 | `data/universe/references/<首字母>/<TICKER>/` | 對照資料：`reference.json` 與每次擷取的證據 |
-| `libs/sec_revenue/companies/<首字母>/<ticker>/` | 每家公司的 parser（`parser.py` 程式碼，或宣告式規格 `spec.py`）與說明（`parser.md`） |
+| `libs/sec_revenue/companies/<首字母>/<ticker>/` | 每家公司的 parser（`parser.py`）與說明（`parser.md`） |
 | `data/revenue/<首字母>/<TICKER>/` | parser 的正式輸出：季度（`Q/`）與年度（`FY/`）兩個序列每期的 `revenue.json` 與 SEC 表格證據，以及 `status.json` |
 | `data/snapshots/<首字母>/<TICKER>/` | 由 SEC 原文產生的 XBRL fact 快照（每份申報一個 JSON Lines 檔，主文件的全部數值 fact、一行一個，與公司 parser 無關）與申報清單（`manifest.json`，每個檔案的 sha256）；沒有原文時以快照驗證正式輸出，需要原文時依清單重新下載 |
 
@@ -126,7 +126,7 @@ npm run parse -- --all --check --snapshots
 npm run download -- --all --from-manifest
 ```
 
-`ALL` 是 Allstate 的 ticker；全部公司用 `--all`。操作步驟見 [本機操作](docs/guides/local-workflow.md)；下載規則、快取與回傳碼見 [SEC 下載](docs/architecture/download.md)；parser 的規格、檢核與輸出格式見 [Parser 與正式輸出](docs/architecture/parser.md)；頁面與 API 見 [Viewer](docs/architecture/viewer.md)。
+`ALL` 是 Allstate 的 ticker；全部公司用 `--all`。操作步驟見 [本機操作](docs/guides/local-workflow.md)；下載規則、快取與回傳碼見 [SEC 下載](docs/architecture/download.md)；parser 的規則、檢核與輸出格式見 [Parser 與正式輸出](docs/architecture/parser.md)；頁面與 API 見 [Viewer](docs/architecture/viewer.md)。
 
 ## 擷取對照資料
 

@@ -14,13 +14,12 @@ from sec_revenue.revenue import snapshot  # noqa: E402
 from sec_revenue.revenue.compose import PeriodComposer  # noqa: E402
 from sec_revenue.revenue.engine import check_outputs, ticker_dir  # noqa: E402
 from sec_revenue.revenue.filings import FilingSet, ParseError  # noqa: E402
-from sec_revenue.revenue.spec import Category, CompanySpec, fact, sum_of  # noqa: E402
 from sec_revenue.revenue.xbrl import InlineDocument  # noqa: E402
 
 # 匯入模組而不是 TestCase 類別，避免同一批測試在這裡再跑一次。
 from tests.sec_revenue.revenue import test_revenue_parser as base  # noqa: E402
 
-REVENUE, SPEC, build_html, item, quarter_items = base.REVENUE, base.SPEC, base.build_html, base.item, base.quarter_items
+REVENUE, COMPANY, build_html, item, quarter_items = base.REVENUE, base.COMPANY, base.build_html, base.item, base.quarter_items
 
 
 class SnapshotFixture(base.Fixture):
@@ -46,8 +45,8 @@ class SnapshotFixture(base.Fixture):
         parser.run(parser.periods())
         snapshot.write(self.data, self.snapshots, "TEST")
 
-    def check_from_snapshots(self, spec=SPEC):
-        return check_outputs(Path(self.temp.name) / "no-sec-data", self.out, spec, "spec-sha", None, snapshots=self.snapshots)[1]
+    def check_from_snapshots(self, source=COMPANY):
+        return check_outputs(Path(self.temp.name) / "no-sec-data", self.out, source, None, snapshots=self.snapshots)[1]
 
 
 class RoundTripTest(SnapshotFixture):
@@ -66,14 +65,14 @@ class RoundTripTest(SnapshotFixture):
                 self.assertEqual(rebuilt.resolve(REVENUE), original.resolve(REVENUE))
                 self.assertIsNone(rebuilt.locator)
 
-    def test_every_fact_is_kept_regardless_of_spec(self):
+    def test_every_fact_is_kept_regardless_of_parser(self):
         items = quarter_items("2025-03-31", (60, 40)) + [item("other", "us-gaap:CostOfRevenue", None, "2025-01-01", "2025-03-31", "5")]
         self.add("0000000001-25-000001", "10-Q", "2025-03-31", "2025-04-15", build_html(2025, "Q1", items))
         snapshot.write(self.data, self.snapshots, "TEST")
         payload = self.load("0000000001-25-000001")
         self.assertEqual(sorted(f["fact_id"] for f in payload["facts"]), ["other", "qa", "qb", "qt"])
         self.assertIn("dei:DocumentFiscalPeriodFocus", payload["dei"])
-        # 規格沒用到的 concept 也在快照內，改公司 parser 不需要重產快照。
+        # 公司 parser 沒用到的 concept 也在快照內，改公司 parser 不需要重產快照。
         filings = snapshot.SnapshotFilingSet(self.snapshots, "TEST")
         self.assertIn("us-gaap:CostOfRevenue", [f.concept for f in filings.document(filings.filings[0]).facts])
 
@@ -157,12 +156,7 @@ class SnapshotPathTest(SnapshotFixture):
 
     def test_geographic_member_check_runs_on_snapshot(self):
         geo, us, non_us = base.GEO, base.US, base.NON_US
-        spec = CompanySpec(
-            ticker="TEST",
-            view="product",
-            categories=(Category("A", sum_of(fact(REVENUE, us), fact(REVENUE, non_us))),),
-            total=Category("Total", fact(REVENUE)),
-        )
+        source = base.company(categories=(("A", (base.fact(REVENUE, us), base.fact(REVENUE, non_us))),))
         items = [
             item("q1", REVENUE, us, "2025-01-01", "2025-03-31", "60"),
             item("q2", REVENUE, non_us, "2025-01-01", "2025-03-31", "40"),
@@ -174,7 +168,7 @@ class SnapshotPathTest(SnapshotFixture):
         for filings in (FilingSet(self.data, "TEST"), snapshot.SnapshotFilingSet(self.snapshots, "TEST")):
             with self.subTest(snapshot=filings.snapshot):
                 with self.assertRaisesRegex(ParseError, r"地區成員完整.*x:OtherMember"):
-                    PeriodComposer(spec, filings).compose("2025-03-31")
+                    PeriodComposer(source, filings).compose("2025-03-31")
 
 
 class ConsistencyTest(SnapshotFixture):

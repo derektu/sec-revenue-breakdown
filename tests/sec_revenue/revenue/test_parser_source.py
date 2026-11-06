@@ -38,7 +38,7 @@ class ParserSourceTest(Fixture):
     def quarter(self, extra=()):
         self.add("0000000001-25-000001", "10-Q", "2025-03-31", "2025-04-15", build_html(2025, "Q1", quarter_items("2025-03-31", (60, 40)) + list(extra)))
 
-    def test_parser_composes_like_spec(self):
+    def test_parser_composition_becomes_lines(self):
         self.quarter()
         result = self.composer(ParserSource(module())).compose("2025-03-31")
         self.assertEqual([(l.name, l.group, l.value) for l in result.lines], [("A", "category", 60_000_000), ("B", "category", 40_000_000), ("Total", "total", 100_000_000)])

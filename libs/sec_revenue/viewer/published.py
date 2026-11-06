@@ -100,7 +100,6 @@ class PublishedRevenue:
         return {
             "ticker": ticker,
             "view": view,
-            "parser": status.get("parser"),
             "comparison_errors": status.get("comparison_errors") or [],
             "series": series,
         }

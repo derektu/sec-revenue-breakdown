@@ -189,7 +189,6 @@ def categories(day):
     - 重算結果與已上線輸出完全相同：不寫入。
     - 數值或依據（序列、分類、總營收、運算元、選用的申報、財年季別、觀點）不同：不寫入，`status.json` 記錄 `differs_from_published`（差異的分類、舊值、新值，原因是選用的申報不同或規則與原文變更）。由人確認後以 `--republish TICKER SERIES PERIOD` 覆寫，覆寫時 `revenue.json` 的 `republished` 記錄原值與原因。
     - 只有中繼資料不同（檢核紀錄、運算元的證據 hash）：不寫入，`status.json` 記錄 `stale_fields`。
-    - `parser`（框架與公司 parser 的 hash）記錄的是產生該輸出的版本，不列入比較：程式改動而內容相同時，視為相同。代價是已上線 `revenue.json` 的 `parser` 停在上線當時的版本，不代表目前的程式；目前的版本看 `status.json` 的 `parser`，兩者不同不代表輸出過時。
 10. **寫入**：先寫暫存目錄，全部完成才換上 `data/revenue/.../<序列>/<period_end>/`；換上失敗時還原舊輸出。開始處理前清理中斷寫入留下的目錄：`.staging-*` 刪除，`.retired-<期別>-*` 在該期目錄不存在時還原、否則刪除。只有以期末日命名的目錄算已上線輸出。
 11. **差異標記**：每次執行結束時重建 `status.json` 的差異標記（見自我檢核的比較欄比對）。
 
@@ -278,8 +277,7 @@ Q4 推算條件（依據的各期都通過，但年度與 Q1–Q3 的分類集�
   "checks": {
     "structural": [ { "check": "定義唯一", "result": "pass" }, "..." ],
     "sum": { "categories": 102466000000, "total": 102466000000, "difference": 0, "tolerance": "6000000" }
-  },
-  "parser": { "spec_sha256": "...", "engine_sha256": "..." }
+  }
 }
 ```
 
@@ -298,8 +296,7 @@ Q4 推算條件（依據的各期都通過，但年度與 Q1–Q3 的分類集�
   "categories": { "Mac": { "value": 33708000000, "expression": [ { "weight": 1, "operand": "op2" } ] } },
   "total": { "value": 416161000000, "expression": [ { "weight": 1, "operand": "op6" } ] },
   "operands": { "op2": { "kind": "xbrl_fact", "role": "annual", "fact_id": "f-380", "...": "..." } },
-  "checks": { "structural": [ "..." ], "sum": { "...": "..." } },
-  "parser": { "spec_sha256": "...", "engine_sha256": "..." }
+  "checks": { "structural": [ "..." ], "sum": { "...": "..." } }
 }
 ```
 
@@ -307,7 +304,8 @@ Q4 推算條件（依據的各期都通過，但年度與 Q1–Q3 的分類集�
 - `expression` 依公司 parser 列出的加數順序列出運算元；多個加數的分類有多個運算元，Q4 依加數交錯列出年度與九個月累計。
 - 公司 parser 交回調節項時另有同格式的 `reconciling` 欄位。
 - 證據圖上的編號就是運算元編號（`op3` 標成 3）；`evidence.png_scale` 是截圖倍率。
-- 以 `--republish` 覆寫過的期別有 `republished` 清單，每筆記錄原因與覆寫前的申報、分類數值、總營收與 `parser`。
+- 以 `--republish` 覆寫過的期別有 `republished` 清單，每筆記錄原因與覆寫前的申報、分類數值與總營收。
+- 輸出不記錄程式版本。已上線保護讓內容相同的輸出不重寫，所以一份輸出最後由哪一版程式寫入，看 Git 中它最後一次改動的 commit；目前的程式是否仍算出相同的輸出，由 `--check` 確認。
 
 `status.json` 依序列列出每個處理過的期別（節錄；`differences` 與 `not_derived` 兩筆是格式示意，不是 AAPL 的實際紀錄）：
 
@@ -315,7 +313,6 @@ Q4 推算條件（依據的各期都通過，但年度與 Q1–Q3 的分類集�
 {
   "ticker": "AAPL",
   "view": "product",
-  "parser": { "spec_sha256": "...", "engine_sha256": "..." },
   "periods": {
     "Q": {
       "2025-06-28": {
@@ -345,7 +342,7 @@ Q4 推算條件（依據的各期都通過，但年度與 Q1–Q3 的分類集�
         "published_output_kept": true,
         "published_output": {
           "accession": "...", "categories": { "iPhone": "<已上線值>", "...": "..." }, "total": "<已上線值>",
-          "note": "已上線輸出保留不動；以目前的申報與規格重算，此期不成立"
+          "note": "已上線輸出保留不動；以目前的申報與公司 parser 重算，此期不成立"
         }
       }
     },
@@ -387,7 +384,7 @@ npm run parse -- --tickers AAPL --republish AAPL Q 2025-09-27   # 由人確認�
 - `--start` 省略時用預設起始日；指定時可以早於預設值。`--end` 省略時不設上限。
 - 一次處理多期時依期末日順序執行，每期只看得到它的時點以前的申報與已上線輸出，與逐期分開執行的結果相同。
 - `--check` 不啟動 Chromium。它在已提交輸出的副本上照一般 parse 執行（同樣受已上線保護），再與已提交的輸出比對；一般 parse 不會改動任何檔案、也不會改變 `status.json` 時才算一致：
-  - 兩個序列的 `revenue.json` 逐欄比對（`parser` 欄位與 PNG hash、倍率除外）；
+  - 兩個序列的 `revenue.json` 逐欄比對（PNG hash 與倍率除外）；
   - `status.json` 中這些期別的紀錄逐欄比對，包括失敗或不推算的原因、`differences`、`differs_from_published`、`stale_fields`（`published_output_kept` 除外），以及頂層的 `comparison_errors`；
   - 證據 HTML 比對 bytes，證據目錄中沒有被 `revenue.json` 引用的檔案列為差異；
   - 已提交的 PNG 核對檔案 hash 與紀錄一致。
@@ -460,6 +457,5 @@ npm run snapshot -- --all --check            # 核對已提交的快照與原文
 - **期間長度與財年**：期間分類以天數範圍判斷，COST 的 16 週 Q4（112 天）與 36 週九個月累計（252 天）不在範圍內（#75）；ORCL 申報宣告的財年與實際不符（#77）。由框架放寬規則，或由公司 parser 指定期間與財年、框架只檢查合不合理。
 - **附件中的 fact**：PGR 10-K 的財報在 EX-13，主文件只有 Schedule III（#76）。fact 清單是否納入附件的 inline XBRL；納入時，申報清單的範圍跟著擴大。
 - **沒有 XBRL 標記的數字**：GOOGL 2025-03-31 以前的「Hedging gains (losses)」列沒有 XBRL 標記（#73）。依「數字只來自 XBRL fact」，fact 清單不含這類數字，GOOGL 這些期別無法上線，除非原則另開例外。
-- **輸出中的舊用語**：`revenue.json`、`status.json` 範例中的 `spec_sha256`、`engine_sha256` 與 note「以目前的申報與規格重算」是現行輸出，隨 #110 處理。
 - **框架檔名**：預設起始日所在的 `revenue/engine.py` 等檔名，隨框架實作調整。
 - **申報清單的位置**：申報清單放在 `data/snapshots/` 下；快照不進 Git 時，清單仍要進 Git。

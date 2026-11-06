@@ -33,8 +33,7 @@ from .compose import NotDerived, Operand, PeriodComposer, PeriodResult
 from .filings import FilingSet, ParseError
 from .review import TOTAL_LABEL, comparatives
 from .snapshot import SnapshotFilingSet
-from .source import SpecSource
-from .spec import CompanySpec
+from .source import ParserSource
 
 SCHEMA_VERSION = 1
 # 預設起始日（期末日，含）：所有公司共用，沒有指定起日時使用；要處理更早的期別時指定起日。
@@ -42,22 +41,15 @@ DEFAULT_START = "2024-01-01"
 SCREENSHOT_SCALE = 1
 SERIES = ("Q", "FY")
 PERIOD_RE = re.compile(r"\d{4}-\d{2}-\d{2}")
-# 輸出中描述數值與其依據的欄位；這些不同代表數值或來源改變。其餘欄位（檢核紀錄、parser、運算元的證據 hash）
+# 輸出中描述數值與其依據的欄位；這些不同代表數值或來源改變。其餘欄位（檢核紀錄、運算元的證據 hash）
 # 不同只是中繼資料。
 VALUE_FIELDS = ("series", "categories", "total", "reconciling", "operands", "filings", "fiscal_year", "fiscal_quarter", "view")
 # 差異標記：比較欄比對中這些結果寫到舊期別。
 MARKED_RESULTS = ("different", "unparseable")
-PACKAGE = Path(__file__).resolve().parents[1]
 
 
 def sha256(raw: bytes) -> str:
     return hashlib.sha256(raw).hexdigest()
-
-
-def engine_sha256() -> str:
-    """引擎程式（`revenue/*.py`，含證據元件）的 hash，記錄在每份輸出。"""
-    files = sorted((PACKAGE / "revenue").glob("*.py"))
-    return sha256(b"".join(f.name.encode() + sha256(f.read_bytes()).encode() for f in files))
 
 
 def ticker_dir(root: Path, ticker: str) -> Path:
@@ -75,8 +67,7 @@ class RevenueParser:
         self,
         data: Path,
         out: Path,
-        spec,
-        spec_sha256: str,
+        source: ParserSource,
         reuse: Path | None = None,
         screenshots: bool = True,
         republish: set[tuple[str, str]] | frozenset[tuple[str, str]] = frozenset(),
@@ -85,8 +76,7 @@ class RevenueParser:
         default_start: str = DEFAULT_START,
         filings: FilingSet | None = None,
     ):
-        # `spec` 是公司 parser（`ParserSource`）或宣告式規格；規格由 `SpecSource` 轉成同一組介面。
-        self.source = SpecSource(spec) if isinstance(spec, CompanySpec) else spec
+        self.source = source
         self.default_start = default_start
         self.out = ticker_dir(out, self.source.ticker)
         self.reuse = ticker_dir(reuse or out, self.source.ticker)
@@ -98,7 +88,6 @@ class RevenueParser:
         self.progress = progress
         self.screenshotter = screenshotter or (lambda: TableScreenshotter(device_scale=SCREENSHOT_SCALE))
         self.active = None
-        self.parser_info = {"spec_sha256": spec_sha256, "engine_sha256": engine_sha256()}
 
     # ---- 期別與已上線輸出 ----
 
@@ -213,7 +202,7 @@ class RevenueParser:
                 "accession": existing["filings"]["primary"]["accession"],
                 "categories": {n: c["value"] for n, c in existing["categories"].items()},
                 "total": existing["total"]["value"],
-                "note": "已上線輸出保留不動；以目前的申報與規格重算，此期不成立",
+                "note": "已上線輸出保留不動；以目前的申報與公司 parser 重算，此期不成立",
             },
         }
 
@@ -243,7 +232,7 @@ class RevenueParser:
                 output["republished"] = existing["republished"]
             changes = published_differences(existing, output)
             if not changes["fields"]:
-                # 只有 parser（引擎與規格 hash）不同：輸出內容相同，不寫入也不算過時。
+                # 內容相同：不寫入也不算過時。
                 return self.unchanged_entry(existing, changes)
             if (series, period) not in self.republish:
                 return self.unchanged_entry(existing, changes)
@@ -254,7 +243,6 @@ class RevenueParser:
                         "accession": existing["filings"]["primary"]["accession"],
                         "categories": {n: c["value"] for n, c in existing["categories"].items()},
                         "total": existing["total"]["value"],
-                        "parser": existing.get("parser"),
                     },
                 }
             ]
@@ -301,7 +289,7 @@ class RevenueParser:
             "categories": self.lines(result, "category"),
             "total": self.lines(result, "total")[self.source.total_name],
         }
-        if self.source.always_reconciling or any(line.group == "reconciling" for line in result.lines):
+        if any(line.group == "reconciling" for line in result.lines):
             output["reconciling"] = self.lines(result, "reconciling")
         output |= {
             "operands": {op.id: self.operand_record(op, evidence[op.id]) for op in operands},
@@ -309,7 +297,6 @@ class RevenueParser:
                 "structural": result.structural + [{"check": "證據完整", "result": "pass"}],
                 "sum": result.sum_check,
             },
-            "parser": self.parser_info,
         }
         return output, files
 
@@ -633,14 +620,13 @@ class RevenueParser:
         status.pop("comparison_errors", None)
         if errors:
             status["comparison_errors"] = errors
-        status["parser"] = self.parser_info
         self.out.mkdir(parents=True, exist_ok=True)
         JsonCodec.write(self.out / "status.json", status)
 
     def differences(self, published: dict[tuple[str, str], dict]) -> tuple[dict[tuple[str, str], list[dict]], list[dict]]:
         """每份已下載的申報（依申報日順序），與它申報當時看得到的已上線輸出做比較欄比對，以目前的已上線值計算。
 
-        回傳（期別 → 差異標記, 無法讀取的申報）。比對使用申報期別生效的規格定義。
+        回傳（期別 → 差異標記, 無法讀取的申報）。每份申報的組成由公司 parser 從該申報組出。
         """
         markers: dict[tuple[str, str], list[dict]] = {}
         errors = []
@@ -676,8 +662,7 @@ class RevenueParser:
 def check_outputs(
     data: Path,
     committed_root: Path,
-    spec: CompanySpec,
-    spec_sha256: str,
+    source: ParserSource,
     periods: list[str] | None,
     start=None,
     end=None,
@@ -690,13 +675,13 @@ def check_outputs(
     一般 parse 不會改動任何檔案、也不會改變 status.json 時才算一致。`snapshots` 指定快照根目錄時不讀原文，
     申報與 fact 來自快照，證據沿用已提交的表格檔。
     """
-    committed = ticker_dir(committed_root, spec.ticker)
+    committed = ticker_dir(committed_root, source.ticker)
     with tempfile.TemporaryDirectory() as temp:
         if committed.exists():
-            shutil.copytree(committed, ticker_dir(Path(temp), spec.ticker))
-        filings = SnapshotFilingSet(snapshots, spec.ticker) if snapshots is not None else None
+            shutil.copytree(committed, ticker_dir(Path(temp), source.ticker))
+        filings = SnapshotFilingSet(snapshots, source.ticker) if snapshots is not None else None
         parser = RevenueParser(
-            data, Path(temp), spec, spec_sha256, screenshots=False, progress=progress, default_start=default_start, filings=filings
+            data, Path(temp), source, screenshots=False, progress=progress, default_start=default_start, filings=filings
         )
         if periods is None:
             status = committed / "status.json"
@@ -705,13 +690,13 @@ def check_outputs(
             else:
                 periods = parser.periods(start, end)
         report = parser.run(periods)
-        return report, compare_outputs(committed, ticker_dir(Path(temp), spec.ticker), periods)
+        return report, compare_outputs(committed, ticker_dir(Path(temp), source.ticker), periods)
 
 
 def compare_outputs(expected_dir: Path, actual_dir: Path, periods: list[str]) -> list[str]:
     """已提交的輸出（expected）與重跑結果（actual）逐欄比對，兩個序列都比。
 
-    - revenue.json 逐欄比對；`parser` 欄位與 PNG hash、倍率不比（引擎重構或不同機器的字型會改變它們）。
+    - revenue.json 逐欄比對；PNG hash 與倍率不比（不同機器的字型會改變它們）。
     - status.json 中這些期別的紀錄逐欄比對（含失敗原因、差異標記、stale_fields），`published_output_kept` 除外；
       頂層的 `comparison_errors` 也比對。
     - 證據 HTML 比對 bytes；證據目錄中沒有被 revenue.json 引用的檔案列為差異。
@@ -739,7 +724,6 @@ def compare_outputs(expected_dir: Path, actual_dir: Path, periods: list[str]) ->
                 continue
             expected, actual = JsonCodec.read(expected_path), JsonCodec.read(actual_path)
             for output in (expected, actual):
-                output.pop("parser", None)
                 for operand in output.get("operands", {}).values():
                     operand.get("evidence", {}).pop("png_sha256", None)
                     operand.get("evidence", {}).pop("png_scale", None)
@@ -788,8 +772,7 @@ def published_differences(existing: dict, new: dict) -> dict:
             categories.append({"category": name, "published": old, "new": value})
     if existing["total"]["value"] != new["total"]["value"]:
         categories.append({"category": "總營收", "published": existing["total"]["value"], "new": new["total"]["value"]})
-    # parser 記錄的是產生這份輸出的引擎與規格版本；內容相同時不同版本不算差異。
-    fields = sorted(k for k in set(existing) | set(new) if k != "parser" and existing.get(k) != new.get(k))
+    fields = sorted(k for k in set(existing) | set(new) if existing.get(k) != new.get(k))
     values = [f for f in fields if f in VALUE_FIELDS]
     if values == ["operands"] and without_evidence(existing["operands"]) == without_evidence(new["operands"]):
         fields[fields.index("operands")] = "operands.evidence"

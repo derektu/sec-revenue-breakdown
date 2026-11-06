@@ -1,19 +1,18 @@
 """公司目錄：`<首字母>/<ticker 小寫，非英數字元改為底線>/`。
 
-公司 parser（`parser.py`，定義 `TICKER`、`VIEW`、`TOTAL`、`compose`、`categories`）或宣告式規格（`spec.py`，定義
-`SPEC`）；有 `parser.py` 時用 parser。每家公司都要有 `parser.md`。
+每家公司有公司 parser（`parser.py`，定義 `TICKER`、`VIEW`、`TOTAL`、`compose`、`categories`）與說明（`parser.md`）。
 """
 
 from __future__ import annotations
 
-import hashlib
 import importlib
 from pathlib import Path
 
 from ..revenue.source import ParserSource
-from ..revenue.spec import SEGMENT_AXIS, CompanySpec
 
 ROOT = Path(__file__).resolve().parent
+# 業務分部軸常被公司用於地區分部（例如 AAPL 的 Americas、Europe），公司 parser 使用時 parser.md 必須說明為何是業務別。
+SEGMENT_AXIS = "us-gaap:StatementBusinessSegmentsAxis"
 
 
 def module_dir(ticker: str) -> Path:
@@ -22,41 +21,32 @@ def module_dir(ticker: str) -> Path:
 
 
 def directories() -> list[Path]:
-    return sorted({p.parent for pattern in ("*/*/parser.py", "*/*/spec.py") for p in ROOT.glob(pattern)})
+    return sorted(p.parent for p in ROOT.glob("*/*/parser.py"))
 
 
 def tickers() -> list[str]:
-    """有公司 parser 或規格的 ticker，以各自宣告的 ticker 為準。"""
-    return sorted(load(directory.name, directory).ticker for directory in directories())
+    """有公司 parser 的 ticker，以各自宣告的 ticker 為準。"""
+    return sorted(load(directory).ticker for directory in directories())
 
 
-def load(name: str, directory: Path) -> ParserSource | CompanySpec:
-    if (directory / "parser.py").exists():
-        return ParserSource(importlib.import_module(f"{__name__}.{directory.parent.name}.{name}.parser"))
-    module = importlib.import_module(f"{__name__}.{directory.parent.name}.{name}.spec")
-    return module.SPEC
+def load(directory: Path) -> ParserSource:
+    return ParserSource(importlib.import_module(f"{__name__}.{directory.parent.name}.{directory.name}.parser"))
 
 
-def spec(ticker: str) -> tuple[ParserSource | CompanySpec, str]:
-    """回傳公司 parser（或規格）與該檔（parser.py 或 spec.py）的 sha256。"""
+def parser_source(ticker: str) -> ParserSource:
+    """回傳公司 parser；檢查宣告的 ticker 與 parser.md。"""
     directory = module_dir(ticker)
-    source = next((directory / name for name in ("parser.py", "spec.py") if (directory / name).exists()), None)
-    if source is None:
-        raise ValueError(f"{ticker} 沒有公司 parser（{directory / 'parser.py'}）")
-    loaded = load(directory.name, directory)
+    source = directory / "parser.py"
+    if not source.exists():
+        raise ValueError(f"{ticker} 沒有公司 parser（{source}）")
+    loaded = load(directory)
     if loaded.ticker != ticker:
         raise ValueError(f"{source} 宣告的 ticker 是 {loaded.ticker}，不是 {ticker}")
     notes = directory / "parser.md"
     if not notes.exists():
         raise ValueError(f"{ticker} 缺少 {notes}；每家公司都要有 parser.md")
-    uses_segment_axis = loaded.uses_axis(SEGMENT_AXIS) if isinstance(loaded, CompanySpec) else SEGMENT_AXIS in source.read_text()
-    check_notes(ticker, uses_segment_axis, notes.read_text())
-    digest = hashlib.sha256(source.name.encode() + source.read_bytes())
-    if source.name == "parser.py":
-        # 公司 parser 的結果也取決於它呼叫的 utility。
-        for path in sorted((ROOT.parent / "parser_utils").glob("*.py")):
-            digest.update(path.name.encode() + path.read_bytes())
-    return loaded, digest.hexdigest()
+    check_notes(ticker, SEGMENT_AXIS in source.read_text(), notes.read_text())
+    return loaded
 
 
 def check_notes(ticker: str, uses_segment_axis: bool, notes: str):

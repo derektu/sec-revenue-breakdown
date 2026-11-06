@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """download → parse → viewer；各階段可獨立執行。
 
-download 下載任何 ticker 的完整 SEC 申報包；parse 依 `libs/sec_revenue/companies/` 的公司規格產生 `data/revenue/`
+download 下載任何 ticker 的完整 SEC 申報包；parse 依 `libs/sec_revenue/companies/` 的公司 parser 產生 `data/revenue/`
 的正式輸出與證據；viewer 唯讀顯示正式輸出。snapshot 由原文產生 `data/snapshots/` 的 XBRL fact 快照與申報清單，
 沒有原文時以 `parse --check --snapshots` 驗證正式輸出。
 """
@@ -38,7 +38,7 @@ class WorkflowCli:
     def run(self):
         cli = argparse.ArgumentParser(description=__doc__)
         commands = cli.add_subparsers(dest="command", required=True)
-        listing = commands.add_parser("tickers", help="列出有公司規格的 ticker")
+        listing = commands.add_parser("tickers", help="列出有公司 parser 的 ticker")
         listing.add_argument("--json", action="store_true")
         download = commands.add_parser("download", help="下載 SEC 申報包")
         download.add_argument("--tickers", nargs="+", help="AAPL MSFT 或 AAPL,MSFT；ALL 是 Allstate 的 ticker")
@@ -66,9 +66,9 @@ class WorkflowCli:
         )
         download.add_argument("--data", type=Path, default=data_root(), help="資料根目錄（預設 SEC_DATA_DIR 或 repo 的 data/）")
         download.add_argument("--snapshots-dir", type=Path, default=SNAPSHOT_ROOT, help=argparse.SUPPRESS)
-        parse = commands.add_parser("parse", help="依公司規格產生 data/revenue/ 的正式輸出")
-        parse.add_argument("--tickers", nargs="+", help="AAPL MSFT 或 AAPL,MSFT；省略或 --all 為全部有規格的公司")
-        parse.add_argument("--all", dest="all_tickers", action="store_true", help="全部有規格的公司")
+        parse = commands.add_parser("parse", help="依公司 parser 產生 data/revenue/ 的正式輸出")
+        parse.add_argument("--tickers", nargs="+", help="AAPL MSFT 或 AAPL,MSFT；省略或 --all 為全部有公司 parser 的公司")
+        parse.add_argument("--all", dest="all_tickers", action="store_true", help="全部有公司 parser 的公司")
         parse.add_argument("--start", help=f"包含起日（期末日 YYYY-MM-DD）；省略時從預設起始日 {DEFAULT_START} 起，可以早於預設值")
         parse.add_argument("--end", help="包含迄日")
         parse.add_argument(
@@ -93,8 +93,8 @@ class WorkflowCli:
         parse.add_argument("--out", type=Path, default=REVENUE_ROOT, help=argparse.SUPPRESS)
         parse.add_argument("--snapshots-dir", type=Path, default=SNAPSHOT_ROOT, help=argparse.SUPPRESS)
         snap = commands.add_parser("snapshot", help="由 SEC 原文產生 data/snapshots/ 的 XBRL fact 快照與申報清單")
-        snap.add_argument("--tickers", nargs="+", help="AAPL MSFT 或 AAPL,MSFT；省略或 --all 為全部有規格的公司")
-        snap.add_argument("--all", dest="all_tickers", action="store_true", help="全部有規格的公司")
+        snap.add_argument("--tickers", nargs="+", help="AAPL MSFT 或 AAPL,MSFT；省略或 --all 為全部有公司 parser 的公司")
+        snap.add_argument("--all", dest="all_tickers", action="store_true", help="全部有公司 parser 的公司")
         snap.add_argument("--check", action="store_true", help="不寫入，核對已提交的快照與申報清單是否與原文重新產生的結果相同")
         snap.add_argument("--data", type=Path, default=data_root(), help="SEC 原文的資料根目錄（預設 SEC_DATA_DIR 或 repo 的 data/）")
         snap.add_argument("--out", type=Path, default=SNAPSHOT_ROOT, help=argparse.SUPPRESS)
@@ -145,27 +145,27 @@ class WorkflowCli:
             return 1
 
     @staticmethod
-    def spec_tickers(args) -> list[str]:
+    def company_tickers(args) -> list[str]:
         names = parse_tickers(args.tickers)
         available = companies.tickers()
         if args.all_tickers or not names:
             names = list(dict.fromkeys(available + names))
         unknown = [n for n in names if n not in available]
         if unknown:
-            raise ValueError("沒有 parser 規格：" + ", ".join(unknown))
+            raise ValueError("沒有公司 parser：" + ", ".join(unknown))
         return names
 
     def snapshot(self, args) -> int:
-        names = self.spec_tickers(args)
+        names = self.company_tickers(args)
         results, differences = [], []
         for ticker in names:
-            spec, _ = companies.spec(ticker)
+            companies.parser_source(ticker)
             if args.check:
-                found = snapshot.check(args.data, args.out, spec.ticker)
+                found = snapshot.check(args.data, args.out, ticker)
                 differences += found
                 results.append({"ticker": ticker, "differences": found})
             else:
-                results.append(snapshot.write(args.data, args.out, spec.ticker))
+                results.append(snapshot.write(args.data, args.out, ticker))
             self.progress({"ticker": ticker, "status": "snapshot_checked" if args.check else "snapshot_written"})
         print(json.dumps({"stage": "snapshot", "check": args.check, "companies": results}, ensure_ascii=False, indent=2))
         if differences:
@@ -179,7 +179,7 @@ class WorkflowCli:
 
     def parse(self, args) -> int:
         PeriodSelection(args.start, args.end)
-        names = self.spec_tickers(args)
+        names = self.company_tickers(args)
         if args.snapshots and not args.check:
             raise ValueError("--snapshots 沒有原文，無法產生證據，只能與 --check 一起使用")
         republish = {}
@@ -195,13 +195,12 @@ class WorkflowCli:
             raise ValueError("--check 不寫入，不能與 --republish 同時使用")
         reports, differences = [], []
         for ticker in names:
-            spec, spec_sha256 = companies.spec(ticker)
+            source = companies.parser_source(ticker)
             if args.check:
                 report, found = check_outputs(
                     args.data,
                     args.out,
-                    spec,
-                    spec_sha256,
+                    source,
                     None,
                     args.start,
                     args.end,
@@ -212,7 +211,7 @@ class WorkflowCli:
                 differences += [f"{ticker} {d}" for d in found]
             else:
                 parser = RevenueParser(
-                    args.data, args.out, spec, spec_sha256, republish=republish.get(ticker, set()), progress=self.progress
+                    args.data, args.out, source, republish=republish.get(ticker, set()), progress=self.progress
                 )
                 periods = parser.periods(args.start, args.end)
                 missing = sorted(p for p in republish.get(ticker, set()) if p[1] not in periods or p[0] not in parser.series_of(p[1]))

@@ -1,4 +1,4 @@
-"""新版 parser 引擎：以合成的 inline XBRL 申報測試每個流程步驟與每項檢核，不連網、不啟動 Chromium。"""
+"""Parser 框架：以合成的 inline XBRL 申報與合成的公司 parser 測試每個流程步驟與每項檢核，不連網、不啟動 Chromium。"""
 
 import hashlib
 import json
@@ -6,68 +6,111 @@ from pathlib import Path
 import shutil
 import sys
 import tempfile
+import types
 import unittest
 
 ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / "libs"))
 from sec_revenue import companies  # noqa: E402
 from sec_revenue.common.jsonio import JsonCodec  # noqa: E402
+from sec_revenue.parser_utils import Missing, find, one_of, put  # noqa: E402
 from sec_revenue.revenue.evidence import TableLocator  # noqa: E402
 from sec_revenue.revenue.compose import PeriodComposer  # noqa: E402
 from sec_revenue.revenue.engine import RevenueParser, check_outputs, ticker_dir  # noqa: E402
 from sec_revenue.revenue.filings import FilingSet, ParseError  # noqa: E402
 from sec_revenue.revenue.review import comparatives as review_comparatives  # noqa: E402
-from sec_revenue.revenue.contract import Composition  # noqa: E402
-from sec_revenue.revenue.source import addend_terms  # noqa: E402
-from sec_revenue.revenue.spec import (  # noqa: E402
-    Category,
-    CompanySpec,
-    define,
-    effective,
-    fact,
-    Addend,
-    minus,
-    one_of,
-    sum_of,
-    table_cell,
-)
+from sec_revenue.revenue.contract import Composition, FilingFacts, ParserFailure  # noqa: E402
+from sec_revenue.revenue.source import ParserSource  # noqa: E402
 from sec_revenue.revenue.xbrl import InlineDocument, classify_duration  # noqa: E402
-
-def comparatives(document, accession, baselines, addends_for):
-    """以「名稱 → 規格加數」的查詢函式（`None` 為總營收）組出新申報的組成，做比較欄比對。"""
-
-    def compose_for(request):
-        result = Composition()
-        total = addends_for(None)
-        if total:
-            found = addend_terms(document, accession, "總營收", total, request)
-            result.total = None if isinstance(found, str) else found
-        names = [n for n in ("A", "B") if addends_for(n)]
-        for name in names:
-            try:
-                found = addend_terms(document, accession, name, addends_for(name), request)
-            except ParseError as error:
-                result.unparseable[name] = error.message
-                continue
-            if isinstance(found, str):
-                result.missing[name] = found
-            else:
-                result.categories[name] = found
-        return result
-
-    return review_comparatives(document, accession, baselines, compose_for)
-
 
 REVENUE = "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax"
 AXIS = "srt:ProductOrServiceAxis"
 A = {AXIS: "x:AMember"}
 B = {AXIS: "x:BMember"}
-SPEC = CompanySpec(
-    ticker="TEST",
-    view="product",
-    categories=(Category("A", fact(REVENUE, A)), Category("B", fact(REVENUE, B))),
-    total=Category("Total", fact(REVENUE)),
-)
+
+
+def fact(concept, dims=None, weight=1):
+    """一個運算元：申報中 concept 與 dimensions 完全相符的 fact。"""
+    return lambda filing, request: find(filing, request, concept, dims, weight=weight)
+
+
+def variants(*forms):
+    """一個運算元的多種寫法（`one_of`）；`forms` 是（concept, dimensions）。"""
+    return lambda filing, request: one_of(filing, request, *forms)
+
+
+def operands(filing, request, found):
+    """運算元函式（或它們的 tuple）在申報中找到的各項。"""
+    return [get(filing, request) for get in (found if isinstance(found, tuple) else (found,))]
+
+
+def company(categories=None, reconciling=(), total=None, view="product"):
+    """合成的公司 parser（TICKER 為 TEST，總營收名稱為 Total）。
+
+    `categories`、`reconciling` 的每一項是 `(名稱, 運算元)` 或 `(名稱, 運算元, 適用)`。運算元是
+    `(filing, request) -> Term | Missing` 的函式，或它們的 tuple（多個加數）；也可以是依 `filing` 回傳運算元的函式，
+    以 `by_filing` 包裝。`適用(期末日)` 回傳 False 的日期，該項不在 `categories` 中，申報期末日不適用時 `compose` 不列出。
+    """
+    categories = categories if categories is not None else (("A", fact(REVENUE, A)), ("B", fact(REVENUE, B)))
+    total = total or fact(REVENUE)
+    items = [("category", *i) for i in categories] + [("reconciling", *i) for i in reconciling]
+    active = lambda item, day: len(item) < 4 or item[3](day)  # noqa: E731
+    parser = types.ModuleType("test_parser")
+    parser.TICKER, parser.VIEW, parser.TOTAL = "TEST", view, "Total"
+
+    def compose(filing, request):
+        result = Composition()
+        for item in items:
+            if active(item, filing.report_date):
+                put(result, item[0], item[1], *operands(filing, request, item[2]))
+        put(result, "total", "Total", *operands(filing, request, total))
+        return result
+
+    parser.compose = compose
+    parser.categories = lambda day: [item[1] for item in items if active(item, day)]
+    return ParserSource(parser)
+
+
+def until(day):
+    return lambda d: d <= day
+
+
+def since(day):
+    return lambda d: d >= day
+
+
+def by_filing(choose):
+    """依申報選運算元：`choose(filing)` 回傳運算元函式。"""
+    return lambda filing, request: choose(filing)(filing, request)
+
+
+COMPANY_CATEGORIES = (("A", fact(REVENUE, A)), ("B", fact(REVENUE, B)))
+COMPANY = company()
+
+
+def comparatives(document, accession, baselines, lookup):
+    """以「名稱 → 運算元」的查詢（`None` 為總營收）從新申報組出組成，做比較欄比對。
+
+    一項的前綴宣告衝突時只把該項記為 `unparseable`，其他項照常比對。
+    """
+    filing = FilingFacts(accession, "10-Q", "2025-03-31", document)
+
+    def compose_for(request):
+        result = Composition()
+        total = lookup(None)
+        if total:
+            found = operands(filing, request, total)
+            if not any(isinstance(f, Missing) for f in found):
+                result.total = list(found)
+        for name in [n for n in ("A", "B") if lookup(n)]:
+            try:
+                put(result, "category", name, *operands(filing, request, lookup(name)))
+            except ParserFailure as error:
+                result.unparseable[name] = error.message
+        return result
+
+    return review_comparatives(document, accession, baselines, compose_for)
+
 
 # 一個財年：Q1–Q3 是 10-Q，FY 是 10-K；值以百萬美元表示。
 QUARTERS = {
@@ -213,11 +256,11 @@ class Fixture(unittest.TestCase):
             ),
         )
 
-    def composer(self, spec=SPEC):
-        return PeriodComposer(spec, FilingSet(self.data, "TEST"))
+    def composer(self, source=COMPANY):
+        return PeriodComposer(source, FilingSet(self.data, "TEST"))
 
-    def parser(self, spec=SPEC, **options):
-        return RevenueParser(self.data, self.out, spec, "spec-sha", screenshotter=lambda: FakeShooter(self), **options)
+    def parser(self, source=COMPANY, **options):
+        return RevenueParser(self.data, self.out, source, screenshotter=lambda: FakeShooter(self), **options)
 
     def output(self, period, series="Q"):
         return JsonCodec.read(ticker_dir(self.out, "TEST") / series / period / "revenue.json")
@@ -351,79 +394,50 @@ class FactTest(Fixture):
             self.compose_q1(quarter_items("2025-03-31", (60, 40)), focus="FY")
 
 
-class DefinitionAndSumTest(Fixture):
+class CompositionAndSumTest(Fixture):
     def setUp(self):
         super().setUp()
         self.add("0000000001-25-000001", "10-Q", "2025-03-31", "2025-04-15", build_html(2025, "Q1", quarter_items("2025-03-31", (60, 40))))
 
-    def spec(self, **changes):
-        base = dict(ticker="TEST", view="product", categories=SPEC.categories, total=SPEC.total)
-        base.update(changes)
-        return CompanySpec(**base)
-
-    def test_effective_definitions_select_at_most_one(self):
-        overlapping = self.spec(
-            categories=(
-                Category("A", define(fact(REVENUE, A), effective(None, "2025-12-31")), define(fact("us-gaap:Revenues", A), effective("2025-01-01"))),
-                SPEC.categories[1],
-            )
-        )
-        with self.assertRaisesRegex(ParseError, r"\[定義唯一\] A 在 2025-03-31 有 2 個"):
-            self.composer(overlapping).compose("2025-03-31")
-        switched = self.spec(
-            categories=(
-                Category("A", define(fact("us-gaap:Revenues", A), effective(None, "2024-12-31")), define(fact(REVENUE, A), effective("2025-01-01"))),
-                SPEC.categories[1],
-            )
-        )
-        self.assertEqual(next(l.value for l in self.composer(switched).compose("2025-03-31").lines if l.name == "A"), 60_000_000)
-
-    def test_category_without_definition_is_not_listed(self):
-        later = Category("C", define(fact(REVENUE, {AXIS: "x:CMember"}), effective("2026-01-01")))
-        result = self.composer(self.spec(categories=SPEC.categories + (later,))).compose("2025-03-31")
+    def test_category_outside_categories_is_not_listed(self):
+        later = ("C", fact(REVENUE, {AXIS: "x:CMember"}), since("2026-01-01"))
+        result = self.composer(company(categories=COMPANY_CATEGORIES + (later,))).compose("2025-03-31")
         self.assertEqual([l.name for l in result.lines], ["A", "B", "Total"])
 
-    def test_missing_effective_fails_sum_instead_of_dropping_category(self):
-        # 規格漏寫 B 在 Q1 的適用期間：該期沒有 B，加總對不上而失敗，不會無聲少一個分類。
-        omitted = Category("B", define(fact(REVENUE, B), effective("2025-04-01")))
+    def test_category_left_out_fails_sum_instead_of_dropping_silently(self):
+        # 公司 parser 的 B 從 Q2 才適用：Q1 沒有 B，加總對不上而失敗，不會無聲少一個分類。
+        omitted = ("B", fact(REVENUE, B), since("2025-04-01"))
         with self.assertRaisesRegex(ParseError, r"\[加總\] 分類加總 60000000 與總營收 100000000"):
-            self.composer(self.spec(categories=(SPEC.categories[0], omitted))).compose("2025-03-31")
+            self.composer(company(categories=(COMPANY_CATEGORIES[0], omitted))).compose("2025-03-31")
         # 調節項是指定的 fact，不會吸收漏掉的分類。
         items = quarter_items("2025-03-31", (60, 45))
         items[2]["raw"] = "100"
         items.append(item("qe", REVENUE, {AXIS: "x:EliminationMember"}, "2025-01-01", "2025-03-31", "5", sign="-"))
         self.packages.pop("0000000001-25-000001")
         self.add("0000000001-25-000001", "10-Q", "2025-03-31", "2025-04-15", build_html(2025, "Q1", items))
-        eliminations = (Category("Eliminations", fact(REVENUE, {AXIS: "x:EliminationMember"})),)
-        self.assertEqual(self.composer(self.spec(reconciling=eliminations)).compose("2025-03-31").sum_check["difference"], 0)
+        eliminations = (("Eliminations", fact(REVENUE, {AXIS: "x:EliminationMember"})),)
+        self.assertEqual(self.composer(company(reconciling=eliminations)).compose("2025-03-31").sum_check["difference"], 0)
         with self.assertRaisesRegex(ParseError, r"\[加總\] 分類加總 55000000 與總營收 100000000"):
-            self.composer(self.spec(categories=(SPEC.categories[0], omitted), reconciling=eliminations)).compose("2025-03-31")
-
-    def test_total_must_have_definition(self):
-        spec = self.spec(total=Category("Total", define(fact(REVENUE), effective("2026-01-01"))))
-        with self.assertRaisesRegex(ParseError, r"\[定義唯一\] 總營收 Total 在 2025-03-31 沒有生效的定義"):
-            self.composer(spec).compose("2025-03-31")
-
-    def test_table_cell_is_declared_but_not_supported(self):
-        spec = self.spec(categories=(Category("A", table_cell("ex99.htm", "Net sales", "A", "Q1")), SPEC.categories[1]))
-        with self.assertRaisesRegex(ParseError, "table_cell 運算元尚未支援"):
-            self.composer(spec).compose("2025-03-31")
+            self.composer(company(categories=(COMPANY_CATEGORIES[0], omitted), reconciling=eliminations)).compose("2025-03-31")
 
     def test_sum_must_match_total_within_precision(self):
         result = self.composer().compose("2025-03-31")
         self.assertEqual(result.sum_check, {"categories": 100_000_000, "total": 100_000_000, "difference": 0, "tolerance": "1500000"})
-        only_a = self.spec(categories=(SPEC.categories[0],))
+        only_a = company(categories=COMPANY_CATEGORIES[:1])
         with self.assertRaisesRegex(ParseError, r"\[加總\] 分類加總 60000000 與總營收 100000000"):
             self.composer(only_a).compose("2025-03-31")
 
     def test_reconciling_items_take_part_in_sum(self):
-        spec = self.spec(categories=(SPEC.categories[0],), reconciling=(Category("Other", fact(REVENUE, B)),))
-        result = self.composer(spec).compose("2025-03-31")
+        source = company(categories=COMPANY_CATEGORIES[:1], reconciling=(("Other", fact(REVENUE, B)),))
+        result = self.composer(source).compose("2025-03-31")
         self.assertEqual(result.sum_check["difference"], 0)
 
-    def test_duplicate_category_names_rejected(self):
-        with self.assertRaisesRegex(ValueError, "重複"):
-            self.spec(categories=(SPEC.categories[0], SPEC.categories[0]))
+    def test_duplicate_names_are_rejected(self):
+        same_as_total = company(categories=(("Total", fact(REVENUE, A)), COMPANY_CATEGORIES[1]))
+        same_as_category = company(categories=COMPANY_CATEGORIES, reconciling=(("A", fact(REVENUE, A)),))
+        for source in (same_as_total, same_as_category):
+            with self.assertRaisesRegex(ParseError, "重複的分類名稱"):
+                self.composer(source).compose("2025-03-31")
 
 
 class FourthQuarterTest(Fixture):
@@ -455,36 +469,26 @@ class FourthQuarterTest(Fixture):
         ]
         self.add("0000000001-26-000001", "10-K", "2025-12-31", "2026-02-15", build_html(2025, "FY", annual))
 
-    def test_q4_operands_use_definition_of_their_source_filing(self):
-        # 10-K 起改用新成員，同財年 Q3 10-Q 仍是舊成員：同一個分類，Q4 照常推算，年度用新定義、九個月用舊定義。
+    def test_q4_operands_follow_their_source_filing(self):
+        # 10-K 起改用新成員，同財年 Q3 10-Q 仍是舊成員：同一個分類，Q4 照常推算，年度與九個月各依自己的申報組成。
         self.renamed_annual("x:ANewMember")
-        spec = CompanySpec(
-            ticker="TEST",
-            view="product",
-            categories=(
-                Category("A", define(fact(REVENUE, A), effective(None, "2025-09-30")), define(fact(REVENUE, {AXIS: "x:ANewMember"}), effective("2025-12-31"))),
-                SPEC.categories[1],
-            ),
-            total=SPEC.total,
-        )
-        a = next(l for l in self.composer(spec).compose("2025-12-31").lines if l.name == "A")
+        renamed = by_filing(lambda filing: fact(REVENUE, A if filing.report_date <= "2025-09-30" else {AXIS: "x:ANewMember"}))
+        source = company(categories=(("A", renamed), COMPANY_CATEGORIES[1]))
+        a = next(l for l in self.composer(source).compose("2025-12-31").lines if l.name == "A")
         self.assertEqual([(t.weight, t.operand.fact.fact_id) for t in a.terms], [(1, "ya"), (-1, "na")])
         self.assertEqual(a.value, 90_000_000)
 
     def test_q4_not_derived_when_annual_categories_differ(self):
         # 10-K 把 A 換成另一個分類 A2：FY 照列 A2，Q4 不推算，status.json 記錄原因與兩邊的分類。
         self.renamed_annual("x:A2Member")
-        spec = CompanySpec(
-            ticker="TEST",
-            view="product",
+        source = company(
             categories=(
-                Category("A", define(fact(REVENUE, A), effective(None, "2025-09-30"))),
-                SPEC.categories[1],
-                Category("A2", define(fact(REVENUE, {AXIS: "x:A2Member"}), effective("2025-12-31"))),
-            ),
-            total=SPEC.total,
+                ("A", fact(REVENUE, A), until("2025-09-30")),
+                COMPANY_CATEGORIES[1],
+                ("A2", fact(REVENUE, {AXIS: "x:A2Member"}), since("2025-12-31")),
+            )
         )
-        parser = self.parser(spec)
+        parser = self.parser(source)
         report = parser.run(parser.periods())
         self.assertTrue(report["complete"])
         status = self.status()["periods"]
@@ -514,11 +518,10 @@ class FourthQuarterTest(Fixture):
             self.packages.pop(accession)
 
     def test_q4_fails_when_fy_or_a_quarter_fails(self):
-        # 規格漏寫 B 在 FY 的適用期間：FY 加總失敗，Q4 也失敗並指向 FY，不是 not_derived。
+        # 公司 parser 在 FY 漏了 B：FY 加總失敗，Q4 也失敗並指向 FY，不是 not_derived。
         self.standard_year()
-        omitted = Category("B", define(fact(REVENUE, B), effective(None, "2025-09-30")))
-        spec = CompanySpec(ticker="TEST", view="product", categories=(SPEC.categories[0], omitted), total=SPEC.total)
-        parser = self.parser(spec)
+        omitted = ("B", fact(REVENUE, B), until("2025-09-30"))
+        parser = self.parser(company(categories=(COMPANY_CATEGORIES[0], omitted)))
         parser.run(parser.periods())
         status = self.status()["periods"]
         self.assertEqual((status["FY"]["2025-12-31"]["status"], status["FY"]["2025-12-31"]["check"]), ("failed", "加總"))
@@ -526,26 +529,18 @@ class FourthQuarterTest(Fixture):
         self.assertEqual((q4["status"], q4["check"]), ("failed", "加總"))
         self.assertTrue(q4["reason"].startswith("Q4 依據的 FY 2025-12-31 不通過：分類加總"), q4["reason"])
         # Q2 失敗時，Q4 指向 Q2。
-        late = Category("B", define(fact(REVENUE, B), effective(None, "2025-03-31")), define(fact(REVENUE, B), effective("2025-07-01")))
-        spec = CompanySpec(ticker="TEST", view="product", categories=(SPEC.categories[0], late), total=SPEC.total)
+        late = ("B", fact(REVENUE, B), lambda day: not "2025-04-01" <= day <= "2025-06-30")
         with self.assertRaisesRegex(ParseError, r"\[加總\] Q4 依據的 Q 2025-06-30 不通過"):
-            self.composer(spec).compose("2025-12-31")
+            self.composer(company(categories=(COMPANY_CATEGORIES[0], late))).compose("2025-12-31")
 
     def test_not_derived_keeps_published_q4_and_says_so(self):
         self.renamed_annual("x:AMember")
         parser = self.parser()
         parser.run(parser.periods())
-        spec = CompanySpec(
-            ticker="TEST",
-            view="product",
-            categories=(
-                Category("A", define(fact(REVENUE, A), effective(None, "2025-09-30"))),
-                SPEC.categories[1],
-                Category("A2", define(fact(REVENUE, A), effective("2025-12-31"))),
-            ),
-            total=SPEC.total,
+        source = company(
+            categories=(("A", fact(REVENUE, A), until("2025-09-30")), COMPANY_CATEGORIES[1], ("A2", fact(REVENUE, A), since("2025-12-31")))
         )
-        self.parser(spec).run(["2025-12-31"])
+        self.parser(source).run(["2025-12-31"])
         entry = self.status()["periods"]["Q"]["2025-12-31"]
         self.assertEqual((entry["status"], entry["published_output_kept"]), ("not_derived", True))
         self.assertEqual(entry["published_output"]["categories"], {"A": 90_000_000, "B": 10_000_000})
@@ -666,7 +661,7 @@ class Q4BasisTest(Fixture):
         self.assertEqual([m["category"] for m in status["FY"]["2024-12-31"]["differences"]], ["A", "B"])
 
     def test_prior_year_before_start_uses_its_own_annual_report(self):
-        # 上一財年在起始日之前、沒有上線：以上一份 10-K 本身依規格組出的值比對。
+        # 上一財年在起始日之前、沒有上線：以公司 parser 從上一份 10-K 本身組出的值比對。
         self.prior_report()
         self.annual_report((110, 90))
         status = self.run_all(default_start="2025-01-01")
@@ -804,10 +799,10 @@ class Q4BasisTest(Fixture):
         self.assertEqual([(c["category"], c["previous_value"], c["listed_value"]) for c in q4["basis_changes"]], [("總營收", 200_000_000, 210_000_000)])
 
     def test_only_reconciling_item_differs(self):
-        spec = CompanySpec(ticker="TEST", view="product", categories=(SPEC.categories[0],), reconciling=(SPEC.categories[1],), total=SPEC.total)
+        source = company(categories=COMPANY_CATEGORIES[:1], reconciling=COMPANY_CATEGORIES[1:])
         self.prior_report()
         self.annual_report((100, 90), total=200)
-        q4 = self.run_all(spec=spec)["Q"]["2025-12-31"]
+        q4 = self.run_all(source=source)["Q"]["2025-12-31"]
         self.assertEqual((q4["status"], q4["check"]), ("not_derived", "Q4 口徑一致"))
         self.assertEqual([c["category"] for c in q4["basis_changes"]], ["B"])
 
@@ -894,7 +889,8 @@ class ParserOutputTest(Fixture):
         status = self.status()
         self.assertEqual({p: e["status"] for p, e in status["periods"]["Q"].items()}, dict.fromkeys(["2025-03-31", "2025-06-30", "2025-09-30", "2025-12-31"], "published"))
         self.assertEqual(status["periods"]["FY"], {"2025-12-31": {"status": "published", "fiscal_year": 2025, "accession": "0000000001-26-000001"}})
-        self.assertEqual(status["parser"]["spec_sha256"], "spec-sha")
+        self.assertNotIn("parser", status)
+        self.assertNotIn("parser", output)
         for series in ("Q", "FY"):
             self.assertEqual([p.name for p in (ticker_dir(self.out, "TEST") / series).iterdir() if p.name.startswith(".")], [])
 
@@ -923,8 +919,7 @@ class ParserOutputTest(Fixture):
         self.add("0000000001-25-000001", "10-Q", "2025-03-31", "2025-04-15", build_html(2025, "Q1", quarter_items("2025-03-31", (60, 40))))
         self.parser().run(["2025-03-31"])
         published = (ticker_dir(self.out, "TEST") / "Q" / "2025-03-31" / "revenue.json").read_bytes()
-        spec = CompanySpec(ticker="TEST", view="product", categories=(SPEC.categories[0],), total=SPEC.total)
-        self.parser(spec).run(["2025-03-31"])
+        self.parser(company(categories=COMPANY_CATEGORIES[:1])).run(["2025-03-31"])
         entry = self.status()["periods"]["Q"]["2025-03-31"]
         self.assertEqual((entry["status"], entry["check"], entry["published_output_kept"]), ("failed", "加總", True))
         self.assertEqual((ticker_dir(self.out, "TEST") / "Q" / "2025-03-31" / "revenue.json").read_bytes(), published)
@@ -937,7 +932,7 @@ class ParserOutputTest(Fixture):
                 png, cropped, _ = super().capture(raw, items)
                 return png, cropped, "other"
 
-        parser = RevenueParser(self.data, self.out, SPEC, "spec-sha", screenshotter=lambda: WrongTable(self))
+        parser = RevenueParser(self.data, self.out, COMPANY, screenshotter=lambda: WrongTable(self))
         parser.run(["2025-03-31"])
         self.assertIn("文字不同", self.status()["periods"]["Q"]["2025-03-31"]["reason"])
 
@@ -947,17 +942,15 @@ class ParserOutputTest(Fixture):
         periods = parser.periods()
         parser.run(periods)
         shots = len(self.shots)
-        self.assertEqual(check_outputs(self.data, self.out, SPEC, "spec-sha", periods)[1], [])
+        self.assertEqual(check_outputs(self.data, self.out, COMPANY, periods)[1], [])
         self.assertEqual(len(self.shots), shots)
-        # 規格或引擎 hash 不同而內容相同：一般 parse 不改動任何東西，--check 一致。
-        self.assertEqual(check_outputs(self.data, self.out, SPEC, "other-spec-sha", periods)[1], [])
         committed = ticker_dir(self.out, "TEST") / "Q" / "2025-03-31" / "revenue.json"
         output = JsonCodec.read(committed)
         output["categories"]["A"]["value"] += 1
         JsonCodec.write(committed, output)
         png = next((ticker_dir(self.out, "TEST") / "Q" / "2025-06-30" / "evidence").glob("*.png"))
         png.write_bytes(b"tampered")
-        found = check_outputs(self.data, self.out, SPEC, "spec-sha", periods)[1]
+        found = check_outputs(self.data, self.out, COMPANY, periods)[1]
         self.assertTrue(any(d.startswith("Q 2025-03-31: status.differs_from_published") for d in found), found)
         self.assertTrue(any("2025-06-30" in d and "PNG" in d for d in found), found)
 
@@ -1002,24 +995,17 @@ class ComparativeTest(Fixture):
         self.assertEqual([(a["operand"], a["value"]) for a in markers[0]["published_addends"]], [("op1", 60_000_000)])
         self.assertNotIn("differences", self.status()["periods"]["Q"]["2025-03-31"])
 
-    def test_comparison_follows_spec_definition_across_rename(self):
+    def test_comparison_follows_parser_across_rename(self):
         # 2024 Q1 用舊成員 x:AMember；2025 Q1 申報改用 x:ANewMember，且其比較欄把 2024 Q1 的 A 列為 62。
-        spec = CompanySpec(
-            ticker="TEST",
-            view="product",
-            categories=(
-                Category("A", define(fact(REVENUE, A), effective(None, "2024-12-31")), define(fact(REVENUE, {AXIS: "x:ANewMember"}), effective("2025-01-01"))),
-                SPEC.categories[1],
-            ),
-            total=SPEC.total,
-        )
+        renamed = by_filing(lambda filing: fact(REVENUE, A if filing.report_date <= "2024-12-31" else {AXIS: "x:ANewMember"}))
+        source = company(categories=(("A", renamed), COMPANY_CATEGORIES[1]))
         self.add("0000000001-24-000001", "10-Q", "2024-03-31", "2024-04-15", build_html(2024, "Q1", self.items("2024", (60, 40))))
         current = self.items("2025", (66, 44), comparative=(62, 40))
         for f in current:
             if f["dims"] == A:
                 f["dims"] = {AXIS: "x:ANewMember"}
         self.add("0000000001-25-000001", "10-Q", "2025-03-31", "2025-04-15", build_html(2025, "Q1", current))
-        self.parser(spec).run(["2024-03-31", "2025-03-31"])
+        self.parser(source).run(["2024-03-31", "2025-03-31"])
         markers = self.status()["periods"]["Q"]["2024-03-31"]["differences"]
         self.assertEqual([(m["category"], m["published_value"], m["listed_value"]) for m in markers], [("A", 60_000_000, 62_000_000), ("總營收", 100_000_000, 102_000_000)])
 
@@ -1076,10 +1062,10 @@ class ComparativeTest(Fixture):
         self.assertNotIn("differences", self.status()["periods"]["Q"]["2025-03-31"])
 
     def test_markers_are_recomputed_from_current_published_values(self):
-        # 2024 Q1 起初因規格錯誤失敗、2025 Q1 先上線；修正規格重跑後 2024 Q1 上線，標記照樣出現。
+        # 2024 Q1 起初因公司 parser 錯誤失敗、2025 Q1 先上線；修正後重跑 2024 Q1 上線，標記照樣出現。
         self.add("0000000001-24-000001", "10-Q", "2024-03-31", "2024-04-15", build_html(2024, "Q1", self.items("2024", (60, 40))))
         self.add("0000000001-25-000001", "10-Q", "2025-03-31", "2025-04-15", build_html(2025, "Q1", self.items("2025", (66, 44), comparative=(62, 40))))
-        broken = CompanySpec(ticker="TEST", view="product", categories=(SPEC.categories[0],), total=SPEC.total)
+        broken = company(categories=COMPANY_CATEGORIES[:1])
         self.parser(broken).run(["2024-03-31"])
         self.parser().run(["2025-03-31"])
         self.assertEqual(self.status()["periods"]["Q"]["2024-03-31"]["status"], "failed")
@@ -1186,7 +1172,7 @@ class ComparativeTest(Fixture):
         ]
         found = comparatives(
             InlineDocument(build_html(2025, "Q1", items)), "new", [("Q", "2024-03-31", published)],
-            lambda name: [Addend(fact(REVENUE, A))] if name == "A" else ([Addend(fact(REVENUE))] if name is None else None),
+            {"A": fact(REVENUE, A), None: fact(REVENUE)}.get,
         )
         self.assertEqual(len(found), 1)
         self.assertEqual((found[0]["result"], found[0]["listed_value"]), ("unparseable", None))
@@ -1198,12 +1184,7 @@ A2 = {AXIS: "x:A2Member"}
 GEO = "srt:StatementGeographicalAxis"
 US = {GEO: "x:USMember"}
 NON_US = {GEO: "x:NonUSMember"}
-SUM_SPEC = CompanySpec(
-    ticker="TEST",
-    view="product",
-    categories=(Category("A", sum_of(fact(REVENUE, A1), fact(REVENUE, A2))), Category("B", fact(REVENUE, B))),
-    total=Category("Total", fact(REVENUE)),
-)
+SUM_COMPANY = company(categories=(("A", (fact(REVENUE, A1), fact(REVENUE, A2))), ("B", fact(REVENUE, B))))
 
 
 class MultiFactSumTest(Fixture):
@@ -1234,7 +1215,7 @@ class MultiFactSumTest(Fixture):
 
     def test_quarter_annual_and_q4_use_every_addend(self):
         self.year()
-        parser = self.parser(SUM_SPEC)
+        parser = self.parser(SUM_COMPANY)
         self.assertTrue(parser.run(parser.periods())["complete"])
         q1 = self.output("2025-03-31")
         self.assertEqual(q1["categories"]["A"]["value"], 60_000_000)
@@ -1251,28 +1232,18 @@ class MultiFactSumTest(Fixture):
         for operand in q4["operands"].values():
             self.assertTrue(operand["evidence"]["table"])
 
-    def test_negative_addend_and_define_weight(self):
-        with self.assertRaisesRegex(ValueError, "同一個運算元"):
-            CompanySpec(
-                ticker="TEST",
-                view="product",
-                categories=(Category("A", sum_of(fact(REVENUE, A1), minus(fact(REVENUE, B)))), Category("B", fact(REVENUE, B))),
-                total=Category("Total", fact(REVENUE)),
-            )
+    def test_negative_addends(self):
         C = {AXIS: "x:CMember"}
-        spec = CompanySpec(
-            ticker="TEST",
-            view="product",
-            categories=(Category("A", sum_of(fact(REVENUE, A1), fact(REVENUE, A2), minus(fact(REVENUE, C)))),),
-            reconciling=(Category("Eliminations", define(sum_of(fact(REVENUE, B), minus(fact(REVENUE, {AXIS: "x:DMember"}))), weight=-1)),),
-            total=Category("Total", fact(REVENUE)),
+        source = company(
+            categories=(("A", (fact(REVENUE, A1), fact(REVENUE, A2), fact(REVENUE, C, weight=-1))),),
+            reconciling=(("Eliminations", (fact(REVENUE, B, weight=-1), fact(REVENUE, {AXIS: "x:DMember"}))),),
         )
         # A = 35 + 25 − 10 = 50；Eliminations = −(40 − 15) = −25；總營收 25。
         dims = (A1, A2, C, B, {AXIS: "x:DMember"})
         items = [item(f"q{n}", REVENUE, d, "2025-01-01", "2025-03-31", str(v)) for n, (d, v) in enumerate(zip(dims, (35, 25, 10, 40, 15)))]
         items.append(item("qt", REVENUE, None, "2025-01-01", "2025-03-31", "25"))
         self.add("0000000001-25-000001", "10-Q", "2025-03-31", "2025-04-15", build_html(2025, "Q1", items))
-        result = self.composer(spec).compose("2025-03-31")
+        result = self.composer(source).compose("2025-03-31")
         lines = {l.name: l for l in result.lines}
         self.assertEqual([t.weight for t in lines["A"].terms], [1, 1, -1])
         self.assertEqual(lines["A"].value, 50_000_000)
@@ -1282,7 +1253,7 @@ class MultiFactSumTest(Fixture):
 
     def test_missing_addend_fails_period_and_q4(self):
         self.year(drop=("2025-06-30", 1))
-        parser = self.parser(SUM_SPEC)
+        parser = self.parser(SUM_COMPANY)
         parser.run(parser.periods())
         entries = self.status()["periods"]["Q"]
         self.assertEqual((entries["2025-06-30"]["status"], entries["2025-06-30"]["check"]), ("failed", "fact 存在且唯一"))
@@ -1294,26 +1265,21 @@ class MultiFactSumTest(Fixture):
     def test_missing_nine_month_addend_fails_q4(self):
         self.year(drop=("2025-09-30", 1))
         with self.assertRaisesRegex(ParseError, "fact 存在且唯一"):
-            self.composer(SUM_SPEC).compose("2025-12-31")
+            self.composer(SUM_COMPANY).compose("2025-12-31")
 
     def test_addends_with_different_start_fail(self):
         items = self.members("q", "2025-01-01", "2025-03-31", (35, 25, 40))
         items[1]["start"] = "2024-12-29"
         self.add("0000000001-25-000001", "10-Q", "2025-03-31", "2025-04-15", build_html(2025, "Q1", items))
         with self.assertRaisesRegex(ParseError, "各加數的 quarter 起日不同"):
-            self.composer(SUM_SPEC).compose("2025-03-31")
+            self.composer(SUM_COMPANY).compose("2025-03-31")
 
-    def geographic_spec(self):
-        return CompanySpec(
-            ticker="TEST",
-            view="product",
-            categories=(Category("A", sum_of(fact(REVENUE, US), fact(REVENUE, NON_US))),),
-            total=Category("Total", fact(REVENUE)),
-        )
+    def geographic_company(self):
+        return company(categories=(("A", (fact(REVENUE, US), fact(REVENUE, NON_US))),))
 
     def test_geographic_sum_of_all_members(self):
         self.year(values={"2025-03-31": (60, 40)}, dims=(US, NON_US))
-        result = self.composer(self.geographic_spec()).compose("2025-03-31")
+        result = self.composer(self.geographic_company()).compose("2025-03-31")
         self.assertEqual(result.lines[0].value, 100_000_000)
         self.assertIn({"check": "地區成員完整", "result": "pass"}, result.structural)
 
@@ -1322,7 +1288,7 @@ class MultiFactSumTest(Fixture):
         items = self.members("q", "2025-01-01", "2025-03-31", (60, 40), (US, NON_US)) + [other]
         self.add("0000000001-25-000001", "10-Q", "2025-03-31", "2025-04-15", build_html(2025, "Q1", items))
         with self.assertRaisesRegex(ParseError, r"地區成員完整.*x:OtherMember"):
-            self.composer(self.geographic_spec()).compose("2025-03-31")
+            self.composer(self.geographic_company()).compose("2025-03-31")
 
     def test_geographic_check_uses_namespace_not_prefix(self):
         namespaces = {**NAMESPACES, "geo": NAMESPACES["srt"], "y": NAMESPACES["x"]}
@@ -1331,7 +1297,7 @@ class MultiFactSumTest(Fixture):
         ]
         self.add("0000000001-25-000001", "10-Q", "2025-03-31", "2025-04-15", build_html(2025, "Q1", items, namespaces))
         with self.assertRaisesRegex(ParseError, r"地區成員完整.*y:OtherMember"):
-            self.composer(self.geographic_spec()).compose("2025-03-31")
+            self.composer(self.geographic_company()).compose("2025-03-31")
 
     def test_geographic_check_fails_on_unresolvable_dimensions(self):
         items = self.members("q", "2025-01-01", "2025-03-31", (60, 40), (US, NON_US)) + [
@@ -1339,7 +1305,7 @@ class MultiFactSumTest(Fixture):
         ]
         self.add("0000000001-25-000001", "10-Q", "2025-03-31", "2025-04-15", build_html(2025, "Q1", items))
         with self.assertRaisesRegex(ParseError, r"地區成員完整.*無法解析"):
-            self.composer(self.geographic_spec()).compose("2025-03-31")
+            self.composer(self.geographic_company()).compose("2025-03-31")
 
     def test_geographic_member_of_other_period_or_dimension_is_ignored(self):
         items = self.members("q", "2025-01-01", "2025-03-31", (60, 40), (US, NON_US)) + [
@@ -1347,7 +1313,7 @@ class MultiFactSumTest(Fixture):
             item("g2", REVENUE, {**A, GEO: "x:OtherMember"}, "2025-01-01", "2025-03-31", "5"),
         ]
         self.add("0000000001-25-000001", "10-Q", "2025-03-31", "2025-04-15", build_html(2025, "Q1", items))
-        self.assertEqual(self.composer(self.geographic_spec()).compose("2025-03-31").lines[0].value, 100_000_000)
+        self.assertEqual(self.composer(self.geographic_company()).compose("2025-03-31").lines[0].value, 100_000_000)
 
     def published_sum(self):
         return {
@@ -1362,7 +1328,7 @@ class MultiFactSumTest(Fixture):
 
     def compare(self, values, dims, addends):
         document = InlineDocument(build_html(2025, "Q1", self.members("p", "2024-01-01", "2024-03-31", values, dims)))
-        lookup = {"A": [Addend(fact(REVENUE, d), w) for d, w in addends], None: [Addend(fact(REVENUE))]}
+        lookup = {"A": tuple(fact(REVENUE, d, weight=w) for d, w in addends), None: fact(REVENUE)}
         found = comparatives(document, "new", [("Q", "2024-03-31", self.published_sum())], lookup.get)
         self.assertEqual(len(found), 1)
         return found[0]
@@ -1392,11 +1358,11 @@ class MultiFactSumTest(Fixture):
 
     def test_comparative_follows_addends_through_parser(self):
         self.year()
-        parser = self.parser(SUM_SPEC)
+        parser = self.parser(SUM_COMPANY)
         parser.run(["2025-03-31"])
         later = self.members("q", "2026-01-01", "2026-03-31", (1, 1, 1)) + self.members("c", "2025-01-01", "2025-03-31", (35, 29, 40), table=1)
         self.add("0000000001-26-000002", "10-Q", "2026-03-31", "2026-04-15", build_html(2026, "Q1", later))
-        self.parser(SUM_SPEC).run([])
+        self.parser(SUM_COMPANY).run([])
         marks = self.status()["periods"]["Q"]["2025-03-31"]["differences"]
         self.assertEqual([(m["category"], m["published_value"], m["listed_value"]) for m in marks], [("A", 60_000_000, 64_000_000), ("總營收", 100_000_000, 104_000_000)])
         self.assertEqual([(a["operand"], a["value"]) for a in marks[0]["published_addends"]], [("op1", 35_000_000), ("op2", 25_000_000)])
@@ -1404,16 +1370,12 @@ class MultiFactSumTest(Fixture):
 
 
 ALT_A = {AXIS: "x:AltAMember"}
-VARIANT_SPEC = CompanySpec(
-    ticker="TEST",
-    view="product",
-    categories=(Category("A", one_of(fact(REVENUE, A), fact(REVENUE, ALT_A))), Category("B", fact(REVENUE, B))),
-    total=Category("Total", fact(REVENUE)),
-)
+VARIANT_A = variants((REVENUE, A), (REVENUE, ALT_A))
+VARIANT_COMPANY = company(categories=(("A", VARIANT_A), ("B", fact(REVENUE, B))))
 
 
 class TagVariantTest(Fixture):
-    """同一個分類在不同申報使用不同寫法：規格以 one_of 明列每種寫法，一份申報中找得到哪種就用哪種。"""
+    """同一個分類在不同申報使用不同寫法：公司 parser 以 one_of 明列每種寫法，一份申報中找得到哪種就用哪種。"""
 
     def filing(self, n, end, focus, rows, form="10-Q", filed=None, start=None):
         """rows：[(id, concept, dims, start, end, value, table)]；B 與總營收由呼叫端列出。"""
@@ -1437,7 +1399,7 @@ class TagVariantTest(Fixture):
         annual = [("ya", REVENUE, ALT_A, "2025-01-01", "2025-12-31", 300, 0), ("yb", REVENUE, B, "2025-01-01", "2025-12-31", 160, 0),
                   ("yt", REVENUE, None, "2025-01-01", "2025-12-31", 460, 0)]
         self.filing(4, "2025-12-31", "FY", annual, form="10-K", filed="2026-02-15")
-        parser = self.parser(VARIANT_SPEC)
+        parser = self.parser(VARIANT_COMPANY)
         self.assertTrue(parser.run(parser.periods())["complete"])
         q2 = self.output("2025-06-30")
         self.assertEqual(q2["operands"]["op1"]["dimensions"], ALT_A)
@@ -1450,19 +1412,11 @@ class TagVariantTest(Fixture):
 
     def test_concept_and_extra_dimension_variants(self):
         consolidated = {**A, "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"}
-        spec = CompanySpec(
-            ticker="TEST",
-            view="product",
-            categories=(
-                Category("A", one_of(fact(REVENUE, A), fact(REVENUE, consolidated))),
-                Category("B", one_of(fact(REVENUE, B), fact("us-gaap:Revenues", B))),
-            ),
-            total=Category("Total", fact(REVENUE)),
-        )
+        source = company(categories=(("A", variants((REVENUE, A), (REVENUE, consolidated))), ("B", variants((REVENUE, B), ("us-gaap:Revenues", B)))))
         rows = [("qa", REVENUE, consolidated, "2025-01-01", "2025-03-31", 60, 0), ("qb", "us-gaap:Revenues", B, "2025-01-01", "2025-03-31", 40, 0),
                 ("qt", REVENUE, None, "2025-01-01", "2025-03-31", 100, 0)]
         self.filing(1, "2025-03-31", "Q1", rows)
-        result = self.composer(spec).compose("2025-03-31")
+        result = self.composer(source).compose("2025-03-31")
         facts = {l.name: l.terms[0].operand.fact for l in result.lines}
         self.assertEqual((facts["A"].fact_id, facts["B"].fact_id, facts["B"].concept), ("qa", "qb", "us-gaap:Revenues"))
         self.assertEqual(result.sum_check["difference"], 0)
@@ -1470,7 +1424,7 @@ class TagVariantTest(Fixture):
     def test_both_variants_with_same_value_are_accepted(self):
         rows = self.quarter(1, "2025-03-31", A, 60, extra=[("alt", REVENUE, ALT_A, "2025-01-01", "2025-03-31", 60, 1)])
         self.filing(1, "2025-03-31", "Q1", rows)
-        operand = next(l for l in self.composer(VARIANT_SPEC).compose("2025-03-31").lines if l.name == "A").terms[0].operand
+        operand = next(l for l in self.composer(VARIANT_COMPANY).compose("2025-03-31").lines if l.name == "A").terms[0].operand
         # 同精度時選所在表格含最多其他項目者：qa 與 B、總營收同表。
         self.assertEqual((operand.fact.fact_id, [d.fact_id for d in operand.duplicates]), ("qa", ["alt"]))
 
@@ -1478,29 +1432,24 @@ class TagVariantTest(Fixture):
         rows = self.quarter(1, "2025-03-31", A, 60, extra=[("alt", REVENUE, ALT_A, "2025-01-01", "2025-03-31", 61, 1)])
         self.filing(1, "2025-03-31", "Q1", rows)
         with self.assertRaisesRegex(ParseError, r"fact 存在且唯一.*多種寫法同時出現且數值不一致"):
-            self.composer(VARIANT_SPEC).compose("2025-03-31")
+            self.composer(VARIANT_COMPANY).compose("2025-03-31")
 
     def test_no_variant_found_fails_and_case_is_not_ignored(self):
         self.filing(1, "2025-03-31", "Q1", self.quarter(1, "2025-03-31", {AXIS: "x:AltAmember"}, 60))
         with self.assertRaisesRegex(ParseError, r"找不到 A：one_of\(.*x:AMember.*x:AltAMember"):
-            self.composer(VARIANT_SPEC).compose("2025-03-31")
+            self.composer(VARIANT_COMPANY).compose("2025-03-31")
 
     def test_variant_inside_sum(self):
-        spec = CompanySpec(
-            ticker="TEST",
-            view="product",
-            categories=(Category("A", sum_of(one_of(fact(REVENUE, A1), fact(REVENUE, {AXIS: "x:AltA1Member"})), fact(REVENUE, A2))),),
-            total=Category("Total", fact(REVENUE)),
-        )
+        source = company(categories=(("A", (variants((REVENUE, A1), (REVENUE, {AXIS: "x:AltA1Member"})), fact(REVENUE, A2))),))
         rows = [("q1", REVENUE, {AXIS: "x:AltA1Member"}, "2025-01-01", "2025-03-31", 35, 0), ("q2", REVENUE, A2, "2025-01-01", "2025-03-31", 25, 0),
                 ("qt", REVENUE, None, "2025-01-01", "2025-03-31", 60, 0)]
         self.filing(1, "2025-03-31", "Q1", rows)
-        line = self.composer(spec).compose("2025-03-31").lines[0]
+        line = self.composer(source).compose("2025-03-31").lines[0]
         self.assertEqual(([t.operand.fact.fact_id for t in line.terms], line.value), (["q1", "q2"], 60_000_000))
 
     def test_comparative_recognises_every_variant(self):
         self.filing(1, "2025-03-31", "Q1", self.quarter(1, "2025-03-31", A, 60))
-        self.parser(VARIANT_SPEC).run(["2025-03-31"])
+        self.parser(VARIANT_COMPANY).run(["2025-03-31"])
         # 一年後的 10-Q 以另一種寫法列示去年同季：62 與已上線 60 不同；寫法不同不影響比對。
         later = [("ca", REVENUE, ALT_A, "2025-01-01", "2025-03-31", 62, 1), ("cb", REVENUE, B, "2025-01-01", "2025-03-31", 40, 1),
                  ("ct", REVENUE, None, "2025-01-01", "2025-03-31", 102, 1),
@@ -1508,7 +1457,7 @@ class TagVariantTest(Fixture):
                  ("qt", REVENUE, None, "2026-01-01", "2026-03-31", 2, 0)]
         items = [item(fid, c, d, st, e, str(v), t) for fid, c, d, st, e, v, t in later]
         self.add("0000000001-26-000002", "10-Q", "2026-03-31", "2026-04-15", build_html(2026, "Q1", items))
-        self.parser(VARIANT_SPEC).run([])
+        self.parser(VARIANT_COMPANY).run([])
         marks = self.status()["periods"]["Q"]["2025-03-31"]["differences"]
         self.assertEqual([(m["category"], m["published_value"], m["listed_value"]) for m in marks], [("A", 60_000_000, 62_000_000), ("總營收", 100_000_000, 102_000_000)])
         self.assertEqual(marks[0]["listed_addends"][0]["dimensions"], ALT_A)
@@ -1523,7 +1472,7 @@ class TagVariantTest(Fixture):
         }
         items = [item("pa", REVENUE, A, "2024-01-01", "2024-03-31", "60"), item("palt", REVENUE, ALT_A, "2024-01-01", "2024-03-31", "64"),
                  item("pt", REVENUE, None, "2024-01-01", "2024-03-31", "100")]
-        lookup = {"A": [Addend(VARIANT_SPEC.categories[0].definitions[0].addends[0].selector)], None: [Addend(fact(REVENUE))]}
+        lookup = {"A": VARIANT_A, None: fact(REVENUE)}
         found = comparatives(InlineDocument(build_html(2025, "Q1", items)), "new", [("Q", "2024-03-31", published)], lookup.get)
         self.assertEqual((found[0]["result"], found[0]["listed_value"]), ("unparseable", None))
         self.assertIn("數值不一致", found[0]["note"])
@@ -1538,16 +1487,11 @@ class TagVariantTest(Fixture):
         return html.replace(b"<body>", b'<body><span xmlns:y="http://example.com/other"></span>', 1)
 
     def test_variant_with_conflicting_prefix_fails(self):
-        spec = CompanySpec(
-            ticker="TEST",
-            view="product",
-            categories=(Category("A", one_of(fact(REVENUE, A), fact(REVENUE, {AXIS: "y:AltAMember"}))), Category("B", fact(REVENUE, B))),
-            total=Category("Total", fact(REVENUE)),
-        )
+        source = company(categories=(("A", variants((REVENUE, A), (REVENUE, {AXIS: "y:AltAMember"}))), COMPANY_CATEGORIES[1]))
         items = [item(fid, REVENUE, d, "2025-01-01", "2025-03-31", str(v)) for fid, d, v in (("qa", A, 60), ("qb", B, 40), ("qt", None, 100))]
         self.add("0000000001-25-000001", "10-Q", "2025-03-31", "2025-04-15", self.conflicted_html(items))
-        with self.assertRaisesRegex(ParseError, r"fact 存在且唯一.*y:AltAMember.*\['y'\] 在文件中宣告衝突"):
-            self.composer(spec).compose("2025-03-31")
+        with self.assertRaisesRegex(ParseError, r"fact 存在且唯一.*y:AltAMember.*\['y'\] 在 0000000001-25-000001 中宣告衝突"):
+            self.composer(source).compose("2025-03-31")
 
     def test_comparative_with_conflicting_prefix_is_unparseable(self):
         published = {
@@ -1557,7 +1501,7 @@ class TagVariantTest(Fixture):
                                  "period": {"start": "2024-01-01", "end": "2024-03-31"}, "value": 60_000_000, "raw": "60", "scale": "6", "decimals": "-6"}},
         }
         items = [item("pa", REVENUE, A, "2024-01-01", "2024-03-31", "60"), item("pt", REVENUE, None, "2024-01-01", "2024-03-31", "100")]
-        lookup = {"A": [Addend(one_of(fact(REVENUE, A), fact(REVENUE, {AXIS: "y:AltAMember"})))], None: [Addend(fact(REVENUE))]}
+        lookup = {"A": variants((REVENUE, A), (REVENUE, {AXIS: "y:AltAMember"})), None: fact(REVENUE)}
         found = comparatives(InlineDocument(self.conflicted_html(items)), "new", [("Q", "2024-03-31", published)], lookup.get)
         self.assertEqual((found[0]["result"], found[0]["listed_value"]), ("unparseable", None))
         self.assertIn("宣告衝突", found[0]["note"])
@@ -1579,7 +1523,7 @@ class DefaultStartTest(Fixture):
         self.assertEqual(q4["filings"]["nine_months"]["accession"], "0000000001-25-000003")
         self.assertEqual(q4["categories"]["A"]["value"], 90_000_000)
         self.assertEqual(sorted(p.name for p in (ticker_dir(self.out, "TEST") / "Q").iterdir()), ["2025-12-31"])
-        self.assertEqual(check_outputs(self.data, self.out, SPEC, "spec-sha", None, default_start=self.START)[1], [])
+        self.assertEqual(check_outputs(self.data, self.out, COMPANY, None, default_start=self.START)[1], [])
 
     def test_start_before_default_publishes_earlier_periods(self):
         self.standard_year()
@@ -1598,7 +1542,7 @@ class DefaultStartTest(Fixture):
         for period, raw in earlier.items():
             self.assertEqual((ticker_dir(self.out, "TEST") / "Q" / period / "revenue.json").read_bytes(), raw)
         # --check 從 status.json 取期別，含較早的期別，照常比對。
-        report, found = check_outputs(self.data, self.out, SPEC, "spec-sha", None, default_start=self.START)
+        report, found = check_outputs(self.data, self.out, COMPANY, None, default_start=self.START)
         self.assertEqual(found, [])
         self.assertIn(("Q", "2025-06-30"), [(p["series"], p["period_end"]) for p in report["periods"]])
 
@@ -1656,14 +1600,6 @@ class PublishedProtectionTest(Fixture):
         self.assertEqual((ticker_dir(self.out, "TEST") / "Q" / "2025-03-31" / "revenue.json").read_bytes(), before)
         self.assertNotIn("differs_from_published", self.status()["periods"]["Q"]["2025-03-31"])
 
-    def test_parser_version_alone_is_not_a_difference(self):
-        published = self.publish_q1()
-        RevenueParser(self.data, self.out, SPEC, "new-spec-sha", screenshotter=lambda: FakeShooter(self)).run(["2025-03-31"])
-        self.assertEqual((ticker_dir(self.out, "TEST") / "Q" / "2025-03-31" / "revenue.json").read_bytes(), published)
-        entry = self.status()["periods"]["Q"]["2025-03-31"]
-        self.assertEqual(entry["status"], "published")
-        self.assertNotIn("stale_fields", entry)
-
     def test_metadata_only_change_is_recorded_as_stale_fields(self):
         self.publish_q1()
         path = ticker_dir(self.out, "TEST") / "Q" / "2025-03-31" / "revenue.json"
@@ -1712,7 +1648,7 @@ class PublishedProtectionTest(Fixture):
 
         published = self.publish_q1()
         self.earlier_original_q1()
-        parser = RevenueParser(self.data, self.out, SPEC, "spec-sha", screenshotter=lambda: FakeShooter(self), republish={("Q", "2025-03-31")})
+        parser = self.parser(republish={("Q", "2025-03-31")})
         real_rename = Path.rename
 
         def rename(path, target):
@@ -1820,7 +1756,7 @@ class StrictnessTest(Fixture):
 
 class CheckModeTest(Fixture):
     def run_check(self, periods):
-        return check_outputs(self.data, self.out, SPEC, "spec-sha", periods)[1]
+        return check_outputs(self.data, self.out, COMPANY, periods)[1]
 
     def test_status_and_extra_evidence_are_compared(self):
         self.add("0000000001-25-000001", "10-Q", "2025-03-31", "2025-04-15", build_html(2025, "Q1", quarter_items("2025-03-31", (60, 40))))
@@ -1876,73 +1812,22 @@ class CheckModeTest(Fixture):
         self.assertTrue(any(d.startswith("FY 2025-12-31: status.differs_from_published") for d in found), found)
 
 
-class SpecValidationTest(unittest.TestCase):
-    def test_weight_is_keyword_only_and_unit(self):
-        with self.assertRaisesRegex(ValueError, "第二個參數必須是 effective"):
-            define(fact(REVENUE, A), -1)
-        with self.assertRaisesRegex(ValueError, "只能是 1 或 -1"):
-            define(fact(REVENUE, A), weight=2)
-        self.assertEqual([a.weight for a in define(fact(REVENUE, A), weight=-1).addends], [-1])
-        self.assertEqual([a.weight for a in define(sum_of(fact(REVENUE, A), minus(fact(REVENUE, B))), weight=-1).addends], [-1, 1])
-        with self.assertRaisesRegex(ValueError, "至少要有兩個加數"):
-            sum_of(fact(REVENUE, A))
-        with self.assertRaisesRegex(ValueError, "加數重複"):
-            sum_of(fact(REVENUE, A), fact(REVENUE, A))
-
-    def test_one_of_rules(self):
-        with self.assertRaisesRegex(ValueError, "至少要有兩種寫法"):
-            one_of(fact(REVENUE, A))
-        with self.assertRaisesRegex(ValueError, "寫法重複"):
-            one_of(fact(REVENUE, A), fact(REVENUE, A))
-        with self.assertRaisesRegex(ValueError, "必須是 fact"):
-            one_of(fact(REVENUE, A), table_cell("ex99", "h", "r", "c"))
-        with self.assertRaisesRegex(ValueError, "加數重複"):
-            sum_of(one_of(fact(REVENUE, A), fact(REVENUE, B)), fact(REVENUE, B))
-
-    def test_spec_rules(self):
-        cases = [
-            (dict(categories=(Category("A", one_of(fact(REVENUE, A), fact(REVENUE, {AXIS: "x:AltMember"}))), Category("B", one_of(fact(REVENUE, B), fact(REVENUE, {AXIS: "x:AltMember"}))))), "同一個運算元 .*x:AltMember"),
-            (dict(categories=(Category("A", sum_of(one_of(fact(REVENUE, {GEO: "x:USMember"}), fact(REVENUE, {GEO: "x:UsMember"})), fact(REVENUE, {GEO: "x:NonUSMember"}))), SPEC.categories[1])), "地區軸的加數不可使用 one_of"),
-            (dict(view="geography"), "view 必須是"),
-            (dict(total=Category("A", fact(REVENUE))), "與分類重名"),
-            (dict(categories=(Category("A", fact(REVENUE, {GEO: "x:USMember"})), SPEC.categories[1])), "地區軸只能以 sum_of"),
-            (dict(categories=(Category("A", sum_of(fact(REVENUE, {GEO: "x:USMember"}), fact(REVENUE, A))), SPEC.categories[1])), "每個加數都必須是帶地區軸"),
-            (dict(categories=(Category("A", sum_of(fact(REVENUE, {GEO: "x:USMember"}), minus(fact(REVENUE, {GEO: "x:NonUSMember"})))), SPEC.categories[1])), "權重 1"),
-            (dict(categories=(Category("A", sum_of(fact(REVENUE, {GEO: "x:USMember"}), fact("us-gaap:Revenues", {GEO: "x:NonUSMember"}))), SPEC.categories[1])), "concept 與地區軸以外"),
-            (dict(categories=(Category("A", sum_of(fact(REVENUE, {**A, GEO: "x:USMember"}), fact(REVENUE, {**B, GEO: "x:NonUSMember"}))), SPEC.categories[1])), "concept 與地區軸以外"),
-            (dict(categories=(Category("A", sum_of(fact(REVENUE, {AXIS: "x:CMember"}), fact(REVENUE, B))), SPEC.categories[1])), "同一個運算元"),
-            (dict(categories=(SPEC.categories[0], Category("B", fact(REVENUE, A)))), "同一個運算元"),
-        ]
-        for change, pattern in cases:
-            with self.subTest(pattern):
-                base = dict(ticker="TEST", view="product", categories=SPEC.categories, total=SPEC.total)
-                base.update(change)
-                with self.assertRaisesRegex(ValueError, pattern):
-                    CompanySpec(**base)
-
-    def test_segment_axis_requires_note(self):
-        spec = CompanySpec(
-            ticker="TEST",
-            view="business_segment",
-            categories=(Category("A", fact(REVENUE, {"us-gaap:StatementBusinessSegmentsAxis": "x:AMember"})),),
-            total=SPEC.total,
-        )
-        with self.assertRaisesRegex(ValueError, "業務別而不是地區"):
-            companies.check_notes(spec.ticker, spec.uses_axis("us-gaap:StatementBusinessSegmentsAxis"), "# notes")
-        companies.check_notes(spec.ticker, True, "us-gaap:StatementBusinessSegmentsAxis 的成員是業務群")
-
-
-class CompanySpecTest(unittest.TestCase):
+class CompanyLoaderTest(unittest.TestCase):
     def test_aapl_parser_loads_with_product_view(self):
         self.assertIn("AAPL", companies.tickers())
-        parser, digest = companies.spec("AAPL")
+        parser = companies.parser_source("AAPL")
         self.assertEqual(parser.view, "product")
         self.assertEqual(parser.categories("2025-06-28"), ["iPhone", "Mac", "iPad", "Wearables, Home and Accessories", "Services"])
-        self.assertEqual(len(digest), 64)
 
     def test_unknown_ticker(self):
         with self.assertRaisesRegex(ValueError, "沒有公司 parser"):
-            companies.spec("ZZZZ")
+            companies.parser_source("ZZZZ")
+
+    def test_segment_axis_requires_note(self):
+        with self.assertRaisesRegex(ValueError, "業務別而不是地區"):
+            companies.check_notes("TEST", True, "# notes")
+        companies.check_notes("TEST", True, "us-gaap:StatementBusinessSegmentsAxis 的成員是業務群")
+        companies.check_notes("TEST", False, "# notes")
 
 
 if __name__ == "__main__":
