@@ -707,7 +707,7 @@ def check_outputs(
     with tempfile.TemporaryDirectory() as temp:
         if committed.exists():
             shutil.copytree(committed, ticker_dir(Path(temp), spec.ticker))
-        filings = SnapshotFilingSet(snapshots, spec) if snapshots is not None else None
+        filings = SnapshotFilingSet(snapshots, spec.ticker) if snapshots is not None else None
         parser = RevenueParser(
             data, Path(temp), spec, spec_sha256, screenshots=False, progress=progress, default_start=default_start, filings=filings
         )

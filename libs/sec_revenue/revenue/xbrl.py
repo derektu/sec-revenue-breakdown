@@ -105,7 +105,7 @@ SNAPSHOT_FACT_FIELDS = tuple(f.name for f in fields(Fact) if f.name not in ("con
 class InlineDocument:
     """一份 inline XBRL HTML 文件的 fact 索引。
 
-    `to_snapshot` 把解析結果中指定 concept 的 fact 連同 namespaces、dei 存成 JSON 可序列化的內容；
+    `to_snapshot` 把解析結果的全部 fact 連同 namespaces、dei 存成 JSON 可序列化的內容；
     `from_snapshot` 由快照重建同一個索引，之後的查找（`resolve`、`facts`、`fiscal`）與原文解析的結果相同。
     快照沒有原文，`locator` 為 None，不能找表格或產生證據。
     """
@@ -161,9 +161,8 @@ class InlineDocument:
             )
         return document
 
-    def to_snapshot(self, concepts) -> dict:
-        """`concepts`（規格中的 QName）在本文件解析到的 fact，依文件順序；前綴無法解析的 concept 沒有 fact。"""
-        keys = {self.resolve(concept) for concept in concepts} - {None}
+    def to_snapshot(self) -> dict:
+        """本文件的全部數值 fact，依文件順序，與公司 parser 無關。"""
         return {
             "namespaces": dict(sorted(self.namespaces.items())),
             "conflicts": sorted(self.conflicts),
@@ -174,7 +173,6 @@ class InlineDocument:
                     for name in SNAPSHOT_FACT_FIELDS
                 }
                 for fact in self.facts
-                if fact.concept_key in keys
             ],
         }
 
