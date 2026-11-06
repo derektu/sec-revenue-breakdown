@@ -1730,7 +1730,7 @@ class StrictnessTest(Fixture):
                     self.compose_q1(items)
 
     def test_evidence_and_reader_share_number_rule(self):
-        from sec_revenue.revenue.evidence import ix_number
+        from sec_revenue.revenue.ixbrl import ix_number
 
         self.assertEqual(ix_number("1,234", "num-dot-decimal", "3", "-"), (-1234000, None))
         self.assertIsNone(ix_number("-1,234", "num-dot-decimal", "3", None)[0])

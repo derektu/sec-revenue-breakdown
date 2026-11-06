@@ -1,0 +1,833 @@
+{
+  "accession": "0001045810-23-000093",
+  "conflicts": [],
+  "dei": {
+    "dei:AmendmentFlag": "FALSE",
+    "dei:CityAreaCode": "408",
+    "dei:CurrentFiscalYearEndDate": "1/28",
+    "dei:DocumentFiscalPeriodFocus": "Q1",
+    "dei:DocumentFiscalYearFocus": "2024",
+    "dei:DocumentPeriodEndDate": "April 30, 2023",
+    "dei:DocumentQuarterlyReport": "☒",
+    "dei:DocumentTransitionReport": "☐",
+    "dei:DocumentType": "10-Q",
+    "dei:EntityAddressAddressLine1": "2788 San Tomas Expressway",
+    "dei:EntityAddressCityOrTown": "Santa Clara",
+    "dei:EntityAddressPostalZipCode": "95051",
+    "dei:EntityAddressStateOrProvince": "California",
+    "dei:EntityCentralIndexKey": "0001045810",
+    "dei:EntityCurrentReportingStatus": "Yes",
+    "dei:EntityEmergingGrowthCompany": "☐",
+    "dei:EntityFileNumber": "0-23985",
+    "dei:EntityFilerCategory": "Large accelerated filer",
+    "dei:EntityIncorporationStateCountryCode": "Delaware",
+    "dei:EntityInteractiveDataCurrent": "Yes",
+    "dei:EntityRegistrantName": "NVIDIA CORP",
+    "dei:EntityShellCompany": "☒",
+    "dei:EntitySmallBusiness": "☐",
+    "dei:EntityTaxIdentificationNumber": "94-3177549",
+    "dei:LocalPhoneNumber": "486-2000",
+    "dei:Security12bTitle": "Common Stock, $0.001 par value per share",
+    "dei:SecurityExchangeName": "The Nasdaq Global Select Market",
+    "dei:TradingSymbol": "NVDA"
+  },
+  "facts": [
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "i22d2c06eca1a447bae57634d686ce3f8_D20230130-20230430",
+      "decimals": "-6",
+      "dimensions": [],
+      "end": "2023-04-30",
+      "fact_id": "id3VybDovL2RvY3MudjEvZG9jOmFjOTliZGQyNjZjOTRkMmNiMmEwY2E3NjIyMWRmMjk4L3NlYzphYzk5YmRkMjY2Yzk0ZDJjYjJhMGNhNzYyMjFkZjI5OF8xNi9mcmFnOjZlZWRmZTcyZjZmYjQ1ODFiYTg4ZmFjMWEzOTdhYTMxL3RhYmxlOjEyOWI3ZTI0ZTFmNzQ2ZjdhZmJjZDQ0NTM1OThlMzhhL3RhYmxlcmFuZ2U6MTI5YjdlMjRlMWY3NDZmN2FmYmNkNDQ1MzU5OGUzOGFfNC0xLTEtMS05OTg0NA_8ffc396b-37b1-42be-a3ae-aa7e24cf5d75",
+      "format": "num-dot-decimal",
+      "order": 1857,
+      "raw": "7,192",
+      "scale": "6",
+      "sign": null,
+      "start": "2023-01-30",
+      "table_index": 7,
+      "unit": "iso4217:USD",
+      "value": 7192000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "ia5206106403d43e6b74ab17bb4a402ce_D20220131-20220501",
+      "decimals": "-6",
+      "dimensions": [],
+      "end": "2022-05-01",
+      "fact_id": "id3VybDovL2RvY3MudjEvZG9jOmFjOTliZGQyNjZjOTRkMmNiMmEwY2E3NjIyMWRmMjk4L3NlYzphYzk5YmRkMjY2Yzk0ZDJjYjJhMGNhNzYyMjFkZjI5OF8xNi9mcmFnOjZlZWRmZTcyZjZmYjQ1ODFiYTg4ZmFjMWEzOTdhYTMxL3RhYmxlOjEyOWI3ZTI0ZTFmNzQ2ZjdhZmJjZDQ0NTM1OThlMzhhL3RhYmxlcmFuZ2U6MTI5YjdlMjRlMWY3NDZmN2FmYmNkNDQ1MzU5OGUzOGFfNC0zLTEtMS05OTg0NA_8884fbee-ac40-44ef-8b94-1e4520597f12",
+      "format": "num-dot-decimal",
+      "order": 1864,
+      "raw": "8,288",
+      "scale": "6",
+      "sign": null,
+      "start": "2022-01-31",
+      "table_index": 7,
+      "unit": "iso4217:USD",
+      "value": 8288000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "i4290dedb67c54e269891ad7beab63db6_D20230130-20230430",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "nvda:ComputeAndNetworkingMember"
+        ]
+      ],
+      "end": "2023-04-30",
+      "fact_id": "id3VybDovL2RvY3MudjEvZG9jOmFjOTliZGQyNjZjOTRkMmNiMmEwY2E3NjIyMWRmMjk4L3NlYzphYzk5YmRkMjY2Yzk0ZDJjYjJhMGNhNzYyMjFkZjI5OF84OC9mcmFnOjMxNzMxZjE3Nzg4MjRjNmE4YjlkMjE3ZGYyYjkwMmNkL3RhYmxlOmZjMmUxYzk2MGNhOTQzZWNhODAyOWViYzExZDk3Y2VlL3RhYmxlcmFuZ2U6ZmMyZTFjOTYwY2E5NDNlY2E4MDI5ZWJjMTFkOTdjZWVfNC0xLTEtMS05OTg0NA_72399f4e-44b9-420b-8e7d-d36cdbe9ff14",
+      "format": "num-dot-decimal",
+      "order": 8919,
+      "raw": "4,460",
+      "scale": "6",
+      "sign": null,
+      "start": "2023-01-30",
+      "table_index": 34,
+      "unit": "iso4217:USD",
+      "value": 4460000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "i6bddcd49dcde4eb89bc4d4aab808da20_D20230130-20230430",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "nvda:GraphicsMember"
+        ]
+      ],
+      "end": "2023-04-30",
+      "fact_id": "id3VybDovL2RvY3MudjEvZG9jOmFjOTliZGQyNjZjOTRkMmNiMmEwY2E3NjIyMWRmMjk4L3NlYzphYzk5YmRkMjY2Yzk0ZDJjYjJhMGNhNzYyMjFkZjI5OF84OC9mcmFnOjMxNzMxZjE3Nzg4MjRjNmE4YjlkMjE3ZGYyYjkwMmNkL3RhYmxlOmZjMmUxYzk2MGNhOTQzZWNhODAyOWViYzExZDk3Y2VlL3RhYmxlcmFuZ2U6ZmMyZTFjOTYwY2E5NDNlY2E4MDI5ZWJjMTFkOTdjZWVfNC0zLTEtMS05OTg0NA_ca47c31a-986f-43b8-ae80-6c67c2b5983d",
+      "format": "num-dot-decimal",
+      "order": 8926,
+      "raw": "2,732",
+      "scale": "6",
+      "sign": null,
+      "start": "2023-01-30",
+      "table_index": 34,
+      "unit": "iso4217:USD",
+      "value": 2732000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "i237c4dccec294d73b4205ba4fea1524c_D20230130-20230430",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:CorporateNonSegmentMember"
+        ]
+      ],
+      "end": "2023-04-30",
+      "fact_id": "id3VybDovL2RvY3MudjEvZG9jOmFjOTliZGQyNjZjOTRkMmNiMmEwY2E3NjIyMWRmMjk4L3NlYzphYzk5YmRkMjY2Yzk0ZDJjYjJhMGNhNzYyMjFkZjI5OF84OC9mcmFnOjMxNzMxZjE3Nzg4MjRjNmE4YjlkMjE3ZGYyYjkwMmNkL3RhYmxlOmZjMmUxYzk2MGNhOTQzZWNhODAyOWViYzExZDk3Y2VlL3RhYmxlcmFuZ2U6ZmMyZTFjOTYwY2E5NDNlY2E4MDI5ZWJjMTFkOTdjZWVfNC01LTEtMS05OTg0NA_f79bc8c6-4682-4868-82cd-0d0c9ee04efc",
+      "format": "fixed-zero",
+      "order": 8933,
+      "raw": "—",
+      "scale": "6",
+      "sign": null,
+      "start": "2023-01-30",
+      "table_index": 34,
+      "unit": "iso4217:USD",
+      "value": 0,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "i22d2c06eca1a447bae57634d686ce3f8_D20230130-20230430",
+      "decimals": "-6",
+      "dimensions": [],
+      "end": "2023-04-30",
+      "fact_id": "id3VybDovL2RvY3MudjEvZG9jOmFjOTliZGQyNjZjOTRkMmNiMmEwY2E3NjIyMWRmMjk4L3NlYzphYzk5YmRkMjY2Yzk0ZDJjYjJhMGNhNzYyMjFkZjI5OF84OC9mcmFnOjMxNzMxZjE3Nzg4MjRjNmE4YjlkMjE3ZGYyYjkwMmNkL3RhYmxlOmZjMmUxYzk2MGNhOTQzZWNhODAyOWViYzExZDk3Y2VlL3RhYmxlcmFuZ2U6ZmMyZTFjOTYwY2E5NDNlY2E4MDI5ZWJjMTFkOTdjZWVfNC03LTEtMS05OTg0NA_184bb56f-17c5-45b2-bcb0-bd35cd62c7cf",
+      "format": "num-dot-decimal",
+      "order": 8940,
+      "raw": "7,192",
+      "scale": "6",
+      "sign": null,
+      "start": "2023-01-30",
+      "table_index": 34,
+      "unit": "iso4217:USD",
+      "value": 7192000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "ic8860cedddb94c7d9888a43ce8820f84_D20220131-20220501",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "nvda:ComputeAndNetworkingMember"
+        ]
+      ],
+      "end": "2022-05-01",
+      "fact_id": "id3VybDovL2RvY3MudjEvZG9jOmFjOTliZGQyNjZjOTRkMmNiMmEwY2E3NjIyMWRmMjk4L3NlYzphYzk5YmRkMjY2Yzk0ZDJjYjJhMGNhNzYyMjFkZjI5OF84OC9mcmFnOjMxNzMxZjE3Nzg4MjRjNmE4YjlkMjE3ZGYyYjkwMmNkL3RhYmxlOmZjMmUxYzk2MGNhOTQzZWNhODAyOWViYzExZDk3Y2VlL3RhYmxlcmFuZ2U6ZmMyZTFjOTYwY2E5NDNlY2E4MDI5ZWJjMTFkOTdjZWVfOS0xLTEtMS05OTg0NA_f627fdb0-c5ce-4a23-983c-4114bd1ffe8a",
+      "format": "num-dot-decimal",
+      "order": 9012,
+      "raw": "3,672",
+      "scale": "6",
+      "sign": null,
+      "start": "2022-01-31",
+      "table_index": 34,
+      "unit": "iso4217:USD",
+      "value": 3672000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "i7eec7fee53a44b319efdae47ba2299e3_D20220131-20220501",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "nvda:GraphicsMember"
+        ]
+      ],
+      "end": "2022-05-01",
+      "fact_id": "id3VybDovL2RvY3MudjEvZG9jOmFjOTliZGQyNjZjOTRkMmNiMmEwY2E3NjIyMWRmMjk4L3NlYzphYzk5YmRkMjY2Yzk0ZDJjYjJhMGNhNzYyMjFkZjI5OF84OC9mcmFnOjMxNzMxZjE3Nzg4MjRjNmE4YjlkMjE3ZGYyYjkwMmNkL3RhYmxlOmZjMmUxYzk2MGNhOTQzZWNhODAyOWViYzExZDk3Y2VlL3RhYmxlcmFuZ2U6ZmMyZTFjOTYwY2E5NDNlY2E4MDI5ZWJjMTFkOTdjZWVfOS0zLTEtMS05OTg0NA_c5e840cb-5db1-435b-8662-322798a34a83",
+      "format": "num-dot-decimal",
+      "order": 9019,
+      "raw": "4,616",
+      "scale": "6",
+      "sign": null,
+      "start": "2022-01-31",
+      "table_index": 34,
+      "unit": "iso4217:USD",
+      "value": 4616000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "ib8c745a897174a529461d25c74b37bff_D20220131-20220501",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:CorporateNonSegmentMember"
+        ]
+      ],
+      "end": "2022-05-01",
+      "fact_id": "id3VybDovL2RvY3MudjEvZG9jOmFjOTliZGQyNjZjOTRkMmNiMmEwY2E3NjIyMWRmMjk4L3NlYzphYzk5YmRkMjY2Yzk0ZDJjYjJhMGNhNzYyMjFkZjI5OF84OC9mcmFnOjMxNzMxZjE3Nzg4MjRjNmE4YjlkMjE3ZGYyYjkwMmNkL3RhYmxlOmZjMmUxYzk2MGNhOTQzZWNhODAyOWViYzExZDk3Y2VlL3RhYmxlcmFuZ2U6ZmMyZTFjOTYwY2E5NDNlY2E4MDI5ZWJjMTFkOTdjZWVfOS01LTEtMS05OTg0NA_21e16b65-8ba7-4abe-990e-3cadcb7a47e8",
+      "format": "fixed-zero",
+      "order": 9026,
+      "raw": "—",
+      "scale": "6",
+      "sign": null,
+      "start": "2022-01-31",
+      "table_index": 34,
+      "unit": "iso4217:USD",
+      "value": 0,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "ia5206106403d43e6b74ab17bb4a402ce_D20220131-20220501",
+      "decimals": "-6",
+      "dimensions": [],
+      "end": "2022-05-01",
+      "fact_id": "id3VybDovL2RvY3MudjEvZG9jOmFjOTliZGQyNjZjOTRkMmNiMmEwY2E3NjIyMWRmMjk4L3NlYzphYzk5YmRkMjY2Yzk0ZDJjYjJhMGNhNzYyMjFkZjI5OF84OC9mcmFnOjMxNzMxZjE3Nzg4MjRjNmE4YjlkMjE3ZGYyYjkwMmNkL3RhYmxlOmZjMmUxYzk2MGNhOTQzZWNhODAyOWViYzExZDk3Y2VlL3RhYmxlcmFuZ2U6ZmMyZTFjOTYwY2E5NDNlY2E4MDI5ZWJjMTFkOTdjZWVfOS03LTEtMS05OTg0NA_649bd10f-dd56-407b-91fd-6947f44e8b23",
+      "format": "num-dot-decimal",
+      "order": 9033,
+      "raw": "8,288",
+      "scale": "6",
+      "sign": null,
+      "start": "2022-01-31",
+      "table_index": 34,
+      "unit": "iso4217:USD",
+      "value": 8288000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "i1996f74d95b5477b845f034c947cceb2_D20230130-20230430",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:StatementGeographicalAxis",
+          "country:US"
+        ]
+      ],
+      "end": "2023-04-30",
+      "fact_id": "id3VybDovL2RvY3MudjEvZG9jOmFjOTliZGQyNjZjOTRkMmNiMmEwY2E3NjIyMWRmMjk4L3NlYzphYzk5YmRkMjY2Yzk0ZDJjYjJhMGNhNzYyMjFkZjI5OF84OC9mcmFnOjMxNzMxZjE3Nzg4MjRjNmE4YjlkMjE3ZGYyYjkwMmNkL3RhYmxlOjAyZWIwZGZhM2RmZTQxMmJhZjE3NGYyMGEwZmUyYjEwL3RhYmxlcmFuZ2U6MDJlYjBkZmEzZGZlNDEyYmFmMTc0ZjIwYTBmZTJiMTBfNi0xLTEtMS05OTg0NA_1caa0cae-347e-44f5-bfc4-01d053dd7bf9",
+      "format": "num-dot-decimal",
+      "order": 9459,
+      "raw": "2,385",
+      "scale": "6",
+      "sign": null,
+      "start": "2023-01-30",
+      "table_index": 36,
+      "unit": "iso4217:USD",
+      "value": 2385000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "i794e447635f94d9dbf427640359a7b98_D20220131-20220501",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:StatementGeographicalAxis",
+          "country:US"
+        ]
+      ],
+      "end": "2022-05-01",
+      "fact_id": "id3VybDovL2RvY3MudjEvZG9jOmFjOTliZGQyNjZjOTRkMmNiMmEwY2E3NjIyMWRmMjk4L3NlYzphYzk5YmRkMjY2Yzk0ZDJjYjJhMGNhNzYyMjFkZjI5OF84OC9mcmFnOjMxNzMxZjE3Nzg4MjRjNmE4YjlkMjE3ZGYyYjkwMmNkL3RhYmxlOjAyZWIwZGZhM2RmZTQxMmJhZjE3NGYyMGEwZmUyYjEwL3RhYmxlcmFuZ2U6MDJlYjBkZmEzZGZlNDEyYmFmMTc0ZjIwYTBmZTJiMTBfNi0zLTEtMS05OTg0NA_e88cbb2a-9d85-4df4-8680-4682ee041371",
+      "format": "num-dot-decimal",
+      "order": 9466,
+      "raw": "1,932",
+      "scale": "6",
+      "sign": null,
+      "start": "2022-01-31",
+      "table_index": 36,
+      "unit": "iso4217:USD",
+      "value": 1932000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "i6df62ddd025e43a3a2dc0d05e9119907_D20230130-20230430",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:StatementGeographicalAxis",
+          "country:TW"
+        ]
+      ],
+      "end": "2023-04-30",
+      "fact_id": "id3VybDovL2RvY3MudjEvZG9jOmFjOTliZGQyNjZjOTRkMmNiMmEwY2E3NjIyMWRmMjk4L3NlYzphYzk5YmRkMjY2Yzk0ZDJjYjJhMGNhNzYyMjFkZjI5OF84OC9mcmFnOjMxNzMxZjE3Nzg4MjRjNmE4YjlkMjE3ZGYyYjkwMmNkL3RhYmxlOjAyZWIwZGZhM2RmZTQxMmJhZjE3NGYyMGEwZmUyYjEwL3RhYmxlcmFuZ2U6MDJlYjBkZmEzZGZlNDEyYmFmMTc0ZjIwYTBmZTJiMTBfNy0xLTEtMS05OTg0NA_fcdd7aed-7deb-4a1f-8a2b-268d128b1788",
+      "format": "num-dot-decimal",
+      "order": 9477,
+      "raw": "1,796",
+      "scale": "6",
+      "sign": null,
+      "start": "2023-01-30",
+      "table_index": 36,
+      "unit": "iso4217:USD",
+      "value": 1796000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "i89c866399df44e4281cd75f1483bc6d9_D20220131-20220501",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:StatementGeographicalAxis",
+          "country:TW"
+        ]
+      ],
+      "end": "2022-05-01",
+      "fact_id": "id3VybDovL2RvY3MudjEvZG9jOmFjOTliZGQyNjZjOTRkMmNiMmEwY2E3NjIyMWRmMjk4L3NlYzphYzk5YmRkMjY2Yzk0ZDJjYjJhMGNhNzYyMjFkZjI5OF84OC9mcmFnOjMxNzMxZjE3Nzg4MjRjNmE4YjlkMjE3ZGYyYjkwMmNkL3RhYmxlOjAyZWIwZGZhM2RmZTQxMmJhZjE3NGYyMGEwZmUyYjEwL3RhYmxlcmFuZ2U6MDJlYjBkZmEzZGZlNDEyYmFmMTc0ZjIwYTBmZTJiMTBfNy0zLTEtMS05OTg0NA_2e8d8625-f35f-4406-8d7f-138f2719c5d0",
+      "format": "num-dot-decimal",
+      "order": 9482,
+      "raw": "2,777",
+      "scale": "6",
+      "sign": null,
+      "start": "2022-01-31",
+      "table_index": 36,
+      "unit": "iso4217:USD",
+      "value": 2777000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "i60026212e2fa41afac48946f8e4887e4_D20230130-20230430",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:StatementGeographicalAxis",
+          "nvda:ChinaIncludingHongKongMember"
+        ]
+      ],
+      "end": "2023-04-30",
+      "fact_id": "id3VybDovL2RvY3MudjEvZG9jOmFjOTliZGQyNjZjOTRkMmNiMmEwY2E3NjIyMWRmMjk4L3NlYzphYzk5YmRkMjY2Yzk0ZDJjYjJhMGNhNzYyMjFkZjI5OF84OC9mcmFnOjMxNzMxZjE3Nzg4MjRjNmE4YjlkMjE3ZGYyYjkwMmNkL3RhYmxlOjAyZWIwZGZhM2RmZTQxMmJhZjE3NGYyMGEwZmUyYjEwL3RhYmxlcmFuZ2U6MDJlYjBkZmEzZGZlNDEyYmFmMTc0ZjIwYTBmZTJiMTBfOC0xLTEtMS05OTg0NA_21a1c029-5fba-4a5a-a775-6105a813f3d8",
+      "format": "num-dot-decimal",
+      "order": 9493,
+      "raw": "1,590",
+      "scale": "6",
+      "sign": null,
+      "start": "2023-01-30",
+      "table_index": 36,
+      "unit": "iso4217:USD",
+      "value": 1590000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "i7d7cd7adbed840b99be7191e0fe154a0_D20220131-20220501",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:StatementGeographicalAxis",
+          "nvda:ChinaIncludingHongKongMember"
+        ]
+      ],
+      "end": "2022-05-01",
+      "fact_id": "id3VybDovL2RvY3MudjEvZG9jOmFjOTliZGQyNjZjOTRkMmNiMmEwY2E3NjIyMWRmMjk4L3NlYzphYzk5YmRkMjY2Yzk0ZDJjYjJhMGNhNzYyMjFkZjI5OF84OC9mcmFnOjMxNzMxZjE3Nzg4MjRjNmE4YjlkMjE3ZGYyYjkwMmNkL3RhYmxlOjAyZWIwZGZhM2RmZTQxMmJhZjE3NGYyMGEwZmUyYjEwL3RhYmxlcmFuZ2U6MDJlYjBkZmEzZGZlNDEyYmFmMTc0ZjIwYTBmZTJiMTBfOC0zLTEtMS05OTg0NA_4c9213e4-ad0a-4382-838b-b7f932c87af3",
+      "format": "num-dot-decimal",
+      "order": 9498,
+      "raw": "2,081",
+      "scale": "6",
+      "sign": null,
+      "start": "2022-01-31",
+      "table_index": 36,
+      "unit": "iso4217:USD",
+      "value": 2081000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "id7a4f1b70faf4b4cb8235eff75b9cc1b_D20230130-20230430",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:StatementGeographicalAxis",
+          "country:SG"
+        ]
+      ],
+      "end": "2023-04-30",
+      "fact_id": "id3VybDovL2RvY3MudjEvZG9jOmFjOTliZGQyNjZjOTRkMmNiMmEwY2E3NjIyMWRmMjk4L3NlYzphYzk5YmRkMjY2Yzk0ZDJjYjJhMGNhNzYyMjFkZjI5OF84OC9mcmFnOjMxNzMxZjE3Nzg4MjRjNmE4YjlkMjE3ZGYyYjkwMmNkL3RhYmxlOjAyZWIwZGZhM2RmZTQxMmJhZjE3NGYyMGEwZmUyYjEwL3RhYmxlcmFuZ2U6MDJlYjBkZmEzZGZlNDEyYmFmMTc0ZjIwYTBmZTJiMTBfMTAtMS0xLTEtMTA1MjA5_353c4139-d7db-4170-969d-5da63eda28cb",
+      "format": "",
+      "order": 9518,
+      "raw": "762",
+      "scale": "6",
+      "sign": null,
+      "start": "2023-01-30",
+      "table_index": 36,
+      "unit": "iso4217:USD",
+      "value": 762000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "i79a2846333564a8a91d967962735d280_D20220131-20220501",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:StatementGeographicalAxis",
+          "country:SG"
+        ]
+      ],
+      "end": "2022-05-01",
+      "fact_id": "id3VybDovL2RvY3MudjEvZG9jOmFjOTliZGQyNjZjOTRkMmNiMmEwY2E3NjIyMWRmMjk4L3NlYzphYzk5YmRkMjY2Yzk0ZDJjYjJhMGNhNzYyMjFkZjI5OF84OC9mcmFnOjMxNzMxZjE3Nzg4MjRjNmE4YjlkMjE3ZGYyYjkwMmNkL3RhYmxlOjAyZWIwZGZhM2RmZTQxMmJhZjE3NGYyMGEwZmUyYjEwL3RhYmxlcmFuZ2U6MDJlYjBkZmEzZGZlNDEyYmFmMTc0ZjIwYTBmZTJiMTBfMTAtMy0xLTEtMTA1MjA5_e97d9f01-8cfa-422a-ac33-c283d6540389",
+      "format": "",
+      "order": 9522,
+      "raw": "454",
+      "scale": "6",
+      "sign": null,
+      "start": "2022-01-31",
+      "table_index": 36,
+      "unit": "iso4217:USD",
+      "value": 454000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "i7104bf02180348b6b50494411a05b716_D20230130-20230430",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:StatementGeographicalAxis",
+          "nvda:AllOtherCountriesNotSeparatelyDisclosedMember"
+        ]
+      ],
+      "end": "2023-04-30",
+      "fact_id": "id3VybDovL2RvY3MudjEvZG9jOmFjOTliZGQyNjZjOTRkMmNiMmEwY2E3NjIyMWRmMjk4L3NlYzphYzk5YmRkMjY2Yzk0ZDJjYjJhMGNhNzYyMjFkZjI5OF84OC9mcmFnOjMxNzMxZjE3Nzg4MjRjNmE4YjlkMjE3ZGYyYjkwMmNkL3RhYmxlOjAyZWIwZGZhM2RmZTQxMmJhZjE3NGYyMGEwZmUyYjEwL3RhYmxlcmFuZ2U6MDJlYjBkZmEzZGZlNDEyYmFmMTc0ZjIwYTBmZTJiMTBfMTMtMS0xLTEtOTk4NDQ_8cfa5b11-cb79-4f08-b1bd-78e084ab8d27",
+      "format": "",
+      "order": 9541,
+      "raw": "659",
+      "scale": "6",
+      "sign": null,
+      "start": "2023-01-30",
+      "table_index": 36,
+      "unit": "iso4217:USD",
+      "value": 659000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "if1c4826294244e769559c9829c850bfb_D20220131-20220501",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:StatementGeographicalAxis",
+          "nvda:AllOtherCountriesNotSeparatelyDisclosedMember"
+        ]
+      ],
+      "end": "2022-05-01",
+      "fact_id": "id3VybDovL2RvY3MudjEvZG9jOmFjOTliZGQyNjZjOTRkMmNiMmEwY2E3NjIyMWRmMjk4L3NlYzphYzk5YmRkMjY2Yzk0ZDJjYjJhMGNhNzYyMjFkZjI5OF84OC9mcmFnOjMxNzMxZjE3Nzg4MjRjNmE4YjlkMjE3ZGYyYjkwMmNkL3RhYmxlOjAyZWIwZGZhM2RmZTQxMmJhZjE3NGYyMGEwZmUyYjEwL3RhYmxlcmFuZ2U6MDJlYjBkZmEzZGZlNDEyYmFmMTc0ZjIwYTBmZTJiMTBfMTMtMy0xLTEtOTk4NDQ_83e0b741-726d-40b0-b464-4b0a68ec231b",
+      "format": "num-dot-decimal",
+      "order": 9546,
+      "raw": "1,044",
+      "scale": "6",
+      "sign": null,
+      "start": "2022-01-31",
+      "table_index": 36,
+      "unit": "iso4217:USD",
+      "value": 1044000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "i22d2c06eca1a447bae57634d686ce3f8_D20230130-20230430",
+      "decimals": "-6",
+      "dimensions": [],
+      "end": "2023-04-30",
+      "fact_id": "id3VybDovL2RvY3MudjEvZG9jOmFjOTliZGQyNjZjOTRkMmNiMmEwY2E3NjIyMWRmMjk4L3NlYzphYzk5YmRkMjY2Yzk0ZDJjYjJhMGNhNzYyMjFkZjI5OF84OC9mcmFnOjMxNzMxZjE3Nzg4MjRjNmE4YjlkMjE3ZGYyYjkwMmNkL3RhYmxlOjAyZWIwZGZhM2RmZTQxMmJhZjE3NGYyMGEwZmUyYjEwL3RhYmxlcmFuZ2U6MDJlYjBkZmEzZGZlNDEyYmFmMTc0ZjIwYTBmZTJiMTBfMTQtMS0xLTEtOTk4NDQ_a2846d19-7e79-4de5-8d6b-93716cbeaff1",
+      "format": "num-dot-decimal",
+      "order": 9559,
+      "raw": "7,192",
+      "scale": "6",
+      "sign": null,
+      "start": "2023-01-30",
+      "table_index": 36,
+      "unit": "iso4217:USD",
+      "value": 7192000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "ia5206106403d43e6b74ab17bb4a402ce_D20220131-20220501",
+      "decimals": "-6",
+      "dimensions": [],
+      "end": "2022-05-01",
+      "fact_id": "id3VybDovL2RvY3MudjEvZG9jOmFjOTliZGQyNjZjOTRkMmNiMmEwY2E3NjIyMWRmMjk4L3NlYzphYzk5YmRkMjY2Yzk0ZDJjYjJhMGNhNzYyMjFkZjI5OF84OC9mcmFnOjMxNzMxZjE3Nzg4MjRjNmE4YjlkMjE3ZGYyYjkwMmNkL3RhYmxlOjAyZWIwZGZhM2RmZTQxMmJhZjE3NGYyMGEwZmUyYjEwL3RhYmxlcmFuZ2U6MDJlYjBkZmEzZGZlNDEyYmFmMTc0ZjIwYTBmZTJiMTBfMTQtMy0xLTEtOTk4NDQ_1c3a9b66-ca0a-4f52-bff9-8659db76f37d",
+      "format": "num-dot-decimal",
+      "order": 9566,
+      "raw": "8,288",
+      "scale": "6",
+      "sign": null,
+      "start": "2022-01-31",
+      "table_index": 36,
+      "unit": "iso4217:USD",
+      "value": 8288000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "i09799e78906748c0805561e8a7a515d6_D20230130-20230430",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ProductOrServiceAxis",
+          "nvda:DataCenterMember"
+        ]
+      ],
+      "end": "2023-04-30",
+      "fact_id": "id3VybDovL2RvY3MudjEvZG9jOmFjOTliZGQyNjZjOTRkMmNiMmEwY2E3NjIyMWRmMjk4L3NlYzphYzk5YmRkMjY2Yzk0ZDJjYjJhMGNhNzYyMjFkZjI5OF84OC9mcmFnOjMxNzMxZjE3Nzg4MjRjNmE4YjlkMjE3ZGYyYjkwMmNkL3RhYmxlOmE5NTg2Njg0MzQ0YjRlM2I4ODRlODQ5ZmQ2NGQxYjVmL3RhYmxlcmFuZ2U6YTk1ODY2ODQzNDRiNGUzYjg4NGU4NDlmZDY0ZDFiNWZfNi0xLTEtMS05OTg0NA_b33141d4-33f1-4871-9d97-2c459745da39",
+      "format": "num-dot-decimal",
+      "order": 9665,
+      "raw": "4,284",
+      "scale": "6",
+      "sign": null,
+      "start": "2023-01-30",
+      "table_index": 37,
+      "unit": "iso4217:USD",
+      "value": 4284000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "i3b177c3ab4f044ac91605ad35526750a_D20220131-20220501",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ProductOrServiceAxis",
+          "nvda:DataCenterMember"
+        ]
+      ],
+      "end": "2022-05-01",
+      "fact_id": "id3VybDovL2RvY3MudjEvZG9jOmFjOTliZGQyNjZjOTRkMmNiMmEwY2E3NjIyMWRmMjk4L3NlYzphYzk5YmRkMjY2Yzk0ZDJjYjJhMGNhNzYyMjFkZjI5OF84OC9mcmFnOjMxNzMxZjE3Nzg4MjRjNmE4YjlkMjE3ZGYyYjkwMmNkL3RhYmxlOmE5NTg2Njg0MzQ0YjRlM2I4ODRlODQ5ZmQ2NGQxYjVmL3RhYmxlcmFuZ2U6YTk1ODY2ODQzNDRiNGUzYjg4NGU4NDlmZDY0ZDFiNWZfNi0zLTEtMS05OTg0NA_69b772dc-b3c0-4667-b547-a0abcede3c9e",
+      "format": "num-dot-decimal",
+      "order": 9672,
+      "raw": "3,750",
+      "scale": "6",
+      "sign": null,
+      "start": "2022-01-31",
+      "table_index": 37,
+      "unit": "iso4217:USD",
+      "value": 3750000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "i4bdcef134eb7458799bea03e5a9646cc_D20230130-20230430",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ProductOrServiceAxis",
+          "nvda:GamingMember"
+        ]
+      ],
+      "end": "2023-04-30",
+      "fact_id": "id3VybDovL2RvY3MudjEvZG9jOmFjOTliZGQyNjZjOTRkMmNiMmEwY2E3NjIyMWRmMjk4L3NlYzphYzk5YmRkMjY2Yzk0ZDJjYjJhMGNhNzYyMjFkZjI5OF84OC9mcmFnOjMxNzMxZjE3Nzg4MjRjNmE4YjlkMjE3ZGYyYjkwMmNkL3RhYmxlOmE5NTg2Njg0MzQ0YjRlM2I4ODRlODQ5ZmQ2NGQxYjVmL3RhYmxlcmFuZ2U6YTk1ODY2ODQzNDRiNGUzYjg4NGU4NDlmZDY0ZDFiNWZfNy0xLTEtMS05OTg0NA_6441b592-866e-47e3-8b06-4ae3ddb7612f",
+      "format": "num-dot-decimal",
+      "order": 9683,
+      "raw": "2,240",
+      "scale": "6",
+      "sign": null,
+      "start": "2023-01-30",
+      "table_index": 37,
+      "unit": "iso4217:USD",
+      "value": 2240000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "ia5e110ccfd63418788791c61e8505711_D20220131-20220501",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ProductOrServiceAxis",
+          "nvda:GamingMember"
+        ]
+      ],
+      "end": "2022-05-01",
+      "fact_id": "id3VybDovL2RvY3MudjEvZG9jOmFjOTliZGQyNjZjOTRkMmNiMmEwY2E3NjIyMWRmMjk4L3NlYzphYzk5YmRkMjY2Yzk0ZDJjYjJhMGNhNzYyMjFkZjI5OF84OC9mcmFnOjMxNzMxZjE3Nzg4MjRjNmE4YjlkMjE3ZGYyYjkwMmNkL3RhYmxlOmE5NTg2Njg0MzQ0YjRlM2I4ODRlODQ5ZmQ2NGQxYjVmL3RhYmxlcmFuZ2U6YTk1ODY2ODQzNDRiNGUzYjg4NGU4NDlmZDY0ZDFiNWZfNy0zLTEtMS05OTg0NA_b4ebd960-0db2-47b8-9bfe-34a7cad42108",
+      "format": "num-dot-decimal",
+      "order": 9688,
+      "raw": "3,620",
+      "scale": "6",
+      "sign": null,
+      "start": "2022-01-31",
+      "table_index": 37,
+      "unit": "iso4217:USD",
+      "value": 3620000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "i553900b5e4a547d0a536089f770fe1cd_D20230130-20230430",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ProductOrServiceAxis",
+          "nvda:ProfessionalVisualizationMember"
+        ]
+      ],
+      "end": "2023-04-30",
+      "fact_id": "id3VybDovL2RvY3MudjEvZG9jOmFjOTliZGQyNjZjOTRkMmNiMmEwY2E3NjIyMWRmMjk4L3NlYzphYzk5YmRkMjY2Yzk0ZDJjYjJhMGNhNzYyMjFkZjI5OF84OC9mcmFnOjMxNzMxZjE3Nzg4MjRjNmE4YjlkMjE3ZGYyYjkwMmNkL3RhYmxlOmE5NTg2Njg0MzQ0YjRlM2I4ODRlODQ5ZmQ2NGQxYjVmL3RhYmxlcmFuZ2U6YTk1ODY2ODQzNDRiNGUzYjg4NGU4NDlmZDY0ZDFiNWZfOC0xLTEtMS05OTg0NA_901f7a80-ed9c-43a9-a406-04250d061cc5",
+      "format": "",
+      "order": 9699,
+      "raw": "295",
+      "scale": "6",
+      "sign": null,
+      "start": "2023-01-30",
+      "table_index": 37,
+      "unit": "iso4217:USD",
+      "value": 295000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "i66b19bed8a284995838f1f7a52be95a6_D20220131-20220501",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ProductOrServiceAxis",
+          "nvda:ProfessionalVisualizationMember"
+        ]
+      ],
+      "end": "2022-05-01",
+      "fact_id": "id3VybDovL2RvY3MudjEvZG9jOmFjOTliZGQyNjZjOTRkMmNiMmEwY2E3NjIyMWRmMjk4L3NlYzphYzk5YmRkMjY2Yzk0ZDJjYjJhMGNhNzYyMjFkZjI5OF84OC9mcmFnOjMxNzMxZjE3Nzg4MjRjNmE4YjlkMjE3ZGYyYjkwMmNkL3RhYmxlOmE5NTg2Njg0MzQ0YjRlM2I4ODRlODQ5ZmQ2NGQxYjVmL3RhYmxlcmFuZ2U6YTk1ODY2ODQzNDRiNGUzYjg4NGU4NDlmZDY0ZDFiNWZfOC0zLTEtMS05OTg0NA_31bc1215-2232-4971-abc6-b686d52180ce",
+      "format": "",
+      "order": 9704,
+      "raw": "622",
+      "scale": "6",
+      "sign": null,
+      "start": "2022-01-31",
+      "table_index": 37,
+      "unit": "iso4217:USD",
+      "value": 622000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "i6d63e9b2dfe741aa8c0421db6c2c5ec8_D20230130-20230430",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ProductOrServiceAxis",
+          "nvda:AutomotiveMember"
+        ]
+      ],
+      "end": "2023-04-30",
+      "fact_id": "id3VybDovL2RvY3MudjEvZG9jOmFjOTliZGQyNjZjOTRkMmNiMmEwY2E3NjIyMWRmMjk4L3NlYzphYzk5YmRkMjY2Yzk0ZDJjYjJhMGNhNzYyMjFkZjI5OF84OC9mcmFnOjMxNzMxZjE3Nzg4MjRjNmE4YjlkMjE3ZGYyYjkwMmNkL3RhYmxlOmE5NTg2Njg0MzQ0YjRlM2I4ODRlODQ5ZmQ2NGQxYjVmL3RhYmxlcmFuZ2U6YTk1ODY2ODQzNDRiNGUzYjg4NGU4NDlmZDY0ZDFiNWZfOS0xLTEtMS05OTg0NA_0c34c255-f29e-4e40-9990-11511e739c94",
+      "format": "",
+      "order": 9715,
+      "raw": "296",
+      "scale": "6",
+      "sign": null,
+      "start": "2023-01-30",
+      "table_index": 37,
+      "unit": "iso4217:USD",
+      "value": 296000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "i76eb0b5ac80b4ecb899fba63bda48428_D20220131-20220501",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ProductOrServiceAxis",
+          "nvda:AutomotiveMember"
+        ]
+      ],
+      "end": "2022-05-01",
+      "fact_id": "id3VybDovL2RvY3MudjEvZG9jOmFjOTliZGQyNjZjOTRkMmNiMmEwY2E3NjIyMWRmMjk4L3NlYzphYzk5YmRkMjY2Yzk0ZDJjYjJhMGNhNzYyMjFkZjI5OF84OC9mcmFnOjMxNzMxZjE3Nzg4MjRjNmE4YjlkMjE3ZGYyYjkwMmNkL3RhYmxlOmE5NTg2Njg0MzQ0YjRlM2I4ODRlODQ5ZmQ2NGQxYjVmL3RhYmxlcmFuZ2U6YTk1ODY2ODQzNDRiNGUzYjg4NGU4NDlmZDY0ZDFiNWZfOS0zLTEtMS05OTg0NA_069e6bd4-b158-418c-a80c-b2feb2ca7e69",
+      "format": "",
+      "order": 9720,
+      "raw": "138",
+      "scale": "6",
+      "sign": null,
+      "start": "2022-01-31",
+      "table_index": 37,
+      "unit": "iso4217:USD",
+      "value": 138000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "if4bf45f48c2a4e98826ee81dada0be9e_D20230130-20230430",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ProductOrServiceAxis",
+          "nvda:OEMAndOtherMember"
+        ]
+      ],
+      "end": "2023-04-30",
+      "fact_id": "id3VybDovL2RvY3MudjEvZG9jOmFjOTliZGQyNjZjOTRkMmNiMmEwY2E3NjIyMWRmMjk4L3NlYzphYzk5YmRkMjY2Yzk0ZDJjYjJhMGNhNzYyMjFkZjI5OF84OC9mcmFnOjMxNzMxZjE3Nzg4MjRjNmE4YjlkMjE3ZGYyYjkwMmNkL3RhYmxlOmE5NTg2Njg0MzQ0YjRlM2I4ODRlODQ5ZmQ2NGQxYjVmL3RhYmxlcmFuZ2U6YTk1ODY2ODQzNDRiNGUzYjg4NGU4NDlmZDY0ZDFiNWZfMTAtMS0xLTEtOTk4NDQ_7dacda27-c44d-4c7b-913f-490de34c4abf",
+      "format": "",
+      "order": 9731,
+      "raw": "77",
+      "scale": "6",
+      "sign": null,
+      "start": "2023-01-30",
+      "table_index": 37,
+      "unit": "iso4217:USD",
+      "value": 77000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "i6d0667345060477e900de511cb78fe7c_D20220131-20220501",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ProductOrServiceAxis",
+          "nvda:OEMAndOtherMember"
+        ]
+      ],
+      "end": "2022-05-01",
+      "fact_id": "id3VybDovL2RvY3MudjEvZG9jOmFjOTliZGQyNjZjOTRkMmNiMmEwY2E3NjIyMWRmMjk4L3NlYzphYzk5YmRkMjY2Yzk0ZDJjYjJhMGNhNzYyMjFkZjI5OF84OC9mcmFnOjMxNzMxZjE3Nzg4MjRjNmE4YjlkMjE3ZGYyYjkwMmNkL3RhYmxlOmE5NTg2Njg0MzQ0YjRlM2I4ODRlODQ5ZmQ2NGQxYjVmL3RhYmxlcmFuZ2U6YTk1ODY2ODQzNDRiNGUzYjg4NGU4NDlmZDY0ZDFiNWZfMTAtMy0xLTEtOTk4NDQ_d684e150-3f96-4ba9-947d-38b84864fbad",
+      "format": "",
+      "order": 9736,
+      "raw": "158",
+      "scale": "6",
+      "sign": null,
+      "start": "2022-01-31",
+      "table_index": 37,
+      "unit": "iso4217:USD",
+      "value": 158000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "i22d2c06eca1a447bae57634d686ce3f8_D20230130-20230430",
+      "decimals": "-6",
+      "dimensions": [],
+      "end": "2023-04-30",
+      "fact_id": "id3VybDovL2RvY3MudjEvZG9jOmFjOTliZGQyNjZjOTRkMmNiMmEwY2E3NjIyMWRmMjk4L3NlYzphYzk5YmRkMjY2Yzk0ZDJjYjJhMGNhNzYyMjFkZjI5OF84OC9mcmFnOjMxNzMxZjE3Nzg4MjRjNmE4YjlkMjE3ZGYyYjkwMmNkL3RhYmxlOmE5NTg2Njg0MzQ0YjRlM2I4ODRlODQ5ZmQ2NGQxYjVmL3RhYmxlcmFuZ2U6YTk1ODY2ODQzNDRiNGUzYjg4NGU4NDlmZDY0ZDFiNWZfMTEtMS0xLTEtOTk4NDQ_cb657253-3e59-498e-8be0-186409c17604",
+      "format": "num-dot-decimal",
+      "order": 9749,
+      "raw": "7,192",
+      "scale": "6",
+      "sign": null,
+      "start": "2023-01-30",
+      "table_index": 37,
+      "unit": "iso4217:USD",
+      "value": 7192000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "ia5206106403d43e6b74ab17bb4a402ce_D20220131-20220501",
+      "decimals": "-6",
+      "dimensions": [],
+      "end": "2022-05-01",
+      "fact_id": "id3VybDovL2RvY3MudjEvZG9jOmFjOTliZGQyNjZjOTRkMmNiMmEwY2E3NjIyMWRmMjk4L3NlYzphYzk5YmRkMjY2Yzk0ZDJjYjJhMGNhNzYyMjFkZjI5OF84OC9mcmFnOjMxNzMxZjE3Nzg4MjRjNmE4YjlkMjE3ZGYyYjkwMmNkL3RhYmxlOmE5NTg2Njg0MzQ0YjRlM2I4ODRlODQ5ZmQ2NGQxYjVmL3RhYmxlcmFuZ2U6YTk1ODY2ODQzNDRiNGUzYjg4NGU4NDlmZDY0ZDFiNWZfMTEtMy0xLTEtOTk4NDQ_8a128d76-c765-4fda-8cd3-51e1552f9b02",
+      "format": "num-dot-decimal",
+      "order": 9756,
+      "raw": "8,288",
+      "scale": "6",
+      "sign": null,
+      "start": "2022-01-31",
+      "table_index": 37,
+      "unit": "iso4217:USD",
+      "value": 8288000000,
+      "value_error": null
+    }
+  ],
+  "format": 1,
+  "namespaces": {
+    "country": "http://xbrl.sec.gov/country/2023",
+    "dei": "http://xbrl.sec.gov/dei/2023",
+    "iso4217": "http://www.xbrl.org/2003/iso4217",
+    "ix": "http://www.xbrl.org/2013/inlineXBRL",
+    "ixt": "http://www.xbrl.org/inlineXBRL/transformation/2020-02-12",
+    "ixt-sec": "http://www.sec.gov/inlineXBRL/transformation/2015-08-31",
+    "link": "http://www.xbrl.org/2003/linkbase",
+    "nvda": "http://www.nvidia.com/20230430",
+    "srt": "http://fasb.org/srt/2023",
+    "us-gaap": "http://fasb.org/us-gaap/2023",
+    "xbrldi": "http://xbrl.org/2006/xbrldi",
+    "xbrli": "http://www.xbrl.org/2003/instance",
+    "xlink": "http://www.w3.org/1999/xlink",
+    "xsi": "http://www.w3.org/2001/XMLSchema-instance"
+  },
+  "package": {
+    "complete": true,
+    "documents": {
+      "nvda-20230430.htm": {
+        "inline_xbrl": true,
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1045810/000104581023000093/nvda-20230430.htm",
+        "name": "nvda-20230430.htm",
+        "primary": true,
+        "sha256": "3283c4c54ff4e8bc20fa6fa1a59b0c7b92ff302861b04860d6376e11ed6828d1",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581023000093/nvda-20230430.htm"
+      }
+    },
+    "filing": {
+      "filingDate": "2023-05-26",
+      "form": "10-Q",
+      "reportDate": "2023-04-30"
+    }
+  },
+  "parser_sha256": "581f401cd885a46e026dc7e23dcd51d3fbd55262780f6b77ab4eb2704c3a19c2",
+  "spec_concepts": [
+    "us-gaap:Revenues"
+  ]
+}

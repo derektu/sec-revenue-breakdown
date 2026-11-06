@@ -1,0 +1,2752 @@
+{
+  "accession": "0000731766-26-000266",
+  "conflicts": [],
+  "dei": {
+    "dei:AmendmentFlag": "false",
+    "dei:CityAreaCode": "(800)",
+    "dei:CurrentFiscalYearEndDate": "12/31",
+    "dei:DocumentFiscalPeriodFocus": "Q3",
+    "dei:DocumentFiscalYearFocus": "2026",
+    "dei:DocumentPeriodEndDate": "September 30, 2026",
+    "dei:DocumentQuarterlyReport": "☒",
+    "dei:DocumentTransitionReport": "☐",
+    "dei:DocumentType": "10-Q",
+    "dei:EntityAddressAddressLine1": "1 Health Drive",
+    "dei:EntityAddressCityOrTown": "Eden Prairie,",
+    "dei:EntityAddressPostalZipCode": "55344",
+    "dei:EntityAddressStateOrProvince": "Minnesota",
+    "dei:EntityCentralIndexKey": "0000731766",
+    "dei:EntityCurrentReportingStatus": "Yes",
+    "dei:EntityEmergingGrowthCompany": "☐",
+    "dei:EntityFileNumber": "1-10864",
+    "dei:EntityFilerCategory": "Large accelerated filer",
+    "dei:EntityIncorporationStateCountryCode": "Delaware",
+    "dei:EntityInteractiveDataCurrent": "Yes",
+    "dei:EntityRegistrantName": "UnitedHealth Group Incorporated",
+    "dei:EntityShellCompany": "☐",
+    "dei:EntitySmallBusiness": "☐",
+    "dei:EntityTaxIdentificationNumber": "41-1321939",
+    "dei:LocalPhoneNumber": "328-5979",
+    "dei:Security12bTitle": "Common Stock, $.01 par value",
+    "dei:SecurityExchangeName": "New York Stock Exchange",
+    "dei:TradingSymbol": "UNH"
+  },
+  "facts": [
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-5",
+      "decimals": "-6",
+      "dimensions": [],
+      "end": "2026-09-30",
+      "fact_id": "f-130",
+      "format": "num-dot-decimal",
+      "order": 4440,
+      "raw": "112,694",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-07-01",
+      "table_index": 9,
+      "unit": "iso4217:USD",
+      "value": 112694000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-6",
+      "decimals": "-6",
+      "dimensions": [],
+      "end": "2025-09-30",
+      "fact_id": "f-131",
+      "format": "num-dot-decimal",
+      "order": 4445,
+      "raw": "113,161",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-07-01",
+      "table_index": 9,
+      "unit": "iso4217:USD",
+      "value": 113161000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-1",
+      "decimals": "-6",
+      "dimensions": [],
+      "end": "2026-09-30",
+      "fact_id": "f-132",
+      "format": "num-dot-decimal",
+      "order": 4450,
+      "raw": "336,447",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 9,
+      "unit": "iso4217:USD",
+      "value": 336447000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-7",
+      "decimals": "-6",
+      "dimensions": [],
+      "end": "2025-09-30",
+      "fact_id": "f-133",
+      "format": "num-dot-decimal",
+      "order": 4455,
+      "raw": "334,352",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 9,
+      "unit": "iso4217:USD",
+      "value": 334352000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-172",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "unh:ExternalCustomersMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:UnitedhealthcareMember"
+        ]
+      ],
+      "end": "2026-09-30",
+      "fact_id": "f-978",
+      "format": "num-dot-decimal",
+      "order": 11110,
+      "raw": "85,793",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-07-01",
+      "table_index": 22,
+      "unit": "iso4217:USD",
+      "value": 85793000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-173",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "unh:ExternalCustomersMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:OptumHealthMember"
+        ]
+      ],
+      "end": "2026-09-30",
+      "fact_id": "f-979",
+      "format": "num-dot-decimal",
+      "order": 11115,
+      "raw": "8,575",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-07-01",
+      "table_index": 22,
+      "unit": "iso4217:USD",
+      "value": 8575000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-174",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "unh:ExternalCustomersMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:OptumInsightMember"
+        ]
+      ],
+      "end": "2026-09-30",
+      "fact_id": "f-980",
+      "format": "num-dot-decimal",
+      "order": 11120,
+      "raw": "1,642",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-07-01",
+      "table_index": 22,
+      "unit": "iso4217:USD",
+      "value": 1642000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-175",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "unh:ExternalCustomersMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:OptumRxMember"
+        ]
+      ],
+      "end": "2026-09-30",
+      "fact_id": "f-981",
+      "format": "num-dot-decimal",
+      "order": 11125,
+      "raw": "15,607",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-07-01",
+      "table_index": 22,
+      "unit": "iso4217:USD",
+      "value": 15607000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-176",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:IntersegmentEliminationMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "unh:ExternalCustomersMember"
+        ]
+      ],
+      "end": "2026-09-30",
+      "fact_id": "f-982",
+      "format": "fixed-zero",
+      "order": 11130,
+      "raw": "—",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-07-01",
+      "table_index": 22,
+      "unit": "iso4217:USD",
+      "value": 0,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-177",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:MajorCustomersAxis",
+          "unh:ExternalCustomersMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:TotalOptumMember"
+        ]
+      ],
+      "end": "2026-09-30",
+      "fact_id": "f-983",
+      "format": "num-dot-decimal",
+      "order": 11135,
+      "raw": "25,824",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-07-01",
+      "table_index": 22,
+      "unit": "iso4217:USD",
+      "value": 25824000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-178",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:CorporateNonSegmentMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "unh:ExternalCustomersMember"
+        ]
+      ],
+      "end": "2026-09-30",
+      "fact_id": "f-984",
+      "format": "fixed-zero",
+      "order": 11140,
+      "raw": "—",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-07-01",
+      "table_index": 22,
+      "unit": "iso4217:USD",
+      "value": 0,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-179",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:MajorCustomersAxis",
+          "unh:ExternalCustomersMember"
+        ]
+      ],
+      "end": "2026-09-30",
+      "fact_id": "f-985",
+      "format": "num-dot-decimal",
+      "order": 11145,
+      "raw": "111,617",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-07-01",
+      "table_index": 22,
+      "unit": "iso4217:USD",
+      "value": 111617000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-196",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "unh:IntersegmentMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:UnitedhealthcareMember"
+        ]
+      ],
+      "end": "2026-09-30",
+      "fact_id": "f-986",
+      "format": "fixed-zero",
+      "order": 11153,
+      "raw": "—",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-07-01",
+      "table_index": 22,
+      "unit": "iso4217:USD",
+      "value": 0,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-197",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "unh:IntersegmentMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:OptumHealthMember"
+        ]
+      ],
+      "end": "2026-09-30",
+      "fact_id": "f-987",
+      "format": "num-dot-decimal",
+      "order": 11158,
+      "raw": "14,180",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-07-01",
+      "table_index": 22,
+      "unit": "iso4217:USD",
+      "value": 14180000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-198",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "unh:IntersegmentMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:OptumInsightMember"
+        ]
+      ],
+      "end": "2026-09-30",
+      "fact_id": "f-988",
+      "format": "num-dot-decimal",
+      "order": 11163,
+      "raw": "3,496",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-07-01",
+      "table_index": 22,
+      "unit": "iso4217:USD",
+      "value": 3496000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-199",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "unh:IntersegmentMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:OptumRxMember"
+        ]
+      ],
+      "end": "2026-09-30",
+      "fact_id": "f-989",
+      "format": "num-dot-decimal",
+      "order": 11168,
+      "raw": "24,271",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-07-01",
+      "table_index": 22,
+      "unit": "iso4217:USD",
+      "value": 24271000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-200",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:IntersegmentEliminationMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "unh:IntersegmentMember"
+        ]
+      ],
+      "end": "2026-09-30",
+      "fact_id": "f-990",
+      "format": "num-dot-decimal",
+      "order": 11173,
+      "raw": "1,428",
+      "scale": "6",
+      "sign": "-",
+      "start": "2026-07-01",
+      "table_index": 22,
+      "unit": "iso4217:USD",
+      "value": -1428000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-201",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:MajorCustomersAxis",
+          "unh:IntersegmentMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:TotalOptumMember"
+        ]
+      ],
+      "end": "2026-09-30",
+      "fact_id": "f-991",
+      "format": "num-dot-decimal",
+      "order": 11178,
+      "raw": "40,519",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-07-01",
+      "table_index": 22,
+      "unit": "iso4217:USD",
+      "value": 40519000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-202",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:CorporateNonSegmentMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "unh:IntersegmentMember"
+        ]
+      ],
+      "end": "2026-09-30",
+      "fact_id": "f-992",
+      "format": "num-dot-decimal",
+      "order": 11183,
+      "raw": "40,519",
+      "scale": "6",
+      "sign": "-",
+      "start": "2026-07-01",
+      "table_index": 22,
+      "unit": "iso4217:USD",
+      "value": -40519000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-203",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:MajorCustomersAxis",
+          "unh:IntersegmentMember"
+        ]
+      ],
+      "end": "2026-09-30",
+      "fact_id": "f-993",
+      "format": "fixed-zero",
+      "order": 11188,
+      "raw": "—",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-07-01",
+      "table_index": 22,
+      "unit": "iso4217:USD",
+      "value": 0,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-204",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:UnitedhealthcareMember"
+        ]
+      ],
+      "end": "2026-09-30",
+      "fact_id": "f-1002",
+      "format": "num-dot-decimal",
+      "order": 11241,
+      "raw": "86,330",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-07-01",
+      "table_index": 22,
+      "unit": "iso4217:USD",
+      "value": 86330000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-205",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:OptumHealthMember"
+        ]
+      ],
+      "end": "2026-09-30",
+      "fact_id": "f-1003",
+      "format": "num-dot-decimal",
+      "order": 11248,
+      "raw": "22,910",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-07-01",
+      "table_index": 22,
+      "unit": "iso4217:USD",
+      "value": 22910000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-206",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:OptumInsightMember"
+        ]
+      ],
+      "end": "2026-09-30",
+      "fact_id": "f-1004",
+      "format": "num-dot-decimal",
+      "order": 11255,
+      "raw": "5,474",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-07-01",
+      "table_index": 22,
+      "unit": "iso4217:USD",
+      "value": 5474000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-207",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:OptumRxMember"
+        ]
+      ],
+      "end": "2026-09-30",
+      "fact_id": "f-1005",
+      "format": "num-dot-decimal",
+      "order": 11262,
+      "raw": "39,927",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-07-01",
+      "table_index": 22,
+      "unit": "iso4217:USD",
+      "value": 39927000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-208",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:IntersegmentEliminationMember"
+        ]
+      ],
+      "end": "2026-09-30",
+      "fact_id": "f-1006",
+      "format": "num-dot-decimal",
+      "order": 11269,
+      "raw": "1,428",
+      "scale": "6",
+      "sign": "-",
+      "start": "2026-07-01",
+      "table_index": 22,
+      "unit": "iso4217:USD",
+      "value": -1428000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-209",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:TotalOptumMember"
+        ]
+      ],
+      "end": "2026-09-30",
+      "fact_id": "f-1007",
+      "format": "num-dot-decimal",
+      "order": 11276,
+      "raw": "66,883",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-07-01",
+      "table_index": 22,
+      "unit": "iso4217:USD",
+      "value": 66883000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-210",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:CorporateNonSegmentMember"
+        ]
+      ],
+      "end": "2026-09-30",
+      "fact_id": "f-1008",
+      "format": "num-dot-decimal",
+      "order": 11283,
+      "raw": "40,519",
+      "scale": "6",
+      "sign": "-",
+      "start": "2026-07-01",
+      "table_index": 22,
+      "unit": "iso4217:USD",
+      "value": -40519000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-5",
+      "decimals": "-6",
+      "dimensions": [],
+      "end": "2026-09-30",
+      "fact_id": "f-1009",
+      "format": "num-dot-decimal",
+      "order": 11290,
+      "raw": "112,694",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-07-01",
+      "table_index": 22,
+      "unit": "iso4217:USD",
+      "value": 112694000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-219",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "unh:ExternalCustomersMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:UnitedhealthcareMember"
+        ]
+      ],
+      "end": "2025-09-30",
+      "fact_id": "f-1098",
+      "format": "num-dot-decimal",
+      "order": 11889,
+      "raw": "86,502",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-07-01",
+      "table_index": 22,
+      "unit": "iso4217:USD",
+      "value": 86502000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-220",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "unh:ExternalCustomersMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:OptumHealthMember"
+        ]
+      ],
+      "end": "2025-09-30",
+      "fact_id": "f-1099",
+      "format": "num-dot-decimal",
+      "order": 11894,
+      "raw": "9,371",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-07-01",
+      "table_index": 22,
+      "unit": "iso4217:USD",
+      "value": 9371000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-221",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "unh:ExternalCustomersMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:OptumInsightMember"
+        ]
+      ],
+      "end": "2025-09-30",
+      "fact_id": "f-1100",
+      "format": "num-dot-decimal",
+      "order": 11899,
+      "raw": "1,723",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-07-01",
+      "table_index": 22,
+      "unit": "iso4217:USD",
+      "value": 1723000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-222",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "unh:ExternalCustomersMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:OptumRxMember"
+        ]
+      ],
+      "end": "2025-09-30",
+      "fact_id": "f-1101",
+      "format": "num-dot-decimal",
+      "order": 11904,
+      "raw": "14,433",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-07-01",
+      "table_index": 22,
+      "unit": "iso4217:USD",
+      "value": 14433000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-223",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:IntersegmentEliminationMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "unh:ExternalCustomersMember"
+        ]
+      ],
+      "end": "2025-09-30",
+      "fact_id": "f-1102",
+      "format": "fixed-zero",
+      "order": 11909,
+      "raw": "—",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-07-01",
+      "table_index": 22,
+      "unit": "iso4217:USD",
+      "value": 0,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-224",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:MajorCustomersAxis",
+          "unh:ExternalCustomersMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:TotalOptumMember"
+        ]
+      ],
+      "end": "2025-09-30",
+      "fact_id": "f-1103",
+      "format": "num-dot-decimal",
+      "order": 11914,
+      "raw": "25,527",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-07-01",
+      "table_index": 22,
+      "unit": "iso4217:USD",
+      "value": 25527000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-225",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:CorporateNonSegmentMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "unh:ExternalCustomersMember"
+        ]
+      ],
+      "end": "2025-09-30",
+      "fact_id": "f-1104",
+      "format": "fixed-zero",
+      "order": 11919,
+      "raw": "—",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-07-01",
+      "table_index": 22,
+      "unit": "iso4217:USD",
+      "value": 0,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-226",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:MajorCustomersAxis",
+          "unh:ExternalCustomersMember"
+        ]
+      ],
+      "end": "2025-09-30",
+      "fact_id": "f-1105",
+      "format": "num-dot-decimal",
+      "order": 11924,
+      "raw": "112,029",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-07-01",
+      "table_index": 22,
+      "unit": "iso4217:USD",
+      "value": 112029000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-243",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "unh:IntersegmentMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:UnitedhealthcareMember"
+        ]
+      ],
+      "end": "2025-09-30",
+      "fact_id": "f-1106",
+      "format": "fixed-zero",
+      "order": 11932,
+      "raw": "—",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-07-01",
+      "table_index": 22,
+      "unit": "iso4217:USD",
+      "value": 0,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-244",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "unh:IntersegmentMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:OptumHealthMember"
+        ]
+      ],
+      "end": "2025-09-30",
+      "fact_id": "f-1107",
+      "format": "num-dot-decimal",
+      "order": 11937,
+      "raw": "15,811",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-07-01",
+      "table_index": 22,
+      "unit": "iso4217:USD",
+      "value": 15811000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-245",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "unh:IntersegmentMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:OptumInsightMember"
+        ]
+      ],
+      "end": "2025-09-30",
+      "fact_id": "f-1108",
+      "format": "num-dot-decimal",
+      "order": 11942,
+      "raw": "3,324",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-07-01",
+      "table_index": 22,
+      "unit": "iso4217:USD",
+      "value": 3324000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-246",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "unh:IntersegmentMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:OptumRxMember"
+        ]
+      ],
+      "end": "2025-09-30",
+      "fact_id": "f-1109",
+      "format": "num-dot-decimal",
+      "order": 11947,
+      "raw": "25,195",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-07-01",
+      "table_index": 22,
+      "unit": "iso4217:USD",
+      "value": 25195000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-247",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:IntersegmentEliminationMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "unh:IntersegmentMember"
+        ]
+      ],
+      "end": "2025-09-30",
+      "fact_id": "f-1110",
+      "format": "num-dot-decimal",
+      "order": 11952,
+      "raw": "1,244",
+      "scale": "6",
+      "sign": "-",
+      "start": "2025-07-01",
+      "table_index": 22,
+      "unit": "iso4217:USD",
+      "value": -1244000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-248",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:MajorCustomersAxis",
+          "unh:IntersegmentMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:TotalOptumMember"
+        ]
+      ],
+      "end": "2025-09-30",
+      "fact_id": "f-1111",
+      "format": "num-dot-decimal",
+      "order": 11957,
+      "raw": "43,086",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-07-01",
+      "table_index": 22,
+      "unit": "iso4217:USD",
+      "value": 43086000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-249",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:CorporateNonSegmentMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "unh:IntersegmentMember"
+        ]
+      ],
+      "end": "2025-09-30",
+      "fact_id": "f-1112",
+      "format": "num-dot-decimal",
+      "order": 11962,
+      "raw": "43,086",
+      "scale": "6",
+      "sign": "-",
+      "start": "2025-07-01",
+      "table_index": 22,
+      "unit": "iso4217:USD",
+      "value": -43086000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-250",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:MajorCustomersAxis",
+          "unh:IntersegmentMember"
+        ]
+      ],
+      "end": "2025-09-30",
+      "fact_id": "f-1113",
+      "format": "fixed-zero",
+      "order": 11967,
+      "raw": "—",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-07-01",
+      "table_index": 22,
+      "unit": "iso4217:USD",
+      "value": 0,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-251",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:UnitedhealthcareMember"
+        ]
+      ],
+      "end": "2025-09-30",
+      "fact_id": "f-1122",
+      "format": "num-dot-decimal",
+      "order": 12020,
+      "raw": "87,070",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-07-01",
+      "table_index": 22,
+      "unit": "iso4217:USD",
+      "value": 87070000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-252",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:OptumHealthMember"
+        ]
+      ],
+      "end": "2025-09-30",
+      "fact_id": "f-1123",
+      "format": "num-dot-decimal",
+      "order": 12027,
+      "raw": "25,422",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-07-01",
+      "table_index": 22,
+      "unit": "iso4217:USD",
+      "value": 25422000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-253",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:OptumInsightMember"
+        ]
+      ],
+      "end": "2025-09-30",
+      "fact_id": "f-1124",
+      "format": "num-dot-decimal",
+      "order": 12034,
+      "raw": "5,320",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-07-01",
+      "table_index": 22,
+      "unit": "iso4217:USD",
+      "value": 5320000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-254",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:OptumRxMember"
+        ]
+      ],
+      "end": "2025-09-30",
+      "fact_id": "f-1125",
+      "format": "num-dot-decimal",
+      "order": 12041,
+      "raw": "39,679",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-07-01",
+      "table_index": 22,
+      "unit": "iso4217:USD",
+      "value": 39679000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-255",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:IntersegmentEliminationMember"
+        ]
+      ],
+      "end": "2025-09-30",
+      "fact_id": "f-1126",
+      "format": "num-dot-decimal",
+      "order": 12048,
+      "raw": "1,244",
+      "scale": "6",
+      "sign": "-",
+      "start": "2025-07-01",
+      "table_index": 22,
+      "unit": "iso4217:USD",
+      "value": -1244000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-256",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:TotalOptumMember"
+        ]
+      ],
+      "end": "2025-09-30",
+      "fact_id": "f-1127",
+      "format": "num-dot-decimal",
+      "order": 12055,
+      "raw": "69,177",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-07-01",
+      "table_index": 22,
+      "unit": "iso4217:USD",
+      "value": 69177000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-257",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:CorporateNonSegmentMember"
+        ]
+      ],
+      "end": "2025-09-30",
+      "fact_id": "f-1128",
+      "format": "num-dot-decimal",
+      "order": 12062,
+      "raw": "43,086",
+      "scale": "6",
+      "sign": "-",
+      "start": "2025-07-01",
+      "table_index": 22,
+      "unit": "iso4217:USD",
+      "value": -43086000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-6",
+      "decimals": "-6",
+      "dimensions": [],
+      "end": "2025-09-30",
+      "fact_id": "f-1129",
+      "format": "num-dot-decimal",
+      "order": 12069,
+      "raw": "113,161",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-07-01",
+      "table_index": 22,
+      "unit": "iso4217:USD",
+      "value": 113161000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-266",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "unh:ExternalCustomersMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:UnitedhealthcareMember"
+        ]
+      ],
+      "end": "2026-09-30",
+      "fact_id": "f-1218",
+      "format": "num-dot-decimal",
+      "order": 12781,
+      "raw": "256,921",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 23,
+      "unit": "iso4217:USD",
+      "value": 256921000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-267",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "unh:ExternalCustomersMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:OptumHealthMember"
+        ]
+      ],
+      "end": "2026-09-30",
+      "fact_id": "f-1219",
+      "format": "num-dot-decimal",
+      "order": 12786,
+      "raw": "26,321",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 23,
+      "unit": "iso4217:USD",
+      "value": 26321000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-268",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "unh:ExternalCustomersMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:OptumInsightMember"
+        ]
+      ],
+      "end": "2026-09-30",
+      "fact_id": "f-1220",
+      "format": "num-dot-decimal",
+      "order": 12791,
+      "raw": "4,869",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 23,
+      "unit": "iso4217:USD",
+      "value": 4869000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-269",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "unh:ExternalCustomersMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:OptumRxMember"
+        ]
+      ],
+      "end": "2026-09-30",
+      "fact_id": "f-1221",
+      "format": "num-dot-decimal",
+      "order": 12796,
+      "raw": "44,905",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 23,
+      "unit": "iso4217:USD",
+      "value": 44905000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-270",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:IntersegmentEliminationMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "unh:ExternalCustomersMember"
+        ]
+      ],
+      "end": "2026-09-30",
+      "fact_id": "f-1222",
+      "format": "fixed-zero",
+      "order": 12801,
+      "raw": "—",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 23,
+      "unit": "iso4217:USD",
+      "value": 0,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-271",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:MajorCustomersAxis",
+          "unh:ExternalCustomersMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:TotalOptumMember"
+        ]
+      ],
+      "end": "2026-09-30",
+      "fact_id": "f-1223",
+      "format": "num-dot-decimal",
+      "order": 12806,
+      "raw": "76,095",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 23,
+      "unit": "iso4217:USD",
+      "value": 76095000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-272",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:CorporateNonSegmentMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "unh:ExternalCustomersMember"
+        ]
+      ],
+      "end": "2026-09-30",
+      "fact_id": "f-1224",
+      "format": "fixed-zero",
+      "order": 12811,
+      "raw": "—",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 23,
+      "unit": "iso4217:USD",
+      "value": 0,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-273",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:MajorCustomersAxis",
+          "unh:ExternalCustomersMember"
+        ]
+      ],
+      "end": "2026-09-30",
+      "fact_id": "f-1225",
+      "format": "num-dot-decimal",
+      "order": 12816,
+      "raw": "333,016",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 23,
+      "unit": "iso4217:USD",
+      "value": 333016000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-290",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "unh:IntersegmentMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:UnitedhealthcareMember"
+        ]
+      ],
+      "end": "2026-09-30",
+      "fact_id": "f-1226",
+      "format": "fixed-zero",
+      "order": 12824,
+      "raw": "—",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 23,
+      "unit": "iso4217:USD",
+      "value": 0,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-291",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "unh:IntersegmentMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:OptumHealthMember"
+        ]
+      ],
+      "end": "2026-09-30",
+      "fact_id": "f-1227",
+      "format": "num-dot-decimal",
+      "order": 12829,
+      "raw": "43,531",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 23,
+      "unit": "iso4217:USD",
+      "value": 43531000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-292",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "unh:IntersegmentMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:OptumInsightMember"
+        ]
+      ],
+      "end": "2026-09-30",
+      "fact_id": "f-1228",
+      "format": "num-dot-decimal",
+      "order": 12834,
+      "raw": "10,170",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 23,
+      "unit": "iso4217:USD",
+      "value": 10170000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-293",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "unh:IntersegmentMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:OptumRxMember"
+        ]
+      ],
+      "end": "2026-09-30",
+      "fact_id": "f-1229",
+      "format": "num-dot-decimal",
+      "order": 12839,
+      "raw": "68,911",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 23,
+      "unit": "iso4217:USD",
+      "value": 68911000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-294",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:IntersegmentEliminationMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "unh:IntersegmentMember"
+        ]
+      ],
+      "end": "2026-09-30",
+      "fact_id": "f-1230",
+      "format": "num-dot-decimal",
+      "order": 12844,
+      "raw": "4,152",
+      "scale": "6",
+      "sign": "-",
+      "start": "2026-01-01",
+      "table_index": 23,
+      "unit": "iso4217:USD",
+      "value": -4152000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-295",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:MajorCustomersAxis",
+          "unh:IntersegmentMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:TotalOptumMember"
+        ]
+      ],
+      "end": "2026-09-30",
+      "fact_id": "f-1231",
+      "format": "num-dot-decimal",
+      "order": 12849,
+      "raw": "118,460",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 23,
+      "unit": "iso4217:USD",
+      "value": 118460000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-296",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:CorporateNonSegmentMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "unh:IntersegmentMember"
+        ]
+      ],
+      "end": "2026-09-30",
+      "fact_id": "f-1232",
+      "format": "num-dot-decimal",
+      "order": 12854,
+      "raw": "118,460",
+      "scale": "6",
+      "sign": "-",
+      "start": "2026-01-01",
+      "table_index": 23,
+      "unit": "iso4217:USD",
+      "value": -118460000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-297",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:MajorCustomersAxis",
+          "unh:IntersegmentMember"
+        ]
+      ],
+      "end": "2026-09-30",
+      "fact_id": "f-1233",
+      "format": "fixed-zero",
+      "order": 12859,
+      "raw": "—",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 23,
+      "unit": "iso4217:USD",
+      "value": 0,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-298",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:UnitedhealthcareMember"
+        ]
+      ],
+      "end": "2026-09-30",
+      "fact_id": "f-1242",
+      "format": "num-dot-decimal",
+      "order": 12912,
+      "raw": "258,612",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 23,
+      "unit": "iso4217:USD",
+      "value": 258612000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-299",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:OptumHealthMember"
+        ]
+      ],
+      "end": "2026-09-30",
+      "fact_id": "f-1243",
+      "format": "num-dot-decimal",
+      "order": 12919,
+      "raw": "70,491",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 23,
+      "unit": "iso4217:USD",
+      "value": 70491000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-300",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:OptumInsightMember"
+        ]
+      ],
+      "end": "2026-09-30",
+      "fact_id": "f-1244",
+      "format": "num-dot-decimal",
+      "order": 12926,
+      "raw": "16,001",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 23,
+      "unit": "iso4217:USD",
+      "value": 16001000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-301",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:OptumRxMember"
+        ]
+      ],
+      "end": "2026-09-30",
+      "fact_id": "f-1245",
+      "format": "num-dot-decimal",
+      "order": 12933,
+      "raw": "113,955",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 23,
+      "unit": "iso4217:USD",
+      "value": 113955000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-302",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:IntersegmentEliminationMember"
+        ]
+      ],
+      "end": "2026-09-30",
+      "fact_id": "f-1246",
+      "format": "num-dot-decimal",
+      "order": 12940,
+      "raw": "4,152",
+      "scale": "6",
+      "sign": "-",
+      "start": "2026-01-01",
+      "table_index": 23,
+      "unit": "iso4217:USD",
+      "value": -4152000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-303",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:TotalOptumMember"
+        ]
+      ],
+      "end": "2026-09-30",
+      "fact_id": "f-1247",
+      "format": "num-dot-decimal",
+      "order": 12947,
+      "raw": "196,295",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 23,
+      "unit": "iso4217:USD",
+      "value": 196295000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-304",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:CorporateNonSegmentMember"
+        ]
+      ],
+      "end": "2026-09-30",
+      "fact_id": "f-1248",
+      "format": "num-dot-decimal",
+      "order": 12954,
+      "raw": "118,460",
+      "scale": "6",
+      "sign": "-",
+      "start": "2026-01-01",
+      "table_index": 23,
+      "unit": "iso4217:USD",
+      "value": -118460000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-1",
+      "decimals": "-6",
+      "dimensions": [],
+      "end": "2026-09-30",
+      "fact_id": "f-1249",
+      "format": "num-dot-decimal",
+      "order": 12961,
+      "raw": "336,447",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 23,
+      "unit": "iso4217:USD",
+      "value": 336447000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-306",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "unh:ExternalCustomersMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:UnitedhealthcareMember"
+        ]
+      ],
+      "end": "2025-09-30",
+      "fact_id": "f-1338",
+      "format": "num-dot-decimal",
+      "order": 13560,
+      "raw": "256,121",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 23,
+      "unit": "iso4217:USD",
+      "value": 256121000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-307",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "unh:ExternalCustomersMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:OptumHealthMember"
+        ]
+      ],
+      "end": "2025-09-30",
+      "fact_id": "f-1339",
+      "format": "num-dot-decimal",
+      "order": 13565,
+      "raw": "26,813",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 23,
+      "unit": "iso4217:USD",
+      "value": 26813000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-308",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "unh:ExternalCustomersMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:OptumInsightMember"
+        ]
+      ],
+      "end": "2025-09-30",
+      "fact_id": "f-1340",
+      "format": "num-dot-decimal",
+      "order": 13570,
+      "raw": "5,143",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 23,
+      "unit": "iso4217:USD",
+      "value": 5143000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-309",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "unh:ExternalCustomersMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:OptumRxMember"
+        ]
+      ],
+      "end": "2025-09-30",
+      "fact_id": "f-1341",
+      "format": "num-dot-decimal",
+      "order": 13575,
+      "raw": "43,002",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 23,
+      "unit": "iso4217:USD",
+      "value": 43002000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-310",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:IntersegmentEliminationMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "unh:ExternalCustomersMember"
+        ]
+      ],
+      "end": "2025-09-30",
+      "fact_id": "f-1342",
+      "format": "fixed-zero",
+      "order": 13580,
+      "raw": "—",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 23,
+      "unit": "iso4217:USD",
+      "value": 0,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-311",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:MajorCustomersAxis",
+          "unh:ExternalCustomersMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:TotalOptumMember"
+        ]
+      ],
+      "end": "2025-09-30",
+      "fact_id": "f-1343",
+      "format": "num-dot-decimal",
+      "order": 13585,
+      "raw": "74,958",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 23,
+      "unit": "iso4217:USD",
+      "value": 74958000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-312",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:CorporateNonSegmentMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "unh:ExternalCustomersMember"
+        ]
+      ],
+      "end": "2025-09-30",
+      "fact_id": "f-1344",
+      "format": "fixed-zero",
+      "order": 13590,
+      "raw": "—",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 23,
+      "unit": "iso4217:USD",
+      "value": 0,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-313",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:MajorCustomersAxis",
+          "unh:ExternalCustomersMember"
+        ]
+      ],
+      "end": "2025-09-30",
+      "fact_id": "f-1345",
+      "format": "num-dot-decimal",
+      "order": 13595,
+      "raw": "331,079",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 23,
+      "unit": "iso4217:USD",
+      "value": 331079000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-330",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "unh:IntersegmentMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:UnitedhealthcareMember"
+        ]
+      ],
+      "end": "2025-09-30",
+      "fact_id": "f-1346",
+      "format": "fixed-zero",
+      "order": 13603,
+      "raw": "—",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 23,
+      "unit": "iso4217:USD",
+      "value": 0,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-331",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "unh:IntersegmentMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:OptumHealthMember"
+        ]
+      ],
+      "end": "2025-09-30",
+      "fact_id": "f-1347",
+      "format": "num-dot-decimal",
+      "order": 13608,
+      "raw": "47,466",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 23,
+      "unit": "iso4217:USD",
+      "value": 47466000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-332",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "unh:IntersegmentMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:OptumInsightMember"
+        ]
+      ],
+      "end": "2025-09-30",
+      "fact_id": "f-1348",
+      "format": "num-dot-decimal",
+      "order": 13613,
+      "raw": "9,683",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 23,
+      "unit": "iso4217:USD",
+      "value": 9683000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-333",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "unh:IntersegmentMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:OptumRxMember"
+        ]
+      ],
+      "end": "2025-09-30",
+      "fact_id": "f-1349",
+      "format": "num-dot-decimal",
+      "order": 13618,
+      "raw": "70,122",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 23,
+      "unit": "iso4217:USD",
+      "value": 70122000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-334",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:IntersegmentEliminationMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "unh:IntersegmentMember"
+        ]
+      ],
+      "end": "2025-09-30",
+      "fact_id": "f-1350",
+      "format": "num-dot-decimal",
+      "order": 13623,
+      "raw": "3,546",
+      "scale": "6",
+      "sign": "-",
+      "start": "2025-01-01",
+      "table_index": 23,
+      "unit": "iso4217:USD",
+      "value": -3546000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-335",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:MajorCustomersAxis",
+          "unh:IntersegmentMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:TotalOptumMember"
+        ]
+      ],
+      "end": "2025-09-30",
+      "fact_id": "f-1351",
+      "format": "num-dot-decimal",
+      "order": 13628,
+      "raw": "123,725",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 23,
+      "unit": "iso4217:USD",
+      "value": 123725000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-336",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:CorporateNonSegmentMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "unh:IntersegmentMember"
+        ]
+      ],
+      "end": "2025-09-30",
+      "fact_id": "f-1352",
+      "format": "num-dot-decimal",
+      "order": 13633,
+      "raw": "123,725",
+      "scale": "6",
+      "sign": "-",
+      "start": "2025-01-01",
+      "table_index": 23,
+      "unit": "iso4217:USD",
+      "value": -123725000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-337",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:MajorCustomersAxis",
+          "unh:IntersegmentMember"
+        ]
+      ],
+      "end": "2025-09-30",
+      "fact_id": "f-1353",
+      "format": "fixed-zero",
+      "order": 13638,
+      "raw": "—",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 23,
+      "unit": "iso4217:USD",
+      "value": 0,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-338",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:UnitedhealthcareMember"
+        ]
+      ],
+      "end": "2025-09-30",
+      "fact_id": "f-1362",
+      "format": "num-dot-decimal",
+      "order": 13691,
+      "raw": "257,790",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 23,
+      "unit": "iso4217:USD",
+      "value": 257790000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-339",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:OptumHealthMember"
+        ]
+      ],
+      "end": "2025-09-30",
+      "fact_id": "f-1363",
+      "format": "num-dot-decimal",
+      "order": 13698,
+      "raw": "74,984",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 23,
+      "unit": "iso4217:USD",
+      "value": 74984000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-340",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:OptumInsightMember"
+        ]
+      ],
+      "end": "2025-09-30",
+      "fact_id": "f-1364",
+      "format": "num-dot-decimal",
+      "order": 13705,
+      "raw": "15,579",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 23,
+      "unit": "iso4217:USD",
+      "value": 15579000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-341",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:OptumRxMember"
+        ]
+      ],
+      "end": "2025-09-30",
+      "fact_id": "f-1365",
+      "format": "num-dot-decimal",
+      "order": 13712,
+      "raw": "113,270",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 23,
+      "unit": "iso4217:USD",
+      "value": 113270000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-342",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:IntersegmentEliminationMember"
+        ]
+      ],
+      "end": "2025-09-30",
+      "fact_id": "f-1366",
+      "format": "num-dot-decimal",
+      "order": 13719,
+      "raw": "3,546",
+      "scale": "6",
+      "sign": "-",
+      "start": "2025-01-01",
+      "table_index": 23,
+      "unit": "iso4217:USD",
+      "value": -3546000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-343",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "unh:TotalOptumMember"
+        ]
+      ],
+      "end": "2025-09-30",
+      "fact_id": "f-1367",
+      "format": "num-dot-decimal",
+      "order": 13726,
+      "raw": "200,287",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 23,
+      "unit": "iso4217:USD",
+      "value": 200287000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-344",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:CorporateNonSegmentMember"
+        ]
+      ],
+      "end": "2025-09-30",
+      "fact_id": "f-1368",
+      "format": "num-dot-decimal",
+      "order": 13733,
+      "raw": "123,725",
+      "scale": "6",
+      "sign": "-",
+      "start": "2025-01-01",
+      "table_index": 23,
+      "unit": "iso4217:USD",
+      "value": -123725000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-7",
+      "decimals": "-6",
+      "dimensions": [],
+      "end": "2025-09-30",
+      "fact_id": "f-1369",
+      "format": "num-dot-decimal",
+      "order": 13740,
+      "raw": "334,352",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 23,
+      "unit": "iso4217:USD",
+      "value": 334352000000,
+      "value_error": null
+    }
+  ],
+  "format": 1,
+  "namespaces": {
+    "dei": "http://xbrl.sec.gov/dei/2026",
+    "ecd": "http://xbrl.sec.gov/ecd/2026",
+    "iso4217": "http://www.xbrl.org/2003/iso4217",
+    "ix": "http://www.xbrl.org/2013/inlineXBRL",
+    "ixt": "http://www.xbrl.org/inlineXBRL/transformation/2020-02-12",
+    "ixt-sec": "http://www.sec.gov/inlineXBRL/transformation/2015-08-31",
+    "link": "http://www.xbrl.org/2003/linkbase",
+    "srt": "http://fasb.org/srt/2026",
+    "unh": "http://www.uhg.com/20260930",
+    "us-gaap": "http://fasb.org/us-gaap/2026",
+    "utr": "http://www.xbrl.org/2009/utr",
+    "xbrldi": "http://xbrl.org/2006/xbrldi",
+    "xbrli": "http://www.xbrl.org/2003/instance",
+    "xlink": "http://www.w3.org/1999/xlink",
+    "xsi": "http://www.w3.org/2001/XMLSchema-instance"
+  },
+  "package": {
+    "complete": true,
+    "documents": {
+      "unh-20260930.htm": {
+        "inline_xbrl": true,
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/731766/000073176626000266/unh-20260930.htm",
+        "name": "unh-20260930.htm",
+        "primary": true,
+        "sha256": "f32c8c7435dcfef79a27d67162b531005d43221f064a9f2b99a581593e25b5d9",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/731766/000073176626000266/unh-20260930.htm"
+      }
+    },
+    "filing": {
+      "filingDate": "2026-11-03",
+      "form": "10-Q",
+      "reportDate": "2026-09-30"
+    }
+  },
+  "parser_sha256": "581f401cd885a46e026dc7e23dcd51d3fbd55262780f6b77ab4eb2704c3a19c2",
+  "spec_concepts": [
+    "us-gaap:Revenues"
+  ]
+}

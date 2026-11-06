@@ -45,5 +45,42 @@ class ParseArgumentsTest(unittest.TestCase):
             self.assertIn("不在這次處理的期別中", message)
 
 
+class SnapshotArgumentsTest(unittest.TestCase):
+    run_cli = ParseArgumentsTest.run_cli
+
+    def test_snapshots_require_check(self):
+        code, message = self.run_cli("parse", "--tickers", "AAPL", "--snapshots")
+        self.assertEqual(code, 1)
+        self.assertIn("只能與 --check 一起使用", message)
+
+    def test_from_manifest_excludes_date_selection_and_dry_run(self):
+        for extra in (["--dry-run"], ["--start", "2024-01-01"], ["--latest"]):
+            with self.subTest(extra=extra):
+                code, message = self.run_cli("download", "--tickers", "AAPL", "--from-manifest", *extra)
+                self.assertEqual(code, 1)
+                self.assertIn("--from-manifest", message)
+
+    def test_all_with_from_manifest_means_companies_with_a_manifest(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp) / "snapshots"
+            for ticker in ("AAPL", "BRK-B"):
+                (root / ticker[0] / ticker).mkdir(parents=True)
+                (root / ticker[0] / ticker / "manifest.json").write_text('{"filings": []}')
+            seen = {}
+
+            class Batch:
+                def __init__(self, workflow):
+                    seen["manifests"] = workflow.manifests
+
+                def run(self, tickers, *args):
+                    seen["tickers"] = tickers
+                    return {"complete": True}
+
+            with mock.patch.object(cli, "DownloadBatch", Batch), mock.patch("sys.stdout"):
+                code, _ = self.run_cli("download", "--all", "--from-manifest", "--snapshots-dir", str(root), "--data", str(Path(temp) / "data"))
+            self.assertEqual(code, 0)
+            self.assertEqual(seen, {"manifests": root, "tickers": ["AAPL", "BRK-B"]})
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -1,0 +1,672 @@
+{
+  "accession": "0000070858-25-000268",
+  "conflicts": [],
+  "dei": {
+    "dei:AmendmentFlag": "FALSE",
+    "dei:CityAreaCode": "704",
+    "dei:CurrentFiscalYearEndDate": "12/31",
+    "dei:DocumentFiscalPeriodFocus": "Q2",
+    "dei:DocumentFiscalYearFocus": "2025",
+    "dei:DocumentPeriodEndDate": "June 30, 2025",
+    "dei:DocumentQuarterlyReport": "☑",
+    "dei:DocumentTransitionReport": "☐",
+    "dei:DocumentType": "10-Q",
+    "dei:EntityAddressAddressLine1": "100 N. Tryon Street",
+    "dei:EntityAddressCityOrTown": "Charlotte",
+    "dei:EntityAddressPostalZipCode": "28255",
+    "dei:EntityAddressStateOrProvince": "North Carolina",
+    "dei:EntityCentralIndexKey": "0000070858",
+    "dei:EntityCurrentReportingStatus": "Yes",
+    "dei:EntityEmergingGrowthCompany": "☐",
+    "dei:EntityFileNumber": "1-6523",
+    "dei:EntityFilerCategory": "Large accelerated filer",
+    "dei:EntityIncorporationStateCountryCode": "Delaware",
+    "dei:EntityInteractiveDataCurrent": "Yes",
+    "dei:EntityRegistrantName": "Bank of America Corporation",
+    "dei:EntityShellCompany": "☐",
+    "dei:EntitySmallBusiness": "☐",
+    "dei:EntityTaxIdentificationNumber": "56-0906609",
+    "dei:LocalPhoneNumber": "386-5681",
+    "dei:Security12bTitle": "Common Stock, par value $0.01 per share",
+    "dei:SecurityExchangeName": "New York Stock Exchange",
+    "dei:TradingSymbol": "BAC"
+  },
+  "facts": [
+    {
+      "concept": "bac:RevenuesNetOfInterestExpenseFullTaxEquivalentBasis",
+      "context_id": "c-22",
+      "decimals": "-6",
+      "dimensions": [],
+      "end": "2025-06-30",
+      "fact_id": "f-6419",
+      "format": "num-dot-decimal",
+      "order": 120996,
+      "raw": "26,608",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-04-01",
+      "table_index": 224,
+      "unit": "iso4217:USD",
+      "value": 26608000000,
+      "value_error": null
+    },
+    {
+      "concept": "bac:RevenuesNetOfInterestExpenseFullTaxEquivalentBasis",
+      "context_id": "c-23",
+      "decimals": "-6",
+      "dimensions": [],
+      "end": "2024-06-30",
+      "fact_id": "f-6420",
+      "format": "num-dot-decimal",
+      "order": 121002,
+      "raw": "25,537",
+      "scale": "6",
+      "sign": null,
+      "start": "2024-04-01",
+      "table_index": 224,
+      "unit": "iso4217:USD",
+      "value": 25537000000,
+      "value_error": null
+    },
+    {
+      "concept": "bac:RevenuesNetOfInterestExpenseFullTaxEquivalentBasis",
+      "context_id": "c-2024",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "bac:ConsumerBankingSegmentMember"
+        ]
+      ],
+      "end": "2025-06-30",
+      "fact_id": "f-6421",
+      "format": "num-dot-decimal",
+      "order": 121009,
+      "raw": "10,813",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-04-01",
+      "table_index": 224,
+      "unit": "iso4217:USD",
+      "value": 10813000000,
+      "value_error": null
+    },
+    {
+      "concept": "bac:RevenuesNetOfInterestExpenseFullTaxEquivalentBasis",
+      "context_id": "c-2025",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "bac:ConsumerBankingSegmentMember"
+        ]
+      ],
+      "end": "2024-06-30",
+      "fact_id": "f-6422",
+      "format": "num-dot-decimal",
+      "order": 121015,
+      "raw": "10,206",
+      "scale": "6",
+      "sign": null,
+      "start": "2024-04-01",
+      "table_index": 224,
+      "unit": "iso4217:USD",
+      "value": 10206000000,
+      "value_error": null
+    },
+    {
+      "concept": "bac:RevenuesNetOfInterestExpenseFullTaxEquivalentBasis",
+      "context_id": "c-2026",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "bac:GlobalWealthAndInvestmentManagementSegmentMember"
+        ]
+      ],
+      "end": "2025-06-30",
+      "fact_id": "f-6423",
+      "format": "num-dot-decimal",
+      "order": 121022,
+      "raw": "5,937",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-04-01",
+      "table_index": 224,
+      "unit": "iso4217:USD",
+      "value": 5937000000,
+      "value_error": null
+    },
+    {
+      "concept": "bac:RevenuesNetOfInterestExpenseFullTaxEquivalentBasis",
+      "context_id": "c-2027",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "bac:GlobalWealthAndInvestmentManagementSegmentMember"
+        ]
+      ],
+      "end": "2024-06-30",
+      "fact_id": "f-6424",
+      "format": "num-dot-decimal",
+      "order": 121028,
+      "raw": "5,574",
+      "scale": "6",
+      "sign": null,
+      "start": "2024-04-01",
+      "table_index": 224,
+      "unit": "iso4217:USD",
+      "value": 5574000000,
+      "value_error": null
+    },
+    {
+      "concept": "bac:RevenuesNetOfInterestExpenseFullTaxEquivalentBasis",
+      "context_id": "c-2030",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "bac:GlobalBankingSegmentMember"
+        ]
+      ],
+      "end": "2025-06-30",
+      "fact_id": "f-6485",
+      "format": "num-dot-decimal",
+      "order": 121948,
+      "raw": "5,690",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-04-01",
+      "table_index": 224,
+      "unit": "iso4217:USD",
+      "value": 5690000000,
+      "value_error": null
+    },
+    {
+      "concept": "bac:RevenuesNetOfInterestExpenseFullTaxEquivalentBasis",
+      "context_id": "c-2031",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "bac:GlobalBankingSegmentMember"
+        ]
+      ],
+      "end": "2024-06-30",
+      "fact_id": "f-6486",
+      "format": "num-dot-decimal",
+      "order": 121954,
+      "raw": "6,053",
+      "scale": "6",
+      "sign": null,
+      "start": "2024-04-01",
+      "table_index": 224,
+      "unit": "iso4217:USD",
+      "value": 6053000000,
+      "value_error": null
+    },
+    {
+      "concept": "bac:RevenuesNetOfInterestExpenseFullTaxEquivalentBasis",
+      "context_id": "c-2032",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "bac:GlobalMarketsSegmentMember"
+        ]
+      ],
+      "end": "2025-06-30",
+      "fact_id": "f-6487",
+      "format": "num-dot-decimal",
+      "order": 121961,
+      "raw": "5,980",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-04-01",
+      "table_index": 224,
+      "unit": "iso4217:USD",
+      "value": 5980000000,
+      "value_error": null
+    },
+    {
+      "concept": "bac:RevenuesNetOfInterestExpenseFullTaxEquivalentBasis",
+      "context_id": "c-2033",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "bac:GlobalMarketsSegmentMember"
+        ]
+      ],
+      "end": "2024-06-30",
+      "fact_id": "f-6488",
+      "format": "num-dot-decimal",
+      "order": 121967,
+      "raw": "5,459",
+      "scale": "6",
+      "sign": null,
+      "start": "2024-04-01",
+      "table_index": 224,
+      "unit": "iso4217:USD",
+      "value": 5459000000,
+      "value_error": null
+    },
+    {
+      "concept": "bac:RevenuesNetOfInterestExpenseFullTaxEquivalentBasis",
+      "context_id": "c-2034",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "bac:CorporateReconcilingItemsAndEliminationsMember"
+        ]
+      ],
+      "end": "2025-06-30",
+      "fact_id": "f-6489",
+      "format": "num-dot-decimal",
+      "order": 121974,
+      "raw": "1,812",
+      "scale": "6",
+      "sign": "-",
+      "start": "2025-04-01",
+      "table_index": 224,
+      "unit": "iso4217:USD",
+      "value": -1812000000,
+      "value_error": null
+    },
+    {
+      "concept": "bac:RevenuesNetOfInterestExpenseFullTaxEquivalentBasis",
+      "context_id": "c-2035",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "bac:CorporateReconcilingItemsAndEliminationsMember"
+        ]
+      ],
+      "end": "2024-06-30",
+      "fact_id": "f-6490",
+      "format": "num-dot-decimal",
+      "order": 121979,
+      "raw": "1,755",
+      "scale": "6",
+      "sign": "-",
+      "start": "2024-04-01",
+      "table_index": 224,
+      "unit": "iso4217:USD",
+      "value": -1755000000,
+      "value_error": null
+    },
+    {
+      "concept": "bac:RevenuesNetOfInterestExpenseFullTaxEquivalentBasis",
+      "context_id": "c-1",
+      "decimals": "-6",
+      "dimensions": [],
+      "end": "2025-06-30",
+      "fact_id": "f-6553",
+      "format": "num-dot-decimal",
+      "order": 123055,
+      "raw": "54,119",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 226,
+      "unit": "iso4217:USD",
+      "value": 54119000000,
+      "value_error": null
+    },
+    {
+      "concept": "bac:RevenuesNetOfInterestExpenseFullTaxEquivalentBasis",
+      "context_id": "c-24",
+      "decimals": "-6",
+      "dimensions": [],
+      "end": "2024-06-30",
+      "fact_id": "f-6554",
+      "format": "num-dot-decimal",
+      "order": 123061,
+      "raw": "51,513",
+      "scale": "6",
+      "sign": null,
+      "start": "2024-01-01",
+      "table_index": 226,
+      "unit": "iso4217:USD",
+      "value": 51513000000,
+      "value_error": null
+    },
+    {
+      "concept": "bac:RevenuesNetOfInterestExpenseFullTaxEquivalentBasis",
+      "context_id": "c-2040",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "bac:ConsumerBankingSegmentMember"
+        ]
+      ],
+      "end": "2025-06-30",
+      "fact_id": "f-6555",
+      "format": "num-dot-decimal",
+      "order": 123068,
+      "raw": "21,306",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 226,
+      "unit": "iso4217:USD",
+      "value": 21306000000,
+      "value_error": null
+    },
+    {
+      "concept": "bac:RevenuesNetOfInterestExpenseFullTaxEquivalentBasis",
+      "context_id": "c-2041",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "bac:ConsumerBankingSegmentMember"
+        ]
+      ],
+      "end": "2024-06-30",
+      "fact_id": "f-6556",
+      "format": "num-dot-decimal",
+      "order": 123074,
+      "raw": "20,372",
+      "scale": "6",
+      "sign": null,
+      "start": "2024-01-01",
+      "table_index": 226,
+      "unit": "iso4217:USD",
+      "value": 20372000000,
+      "value_error": null
+    },
+    {
+      "concept": "bac:RevenuesNetOfInterestExpenseFullTaxEquivalentBasis",
+      "context_id": "c-2042",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "bac:GlobalWealthAndInvestmentManagementSegmentMember"
+        ]
+      ],
+      "end": "2025-06-30",
+      "fact_id": "f-6557",
+      "format": "num-dot-decimal",
+      "order": 123081,
+      "raw": "11,953",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 226,
+      "unit": "iso4217:USD",
+      "value": 11953000000,
+      "value_error": null
+    },
+    {
+      "concept": "bac:RevenuesNetOfInterestExpenseFullTaxEquivalentBasis",
+      "context_id": "c-2043",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "bac:GlobalWealthAndInvestmentManagementSegmentMember"
+        ]
+      ],
+      "end": "2024-06-30",
+      "fact_id": "f-6558",
+      "format": "num-dot-decimal",
+      "order": 123087,
+      "raw": "11,165",
+      "scale": "6",
+      "sign": null,
+      "start": "2024-01-01",
+      "table_index": 226,
+      "unit": "iso4217:USD",
+      "value": 11165000000,
+      "value_error": null
+    },
+    {
+      "concept": "bac:RevenuesNetOfInterestExpenseFullTaxEquivalentBasis",
+      "context_id": "c-2044",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "bac:GlobalBankingSegmentMember"
+        ]
+      ],
+      "end": "2025-06-30",
+      "fact_id": "f-6619",
+      "format": "num-dot-decimal",
+      "order": 124007,
+      "raw": "11,667",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 226,
+      "unit": "iso4217:USD",
+      "value": 11667000000,
+      "value_error": null
+    },
+    {
+      "concept": "bac:RevenuesNetOfInterestExpenseFullTaxEquivalentBasis",
+      "context_id": "c-2045",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "bac:GlobalBankingSegmentMember"
+        ]
+      ],
+      "end": "2024-06-30",
+      "fact_id": "f-6620",
+      "format": "num-dot-decimal",
+      "order": 124013,
+      "raw": "12,033",
+      "scale": "6",
+      "sign": null,
+      "start": "2024-01-01",
+      "table_index": 226,
+      "unit": "iso4217:USD",
+      "value": 12033000000,
+      "value_error": null
+    },
+    {
+      "concept": "bac:RevenuesNetOfInterestExpenseFullTaxEquivalentBasis",
+      "context_id": "c-2046",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "bac:GlobalMarketsSegmentMember"
+        ]
+      ],
+      "end": "2025-06-30",
+      "fact_id": "f-6621",
+      "format": "num-dot-decimal",
+      "order": 124020,
+      "raw": "12,564",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 226,
+      "unit": "iso4217:USD",
+      "value": 12564000000,
+      "value_error": null
+    },
+    {
+      "concept": "bac:RevenuesNetOfInterestExpenseFullTaxEquivalentBasis",
+      "context_id": "c-2047",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "bac:GlobalMarketsSegmentMember"
+        ]
+      ],
+      "end": "2024-06-30",
+      "fact_id": "f-6622",
+      "format": "num-dot-decimal",
+      "order": 124026,
+      "raw": "11,342",
+      "scale": "6",
+      "sign": null,
+      "start": "2024-01-01",
+      "table_index": 226,
+      "unit": "iso4217:USD",
+      "value": 11342000000,
+      "value_error": null
+    },
+    {
+      "concept": "bac:RevenuesNetOfInterestExpenseFullTaxEquivalentBasis",
+      "context_id": "c-2048",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "bac:CorporateReconcilingItemsAndEliminationsMember"
+        ]
+      ],
+      "end": "2025-06-30",
+      "fact_id": "f-6623",
+      "format": "num-dot-decimal",
+      "order": 124033,
+      "raw": "3,371",
+      "scale": "6",
+      "sign": "-",
+      "start": "2025-01-01",
+      "table_index": 226,
+      "unit": "iso4217:USD",
+      "value": -3371000000,
+      "value_error": null
+    },
+    {
+      "concept": "bac:RevenuesNetOfInterestExpenseFullTaxEquivalentBasis",
+      "context_id": "c-2049",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "bac:CorporateReconcilingItemsAndEliminationsMember"
+        ]
+      ],
+      "end": "2024-06-30",
+      "fact_id": "f-6624",
+      "format": "num-dot-decimal",
+      "order": 124038,
+      "raw": "3,399",
+      "scale": "6",
+      "sign": "-",
+      "start": "2024-01-01",
+      "table_index": 226,
+      "unit": "iso4217:USD",
+      "value": -3399000000,
+      "value_error": null
+    }
+  ],
+  "format": 1,
+  "namespaces": {
+    "bac": "http://www.bankofamerica.com/20250630",
+    "dei": "http://xbrl.sec.gov/dei/2025",
+    "ecd": "http://xbrl.sec.gov/ecd/2025",
+    "iso4217": "http://www.xbrl.org/2003/iso4217",
+    "ix": "http://www.xbrl.org/2013/inlineXBRL",
+    "ixt": "http://www.xbrl.org/inlineXBRL/transformation/2020-02-12",
+    "ixt-sec": "http://www.sec.gov/inlineXBRL/transformation/2015-08-31",
+    "link": "http://www.xbrl.org/2003/linkbase",
+    "srt": "http://fasb.org/srt/2025",
+    "us-gaap": "http://fasb.org/us-gaap/2025",
+    "utr": "http://www.xbrl.org/2009/utr",
+    "xbrldi": "http://xbrl.org/2006/xbrldi",
+    "xbrli": "http://www.xbrl.org/2003/instance",
+    "xlink": "http://www.w3.org/1999/xlink",
+    "xsi": "http://www.w3.org/2001/XMLSchema-instance"
+  },
+  "package": {
+    "complete": true,
+    "documents": {
+      "bac-20250630.htm": {
+        "inline_xbrl": true,
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/70858/000007085825000268/bac-20250630.htm",
+        "name": "bac-20250630.htm",
+        "primary": true,
+        "sha256": "76530d839328c60dacb43313c52bbd1af8a57eda0d86427fe594402e57b78119",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/70858/000007085825000268/bac-20250630.htm"
+      }
+    },
+    "filing": {
+      "filingDate": "2025-07-31",
+      "form": "10-Q",
+      "reportDate": "2025-06-30"
+    }
+  },
+  "parser_sha256": "581f401cd885a46e026dc7e23dcd51d3fbd55262780f6b77ab4eb2704c3a19c2",
+  "spec_concepts": [
+    "bac:RevenuesNetOfInterestExpenseFullTaxEquivalentBasis"
+  ]
+}

@@ -38,6 +38,7 @@
 | `data/universe/references/<首字母>/<TICKER>/` | 對照資料：`reference.json` 與每次擷取的證據 |
 | `libs/sec_revenue/companies/<首字母>/<ticker>/` | 每家公司的 parser 規格（`spec.py`）與說明（`parser.md`） |
 | `data/revenue/<首字母>/<TICKER>/` | parser 的正式輸出：季度（`Q/`）與年度（`FY/`）兩個序列每期的 `revenue.json` 與 SEC 表格證據，以及 `status.json` |
+| `data/snapshots/<首字母>/<TICKER>/` | 由 SEC 原文產生的 XBRL fact 快照（每份申報一個 JSON）與申報清單（`manifest.json`，每個檔案的 sha256）；沒有原文時以快照驗證正式輸出，需要原文時依清單重新下載 |
 
 格式規格見 [ticker 清單與對照資料格式](docs/architecture/universe.md)。
 
@@ -67,7 +68,7 @@
    npm run setup
    ```
 
-2. 設定 `.env`：複製 `.env.example` 為 `.env`，填入兩項設定。`.env` 不進 Git，主 repo 與每個 worktree 各放一份。
+2. 設定 `.env`（只有下載或以原文 parse 時需要；只跑 `npm run check` 可以略過）：複製 `.env.example` 為 `.env`，填入兩項設定。`.env` 不進 Git，主 repo 與每個 worktree 各放一份。
    - `SEC_USER_AGENT`：姓名或組織加上聯絡 email。SEC 要求自動化請求註明身分，email 須是聯絡得到的真實地址；只讀本機快取（`--offline`）時不需要。
    - `SEC_DATA_DIR`：SEC 原文與下載索引的共用目錄，放在 repo 以外，例如 `~/sec-revenue-data`。原文可依記錄的 SEC URL 與 sha256 重建，不進 Git。
 
@@ -75,7 +76,7 @@
    cp .env.example .env
    ```
 
-3. 確認環境：
+3. 確認環境。不需要 SEC 原文：unit test、對照資料驗證，以及以快照對全部上線公司跑 `parse --check`。
 
    ```bash
    npm run check
@@ -90,10 +91,12 @@
 | `npm run setup` | 建立 `.venv`，安裝 `requirements.txt` 與擷取、截圖用的 Chromium |
 | `npm run test` | unit test（`unittest discover -s tests -t .`） |
 | `npm run validate` | 驗證 `tickers.csv` 與對照資料 |
-| `npm run check` | 依序執行以上兩項（CI 在每個 PR 執行同樣兩項） |
+| `npm run regression` | 以 `data/snapshots/` 的快照對全部上線公司跑 `parse --check`，不需要 SEC 原文 |
+| `npm run check` | 依序執行以上三項（CI 在每個 PR 執行同樣三項） |
 | `npm run tickers` | 列出有公司規格的 ticker |
-| `npm run download -- ...` | 下載 SEC 申報包；目標期別有 10-K 時一併下載推算 Q4 所需的申報；`--dry-run` 只列出還沒下載的申報 |
-| `npm run parse -- ...` | 依公司規格產生 `data/revenue/` 的正式輸出與證據，不連網；不指定 `--start` 時從預設起始日（2024-01-01）起；`--check` 與已提交的輸出比對 |
+| `npm run download -- ...` | 下載 SEC 申報包；目標期別有 10-K 時一併下載推算 Q4 所需的申報；`--dry-run` 只列出還沒下載的申報；`--from-manifest` 依申報清單重新下載並逐檔核對 |
+| `npm run parse -- ...` | 依公司規格產生 `data/revenue/` 的正式輸出與證據，不連網；不指定 `--start` 時從預設起始日（2024-01-01）起；`--check` 與已提交的輸出比對，加 `--snapshots` 時不讀原文 |
+| `npm run snapshot -- ...` | 由 SEC 原文產生 `data/snapshots/` 的快照與申報清單；`--check` 核對已提交的快照與原文一致 |
 | `npm run capture:setup` | 開啟擷取用的專用瀏覽器，檢查並等待登入 |
 | `npm run capture -- ...` | 擷取對照資料 |
 | `npm run viewer` | 本機唯讀 viewer，<http://127.0.0.1:7290>：正式輸出（`data/revenue/`）的 Q／FY 數字與 SEC 證據 |
@@ -116,6 +119,10 @@ npm run download -- --all --start 2024-01-01 --dry-run
 # 產生正式輸出，或與已提交的輸出比對
 npm run parse -- --tickers AAPL
 npm run parse -- --tickers AAPL --check
+
+# 沒有 SEC 原文時：以快照比對；需要原文時依申報清單下載
+npm run parse -- --all --check --snapshots
+npm run download -- --all --from-manifest
 ```
 
 `ALL` 是 Allstate 的 ticker；全部公司用 `--all`。操作步驟見 [本機操作](docs/guides/local-workflow.md)；下載規則、快取與回傳碼見 [SEC 下載](docs/architecture/download.md)；parser 的規格、檢核與輸出格式見 [Parser 與正式輸出](docs/architecture/parser.md)；頁面與 API 見 [Viewer](docs/architecture/viewer.md)。

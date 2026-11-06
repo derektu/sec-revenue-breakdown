@@ -38,11 +38,13 @@ parser 的範圍：
 ```
 libs/sec_revenue/revenue/              引擎
   spec.py          規格的資料結構（CompanySpec、Category、fact、one_of、table_cell、sum_of、minus、define、effective）
+  ixbrl.py         inline XBRL 原文的共用規則：HTML 解析、表格編號、文字正規化、數值換算
   xbrl.py          讀 inline XBRL：contexts、units、dei、fact 與所在表格
   filings.py       選主申報、讀原文並核對 sha256
   compose.py       組合數值與結構檢核
   review.py        比較欄比對
   evidence.py      證據元件：找表、核對 fact、抽出表格 HTML、截圖
+  snapshot.py      XBRL fact 快照與申報清單：產生、核對、由快照建立 FilingSet
   engine.py        證據、寫入、status.json、--check 比對
 
 libs/sec_revenue/companies/<首字母>/<目錄>/
@@ -58,10 +60,14 @@ data/revenue/<首字母>/<TICKER>/
   FY/<period_end>/ 年度序列，期末日與同財年的 Q4 相同
     revenue.json
     evidence/
+
+data/snapshots/<首字母>/<TICKER>/
+  <accession>.json FilingSet 讀到的每份申報的 XBRL fact 快照
+  manifest.json    申報清單：正式輸出依賴的每份 10-K／10-Q 的申報資訊與申報包內每個檔案的 sha256、bytes
 ```
 
 - 公司目錄名是 ticker 小寫，非英數字元改為底線，例如 `a/aapl`、`b/brk_b`；ticker 本身以 `SPEC.ticker` 為準。
-- `companies/` 與 `data/revenue/` 都進 Git。SEC 原文在共用資料目錄（`SEC_DATA_DIR`），不進 Git；正式輸出記錄每份原文的 URL 與 sha256，可以重新下載核對。
+- `companies/`、`data/revenue/` 與 `data/snapshots/` 都進 Git。SEC 原文在共用資料目錄（`SEC_DATA_DIR`），不進 Git；正式輸出記錄每份原文的 URL 與 sha256，可以重新下載核對。
 - SEC 原文由 `download/` 下載成申報包（見 [download.md](download.md)），parser 只讀申報包。`engine_sha256` 是 `revenue/*.py` 的 hash，證據元件在其中。
 
 ## 公司規格
@@ -348,6 +354,7 @@ Q4 推算條件（依據的各期都通過，但年度與 Q1–Q3 的分類集�
 npm run parse -- --tickers AAPL                     # 預設起始日起的全部已下載期別：解析、檢核、證據、寫入 data/revenue/（Q 與 FY）
 npm run parse -- --tickers AAPL --start 2025-01-01  # 只處理期末日在範圍內的期別
 npm run parse -- --tickers AAPL --check             # 重跑並與已提交的輸出比對，不寫入
+npm run parse -- --all --check --snapshots          # 不讀 SEC 原文，以快照重跑並比對（CI 執行這一項）
 npm run parse -- --tickers AAPL --republish AAPL Q 2025-09-27   # 由人確認後覆寫已上線的期別
 ```
 
@@ -362,10 +369,46 @@ npm run parse -- --tickers AAPL --republish AAPL Q 2025-09-27   # 由人確認�
   - 已提交的 PNG 核對檔案 hash 與紀錄一致。
 
   省略期別時比對 `status.json` 列出的期別。有差異時回傳碼為 2。`--check` 不能與 `--republish` 同時使用。
+- `--snapshots` 只能與 `--check` 一起使用，申報與 fact 改讀 `data/snapshots/`，見「快照」。
 - `--republish TICKER SERIES PERIOD` 可重複指定；SERIES 是 `Q` 或 `FY`，ticker 與期別必須在這次處理的範圍內。
 - 回傳碼：`0` 沒有期別失敗（Q4 不推算不算失敗）；`2` 有期別失敗或 `--check` 有差異；`1` 輸入錯誤。
+
+## 快照
+
+快照讓沒有 SEC 原文的人（例如 CI 或剛 clone repo 的人）也能對全部上線公司跑 `--check`。
+
+```bash
+npm run snapshot -- --tickers AAPL           # 由原文產生 data/snapshots/A/AAPL/ 的快照與申報清單
+npm run snapshot -- --all --check            # 核對已提交的快照與原文重新產生的結果相同，不寫入
+```
+
+回傳碼：`0` 成功；`2` 寫入時有原文讀不到的申報（快照記錄為錯誤，清單印到 stderr），或 `--check` 有不同；`1` 輸入錯誤。
+
+- **內容**：每份申報（FilingSet 讀到的每份 10-K、10-Q，含修訂版與 Q4 依賴的較早申報）一個 JSON。內容包括：
+  - 申報篩選（`filings.periodic_filing`）用到的申報包欄位：表單、期末日、申報日、申報包是否完整，以及主文件的檔名、是否為 inline XBRL、sha256、URL。
+  - 文件宣告的 namespaces 與衝突的前綴、全部 dei。
+  - 規格用到的 concept（含 `one_of` 的每種寫法、調節項與總營收）在該文件的全部 fact，不分 dimensions。每個 fact 保留 `Fact` 的全部欄位，包括決定候選排序的 `table_index` 與 `order`。
+
+  原文讀不到的申報記錄錯誤原因，快照模式重現同一個 `comparison_errors`。
+- **產生與版本**：快照只由 `snapshot` 子命令從原文產生，不手寫。每份快照記錄產生時的規格 concept 集合與解析器 hash。解析器 hash 涵蓋決定快照內容的程式：`xbrl.py`（fact 解析）、`ixbrl.py`（HTML 解析、表格編號、數值規則）、`filings.py`（申報篩選）與 `snapshot.py`（快照的產生與讀取）。`InlineDocument` 以 `ixbrl.parse_html` 自行解析原文，讀完全部 fact 後才把同一棵解析樹交給證據元件，所以證據的找表、表格 HTML 與截圖（`evidence.py`）不影響快照，不在 hash 內。快照模式建立 FilingSet 時先檢查，不符時直接報錯，不以不完整的快照計算：
+  - 規格有快照範圍外的 concept：指出缺哪個 concept。
+  - 解析器 hash 不同：快照過期。
+  - 快照與申報清單的申報不一致，包括快照檔名與記錄的 accession 不同、申報資訊（表單、日期）與清單不同。
+- **同一條程式路徑**：`SnapshotFilingSet` 與 `FilingSet` 以同一個 `periodic_filing` 篩選申報，文件由 `InlineDocument.from_snapshot` 重建；之後的選申報、期別、組數值、檢核（含地區成員完整）、比較欄比對與 Q4 口徑都走同一段程式。
+- **驗得到與驗不到**：
+  - 快照模式驗得到 `revenue.json` 的數字、運算式、運算元與表格鍵（accession、文件 hash、表格編號），以及 `status.json` 的全部紀錄。
+  - 快照沒有原文，`raw()` 不可用。證據以 fact 的 `table_index` 算出表格鍵，沿用已提交的表格 HTML 與 PNG，所以驗不到表格 HTML 的內容，也驗不到 fact 在原文中的節點核對。
+  - 已提交的證據中沒有該表格時，該期失敗。
+  - 快照模式不能寫入正式輸出，只能 `--check`。
+- **何時重產**：重產的快照與造成它的改動放在同一個 PR，需要在有原文的環境執行。
+  - 規格新增或更換 concept：重產該公司（`snapshot --tickers X`）。
+  - 解析器 hash 涵蓋的程式（`xbrl.py`、`ixbrl.py`、`filings.py`、`snapshot.py`）改動：重產全部公司。
+  - 下載了新的申報：重產該公司。
+  - 改動證據元件時，另以原文跑 `--check` 驗證表格 HTML。
+- **engine_sha256**：快照是資料，不在 `engine_sha256` 內。`snapshot.py` 是引擎程式，在其中。
 
 ## 測試
 
 - 引擎：`tests/sec_revenue/revenue/test_revenue_parser.py` 以合成的 inline XBRL 申報測試每個流程步驟與每項檢核，不連網、不啟動 Chromium。
-- 公司：`data/revenue/` 中已提交的輸出就是回歸基準。`--check` 重跑 parser，與已提交的輸出逐欄比對；改某家公司的規格只重跑該家，改引擎則重跑所有上線公司（#49）。`--check` 需要本機的 SEC 原文，CI 不執行，只跑 unit test 與 `validate_universe.py`。
+- 快照：`tests/sec_revenue/revenue/test_snapshot.py` 測試快照往返等價、快照模式不讀原文、申報篩選與地區成員檢查走同一段程式、涵蓋性與解析器版本檢查、申報清單一致性、新上線期別沒有快照與缺已提交證據會被抓到，以及改動快照中的一個值會被 `--check` 抓到。
+- 公司：`data/revenue/` 中已提交的輸出就是回歸基準。`--check` 重跑 parser，與已提交的輸出逐欄比對；改某家公司的規格只重跑該家，改引擎則重跑所有上線公司。CI 以快照執行 `parse --all --check --snapshots`；表格 HTML 只有原文模式的 `--check` 驗得到。

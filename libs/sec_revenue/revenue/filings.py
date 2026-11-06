@@ -53,27 +53,51 @@ class Filing:
         }
 
 
+# 申報篩選用到的申報包欄位；快照保存這些欄位，以同一個函式篩選。
+FILING_FIELDS = ("form", "reportDate", "filingDate")
+PRIMARY_FIELDS = ("name", "primary", "inline_xbrl", "sha256", "source_url", "ixviewer_url")
+
+
+def periodic_filing(accession: str, package: dict) -> Filing | None:
+    """申報包是否為 parser 讀取的申報：10-Q、10-K 或其修訂版，申報包完整，且只有一份主文件、是 inline XBRL。"""
+    filing = package.get("filing", {})
+    form = filing.get("form")
+    if form not in ORIGINAL_FORMS | AMENDMENT_FORMS or not package.get("complete"):
+        return None
+    primary = [d for d in package["documents"].values() if d.get("primary")]
+    if len(primary) != 1 or not primary[0].get("inline_xbrl"):
+        return None
+    return Filing(accession, form, filing["reportDate"], filing["filingDate"], primary[0])
+
+
+def package_record(package: dict) -> dict:
+    """`periodic_filing` 需要的申報包欄位：申報資訊、是否完整、主文件。"""
+    return {
+        "filing": {k: package.get("filing", {}).get(k) for k in FILING_FIELDS},
+        "complete": bool(package.get("complete")),
+        "documents": {
+            name: {k: d.get(k) for k in PRIMARY_FIELDS} for name, d in sorted(package["documents"].items()) if d.get("primary")
+        },
+    }
+
+
 class FilingSet:
-    """一家公司已下載的 10-Q／10-K 申報與其主文件（讀取時核對 sha256）。"""
+    """一家公司已下載的 10-Q／10-K 申報與其主文件（讀取時核對 sha256）。
+
+    `snapshot` 為 False 表示文件來自原文；快照建立的子類別（`snapshot.SnapshotFilingSet`）為 True。
+    """
+
+    snapshot = False
 
     def __init__(self, data: Path, ticker: str):
         self.root = data.resolve()
         path = self.root / "pipeline" / ticker / "packages.json"
         if not path.exists():
             raise ValueError(f"{ticker} 沒有已下載的申報包（{path}）；請先執行 download")
-        self.filings = []
-        for accession, package in JsonCodec.read(path)["packages"].items():
-            filing = package.get("filing", {})
-            form = filing.get("form")
-            if form not in ORIGINAL_FORMS | AMENDMENT_FORMS or not package.get("complete"):
-                continue
-            primary = [d for d in package["documents"].values() if d.get("primary")]
-            if len(primary) != 1 or not primary[0].get("inline_xbrl"):
-                continue
-            self.filings.append(
-                Filing(accession, form, filing["reportDate"], filing["filingDate"], primary[0])
-            )
-        self.filings.sort(key=lambda f: (f.filing_date, f.accession))
+        self.filings = sorted(
+            (f for accession, package in JsonCodec.read(path)["packages"].items() if (f := periodic_filing(accession, package))),
+            key=lambda f: (f.filing_date, f.accession),
+        )
         self.documents: dict[str, InlineDocument] = {}
 
     def visible(self, as_of: str | None) -> list[Filing]:

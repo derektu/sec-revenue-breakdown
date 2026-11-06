@@ -1,0 +1,656 @@
+{
+  "accession": "0000019617-24-000225",
+  "conflicts": [],
+  "dei": {
+    "dei:AmendmentFlag": "FALSE",
+    "dei:AuditorFirmId": "238",
+    "dei:AuditorLocation": "New York, NY 10017",
+    "dei:AuditorName": "PricewaterhouseCoopers LLP",
+    "dei:CityAreaCode": "212",
+    "dei:CurrentFiscalYearEndDate": "December 31",
+    "dei:DocumentAnnualReport": "true",
+    "dei:DocumentFinStmtErrorCorrectionFlag": "☐",
+    "dei:DocumentFiscalPeriodFocus": "FY",
+    "dei:DocumentFiscalYearFocus": "2023",
+    "dei:DocumentPeriodEndDate": "December 31, 2023",
+    "dei:DocumentTransitionReport": "false",
+    "dei:DocumentType": "10-K",
+    "dei:DocumentsIncorporatedByReferenceTextBlock": "Portions of the registrant’s Proxy Statement for the annual meeting of stockholders to be held on May 21, 2024, are incorporated by reference in this Form 10-K in response to Items 10, 11, 12, 13 and 14 of Part III.",
+    "dei:EntityAddressAddressLine1": "383 Madison Avenue,",
+    "dei:EntityAddressCityOrTown": "New York,",
+    "dei:EntityAddressPostalZipCode": "10179",
+    "dei:EntityAddressStateOrProvince": "New York",
+    "dei:EntityCentralIndexKey": "0000019617",
+    "dei:EntityCurrentReportingStatus": "Yes",
+    "dei:EntityEmergingGrowthCompany": "☐",
+    "dei:EntityFileNumber": "1-5805",
+    "dei:EntityFilerCategory": "Large accelerated filer",
+    "dei:EntityIncorporationStateCountryCode": "Delaware",
+    "dei:EntityInteractiveDataCurrent": "Yes",
+    "dei:EntityRegistrantName": "JPMorgan Chase & Co",
+    "dei:EntityShellCompany": "☐",
+    "dei:EntitySmallBusiness": "☐",
+    "dei:EntityTaxIdentificationNumber": "13-2624428",
+    "dei:EntityVoluntaryFilers": "No",
+    "dei:EntityWellKnownSeasonedIssuer": "No",
+    "dei:IcfrAuditorAttestationFlag": "☒",
+    "dei:LocalPhoneNumber": "270-6000",
+    "dei:Security12bTitle": "Common stock",
+    "dei:SecurityExchangeName": "The New York Stock Exchange",
+    "dei:TradingSymbol": "JPM"
+  },
+  "facts": [
+    {
+      "concept": "us-gaap:RevenuesNetOfInterestExpense",
+      "context_id": "c-1",
+      "decimals": "-6",
+      "dimensions": [],
+      "end": "2023-12-31",
+      "fact_id": "f-127",
+      "format": "num-dot-decimal",
+      "order": 65410,
+      "raw": "158,104",
+      "scale": "6",
+      "sign": null,
+      "start": "2023-01-01",
+      "table_index": 336,
+      "unit": "iso4217:USD",
+      "value": 158104000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenuesNetOfInterestExpense",
+      "context_id": "c-21",
+      "decimals": "-6",
+      "dimensions": [],
+      "end": "2022-12-31",
+      "fact_id": "f-128",
+      "format": "num-dot-decimal",
+      "order": 65416,
+      "raw": "128,695",
+      "scale": "6",
+      "sign": null,
+      "start": "2022-01-01",
+      "table_index": 336,
+      "unit": "iso4217:USD",
+      "value": 128695000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenuesNetOfInterestExpense",
+      "context_id": "c-22",
+      "decimals": "-6",
+      "dimensions": [],
+      "end": "2021-12-31",
+      "fact_id": "f-129",
+      "format": "num-dot-decimal",
+      "order": 65421,
+      "raw": "121,649",
+      "scale": "6",
+      "sign": null,
+      "start": "2021-01-01",
+      "table_index": 336,
+      "unit": "iso4217:USD",
+      "value": 121649000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenuesNetOfInterestExpense",
+      "context_id": "c-2167",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "jpm:ConsumerCommunityBankingMember"
+        ]
+      ],
+      "end": "2023-12-31",
+      "fact_id": "f-7730",
+      "format": "num-dot-decimal",
+      "order": 131226,
+      "raw": "70,148",
+      "scale": "6",
+      "sign": null,
+      "start": "2023-01-01",
+      "table_index": 636,
+      "unit": "iso4217:USD",
+      "value": 70148000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenuesNetOfInterestExpense",
+      "context_id": "c-2168",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "jpm:ConsumerCommunityBankingMember"
+        ]
+      ],
+      "end": "2022-12-31",
+      "fact_id": "f-7731",
+      "format": "num-dot-decimal",
+      "order": 131231,
+      "raw": "54,814",
+      "scale": "6",
+      "sign": null,
+      "start": "2022-01-01",
+      "table_index": 636,
+      "unit": "iso4217:USD",
+      "value": 54814000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenuesNetOfInterestExpense",
+      "context_id": "c-2169",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "jpm:ConsumerCommunityBankingMember"
+        ]
+      ],
+      "end": "2021-12-31",
+      "fact_id": "f-7732",
+      "format": "num-dot-decimal",
+      "order": 131235,
+      "raw": "49,879",
+      "scale": "6",
+      "sign": null,
+      "start": "2021-01-01",
+      "table_index": 636,
+      "unit": "iso4217:USD",
+      "value": 49879000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenuesNetOfInterestExpense",
+      "context_id": "c-2170",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "jpm:CorporateAndInvestmentBankMember"
+        ]
+      ],
+      "end": "2023-12-31",
+      "fact_id": "f-7733",
+      "format": "num-dot-decimal",
+      "order": 131239,
+      "raw": "48,807",
+      "scale": "6",
+      "sign": null,
+      "start": "2023-01-01",
+      "table_index": 636,
+      "unit": "iso4217:USD",
+      "value": 48807000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenuesNetOfInterestExpense",
+      "context_id": "c-2171",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "jpm:CorporateAndInvestmentBankMember"
+        ]
+      ],
+      "end": "2022-12-31",
+      "fact_id": "f-7734",
+      "format": "num-dot-decimal",
+      "order": 131244,
+      "raw": "48,102",
+      "scale": "6",
+      "sign": null,
+      "start": "2022-01-01",
+      "table_index": 636,
+      "unit": "iso4217:USD",
+      "value": 48102000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenuesNetOfInterestExpense",
+      "context_id": "c-2172",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "jpm:CorporateAndInvestmentBankMember"
+        ]
+      ],
+      "end": "2021-12-31",
+      "fact_id": "f-7735",
+      "format": "num-dot-decimal",
+      "order": 131248,
+      "raw": "51,943",
+      "scale": "6",
+      "sign": null,
+      "start": "2021-01-01",
+      "table_index": 636,
+      "unit": "iso4217:USD",
+      "value": 51943000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenuesNetOfInterestExpense",
+      "context_id": "c-2173",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "jpm:CommercialBankingMember"
+        ]
+      ],
+      "end": "2023-12-31",
+      "fact_id": "f-7736",
+      "format": "num-dot-decimal",
+      "order": 131252,
+      "raw": "15,546",
+      "scale": "6",
+      "sign": null,
+      "start": "2023-01-01",
+      "table_index": 636,
+      "unit": "iso4217:USD",
+      "value": 15546000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenuesNetOfInterestExpense",
+      "context_id": "c-2174",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "jpm:CommercialBankingMember"
+        ]
+      ],
+      "end": "2022-12-31",
+      "fact_id": "f-7737",
+      "format": "num-dot-decimal",
+      "order": 131257,
+      "raw": "11,533",
+      "scale": "6",
+      "sign": null,
+      "start": "2022-01-01",
+      "table_index": 636,
+      "unit": "iso4217:USD",
+      "value": 11533000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenuesNetOfInterestExpense",
+      "context_id": "c-2175",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "jpm:CommercialBankingMember"
+        ]
+      ],
+      "end": "2021-12-31",
+      "fact_id": "f-7738",
+      "format": "num-dot-decimal",
+      "order": 131262,
+      "raw": "10,008",
+      "scale": "6",
+      "sign": null,
+      "start": "2021-01-01",
+      "table_index": 636,
+      "unit": "iso4217:USD",
+      "value": 10008000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenuesNetOfInterestExpense",
+      "context_id": "c-2176",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "jpm:AssetandWealthManagementSegmentMember"
+        ]
+      ],
+      "end": "2023-12-31",
+      "fact_id": "f-7739",
+      "format": "num-dot-decimal",
+      "order": 131267,
+      "raw": "19,827",
+      "scale": "6",
+      "sign": null,
+      "start": "2023-01-01",
+      "table_index": 636,
+      "unit": "iso4217:USD",
+      "value": 19827000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenuesNetOfInterestExpense",
+      "context_id": "c-2177",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "jpm:AssetandWealthManagementSegmentMember"
+        ]
+      ],
+      "end": "2022-12-31",
+      "fact_id": "f-7740",
+      "format": "num-dot-decimal",
+      "order": 131272,
+      "raw": "17,748",
+      "scale": "6",
+      "sign": null,
+      "start": "2022-01-01",
+      "table_index": 636,
+      "unit": "iso4217:USD",
+      "value": 17748000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenuesNetOfInterestExpense",
+      "context_id": "c-2178",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "jpm:AssetandWealthManagementSegmentMember"
+        ]
+      ],
+      "end": "2021-12-31",
+      "fact_id": "f-7741",
+      "format": "num-dot-decimal",
+      "order": 131277,
+      "raw": "16,957",
+      "scale": "6",
+      "sign": null,
+      "start": "2021-01-01",
+      "table_index": 636,
+      "unit": "iso4217:USD",
+      "value": 16957000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenuesNetOfInterestExpense",
+      "context_id": "c-2179",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:CorporateNonSegmentMember"
+        ]
+      ],
+      "end": "2023-12-31",
+      "fact_id": "f-7868",
+      "format": "num-dot-decimal",
+      "order": 132158,
+      "raw": "8,038",
+      "scale": "6",
+      "sign": null,
+      "start": "2023-01-01",
+      "table_index": 638,
+      "unit": "iso4217:USD",
+      "value": 8038000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenuesNetOfInterestExpense",
+      "context_id": "c-2180",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:CorporateNonSegmentMember"
+        ]
+      ],
+      "end": "2022-12-31",
+      "fact_id": "f-7869",
+      "format": "",
+      "order": 132163,
+      "raw": "80",
+      "scale": "6",
+      "sign": null,
+      "start": "2022-01-01",
+      "table_index": 638,
+      "unit": "iso4217:USD",
+      "value": 80000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenuesNetOfInterestExpense",
+      "context_id": "c-2181",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:CorporateNonSegmentMember"
+        ]
+      ],
+      "end": "2021-12-31",
+      "fact_id": "f-7870",
+      "format": "num-dot-decimal",
+      "order": 132168,
+      "raw": "3,483",
+      "scale": "6",
+      "sign": "-",
+      "start": "2021-01-01",
+      "table_index": 638,
+      "unit": "iso4217:USD",
+      "value": -3483000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenuesNetOfInterestExpense",
+      "context_id": "c-2182",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:MaterialReconcilingItemsMember"
+        ]
+      ],
+      "end": "2023-12-31",
+      "fact_id": "f-7871",
+      "format": "num-dot-decimal",
+      "order": 132173,
+      "raw": "4,262",
+      "scale": "6",
+      "sign": "-",
+      "start": "2023-01-01",
+      "table_index": 638,
+      "unit": "iso4217:USD",
+      "value": -4262000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenuesNetOfInterestExpense",
+      "context_id": "c-2183",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:MaterialReconcilingItemsMember"
+        ]
+      ],
+      "end": "2022-12-31",
+      "fact_id": "f-7872",
+      "format": "num-dot-decimal",
+      "order": 132177,
+      "raw": "3,582",
+      "scale": "6",
+      "sign": "-",
+      "start": "2022-01-01",
+      "table_index": 638,
+      "unit": "iso4217:USD",
+      "value": -3582000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenuesNetOfInterestExpense",
+      "context_id": "c-2184",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:MaterialReconcilingItemsMember"
+        ]
+      ],
+      "end": "2021-12-31",
+      "fact_id": "f-7873",
+      "format": "num-dot-decimal",
+      "order": 132182,
+      "raw": "3,655",
+      "scale": "6",
+      "sign": "-",
+      "start": "2021-01-01",
+      "table_index": 638,
+      "unit": "iso4217:USD",
+      "value": -3655000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenuesNetOfInterestExpense",
+      "context_id": "c-1",
+      "decimals": "-6",
+      "dimensions": [],
+      "end": "2023-12-31",
+      "fact_id": "f-7874",
+      "format": "num-dot-decimal",
+      "order": 132187,
+      "raw": "158,104",
+      "scale": "6",
+      "sign": null,
+      "start": "2023-01-01",
+      "table_index": 638,
+      "unit": "iso4217:USD",
+      "value": 158104000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenuesNetOfInterestExpense",
+      "context_id": "c-21",
+      "decimals": "-6",
+      "dimensions": [],
+      "end": "2022-12-31",
+      "fact_id": "f-7875",
+      "format": "num-dot-decimal",
+      "order": 132192,
+      "raw": "128,695",
+      "scale": "6",
+      "sign": null,
+      "start": "2022-01-01",
+      "table_index": 638,
+      "unit": "iso4217:USD",
+      "value": 128695000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenuesNetOfInterestExpense",
+      "context_id": "c-22",
+      "decimals": "-6",
+      "dimensions": [],
+      "end": "2021-12-31",
+      "fact_id": "f-7876",
+      "format": "num-dot-decimal",
+      "order": 132196,
+      "raw": "121,649",
+      "scale": "6",
+      "sign": null,
+      "start": "2021-01-01",
+      "table_index": 638,
+      "unit": "iso4217:USD",
+      "value": 121649000000,
+      "value_error": null
+    }
+  ],
+  "format": 1,
+  "namespaces": {
+    "country": "http://xbrl.sec.gov/country/2023",
+    "dei": "http://xbrl.sec.gov/dei/2023",
+    "ecd": "http://xbrl.sec.gov/ecd/2023",
+    "iso4217": "http://www.xbrl.org/2003/iso4217",
+    "ix": "http://www.xbrl.org/2013/inlineXBRL",
+    "ixt": "http://www.xbrl.org/inlineXBRL/transformation/2020-02-12",
+    "ixt-sec": "http://www.sec.gov/inlineXBRL/transformation/2015-08-31",
+    "jpm": "http://www.jpmorganchase.com/20231231",
+    "link": "http://www.xbrl.org/2003/linkbase",
+    "srt": "http://fasb.org/srt/2023",
+    "stpr": "http://xbrl.sec.gov/stpr/2023",
+    "us-gaap": "http://fasb.org/us-gaap/2023",
+    "utr": "http://www.xbrl.org/2009/utr",
+    "xbrldi": "http://xbrl.org/2006/xbrldi",
+    "xbrli": "http://www.xbrl.org/2003/instance",
+    "xlink": "http://www.w3.org/1999/xlink",
+    "xsi": "http://www.w3.org/2001/XMLSchema-instance"
+  },
+  "package": {
+    "complete": true,
+    "documents": {
+      "jpm-20231231.htm": {
+        "inline_xbrl": true,
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/19617/000001961724000225/jpm-20231231.htm",
+        "name": "jpm-20231231.htm",
+        "primary": true,
+        "sha256": "e7b62403d64c799cf390c0ebc74a6e1425b8abb8d34482faed15ee604308c096",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/19617/000001961724000225/jpm-20231231.htm"
+      }
+    },
+    "filing": {
+      "filingDate": "2024-02-16",
+      "form": "10-K",
+      "reportDate": "2023-12-31"
+    }
+  },
+  "parser_sha256": "581f401cd885a46e026dc7e23dcd51d3fbd55262780f6b77ab4eb2704c3a19c2",
+  "spec_concepts": [
+    "us-gaap:RevenuesNetOfInterestExpense"
+  ]
+}

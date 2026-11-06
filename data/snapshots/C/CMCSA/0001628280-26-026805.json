@@ -1,0 +1,2571 @@
+{
+  "accession": "0001628280-26-026805",
+  "conflicts": [],
+  "dei": {
+    "dei:AmendmentFlag": "false",
+    "dei:CityAreaCode": "215",
+    "dei:CurrentFiscalYearEndDate": "December 31",
+    "dei:DocumentFiscalPeriodFocus": "Q1",
+    "dei:DocumentFiscalYearFocus": "2026",
+    "dei:DocumentPeriodEndDate": "March 31, 2026",
+    "dei:DocumentQuarterlyReport": "☒",
+    "dei:DocumentTransitionReport": "☐",
+    "dei:DocumentType": "10-Q",
+    "dei:EntityAddressAddressLine1": "One Comcast Center",
+    "dei:EntityAddressCityOrTown": "Philadelphia",
+    "dei:EntityAddressPostalZipCode": "19103-2838",
+    "dei:EntityAddressStateOrProvince": "PA",
+    "dei:EntityCentralIndexKey": "0001166691",
+    "dei:EntityCurrentReportingStatus": "Yes",
+    "dei:EntityEmergingGrowthCompany": "☐",
+    "dei:EntityFileNumber": "001-32871",
+    "dei:EntityFilerCategory": "Large accelerated filer",
+    "dei:EntityIncorporationStateCountryCode": "Pennsylvania",
+    "dei:EntityInteractiveDataCurrent": "Yes",
+    "dei:EntityRegistrantName": "COMCAST CORPORATION",
+    "dei:EntityShellCompany": "☒",
+    "dei:EntitySmallBusiness": "☐",
+    "dei:EntityTaxIdentificationNumber": "27-0000798",
+    "dei:LocalPhoneNumber": "286-1700",
+    "dei:Security12bTitle": "Class A Common Stock, $0.01 par value",
+    "dei:SecurityExchangeName": "The Nasdaq Stock Market LLC",
+    "dei:TradingSymbol": "CMCSA"
+  },
+  "facts": [
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-1",
+      "decimals": "-6",
+      "dimensions": [],
+      "end": "2026-03-31",
+      "fact_id": "f-67",
+      "format": "num-dot-decimal",
+      "order": 2415,
+      "raw": "31,457",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 8,
+      "unit": "iso4217:USD",
+      "value": 31457000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-17",
+      "decimals": "-6",
+      "dimensions": [],
+      "end": "2025-03-31",
+      "fact_id": "f-68",
+      "format": "num-dot-decimal",
+      "order": 2422,
+      "raw": "29,887",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 8,
+      "unit": "iso4217:USD",
+      "value": 29887000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-62",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "cmcsa:ExternalCustomersMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:ResidentialConnectivityAndPlatformsSegmentMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-351",
+      "format": "num-dot-decimal",
+      "order": 4902,
+      "raw": "17,287",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 13,
+      "unit": "iso4217:USD",
+      "value": 17287000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-63",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "cmcsa:ExternalCustomersMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:BusinessServicesConnectivitySegmentMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-352",
+      "format": "num-dot-decimal",
+      "order": 4908,
+      "raw": "2,634",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 13,
+      "unit": "iso4217:USD",
+      "value": 2634000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-64",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "cmcsa:ExternalCustomersMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:MediaSegmentMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-353",
+      "format": "num-dot-decimal",
+      "order": 4914,
+      "raw": "6,134",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 13,
+      "unit": "iso4217:USD",
+      "value": 6134000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-65",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "cmcsa:ExternalCustomersMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:StudiosSegmentMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-354",
+      "format": "num-dot-decimal",
+      "order": 4920,
+      "raw": "2,092",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 13,
+      "unit": "iso4217:USD",
+      "value": 2092000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-66",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "cmcsa:ExternalCustomersMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:ThemeParksSegmentMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-355",
+      "format": "num-dot-decimal",
+      "order": 4926,
+      "raw": "2,331",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 13,
+      "unit": "iso4217:USD",
+      "value": 2331000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-67",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "cmcsa:ExternalCustomersMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-356",
+      "format": "num-dot-decimal",
+      "order": 4932,
+      "raw": "30,478",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 13,
+      "unit": "iso4217:USD",
+      "value": 30478000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-68",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:IntersegmentEliminationMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:ResidentialConnectivityAndPlatformsSegmentMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-357",
+      "format": "",
+      "order": 4941,
+      "raw": "35",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 13,
+      "unit": "iso4217:USD",
+      "value": 35000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-69",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:IntersegmentEliminationMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:BusinessServicesConnectivitySegmentMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-358",
+      "format": "",
+      "order": 4945,
+      "raw": "6",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 13,
+      "unit": "iso4217:USD",
+      "value": 6000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-70",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:IntersegmentEliminationMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:MediaSegmentMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-359",
+      "format": "num-dot-decimal",
+      "order": 4949,
+      "raw": "1,146",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 13,
+      "unit": "iso4217:USD",
+      "value": 1146000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-71",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:IntersegmentEliminationMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:StudiosSegmentMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-360",
+      "format": "num-dot-decimal",
+      "order": 4953,
+      "raw": "1,334",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 13,
+      "unit": "iso4217:USD",
+      "value": 1334000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-72",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:IntersegmentEliminationMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:ThemeParksSegmentMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-361",
+      "format": "fixed-zero",
+      "order": 4957,
+      "raw": "—",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 13,
+      "unit": "iso4217:USD",
+      "value": 0,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-73",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:IntersegmentEliminationMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-362",
+      "format": "num-dot-decimal",
+      "order": 4961,
+      "raw": "2,521",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 13,
+      "unit": "iso4217:USD",
+      "value": 2521000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-74",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:ResidentialConnectivityAndPlatformsSegmentMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-363",
+      "format": "num-dot-decimal",
+      "order": 4967,
+      "raw": "17,323",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 13,
+      "unit": "iso4217:USD",
+      "value": 17323000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-75",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:BusinessServicesConnectivitySegmentMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-364",
+      "format": "num-dot-decimal",
+      "order": 4971,
+      "raw": "2,640",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 13,
+      "unit": "iso4217:USD",
+      "value": 2640000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-76",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:MediaSegmentMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-365",
+      "format": "num-dot-decimal",
+      "order": 4975,
+      "raw": "7,280",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 13,
+      "unit": "iso4217:USD",
+      "value": 7280000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-77",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:StudiosSegmentMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-366",
+      "format": "num-dot-decimal",
+      "order": 4979,
+      "raw": "3,426",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 13,
+      "unit": "iso4217:USD",
+      "value": 3426000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-78",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:ThemeParksSegmentMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-367",
+      "format": "num-dot-decimal",
+      "order": 4983,
+      "raw": "2,331",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 13,
+      "unit": "iso4217:USD",
+      "value": 2331000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-79",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-368",
+      "format": "num-dot-decimal",
+      "order": 4987,
+      "raw": "32,998",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 13,
+      "unit": "iso4217:USD",
+      "value": 32998000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-80",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:CorporateNonSegmentMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-369",
+      "format": "num-dot-decimal",
+      "order": 5011,
+      "raw": "1,021",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 13,
+      "unit": "iso4217:USD",
+      "value": 1021000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-81",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "srt:ConsolidationEliminationsMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-370",
+      "format": "num-dot-decimal",
+      "order": 5025,
+      "raw": "2,562",
+      "scale": "6",
+      "sign": "-",
+      "start": "2026-01-01",
+      "table_index": 13,
+      "unit": "iso4217:USD",
+      "value": -2562000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-1",
+      "decimals": "-6",
+      "dimensions": [],
+      "end": "2026-03-31",
+      "fact_id": "f-371",
+      "format": "num-dot-decimal",
+      "order": 5039,
+      "raw": "31,457",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 13,
+      "unit": "iso4217:USD",
+      "value": 31457000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-84",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "cmcsa:ExternalCustomersMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:ResidentialConnectivityAndPlatformsSegmentMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-396",
+      "format": "num-dot-decimal",
+      "order": 5352,
+      "raw": "17,629",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 14,
+      "unit": "iso4217:USD",
+      "value": 17629000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-85",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "cmcsa:ExternalCustomersMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:BusinessServicesConnectivitySegmentMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-397",
+      "format": "num-dot-decimal",
+      "order": 5358,
+      "raw": "2,490",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 14,
+      "unit": "iso4217:USD",
+      "value": 2490000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-86",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "cmcsa:ExternalCustomersMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:MediaSegmentMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-398",
+      "format": "num-dot-decimal",
+      "order": 5364,
+      "raw": "3,498",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 14,
+      "unit": "iso4217:USD",
+      "value": 3498000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-87",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "cmcsa:ExternalCustomersMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:StudiosSegmentMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-399",
+      "format": "num-dot-decimal",
+      "order": 5370,
+      "raw": "2,001",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 14,
+      "unit": "iso4217:USD",
+      "value": 2001000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-88",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "cmcsa:ExternalCustomersMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:ThemeParksSegmentMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-400",
+      "format": "num-dot-decimal",
+      "order": 5376,
+      "raw": "1,876",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 14,
+      "unit": "iso4217:USD",
+      "value": 1876000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-89",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:MajorCustomersAxis",
+          "cmcsa:ExternalCustomersMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-401",
+      "format": "num-dot-decimal",
+      "order": 5382,
+      "raw": "27,494",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 14,
+      "unit": "iso4217:USD",
+      "value": 27494000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-90",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:IntersegmentEliminationMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:ResidentialConnectivityAndPlatformsSegmentMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-402",
+      "format": "",
+      "order": 5391,
+      "raw": "37",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 14,
+      "unit": "iso4217:USD",
+      "value": 37000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-91",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:IntersegmentEliminationMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:BusinessServicesConnectivitySegmentMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-403",
+      "format": "",
+      "order": 5395,
+      "raw": "6",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 14,
+      "unit": "iso4217:USD",
+      "value": 6000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-92",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:IntersegmentEliminationMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:MediaSegmentMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-404",
+      "format": "num-dot-decimal",
+      "order": 5399,
+      "raw": "1,028",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 14,
+      "unit": "iso4217:USD",
+      "value": 1028000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-93",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:IntersegmentEliminationMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:StudiosSegmentMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-405",
+      "format": "",
+      "order": 5403,
+      "raw": "825",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 14,
+      "unit": "iso4217:USD",
+      "value": 825000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-94",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:IntersegmentEliminationMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:ThemeParksSegmentMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-406",
+      "format": "fixed-zero",
+      "order": 5407,
+      "raw": "—",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 14,
+      "unit": "iso4217:USD",
+      "value": 0,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-95",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:IntersegmentEliminationMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-407",
+      "format": "num-dot-decimal",
+      "order": 5411,
+      "raw": "1,896",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 14,
+      "unit": "iso4217:USD",
+      "value": 1896000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-96",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:ResidentialConnectivityAndPlatformsSegmentMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-408",
+      "format": "num-dot-decimal",
+      "order": 5417,
+      "raw": "17,665",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 14,
+      "unit": "iso4217:USD",
+      "value": 17665000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-97",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:BusinessServicesConnectivitySegmentMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-409",
+      "format": "num-dot-decimal",
+      "order": 5421,
+      "raw": "2,496",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 14,
+      "unit": "iso4217:USD",
+      "value": 2496000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-98",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:MediaSegmentMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-410",
+      "format": "num-dot-decimal",
+      "order": 5425,
+      "raw": "4,527",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 14,
+      "unit": "iso4217:USD",
+      "value": 4527000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-99",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:StudiosSegmentMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-411",
+      "format": "num-dot-decimal",
+      "order": 5429,
+      "raw": "2,826",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 14,
+      "unit": "iso4217:USD",
+      "value": 2826000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-100",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:ThemeParksSegmentMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-412",
+      "format": "num-dot-decimal",
+      "order": 5433,
+      "raw": "1,876",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 14,
+      "unit": "iso4217:USD",
+      "value": 1876000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-101",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-413",
+      "format": "num-dot-decimal",
+      "order": 5437,
+      "raw": "29,390",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 14,
+      "unit": "iso4217:USD",
+      "value": 29390000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-102",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "us-gaap:DisposalGroupClassificationAxis",
+          "us-gaap:DisposalGroupDisposedOfByMeansOtherThanSaleNotDiscontinuedOperationsSpinoffMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-414",
+      "format": "num-dot-decimal",
+      "order": 5458,
+      "raw": "1,769",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 14,
+      "unit": "iso4217:USD",
+      "value": 1769000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-103",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:CorporateNonSegmentMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-415",
+      "format": "",
+      "order": 5472,
+      "raw": "917",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 14,
+      "unit": "iso4217:USD",
+      "value": 917000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-104",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "srt:ConsolidationEliminationsMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-416",
+      "format": "num-dot-decimal",
+      "order": 5486,
+      "raw": "2,189",
+      "scale": "6",
+      "sign": "-",
+      "start": "2025-01-01",
+      "table_index": 14,
+      "unit": "iso4217:USD",
+      "value": -2189000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-17",
+      "decimals": "-6",
+      "dimensions": [],
+      "end": "2025-03-31",
+      "fact_id": "f-417",
+      "format": "num-dot-decimal",
+      "order": 5500,
+      "raw": "29,887",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 14,
+      "unit": "iso4217:USD",
+      "value": 29887000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-109",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:ProductOrServiceAxis",
+          "cmcsa:DomesticBroadbandMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:ResidentialConnectivityAndPlatformsSegmentMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-447",
+      "format": "num-dot-decimal",
+      "order": 5851,
+      "raw": "6,338",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 15,
+      "unit": "iso4217:USD",
+      "value": 6338000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-110",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:ProductOrServiceAxis",
+          "cmcsa:DomesticBroadbandMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:ResidentialConnectivityAndPlatformsSegmentMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-448",
+      "format": "num-dot-decimal",
+      "order": 5858,
+      "raw": "6,679",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 15,
+      "unit": "iso4217:USD",
+      "value": 6679000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-111",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:ProductOrServiceAxis",
+          "cmcsa:DomesticWirelessServiceMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:ResidentialConnectivityAndPlatformsSegmentMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-449",
+      "format": "",
+      "order": 5869,
+      "raw": "977",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 15,
+      "unit": "iso4217:USD",
+      "value": 977000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-112",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:ProductOrServiceAxis",
+          "cmcsa:DomesticWirelessServiceMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:ResidentialConnectivityAndPlatformsSegmentMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-450",
+      "format": "",
+      "order": 5874,
+      "raw": "850",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 15,
+      "unit": "iso4217:USD",
+      "value": 850000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-113",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:ProductOrServiceAxis",
+          "cmcsa:DomesticWirelessEquipmentMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:ResidentialConnectivityAndPlatformsSegmentMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-451",
+      "format": "",
+      "order": 5885,
+      "raw": "418",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 15,
+      "unit": "iso4217:USD",
+      "value": 418000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-114",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:ProductOrServiceAxis",
+          "cmcsa:DomesticWirelessEquipmentMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:ResidentialConnectivityAndPlatformsSegmentMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-452",
+      "format": "",
+      "order": 5890,
+      "raw": "273",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 15,
+      "unit": "iso4217:USD",
+      "value": 273000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-115",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:ProductOrServiceAxis",
+          "cmcsa:InternationalConnectivityMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:ResidentialConnectivityAndPlatformsSegmentMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-453",
+      "format": "num-dot-decimal",
+      "order": 5901,
+      "raw": "1,240",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 15,
+      "unit": "iso4217:USD",
+      "value": 1240000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-116",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:ProductOrServiceAxis",
+          "cmcsa:InternationalConnectivityMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:ResidentialConnectivityAndPlatformsSegmentMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-454",
+      "format": "num-dot-decimal",
+      "order": 5906,
+      "raw": "1,132",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 15,
+      "unit": "iso4217:USD",
+      "value": 1132000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-117",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:ProductOrServiceAxis",
+          "cmcsa:VideoMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:ResidentialConnectivityAndPlatformsSegmentMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-455",
+      "format": "num-dot-decimal",
+      "order": 5917,
+      "raw": "6,256",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 15,
+      "unit": "iso4217:USD",
+      "value": 6256000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-118",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:ProductOrServiceAxis",
+          "cmcsa:VideoMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:ResidentialConnectivityAndPlatformsSegmentMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-456",
+      "format": "num-dot-decimal",
+      "order": 5922,
+      "raw": "6,600",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 15,
+      "unit": "iso4217:USD",
+      "value": 6600000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-119",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:ProductOrServiceAxis",
+          "us-gaap:AdvertisingMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:ResidentialConnectivityAndPlatformsSegmentMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-457",
+      "format": "",
+      "order": 5933,
+      "raw": "951",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 15,
+      "unit": "iso4217:USD",
+      "value": 951000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-120",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:ProductOrServiceAxis",
+          "us-gaap:AdvertisingMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:ResidentialConnectivityAndPlatformsSegmentMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-458",
+      "format": "",
+      "order": 5938,
+      "raw": "899",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 15,
+      "unit": "iso4217:USD",
+      "value": 899000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-121",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:ProductOrServiceAxis",
+          "cmcsa:OtherMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:ResidentialConnectivityAndPlatformsSegmentMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-459",
+      "format": "num-dot-decimal",
+      "order": 5949,
+      "raw": "1,143",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 15,
+      "unit": "iso4217:USD",
+      "value": 1143000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-122",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:ProductOrServiceAxis",
+          "cmcsa:OtherMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:ResidentialConnectivityAndPlatformsSegmentMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-460",
+      "format": "num-dot-decimal",
+      "order": 5954,
+      "raw": "1,233",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 15,
+      "unit": "iso4217:USD",
+      "value": 1233000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-74",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:ResidentialConnectivityAndPlatformsSegmentMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-461",
+      "format": "num-dot-decimal",
+      "order": 5965,
+      "raw": "17,323",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 15,
+      "unit": "iso4217:USD",
+      "value": 17323000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-96",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:ResidentialConnectivityAndPlatformsSegmentMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-462",
+      "format": "num-dot-decimal",
+      "order": 5970,
+      "raw": "17,665",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 15,
+      "unit": "iso4217:USD",
+      "value": 17665000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-75",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:BusinessServicesConnectivitySegmentMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-463",
+      "format": "num-dot-decimal",
+      "order": 5990,
+      "raw": "2,640",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 15,
+      "unit": "iso4217:USD",
+      "value": 2640000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-97",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:BusinessServicesConnectivitySegmentMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-464",
+      "format": "num-dot-decimal",
+      "order": 5995,
+      "raw": "2,496",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 15,
+      "unit": "iso4217:USD",
+      "value": 2496000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-123",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:ProductOrServiceAxis",
+          "cmcsa:DomesticAdvertisingMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:MediaSegmentMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-465",
+      "format": "num-dot-decimal",
+      "order": 6015,
+      "raw": "3,453",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 15,
+      "unit": "iso4217:USD",
+      "value": 3453000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-124",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:ProductOrServiceAxis",
+          "cmcsa:DomesticAdvertisingMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:MediaSegmentMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-466",
+      "format": "num-dot-decimal",
+      "order": 6020,
+      "raw": "1,468",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 15,
+      "unit": "iso4217:USD",
+      "value": 1468000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-125",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:ProductOrServiceAxis",
+          "cmcsa:DomesticDistributionMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:MediaSegmentMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-467",
+      "format": "num-dot-decimal",
+      "order": 6031,
+      "raw": "2,283",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 15,
+      "unit": "iso4217:USD",
+      "value": 2283000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-126",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:ProductOrServiceAxis",
+          "cmcsa:DomesticDistributionMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:MediaSegmentMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-468",
+      "format": "num-dot-decimal",
+      "order": 6036,
+      "raw": "1,667",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 15,
+      "unit": "iso4217:USD",
+      "value": 1667000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-127",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:ProductOrServiceAxis",
+          "cmcsa:InternationalNetworksMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:MediaSegmentMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-469",
+      "format": "num-dot-decimal",
+      "order": 6047,
+      "raw": "1,291",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 15,
+      "unit": "iso4217:USD",
+      "value": 1291000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-128",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:ProductOrServiceAxis",
+          "cmcsa:InternationalNetworksMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:MediaSegmentMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-470",
+      "format": "num-dot-decimal",
+      "order": 6052,
+      "raw": "1,148",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 15,
+      "unit": "iso4217:USD",
+      "value": 1148000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-129",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:ProductOrServiceAxis",
+          "cmcsa:OtherMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:MediaSegmentMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-471",
+      "format": "",
+      "order": 6063,
+      "raw": "253",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 15,
+      "unit": "iso4217:USD",
+      "value": 253000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-130",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:ProductOrServiceAxis",
+          "cmcsa:OtherMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:MediaSegmentMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-472",
+      "format": "",
+      "order": 6068,
+      "raw": "244",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 15,
+      "unit": "iso4217:USD",
+      "value": 244000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-76",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:MediaSegmentMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-473",
+      "format": "num-dot-decimal",
+      "order": 6079,
+      "raw": "7,280",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 15,
+      "unit": "iso4217:USD",
+      "value": 7280000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-98",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:MediaSegmentMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-474",
+      "format": "num-dot-decimal",
+      "order": 6084,
+      "raw": "4,527",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 15,
+      "unit": "iso4217:USD",
+      "value": 4527000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-131",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:ProductOrServiceAxis",
+          "cmcsa:ContentLicensingMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:StudiosSegmentMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-475",
+      "format": "num-dot-decimal",
+      "order": 6104,
+      "raw": "2,973",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 15,
+      "unit": "iso4217:USD",
+      "value": 2973000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-132",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:ProductOrServiceAxis",
+          "cmcsa:ContentLicensingMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:StudiosSegmentMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-476",
+      "format": "num-dot-decimal",
+      "order": 6109,
+      "raw": "2,174",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 15,
+      "unit": "iso4217:USD",
+      "value": 2174000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-133",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:ProductOrServiceAxis",
+          "cmcsa:TheatricalMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:StudiosSegmentMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-477",
+      "format": "",
+      "order": 6120,
+      "raw": "117",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 15,
+      "unit": "iso4217:USD",
+      "value": 117000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-134",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:ProductOrServiceAxis",
+          "cmcsa:TheatricalMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:StudiosSegmentMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-478",
+      "format": "",
+      "order": 6125,
+      "raw": "286",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 15,
+      "unit": "iso4217:USD",
+      "value": 286000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-135",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:ProductOrServiceAxis",
+          "cmcsa:OtherMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:StudiosSegmentMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-479",
+      "format": "",
+      "order": 6136,
+      "raw": "336",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 15,
+      "unit": "iso4217:USD",
+      "value": 336000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-136",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "srt:ProductOrServiceAxis",
+          "cmcsa:OtherMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:StudiosSegmentMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-480",
+      "format": "",
+      "order": 6141,
+      "raw": "366",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 15,
+      "unit": "iso4217:USD",
+      "value": 366000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-77",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:StudiosSegmentMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-481",
+      "format": "num-dot-decimal",
+      "order": 6152,
+      "raw": "3,426",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 15,
+      "unit": "iso4217:USD",
+      "value": 3426000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-99",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:StudiosSegmentMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-482",
+      "format": "num-dot-decimal",
+      "order": 6157,
+      "raw": "2,826",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 15,
+      "unit": "iso4217:USD",
+      "value": 2826000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-78",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:ThemeParksSegmentMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-483",
+      "format": "num-dot-decimal",
+      "order": 6177,
+      "raw": "2,331",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 15,
+      "unit": "iso4217:USD",
+      "value": 2331000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-100",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cmcsa:ThemeParksSegmentMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-484",
+      "format": "num-dot-decimal",
+      "order": 6182,
+      "raw": "1,876",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 15,
+      "unit": "iso4217:USD",
+      "value": 1876000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-137",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "us-gaap:DisposalGroupClassificationAxis",
+          "us-gaap:DisposalGroupDisposedOfByMeansOtherThanSaleNotDiscontinuedOperationsSpinoffMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-485",
+      "format": "fixed-zero",
+      "order": 6204,
+      "raw": "—",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 15,
+      "unit": "iso4217:USD",
+      "value": 0,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-102",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "us-gaap:DisposalGroupClassificationAxis",
+          "us-gaap:DisposalGroupDisposedOfByMeansOtherThanSaleNotDiscontinuedOperationsSpinoffMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-486",
+      "format": "num-dot-decimal",
+      "order": 6209,
+      "raw": "1,769",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 15,
+      "unit": "iso4217:USD",
+      "value": 1769000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-80",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:CorporateNonSegmentMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-487",
+      "format": "num-dot-decimal",
+      "order": 6220,
+      "raw": "1,021",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 15,
+      "unit": "iso4217:USD",
+      "value": 1021000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-103",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:CorporateNonSegmentMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-488",
+      "format": "",
+      "order": 6225,
+      "raw": "917",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 15,
+      "unit": "iso4217:USD",
+      "value": 917000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-81",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "srt:ConsolidationEliminationsMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-489",
+      "format": "num-dot-decimal",
+      "order": 6238,
+      "raw": "2,562",
+      "scale": "6",
+      "sign": "-",
+      "start": "2026-01-01",
+      "table_index": 15,
+      "unit": "iso4217:USD",
+      "value": -2562000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-104",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "srt:ConsolidationEliminationsMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-490",
+      "format": "num-dot-decimal",
+      "order": 6243,
+      "raw": "2,189",
+      "scale": "6",
+      "sign": "-",
+      "start": "2025-01-01",
+      "table_index": 15,
+      "unit": "iso4217:USD",
+      "value": -2189000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-1",
+      "decimals": "-6",
+      "dimensions": [],
+      "end": "2026-03-31",
+      "fact_id": "f-491",
+      "format": "num-dot-decimal",
+      "order": 6256,
+      "raw": "31,457",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 15,
+      "unit": "iso4217:USD",
+      "value": 31457000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-17",
+      "decimals": "-6",
+      "dimensions": [],
+      "end": "2025-03-31",
+      "fact_id": "f-492",
+      "format": "num-dot-decimal",
+      "order": 6264,
+      "raw": "29,887",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 15,
+      "unit": "iso4217:USD",
+      "value": 29887000000,
+      "value_error": null
+    }
+  ],
+  "format": 1,
+  "namespaces": {
+    "cmcsa": "http://www.comcast.com/20260331",
+    "dei": "http://xbrl.sec.gov/dei/2025",
+    "ecd": "http://xbrl.sec.gov/ecd/2025",
+    "iso4217": "http://www.xbrl.org/2003/iso4217",
+    "ix": "http://www.xbrl.org/2013/inlineXBRL",
+    "ixt": "http://www.xbrl.org/inlineXBRL/transformation/2020-02-12",
+    "ixt-sec": "http://www.sec.gov/inlineXBRL/transformation/2015-08-31",
+    "link": "http://www.xbrl.org/2003/linkbase",
+    "srt": "http://fasb.org/srt/2025",
+    "us-gaap": "http://fasb.org/us-gaap/2025",
+    "xbrldi": "http://xbrl.org/2006/xbrldi",
+    "xbrli": "http://www.xbrl.org/2003/instance",
+    "xlink": "http://www.w3.org/1999/xlink",
+    "xsi": "http://www.w3.org/2001/XMLSchema-instance"
+  },
+  "package": {
+    "complete": true,
+    "documents": {
+      "cmcsa-20260331.htm": {
+        "inline_xbrl": true,
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1166691/000162828026026805/cmcsa-20260331.htm",
+        "name": "cmcsa-20260331.htm",
+        "primary": true,
+        "sha256": "b4393b3dfad2cd5566f50a413bb58da3a3c0c19c68f0f943815f97c7deb142e7",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1166691/000162828026026805/cmcsa-20260331.htm"
+      }
+    },
+    "filing": {
+      "filingDate": "2026-04-23",
+      "form": "10-Q",
+      "reportDate": "2026-03-31"
+    }
+  },
+  "parser_sha256": "581f401cd885a46e026dc7e23dcd51d3fbd55262780f6b77ab4eb2704c3a19c2",
+  "spec_concepts": [
+    "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+    "us-gaap:Revenues"
+  ]
+}

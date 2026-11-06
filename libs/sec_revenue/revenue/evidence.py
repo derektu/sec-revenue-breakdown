@@ -1,17 +1,18 @@
 """SEC 表格證據元件：以 fact id 在 inline XBRL 原文中找到 fact 與所在表格，核對 fact，抽出單一表格 HTML，並以
 headless Chromium 截圖。
 
-表格編號依文件順序列舉 `<table>`，與 `xbrl.InlineDocument` 的編號相同。只讀呼叫端給的原文 bytes，不發網路請求。
+表格編號與數值規則來自 `ixbrl.py`，與 `xbrl.InlineDocument` 相同。只讀呼叫端給的原文 bytes，不發網路請求。
 """
 
 from __future__ import annotations
 
 import copy
-from decimal import Decimal, InvalidOperation
 import html as html_text
 import re
 
 from lxml import html
+
+from .ixbrl import clean_text, ix_number, numbered_tables, parse_html
 
 # 截圖高度超過門檻時只保留表頭與標示列附近的列，並以裁切列標出略過的位置。
 SCREENSHOT_MAX_HEIGHT = 3000
@@ -115,42 +116,6 @@ HIGHLIGHT_SCRIPT = """
 """
 
 
-def clean_text(text: str) -> str:
-    return " ".join(text.split())
-
-
-
-SUPPORTED_FORMATS = {"", "num-dot-decimal", "numdotdecimal", "fixed-zero", "zerodash"}
-ZERO_FORMATS = {"fixed-zero", "zerodash"}
-NEGATIVE_MARKS = ("-", "−", "(", ")")
-
-
-def ix_number(raw: str, transform: str, scale: str, sign: str | None) -> tuple[int | None, str | None]:
-    """依 iXBRL 規則由顯示文字、format、scale 與 sign 算出整數美元；不符時回傳 (None, 原因)。
-
-    正負號只由 `sign="-"` 表示；顯示文字帶負號或括號時視為無法解析，不自行推斷。
-    """
-    if transform not in SUPPORTED_FORMATS:
-        return None, f"不支援的數字格式 {transform}"
-    if transform in ZERO_FORMATS:
-        cleaned = "0"
-    else:
-        if any(mark in raw for mark in NEGATIVE_MARKS):
-            return None, f"顯示文字 {raw!r} 帶負號；iXBRL 的正負號應由 sign 屬性表示"
-        cleaned = raw.replace(",", "").replace(" ", "")
-    try:
-        value = Decimal(cleaned) * Decimal(10) ** int(scale)
-    except (InvalidOperation, ValueError):
-        return None, f"無法解析數字 {raw!r}"
-    if not value.is_finite():
-        return None, f"數值不是有限數：{raw!r}"
-    if sign == "-":
-        value = -value
-    if value != value.to_integral_value():
-        return None, f"不是整數美元：{raw!r}"
-    return int(value), None
-
-
 def fact_value(node, raw: str) -> int | None:
     """`ix:nonFraction` 的整數美元；規則與 `ix_number` 相同，無法解析時回傳 None。"""
     transform = node.get("format", "").split(":")[-1].lower()
@@ -161,8 +126,18 @@ class TableLocator:
     """以 fact id 在 SEC 原文找 `ix:nonFraction` 與所在表格；表格依文件順序編號。"""
 
     def __init__(self, raw: bytes):
-        self.root = html.fromstring(raw, parser=html.HTMLParser(no_network=True))
-        self.tables = list(self.root.iter("table"))
+        self.attach(parse_html(raw))
+
+    @classmethod
+    def from_root(cls, root) -> TableLocator:
+        """以 `ixbrl.parse_html` 解析好的樹建立，不重新解析原文。"""
+        locator = cls.__new__(cls)
+        locator.attach(root)
+        return locator
+
+    def attach(self, root):
+        self.root = root
+        self.tables = numbered_tables(root)
         self.index = {id(table): i for i, table in enumerate(self.tables)}
 
     def node(self, fact_id: str):
