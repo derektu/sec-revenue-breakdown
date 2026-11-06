@@ -13,7 +13,7 @@
 | 富途 | 三個分部、公司與對賬項目 |
 
 - Corporate 三個來源都列出，列成分類。
-- Reconciling items 只有富途列出，宣告為 `reconciling`，參與加總但不輸出成分類。
+- Reconciling items 只有富途列出，列為調節項，參與加總但不輸出成分類。
 
 分部取自 `us-gaap:StatementBusinessSegmentsAxis`。JPM 這個軸的成員是業務別：消費金融、企業與投資銀行、資產與財富管理。它們不是地區，所以採用。
 
@@ -24,7 +24,7 @@ concept 是 `us-gaap:RevenuesNetOfInterestExpense`（Total net revenue）。
 | 分類 | 維度 | 期末日 |
 |---|---|---|
 | Consumer & Community Banking | `srt:ConsolidationItemsAxis=us-gaap:OperatingSegmentsMember`＋分部 `jpm:ConsumerCommunityBankingMember` | 全部 |
-| Commercial & Investment Bank | 同上，分部 `one_of`：`jpm:CommercialAndInvestmentBankMember`、`jpm:CorporateAndInvestmentBankMember` | 2024-04-01 起 |
+| Commercial & Investment Bank | 同上，分部 `jpm:CommercialAndInvestmentBankMember` 或 `jpm:CorporateAndInvestmentBankMember`（兩種寫法都找） | 2024-04-01 起 |
 | Corporate & Investment Bank | 同上，分部 `jpm:CorporateAndInvestmentBankMember` | 2024-03-31 以前 |
 | Commercial Banking | 同上，分部 `jpm:CommercialBankingMember` | 2024-03-31 以前 |
 | Asset & Wealth Management | 同上，分部 `jpm:AssetandWealthManagementSegmentMember` | 全部 |
@@ -32,7 +32,7 @@ concept 是 `us-gaap:RevenuesNetOfInterestExpense`（Total net revenue）。
 | Reconciling items（調節項） | `srt:ConsolidationItemsAxis=us-gaap:MaterialReconcilingItemsMember` | 全部 |
 | 總營收（Total net revenue） | 不帶維度 | 全部 |
 
-- 2024 年 Q2 起，Corporate & Investment Bank 與 Commercial Banking 合併為 Commercial & Investment Bank。2024 年 Q2、Q3 的 10-Q 沿用 `jpm:CorporateAndInvestmentBankMember` 標示合併後的分部，FY2024 10-K 起改用 `jpm:CommercialAndInvestmentBankMember`。同一個成員在合併前後代表不同範圍，所以以申報期末日分段定義。相鄰定義的生效期間首尾相接。
+- 2024 年 Q2 起，Corporate & Investment Bank 與 Commercial Banking 合併為 Commercial & Investment Bank。2024 年 Q2、Q3 的 10-Q 沿用 `jpm:CorporateAndInvestmentBankMember` 標示合併後的分部，FY2024 10-K 起改用 `jpm:CommercialAndInvestmentBankMember`。同一個成員在合併前後代表不同範圍，所以 parser 依申報期末日（`filing.report_date`）切換：2024 年 Q1 10-Q（0000019617-24-000326，期末 2024-03-31）是最後一份舊分部結構的申報，2024 年 Q2 10-Q（0000019617-24-000453，期末 2024-06-30）起是合併後的結構，FY2024 10-K（0000019617-25-000270）起改用新成員。`categories` 以 2024-04-01 為界，前後首尾相接。
 - 分部營收是 managed basis，免稅收入以稅負等價（FTE）計入。Reconciling items 主要是這項調整，把分部合計調回報告的總營收。
 - 四類（2024 年 Q1 為五類）加上 Reconciling items 等於總營收。
 - 分類名稱取自分部表的欄名；總營收取自同表的 `Total net revenue` 列、`Total` 欄。

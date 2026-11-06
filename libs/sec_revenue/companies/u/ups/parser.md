@@ -25,22 +25,22 @@ concept 是 `us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax`。
 - Supply Chain Solutions 不再是報告分部，分部表的營收調節把它列為 `Other revenues`。
 - 兩個包裹分部改用新的成員。
 
-因此定義以申報期末日切換，分界在 2025 財年起點：
+parser 依申報期末日（`filing.report_date`）切換寫法，分界在 2025 財年起點：
 
 | 分類 | 期末日 2024-01-01 至 2024-12-31 | 期末日 2025-01-01 起 |
 |---|---|---|
 | U.S. Domestic Package | 分部 `ups:USDomesticPackageMember` | `srt:ConsolidationItemsAxis=us-gaap:OperatingSegmentsMember`＋分部 `ups:U.S.DomesticPackageSegmentMember` |
 | International Package | 分部 `ups:InternationalPackageMember` | `srt:ConsolidationItemsAxis=us-gaap:OperatingSegmentsMember`＋分部 `ups:InternationalSegmentMember` |
 | Supply Chain Solutions | 分部 `ups:SupplyChainSolutionsMember` | （沒有這一類） |
-| Other revenues | （沒有這一類） | `one_of`：`srt:ConsolidationItemsAxis=us-gaap:CorporateNonSegmentMember`、分部 `ups:SupplyChainSolutionsMember` |
+| Other revenues | （沒有這一類） | `srt:ConsolidationItemsAxis=us-gaap:CorporateNonSegmentMember` 或分部 `ups:SupplyChainSolutionsMember`（兩種寫法都找） |
 | 總營收（Consolidated revenue） | 不帶維度 | 不帶維度 |
 
 - 三類加總等於總營收，沒有調節項。
-- 相鄰定義的生效期間首尾相接。Q4 推算條件逐日比對財年起日到 Q3 期末的分類集合，生效期間中間若有空檔，會被判為分類不同。
+- 分界：FY2024 10-K（0001090727-25-000019，期末 2024-12-31）是最後一份用舊成員與 Supply Chain Solutions 的申報；2025 年 Q1 10-Q（0001090727-25-000049，期末 2025-03-31）起用新成員與 Other revenues。`categories` 對期末日 2025-01-01 以前的每一天列出 Supply Chain Solutions，之後列出 Other revenues，中間沒有空檔，Q4 推算條件逐日比對分類集合時不會誤判。
 - 分類名稱與 tag 都只依該期申報本身：2024 年的申報把第三類列為 Supply Chain Solutions 分部；2025 年起的申報列為營收調節的 `Other revenues`。
-- 2025 年各 10-Q 以 `us-gaap:CorporateNonSegmentMember` 與 `ups:SupplyChainSolutionsMember` 兩種寫法標示同一個數字，FY2025 10-K 起只有前者，所以以 `one_of` 列出；同一份申報兩種寫法都有時，數值必須在精度內一致。
-- 2024 年度 10-K 與 2024 年 Q3 10-Q 都用舊成員，2025 年度 10-K 與 2025 年 Q3 10-Q 都用新成員，所以同一個 Q4 的運算元不會跨定義。
-- 規格另有 2023 年以前的定義（2023 年度 10-K 的包裹分部帶 `OperatingSegmentsMember`），供 `--start` 指定更早的期別時使用。
+- 2025 年各 10-Q 以 `us-gaap:CorporateNonSegmentMember` 與 `ups:SupplyChainSolutionsMember` 兩種寫法標示同一個數字，FY2025 10-K（0001628280-26-008432）起只有前者，所以兩種寫法都找；同一份申報兩種寫法都有時，數值必須在精度內一致。
+- 2024 年度 10-K 與 2024 年 Q3 10-Q 都用舊成員，2025 年度 10-K 與 2025 年 Q3 10-Q 都用新成員，所以同一個 Q4 的兩個運算元用同一種寫法。
+- 期末日 2023-12-31 以前：FY2023 10-K（0001090727-24-000008，期末 2023-12-31）的包裹分部另帶 `srt:ConsolidationItemsAxis=us-gaap:OperatingSegmentsMember`，parser 對期末日 2023-10-01 至 2023-12-31 的申報用這種寫法；更早的申報只帶分部軸。這些寫法供 `--start` 指定更早的期別，以及 FY2024 Q4 口徑一致以 FY2023 10-K 組出上一財年的值時使用。
 - 分類名稱：U.S. Domestic Package、International Package、Supply Chain Solutions 取自 2024 年營收拆分表的列標籤（`Supply Chain Solutions ("SCS")` 去掉縮寫）；Other revenues 取自 2025 年起分部表營收調節的列標籤。總營收取自 2024 年營收拆分表的 `Consolidated revenue`。
 
 ## 期別與推算

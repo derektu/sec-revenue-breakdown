@@ -20,14 +20,14 @@
 
 | 分類 | concept | 維度 |
 |---|---|---|
-| Walmart U.S. | `us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax` | 分部 `one_of`：`wmt:WalmartUSMember`、`wmt:WalmartUSSegmentMember` |
-| Walmart International | 同上 | 分部 `one_of`：`wmt:WalmartInternationalMember`、`wmt:WalmartInternationalSegmentMember` |
-| Sam's Club U.S. | 同上 | 分部 `one_of`：`wmt:SamsClubUSMember`、`wmt:SamsClubSegmentMember`、`wmt:SamsClubMember` |
+| Walmart U.S. | `us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax` | 分部 `wmt:WalmartUSMember` 或 `wmt:WalmartUSSegmentMember` |
+| Walmart International | 同上 | 分部 `wmt:WalmartInternationalMember` 或 `wmt:WalmartInternationalSegmentMember` |
+| Sam's Club U.S. | 同上 | 分部 `wmt:SamsClubUSMember`、`wmt:SamsClubSegmentMember` 或 `wmt:SamsClubMember` |
 | Membership and other income | `us-gaap:OtherIncome` | 不帶維度 |
 | 總營收（Total revenues） | `us-gaap:Revenues` | 不帶維度 |
 
-- 分部成員在申報之間有不同名稱，數字是同一列，所以以 `one_of` 列出：10-Q 多用 `...SegmentMember`，10-K 與部分 10-Q 用 `...Member`；FY2024 10-K 的 Sam's Club 是 `wmt:SamsClubMember`。
-- 分部 fact 只帶分部軸。部分申報另有同數字、多帶 `srt:ConsolidationItemsAxis=us-gaap:OperatingSegmentsMember` 的寫法，規格不用它：較早的申報沒有這種寫法。
+- 分部成員在申報之間有不同名稱，數字是同一列，所以每種寫法都找（同一份申報有多種寫法時，數值必須在精度內一致）：10-Q 多用 `...SegmentMember`，10-K 與部分 10-Q 用 `...Member`；FY2024 10-K 的 Sam's Club 是 `wmt:SamsClubMember`。
+- 分部 fact 只帶分部軸。部分申報另有同數字、多帶 `srt:ConsolidationItemsAxis=us-gaap:OperatingSegmentsMember` 的寫法，parser 不用它：較早的申報沒有這種寫法。
 - 四類加總等於總營收，沒有調節項。
 - 分類名稱：三個分部取自分部淨銷售額表的標題，Membership and other income 與總營收取自損益表的列標籤。
 

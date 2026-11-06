@@ -23,7 +23,7 @@ concept 是 `us-gaap:Revenues`。分部 fact 帶兩個維度：`srt:Consolidatio
 | Strategic capital segment | `pld:StrategicCapitalSegmentMember` |
 | 總營收（Total revenues） | 不帶維度 |
 
-- 所有期別都使用同一組定義，沒有 `effective` 分段。
+- 所有期別都用同一組寫法，parser 不依期末日切換。
 - 兩類加總等於總營收，沒有調節項。
 - 分類名稱取自附註分部表的列標籤（`Total real estate segment`、`Total strategic capital segment`，去掉 Total）；總營收取自同表的 `Total revenues`。
 - 申報以千美元為單位（`decimals="-3"`）。
