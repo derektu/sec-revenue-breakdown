@@ -24,3 +24,7 @@ jobs:
 
       - name: 驗證 ticker 清單與對照資料
         run: python scripts/validate_universe.py
+
+      # 以 data/snapshots/ 的 XBRL fact 快照重跑全部公司，與 data/revenue/ 的正式輸出逐欄比對；不需要 SEC 原文。
+      - name: 快照回歸
+        run: python scripts/sec_pipeline.py parse --all --check --snapshots

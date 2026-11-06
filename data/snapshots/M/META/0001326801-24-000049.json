@@ -1,0 +1,695 @@
+{
+  "accession": "0001326801-24-000049",
+  "conflicts": [],
+  "dei": {
+    "dei:AmendmentFlag": "false",
+    "dei:CityAreaCode": "650",
+    "dei:CurrentFiscalYearEndDate": "12/31",
+    "dei:DocumentFiscalPeriodFocus": "Q1",
+    "dei:DocumentFiscalYearFocus": "2024",
+    "dei:DocumentPeriodEndDate": "March 31, 2024",
+    "dei:DocumentQuarterlyReport": "☒",
+    "dei:DocumentTransitionReport": "☐",
+    "dei:DocumentType": "10-Q",
+    "dei:EntityAddressAddressLine1": "1 Meta Way",
+    "dei:EntityAddressCityOrTown": "Menlo Park",
+    "dei:EntityAddressPostalZipCode": "94025",
+    "dei:EntityAddressStateOrProvince": "California",
+    "dei:EntityCentralIndexKey": "0001326801",
+    "dei:EntityCurrentReportingStatus": "Yes",
+    "dei:EntityEmergingGrowthCompany": "☐",
+    "dei:EntityFileNumber": "001-35551",
+    "dei:EntityFilerCategory": "Large accelerated filer",
+    "dei:EntityIncorporationStateCountryCode": "Delaware",
+    "dei:EntityInteractiveDataCurrent": "Yes",
+    "dei:EntityRegistrantName": "Meta Platforms, Inc.",
+    "dei:EntityShellCompany": "☒",
+    "dei:EntitySmallBusiness": "☐",
+    "dei:EntityTaxIdentificationNumber": "20-1665019",
+    "dei:LocalPhoneNumber": "543-4800",
+    "dei:Security12bTitle": "Class A Common Stock, $0.000006 par value",
+    "dei:SecurityExchangeName": "The Nasdaq Stock Market LLC",
+    "dei:TradingSymbol": "META"
+  },
+  "facts": [
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-1",
+      "decimals": "-6",
+      "dimensions": [],
+      "end": "2024-03-31",
+      "fact_id": "f-99",
+      "format": "num-dot-decimal",
+      "order": 3215,
+      "raw": "36,455",
+      "scale": "6",
+      "sign": null,
+      "start": "2024-01-01",
+      "table_index": 6,
+      "unit": "iso4217:USD",
+      "value": 36455000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-10",
+      "decimals": "-6",
+      "dimensions": [],
+      "end": "2023-03-31",
+      "fact_id": "f-100",
+      "format": "num-dot-decimal",
+      "order": 3222,
+      "raw": "28,645",
+      "scale": "6",
+      "sign": null,
+      "start": "2023-01-01",
+      "table_index": 6,
+      "unit": "iso4217:USD",
+      "value": 28645000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-41",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ProductOrServiceAxis",
+          "us-gaap:AdvertisingMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "meta:FamilyOfAppsMember"
+        ]
+      ],
+      "end": "2024-03-31",
+      "fact_id": "f-272",
+      "format": "num-dot-decimal",
+      "order": 5444,
+      "raw": "35,635",
+      "scale": "6",
+      "sign": null,
+      "start": "2024-01-01",
+      "table_index": 11,
+      "unit": "iso4217:USD",
+      "value": 35635000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-42",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ProductOrServiceAxis",
+          "us-gaap:AdvertisingMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "meta:FamilyOfAppsMember"
+        ]
+      ],
+      "end": "2023-03-31",
+      "fact_id": "f-273",
+      "format": "num-dot-decimal",
+      "order": 5451,
+      "raw": "28,101",
+      "scale": "6",
+      "sign": null,
+      "start": "2023-01-01",
+      "table_index": 11,
+      "unit": "iso4217:USD",
+      "value": 28101000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-43",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ProductOrServiceAxis",
+          "us-gaap:ServiceOtherMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "meta:FamilyOfAppsMember"
+        ]
+      ],
+      "end": "2024-03-31",
+      "fact_id": "f-274",
+      "format": "",
+      "order": 5462,
+      "raw": "380",
+      "scale": "6",
+      "sign": null,
+      "start": "2024-01-01",
+      "table_index": 11,
+      "unit": "iso4217:USD",
+      "value": 380000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-44",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ProductOrServiceAxis",
+          "us-gaap:ServiceOtherMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "meta:FamilyOfAppsMember"
+        ]
+      ],
+      "end": "2023-03-31",
+      "fact_id": "f-275",
+      "format": "",
+      "order": 5467,
+      "raw": "205",
+      "scale": "6",
+      "sign": null,
+      "start": "2023-01-01",
+      "table_index": 11,
+      "unit": "iso4217:USD",
+      "value": 205000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-45",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "meta:FamilyOfAppsMember"
+        ]
+      ],
+      "end": "2024-03-31",
+      "fact_id": "f-276",
+      "format": "num-dot-decimal",
+      "order": 5478,
+      "raw": "36,015",
+      "scale": "6",
+      "sign": null,
+      "start": "2024-01-01",
+      "table_index": 11,
+      "unit": "iso4217:USD",
+      "value": 36015000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-46",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "meta:FamilyOfAppsMember"
+        ]
+      ],
+      "end": "2023-03-31",
+      "fact_id": "f-277",
+      "format": "num-dot-decimal",
+      "order": 5483,
+      "raw": "28,306",
+      "scale": "6",
+      "sign": null,
+      "start": "2023-01-01",
+      "table_index": 11,
+      "unit": "iso4217:USD",
+      "value": 28306000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-47",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "meta:RealityLabsMember"
+        ]
+      ],
+      "end": "2024-03-31",
+      "fact_id": "f-278",
+      "format": "",
+      "order": 5494,
+      "raw": "440",
+      "scale": "6",
+      "sign": null,
+      "start": "2024-01-01",
+      "table_index": 11,
+      "unit": "iso4217:USD",
+      "value": 440000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-48",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "meta:RealityLabsMember"
+        ]
+      ],
+      "end": "2023-03-31",
+      "fact_id": "f-279",
+      "format": "",
+      "order": 5499,
+      "raw": "339",
+      "scale": "6",
+      "sign": null,
+      "start": "2023-01-01",
+      "table_index": 11,
+      "unit": "iso4217:USD",
+      "value": 339000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-1",
+      "decimals": "-6",
+      "dimensions": [],
+      "end": "2024-03-31",
+      "fact_id": "f-280",
+      "format": "num-dot-decimal",
+      "order": 5512,
+      "raw": "36,455",
+      "scale": "6",
+      "sign": null,
+      "start": "2024-01-01",
+      "table_index": 11,
+      "unit": "iso4217:USD",
+      "value": 36455000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-10",
+      "decimals": "-6",
+      "dimensions": [],
+      "end": "2023-03-31",
+      "fact_id": "f-281",
+      "format": "num-dot-decimal",
+      "order": 5519,
+      "raw": "28,645",
+      "scale": "6",
+      "sign": null,
+      "start": "2023-01-01",
+      "table_index": 11,
+      "unit": "iso4217:USD",
+      "value": 28645000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-49",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:StatementGeographicalAxis",
+          "meta:USCanadaMember"
+        ]
+      ],
+      "end": "2024-03-31",
+      "fact_id": "f-282",
+      "format": "num-dot-decimal",
+      "order": 5575,
+      "raw": "13,646",
+      "scale": "6",
+      "sign": null,
+      "start": "2024-01-01",
+      "table_index": 12,
+      "unit": "iso4217:USD",
+      "value": 13646000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-50",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:StatementGeographicalAxis",
+          "meta:USCanadaMember"
+        ]
+      ],
+      "end": "2023-03-31",
+      "fact_id": "f-283",
+      "format": "num-dot-decimal",
+      "order": 5582,
+      "raw": "11,449",
+      "scale": "6",
+      "sign": null,
+      "start": "2023-01-01",
+      "table_index": 12,
+      "unit": "iso4217:USD",
+      "value": 11449000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-51",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:StatementGeographicalAxis",
+          "srt:EuropeMember"
+        ]
+      ],
+      "end": "2024-03-31",
+      "fact_id": "f-284",
+      "format": "num-dot-decimal",
+      "order": 5595,
+      "raw": "8,404",
+      "scale": "6",
+      "sign": null,
+      "start": "2024-01-01",
+      "table_index": 12,
+      "unit": "iso4217:USD",
+      "value": 8404000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-52",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:StatementGeographicalAxis",
+          "srt:EuropeMember"
+        ]
+      ],
+      "end": "2023-03-31",
+      "fact_id": "f-285",
+      "format": "num-dot-decimal",
+      "order": 5600,
+      "raw": "6,759",
+      "scale": "6",
+      "sign": null,
+      "start": "2023-01-01",
+      "table_index": 12,
+      "unit": "iso4217:USD",
+      "value": 6759000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-53",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:StatementGeographicalAxis",
+          "srt:AsiaPacificMember"
+        ]
+      ],
+      "end": "2024-03-31",
+      "fact_id": "f-286",
+      "format": "num-dot-decimal",
+      "order": 5611,
+      "raw": "10,312",
+      "scale": "6",
+      "sign": null,
+      "start": "2024-01-01",
+      "table_index": 12,
+      "unit": "iso4217:USD",
+      "value": 10312000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-54",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:StatementGeographicalAxis",
+          "srt:AsiaPacificMember"
+        ]
+      ],
+      "end": "2023-03-31",
+      "fact_id": "f-287",
+      "format": "num-dot-decimal",
+      "order": 5616,
+      "raw": "7,292",
+      "scale": "6",
+      "sign": null,
+      "start": "2023-01-01",
+      "table_index": 12,
+      "unit": "iso4217:USD",
+      "value": 7292000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-55",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:StatementGeographicalAxis",
+          "meta:RestOfWorldMember"
+        ]
+      ],
+      "end": "2024-03-31",
+      "fact_id": "f-288",
+      "format": "num-dot-decimal",
+      "order": 5627,
+      "raw": "4,093",
+      "scale": "6",
+      "sign": null,
+      "start": "2024-01-01",
+      "table_index": 12,
+      "unit": "iso4217:USD",
+      "value": 4093000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-56",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:StatementGeographicalAxis",
+          "meta:RestOfWorldMember"
+        ]
+      ],
+      "end": "2023-03-31",
+      "fact_id": "f-289",
+      "format": "num-dot-decimal",
+      "order": 5632,
+      "raw": "3,145",
+      "scale": "6",
+      "sign": null,
+      "start": "2023-01-01",
+      "table_index": 12,
+      "unit": "iso4217:USD",
+      "value": 3145000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-1",
+      "decimals": "-6",
+      "dimensions": [],
+      "end": "2024-03-31",
+      "fact_id": "f-290",
+      "format": "num-dot-decimal",
+      "order": 5645,
+      "raw": "36,455",
+      "scale": "6",
+      "sign": null,
+      "start": "2024-01-01",
+      "table_index": 12,
+      "unit": "iso4217:USD",
+      "value": 36455000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-10",
+      "decimals": "-6",
+      "dimensions": [],
+      "end": "2023-03-31",
+      "fact_id": "f-291",
+      "format": "num-dot-decimal",
+      "order": 5652,
+      "raw": "28,645",
+      "scale": "6",
+      "sign": null,
+      "start": "2023-01-01",
+      "table_index": 12,
+      "unit": "iso4217:USD",
+      "value": 28645000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-45",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "meta:FamilyOfAppsMember"
+        ]
+      ],
+      "end": "2024-03-31",
+      "fact_id": "f-729",
+      "format": "num-dot-decimal",
+      "order": 9733,
+      "raw": "36,015",
+      "scale": "6",
+      "sign": null,
+      "start": "2024-01-01",
+      "table_index": 29,
+      "unit": "iso4217:USD",
+      "value": 36015000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-46",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "meta:FamilyOfAppsMember"
+        ]
+      ],
+      "end": "2023-03-31",
+      "fact_id": "f-730",
+      "format": "num-dot-decimal",
+      "order": 9740,
+      "raw": "28,306",
+      "scale": "6",
+      "sign": null,
+      "start": "2023-01-01",
+      "table_index": 29,
+      "unit": "iso4217:USD",
+      "value": 28306000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-47",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "meta:RealityLabsMember"
+        ]
+      ],
+      "end": "2024-03-31",
+      "fact_id": "f-731",
+      "format": "",
+      "order": 9751,
+      "raw": "440",
+      "scale": "6",
+      "sign": null,
+      "start": "2024-01-01",
+      "table_index": 29,
+      "unit": "iso4217:USD",
+      "value": 440000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-48",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "meta:RealityLabsMember"
+        ]
+      ],
+      "end": "2023-03-31",
+      "fact_id": "f-732",
+      "format": "",
+      "order": 9756,
+      "raw": "339",
+      "scale": "6",
+      "sign": null,
+      "start": "2023-01-01",
+      "table_index": 29,
+      "unit": "iso4217:USD",
+      "value": 339000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-1",
+      "decimals": "-6",
+      "dimensions": [],
+      "end": "2024-03-31",
+      "fact_id": "f-733",
+      "format": "num-dot-decimal",
+      "order": 9769,
+      "raw": "36,455",
+      "scale": "6",
+      "sign": null,
+      "start": "2024-01-01",
+      "table_index": 29,
+      "unit": "iso4217:USD",
+      "value": 36455000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-10",
+      "decimals": "-6",
+      "dimensions": [],
+      "end": "2023-03-31",
+      "fact_id": "f-734",
+      "format": "num-dot-decimal",
+      "order": 9776,
+      "raw": "28,645",
+      "scale": "6",
+      "sign": null,
+      "start": "2023-01-01",
+      "table_index": 29,
+      "unit": "iso4217:USD",
+      "value": 28645000000,
+      "value_error": null
+    }
+  ],
+  "format": 1,
+  "namespaces": {
+    "dei": "http://xbrl.sec.gov/dei/2023",
+    "ecd": "http://xbrl.sec.gov/ecd/2023",
+    "iso4217": "http://www.xbrl.org/2003/iso4217",
+    "ix": "http://www.xbrl.org/2013/inlineXBRL",
+    "ixt": "http://www.xbrl.org/inlineXBRL/transformation/2020-02-12",
+    "ixt-sec": "http://www.sec.gov/inlineXBRL/transformation/2015-08-31",
+    "link": "http://www.xbrl.org/2003/linkbase",
+    "meta": "http://www.facebook.com/20240331",
+    "srt": "http://fasb.org/srt/2023",
+    "us-gaap": "http://fasb.org/us-gaap/2023",
+    "xbrldi": "http://xbrl.org/2006/xbrldi",
+    "xbrli": "http://www.xbrl.org/2003/instance",
+    "xlink": "http://www.w3.org/1999/xlink",
+    "xsi": "http://www.w3.org/2001/XMLSchema-instance"
+  },
+  "package": {
+    "complete": true,
+    "documents": {
+      "meta-20240331.htm": {
+        "inline_xbrl": true,
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1326801/000132680124000049/meta-20240331.htm",
+        "name": "meta-20240331.htm",
+        "primary": true,
+        "sha256": "f14d93ce36efff0be06dc6c8129aed087196349ca297e214fed6ce15b4863e6b",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1326801/000132680124000049/meta-20240331.htm"
+      }
+    },
+    "filing": {
+      "filingDate": "2024-04-25",
+      "form": "10-Q",
+      "reportDate": "2024-03-31"
+    }
+  },
+  "parser_sha256": "581f401cd885a46e026dc7e23dcd51d3fbd55262780f6b77ab4eb2704c3a19c2",
+  "spec_concepts": [
+    "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax"
+  ]
+}

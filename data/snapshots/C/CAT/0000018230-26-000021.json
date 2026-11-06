@@ -1,0 +1,3961 @@
+{
+  "accession": "0000018230-26-000021",
+  "conflicts": [],
+  "dei": {
+    "dei:AmendmentFlag": "FALSE",
+    "dei:CityAreaCode": "972",
+    "dei:CurrentFiscalYearEndDate": "12/31",
+    "dei:DocumentFiscalPeriodFocus": "Q1",
+    "dei:DocumentFiscalYearFocus": "2026",
+    "dei:DocumentPeriodEndDate": "March 31, 2026",
+    "dei:DocumentQuarterlyReport": "☒",
+    "dei:DocumentTransitionReport": "☐",
+    "dei:DocumentType": "10-Q",
+    "dei:EntityAddressAddressLine1": "5205 N. O'Connor Boulevard,",
+    "dei:EntityAddressAddressLine2": "Suite 100,",
+    "dei:EntityAddressCityOrTown": "Irving,",
+    "dei:EntityAddressPostalZipCode": "75039",
+    "dei:EntityAddressStateOrProvince": "Texas",
+    "dei:EntityCentralIndexKey": "0000018230",
+    "dei:EntityCurrentReportingStatus": "Yes",
+    "dei:EntityEmergingGrowthCompany": "☐",
+    "dei:EntityFileNumber": "1-768",
+    "dei:EntityFilerCategory": "Large accelerated filer",
+    "dei:EntityIncorporationStateCountryCode": "Delaware",
+    "dei:EntityInteractiveDataCurrent": "Yes",
+    "dei:EntityRegistrantName": "CATERPILLAR INC",
+    "dei:EntityShellCompany": "☐",
+    "dei:EntitySmallBusiness": "☐",
+    "dei:EntityTaxIdentificationNumber": "37-0602744",
+    "dei:LocalPhoneNumber": "891-7700",
+    "dei:Security12bTitle": "Common Stock ($1.00 par value)",
+    "dei:SecurityExchangeName": "New York Stock Exchange",
+    "dei:TradingSymbol": "CAT"
+  },
+  "facts": [
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-5",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ProductOrServiceAxis",
+          "cat:MachineryPowerEnergyMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-34",
+      "format": "num-dot-decimal",
+      "order": 5336,
+      "raw": "16,473",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 7,
+      "unit": "iso4217:USD",
+      "value": 16473000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-6",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ProductOrServiceAxis",
+          "cat:MachineryPowerEnergyMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-35",
+      "format": "num-dot-decimal",
+      "order": 5343,
+      "raw": "13,378",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 7,
+      "unit": "iso4217:USD",
+      "value": 13378000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-7",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ProductOrServiceAxis",
+          "cat:FinancialProductsMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-36",
+      "format": "",
+      "order": 5350,
+      "raw": "942",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 7,
+      "unit": "iso4217:USD",
+      "value": 942000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-8",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ProductOrServiceAxis",
+          "cat:FinancialProductsMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-37",
+      "format": "",
+      "order": 5355,
+      "raw": "871",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 7,
+      "unit": "iso4217:USD",
+      "value": 871000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-1",
+      "decimals": "-6",
+      "dimensions": [],
+      "end": "2026-03-31",
+      "fact_id": "f-38",
+      "format": "num-dot-decimal",
+      "order": 5362,
+      "raw": "17,415",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 7,
+      "unit": "iso4217:USD",
+      "value": 17415000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-9",
+      "decimals": "-6",
+      "dimensions": [],
+      "end": "2025-03-31",
+      "fact_id": "f-39",
+      "format": "num-dot-decimal",
+      "order": 5367,
+      "raw": "14,249",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 7,
+      "unit": "iso4217:USD",
+      "value": 14249000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-160",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "srt:NorthAmericaMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:PowerEnergyMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-912",
+      "format": "num-dot-decimal",
+      "order": 15965,
+      "raw": "3,500",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 3500000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-161",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "srt:LatinAmericaMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:PowerEnergyMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-913",
+      "format": "",
+      "order": 15972,
+      "raw": "278",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 278000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-162",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "us-gaap:EMEAMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:PowerEnergyMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-914",
+      "format": "num-dot-decimal",
+      "order": 15979,
+      "raw": "1,141",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 1141000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-163",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "srt:AsiaPacificMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:PowerEnergyMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-915",
+      "format": "",
+      "order": 15986,
+      "raw": "794",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 794000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-164",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:PowerEnergyMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-916",
+      "format": "num-dot-decimal",
+      "order": 15993,
+      "raw": "5,713",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 5713000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-165",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:IntersegmentEliminationMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:PowerEnergyMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-917",
+      "format": "num-dot-decimal",
+      "order": 16000,
+      "raw": "1,318",
+      "scale": "6",
+      "sign": "-",
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": -1318000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-166",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:PowerEnergyMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-918",
+      "format": "num-dot-decimal",
+      "order": 16007,
+      "raw": "7,031",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 7031000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-167",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "srt:NorthAmericaMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:ConstructionIndustriesMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-919",
+      "format": "num-dot-decimal",
+      "order": 16015,
+      "raw": "4,292",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 4292000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-168",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "srt:LatinAmericaMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:ConstructionIndustriesMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-920",
+      "format": "",
+      "order": 16020,
+      "raw": "650",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 650000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-169",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "us-gaap:EMEAMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:ConstructionIndustriesMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-921",
+      "format": "num-dot-decimal",
+      "order": 16025,
+      "raw": "1,199",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 1199000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-170",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "srt:AsiaPacificMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:ConstructionIndustriesMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-922",
+      "format": "",
+      "order": 16030,
+      "raw": "961",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 961000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-171",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:ConstructionIndustriesMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-923",
+      "format": "num-dot-decimal",
+      "order": 16035,
+      "raw": "7,102",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 7102000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-172",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:IntersegmentEliminationMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:ConstructionIndustriesMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-924",
+      "format": "",
+      "order": 16040,
+      "raw": "59",
+      "scale": "6",
+      "sign": "-",
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": -59000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-173",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:ConstructionIndustriesMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-925",
+      "format": "num-dot-decimal",
+      "order": 16045,
+      "raw": "7,161",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 7161000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-174",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "srt:NorthAmericaMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:ResourceIndustriesMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-926",
+      "format": "num-dot-decimal",
+      "order": 16053,
+      "raw": "1,836",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 1836000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-175",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "srt:LatinAmericaMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:ResourceIndustriesMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-927",
+      "format": "",
+      "order": 16058,
+      "raw": "572",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 572000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-176",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "us-gaap:EMEAMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:ResourceIndustriesMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-928",
+      "format": "",
+      "order": 16063,
+      "raw": "560",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 560000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-177",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "srt:AsiaPacificMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:ResourceIndustriesMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-929",
+      "format": "",
+      "order": 16068,
+      "raw": "742",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 742000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-178",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:ResourceIndustriesMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-930",
+      "format": "num-dot-decimal",
+      "order": 16073,
+      "raw": "3,710",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 3710000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-179",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:IntersegmentEliminationMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:ResourceIndustriesMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-931",
+      "format": "",
+      "order": 16078,
+      "raw": "87",
+      "scale": "6",
+      "sign": "-",
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": -87000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-180",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:ResourceIndustriesMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-932",
+      "format": "num-dot-decimal",
+      "order": 16083,
+      "raw": "3,797",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 3797000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-181",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "srt:NorthAmericaMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:FinancialProductsSegmentMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-933",
+      "format": "",
+      "order": 16091,
+      "raw": "741",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 741000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-182",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "srt:LatinAmericaMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:FinancialProductsSegmentMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-934",
+      "format": "",
+      "order": 16096,
+      "raw": "111",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 111000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-183",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "us-gaap:EMEAMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:FinancialProductsSegmentMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-935",
+      "format": "",
+      "order": 16101,
+      "raw": "133",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 133000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-184",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "srt:AsiaPacificMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:FinancialProductsSegmentMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-936",
+      "format": "",
+      "order": 16106,
+      "raw": "111",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 111000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-185",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:FinancialProductsSegmentMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-937",
+      "format": "num-dot-decimal",
+      "order": 16111,
+      "raw": "1,096",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 1096000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-186",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:IntersegmentEliminationMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:FinancialProductsSegmentMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-938",
+      "format": "fixed-zero",
+      "order": 16118,
+      "raw": "—",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 0,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-187",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:FinancialProductsSegmentMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-939",
+      "format": "num-dot-decimal",
+      "order": 16123,
+      "raw": "1,096",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 1096000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-188",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "srt:NorthAmericaMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "us-gaap:ReportableSegmentAggregationBeforeOtherOperatingSegmentMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-940",
+      "format": "num-dot-decimal",
+      "order": 16131,
+      "raw": "10,369",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 10369000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-189",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "srt:LatinAmericaMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "us-gaap:ReportableSegmentAggregationBeforeOtherOperatingSegmentMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-941",
+      "format": "num-dot-decimal",
+      "order": 16136,
+      "raw": "1,611",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 1611000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-190",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "us-gaap:EMEAMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "us-gaap:ReportableSegmentAggregationBeforeOtherOperatingSegmentMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-942",
+      "format": "num-dot-decimal",
+      "order": 16141,
+      "raw": "3,033",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 3033000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-191",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "srt:AsiaPacificMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "us-gaap:ReportableSegmentAggregationBeforeOtherOperatingSegmentMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-943",
+      "format": "num-dot-decimal",
+      "order": 16146,
+      "raw": "2,608",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 2608000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-192",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "us-gaap:ReportableSegmentAggregationBeforeOtherOperatingSegmentMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-944",
+      "format": "num-dot-decimal",
+      "order": 16151,
+      "raw": "17,621",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 17621000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-193",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:IntersegmentEliminationMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "us-gaap:ReportableSegmentAggregationBeforeOtherOperatingSegmentMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-945",
+      "format": "num-dot-decimal",
+      "order": 16156,
+      "raw": "1,464",
+      "scale": "6",
+      "sign": "-",
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": -1464000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-194",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "us-gaap:ReportableSegmentAggregationBeforeOtherOperatingSegmentMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-946",
+      "format": "num-dot-decimal",
+      "order": 16161,
+      "raw": "19,085",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 19085000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-195",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "srt:NorthAmericaMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "us-gaap:AllOtherSegmentsMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-947",
+      "format": "",
+      "order": 16169,
+      "raw": "7",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 7000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-196",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "srt:LatinAmericaMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "us-gaap:AllOtherSegmentsMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-948",
+      "format": "fixed-zero",
+      "order": 16174,
+      "raw": "—",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 0,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-197",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "us-gaap:EMEAMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "us-gaap:AllOtherSegmentsMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-949",
+      "format": "",
+      "order": 16179,
+      "raw": "3",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 3000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-198",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "srt:AsiaPacificMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "us-gaap:AllOtherSegmentsMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-950",
+      "format": "",
+      "order": 16184,
+      "raw": "2",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 2000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-199",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "us-gaap:AllOtherSegmentsMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-951",
+      "format": "",
+      "order": 16189,
+      "raw": "12",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 12000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-200",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:IntersegmentEliminationMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "us-gaap:AllOtherSegmentsMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-952",
+      "format": "",
+      "order": 16194,
+      "raw": "65",
+      "scale": "6",
+      "sign": "-",
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": -65000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-201",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "us-gaap:AllOtherSegmentsMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-953",
+      "format": "",
+      "order": 16199,
+      "raw": "77",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 77000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-202",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:CorporateNonSegmentMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "srt:NorthAmericaMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-954",
+      "format": "",
+      "order": 16207,
+      "raw": "146",
+      "scale": "6",
+      "sign": "-",
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": -146000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-203",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:CorporateNonSegmentMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "srt:LatinAmericaMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-955",
+      "format": "",
+      "order": 16212,
+      "raw": "19",
+      "scale": "6",
+      "sign": "-",
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": -19000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-204",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:CorporateNonSegmentMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "us-gaap:EMEAMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-956",
+      "format": "",
+      "order": 16217,
+      "raw": "28",
+      "scale": "6",
+      "sign": "-",
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": -28000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-205",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:CorporateNonSegmentMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "srt:AsiaPacificMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-957",
+      "format": "",
+      "order": 16222,
+      "raw": "25",
+      "scale": "6",
+      "sign": "-",
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": -25000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-206",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:CorporateNonSegmentMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-958",
+      "format": "",
+      "order": 16227,
+      "raw": "218",
+      "scale": "6",
+      "sign": "-",
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": -218000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-207",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:IntersegmentEliminationMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-959",
+      "format": "num-dot-decimal",
+      "order": 16232,
+      "raw": "1,529",
+      "scale": "6",
+      "sign": "-",
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": -1529000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-208",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:EliminationsAndReconcilingItemsMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-960",
+      "format": "num-dot-decimal",
+      "order": 16237,
+      "raw": "1,747",
+      "scale": "6",
+      "sign": "-",
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": -1747000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-209",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:StatementGeographicalAxis",
+          "srt:NorthAmericaMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-961",
+      "format": "num-dot-decimal",
+      "order": 16247,
+      "raw": "10,230",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 10230000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-210",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:StatementGeographicalAxis",
+          "srt:LatinAmericaMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-962",
+      "format": "num-dot-decimal",
+      "order": 16254,
+      "raw": "1,592",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 1592000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-211",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:StatementGeographicalAxis",
+          "us-gaap:EMEAMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-963",
+      "format": "num-dot-decimal",
+      "order": 16261,
+      "raw": "3,008",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 3008000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-212",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:StatementGeographicalAxis",
+          "srt:AsiaPacificMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-964",
+      "format": "num-dot-decimal",
+      "order": 16268,
+      "raw": "2,585",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 2585000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-1",
+      "decimals": "-6",
+      "dimensions": [],
+      "end": "2026-03-31",
+      "fact_id": "f-965",
+      "format": "num-dot-decimal",
+      "order": 16275,
+      "raw": "17,415",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 17415000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-1",
+      "decimals": "-6",
+      "dimensions": [],
+      "end": "2026-03-31",
+      "fact_id": "f-966",
+      "format": "num-dot-decimal",
+      "order": 16288,
+      "raw": "17,415",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 17415000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-213",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "srt:NorthAmericaMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:PowerEnergyMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-967",
+      "format": "num-dot-decimal",
+      "order": 16335,
+      "raw": "2,625",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 2625000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-214",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "srt:LatinAmericaMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:PowerEnergyMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-968",
+      "format": "",
+      "order": 16342,
+      "raw": "326",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 326000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-215",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "us-gaap:EMEAMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:PowerEnergyMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-969",
+      "format": "num-dot-decimal",
+      "order": 16349,
+      "raw": "1,026",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 1026000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-216",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "srt:AsiaPacificMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:PowerEnergyMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-970",
+      "format": "",
+      "order": 16356,
+      "raw": "677",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 677000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-217",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:PowerEnergyMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-971",
+      "format": "num-dot-decimal",
+      "order": 16363,
+      "raw": "4,654",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 4654000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-218",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:IntersegmentEliminationMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:PowerEnergyMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-972",
+      "format": "num-dot-decimal",
+      "order": 16370,
+      "raw": "1,129",
+      "scale": "6",
+      "sign": "-",
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": -1129000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-219",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:PowerEnergyMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-973",
+      "format": "num-dot-decimal",
+      "order": 16377,
+      "raw": "5,783",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 5783000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-220",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "srt:NorthAmericaMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:ConstructionIndustriesMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-974",
+      "format": "num-dot-decimal",
+      "order": 16385,
+      "raw": "2,904",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 2904000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-221",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "srt:LatinAmericaMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:ConstructionIndustriesMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-975",
+      "format": "",
+      "order": 16390,
+      "raw": "504",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 504000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-222",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "us-gaap:EMEAMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:ConstructionIndustriesMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-976",
+      "format": "",
+      "order": 16395,
+      "raw": "867",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 867000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-223",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "srt:AsiaPacificMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:ConstructionIndustriesMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-977",
+      "format": "",
+      "order": 16400,
+      "raw": "869",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 869000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-224",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:ConstructionIndustriesMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-978",
+      "format": "num-dot-decimal",
+      "order": 16405,
+      "raw": "5,144",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 5144000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-225",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:IntersegmentEliminationMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:ConstructionIndustriesMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-979",
+      "format": "",
+      "order": 16410,
+      "raw": "40",
+      "scale": "6",
+      "sign": "-",
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": -40000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-226",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:ConstructionIndustriesMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-980",
+      "format": "num-dot-decimal",
+      "order": 16415,
+      "raw": "5,184",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 5184000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-227",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "srt:NorthAmericaMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:ResourceIndustriesMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-981",
+      "format": "num-dot-decimal",
+      "order": 16423,
+      "raw": "1,610",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 1610000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-228",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "srt:LatinAmericaMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:ResourceIndustriesMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-982",
+      "format": "",
+      "order": 16428,
+      "raw": "606",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 606000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-229",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "us-gaap:EMEAMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:ResourceIndustriesMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-983",
+      "format": "",
+      "order": 16433,
+      "raw": "510",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 510000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-230",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "srt:AsiaPacificMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:ResourceIndustriesMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-984",
+      "format": "",
+      "order": 16438,
+      "raw": "860",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 860000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-231",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:ResourceIndustriesMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-985",
+      "format": "num-dot-decimal",
+      "order": 16443,
+      "raw": "3,586",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 3586000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-232",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:IntersegmentEliminationMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:ResourceIndustriesMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-986",
+      "format": "",
+      "order": 16448,
+      "raw": "75",
+      "scale": "6",
+      "sign": "-",
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": -75000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-233",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:ResourceIndustriesMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-987",
+      "format": "num-dot-decimal",
+      "order": 16453,
+      "raw": "3,661",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 3661000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-234",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "srt:NorthAmericaMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:FinancialProductsSegmentMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-988",
+      "format": "",
+      "order": 16461,
+      "raw": "682",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 682000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-235",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "srt:LatinAmericaMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:FinancialProductsSegmentMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-989",
+      "format": "",
+      "order": 16466,
+      "raw": "99",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 99000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-236",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "us-gaap:EMEAMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:FinancialProductsSegmentMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-990",
+      "format": "",
+      "order": 16471,
+      "raw": "122",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 122000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-237",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "srt:AsiaPacificMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:FinancialProductsSegmentMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-991",
+      "format": "",
+      "order": 16476,
+      "raw": "104",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 104000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-238",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:FinancialProductsSegmentMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-992",
+      "format": "num-dot-decimal",
+      "order": 16481,
+      "raw": "1,007",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 1007000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-239",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:IntersegmentEliminationMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:FinancialProductsSegmentMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-993",
+      "format": "fixed-zero",
+      "order": 16488,
+      "raw": "—",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 0,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-240",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:FinancialProductsSegmentMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-994",
+      "format": "num-dot-decimal",
+      "order": 16493,
+      "raw": "1,007",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 1007000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-241",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "srt:NorthAmericaMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "us-gaap:ReportableSegmentAggregationBeforeOtherOperatingSegmentMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-995",
+      "format": "num-dot-decimal",
+      "order": 16501,
+      "raw": "7,821",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 7821000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-242",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "srt:LatinAmericaMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "us-gaap:ReportableSegmentAggregationBeforeOtherOperatingSegmentMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-996",
+      "format": "num-dot-decimal",
+      "order": 16506,
+      "raw": "1,535",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 1535000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-243",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "us-gaap:EMEAMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "us-gaap:ReportableSegmentAggregationBeforeOtherOperatingSegmentMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-997",
+      "format": "num-dot-decimal",
+      "order": 16511,
+      "raw": "2,525",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 2525000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-244",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "srt:AsiaPacificMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "us-gaap:ReportableSegmentAggregationBeforeOtherOperatingSegmentMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-998",
+      "format": "num-dot-decimal",
+      "order": 16516,
+      "raw": "2,510",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 2510000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-245",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "us-gaap:ReportableSegmentAggregationBeforeOtherOperatingSegmentMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-999",
+      "format": "num-dot-decimal",
+      "order": 16521,
+      "raw": "14,391",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 14391000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-246",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:IntersegmentEliminationMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "us-gaap:ReportableSegmentAggregationBeforeOtherOperatingSegmentMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-1000",
+      "format": "num-dot-decimal",
+      "order": 16526,
+      "raw": "1,244",
+      "scale": "6",
+      "sign": "-",
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": -1244000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-247",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "us-gaap:ReportableSegmentAggregationBeforeOtherOperatingSegmentMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-1001",
+      "format": "num-dot-decimal",
+      "order": 16531,
+      "raw": "15,635",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 15635000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-248",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "srt:NorthAmericaMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "us-gaap:AllOtherSegmentsMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-1002",
+      "format": "",
+      "order": 16539,
+      "raw": "8",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 8000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-249",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "srt:LatinAmericaMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "us-gaap:AllOtherSegmentsMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-1003",
+      "format": "fixed-zero",
+      "order": 16544,
+      "raw": "—",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 0,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-250",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "us-gaap:EMEAMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "us-gaap:AllOtherSegmentsMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-1004",
+      "format": "",
+      "order": 16549,
+      "raw": "1",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 1000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-251",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "srt:AsiaPacificMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "us-gaap:AllOtherSegmentsMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-1005",
+      "format": "",
+      "order": 16554,
+      "raw": "2",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 2000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-252",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:OperatingSegmentsExcludingIntersegmentEliminationMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "us-gaap:AllOtherSegmentsMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-1006",
+      "format": "",
+      "order": 16559,
+      "raw": "11",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 11000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-253",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:IntersegmentEliminationMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "us-gaap:AllOtherSegmentsMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-1007",
+      "format": "",
+      "order": 16564,
+      "raw": "59",
+      "scale": "6",
+      "sign": "-",
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": -59000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-254",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "us-gaap:AllOtherSegmentsMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-1008",
+      "format": "",
+      "order": 16569,
+      "raw": "70",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 70000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-255",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:CorporateNonSegmentMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "srt:NorthAmericaMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-1009",
+      "format": "",
+      "order": 16577,
+      "raw": "91",
+      "scale": "6",
+      "sign": "-",
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": -91000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-256",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:CorporateNonSegmentMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "srt:LatinAmericaMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-1010",
+      "format": "",
+      "order": 16582,
+      "raw": "20",
+      "scale": "6",
+      "sign": "-",
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": -20000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-257",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:CorporateNonSegmentMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "us-gaap:EMEAMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-1011",
+      "format": "",
+      "order": 16587,
+      "raw": "20",
+      "scale": "6",
+      "sign": "-",
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": -20000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-258",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:CorporateNonSegmentMember"
+        ],
+        [
+          "srt:StatementGeographicalAxis",
+          "srt:AsiaPacificMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-1012",
+      "format": "",
+      "order": 16592,
+      "raw": "22",
+      "scale": "6",
+      "sign": "-",
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": -22000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-259",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:CorporateNonSegmentMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-1013",
+      "format": "",
+      "order": 16597,
+      "raw": "153",
+      "scale": "6",
+      "sign": "-",
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": -153000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-260",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:IntersegmentEliminationMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-1014",
+      "format": "num-dot-decimal",
+      "order": 16602,
+      "raw": "1,303",
+      "scale": "6",
+      "sign": "-",
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": -1303000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-261",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "cat:EliminationsAndReconcilingItemsMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-1015",
+      "format": "num-dot-decimal",
+      "order": 16607,
+      "raw": "1,456",
+      "scale": "6",
+      "sign": "-",
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": -1456000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-262",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:StatementGeographicalAxis",
+          "srt:NorthAmericaMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-1016",
+      "format": "num-dot-decimal",
+      "order": 16617,
+      "raw": "7,738",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 7738000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-263",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:StatementGeographicalAxis",
+          "srt:LatinAmericaMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-1017",
+      "format": "num-dot-decimal",
+      "order": 16624,
+      "raw": "1,515",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 1515000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-264",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:StatementGeographicalAxis",
+          "us-gaap:EMEAMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-1018",
+      "format": "num-dot-decimal",
+      "order": 16631,
+      "raw": "2,506",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 2506000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-265",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:StatementGeographicalAxis",
+          "srt:AsiaPacificMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-1019",
+      "format": "num-dot-decimal",
+      "order": 16638,
+      "raw": "2,490",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 2490000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-9",
+      "decimals": "-6",
+      "dimensions": [],
+      "end": "2025-03-31",
+      "fact_id": "f-1020",
+      "format": "num-dot-decimal",
+      "order": 16645,
+      "raw": "14,249",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 14249000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-9",
+      "decimals": "-6",
+      "dimensions": [],
+      "end": "2025-03-31",
+      "fact_id": "f-1021",
+      "format": "num-dot-decimal",
+      "order": 16658,
+      "raw": "14,249",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 47,
+      "unit": "iso4217:USD",
+      "value": 14249000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-266",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "us-gaap:RelatedPartyTransactionsByRelatedPartyAxis",
+          "us-gaap:RelatedPartyMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:FinancialProductsSegmentMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-1022",
+      "format": "",
+      "order": 16679,
+      "raw": "183",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": null,
+      "unit": "iso4217:USD",
+      "value": 183000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-267",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "us-gaap:RelatedPartyTransactionsByRelatedPartyAxis",
+          "us-gaap:RelatedPartyMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:FinancialProductsSegmentMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-1023",
+      "format": "",
+      "order": 16680,
+      "raw": "163",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": null,
+      "unit": "iso4217:USD",
+      "value": 163000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-268",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:MajorCustomersAxis",
+          "cat:PowergenerationMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:PowerEnergyMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-1024",
+      "format": "num-dot-decimal",
+      "order": 16802,
+      "raw": "2,817",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 50,
+      "unit": "iso4217:USD",
+      "value": 2817000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-269",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:MajorCustomersAxis",
+          "cat:PowergenerationMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:PowerEnergyMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-1025",
+      "format": "num-dot-decimal",
+      "order": 16809,
+      "raw": "1,996",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 50,
+      "unit": "iso4217:USD",
+      "value": 1996000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-270",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:MajorCustomersAxis",
+          "cat:OilAndGasCustomerMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:PowerEnergyMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-1026",
+      "format": "num-dot-decimal",
+      "order": 16821,
+      "raw": "1,423",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 50,
+      "unit": "iso4217:USD",
+      "value": 1423000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-271",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:MajorCustomersAxis",
+          "cat:OilAndGasCustomerMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:PowerEnergyMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-1027",
+      "format": "num-dot-decimal",
+      "order": 16826,
+      "raw": "1,258",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 50,
+      "unit": "iso4217:USD",
+      "value": 1258000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-272",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:MajorCustomersAxis",
+          "cat:IndustrialMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:PowerEnergyMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-1028",
+      "format": "num-dot-decimal",
+      "order": 16838,
+      "raw": "1,473",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 50,
+      "unit": "iso4217:USD",
+      "value": 1473000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-273",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:MajorCustomersAxis",
+          "cat:IndustrialMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:PowerEnergyMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-1029",
+      "format": "num-dot-decimal",
+      "order": 16843,
+      "raw": "1,400",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 50,
+      "unit": "iso4217:USD",
+      "value": 1400000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-101",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:PowerEnergyMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-1030",
+      "format": "num-dot-decimal",
+      "order": 16867,
+      "raw": "5,713",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 50,
+      "unit": "iso4217:USD",
+      "value": 5713000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-274",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:PowerEnergyMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-1031",
+      "format": "num-dot-decimal",
+      "order": 16874,
+      "raw": "4,654",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 50,
+      "unit": "iso4217:USD",
+      "value": 4654000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-275",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:MajorCustomersAxis",
+          "cat:MiningHeavyConstructionAndQuarryAggregatesMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:ResourceIndustriesMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-1032",
+      "format": "num-dot-decimal",
+      "order": 16959,
+      "raw": "2,954",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 51,
+      "unit": "iso4217:USD",
+      "value": 2954000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-276",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:MajorCustomersAxis",
+          "cat:MiningHeavyConstructionAndQuarryAggregatesMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:ResourceIndustriesMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-1033",
+      "format": "num-dot-decimal",
+      "order": 16966,
+      "raw": "2,842",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 51,
+      "unit": "iso4217:USD",
+      "value": 2842000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-277",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:MajorCustomersAxis",
+          "cat:RailMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:ResourceIndustriesMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-1034",
+      "format": "",
+      "order": 16978,
+      "raw": "756",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 51,
+      "unit": "iso4217:USD",
+      "value": 756000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-278",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:MajorCustomersAxis",
+          "cat:RailMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:ResourceIndustriesMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-1035",
+      "format": "",
+      "order": 16983,
+      "raw": "744",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 51,
+      "unit": "iso4217:USD",
+      "value": 744000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-98",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:ResourceIndustriesMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-1036",
+      "format": "num-dot-decimal",
+      "order": 16997,
+      "raw": "3,710",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 51,
+      "unit": "iso4217:USD",
+      "value": 3710000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-279",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:ResourceIndustriesMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-1037",
+      "format": "num-dot-decimal",
+      "order": 17004,
+      "raw": "3,586",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 51,
+      "unit": "iso4217:USD",
+      "value": 3586000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-166",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:PowerEnergyMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-1039",
+      "format": "num-dot-decimal",
+      "order": 17131,
+      "raw": "7,031",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 52,
+      "unit": "iso4217:USD",
+      "value": 7031000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-173",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:ConstructionIndustriesMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-1040",
+      "format": "num-dot-decimal",
+      "order": 17138,
+      "raw": "7,161",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 52,
+      "unit": "iso4217:USD",
+      "value": 7161000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-180",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:ResourceIndustriesMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-1041",
+      "format": "num-dot-decimal",
+      "order": 17145,
+      "raw": "3,797",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 52,
+      "unit": "iso4217:USD",
+      "value": 3797000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-187",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:FinancialProductsSegmentMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-1042",
+      "format": "num-dot-decimal",
+      "order": 17152,
+      "raw": "1,096",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 52,
+      "unit": "iso4217:USD",
+      "value": 1096000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-194",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "us-gaap:ReportableSegmentAggregationBeforeOtherOperatingSegmentMember"
+        ]
+      ],
+      "end": "2026-03-31",
+      "fact_id": "f-1043",
+      "format": "num-dot-decimal",
+      "order": 17159,
+      "raw": "19,085",
+      "scale": "6",
+      "sign": null,
+      "start": "2026-01-01",
+      "table_index": 52,
+      "unit": "iso4217:USD",
+      "value": 19085000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-219",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:PowerEnergyMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-1064",
+      "format": "num-dot-decimal",
+      "order": 17336,
+      "raw": "5,783",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 52,
+      "unit": "iso4217:USD",
+      "value": 5783000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-226",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:ConstructionIndustriesMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-1065",
+      "format": "num-dot-decimal",
+      "order": 17343,
+      "raw": "5,184",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 52,
+      "unit": "iso4217:USD",
+      "value": 5184000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-233",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:ResourceIndustriesMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-1066",
+      "format": "num-dot-decimal",
+      "order": 17350,
+      "raw": "3,661",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 52,
+      "unit": "iso4217:USD",
+      "value": 3661000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-240",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "cat:FinancialProductsSegmentMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-1067",
+      "format": "num-dot-decimal",
+      "order": 17357,
+      "raw": "1,007",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 52,
+      "unit": "iso4217:USD",
+      "value": 1007000000,
+      "value_error": null
+    },
+    {
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-247",
+      "decimals": "-6",
+      "dimensions": [
+        [
+          "srt:ConsolidationItemsAxis",
+          "us-gaap:OperatingSegmentsMember"
+        ],
+        [
+          "us-gaap:StatementBusinessSegmentsAxis",
+          "us-gaap:ReportableSegmentAggregationBeforeOtherOperatingSegmentMember"
+        ]
+      ],
+      "end": "2025-03-31",
+      "fact_id": "f-1068",
+      "format": "num-dot-decimal",
+      "order": 17364,
+      "raw": "15,635",
+      "scale": "6",
+      "sign": null,
+      "start": "2025-01-01",
+      "table_index": 52,
+      "unit": "iso4217:USD",
+      "value": 15635000000,
+      "value_error": null
+    }
+  ],
+  "format": 1,
+  "namespaces": {
+    "cat": "http://www.cat.com/20260331",
+    "country": "http://xbrl.sec.gov/country/2025",
+    "dei": "http://xbrl.sec.gov/dei/2025",
+    "ecd": "http://xbrl.sec.gov/ecd/2025",
+    "iso4217": "http://www.xbrl.org/2003/iso4217",
+    "ix": "http://www.xbrl.org/2013/inlineXBRL",
+    "ixt": "http://www.xbrl.org/inlineXBRL/transformation/2020-02-12",
+    "ixt-sec": "http://www.sec.gov/inlineXBRL/transformation/2015-08-31",
+    "link": "http://www.xbrl.org/2003/linkbase",
+    "srt": "http://fasb.org/srt/2025",
+    "us-gaap": "http://fasb.org/us-gaap/2025",
+    "xbrldi": "http://xbrl.org/2006/xbrldi",
+    "xbrli": "http://www.xbrl.org/2003/instance",
+    "xlink": "http://www.w3.org/1999/xlink",
+    "xsi": "http://www.w3.org/2001/XMLSchema-instance"
+  },
+  "package": {
+    "complete": true,
+    "documents": {
+      "cat-20260331.htm": {
+        "inline_xbrl": true,
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/18230/000001823026000021/cat-20260331.htm",
+        "name": "cat-20260331.htm",
+        "primary": true,
+        "sha256": "47a01b622bfc335d513020d6b36c255f868beedda3bad83750f31fa60167db81",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/18230/000001823026000021/cat-20260331.htm"
+      }
+    },
+    "filing": {
+      "filingDate": "2026-05-06",
+      "form": "10-Q",
+      "reportDate": "2026-03-31"
+    }
+  },
+  "parser_sha256": "581f401cd885a46e026dc7e23dcd51d3fbd55262780f6b77ab4eb2704c3a19c2",
+  "spec_concepts": [
+    "us-gaap:Revenues"
+  ]
+}

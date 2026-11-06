@@ -6,10 +6,12 @@
     "setup": "python3 -m venv .venv && .venv/bin/python -m pip install -r requirements.txt && .venv/bin/playwright install chromium",
     "test": ".venv/bin/python -m unittest discover -s tests -t .",
     "validate": ".venv/bin/python scripts/validate_universe.py",
-    "check": "npm run test && npm run validate",
+    "regression": ".venv/bin/python scripts/sec_pipeline.py parse --all --check --snapshots",
+    "check": "npm run test && npm run validate && npm run regression",
     "tickers": ".venv/bin/python scripts/sec_pipeline.py tickers",
     "download": ".venv/bin/python scripts/sec_pipeline.py download",
     "parse": ".venv/bin/python scripts/sec_pipeline.py parse",
+    "snapshot": ".venv/bin/python scripts/sec_pipeline.py snapshot",
     "capture:setup": ".venv/bin/python scripts/capture_references.py setup",
     "capture": ".venv/bin/python scripts/capture_references.py capture",
     "viewer": ".venv/bin/python scripts/sec_pipeline.py viewer"

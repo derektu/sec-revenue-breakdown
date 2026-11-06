@@ -1,6 +1,6 @@
 # 本機操作
 
-流程分三個階段，各自獨立執行：`download` 下載 SEC 申報包，不產生營收輸出；`parse` 不連網，只讀已下載的申報包，依公司規格產生 `data/revenue/` 的正式輸出與證據；`viewer` 唯讀顯示正式輸出。沒有前端編譯步驟，Python 3.11+ 與 lxml 即可執行；`parse` 截圖另需 Playwright 與 Chromium。
+流程分三個階段，各自獨立執行：`download` 下載 SEC 申報包，不產生營收輸出；`parse` 不連網，只讀已下載的申報包，依公司規格產生 `data/revenue/` 的正式輸出與證據；`viewer` 唯讀顯示正式輸出。`snapshot` 由原文產生 `data/snapshots/` 的 XBRL fact 快照與申報清單，讓沒有原文的人也能驗證正式輸出。沒有前端編譯步驟，Python 3.11+ 與 lxml 即可執行；`parse` 截圖另需 Playwright 與 Chromium。
 
 ## 拉取與安裝
 
@@ -15,6 +15,22 @@ python3 -m venv .venv
 ```
 
 以下命令都從 repo 根目錄執行；`--data` 省略時使用資料根目錄（`SEC_DATA_DIR`，未設定時為 repo 的 `data/`）。macOS 可直接用 `.venv/bin/python`，不需啟動 Node／npm。
+
+## 接手或第一次 clone
+
+不需要 SEC 原文就能確認環境與全部正式輸出：
+
+```bash
+npm run setup
+npm run check        # unit test、對照資料驗證，以及以快照對全部上線公司跑 parse --check
+```
+
+需要原文時（產生證據、修改規格或解析器、處理新一期財報），先設定 `.env` 的 `SEC_USER_AGENT` 與 `SEC_DATA_DIR`，再依申報清單下載並逐檔核對 sha256：
+
+```bash
+.venv/bin/python scripts/sec_pipeline.py download --all --from-manifest
+.venv/bin/python scripts/sec_pipeline.py parse --all --check     # 原文模式：另外驗證表格 HTML
+```
 
 ## 選擇 ticker
 
@@ -71,6 +87,24 @@ SEC 原文（`sec/`）與下載索引（`pipeline/`）放在資料根目錄。�
 ```
 
 規格、檢核、證據、正式輸出格式與參數見 [parser.md](../architecture/parser.md)。
+
+## 快照
+
+```bash
+.venv/bin/python scripts/sec_pipeline.py parse --all --check --snapshots   # 不讀原文，以快照比對
+.venv/bin/python scripts/sec_pipeline.py snapshot --tickers AAPL           # 由原文重產該公司的快照與申報清單
+.venv/bin/python scripts/sec_pipeline.py snapshot --all --check            # 核對已提交的快照與原文一致
+```
+
+以下改動要重產快照，並和改動放在同一個 PR：
+
+| 改動 | 重產範圍 |
+|---|---|
+| 規格新增或更換 concept | 該公司 |
+| 下載了新的申報 | 該公司 |
+| 決定快照內容的程式（`revenue/xbrl.py`、`ixbrl.py`、`filings.py`、`snapshot.py`）改動 | 全部公司 |
+
+快照不足或過期時，`--snapshots` 直接報錯並指出要重產的公司。`snapshot` 寫入時若有原文讀不到的申報，快照記錄為錯誤並回傳 2，先補下載再重產。快照模式驗得到與驗不到的內容見 [parser.md](../architecture/parser.md) 的「快照」。
 
 ## Viewer
 

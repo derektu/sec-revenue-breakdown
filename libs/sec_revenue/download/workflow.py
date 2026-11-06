@@ -5,10 +5,12 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Callable
 
+from ..common.jsonio import JsonCodec
 from ..common.periods import PeriodSelection
+from ..revenue.snapshot import MANIFEST, snapshot_dir
 from .catalog import CikResolver, SecFilingCatalog
 from .http import SecHttpClient, is_blocking
-from .packages import FilingPackages
+from .packages import RENDERING_RE, FilingPackages
 from .plan import PERIODIC_FORMS, earnings_releases, package_filings, q4_dependencies, release_window
 from .store import WorkflowCache
 
@@ -18,6 +20,9 @@ class DownloadWorkflow:
 
     每家公司下載目標期別、Q4 依賴期別與財報新聞稿 8-K 的申報包。`dry_run=True` 只讀本機 catalog 與 packages.json，
     列出還沒下載完整的申報，不發網路請求、不寫入任何檔案。
+
+    `manifests` 指定快照根目錄時改依申報清單（`<首字母>/<TICKER>/manifest.json`）下載：不查 SEC 申報清單、
+    不選期別，下載清單列出的每份申報包，並逐檔核對 sha256。
     """
 
     initial_status = "loading_catalog"
@@ -30,6 +35,7 @@ class DownloadWorkflow:
         progress: Callable[[dict], None] | None = None,
         include_r_pages: bool = False,
         tickers_csv: Path | None = None,
+        manifests: Path | None = None,
     ):
         self.repository = repository
         self.progress = progress
@@ -39,6 +45,7 @@ class DownloadWorkflow:
         self.ciks = CikResolver(self.cache, self.http, tickers_csv)
         self.packages = FilingPackages(self.cache, self.http)
         self.include_r_pages = include_r_pages
+        self.manifests = manifests
 
     def notify(self, ticker: str, status: str, period: str = ""):
         if self.progress:
@@ -68,6 +75,8 @@ class DownloadWorkflow:
     def company(self, ticker: str, selection: PeriodSelection, force: bool, offline: bool, dry_run: bool = False) -> dict:
         if dry_run:
             return self.missing(ticker, selection)
+        if self.manifests is not None:
+            return self.restore(ticker, force, offline)
         self.notify(ticker, self.initial_status)
         cik = self.ciks.resolve(ticker, offline)
         load = dict(refresh=force or selection.latest, offline=offline, need_items=True)
@@ -161,6 +170,50 @@ class DownloadWorkflow:
             result["catalog_incomplete"] = uncovered
         return result
 
+    def restore(self, ticker: str, force: bool, offline: bool) -> dict:
+        """依申報清單下載每份申報包，逐檔核對清單記錄的 sha256。
+
+        缺檔或 sha256 不同的檔案列在 `manifest_mismatches`，並記成該申報包的失敗檔案：申報包標為不完整，parse 不讀它，
+        之後重跑 download 會重新下載這些檔案。申報包有、清單沒列的檔案列在 `manifest_extra`，只回報不算失敗。
+        """
+        path = snapshot_dir(self.manifests, ticker) / MANIFEST
+        if not path.exists():
+            raise ValueError(f"{ticker} 沒有申報清單（{path}）")
+        self.notify(ticker, "loading_manifest")
+        company = {"ticker": ticker, "manifest": str(path), "packages": [], "manifest_mismatches": [], "manifest_extra": []}
+        for entry in JsonCodec.read(path)["filings"]:
+            filing = entry["filing"]
+            accession = filing["accessionNumber"]
+            # 清單列了 R 頁面時一併下載，才能逐檔核對。
+            r_pages = self.include_r_pages or any(RENDERING_RE.fullmatch(name) for name in entry["documents"])
+            package = self.packages.download(ticker, filing, r_pages, force, offline)
+            self.notify(ticker, "package_" + package["status"], filing["reportDate"])
+            bad = {}
+            for name, expected in entry["documents"].items():
+                found = package["documents"].get(name)
+                if found is None:
+                    bad[name] = "申報清單列出、申報包沒有這個檔案"
+                elif found["sha256"] != expected["sha256"]:
+                    bad[name] = "sha256 與申報清單不同"
+            company["manifest_mismatches"] += [f"{accession} {name}：{reason}" for name, reason in bad.items()]
+            company["manifest_extra"] += [f"{accession} {name}" for name in sorted(set(package["documents"]) - set(entry["documents"]))]
+            if bad:
+                package = self.reject(ticker, accession, bad)
+            company["packages"].append(self.packages.summary(package))
+        return company
+
+    def reject(self, ticker: str, accession: str, bad: dict[str, str]) -> dict:
+        """把與申報清單不符的檔案記成申報包的失敗檔案，申報包標為不完整。"""
+        saved = self.packages.read(ticker)
+        package = saved["packages"][accession]
+        base = FilingPackages.base_url(package["filing"])
+        for name, reason in bad.items():
+            document = package["documents"].pop(name, None)
+            package["failures"][name] = {"url": (document or {}).get("source_url", base + name), "error": reason}
+        package["complete"] = False
+        self.cache.write(ticker, "packages", saved)
+        return dict(package, status="manifest_mismatch")
+
     @staticmethod
     def targets(filings: list[dict], selection: PeriodSelection) -> list[dict]:
         """目標期別：範圍內每期一份 10-K／10-Q（修訂版優先）。"""
@@ -215,6 +268,8 @@ class DownloadBatch:
                 problems.append(
                     "8-K item 代碼不明，無法判斷是否為財報新聞稿：" + ", ".join(company["eight_k_items_missing"])
                 )
+            if company.get("manifest_mismatches"):
+                problems.append("與申報清單不符（申報包已標為不完整）：" + "；".join(company["manifest_mismatches"]))
             if company.get("dependencies_unresolved"):
                 problems.append("Q4 依賴期別無法確定：" + "；".join(company["dependencies_unresolved"]))
             if problems:

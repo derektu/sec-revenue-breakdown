@@ -78,6 +78,21 @@ parse 推算 Q4 需要年度減去同財年 Q1–Q3，「Q4 口徑一致」檢�
 
 任何一家有上述缺漏時，結果的 `complete` 為 false，回傳碼為 2；否則為 0。
 
+## 依申報清單下載（`--from-manifest`）
+
+`data/snapshots/<首字母>/<TICKER>/manifest.json` 是 `snapshot` 子命令產生的申報清單（見 [parser.md](parser.md) 的「快照」），列出正式輸出依賴的每份 10-K／10-Q（引擎不讀 8-K，所以 8-K 不在清單內）：
+
+- 申報資訊：accession、表單、期末日、申報日、CIK、主文件名。
+- 申報包內每個檔案的 sha256 與 bytes。
+
+`download --from-manifest` 依清單重建資料根目錄。它不查 SEC 申報清單、不選期別，只下載清單列出的每份申報包：
+
+- 清單列了 R 頁面的申報，一併下載 R 頁面。
+- 每個檔案都核對清單記錄的 sha256。缺檔或 sha256 不同時列在 `manifest_mismatches`，該公司列為失敗；這些檔案記成申報包的失敗檔案，申報包標為不完整，parse 不讀它，之後重跑 download 會重新下載。
+- 申報包有、清單沒列的檔案列在 `manifest_extra`，只回報，不算失敗。
+- `--all` 為 `data/snapshots/` 中有申報清單的公司。
+- 加上 `--offline` 時只核對本機快取，不連網。核對不符時同樣改寫本機的 `packages.json`：把不符的檔案移到失敗清單、申報包標為不完整。
+
 ## 下載快取
 
 | 路徑 | 內容 |

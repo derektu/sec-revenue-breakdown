@@ -2,7 +2,8 @@
 """download → parse → viewer；各階段可獨立執行。
 
 download 下載任何 ticker 的完整 SEC 申報包；parse 依 `libs/sec_revenue/companies/` 的公司規格產生 `data/revenue/`
-的正式輸出與證據；viewer 唯讀顯示正式輸出。
+的正式輸出與證據；viewer 唯讀顯示正式輸出。snapshot 由原文產生 `data/snapshots/` 的 XBRL fact 快照與申報清單，
+沒有原文時以 `parse --check --snapshots` 驗證正式輸出。
 """
 
 import argparse
@@ -21,8 +22,10 @@ from sec_revenue.universe import parse_tickers
 from sec_revenue.viewer.server import RevenueViewer
 from sec_revenue import companies
 from sec_revenue.revenue.engine import DEFAULT_START, SERIES, RevenueParser, check_outputs
+from sec_revenue.revenue import snapshot
 
 REVENUE_ROOT = ROOT / "data" / "revenue"
+SNAPSHOT_ROOT = ROOT / "data" / "snapshots"
 
 
 def data_root() -> Path:
@@ -39,7 +42,7 @@ class WorkflowCli:
         listing.add_argument("--json", action="store_true")
         download = commands.add_parser("download", help="下載 SEC 申報包")
         download.add_argument("--tickers", nargs="+", help="AAPL MSFT 或 AAPL,MSFT；ALL 是 Allstate 的 ticker")
-        download.add_argument("--all", dest="all_tickers", action="store_true", help="tickers.csv 的全部公司")
+        download.add_argument("--all", dest="all_tickers", action="store_true", help="tickers.csv 的全部公司；與 --from-manifest 一起用時為有申報清單的公司")
         download.add_argument("--ticker-file", type=Path, help="一行一個 ticker，或 JSON 字串清單")
         download.add_argument("--start", help="包含起日，實際 SEC reportDate YYYY-MM-DD")
         download.add_argument("--end", help="包含迄日")
@@ -56,7 +59,13 @@ class WorkflowCli:
             action="store_true",
             help="只讀本機 catalog 與申報包，列出目標期別與 Q4 依賴期別中還沒下載完整的申報，以及 catalog 未涵蓋的範圍；不連網、不寫入，有缺漏時回傳 2",
         )
+        download.add_argument(
+            "--from-manifest",
+            action="store_true",
+            help="依 data/snapshots/ 的申報清單下載每份申報包並逐檔核對 sha256；不查 SEC 申報清單、不選期別。--all 為有申報清單的公司",
+        )
         download.add_argument("--data", type=Path, default=data_root(), help="資料根目錄（預設 SEC_DATA_DIR 或 repo 的 data/）")
+        download.add_argument("--snapshots-dir", type=Path, default=SNAPSHOT_ROOT, help=argparse.SUPPRESS)
         parse = commands.add_parser("parse", help="依公司規格產生 data/revenue/ 的正式輸出")
         parse.add_argument("--tickers", nargs="+", help="AAPL MSFT 或 AAPL,MSFT；省略或 --all 為全部有規格的公司")
         parse.add_argument("--all", dest="all_tickers", action="store_true", help="全部有規格的公司")
@@ -68,6 +77,11 @@ class WorkflowCli:
             help="在已提交輸出的副本上照一般 parse 執行並逐欄比對，不寫入、不啟動 Chromium；省略期別時比對 status.json 列出的期別",
         )
         parse.add_argument(
+            "--snapshots",
+            action="store_true",
+            help="與 --check 一起使用：申報與 fact 讀 data/snapshots/ 的快照，不需要 SEC 原文；證據沿用已提交的表格檔",
+        )
+        parse.add_argument(
             "--republish",
             nargs=3,
             action="append",
@@ -77,6 +91,13 @@ class WorkflowCli:
         )
         parse.add_argument("--data", type=Path, default=data_root(), help="SEC 原文的資料根目錄（預設 SEC_DATA_DIR 或 repo 的 data/）")
         parse.add_argument("--out", type=Path, default=REVENUE_ROOT, help=argparse.SUPPRESS)
+        parse.add_argument("--snapshots-dir", type=Path, default=SNAPSHOT_ROOT, help=argparse.SUPPRESS)
+        snap = commands.add_parser("snapshot", help="由 SEC 原文產生 data/snapshots/ 的 XBRL fact 快照與申報清單")
+        snap.add_argument("--tickers", nargs="+", help="AAPL MSFT 或 AAPL,MSFT；省略或 --all 為全部有規格的公司")
+        snap.add_argument("--all", dest="all_tickers", action="store_true", help="全部有規格的公司")
+        snap.add_argument("--check", action="store_true", help="不寫入，核對已提交的快照與申報清單是否與原文重新產生的結果相同")
+        snap.add_argument("--data", type=Path, default=data_root(), help="SEC 原文的資料根目錄（預設 SEC_DATA_DIR 或 repo 的 data/）")
+        snap.add_argument("--out", type=Path, default=SNAPSHOT_ROOT, help=argparse.SUPPRESS)
         viewer = commands.add_parser("viewer", help="本機唯讀 viewer")
         viewer.add_argument("--host", default="127.0.0.1")
         viewer.add_argument("--port", type=int, default=7290)
@@ -94,9 +115,24 @@ class WorkflowCli:
                 return 0
             if args.command == "parse":
                 return self.parse(args)
+            if args.command == "snapshot":
+                return self.snapshot(args)
             periods = PeriodSelection(args.start, args.end, args.latest)
-            tickers = DownloadTickers().select(args.tickers, args.ticker_file, args.all_tickers)
-            workflow = DownloadWorkflow(ROOT, args.data, progress=self.progress, include_r_pages=args.include_r_pages)
+            if args.from_manifest and args.all_tickers:
+                listed = sorted(p.parent.name for p in args.snapshots_dir.glob(f"*/*/{snapshot.MANIFEST}"))
+                named = DownloadTickers().select(args.tickers, args.ticker_file) if args.tickers or args.ticker_file else []
+                tickers = list(dict.fromkeys(listed + named))
+            else:
+                tickers = DownloadTickers().select(args.tickers, args.ticker_file, args.all_tickers)
+            if args.from_manifest and (args.dry_run or args.start or args.end or args.latest):
+                raise ValueError("--from-manifest 依申報清單下載，不能與 --dry-run、--start、--end、--latest 同時使用")
+            workflow = DownloadWorkflow(
+                ROOT,
+                args.data,
+                progress=self.progress,
+                include_r_pages=args.include_r_pages,
+                manifests=args.snapshots_dir if args.from_manifest else None,
+            )
             if args.dry_run:
                 result = workflow.run(tickers, periods, dry_run=True)
                 print(json.dumps(result, ensure_ascii=False, indent=2))
@@ -108,8 +144,8 @@ class WorkflowCli:
             print(f"{args.command} 失敗：{error}", file=sys.stderr)
             return 1
 
-    def parse(self, args) -> int:
-        PeriodSelection(args.start, args.end)
+    @staticmethod
+    def spec_tickers(args) -> list[str]:
         names = parse_tickers(args.tickers)
         available = companies.tickers()
         if args.all_tickers or not names:
@@ -117,6 +153,35 @@ class WorkflowCli:
         unknown = [n for n in names if n not in available]
         if unknown:
             raise ValueError("沒有 parser 規格：" + ", ".join(unknown))
+        return names
+
+    def snapshot(self, args) -> int:
+        names = self.spec_tickers(args)
+        results, differences = [], []
+        for ticker in names:
+            spec, _ = companies.spec(ticker)
+            if args.check:
+                found = snapshot.check(args.data, args.out, spec)
+                differences += found
+                results.append({"ticker": ticker, "differences": found})
+            else:
+                results.append(snapshot.write(args.data, args.out, spec))
+            self.progress({"ticker": ticker, "status": "snapshot_checked" if args.check else "snapshot_written"})
+        print(json.dumps({"stage": "snapshot", "check": args.check, "companies": results}, ensure_ascii=False, indent=2))
+        if differences:
+            print("\n".join(["快照與原文重新產生的結果不同："] + differences), file=sys.stderr)
+            return 2
+        unreadable = [f"{r['ticker']} {a}" for r in results for a in r.get("errors", [])]
+        if unreadable:
+            print("\n".join(["原文讀不到，快照記錄為錯誤："] + unreadable), file=sys.stderr)
+            return 2
+        return 0
+
+    def parse(self, args) -> int:
+        PeriodSelection(args.start, args.end)
+        names = self.spec_tickers(args)
+        if args.snapshots and not args.check:
+            raise ValueError("--snapshots 沒有原文，無法產生證據，只能與 --check 一起使用")
         republish = {}
         for ticker, series, period in args.republish:
             ticker, series = ticker.upper(), series.upper()
@@ -133,7 +198,15 @@ class WorkflowCli:
             spec, spec_sha256 = companies.spec(ticker)
             if args.check:
                 report, found = check_outputs(
-                    args.data, args.out, spec, spec_sha256, None, args.start, args.end, progress=self.progress
+                    args.data,
+                    args.out,
+                    spec,
+                    spec_sha256,
+                    None,
+                    args.start,
+                    args.end,
+                    progress=self.progress,
+                    snapshots=args.snapshots_dir if args.snapshots else None,
                 )
                 report["differences"] = found
                 differences += [f"{ticker} {d}" for d in found]

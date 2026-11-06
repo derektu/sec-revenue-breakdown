@@ -32,6 +32,7 @@ from .evidence import TableScreenshotter
 from .compose import NotDerived, Operand, PeriodComposer, PeriodResult
 from .filings import FilingSet, ParseError
 from .review import TOTAL_LABEL, comparatives
+from .snapshot import SnapshotFilingSet
 from .spec import CompanySpec, fact_variants
 
 SCHEMA_VERSION = 1
@@ -81,12 +82,14 @@ class RevenueParser:
         progress: Callable[[dict], None] | None = None,
         screenshotter: Callable[[], TableScreenshotter] | None = None,
         default_start: str = DEFAULT_START,
+        filings: FilingSet | None = None,
     ):
         self.spec = spec
         self.default_start = default_start
         self.out = ticker_dir(out, spec.ticker)
         self.reuse = ticker_dir(reuse or out, spec.ticker)
-        self.filings = FilingSet(data, spec.ticker)
+        # 預設讀 `data` 下載的原文；`--check --snapshots` 改用快照建立的 FilingSet。
+        self.filings = filings or FilingSet(data, spec.ticker)
         self.composer = PeriodComposer(spec, self.filings)
         self.screenshots = screenshots
         self.republish = set(republish)
@@ -467,6 +470,8 @@ class RevenueParser:
 
     def evidence(self, result: PeriodResult, operands: list[Operand]) -> tuple[dict, dict[str, bytes]]:
         """每個運算元找到所在表格；同一張表的運算元一起標示，產生 HTML 與 PNG。"""
+        if self.filings.snapshot:
+            return self.committed_evidence(result, operands)
         groups: dict[str, list[Operand]] = {}
         for operand in operands:
             document = self.filings.document(operand.filing)
@@ -517,6 +522,39 @@ class RevenueParser:
                     "png_sha256": sha256(png) if png is not None else None,
                     "png_scale": SCREENSHOT_SCALE if png is not None else None,
                 }
+        return records, files
+
+    def committed_evidence(self, result: PeriodResult, operands: list[Operand]) -> tuple[dict, dict[str, bytes]]:
+        """快照模式沒有原文：表格鍵由 fact 的 `table_index` 算出，HTML 與 PNG 沿用已提交的證據檔。
+
+        已提交的證據中找不到該表格時該期失敗，表示這張表要以原文產生。表格 HTML 的內容與 fact 節點核對只在原文模式進行。
+        """
+        records, files = {}, {}
+        for operand in operands:
+            fact = operand.fact
+            if fact.table_index is None:
+                raise ParseError("證據完整", f"{operand.id} {fact.fact_id}（{operand.filing.accession}）不在 HTML 表格內，沒有表格證據")
+            key = f"{operand.filing.accession}-{operand.filing.document['sha256'][:12]}-t{fact.table_index}"
+            source = next(
+                (s for s in [result.series] + [s for s in SERIES if s != result.series]
+                 if (self.reuse / s / result.period_end / "evidence" / f"{key}.html").is_file()),
+                None,
+            )
+            if source is None:
+                raise ParseError("證據完整", f"快照模式沒有已提交的表格證據 {key}；這張表要以原文產生")
+            committed = self.reuse / source / result.period_end / "evidence"
+            page = (committed / f"{key}.html").read_bytes()
+            png = (committed / f"{key}.png").read_bytes() if (committed / f"{key}.png").is_file() else None
+            recorded = self.recorded_png(source, result.period_end, key)
+            files[f"{key}.html"] = page
+            if png is not None:
+                files[f"{key}.png"] = png
+            records[operand.id] = {
+                "table": key,
+                "html_sha256": sha256(page),
+                "png_sha256": sha256(png) if png is not None else None,
+                "png_scale": (recorded[1] if recorded else None) if png is not None else None,
+            }
         return records, files
 
     def png(self, series, period, key, page, filing, items, locator, index) -> bytes | None:
@@ -658,16 +696,21 @@ def check_outputs(
     end=None,
     progress=None,
     default_start: str = DEFAULT_START,
+    snapshots: Path | None = None,
 ) -> tuple[dict, list[str]]:
     """`--check`：在已提交輸出的副本上照一般 parse 執行（不啟動 Chromium），再與已提交的輸出比對。
 
-    一般 parse 不會改動任何檔案、也不會改變 status.json 時才算一致。
+    一般 parse 不會改動任何檔案、也不會改變 status.json 時才算一致。`snapshots` 指定快照根目錄時不讀原文，
+    申報與 fact 來自快照，證據沿用已提交的表格檔。
     """
     committed = ticker_dir(committed_root, spec.ticker)
     with tempfile.TemporaryDirectory() as temp:
         if committed.exists():
             shutil.copytree(committed, ticker_dir(Path(temp), spec.ticker))
-        parser = RevenueParser(data, Path(temp), spec, spec_sha256, screenshots=False, progress=progress, default_start=default_start)
+        filings = SnapshotFilingSet(snapshots, spec) if snapshots is not None else None
+        parser = RevenueParser(
+            data, Path(temp), spec, spec_sha256, screenshots=False, progress=progress, default_start=default_start, filings=filings
+        )
         if periods is None:
             status = committed / "status.json"
             if status.exists() and not (start or end):

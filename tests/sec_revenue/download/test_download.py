@@ -758,5 +758,78 @@ class DryRunTests(SecFixture):
         self.assertFalse(report["complete"])
 
 
+class ManifestRestoreTests(SecFixture):
+    """依申報清單重新下載申報包並逐檔核對 sha256。"""
+
+    CIK = "999005"
+
+    def setUp(self):
+        super().setUp()
+        self.company_tickers({"ZZZM": self.CIK})
+        self.q = self.filing(self.CIK, "2027-03-31")
+        self.submissions(self.CIK, [self.q])
+        self.base = self.package(self.CIK, self.q)
+        self.workflow(include_r_pages=True).run(["ZZZM"], PeriodSelection())
+        packages = JsonCodec.read(self.data / "pipeline/ZZZM/packages.json")["packages"]
+        self.manifests = Path(self.temp.name) / "snapshots"
+        self.entries = [
+            {"filing": p["filing"], "documents": {n: {"sha256": d["sha256"], "bytes": d["bytes"]} for n, d in p["documents"].items()}}
+            for p in packages.values()
+        ]
+        self.write_manifest()
+        self.fresh = Path(self.temp.name) / "fresh"
+
+    def write_manifest(self):
+        JsonCodec.write(self.manifests / "Z/ZZZM/manifest.json", {"ticker": "ZZZM", "filings": self.entries})
+
+    def restore(self):
+        workflow = DownloadWorkflow(ROOT, self.fresh, self.http, tickers_csv=self.csv, manifests=self.manifests)
+        return DownloadBatch(workflow).run(["ZZZM"], PeriodSelection())
+
+    def saved(self):
+        return JsonCodec.read(self.fresh / "pipeline/ZZZM/packages.json")["packages"][self.q["accessionNumber"]]
+
+    def test_restores_listed_packages_without_catalog(self):
+        before = len(self.http.requests)
+        report = self.restore()
+        self.assertEqual(report["succeeded"], ["ZZZM"])
+        self.assertEqual(report["companies"][0]["manifest_mismatches"], [])
+        requested = self.http.requests[before:]
+        self.assertFalse(any("submissions" in url or "company_tickers" in url for url in requested), requested)
+        self.assertTrue(self.saved()["complete"])
+
+    def test_listed_r_pages_are_downloaded(self):
+        self.assertIn("R1.htm", self.entries[0]["documents"])
+        self.restore()
+        self.assertIn("R1.htm", self.saved()["documents"])
+
+    def test_changed_file_marks_package_incomplete_until_redownloaded(self):
+        good = self.http.responses[self.base + "doc.xsd"]
+        self.http.responses[self.base + "doc.xsd"] = b"<schema changed/>"
+        report = self.restore()
+        self.assertEqual(report["succeeded"], [])
+        self.assertIn("doc.xsd：sha256 與申報清單不同", report["failed"][0]["error"])
+        saved = self.saved()
+        self.assertFalse(saved["complete"])
+        self.assertNotIn("doc.xsd", saved["documents"])
+        self.assertIn("doc.xsd", saved["failures"])
+        self.http.responses[self.base + "doc.xsd"] = good
+        self.assertEqual(self.restore()["succeeded"], ["ZZZM"])
+        self.assertTrue(self.saved()["complete"])
+
+    def test_listed_file_missing_from_package_fails(self):
+        self.entries[0]["documents"]["gone.htm"] = {"sha256": "0" * 64, "bytes": 1}
+        self.write_manifest()
+        report = self.restore()
+        self.assertIn("gone.htm：申報清單列出、申報包沒有這個檔案", report["failed"][0]["error"])
+        self.assertFalse(self.saved()["complete"])
+
+    def test_unlisted_file_is_reported_without_failing(self):
+        del self.entries[0]["documents"]["g1.jpg"]
+        self.write_manifest()
+        report = self.restore()
+        self.assertEqual(report["succeeded"], ["ZZZM"])
+        self.assertEqual(report["companies"][0]["manifest_extra"], [f"{self.q['accessionNumber']} g1.jpg"])
+
 if __name__ == "__main__":
     unittest.main()
