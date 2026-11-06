@@ -1,0 +1,229 @@
+{
+  "categories": {
+    "Corporate and Other": {
+      "expression": [
+        {
+          "operand": "op3",
+          "weight": 1
+        }
+      ],
+      "value": 78000000
+    },
+    "FPL": {
+      "expression": [
+        {
+          "operand": "op1",
+          "weight": 1
+        }
+      ],
+      "value": 4708000000
+    },
+    "NEER": {
+      "expression": [
+        {
+          "operand": "op2",
+          "weight": 1
+        }
+      ],
+      "value": 1914000000
+    }
+  },
+  "checks": {
+    "structural": [
+      {
+        "check": "定義唯一",
+        "result": "pass"
+      },
+      {
+        "check": "fact 存在且唯一",
+        "result": "pass"
+      },
+      {
+        "check": "單位與精度",
+        "result": "pass"
+      },
+      {
+        "check": "加總",
+        "result": "pass"
+      },
+      {
+        "check": "證據完整",
+        "result": "pass"
+      }
+    ],
+    "sum": {
+      "categories": 6700000000,
+      "difference": 0,
+      "tolerance": "2000000",
+      "total": 6700000000
+    }
+  },
+  "filings": {
+    "primary": {
+      "accession": "0000753308-25-000040",
+      "filing_date": "2025-07-23",
+      "form": "10-Q",
+      "report_date": "2025-06-30"
+    }
+  },
+  "fiscal_quarter": 2,
+  "fiscal_year": 2025,
+  "operands": {
+    "op1": {
+      "accession": "0000753308-25-000040",
+      "concept": "us-gaap:RegulatedAndUnregulatedOperatingRevenue",
+      "context_id": "c-81",
+      "decimals": "-6",
+      "dimensions": {
+        "dei:LegalEntityAxis": "nee:FloridaPowerLightCompanyMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/753308/000075330825000040/nee-20250630.htm",
+        "name": "nee-20250630.htm",
+        "sha256": "7134dc68fe9a5543dfb78703dfa2097463d3db76f069769a8bea849d41e4e4e1",
+        "url": "https://www.sec.gov/Archives/edgar/data/753308/000075330825000040/nee-20250630.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "2b8d5df21a338ddb0bee30c01ba836840df1953aa43d246bb03f5561ff15640c",
+        "png_scale": 1,
+        "png_sha256": "5cd74b833c1563704fc8e54ae92a834c2d23aac49f5a7ec02e0c458a8867ea9e",
+        "table": "0000753308-25-000040-7134dc68fe9a-t13"
+      },
+      "fact_id": "f-571",
+      "filing_date": "2025-07-23",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-06-30",
+        "start": "2025-04-01"
+      },
+      "raw": "4,708",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 4708000000
+    },
+    "op2": {
+      "accession": "0000753308-25-000040",
+      "concept": "us-gaap:RegulatedAndUnregulatedOperatingRevenue",
+      "context_id": "c-461",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "nee:NEERSegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/753308/000075330825000040/nee-20250630.htm",
+        "name": "nee-20250630.htm",
+        "sha256": "7134dc68fe9a5543dfb78703dfa2097463d3db76f069769a8bea849d41e4e4e1",
+        "url": "https://www.sec.gov/Archives/edgar/data/753308/000075330825000040/nee-20250630.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "d644f8b064c6c28e00555bb6d55dfeaa4c27c76746e335c7210bebda6d6df8ab",
+        "png_scale": 1,
+        "png_sha256": "f6e7b61a5b8eedaa3d16f4fde6a7c3d3ba48b841f14c5f5807c5331c155720a2",
+        "table": "0000753308-25-000040-7134dc68fe9a-t46"
+      },
+      "fact_id": "f-1989",
+      "filing_date": "2025-07-23",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-06-30",
+        "start": "2025-04-01"
+      },
+      "raw": "1,914",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 1914000000
+    },
+    "op3": {
+      "accession": "0000753308-25-000040",
+      "concept": "us-gaap:RegulatedAndUnregulatedOperatingRevenue",
+      "context_id": "c-466",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "nee:CorporateAndEliminationsMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/753308/000075330825000040/nee-20250630.htm",
+        "name": "nee-20250630.htm",
+        "sha256": "7134dc68fe9a5543dfb78703dfa2097463d3db76f069769a8bea849d41e4e4e1",
+        "url": "https://www.sec.gov/Archives/edgar/data/753308/000075330825000040/nee-20250630.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "d644f8b064c6c28e00555bb6d55dfeaa4c27c76746e335c7210bebda6d6df8ab",
+        "png_scale": 1,
+        "png_sha256": "f6e7b61a5b8eedaa3d16f4fde6a7c3d3ba48b841f14c5f5807c5331c155720a2",
+        "table": "0000753308-25-000040-7134dc68fe9a-t46"
+      },
+      "fact_id": "f-1994",
+      "filing_date": "2025-07-23",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-06-30",
+        "start": "2025-04-01"
+      },
+      "raw": "78",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 78000000
+    },
+    "op4": {
+      "accession": "0000753308-25-000040",
+      "concept": "us-gaap:RegulatedAndUnregulatedOperatingRevenue",
+      "context_id": "c-9",
+      "decimals": "-6",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/753308/000075330825000040/nee-20250630.htm",
+        "name": "nee-20250630.htm",
+        "sha256": "7134dc68fe9a5543dfb78703dfa2097463d3db76f069769a8bea849d41e4e4e1",
+        "url": "https://www.sec.gov/Archives/edgar/data/753308/000075330825000040/nee-20250630.htm"
+      },
+      "duplicates": [
+        "f-52"
+      ],
+      "evidence": {
+        "html_sha256": "d644f8b064c6c28e00555bb6d55dfeaa4c27c76746e335c7210bebda6d6df8ab",
+        "png_scale": 1,
+        "png_sha256": "f6e7b61a5b8eedaa3d16f4fde6a7c3d3ba48b841f14c5f5807c5331c155720a2",
+        "table": "0000753308-25-000040-7134dc68fe9a-t46"
+      },
+      "fact_id": "f-1996",
+      "filing_date": "2025-07-23",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-06-30",
+        "start": "2025-04-01"
+      },
+      "raw": "6,700",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 6700000000
+    }
+  },
+  "period_end": "2025-06-30",
+  "schema_version": 1,
+  "series": "Q",
+  "ticker": "NEE",
+  "total": {
+    "expression": [
+      {
+        "operand": "op4",
+        "weight": 1
+      }
+    ],
+    "value": 6700000000
+  },
+  "unit": "USD",
+  "view": "business_segment"
+}
