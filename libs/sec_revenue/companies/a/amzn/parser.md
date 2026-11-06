@@ -28,13 +28,14 @@ concept 是 `us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax`，帶 
 | Online stores | `amzn:OnlineStoresMember` |
 | Physical stores | `amzn:PhysicalStoresMember` |
 | Third-party seller services | `amzn:ThirdPartySellerServicesMember` |
-| Advertising services | `one_of`：`amzn:AdvertisingServicesMember`（10-Q）、`us-gaap:AdvertisingMember`（10-K） |
+| Advertising services | `amzn:AdvertisingServicesMember`（10-Q）或 `us-gaap:AdvertisingMember`（10-K） |
 | Subscription services | `amzn:SubscriptionServicesMember` |
 | AWS | `amzn:AmazonWebServicesMember` |
 | Other | `amzn:OtherServicesMember` |
 | 總營收（Consolidated） | 不帶維度 |
 
-- Advertising services 在 10-K 與 10-Q 用不同的成員，數字是同一列，所以以 `one_of` 列出兩種寫法。Q4 的年度運算元來自 10-K 的 `us-gaap:AdvertisingMember`，九個月運算元來自 Q3 10-Q 的 `amzn:AdvertisingServicesMember`。
+- Advertising services 在 10-K 與 10-Q 用不同的成員，數字是同一列，所以 parser 在每份申報都找這兩種寫法。Q4 的年度運算元來自 10-K 的 `us-gaap:AdvertisingMember`，九個月運算元來自 Q3 10-Q 的 `amzn:AdvertisingServicesMember`。
+- `categories` 每一天都是這 7 類。
 - 7 類加總等於總營收，沒有調節項。
 - 分類名稱取自營收附註表的列標籤（去掉註腳編號）；總營收取自同表的 `Consolidated`。
 

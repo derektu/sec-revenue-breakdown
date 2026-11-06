@@ -29,8 +29,9 @@ concept 是 `us-gaap:Revenues`。分部 fact 帶兩個維度：`srt:Consolidatio
 | Corporate, eliminations and other | 只帶 `srt:ConsolidationItemsAxis=brka:CorporateReconcilingItemsAndEliminationsMember` |
 | 總營收（Revenues） | 不帶維度 |
 
+- `categories` 每一天都是這 8 類。
 - 8 類加總等於總營收，沒有調節項。
-- 同一個 concept 另有一組只帶分部軸、不帶 `srt:ConsolidationItemsAxis` 的 fact。那組把保險與公司層級合併為 `brka:InsuranceCorporateAndOtherMember`，數字是對外營收，與分部表不同，所以規格一律寫完整的兩個維度。
+- 同一個 concept 另有一組只帶分部軸、不帶 `srt:ConsolidationItemsAxis` 的 fact。那組把保險與公司層級合併為 `brka:InsuranceCorporateAndOtherMember`，數字是對外營收，與分部表不同，所以 parser 一律找完整的兩個維度。
 - 分類名稱取自附註分部表的欄標題或列標籤：BNSF、BHE、Manufacturing、McLane、Pilot、Service and retailing 是各分部營業結果表的欄標題，Corporate, eliminations and other 是分部與合併營收調節表的列標籤。Insurance 的列標籤是「Premiums earned and investment income」，名稱取該表的分部名稱。
 
 ## 期別與推算

@@ -15,7 +15,7 @@
 兩個來源用分部總營收，所以採用這個口徑：
 - 分部的數字含分部間營收。UNH 的 Optum 有大量營收來自 UnitedHealthcare，所以抵銷項很大。
 - Corporate and eliminations 有兩個來源列出（富途的「公司和抵銷」、Stock Analysis 的 Eliminations），列成分類。
-- Optum eliminations 只有富途列出，宣告為 `reconciling`，參與加總但不輸出成分類。Stock Analysis 的 Optum 是扣除這一項後的合計。
+- Optum eliminations 只有富途列出，列為調節項，參與加總但不輸出成分類。Stock Analysis 的 Optum 是扣除這一項後的合計。
 
 分部取自 `us-gaap:StatementBusinessSegmentsAxis`。UNH 這個軸的成員是業務別：健康保險（UnitedHealthcare）、醫療服務（Optum Health）、資訊與科技服務（Optum Insight）、藥品福利管理（Optum Rx）。它們不是地區，所以採用。
 
@@ -26,15 +26,16 @@ concept 是 `us-gaap:Revenues`。
 | 分類 | 維度 |
 |---|---|
 | UnitedHealthcare | `srt:ConsolidationItemsAxis=us-gaap:OperatingSegmentsMember`＋分部 `unh:UnitedhealthcareMember` |
-| Optum Health | 同上，分部 `one_of`：`unh:OptumHealthMember`（10-Q）、`unh:OptumhealthMember`（10-K） |
-| Optum Insight | 同上，分部 `one_of`：`unh:OptumInsightMember`、`unh:OptuminsightMember` |
-| Optum Rx | 同上，分部 `one_of`：`unh:OptumRxMember`、`unh:OptumrxMember` |
+| Optum Health | 同上，分部 `unh:OptumHealthMember`（10-Q）或 `unh:OptumhealthMember`（10-K） |
+| Optum Insight | 同上，分部 `unh:OptumInsightMember` 或 `unh:OptuminsightMember` |
+| Optum Rx | 同上，分部 `unh:OptumRxMember` 或 `unh:OptumrxMember` |
 | Corporate and eliminations | `srt:ConsolidationItemsAxis=us-gaap:CorporateNonSegmentMember` |
 | Optum eliminations（調節項） | `srt:ConsolidationItemsAxis=us-gaap:IntersegmentEliminationMember` |
 | 總營收（Consolidated） | 不帶維度 |
 
-- Optum 三個分部的成員在 10-Q 與 10-K 之間只差大小寫，數字是分部表的同一列，所以以 `one_of` 列出兩種寫法。
-- 分部 fact 另有帶 `srt:MajorCustomersAxis`（對外／分部間）的拆分，規格用不帶這個軸的合計。
+- Optum 三個分部的成員在 10-Q 與 10-K 之間只差大小寫，數字是分部表的同一列，所以 parser 在每份申報都找這兩種寫法。
+- 分部 fact 另有帶 `srt:MajorCustomersAxis`（對外／分部間）的拆分，parser 用不帶這個軸的合計。
+- `categories` 每一天都是這五類加 Optum eliminations。
 - 五類加上 Optum eliminations 等於總營收。
 - 分類名稱取自分部表的欄名；總營收取自同表的 `Consolidated` 欄、`Total revenues` 列。
 
