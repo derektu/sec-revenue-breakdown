@@ -550,6 +550,20 @@ class FourthQuarterTest(Fixture):
             self.composer().compose("2025-12-31")
 
 
+class ComparisonBoundTest(unittest.TestCase):
+    def test_bound_is_coarser_of_declared_and_displayed_precision(self):
+        from sec_revenue.revenue.xbrl import comparison_bound
+        from decimal import Decimal
+
+        self.assertEqual(comparison_bound("-5", "15,437", "6"), Decimal(500_000))
+        self.assertEqual(comparison_bound("-5", "15,436.5", "6"), Decimal(50_000))
+        self.assertEqual(comparison_bound("-6", "15,436.5", "6"), Decimal(500_000))
+        self.assertEqual(comparison_bound("-3", "1,234", "3"), Decimal(500))
+        self.assertEqual(comparison_bound("INF", "12", "0"), Decimal("0.5"))
+        self.assertEqual(comparison_bound("-6", "—", "6"), Decimal(500_000))
+        self.assertIsNone(comparison_bound(None, "15", "6"))
+
+
 class Q4BasisTest(Fixture):
     """Q4 口徑一致：年報列示的上一財年數字與上一財年先前申報的值比對。"""
 
@@ -693,6 +707,50 @@ class Q4BasisTest(Fixture):
         self.assertEqual(q4["status"], "published")
         self.assertEqual(q4["q4_basis"]["result"], "undetermined")
         self.assertIn("A：unparseable", q4["q4_basis"]["reason"])
+
+    def test_declared_precision_finer_than_display_is_not_a_change(self):
+        # MCD 的形狀：上一份 10-K 顯示 15,436.5（百萬、decimals -5）；年報列示上一財年 15,437（百萬），卻宣告 decimals -5。
+        # 年報的數字實際只到百萬位，差 50 萬在誤差內，不是口徑變更。
+        self.add(
+            self.PRIOR_10K, "10-K", "2024-12-31", "2025-02-10",
+            build_html(2024, "FY", [
+                item("ya", REVENUE, A, "2024-01-01", "2024-12-31", "100.5", decimals="-5"),
+                item("yb", REVENUE, B, "2024-01-01", "2024-12-31", "99.5", decimals="-5"),
+                item("yt", REVENUE, None, "2024-01-01", "2024-12-31", "200"),
+            ]),
+        )
+        self.standard_year()
+        self.add(
+            self.ANNUAL_10K, "10-K", "2025-12-31", "2026-02-15",
+            build_html(2025, "FY", [
+                item("ya", REVENUE, A, "2025-01-01", "2025-12-31", "300"),
+                item("yb", REVENUE, B, "2025-01-01", "2025-12-31", "100"),
+                item("yt", REVENUE, None, "2025-01-01", "2025-12-31", "400"),
+                item("pa", REVENUE, A, "2024-01-01", "2024-12-31", "101", 1, decimals="-5"),
+                item("pb", REVENUE, B, "2024-01-01", "2024-12-31", "99.5", 1, decimals="-5"),
+                item("pt", REVENUE, None, "2024-01-01", "2024-12-31", "200", 1),
+            ]),
+        )
+        for start in ("2025-01-01", None):
+            options = {"default_start": start} if start else {}
+            q4 = self.run_all(**options)["Q"]["2025-12-31"]
+            self.assertEqual(q4["status"], "published", start)
+            self.assertNotIn("q4_basis", q4)
+        # 顯示精度與宣告相符（101.2，十萬位）而差 70 萬時才是不同。
+        self.add(
+            self.ANNUAL_10K, "10-K", "2025-12-31", "2026-02-15",
+            build_html(2025, "FY", [
+                item("ya", REVENUE, A, "2025-01-01", "2025-12-31", "300"),
+                item("yb", REVENUE, B, "2025-01-01", "2025-12-31", "100"),
+                item("yt", REVENUE, None, "2025-01-01", "2025-12-31", "400"),
+                item("pa", REVENUE, A, "2024-01-01", "2024-12-31", "101.2", 1, decimals="-5"),
+                item("pb", REVENUE, B, "2024-01-01", "2024-12-31", "98.8", 1, decimals="-5"),
+                item("pt", REVENUE, None, "2024-01-01", "2024-12-31", "200", 1),
+            ]),
+        )
+        shutil.rmtree(self.out)
+        q4 = self.run_all(default_start="2025-01-01")["Q"]["2025-12-31"]
+        self.assertEqual((q4["status"], [c["category"] for c in q4["basis_changes"]]), ("not_derived", ["A", "B"]))
 
     def test_prior_report_filed_after_annual_report_is_not_used(self):
         # Point in time：上一財年的 10-K 晚於本年報才申報。它的 FY 照常上線，但本年報判斷時看不到，也不讀那份 10-K。
@@ -1094,7 +1152,7 @@ class ComparativeTest(Fixture):
             "total": {"value": 60_000_000, "expression": []},
             "operands": {
                 "op1": {"kind": "xbrl_fact", "role": "quarter", "accession": "old", "concept": REVENUE, "dimensions": A,
-                        "period": {"start": "2024-01-01", "end": "2024-03-31"}, "value": 60_000_000, "decimals": "-6"}
+                        "period": {"start": "2024-01-01", "end": "2024-03-31"}, "value": 60_000_000, "raw": "60", "scale": "6", "decimals": "-6"}
             },
         }
         items = [
@@ -1272,7 +1330,7 @@ class MultiFactSumTest(Fixture):
             "total": {"value": 60_000_000, "expression": []},
             "operands": {
                 f"op{n}": {"kind": "xbrl_fact", "role": "quarter", "accession": "old", "concept": REVENUE, "dimensions": d,
-                           "period": {"start": "2024-01-01", "end": "2024-03-31"}, "value": v, "decimals": "-6"}
+                           "period": {"start": "2024-01-01", "end": "2024-03-31"}, "value": v, "raw": str(v // 1_000_000), "scale": "6", "decimals": "-6"}
                 for n, d, v in ((1, A1, 35_000_000), (2, A2, 25_000_000))
             },
         }
@@ -1436,7 +1494,7 @@ class TagVariantTest(Fixture):
             "categories": {"A": {"value": 60_000_000, "expression": [{"weight": 1, "operand": "op1"}]}},
             "total": {"value": 60_000_000, "expression": []},
             "operands": {"op1": {"kind": "xbrl_fact", "role": "quarter", "accession": "old", "concept": REVENUE, "dimensions": A,
-                                 "period": {"start": "2024-01-01", "end": "2024-03-31"}, "value": 60_000_000, "decimals": "-6"}},
+                                 "period": {"start": "2024-01-01", "end": "2024-03-31"}, "value": 60_000_000, "raw": "60", "scale": "6", "decimals": "-6"}},
         }
         items = [item("pa", REVENUE, A, "2024-01-01", "2024-03-31", "60"), item("palt", REVENUE, ALT_A, "2024-01-01", "2024-03-31", "64"),
                  item("pt", REVENUE, None, "2024-01-01", "2024-03-31", "100")]
@@ -1471,7 +1529,7 @@ class TagVariantTest(Fixture):
             "categories": {"A": {"value": 60_000_000, "expression": [{"weight": 1, "operand": "op1"}]}},
             "total": {"value": 60_000_000, "expression": []},
             "operands": {"op1": {"kind": "xbrl_fact", "role": "quarter", "accession": "old", "concept": REVENUE, "dimensions": A,
-                                 "period": {"start": "2024-01-01", "end": "2024-03-31"}, "value": 60_000_000, "decimals": "-6"}},
+                                 "period": {"start": "2024-01-01", "end": "2024-03-31"}, "value": 60_000_000, "raw": "60", "scale": "6", "decimals": "-6"}},
         }
         items = [item("pa", REVENUE, A, "2024-01-01", "2024-03-31", "60"), item("pt", REVENUE, None, "2024-01-01", "2024-03-31", "100")]
         lookup = {"A": [Addend(one_of(fact(REVENUE, A), fact(REVENUE, {AXIS: "y:AltAMember"})))], None: [Addend(fact(REVENUE))]}

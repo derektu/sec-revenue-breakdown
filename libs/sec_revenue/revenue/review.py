@@ -9,7 +9,7 @@ from __future__ import annotations
 from decimal import Decimal
 
 from .spec import fact_variants
-from .xbrl import InlineDocument, decimals_rank, error_bound
+from .xbrl import InlineDocument, comparison_bound, decimals_rank
 
 TOTAL_LABEL = "總營收"
 # 已上線運算式中，九個月累計以負號參與 Q4；比對時換回定義本身的符號，與申報列示的九個月累計同號。
@@ -28,7 +28,7 @@ def comparatives(document: InlineDocument, accession: str, baselines: list[tuple
     namespace URI 比對。
 
     新申報有某段期間的總營收（總營收的每個加數都有該期間的 fact）時，視為涵蓋該期間。結果是 `consistent`
-    （差距不超過雙方所有運算元的精度誤差總和）、`different`（超出）、`unparseable`（新申報或已上線的 fact 無法比較）或
+    （差距不超過雙方所有運算元的誤差上限總和；每個 fact 的誤差上限取 decimals 與顯示文字精度中較粗者）、`different`（超出）、`unparseable`（新申報或已上線的 fact 無法比較）或
     `not_found`（新申報期別沒有這個分類的定義，或有加數在新申報中找不到該期間的 fact）。沒有涵蓋的期間不列入；
     已上線輸出沒有的期間長度（例如六個月累計）因此不比對。
     """
@@ -55,7 +55,7 @@ def comparatives(document: InlineDocument, accession: str, baselines: list[tuple
                 sign = ROLE_SIGN.get(role, 1)
                 published = [
                     {"operand": op_id, "concept": o["concept"], "dimensions": o["dimensions"], "weight": sign * w,
-                     "value": o["value"], "decimals": o["decimals"]}
+                     "value": o["value"], "bound": comparison_bound(o["decimals"], o["raw"], o["scale"])}
                     for w, op_id, o in terms
                 ]
                 entry = {
@@ -102,7 +102,7 @@ def listed_value(document: InlineDocument, addends, span: tuple[str, str], publi
         return {"result": "unparseable", "listed_value": None, "listed_addends": others + ambiguous,
                 "note": f"新申報同一個加數的 fact 數值不一致：{'；'.join(conflicts)}"}
     result = {"listed_addends": [{k: a[k] for k in ("fact_id", "concept", "dimensions", "weight", "value")} for a in listed]}
-    bounds = [error_bound(a["decimals"]) for a in published] + [a["fact"].error_bound() for a in listed]
+    bounds = [a["bound"] for a in published] + [a["fact"].comparison_bound() for a in listed]
     broken = [a["fact"] for a in listed if a["fact"].value is None or a["fact"].error_bound() is None]
     if broken or None in bounds:
         reason = "、".join(f"{f.fact_id}：{f.value_error or '缺 decimals'}" for f in broken) or "已上線運算元缺 decimals"

@@ -52,6 +52,20 @@ def error_bound(decimals: str | None) -> Decimal | None:
     return Decimal(10) ** (-int(decimals)) / 2
 
 
+def comparison_bound(decimals: str | None, raw: str, scale: str) -> Decimal | None:
+    """跨申報比對用的誤差上限：`decimals` 與顯示文字本身的精度取較粗者。
+
+    公司有時宣告的 decimals 比顯示的位數細（例如顯示 `15,437`、scale 6，卻宣告 decimals=-5），數值實際只到顯示的位數。
+    顯示精度由 fact 自己的文字與 scale 推得：小數點後的位數減 scale。文字沒有數字（零值格式）時只看 decimals。
+    """
+    declared = error_bound(decimals)
+    digits = raw.replace(",", "").replace(" ", "")
+    if declared is None or not any(c.isdigit() for c in digits):
+        return declared
+    fraction = len(digits.split(".", 1)[1]) if "." in digits else 0
+    return max(declared, error_bound(str(fraction - int(scale))))
+
+
 @dataclass(frozen=True)
 class Fact:
     fact_id: str
@@ -79,6 +93,9 @@ class Fact:
 
     def error_bound(self) -> Decimal | None:
         return error_bound(self.decimals)
+
+    def comparison_bound(self) -> Decimal | None:
+        return comparison_bound(self.decimals, self.raw, self.scale)
 
 
 class InlineDocument:
