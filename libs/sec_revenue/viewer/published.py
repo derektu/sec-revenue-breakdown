@@ -5,6 +5,9 @@
 上線輸出的期別，兩者都有。
 
 每個運算元的證據表格檔以 `revenue.json` 記錄的 sha256 核對，缺檔或 hash 不符時附原因，不當作正常證據。
+
+對照資料（`data/universe/references/`）由 `load_reference` 讀取與驗證（含證據檔的 sha256）；驗證不通過的 ticker
+不列擷取紀錄、不提供截圖。
 """
 
 from __future__ import annotations
@@ -15,21 +18,40 @@ from pathlib import Path
 import re
 
 from ..revenue.evidence import FILE_NAME_RE
-from ..universe import TICKER_RE, UniverseError, load_tickers
+from ..universe import (
+    CAPTURE_ID_RE,
+    DEFAULT_UNIVERSE_DIR,
+    REFERENCE_FILE,
+    REFERENCES_DIR,
+    SOURCES,
+    TICKER_RE,
+    UniverseError,
+    load_reference,
+    load_tickers,
+    reference_dir,
+)
 
 SERIES = ("Q", "FY")
 DATE_RE = re.compile(r"\d{4}-\d{2}-\d{2}")
 
 
 class PublishedRevenue:
-    """`root` 是正式輸出根目錄（`data/revenue/`）；`universe` 是 `tickers.csv` 路徑，省略時用預設位置。"""
+    """`root` 是正式輸出根目錄（`data/revenue/`）；`universe` 是 `tickers.csv` 路徑，省略時用預設位置。
+
+    對照資料在 `tickers.csv` 同目錄的 `references/`。
+    """
 
     def __init__(self, root: Path, universe: Path | None = None):
         self.root = Path(root)
         self.universe = universe
+        self.universe_dir = Path(universe).parent if universe else DEFAULT_UNIVERSE_DIR
 
     def companies(self) -> list[dict]:
-        """`tickers.csv` 的公司加上有輸出目錄的公司；`listed` 為 `status=ok`，`has_output` 為有輸出目錄。"""
+        """`tickers.csv` 的公司加上有輸出目錄的公司。
+
+        `universe_status` 是 `tickers.csv` 的 `status`（沒列入時為 None），`listed` 為 `status=ok`，`has_output` 為有輸出目錄，
+        `has_reference` 為有對照檔；`adopted_source`、`stability_score`、`stability_note` 照 `tickers.csv`，空白評分為 None。
+        """
         try:
             entries = {e.ticker: e for e in load_tickers(self.universe)}
         except UniverseError:
@@ -43,9 +65,21 @@ class PublishedRevenue:
                 "universe_status": entries[name].status if name in entries else None,
                 "listed": name in entries and entries[name].status == "ok",
                 "has_output": name in outputs,
+                "has_reference": self.reference_file(name).is_file(),
+                "adopted_source": entries[name].adopted_source if name in entries else None,
+                "stability_score": entries[name].stability_score if name in entries else None,
+                "stability_note": entries[name].stability_note if name in entries else "",
             }
             for name in names
         ]
+
+    def universe_errors(self) -> list[str]:
+        """`tickers.csv` 的驗證錯誤；有錯誤時 `companies()` 只列有輸出目錄的公司。"""
+        try:
+            load_tickers(self.universe)
+        except UniverseError as error:
+            return error.errors
+        return []
 
     def output_tickers(self) -> list[str]:
         if not self.root.is_dir():
@@ -146,6 +180,65 @@ class PublishedRevenue:
                     problems.append(f"{name} 的 hash 與 revenue.json 中 {'、'.join(mismatched)} 的紀錄不同")
             tables[key] = {"png": f"{key}.png", "html": f"{key}.html", "problems": problems}
         return tables
+
+    def reference_file(self, ticker: str) -> Path:
+        return reference_dir(ticker, self.universe_dir) / REFERENCE_FILE
+
+    def references(self, ticker: str) -> dict:
+        """一家公司各對照來源的擷取紀錄。沒有對照檔時 `sources` 為空；對照檔驗證不通過時列出 `errors`，不列擷取。
+
+        每個來源的 `captures` 依擷取時間由舊到新，各附擷取頁面 `url`、`captured_at`、`method`、是否有截圖（`png`），
+        以及數值指向這次擷取的期間標籤（`periods`，依 `reference.json` 的順序）。
+        """
+        result = {"ticker": ticker, "sources": [], "errors": []}
+        if not self.reference_file(ticker).is_file():
+            return result
+        try:
+            data = load_reference(ticker, self.universe_dir)
+        except UniverseError as error:
+            result["errors"] = error.errors
+            return result
+        for source in SOURCES:
+            entry = data["sources"].get(source)
+            if not entry:
+                continue
+            labels: dict[str, list[str]] = {}
+            for period in entry["periods"]:
+                labels.setdefault(period["capture"], []).append(period["label"])
+            result["sources"].append(
+                {
+                    "source": source,
+                    "captures": [
+                        {
+                            "capture": capture,
+                            "url": record.get("url"),
+                            "captured_at": record["captured_at"],
+                            "method": record["method"],
+                            "png": "files" in record,
+                            "periods": labels.get(capture, []),
+                        }
+                        for capture, record in sorted(entry["captures"].items())
+                    ],
+                }
+            )
+        return result
+
+    def reference_capture_file(self, ticker: str, source: str, capture: str) -> Path | None:
+        """對照檔記錄的表格截圖（`table.png`）；ticker、來源或擷取不在對照檔、或對照檔驗證不通過時回傳 None。"""
+        if not self.known(ticker) or source not in SOURCES or not CAPTURE_ID_RE.fullmatch(capture):
+            return None
+        if not self.reference_file(ticker).is_file():
+            return None
+        try:
+            data = load_reference(ticker, self.universe_dir)
+        except UniverseError:
+            return None
+        record = (data["sources"].get(source) or {}).get("captures", {}).get(capture)
+        if not record or "files" not in record:
+            return None
+        root = (self.universe_dir / REFERENCES_DIR).resolve()
+        file = (reference_dir(ticker, self.universe_dir) / record["files"]["png"]["path"]).resolve()
+        return file if file.is_relative_to(root) and file.is_file() else None
 
     def evidence_file(self, ticker: str, series: str, period: str, name: str) -> Path | None:
         """證據目錄內符合命名規則的表格檔；其他路徑一律回傳 None。"""

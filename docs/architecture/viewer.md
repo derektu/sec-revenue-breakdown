@@ -1,12 +1,28 @@
 # Viewer
 
-`viewer` 是本機唯讀網頁，顯示正式輸出（`data/revenue/`）的 Q、FY 兩個序列、運算式與 SEC 表格證據；不執行 parser、API 不接受檔案路徑。啟動方式見 [本機操作](../guides/local-workflow.md)。程式在 `libs/sec_revenue/viewer/`：`server.py`（路由與標頭）、`published.py`（整理輸出、核對表格檔）、`viewer.html`（頁面）。
+`viewer` 是本機唯讀網頁，顯示正式輸出（`data/revenue/`）的 Q、FY 兩個序列、運算式與 SEC 表格證據，以及 `data/universe/` 的 ticker 清單與對照資料；不執行 parser、API 不接受檔案路徑。啟動方式見 [本機操作](../guides/local-workflow.md)。程式在 `libs/sec_revenue/viewer/`：`server.py`（路由與標頭）、`published.py`（整理輸出、核對表格檔）、`viewer.html`（頁面）。
+
+## 頁面
+
+網址 hash 有 `ticker` 時是公司頁（例如 `#ticker=KO&series=Q`），其他是總覽頁。頁首的「總覽」連回總覽頁。換公司（從總覽頁或搜尋框）會留下瀏覽紀錄，瀏覽器的上一頁回到前一家公司或總覽頁；切換 Q、FY 不留紀錄。
+
+## 總覽頁
+
+- 列出 `tickers.csv` 的全部公司：代碼、公司名稱、狀態（`ok`、`wip`、`drop`）、採用來源、穩定度評分、有沒有正式輸出。評分 1–2 以紅色、3 以橘色標示，空白顯示「尚未評分」；滑鼠停在評分上顯示評分理由。
+- 依狀態過濾，依代碼或名稱搜尋（不分大小寫）。
+- 有正式輸出的公司，代碼連到公司頁；沒有的標示「尚無輸出」，不提供連結。
+- `tickers.csv` 驗證不通過時，頁首列出錯誤，總覽只列有輸出目錄的公司。
 
 ## 公司搜尋框
 
-- 輸入代碼或名稱即時篩選候選清單，兩者都比對、不分大小寫；代碼開頭相符的排在前面。
+- 邊打邊找：輸入至少一個字才列候選，代碼與名稱都比對、不分大小寫。最多列 20 筆，超過時提示還有幾家。
+- 排序依代碼完全相符、代碼開頭相符、代碼包含、名稱包含；同一級中 `ok` 排在 `wip` 前，再依代碼。
+- 候選是 `status=ok` 的公司與有正式輸出的 `wip` 公司，每筆是「代碼 公司名」，`wip` 另加標示。其他公司從總覽頁或 URL hash 開啟。
 - 方向鍵上下移動、Enter 選定、Esc 取消並還原目前的公司。
-- 候選清單只列 `tickers.csv` 中 `status=ok` 的公司，每筆是「代碼 公司名」。其他公司不在清單上，用 URL hash 開啟（例如 `#ticker=KO&series=Q`）。
+
+## 公司資訊
+
+公司頁頂端顯示代碼、公司名稱、狀態、採用來源、穩定度評分（`stability_score`，1–5）與評分理由（`stability_note`），內容照 `tickers.csv`。評分空白顯示「尚未評分」，不當作 0 分。
 
 ## 數字表
 
@@ -39,12 +55,25 @@
 - 差異標記的明細：分類、角色與期間、結果（數值不同或無法解析）、已上線值、申報列示值、來源申報與申報日、說明，以及雙方各自的加數清單（已上線的運算元編號、申報中的 fact id，各附 concept、維度、正負號與值）。
 - 各運算元的 SEC 表格截圖：同一張表只顯示一次，表頭列出表內的運算元編號；每張表附 SEC 原文、XBRL viewer 與表格 HTML 連結。
 
+## 對照資料
+
+公司頁下方依 `data/universe/references/<首字母>/<TICKER>/reference.json` 列出每個對照來源，沒有的來源不列；採用的來源加註「採用」。每個來源是一個可展開的區塊，列出每次擷取（依擷取時間由舊到新）：
+
+- 擷取時間（UTC，與 capture_id 相同）與數值指向這次擷取的期間標籤（同一來源可能有多次擷取，各涵蓋不同期間）。
+- 擷取頁面連結（`url`，只接受 `https://`）；網站可能需要登入，內容也可能和擷取時不同。
+- 擷取時保存的表格截圖（`captures/` 的 `table.png`），區塊展開時才載入。`manual` 擷取沒有截圖。
+
+對照檔以 `load_reference` 驗證（格式與證據檔的 sha256，見 [universe.md](universe.md)）；驗證不通過時列出錯誤，不列擷取、不提供截圖。
+
 ## 表格檔的核對
 
 表格檔以 `revenue.json` 記錄的 sha256 核對；同一張表由多個運算元引用時，每個運算元的紀錄都要相符。缺檔或 hash 不符時，不顯示截圖，改以紅色「無表格證據」區塊標示，並附原因。
 
 ## API 與安全
 
-- `/api/companies` 列出公司。
+- `/api/companies` 列出 `tickers.csv` 的公司與有輸出目錄的公司，附狀態、採用來源、穩定度評分與理由、有沒有輸出與對照檔。
 - `/api/company?ticker=` 回傳一家公司的兩個序列。
+- `/api/references?ticker=` 回傳一家公司各對照來源的擷取紀錄。
+- `ticker` 只接受已知公司（列在 `tickers.csv` 或有輸出目錄）。
+- 對照截圖只經 `/reference-capture/TICKER/來源/capture_id/table.png` 提供，且必須是對照檔記錄、通過驗證的擷取，並檢查路徑不超出對照資料根目錄。
 - 表格檔只經 `/revenue-evidence/TICKER/(Q|FY)/期末日/ACCESSION-SHA12-tN.(png|html)` 提供，並檢查路徑不超出輸出根目錄。表格 HTML 以 CSP sandbox 開啟。頁面本身的 CSP 只允許同源資源。
