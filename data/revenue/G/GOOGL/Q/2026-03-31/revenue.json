@@ -1,0 +1,416 @@
+{
+  "categories": {
+    "Google Cloud": {
+      "expression": [
+        {
+          "operand": "op2",
+          "weight": 1
+        }
+      ],
+      "value": 20028000000
+    },
+    "Google Network": {
+      "expression": [
+        {
+          "operand": "op5",
+          "weight": 1
+        }
+      ],
+      "value": 6971000000
+    },
+    "Google Search & other": {
+      "expression": [
+        {
+          "operand": "op1",
+          "weight": 1
+        }
+      ],
+      "value": 60399000000
+    },
+    "Google subscriptions, platforms, and devices": {
+      "expression": [
+        {
+          "operand": "op3",
+          "weight": 1
+        }
+      ],
+      "value": 12384000000
+    },
+    "Hedging gains (losses)": {
+      "expression": [
+        {
+          "operand": "op7",
+          "weight": 1
+        }
+      ],
+      "value": -180000000
+    },
+    "Other Bets": {
+      "expression": [
+        {
+          "operand": "op6",
+          "weight": 1
+        }
+      ],
+      "value": 411000000
+    },
+    "YouTube ads": {
+      "expression": [
+        {
+          "operand": "op4",
+          "weight": 1
+        }
+      ],
+      "value": 9883000000
+    }
+  },
+  "checks": {
+    "structural": [
+      {
+        "check": "定義唯一",
+        "result": "pass"
+      },
+      {
+        "check": "fact 存在且唯一",
+        "result": "pass"
+      },
+      {
+        "check": "單位與精度",
+        "result": "pass"
+      },
+      {
+        "check": "加總",
+        "result": "pass"
+      },
+      {
+        "check": "證據完整",
+        "result": "pass"
+      }
+    ],
+    "sum": {
+      "categories": 109896000000,
+      "difference": 0,
+      "tolerance": "4000000",
+      "total": 109896000000
+    }
+  },
+  "filings": {
+    "primary": {
+      "accession": "0001652044-26-000048",
+      "filing_date": "2026-04-30",
+      "form": "10-Q",
+      "report_date": "2026-03-31"
+    }
+  },
+  "fiscal_quarter": 1,
+  "fiscal_year": 2026,
+  "operands": {
+    "op1": {
+      "accession": "0001652044-26-000048",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-55",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "goog:GoogleSearchOtherMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "goog:GoogleServicesMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1652044/000165204426000048/goog-20260331.htm",
+        "name": "goog-20260331.htm",
+        "sha256": "c3210a73ce9f7db64309bf653297866b668f43cc29608a29fd5486153851341e",
+        "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000048/goog-20260331.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "e56ab80c23e6bbd9aebfe995493092f165c50c4689dfe94dc9bbe9b4f00f4ffb",
+        "png_scale": 1,
+        "png_sha256": "1812a7ad8579a75eac07eb5456e9e0477d474f4e797bfd80f5ef771d1ad4c3eb",
+        "table": "0001652044-26-000048-c3210a73ce9f-t23"
+      },
+      "fact_id": "f-367",
+      "filing_date": "2026-04-30",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-03-31",
+        "start": "2026-01-01"
+      },
+      "raw": "60,399",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 60399000000
+    },
+    "op2": {
+      "accession": "0001652044-26-000048",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-67",
+      "decimals": "-6",
+      "dimensions": {
+        "us-gaap:StatementBusinessSegmentsAxis": "goog:GoogleCloudMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1652044/000165204426000048/goog-20260331.htm",
+        "name": "goog-20260331.htm",
+        "sha256": "c3210a73ce9f7db64309bf653297866b668f43cc29608a29fd5486153851341e",
+        "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000048/goog-20260331.htm"
+      },
+      "duplicates": [
+        "f-1321"
+      ],
+      "evidence": {
+        "html_sha256": "e56ab80c23e6bbd9aebfe995493092f165c50c4689dfe94dc9bbe9b4f00f4ffb",
+        "png_scale": 1,
+        "png_sha256": "1812a7ad8579a75eac07eb5456e9e0477d474f4e797bfd80f5ef771d1ad4c3eb",
+        "table": "0001652044-26-000048-c3210a73ce9f-t23"
+      },
+      "fact_id": "f-379",
+      "filing_date": "2026-04-30",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-03-31",
+        "start": "2026-01-01"
+      },
+      "raw": "20,028",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 20028000000
+    },
+    "op3": {
+      "accession": "0001652044-26-000048",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-63",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "goog:SubscriptionsPlatformsAndDevicesRevenueMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "goog:GoogleServicesMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1652044/000165204426000048/goog-20260331.htm",
+        "name": "goog-20260331.htm",
+        "sha256": "c3210a73ce9f7db64309bf653297866b668f43cc29608a29fd5486153851341e",
+        "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000048/goog-20260331.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "e56ab80c23e6bbd9aebfe995493092f165c50c4689dfe94dc9bbe9b4f00f4ffb",
+        "png_scale": 1,
+        "png_sha256": "1812a7ad8579a75eac07eb5456e9e0477d474f4e797bfd80f5ef771d1ad4c3eb",
+        "table": "0001652044-26-000048-c3210a73ce9f-t23"
+      },
+      "fact_id": "f-375",
+      "filing_date": "2026-04-30",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-03-31",
+        "start": "2026-01-01"
+      },
+      "raw": "12,384",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 12384000000
+    },
+    "op4": {
+      "accession": "0001652044-26-000048",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-57",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "goog:YouTubeAdvertisingRevenueMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "goog:GoogleServicesMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1652044/000165204426000048/goog-20260331.htm",
+        "name": "goog-20260331.htm",
+        "sha256": "c3210a73ce9f7db64309bf653297866b668f43cc29608a29fd5486153851341e",
+        "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000048/goog-20260331.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "e56ab80c23e6bbd9aebfe995493092f165c50c4689dfe94dc9bbe9b4f00f4ffb",
+        "png_scale": 1,
+        "png_sha256": "1812a7ad8579a75eac07eb5456e9e0477d474f4e797bfd80f5ef771d1ad4c3eb",
+        "table": "0001652044-26-000048-c3210a73ce9f-t23"
+      },
+      "fact_id": "f-369",
+      "filing_date": "2026-04-30",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-03-31",
+        "start": "2026-01-01"
+      },
+      "raw": "9,883",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 9883000000
+    },
+    "op5": {
+      "accession": "0001652044-26-000048",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-59",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "goog:GoogleNetworkMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "goog:GoogleServicesMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1652044/000165204426000048/goog-20260331.htm",
+        "name": "goog-20260331.htm",
+        "sha256": "c3210a73ce9f7db64309bf653297866b668f43cc29608a29fd5486153851341e",
+        "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000048/goog-20260331.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "e56ab80c23e6bbd9aebfe995493092f165c50c4689dfe94dc9bbe9b4f00f4ffb",
+        "png_scale": 1,
+        "png_sha256": "1812a7ad8579a75eac07eb5456e9e0477d474f4e797bfd80f5ef771d1ad4c3eb",
+        "table": "0001652044-26-000048-c3210a73ce9f-t23"
+      },
+      "fact_id": "f-371",
+      "filing_date": "2026-04-30",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-03-31",
+        "start": "2026-01-01"
+      },
+      "raw": "6,971",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 6971000000
+    },
+    "op6": {
+      "accession": "0001652044-26-000048",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-69",
+      "decimals": "-6",
+      "dimensions": {
+        "us-gaap:StatementBusinessSegmentsAxis": "us-gaap:AllOtherSegmentsMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1652044/000165204426000048/goog-20260331.htm",
+        "name": "goog-20260331.htm",
+        "sha256": "c3210a73ce9f7db64309bf653297866b668f43cc29608a29fd5486153851341e",
+        "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000048/goog-20260331.htm"
+      },
+      "duplicates": [
+        "f-1323"
+      ],
+      "evidence": {
+        "html_sha256": "e56ab80c23e6bbd9aebfe995493092f165c50c4689dfe94dc9bbe9b4f00f4ffb",
+        "png_scale": 1,
+        "png_sha256": "1812a7ad8579a75eac07eb5456e9e0477d474f4e797bfd80f5ef771d1ad4c3eb",
+        "table": "0001652044-26-000048-c3210a73ce9f-t23"
+      },
+      "fact_id": "f-381",
+      "filing_date": "2026-04-30",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-03-31",
+        "start": "2026-01-01"
+      },
+      "raw": "411",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 411000000
+    },
+    "op7": {
+      "accession": "0001652044-26-000048",
+      "concept": "us-gaap:RevenueNotFromContractWithCustomer",
+      "context_id": "c-1",
+      "decimals": "-6",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1652044/000165204426000048/goog-20260331.htm",
+        "name": "goog-20260331.htm",
+        "sha256": "c3210a73ce9f7db64309bf653297866b668f43cc29608a29fd5486153851341e",
+        "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000048/goog-20260331.htm"
+      },
+      "duplicates": [
+        "f-1325",
+        "f-405"
+      ],
+      "evidence": {
+        "html_sha256": "e56ab80c23e6bbd9aebfe995493092f165c50c4689dfe94dc9bbe9b4f00f4ffb",
+        "png_scale": 1,
+        "png_sha256": "1812a7ad8579a75eac07eb5456e9e0477d474f4e797bfd80f5ef771d1ad4c3eb",
+        "table": "0001652044-26-000048-c3210a73ce9f-t23"
+      },
+      "fact_id": "f-383",
+      "filing_date": "2026-04-30",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-03-31",
+        "start": "2026-01-01"
+      },
+      "raw": "180",
+      "role": "quarter",
+      "scale": "6",
+      "sign": "-",
+      "value": -180000000
+    },
+    "op8": {
+      "accession": "0001652044-26-000048",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-1",
+      "decimals": "-6",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1652044/000165204426000048/goog-20260331.htm",
+        "name": "goog-20260331.htm",
+        "sha256": "c3210a73ce9f7db64309bf653297866b668f43cc29608a29fd5486153851341e",
+        "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000048/goog-20260331.htm"
+      },
+      "duplicates": [
+        "f-1327",
+        "f-409",
+        "f-182",
+        "f-697"
+      ],
+      "evidence": {
+        "html_sha256": "e56ab80c23e6bbd9aebfe995493092f165c50c4689dfe94dc9bbe9b4f00f4ffb",
+        "png_scale": 1,
+        "png_sha256": "1812a7ad8579a75eac07eb5456e9e0477d474f4e797bfd80f5ef771d1ad4c3eb",
+        "table": "0001652044-26-000048-c3210a73ce9f-t23"
+      },
+      "fact_id": "f-385",
+      "filing_date": "2026-04-30",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-03-31",
+        "start": "2026-01-01"
+      },
+      "raw": "109,896",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 109896000000
+    }
+  },
+  "period_end": "2026-03-31",
+  "schema_version": 1,
+  "series": "Q",
+  "ticker": "GOOGL",
+  "total": {
+    "expression": [
+      {
+        "operand": "op8",
+        "weight": 1
+      }
+    ],
+    "value": 109896000000
+  },
+  "unit": "USD",
+  "view": "product"
+}
