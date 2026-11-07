@@ -81,30 +81,75 @@
     .addends table { border-collapse: collapse; font-size: 12px; font-variant-numeric: tabular-nums; }
     .addends td { padding: 1px 8px 1px 0; vertical-align: top; }
     .addends td.num { text-align: right; }
+    nav a { margin-right: 14px; }
+    nav a[aria-current="page"] { font-weight: 700; color: #182332; text-decoration: none; }
+    .profile { background: white; border: 1px solid #d5dce6; padding: 10px 14px; margin: 8px 0 12px; }
+    .profile .score { font-weight: 700; }
+    .status-tag { font: 600 11px system-ui; border-radius: 3px; padding: 1px 5px; margin-left: 6px; border: 1px solid; }
+    .status-tag.ok { color: #1d6b2f; border-color: #8cc79a; background: #eaf6ec; }
+    .status-tag.wip { color: #7a5200; border-color: #e0bf73; background: #fff6df; }
+    .status-tag.drop { color: #6b6b6b; border-color: #c4c4c4; background: #f1f1f1; }
+    .picker li .status-tag { margin-left: 8px; }
+    table.list { border-collapse: collapse; background: white; border: 1px solid #d5dce6; min-width: 960px; }
+    .list th, .list td { padding: 9px 20px; border-bottom: 1px solid #e3e8ef; text-align: left; }
+    .list thead th { background: #eef2f7; }
+    .list th.center, .list td.center { text-align: center; }
+    .list td.score { min-width: 90px; }
+    .score-pill { display: inline-block; min-width: 44px; padding: 1px 8px; border-radius: 10px; font-variant-numeric: tabular-nums; }
+    .score-pill.low { background: #fde7e9; color: #a50e0e; font-weight: 700; }
+    .score-pill.mid { background: #fff1d6; color: #8a4b00; font-weight: 600; }
+    .score-pill.none { color: #8a99ad; }
+    #references details { background: white; border: 1px solid #d5dce6; margin: 8px 0; padding: 8px 14px; }
+    #references summary { cursor: pointer; font-weight: 600; }
+    .capture { margin: 12px 0 18px; }
+    .capture img { display: block; max-width: 100%; margin-top: 6px; border: 1px solid #ccd5e1; }
   </style>
   <h1>SEC 營收正式輸出</h1>
-  <div class="bar">
-    <label class="picker">公司
-      <input id="company" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="company-list"
-        autocomplete="off" spellcheck="false" placeholder="輸入代碼或名稱" />
-      <ul id="company-list" role="listbox" hidden></ul>
-    </label>
-    <span class="toggle" id="series">
-      <button type="button" data-series="Q" aria-pressed="true">季度 Q</button>
-      <button type="button" data-series="FY" aria-pressed="false">年度 FY</button>
-    </span>
-  </div>
+  <nav><a href="#overview" id="nav-overview">總覽</a></nav>
   <p id="error" role="alert"></p>
-  <div id="notes"></div>
-  <div class="scroll"><table class="grid" id="grid"></table></div>
-  <p class="muted" id="legend">
-    <span class="flag">△</span> 後來申報的比較欄與已上線值不同（差異標記）；灰底斜體：留空（未推算）；紅底：失敗。
-    留空或失敗而保留先前上線輸出的期別，格子顯示已上線值。
-  </p>
-  <section id="detail" hidden></section>
+  <section id="overview-page" hidden>
+    <div class="bar">
+      <label>狀態
+        <select id="overview-status">
+          <option value="">全部</option>
+          <option value="ok">ok</option>
+          <option value="wip">wip</option>
+          <option value="drop">drop</option>
+        </select>
+      </label>
+      <label>搜尋 <input id="overview-search" autocomplete="off" spellcheck="false" placeholder="代碼或名稱" /></label>
+      <span class="muted" id="overview-count"></span>
+    </div>
+    <table class="list" id="overview"></table>
+  </section>
+  <section id="company-page" hidden>
+    <div class="bar">
+      <label class="picker">公司
+        <input id="company" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="company-list"
+          autocomplete="off" spellcheck="false" placeholder="輸入代碼或名稱" />
+        <ul id="company-list" role="listbox" hidden></ul>
+      </label>
+      <span class="toggle" id="series">
+        <button type="button" data-series="Q" aria-pressed="true">季度 Q</button>
+        <button type="button" data-series="FY" aria-pressed="false">年度 FY</button>
+      </span>
+    </div>
+    <div class="profile" id="profile"></div>
+    <div id="notes"></div>
+    <div class="scroll"><table class="grid" id="grid"></table></div>
+    <p class="muted" id="legend">
+      <span class="flag">△</span> 後來申報的比較欄與已上線值不同（差異標記）；灰底斜體：留空（未推算）；紅底：失敗。
+      留空或失敗而保留先前上線輸出的期別，格子顯示已上線值。
+    </p>
+    <section id="detail" hidden></section>
+    <section id="references"></section>
+  </section>
   <script>
     const el = (id) => document.getElementById(id);
     const state = { companies: [], ticker: null, company: null, series: "Q", selected: null };
+    const SOURCE = { stockanalysis: "Stock Analysis", futu: "富途", tradingview: "TradingView", manual: "手動輸入" };
+    const HTTPS_URL = /^https:\/\//;
+    const PICKER_LIMIT = 20;
     const ROLE = { quarter: "單季", annual: "年度", nine_months: "九個月", six_months: "六個月" };
     const STATUS = { published: "已上線", failed: "失敗", not_derived: "留空", unknown: "狀態不明" };
     const SEC_URL = /^https:\/\/www\.sec\.gov\//;
@@ -183,53 +228,141 @@
 
     async function loadCompanies() {
       const response = await fetch("/api/companies");
-      state.companies = await response.json();
-      const hash = new URLSearchParams(location.hash.slice(1));
-      const series = hash.get("series");
-      if (series === "FY" || series === "Q") state.series = series;
-      const wanted = state.companies.find((c) => c.ticker === hash.get("ticker"));
-      const first = wanted || state.companies.find((c) => c.listed && c.has_output);
-      if (first) await chooseCompany(first.ticker);
+      const data = await response.json();
+      state.companies = data.companies;
+      state.universeErrors = data.universe_errors || [];
+      await route();
     }
 
-    // 公司搜尋：候選只列 tickers.csv status=ok 的公司；其他公司可用 URL hash 開啟。
-    // 代碼與名稱都比對、不分大小寫；代碼開頭相符的排前面。
-    const picker = { matches: [], active: -1 };
+    // 網址 hash 決定頁面：有 `ticker` 是公司頁（`#ticker=KO&series=Q`），其他是總覽頁。
+    async function route() {
+      const hash = new URLSearchParams(location.hash.slice(1));
+      const ticker = hash.get("ticker");
+      const series = hash.get("series");
+      if (series === "FY" || series === "Q") state.series = series;
+      const wanted = ticker && state.companies.find((c) => c.ticker === ticker);
+      el("overview-page").hidden = Boolean(wanted);
+      el("company-page").hidden = !wanted;
+      if (wanted) el("nav-overview").removeAttribute("aria-current");
+      else el("nav-overview").setAttribute("aria-current", "page");
+      if (wanted) {
+        if (wanted.ticker !== state.ticker || !state.company) await chooseCompany(wanted.ticker);
+        else if (state.company) render();
+      } else {
+        el("error").textContent = ticker
+          ? `找不到 ${ticker}`
+          : state.universeErrors.length
+            ? "tickers.csv 驗證不通過，總覽只列有輸出的公司：" + state.universeErrors.join("；")
+            : "";
+        renderOverview();
+      }
+    }
+    window.addEventListener("hashchange", () => route().catch((error) => (el("error").textContent = "載入失敗：" + error.message)));
+
+    function statusTag(status) {
+      return status ? node("span", "status-tag " + status, status) : node("span", "muted", "未列入");
+    }
+    // 評分 1–2 紅色、3 橘色提醒；4–5 不加色；空白為灰色「尚未評分」。
+    function scoreLevel(score) {
+      if (score === null || score === undefined) return "none";
+      return score <= 2 ? "low" : score === 3 ? "mid" : "";
+    }
+    function scoreText(c) {
+      return c.stability_score === null || c.stability_score === undefined ? "尚未評分" : `${c.stability_score} / 5`;
+    }
+
+    // 總覽頁：tickers.csv 的全部公司，可依狀態過濾、依代碼或名稱搜尋；有輸出的連到公司頁。
+    function renderOverview() {
+      const status = el("overview-status").value;
+      const q = el("overview-search").value.trim().toLowerCase();
+      const rows = state.companies
+        .filter((c) => c.universe_status || state.universeErrors.length)
+        .filter((c) => !status || c.universe_status === status)
+        .filter((c) => !q || c.ticker.toLowerCase().includes(q) || (c.name || "").toLowerCase().includes(q));
+      const universe = state.companies.filter((c) => c.universe_status || state.universeErrors.length).length;
+      el("overview-count").textContent = `${rows.length} / ${universe} 家`;
+      const table = el("overview");
+      table.replaceChildren();
+      const head = table.createTHead().insertRow();
+      for (const label of ["代碼", "公司名稱", "狀態", "採用來源", "穩定度", "正式輸出"])
+        head.append(node("th", label === "穩定度" ? "center" : "", label));
+      const body = table.createTBody();
+      for (const c of rows) {
+        const row = body.insertRow();
+        const ticker = node("td");
+        if (c.has_output) {
+          const a = node("a", "", c.ticker);
+          a.href = `#ticker=${encodeURIComponent(c.ticker)}&series=Q`;
+          ticker.append(a);
+        } else ticker.textContent = c.ticker;
+        const status = node("td");
+        status.append(statusTag(c.universe_status));
+        const score = node("td", "center score");
+        score.append(node("span", "score-pill " + scoreLevel(c.stability_score), scoreText(c)));
+        if (c.stability_note) score.title = c.stability_note;
+        row.append(
+          ticker,
+          node("td", "", c.name || ""),
+          status,
+          node("td", "", SOURCE[c.adopted_source] ?? c.adopted_source ?? "—"),
+          score,
+          node("td", c.has_output ? "" : "muted", c.has_output ? "有" : "尚無輸出"),
+        );
+      }
+      if (!rows.length) body.insertRow().append(node("td", "muted", "沒有符合的公司"));
+    }
+    el("overview-status").addEventListener("change", renderOverview);
+    el("overview-search").addEventListener("input", renderOverview);
+
+    // 公司搜尋：邊打邊找，輸入至少一個字才列候選，最多列 PICKER_LIMIT 筆；其他公司從總覽頁或 URL hash 開啟。
+    // 候選是 status=ok 的公司與有輸出的 wip 公司；代碼與名稱都比對、不分大小寫；
+    // 代碼完全相符、開頭相符、包含、名稱包含依序排列，同一級中 ok 在 wip 前。
+    const picker = { matches: [], more: 0, active: -1 };
+    function searchable(c) {
+      return c.listed || (c.universe_status === "wip" && c.has_output);
+    }
     function matchCompanies(query) {
       const q = query.trim().toLowerCase();
+      if (!q) return [];
       const rank = (c) => {
         const t = c.ticker.toLowerCase();
-        if (!q || t === q) return 0;
+        if (t === q) return 0;
         if (t.startsWith(q)) return 1;
         if (t.includes(q)) return 2;
         if ((c.name || "").toLowerCase().includes(q)) return 3;
         return -1;
       };
       return state.companies
-        .filter((c) => c.listed)
+        .filter(searchable)
         .map((c) => [rank(c), c])
         .filter(([r]) => r >= 0)
-        .sort((a, b) => a[0] - b[0] || a[1].ticker.localeCompare(b[1].ticker))
+        .sort((a, b) => a[0] - b[0] || Number(!a[1].listed) - Number(!b[1].listed) || a[1].ticker.localeCompare(b[1].ticker))
         .map(([, c]) => c);
     }
     function renderPicker() {
       const list = el("company-list");
       list.replaceChildren();
-      picker.matches = matchCompanies(el("company").value);
+      const query = el("company").value.trim();
+      const all = matchCompanies(query);
+      picker.matches = all.slice(0, PICKER_LIMIT);
+      picker.more = all.length - picker.matches.length;
       if (picker.active >= picker.matches.length) picker.active = picker.matches.length - 1;
-      if (!picker.matches.length) list.append(node("li", "none", "沒有符合的公司"));
+      if (!query) list.append(node("li", "none", "輸入代碼或名稱搜尋"));
+      else if (!picker.matches.length) list.append(node("li", "none", "沒有符合的公司"));
       picker.matches.forEach((c, i) => {
         const li = node("li", "", c.ticker);
         li.id = "company-option-" + i;
         li.setAttribute("role", "option");
         li.setAttribute("aria-selected", String(i === picker.active));
         li.append(node("span", "name", c.name || ""));
+        if (!c.listed) li.append(statusTag(c.universe_status));
         li.addEventListener("mousedown", (event) => {
           event.preventDefault();
-          chooseCompany(c.ticker);
+          openCompany(c.ticker);
         });
         list.append(li);
       });
+      if (picker.more > 0) list.append(node("li", "none", `還有 ${picker.more} 家，請輸入更多字`));
       const input = el("company");
       if (picker.active >= 0) {
         input.setAttribute("aria-activedescendant", "company-option-" + picker.active);
@@ -247,6 +380,12 @@
       picker.active = -1;
       const current = state.companies.find((c) => c.ticker === state.ticker);
       el("company").value = current ? `${current.ticker} ${current.name}` : "";
+    }
+    // 從搜尋框選公司：改網址 hash（留下瀏覽紀錄），由 route() 載入。
+    function openCompany(ticker) {
+      closePicker();
+      el("company").blur();
+      location.hash = `ticker=${encodeURIComponent(ticker)}&series=${state.series}`;
     }
     async function chooseCompany(ticker) {
       state.ticker = ticker;
@@ -276,11 +415,75 @@
       } else if (event.key === "Enter") {
         event.preventDefault();
         const choice = picker.matches[picker.active >= 0 ? picker.active : 0];
-        if (choice) chooseCompany(choice.ticker);
+        if (choice) openCompany(choice.ticker);
       } else if (event.key === "Escape") {
         el("company").blur();
       }
     });
+
+    // 公司頁頂端：狀態、採用來源、穩定度評分與理由（照 tickers.csv；空白評分顯示尚未評分）。
+    function renderProfile(c) {
+      const box = el("profile");
+      box.replaceChildren();
+      const title = node("div");
+      title.append(node("strong", "", `${c.ticker} ${c.name || ""}`), statusTag(c.universe_status));
+      box.append(title);
+      const dl = node("dl", "kv");
+      dl.append(node("dt", "", "採用來源"), node("dd", "", SOURCE[c.adopted_source] ?? c.adopted_source ?? "尚未決定"));
+      dl.append(node("dt", "", "穩定度"), node("dd", "score", scoreText(c)));
+      if (c.stability_note) dl.append(node("dt", "", "評分理由"), node("dd", "", c.stability_note));
+      box.append(dl);
+    }
+
+    // 對照資料：每個來源一個可展開的區塊，列出每次擷取的頁面連結、擷取時間、數值指向它的期間與表格截圖。
+    // 截圖在展開時才載入。
+    async function loadReferences(ticker) {
+      const box = el("references");
+      box.replaceChildren();
+      const response = await fetch("/api/references?ticker=" + encodeURIComponent(ticker));
+      if (!response.ok || ticker !== state.ticker) return;
+      const data = await response.json();
+      box.append(node("h2", "", "對照資料"));
+      if (data.errors?.length) {
+        const bad = node("div", "box bad", "對照檔驗證不通過，不顯示擷取紀錄：");
+        const ul = node("ul", "plain");
+        for (const e of data.errors) ul.append(node("li", "", e));
+        bad.append(ul);
+        box.append(bad);
+        return;
+      }
+      if (!data.sources.length) {
+        box.append(node("div", "muted", "沒有對照資料。"));
+        return;
+      }
+      const company = state.companies.find((c) => c.ticker === ticker) || {};
+      for (const source of data.sources) {
+        const details = node("details");
+        const summary = node("summary", "", `${SOURCE[source.source] ?? source.source} · ${source.captures.length} 次擷取`);
+        if (source.source === company.adopted_source) summary.append(node("span", "status-tag ok", "採用"));
+        details.append(summary);
+        for (const c of source.captures) {
+          const item = node("div", "capture");
+          const when = c.captured_at.replace("T", " ").replace(/\.\d+Z$|Z$/, " UTC");
+          const line = node("div", "", `擷取時間 ${when} · 期間 ${c.periods.join("、") || "（無）"}`);
+          if (HTTPS_URL.test(c.url || "")) line.append(" · ", link(c.url, "擷取頁面"));
+          item.append(line);
+          if (c.png) {
+            const image = node("img");
+            image.dataset.src = `/reference-capture/${encodeURIComponent(ticker)}/${source.source}/${c.capture}/table.png`;
+            image.alt = `${SOURCE[source.source] ?? source.source} ${c.capture} 表格截圖`;
+            const a = link(image.dataset.src, "");
+            a.append(image);
+            item.append(a);
+          } else item.append(node("div", "muted", "手動輸入，沒有截圖"));
+          details.append(item);
+        }
+        details.addEventListener("toggle", () => {
+          if (details.open) for (const img of details.querySelectorAll("img[data-src]")) if (!img.src) img.src = img.dataset.src;
+        });
+        box.append(details);
+      }
+    }
 
     async function loadCompany() {
       el("error").textContent = "";
@@ -288,6 +491,9 @@
       el("detail").hidden = true;
       const ticker = state.ticker;
       if (!ticker) return;
+      const info = state.companies.find((c) => c.ticker === ticker);
+      if (info) renderProfile(info);
+      loadReferences(ticker).catch(() => {});
       const response = await fetch("/api/company?ticker=" + encodeURIComponent(ticker));
       if (!response.ok) {
         state.company = null;
