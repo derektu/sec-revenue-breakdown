@@ -10,6 +10,11 @@
 `extract.py` 的語法樹計算，不含註解、docstring 與排版；快照模式先檢查 hash，不同時直接報錯，不以過期的快照計算。
 快照檔的編排（`encode`）改變時，`SNAPSHOT_FORMAT` 隨之改變。
 
+公司 parser 宣告附件（`ATTACHMENTS`）時，快照涵蓋主文件與這些附件：表頭另有 `ixds`（宣告的附件類型、合併程式
+`ixds.py` 的 hash、每份附件的申報包欄位）與合併後的 `attachments`，附件的 fact 列帶 `document`（見 `ixds.extract_set`）。
+沒有宣告的公司，快照沒有這些欄位，內容與 `ixds.py` 無關。快照模式核對宣告的附件類型與 `ixds.py` 的 hash 都與快照
+相同，不同時要重產這家公司的快照。
+
 申報清單（同目錄的 `manifest.json`）列出正式輸出依賴的每份 10-K／10-Q（框架不讀 8-K，所以不在清單內）的申報資訊，
 與申報包內每個檔案的 sha256、bytes；download 可依清單重新下載並逐檔核對。
 
@@ -26,7 +31,9 @@ import json
 from pathlib import Path
 
 from ..common.jsonio import JsonCodec
-from . import extract
+from dataclasses import replace
+
+from . import extract, ixds
 from .filings import Filing, FilingSet, ParseError, periodic_filing
 from .xbrl import InlineDocument
 
@@ -50,6 +57,11 @@ def source_sha256(source: str) -> str:
 def extract_sha256() -> str:
     """決定快照內容的抽取程式（`extract.py`）的 hash。"""
     return source_sha256(Path(extract.__file__).read_text(encoding="utf-8"))
+
+
+def ixds_sha256() -> str:
+    """涵蓋附件的快照另外依賴的合併程式（`ixds.py`）的 hash。"""
+    return source_sha256(Path(ixds.__file__).read_text(encoding="utf-8"))
 
 
 def snapshot_dir(root: Path, ticker: str) -> Path:
@@ -85,11 +97,14 @@ def snapshot_files(directory: Path) -> list[Path]:
     return sorted(p for p in directory.iterdir() if p.name != MANIFEST and p.suffix in (SUFFIX, ".json"))
 
 
-def build(data: Path, ticker: str) -> tuple[dict[str, dict], dict]:
-    """由原文產生（accession → 快照, 申報清單）；原文讀不到的申報記成錯誤，快照模式照樣重現。"""
-    filings = FilingSet(data, ticker)
+def build(data: Path, ticker: str, attachments: tuple[str, ...] = ()) -> tuple[dict[str, dict], dict]:
+    """由原文產生（accession → 快照, 申報清單）；原文讀不到的申報記成錯誤，快照模式照樣重現。
+
+    `attachments` 是公司 parser 宣告的附件類型；有宣告時快照涵蓋這些附件。
+    """
+    filings = FilingSet(data, ticker, attachments)
     extractor = extract_sha256()
-    packages = JsonCodec.read(filings.root / "pipeline" / ticker / "packages.json")["packages"]
+    packages = filings.packages
     snapshots, listed = {}, []
     for filing in filings.filings:
         payload = {
@@ -98,8 +113,10 @@ def build(data: Path, ticker: str) -> tuple[dict[str, dict], dict]:
             "accession": filing.accession,
             "package": extract.package_record(packages[filing.accession]),
         }
+        if attachments:
+            payload["ixds"] = {"types": list(attachments), "sha256": ixds_sha256(), "documents": list(filing.attachments)}
         try:
-            payload.update(extract.extract(extract.parse_html(filings.raw(filing))))
+            payload.update(filings.extract(filing)[0])
         except ParseError as error:
             payload["error"] = {"check": error.check, "message": error.message}
         snapshots[filing.accession] = payload
@@ -115,9 +132,9 @@ def build(data: Path, ticker: str) -> tuple[dict[str, dict], dict]:
     return snapshots, {"ticker": ticker, "filings": listed}
 
 
-def write(data: Path, root: Path, ticker: str) -> dict:
+def write(data: Path, root: Path, ticker: str, attachments: tuple[str, ...] = ()) -> dict:
     """產生該公司的快照與申報清單；不屬於 FilingSet 的快照檔刪除。"""
-    snapshots, manifest = build(data, ticker)
+    snapshots, manifest = build(data, ticker, attachments)
     directory = snapshot_dir(root, ticker)
     directory.mkdir(parents=True, exist_ok=True)
     for accession, payload in snapshots.items():
@@ -129,9 +146,9 @@ def write(data: Path, root: Path, ticker: str) -> dict:
     return {"ticker": ticker, "snapshots": len(snapshots), "errors": sorted(a for a, p in snapshots.items() if "error" in p)}
 
 
-def check(data: Path, root: Path, ticker: str) -> list[str]:
+def check(data: Path, root: Path, ticker: str, attachments: tuple[str, ...] = ()) -> list[str]:
     """已提交的快照與申報清單是否與原文重新產生的結果完全相同；回傳不同之處。"""
-    snapshots, manifest = build(data, ticker)
+    snapshots, manifest = build(data, ticker, attachments)
     directory = snapshot_dir(root, ticker)
     expected = {f"{a}{SUFFIX}": encode(p) for a, p in snapshots.items()} | {MANIFEST: JsonCodec.encode(manifest)}
     found = {p.name: p.read_bytes() for p in snapshot_files(directory)}
@@ -146,12 +163,13 @@ def check(data: Path, root: Path, ticker: str) -> list[str]:
 class SnapshotFilingSet(FilingSet):
     """由快照建立的 FilingSet：申報、選申報、期別與原文模式相同，文件由快照重建。
 
-    建立時檢查快照與申報清單一致、抽取程式 hash 相同；不符時丟出 ValueError，指出要重產的公司與原因。
+    建立時檢查快照與申報清單一致、抽取程式 hash 相同，以及快照涵蓋的附件類型等於 `attachments`（公司 parser 的
+    宣告）、涵蓋附件時合併程式 hash 相同；不符時丟出 ValueError，指出要重產的公司與原因。
     """
 
     snapshot = True
 
-    def __init__(self, root: Path, ticker: str):
+    def __init__(self, root: Path, ticker: str, attachments: tuple[str, ...] = ()):
         directory = snapshot_dir(root, ticker)
         manifest_path = directory / MANIFEST
         if not manifest_path.exists():
@@ -186,17 +204,32 @@ class SnapshotFilingSet(FilingSet):
         stale = sorted(a for a, p in self.payloads.items() if p.get("format") != SNAPSHOT_FORMAT or p.get("extract_sha256") != current)
         if stale:
             problems.append(f"{len(stale)} 份快照由不同版本的抽取程式產生（例如 {stale[0]}）")
+        declared = list(attachments)
+        covered = sorted(a for a, p in self.payloads.items() if p.get("ixds", {}).get("types", []) != declared)
+        if covered:
+            what = f"附件類型 {'、'.join(declared)}" if declared else "沒有附件"
+            problems.append(f"{len(covered)} 份快照涵蓋的附件與公司 parser 宣告的（{what}）不同（例如 {covered[0]}）")
+        elif declared:
+            merger = ixds_sha256()
+            outdated = sorted(a for a, p in self.payloads.items() if p["ixds"].get("sha256") != merger)
+            if outdated:
+                problems.append(f"{len(outdated)} 份快照由不同版本的附件合併程式產生（例如 {outdated[0]}）")
         if problems:
             raise ValueError(f"{ticker} 的快照需要重產：{'；'.join(problems)}；請在有原文的環境執行 snapshot --tickers {ticker}")
         self.root = None
-        # 與原文模式相同的申報篩選；快照保存的是篩選用到的申報包欄位。
+        self.attachment_types = tuple(attachments)
+        # 與原文模式相同的申報篩選；快照保存的是篩選用到的申報包欄位，與宣告附件時選出的附件。
         self.filings = sorted(
-            (f for accession, p in self.payloads.items() if (f := periodic_filing(accession, p["package"]))),
+            (
+                replace(f, attachments=tuple(p.get("ixds", {}).get("documents", [])))
+                for accession, p in self.payloads.items()
+                if (f := periodic_filing(accession, p["package"]))
+            ),
             key=lambda f: (f.filing_date, f.accession),
         )
         self.documents: dict[str, InlineDocument] = {}
 
-    def raw(self, filing: Filing) -> bytes:
+    def raw(self, filing: Filing, name: str | None = None) -> bytes:
         raise ParseError("原文存在", f"快照模式沒有 {filing.accession} 的原文")
 
     def document(self, filing: Filing) -> InlineDocument:

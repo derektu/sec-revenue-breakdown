@@ -185,17 +185,18 @@ class WorkflowCli:
         results, differences, broken = [], [], []
         self.unloaded(results, broken)
         for ticker in names:
-            _, error = self.load(ticker)
+            source, error = self.load(ticker)
             if error is not None:
                 broken.append(f"{ticker}：{error}")
                 results.append({"ticker": ticker, "error": error})
                 continue
+            # 公司 parser 宣告附件（ATTACHMENTS）時，快照涵蓋這些附件。
             if args.check:
-                found = snapshot.check(args.data, args.out, ticker)
+                found = snapshot.check(args.data, args.out, ticker, source.attachments)
                 differences += found
                 results.append({"ticker": ticker, "differences": found})
             else:
-                results.append(snapshot.write(args.data, args.out, ticker))
+                results.append(snapshot.write(args.data, args.out, ticker, source.attachments))
             self.progress({"ticker": ticker, "status": "snapshot_checked" if args.check else "snapshot_written"})
         print(json.dumps({"stage": "snapshot", "check": args.check, "companies": results}, ensure_ascii=False, indent=2))
         if broken:

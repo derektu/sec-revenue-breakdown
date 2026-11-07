@@ -17,7 +17,10 @@ DURATIONS = ("quarter", "nine_months", "annual")
 
 @dataclass(frozen=True)
 class FilingFacts:
-    """交給公司 parser 的一份申報：申報資訊與主文件的 fact 清單（facts、namespaces、dei），沒有 HTML 原文。"""
+    """交給公司 parser 的一份申報：申報資訊與 fact 清單（facts、namespaces、dei），沒有 HTML 原文。
+
+    fact 清單來自主文件；公司 parser 宣告 `ATTACHMENTS` 時另含這些附件的 fact（`Fact.document` 是附件檔名）。
+    """
 
     accession: str
     form: str
