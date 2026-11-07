@@ -35,10 +35,18 @@
 所有改動（parser、utility、框架、文件）都照這個順序：
 
 1. 寫完，停在 commit 之前。
-2. 沒參與開發的 agent 對還沒 commit 的 diff 做獨立 review。
-3. 修完 review 的問題，必要時再 review。
+2. 對還沒 commit 的 diff 做 review，深度依改動範圍（見下表）。
+3. 修完 review 的問題。orchestrator 看修正的 diff、重跑 `npm run check`，不再派第二輪 review；修正改變了設計或擴大了改動範圍時才再 review。
 4. orchestrator（負責交辦與整合的 agent）判斷可以合併時，停下來請人核准。
 5. 人核准後：commit 一次、push、開 PR（附 review 摘要）、等 CI 通過、squash 合併，回到 main。
+
+review 的深度依改動能影響的範圍而定：只改一個 ticker 的改動不影響其他 ticker 的輸出，改框架或既有 utility 會影響所有 ticker。
+
+| 改動範圍 | review |
+|---|---|
+| 只改文件 | orchestrator 自己看 diff，不另派 agent |
+| 只改一個 ticker 的目錄，以及第 2、3 步留下的 `wip` 列、對照資料與新增的 utility | 沒參與開發的 agent 照[第 8 步](#8-獨立-review)的必看項目 review；不重讀整份規範，不用暫時修改程式來驗證測試 |
+| 改框架或既有 utility | 沒參與開發的 agent 完整 review：對照規範文件，並驗證測試在功能退回時會失敗 |
 
 開發者自己就是合併的人，所以 review 放在 commit 之前，問題在 commit 前就修完：每個 PR 只有一個 commit，CI 只跑一次。CI 沒通過不合併。
 
@@ -49,8 +57,8 @@
 - 不經手任何網站的帳密、cookie 或 token；網站需要登入時，請人在專用瀏覽器中登入。
 - 不改框架（`libs/sec_revenue/revenue/`）與既有 utility，非改不可時停下來回報。
 - 沒有人核准時不 commit、不 push、不合併；做完停下來回報。
-- 任何改動從寫完到合併都照這個順序（[從寫完到合併](#從寫完到合併)）：寫完 → 獨立 review → 修完 → 人核准 → commit、開 PR、CI 通過、合併。
-- 每一步做完回報：做了什麼、結果、遇到的問題、需要人決定的事項（附選項與建議）。
+- 任何改動從寫完到合併都照這個順序（[從寫完到合併](#從寫完到合併)）：寫完 → review → 修完 → 人核准 → commit、開 PR、CI 通過、合併。
+- 每一步做完回報：結果、遇到的問題、需要人決定的事項（附選項與建議）。只寫結論；不重述交辦內容，不列沒有問題的檢查過程。
 
 ## 1. 下載 SEC 申報
 
@@ -159,9 +167,9 @@
 
 範圍外的較早期別可以用 `parse --tickers <TICKER> --check --start <較早日期>` 試跑，從輸出的 JSON 看各期的狀態，驗證切換日與 `not_derived`。較早期別沒有已提交的輸出，回報為差異是預期的；現行分類結構開始以前的期別失敗（例如找不到現行成員）也是預期的，結果不代表那些期別的正確組法。要看的是範圍內已提交的期別：它們出現差異時（例如第一個 Q4 的口徑依據改由較早的已上線 FY 提供），逐筆看原因。`--check` 不寫入輸出。
 
-回報發現的問題，依嚴重程度排列。
+回報發現的問題，依嚴重程度排列；每項寫位置、問題、失敗情境與建議，各一兩句。沒有問題的項目不列。
 
-**agent**（orchestrator）：修完 review 的問題，必要時再 review，接著做第 9 步。需要人決定的 review 問題，放進第 9 步請人核准時的回報。
+**agent**（orchestrator）：修完 review 的問題，看修正的 diff、重跑 `npm run check`（見[從寫完到合併](#從寫完到合併)），接著做第 9 步。需要人決定的 review 問題，放進第 9 步請人核准時的回報。
 
 **人**：決定 review 問題怎麼處理。
 
