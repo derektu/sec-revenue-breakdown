@@ -93,6 +93,7 @@ EOF
 - **範圍以前的上一份 10-K 也要組得出來**：判斷範圍內第一個 Q4 的口徑時，框架用 parser 從上一財年的 10-K 組出年度值（見 `parser.md` 的「Q4 口徑一致」）。那份 10-K 的寫法也要涵蓋；組不出來時口徑判斷為「無法判斷」，Q4 照常推算並註記，不會報錯，所以要自己確認。
 - **dimensions 要完全相同**：`find` 是精確比對，fact 多一個或少一個維度都不算。例如 NVDA 的分部 fact 另帶 `srt:ConsolidationItemsAxis=us-gaap:OperatingSegmentsMember`；UPS FY2025 10-K 的 `ups:SupplyChainSolutionsMember` 只出現在帶 `srt:ProductOrServiceAxis` 的細項 fact 上。
 - **分部 fact 的寫法每份申報都不同時，找穩定的同值 fact**：NEE 分部表的 FPL 至少有四種維度組合，但子公司的法律實體 fact（`dei:LegalEntityAxis`）每份申報都有且數值相同。可以選這個穩定的 fact，在 `parser.md` 寫明每份申報兩者相等的依據；其他分類與總營收都取各自的 fact、沒有以總營收倒算的分類時，法律實體值與分部值將來不同會讓加總檢核失敗。
+- **調節項的直接 fact 從某份申報起消失時，可以用相減組成**：XOM 的 Corporate and Financing 銷售在 FY2024 10-K 起沒有自己的 fact，改由合併銷售減 `ConsolidationItemsAxis=OperatingSegmentsMember` 的分部合計組成；有直接 fact 的申報仍取直接 fact（以 `isinstance(..., Missing)` 判斷）。`parser.md` 要列出兩種寫法在重疊期別逐一相等的證據（accession 與數值，通常是較晚申報比較欄的相減值對原申報的直接值）。用相減式的期別，加總檢核核對的是分類加總等於分部合計。
 - **用表格編號對照原文**：同一個數字常在多張表各標一次；分類的 fact 與總營收的 fact 最好在同一張表，證據截圖較少。在 SEC 的 XBRL viewer（`revenue.json` 運算元的 `ixviewer_url`）可以看 fact 在原文中的位置。
 - **總營收用合併 fact**，通常是不帶維度的那個，不是只帶 `ConsolidationItemsAxis=OperatingSegmentsMember` 的分部合計；申報有分部以外的營收時兩者不同。分類採用特殊口徑時，總營收跟著分類的口徑走（例如 BAC 的 FTE），與 GAAP 的差額寫在 `parser.md`。分類只取銷售營收、合併營收另含權益法收益或其他收入時（XOM），可以在第 1 步提議總營收改用同口徑的合併銷售 fact，即使它帶 `srt:ProductOrServiceAxis` 之類的維度；它必須是合併數，不能是分部合計；與不帶維度的合併營收的差額寫在 `parser.md`。
 
@@ -139,7 +140,7 @@ EOF
 財年與季末日（52／53 週制要寫）；Q1–Q3、Q4、FY 各自怎麼來；哪些 Q4 不推算與原因。
 
 ## 數字在原文的位置
-10-Q、10-K 中是哪張表。同一個 fact 常標在多張表，框架選來當證據的表格（`data/revenue/` 各期 evidence 檔名的 `-t<編號>`）不一定是分部表；寫證據實際取自的表格。一張表跨頁時各段有不同的編號，寫明證據所在的各段含哪些列（例如 JNJ 2024 年 Q1 10-Q 的分部銷售表跨五頁，Innovative Medicine 的合計在 t62，MedTech 與總營收在 t64）。
+10-Q、10-K 中是哪張表。同一個 fact 常標在多張表，框架選來當證據的表格（`data/revenue/` 各期 evidence 檔名的 `-t<編號>`）不一定是分部表；寫證據實際取自的表格，編號依正式輸出的 evidence 檔名，不寫「尚無截圖」這類暫時狀態。一張表跨頁時各段有不同的編號，寫明證據所在的各段含哪些列（例如 JNJ 2024 年 Q1 10-Q 的分部銷售表跨五頁，Innovative Medicine 的合計在 t62，MedTech 與總營收在 t64）。
 
 ## 已知的重複 fact（有的話）
 
