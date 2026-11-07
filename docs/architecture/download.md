@@ -1,6 +1,6 @@
 # SEC 下載
 
-`download` 取得 SEC 申報清單與完整申報包，存在資料根目錄（`SEC_DATA_DIR`，未設定時為 repo 的 `data/`）；不產生營收輸出。parse 只讀這裡下載的申報包。指令與參數見 [本機操作](../guides/local-workflow.md)。程式在 `libs/sec_revenue/download/`：`http.py`（SEC 請求）、`store.py`（快取）、`catalog.py`（CIK 與申報清單）、`plan.py`（要下載的申報）、`packages.py`（申報包）、`workflow.py`（單家公司與批次）。
+`download` 取得 SEC 申報清單與完整申報包，存在資料根目錄（`SEC_DATA_DIR`，未設定時為 repo 的 `data/`）；不產生營收輸出。parse 只讀這裡下載的申報包。指令與參數見 [本機操作](../guides/local-workflow.md)。程式在 `libs/sec_revenue/download/`：`http.py`（SEC 請求）、`store.py`（快取）、`catalog.py`（CIK 與申報清單）、`plan.py`（要下載的申報與依賴期別）、`packages.py`（申報包）、`workflow.py`（單家公司與批次）。
 
 ## CIK
 
@@ -26,6 +26,19 @@ parse 推算 Q4 需要年度減去同財年 Q1–Q3，「Q4 口徑一致」檢�
 這些期別的 10-K／10-Q（含修訂版）與目標期別一樣下載完整申報包，列在結果的 `dependency_periods`，不算使用者要求的目標期別，也不擴大 8-K 的窗口。catalog 中沒有上一份 10-K 時，改取目標前 370 天內的 10-Q，並在 `dependencies_unresolved` 註明。
 
 依賴期別比目標期別早約 15 個月，可能不在只含 recent 分頁的 catalog 內：有無法確定的依賴、線上執行且 catalog 尚未含全部歷史分頁時，補抓全部歷史分頁再計算一次。仍無法確定時，該公司列為失敗。
+
+## 10-Q 財年依賴申報
+
+parse 可以用申報日不晚於 10-Q、與它相接的前一份 10-K 推算 10-Q 的財年（見 [parser.md](parser.md) 的 `FISCAL_YEAR`）。下載在寫 parser 之前，不讀公司 parser，所以期末日沒有 10-K 的目標期別（季報期別）一律另外下載上一份 10-K：
+
+- 每份 10-Q 申報（原始與修訂版）各取申報日不晚於它、期末早於它的 10-K 中期末最晚的一期，也就是同財年開始前的最後一份 10-K。parse 只用申報日不晚於 10-Q 的申報，所以申報日較晚的 10-K 不算。
+- 這份 10-K 的期末須在 10-Q 期末前 370 天內，與 Q4 依賴的同財年範圍相同；更早的 10-K 表示中間那份不在 catalog 中，不列為依賴。
+
+這些期別與 Q4 依賴期別合併成同一份 `dependency_periods`，已是目標或已列為 Q4 依賴的期別只下載一次。範圍含該財年的 10-K 時，上一份 10-K 同時是 Q4 依賴；起日落在財年中段（例如 `--start 2026-07-01`）時，上一份 10-K 只因 10-Q 財年依賴下載。只選最新一期（含 `--latest`）時同樣列上一份 10-K 為依賴；資料目錄已有完整申報包時沿用，不重新下載。
+
+依賴期別的申報包與目標一樣存在資料目錄，parse 讀得到。依賴 10-K 落在 parse 預設範圍內時（例如以財年中段的起日下載後，不帶 `--start` 執行 parse），parse 會多處理那一期的 FY 與 Q4，Q4 因缺同財年 Q1–Q3 失敗。Q4 依賴的上一份 10-K 也是如此。
+
+找不到上一份 10-K 的 10-Q 期別列在結果的 `prior_annual_unresolved`，不算失敗：上市後的第一批 10-Q 沒有更早的 10-K，宣告財年的公司照常 parse，以前一份 10-K 推算財年的公司在 parse 時以「財年與季別」失敗。有日期範圍、線上執行且 catalog 尚未含全部歷史分頁時，補抓全部歷史分頁再計算一次。只選最新一期時不補抓：SEC 的 recent 分頁至少含最近一年的申報，最新 10-Q 的上一份 10-K 若存在必在其中。
 
 ## 完整申報包
 
@@ -64,7 +77,7 @@ parse 推算 Q4 需要年度減去同財年 Q1–Q3，「Q4 口徑一致」檢�
 
 多家公司逐家下載，一家失敗（含非預期例外）不中止整批。結果列出 `succeeded`、`failed`（附錯誤原因）與 `not_attempted`。SEC 回應 403 或 429，或缺少合格的 `SEC_USER_AGENT` 時，代表身分或速率被拒，繼續送請求違反 SEC 規範，因此整批停止：該 ticker 列為失敗，其餘列為 `not_attempted`，`stopped` 註明原因。
 
-申報包未完成、離線時申報包不完整、8-K item 不明，或 Q4 依賴期別無法確定的公司都列在 `failed`。
+申報包未完成、離線時申報包不完整、8-K item 不明，或 Q4 依賴期別無法確定的公司都列在 `failed`；`prior_annual_unresolved` 只回報。
 
 回傳碼：`0` 全部公司成功；`1` 輸入或快取驗證失敗；`2` 有公司失敗或未執行。
 
@@ -75,7 +88,8 @@ parse 推算 Q4 需要年度減去同財年 Q1–Q3，「Q4 口徑一致」檢�
 | 欄位 | 內容 |
 |---|---|
 | `missing_targets`、`missing_dependencies` | 目標期別、依賴期別中沒有完整申報包的 10-K／10-Q：accession、表單、期末日、申報日，以及 `not_downloaded`（沒有申報包）或 `incomplete`（申報包未完成） |
-| `catalog_incomplete` | 本機 catalog 尚未含全部歷史分頁，且範圍起日早於 catalog 最舊的 10-K／10-Q 期別，或有無法確定的依賴期別；附原因 |
+| `catalog_incomplete` | 本機 catalog 尚未含全部歷史分頁，且範圍起日早於 catalog 最舊的 10-K／10-Q 期別、有無法確定的 Q4 依賴期別，或有日期範圍時有找不到上一份 10-K 的 10-Q 期別；附原因 |
+| `prior_annual_unresolved` | 找不到上一份 10-K 的 10-Q 期別（見「10-Q 財年依賴申報」） |
 | `error` | 沒有本機 catalog，或範圍內沒有 10-K／10-Q |
 
 任何一家有上述缺漏時，結果的 `complete` 為 false，回傳碼為 2；否則為 0。
