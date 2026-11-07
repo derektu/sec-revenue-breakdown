@@ -61,7 +61,7 @@ class WorkflowCli:
         download.add_argument(
             "--dry-run",
             action="store_true",
-            help="只讀本機 catalog 與申報包，列出目標期別與 Q4 依賴期別中還沒下載完整的申報，以及 catalog 未涵蓋的範圍；不連網、不寫入，有缺漏時回傳 2",
+            help="只讀本機 catalog 與申報包，列出目標期別與依賴期別（Q4 與 10-Q 財年）中還沒下載完整的申報，以及 catalog 未涵蓋的範圍；不連網、不寫入，有缺漏時回傳 2",
         )
         download.add_argument(
             "--from-manifest",

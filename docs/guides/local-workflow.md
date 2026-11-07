@@ -73,11 +73,11 @@ SEC 原文（`sec/`）與下載索引（`pipeline/`）放在資料根目錄。�
 # 完全不連網，只驗證並沿用既有索引與檔案；缺任何必要檔案即失敗
 .venv/bin/python scripts/sec_pipeline.py download --tickers AAPL --latest --offline
 
-# 只讀本機 catalog 與 packages.json，列出範圍內還沒下載完整的目標與 Q4 依賴申報；不連網、不寫入，有缺漏時回傳 2
+# 只讀本機 catalog 與 packages.json，列出範圍內還沒下載完整的目標與依賴申報；不連網、不寫入，有缺漏時回傳 2
 .venv/bin/python scripts/sec_pipeline.py download --all --start 2024-01-01 --dry-run
 ```
 
-目標期別有 10-K 時，會一併下載推算 Q4 所需的同財年 10-Q 與上一份 10-K。選擇申報、依賴期別、申報包內容、快取格式與回傳碼見 [SEC 下載](../architecture/download.md)。
+目標期別有 10-K 時，會一併下載推算 Q4 所需的同財年 10-Q 與上一份 10-K；目標期別有 10-Q 時，會一併下載推算財年所需的上一份 10-K。選擇申報、依賴期別、申報包內容、快取格式與回傳碼見 [SEC 下載](../architecture/download.md)。
 
 ## Parse
 

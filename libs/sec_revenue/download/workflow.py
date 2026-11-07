@@ -1,4 +1,4 @@
-"""下載一組 ticker：每家公司的目標、依賴與 8-K 申報包，以及逐家隔離的批次。"""
+"""下載一組 ticker：每家公司的目標、依賴（Q4 與 10-Q 財年）與 8-K 申報包，以及逐家隔離的批次。"""
 
 from __future__ import annotations
 
@@ -11,14 +11,14 @@ from ..revenue.snapshot import MANIFEST, snapshot_dir
 from .catalog import CikResolver, SecFilingCatalog
 from .http import SecHttpClient, is_blocking
 from .packages import RENDERING_RE, FilingPackages
-from .plan import PERIODIC_FORMS, earnings_releases, package_filings, q4_dependencies, release_window
+from .plan import PERIODIC_FORMS, dependencies, earnings_releases, package_filings, release_window
 from .store import WorkflowCache
 
 
 class DownloadWorkflow:
     """下載一組 ticker 的完整申報包；任一錯誤直接拋出，批次隔離由 DownloadBatch 負責。
 
-    每家公司下載目標期別、Q4 依賴期別與財報新聞稿 8-K 的申報包。`dry_run=True` 只讀本機 catalog 與 packages.json，
+    每家公司下載目標期別、依賴期別（Q4 推算所需的期別與 10-Q 推算財年所需的上一份 10-K）與財報新聞稿 8-K 的申報包。`dry_run=True` 只讀本機 catalog 與 packages.json，
     列出還沒下載完整的申報，不發網路請求、不寫入任何檔案。
 
     `manifests` 指定快照根目錄時改依申報清單（`<首字母>/<TICKER>/manifest.json`）下載：不查 SEC 申報清單、
@@ -90,26 +90,28 @@ class DownloadWorkflow:
             targets = self.targets(filings, selection)
             items = self.catalog.items(ticker)
             unknown = [f for f in release_window(filings, targets, selection) if f["accessionNumber"] not in items]
-        dependencies = q4_dependencies(filings, targets)
-        if dependencies["unresolved"] and not offline and not self.catalog.history_complete(ticker):
+        needed = dependencies(filings, targets)
+        if self.reload_for(needed, selection) and not offline and not self.catalog.history_complete(ticker):
             # 依賴期別比目標早約 15 個月，可能在只抓 recent 的 catalog 之外：補抓全部歷史分頁再算一次。
             filings = self.catalog.load(ticker, cik["ciks"], selection, **dict(load, full_history=True))
             targets = self.targets(filings, selection)
             items = self.catalog.items(ticker)
             unknown = [f for f in release_window(filings, targets, selection) if f["accessionNumber"] not in items]
-            dependencies = q4_dependencies(filings, targets)
+            needed = dependencies(filings, targets)
         company = {
             "ticker": ticker,
             "cik": cik,
             "catalog_source": self.catalog.last_source,
             "target_periods": [f["reportDate"] for f in targets],
-            "dependency_periods": dependencies["periods"],
+            "dependency_periods": needed["periods"],
         }
-        if dependencies["unresolved"]:
-            company["dependencies_unresolved"] = dependencies["unresolved"]
+        if needed["unresolved"]:
+            company["dependencies_unresolved"] = needed["unresolved"]
+        if needed["prior_annual_unresolved"]:
+            company["prior_annual_unresolved"] = needed["prior_annual_unresolved"]
         if unknown:
             company["eight_k_items_missing"] = sorted(f["accessionNumber"] for f in unknown)
-        wanted = package_filings(filings, targets, dependencies["periods"]) + earnings_releases(filings, items, targets, selection)
+        wanted = package_filings(filings, targets, needed["periods"]) + earnings_releases(filings, items, targets, selection)
         packages = []
         for filing in sorted({f["accessionNumber"]: f for f in wanted}.values(), key=lambda f: (f["filingDate"], f["accessionNumber"])):
             package = self.packages.download(ticker, filing, self.include_r_pages, force, offline)
@@ -119,7 +121,7 @@ class DownloadWorkflow:
         return company
 
     def missing(self, ticker: str, selection: PeriodSelection) -> dict:
-        """只讀本機資料，列出目標期別與 Q4 依賴期別中沒有完整申報包的 10-K／10-Q。"""
+        """只讀本機資料，列出目標期別與依賴期別中沒有完整申報包的 10-K／10-Q。"""
         cached = self.cache.read(ticker, "catalog")
         if not cached:
             return {"ticker": ticker, "dry_run": True, "error": "沒有本機 catalog；先線上 download"}
@@ -128,14 +130,16 @@ class DownloadWorkflow:
             targets = self.targets(filings, selection)
         except ValueError as error:
             return {"ticker": ticker, "dry_run": True, "error": str(error)}
-        dependencies = q4_dependencies(filings, targets)
+        needed = dependencies(filings, targets)
         oldest = min((f["reportDate"] for f in filings if f["form"] in PERIODIC_FORMS), default="9999")
         bound = selection.start or selection.end
         uncovered = []
         if not cached.get("history_complete"):
             if bound and bound < oldest:
                 uncovered.append(f"範圍起日 {bound} 早於本機 catalog 最舊的 10-K／10-Q 期別 {oldest}")
-            uncovered += dependencies["unresolved"]
+            uncovered += needed["unresolved"]
+            if self.reload_for(needed, selection):
+                uncovered += needed["prior_annual_unresolved"]
         saved = self.packages.read(ticker)["packages"]
         target_periods = {f["reportDate"] for f in targets}
 
@@ -160,12 +164,14 @@ class DownloadWorkflow:
             "ticker": ticker,
             "dry_run": True,
             "target_periods": sorted(target_periods),
-            "dependency_periods": dependencies["periods"],
+            "dependency_periods": needed["periods"],
             "missing_targets": absent(None),
-            "missing_dependencies": absent(dependencies["periods"]),
+            "missing_dependencies": absent(needed["periods"]),
         }
-        if dependencies["unresolved"]:
-            result["dependencies_unresolved"] = dependencies["unresolved"]
+        if needed["unresolved"]:
+            result["dependencies_unresolved"] = needed["unresolved"]
+        if needed["prior_annual_unresolved"]:
+            result["prior_annual_unresolved"] = needed["prior_annual_unresolved"]
         if uncovered:
             result["catalog_incomplete"] = uncovered
         return result
@@ -213,6 +219,15 @@ class DownloadWorkflow:
         package["complete"] = False
         self.cache.write(ticker, "packages", saved)
         return dict(package, status="manifest_mismatch")
+
+    @staticmethod
+    def reload_for(needed: dict, selection: PeriodSelection) -> bool:
+        """無法確定的依賴是否可能在 catalog 尚未載入的歷史分頁中。
+
+        Q4 依賴一律可能。10-Q 的上一份 10-K 只在有日期範圍時可能：SEC 的 recent 分頁至少含最近一年的申報，
+        只選最新一期時，最新 10-Q 的上一份 10-K（期末早不到一年）若存在必在 recent 分頁內。
+        """
+        return bool(needed["unresolved"] or (needed["prior_annual_unresolved"] and (selection.start or selection.end)))
 
     @staticmethod
     def targets(filings: list[dict], selection: PeriodSelection) -> list[dict]:
