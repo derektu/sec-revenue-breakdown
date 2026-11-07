@@ -1,0 +1,360 @@
+{
+  "categories": {
+    "Commercial Lines": {
+      "expression": [
+        {
+          "operand": "op2",
+          "weight": 1
+        }
+      ],
+      "value": 2827000000
+    },
+    "Investment income": {
+      "expression": [
+        {
+          "operand": "op4",
+          "weight": 1
+        }
+      ],
+      "value": 1035000000
+    },
+    "Net realized gains (losses) on securities": {
+      "expression": [
+        {
+          "operand": "op5",
+          "weight": 1
+        }
+      ],
+      "value": -170000000
+    },
+    "Other indemnity": {
+      "expression": [
+        {
+          "operand": "op3",
+          "weight": 1
+        }
+      ],
+      "value": 2000000
+    },
+    "Personal Lines": {
+      "expression": [
+        {
+          "operand": "op1",
+          "weight": 1
+        }
+      ],
+      "value": 19351000000
+    },
+    "Service revenues": {
+      "expression": [
+        {
+          "operand": "op6",
+          "weight": 1
+        }
+      ],
+      "value": 147000000
+    }
+  },
+  "checks": {
+    "structural": [
+      {
+        "check": "定義唯一",
+        "result": "pass"
+      },
+      {
+        "check": "fact 存在且唯一",
+        "result": "pass"
+      },
+      {
+        "check": "單位與精度",
+        "result": "pass"
+      },
+      {
+        "check": "加總",
+        "result": "pass"
+      },
+      {
+        "check": "證據完整",
+        "result": "pass"
+      }
+    ],
+    "sum": {
+      "categories": 23192000000,
+      "difference": 0,
+      "tolerance": "3500000",
+      "total": 23192000000
+    }
+  },
+  "filings": {
+    "primary": {
+      "accession": "0000080661-26-000379",
+      "filing_date": "2026-11-02",
+      "form": "10-Q",
+      "report_date": "2026-09-30"
+    }
+  },
+  "fiscal_quarter": 3,
+  "fiscal_year": 2026,
+  "operands": {
+    "op1": {
+      "accession": "0000080661-26-000379",
+      "concept": "pgr:PremiumsEarnedFeesAndOtherRevenue",
+      "context_id": "c-514",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "srt:ProductOrServiceAxis": "pgr:UnderwritingOperationsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "pgr:PersonalLinesSegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/80661/000008066126000379/pgr-20260930.htm",
+        "name": "pgr-20260930.htm",
+        "sha256": "721378bd43433bc33f7e9a6c703cc8ed053fbbdf855220c584e57a1f5dcb8cec",
+        "url": "https://www.sec.gov/Archives/edgar/data/80661/000008066126000379/pgr-20260930.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "11e945ca79a06c7c205c7449997579e5db470e98defc384d5ab8f9e30ec574d7",
+        "png_scale": 1,
+        "png_sha256": "31c099b39eb8e2030621a1cf05dacf792c6b55e7418f4923d07ad8b88aa18abe",
+        "table": "0000080661-26-000379-721378bd4343-t39"
+      },
+      "fact_id": "f-1865",
+      "filing_date": "2026-11-02",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-09-30",
+        "start": "2026-07-01"
+      },
+      "raw": "19,351",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 19351000000
+    },
+    "op2": {
+      "accession": "0000080661-26-000379",
+      "concept": "pgr:PremiumsEarnedFeesAndOtherRevenue",
+      "context_id": "c-515",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "srt:ProductOrServiceAxis": "pgr:UnderwritingOperationsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "pgr:CommercialLinesSegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/80661/000008066126000379/pgr-20260930.htm",
+        "name": "pgr-20260930.htm",
+        "sha256": "721378bd43433bc33f7e9a6c703cc8ed053fbbdf855220c584e57a1f5dcb8cec",
+        "url": "https://www.sec.gov/Archives/edgar/data/80661/000008066126000379/pgr-20260930.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "11e945ca79a06c7c205c7449997579e5db470e98defc384d5ab8f9e30ec574d7",
+        "png_scale": 1,
+        "png_sha256": "31c099b39eb8e2030621a1cf05dacf792c6b55e7418f4923d07ad8b88aa18abe",
+        "table": "0000080661-26-000379-721378bd4343-t39"
+      },
+      "fact_id": "f-1866",
+      "filing_date": "2026-11-02",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-09-30",
+        "start": "2026-07-01"
+      },
+      "raw": "2,827",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 2827000000
+    },
+    "op3": {
+      "accession": "0000080661-26-000379",
+      "concept": "pgr:PremiumsEarnedFeesAndOtherRevenue",
+      "context_id": "c-516",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "srt:ProductOrServiceAxis": "pgr:UnderwritingOperationsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "pgr:OtherIndemnitySegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/80661/000008066126000379/pgr-20260930.htm",
+        "name": "pgr-20260930.htm",
+        "sha256": "721378bd43433bc33f7e9a6c703cc8ed053fbbdf855220c584e57a1f5dcb8cec",
+        "url": "https://www.sec.gov/Archives/edgar/data/80661/000008066126000379/pgr-20260930.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "11e945ca79a06c7c205c7449997579e5db470e98defc384d5ab8f9e30ec574d7",
+        "png_scale": 1,
+        "png_sha256": "31c099b39eb8e2030621a1cf05dacf792c6b55e7418f4923d07ad8b88aa18abe",
+        "table": "0000080661-26-000379-721378bd4343-t39"
+      },
+      "fact_id": "f-1867",
+      "filing_date": "2026-11-02",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-09-30",
+        "start": "2026-07-01"
+      },
+      "raw": "2",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 2000000
+    },
+    "op4": {
+      "accession": "0000080661-26-000379",
+      "concept": "us-gaap:InterestAndDividendIncomeOperating",
+      "context_id": "c-3",
+      "decimals": "-6",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/80661/000008066126000379/pgr-20260930.htm",
+        "name": "pgr-20260930.htm",
+        "sha256": "721378bd43433bc33f7e9a6c703cc8ed053fbbdf855220c584e57a1f5dcb8cec",
+        "url": "https://www.sec.gov/Archives/edgar/data/80661/000008066126000379/pgr-20260930.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "b1cd7623f8907f84b3a927c2ca7fd833bdcbb4c0d282b88978716a41c7c57b08",
+        "png_scale": 1,
+        "png_sha256": "174722a801dba761b0aa0938033ef3583eb89487e88f7606624fb152b5c4729d",
+        "table": "0000080661-26-000379-721378bd4343-t12"
+      },
+      "fact_id": "f-35",
+      "filing_date": "2026-11-02",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-09-30",
+        "start": "2026-07-01"
+      },
+      "raw": "1,035",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 1035000000
+    },
+    "op5": {
+      "accession": "0000080661-26-000379",
+      "concept": "us-gaap:DebtAndEquitySecuritiesGainLoss",
+      "context_id": "c-3",
+      "decimals": "-6",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/80661/000008066126000379/pgr-20260930.htm",
+        "name": "pgr-20260930.htm",
+        "sha256": "721378bd43433bc33f7e9a6c703cc8ed053fbbdf855220c584e57a1f5dcb8cec",
+        "url": "https://www.sec.gov/Archives/edgar/data/80661/000008066126000379/pgr-20260930.htm"
+      },
+      "duplicates": [
+        "f-1087"
+      ],
+      "evidence": {
+        "html_sha256": "b1cd7623f8907f84b3a927c2ca7fd833bdcbb4c0d282b88978716a41c7c57b08",
+        "png_scale": 1,
+        "png_sha256": "174722a801dba761b0aa0938033ef3583eb89487e88f7606624fb152b5c4729d",
+        "table": "0000080661-26-000379-721378bd4343-t12"
+      },
+      "fact_id": "f-47",
+      "filing_date": "2026-11-02",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-09-30",
+        "start": "2026-07-01"
+      },
+      "raw": "170",
+      "role": "quarter",
+      "scale": "6",
+      "sign": "-",
+      "value": -170000000
+    },
+    "op6": {
+      "accession": "0000080661-26-000379",
+      "concept": "pgr:NonInsuranceServiceRevenues",
+      "context_id": "c-3",
+      "decimals": "-6",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/80661/000008066126000379/pgr-20260930.htm",
+        "name": "pgr-20260930.htm",
+        "sha256": "721378bd43433bc33f7e9a6c703cc8ed053fbbdf855220c584e57a1f5dcb8cec",
+        "url": "https://www.sec.gov/Archives/edgar/data/80661/000008066126000379/pgr-20260930.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "b1cd7623f8907f84b3a927c2ca7fd833bdcbb4c0d282b88978716a41c7c57b08",
+        "png_scale": 1,
+        "png_sha256": "174722a801dba761b0aa0938033ef3583eb89487e88f7606624fb152b5c4729d",
+        "table": "0000080661-26-000379-721378bd4343-t12"
+      },
+      "fact_id": "f-55",
+      "filing_date": "2026-11-02",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-09-30",
+        "start": "2026-07-01"
+      },
+      "raw": "147",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 147000000
+    },
+    "op7": {
+      "accession": "0000080661-26-000379",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-3",
+      "decimals": "-6",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/80661/000008066126000379/pgr-20260930.htm",
+        "name": "pgr-20260930.htm",
+        "sha256": "721378bd43433bc33f7e9a6c703cc8ed053fbbdf855220c584e57a1f5dcb8cec",
+        "url": "https://www.sec.gov/Archives/edgar/data/80661/000008066126000379/pgr-20260930.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "b1cd7623f8907f84b3a927c2ca7fd833bdcbb4c0d282b88978716a41c7c57b08",
+        "png_scale": 1,
+        "png_sha256": "174722a801dba761b0aa0938033ef3583eb89487e88f7606624fb152b5c4729d",
+        "table": "0000080661-26-000379-721378bd4343-t12"
+      },
+      "fact_id": "f-59",
+      "filing_date": "2026-11-02",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-09-30",
+        "start": "2026-07-01"
+      },
+      "raw": "23,192",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 23192000000
+    }
+  },
+  "period_end": "2026-09-30",
+  "schema_version": 1,
+  "series": "Q",
+  "ticker": "PGR",
+  "total": {
+    "expression": [
+      {
+        "operand": "op7",
+        "weight": 1
+      }
+    ],
+    "value": 23192000000
+  },
+  "unit": "USD",
+  "view": "business_segment"
+}
