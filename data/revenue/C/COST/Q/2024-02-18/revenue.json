@@ -1,0 +1,314 @@
+{
+  "categories": {
+    "Foods and Sundries": {
+      "expression": [
+        {
+          "operand": "op1",
+          "weight": 1
+        }
+      ],
+      "value": 23675000000
+    },
+    "Fresh Foods": {
+      "expression": [
+        {
+          "operand": "op4",
+          "weight": 1
+        }
+      ],
+      "value": 7996000000
+    },
+    "Membership fees": {
+      "expression": [
+        {
+          "operand": "op5",
+          "weight": 1
+        }
+      ],
+      "value": 1111000000
+    },
+    "Non-Foods": {
+      "expression": [
+        {
+          "operand": "op2",
+          "weight": 1
+        }
+      ],
+      "value": 15017000000
+    },
+    "Warehouse Ancillary and Other Businesses": {
+      "expression": [
+        {
+          "operand": "op3",
+          "weight": 1
+        }
+      ],
+      "value": 10643000000
+    }
+  },
+  "checks": {
+    "structural": [
+      {
+        "check": "定義唯一",
+        "result": "pass"
+      },
+      {
+        "check": "fact 存在且唯一",
+        "result": "pass"
+      },
+      {
+        "check": "單位與精度",
+        "result": "pass"
+      },
+      {
+        "check": "加總",
+        "result": "pass"
+      },
+      {
+        "check": "證據完整",
+        "result": "pass"
+      }
+    ],
+    "sum": {
+      "categories": 58442000000,
+      "difference": 0,
+      "tolerance": "3000000",
+      "total": 58442000000
+    }
+  },
+  "filings": {
+    "primary": {
+      "accession": "0000909832-24-000017",
+      "filing_date": "2024-03-13",
+      "form": "10-Q",
+      "report_date": "2024-02-18"
+    }
+  },
+  "fiscal_quarter": 2,
+  "fiscal_year": 2024,
+  "operands": {
+    "op1": {
+      "accession": "0000909832-24-000017",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-146",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "cost:FoodsAndSundriesMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/909832/000090983224000017/cost-20240218.htm",
+        "name": "cost-20240218.htm",
+        "sha256": "4d95b87a60f8192d619a3e7f0dcf4c9f445caaa6c60962abef0a7ecde20bac38",
+        "url": "https://www.sec.gov/Archives/edgar/data/909832/000090983224000017/cost-20240218.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "034705339ea6b0a67506931042fbbd385548a05a4b1ba312f12a04a6abf73462",
+        "png_scale": 1,
+        "png_sha256": "5fd24efbbf876dafd8853b998569275e9e6d3b426ca9eaea5adb044ab3459e9f",
+        "table": "0000909832-24-000017-4d95b87a60f8-t22"
+      },
+      "fact_id": "f-625",
+      "filing_date": "2024-03-13",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-02-18",
+        "start": "2023-11-27"
+      },
+      "raw": "23,675",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 23675000000
+    },
+    "op2": {
+      "accession": "0000909832-24-000017",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-150",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "cost:NonFoodsMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/909832/000090983224000017/cost-20240218.htm",
+        "name": "cost-20240218.htm",
+        "sha256": "4d95b87a60f8192d619a3e7f0dcf4c9f445caaa6c60962abef0a7ecde20bac38",
+        "url": "https://www.sec.gov/Archives/edgar/data/909832/000090983224000017/cost-20240218.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "034705339ea6b0a67506931042fbbd385548a05a4b1ba312f12a04a6abf73462",
+        "png_scale": 1,
+        "png_sha256": "5fd24efbbf876dafd8853b998569275e9e6d3b426ca9eaea5adb044ab3459e9f",
+        "table": "0000909832-24-000017-4d95b87a60f8-t22"
+      },
+      "fact_id": "f-629",
+      "filing_date": "2024-03-13",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-02-18",
+        "start": "2023-11-27"
+      },
+      "raw": "15,017",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 15017000000
+    },
+    "op3": {
+      "accession": "0000909832-24-000017",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-158",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "cost:OtherMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/909832/000090983224000017/cost-20240218.htm",
+        "name": "cost-20240218.htm",
+        "sha256": "4d95b87a60f8192d619a3e7f0dcf4c9f445caaa6c60962abef0a7ecde20bac38",
+        "url": "https://www.sec.gov/Archives/edgar/data/909832/000090983224000017/cost-20240218.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "034705339ea6b0a67506931042fbbd385548a05a4b1ba312f12a04a6abf73462",
+        "png_scale": 1,
+        "png_sha256": "5fd24efbbf876dafd8853b998569275e9e6d3b426ca9eaea5adb044ab3459e9f",
+        "table": "0000909832-24-000017-4d95b87a60f8-t22"
+      },
+      "fact_id": "f-637",
+      "filing_date": "2024-03-13",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-02-18",
+        "start": "2023-11-27"
+      },
+      "raw": "10,643",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 10643000000
+    },
+    "op4": {
+      "accession": "0000909832-24-000017",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-154",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "cost:FreshFoodsMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/909832/000090983224000017/cost-20240218.htm",
+        "name": "cost-20240218.htm",
+        "sha256": "4d95b87a60f8192d619a3e7f0dcf4c9f445caaa6c60962abef0a7ecde20bac38",
+        "url": "https://www.sec.gov/Archives/edgar/data/909832/000090983224000017/cost-20240218.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "034705339ea6b0a67506931042fbbd385548a05a4b1ba312f12a04a6abf73462",
+        "png_scale": 1,
+        "png_sha256": "5fd24efbbf876dafd8853b998569275e9e6d3b426ca9eaea5adb044ab3459e9f",
+        "table": "0000909832-24-000017-4d95b87a60f8-t22"
+      },
+      "fact_id": "f-633",
+      "filing_date": "2024-03-13",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-02-18",
+        "start": "2023-11-27"
+      },
+      "raw": "7,996",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 7996000000
+    },
+    "op5": {
+      "accession": "0000909832-24-000017",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-7",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "us-gaap:MembershipMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/909832/000090983224000017/cost-20240218.htm",
+        "name": "cost-20240218.htm",
+        "sha256": "4d95b87a60f8192d619a3e7f0dcf4c9f445caaa6c60962abef0a7ecde20bac38",
+        "url": "https://www.sec.gov/Archives/edgar/data/909832/000090983224000017/cost-20240218.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "099950c529c59e1260b6ff26422169c9e3699795a0d6198dbff190f7d0c44463",
+        "png_scale": 1,
+        "png_sha256": "3359927c6c1bd644d328e4bfc3989b6719ff9fa054efbeffd29fc3bd4dd0ec23",
+        "table": "0000909832-24-000017-4d95b87a60f8-t6"
+      },
+      "fact_id": "f-34",
+      "filing_date": "2024-03-13",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-02-18",
+        "start": "2023-11-27"
+      },
+      "raw": "1,111",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 1111000000
+    },
+    "op6": {
+      "accession": "0000909832-24-000017",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-11",
+      "decimals": "-6",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/909832/000090983224000017/cost-20240218.htm",
+        "name": "cost-20240218.htm",
+        "sha256": "4d95b87a60f8192d619a3e7f0dcf4c9f445caaa6c60962abef0a7ecde20bac38",
+        "url": "https://www.sec.gov/Archives/edgar/data/909832/000090983224000017/cost-20240218.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "099950c529c59e1260b6ff26422169c9e3699795a0d6198dbff190f7d0c44463",
+        "png_scale": 1,
+        "png_sha256": "3359927c6c1bd644d328e4bfc3989b6719ff9fa054efbeffd29fc3bd4dd0ec23",
+        "table": "0000909832-24-000017-4d95b87a60f8-t6"
+      },
+      "fact_id": "f-38",
+      "filing_date": "2024-03-13",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-02-18",
+        "start": "2023-11-27"
+      },
+      "raw": "58,442",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 58442000000
+    }
+  },
+  "period_end": "2024-02-18",
+  "schema_version": 1,
+  "series": "Q",
+  "ticker": "COST",
+  "total": {
+    "expression": [
+      {
+        "operand": "op6",
+        "weight": 1
+      }
+    ],
+    "value": 58442000000
+  },
+  "unit": "USD",
+  "view": "product"
+}
