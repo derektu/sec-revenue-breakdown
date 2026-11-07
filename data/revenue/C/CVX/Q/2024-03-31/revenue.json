@@ -1,0 +1,229 @@
+{
+  "categories": {
+    "All Other": {
+      "expression": [
+        {
+          "operand": "op3",
+          "weight": 1
+        }
+      ],
+      "value": 27000000
+    },
+    "Downstream": {
+      "expression": [
+        {
+          "operand": "op1",
+          "weight": 1
+        }
+      ],
+      "value": 35117000000
+    },
+    "Upstream": {
+      "expression": [
+        {
+          "operand": "op2",
+          "weight": 1
+        }
+      ],
+      "value": 11436000000
+    }
+  },
+  "checks": {
+    "structural": [
+      {
+        "check": "定義唯一",
+        "result": "pass"
+      },
+      {
+        "check": "fact 存在且唯一",
+        "result": "pass"
+      },
+      {
+        "check": "單位與精度",
+        "result": "pass"
+      },
+      {
+        "check": "加總",
+        "result": "pass"
+      },
+      {
+        "check": "證據完整",
+        "result": "pass"
+      }
+    ],
+    "sum": {
+      "categories": 46580000000,
+      "difference": 0,
+      "tolerance": "2000000",
+      "total": 46580000000
+    }
+  },
+  "filings": {
+    "primary": {
+      "accession": "0000093410-24-000021",
+      "filing_date": "2024-05-02",
+      "form": "10-Q",
+      "report_date": "2024-03-31"
+    }
+  },
+  "fiscal_quarter": 1,
+  "fiscal_year": 2024,
+  "operands": {
+    "op1": {
+      "accession": "0000093410-24-000021",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-138",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "us-gaap:OilAndGasMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cvx:DownstreamMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/93410/000009341024000021/cvx-20240331.htm",
+        "name": "cvx-20240331.htm",
+        "sha256": "1c1dad818f8b854a22152558a11bf2192214726253916b1af4fafdb7e88faf6a",
+        "url": "https://www.sec.gov/Archives/edgar/data/93410/000009341024000021/cvx-20240331.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "b10659f96cb8281b5d672a0269987c99e66e50b4c0c24363e750f74837a0a480",
+        "png_scale": 1,
+        "png_sha256": "e5023af109844061ceea88ab8fe6e194be99ba618d1c6d64aec0bb9117f19f95",
+        "table": "0000093410-24-000021-1c1dad818f8b-t21"
+      },
+      "fact_id": "f-657",
+      "filing_date": "2024-05-02",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-03-31",
+        "start": "2024-01-01"
+      },
+      "raw": "35,117",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 35117000000
+    },
+    "op2": {
+      "accession": "0000093410-24-000021",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-126",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "us-gaap:OilAndGasMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cvx:UpstreamMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/93410/000009341024000021/cvx-20240331.htm",
+        "name": "cvx-20240331.htm",
+        "sha256": "1c1dad818f8b854a22152558a11bf2192214726253916b1af4fafdb7e88faf6a",
+        "url": "https://www.sec.gov/Archives/edgar/data/93410/000009341024000021/cvx-20240331.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "b10659f96cb8281b5d672a0269987c99e66e50b4c0c24363e750f74837a0a480",
+        "png_scale": 1,
+        "png_sha256": "e5023af109844061ceea88ab8fe6e194be99ba618d1c6d64aec0bb9117f19f95",
+        "table": "0000093410-24-000021-1c1dad818f8b-t21"
+      },
+      "fact_id": "f-645",
+      "filing_date": "2024-05-02",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-03-31",
+        "start": "2024-01-01"
+      },
+      "raw": "11,436",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 11436000000
+    },
+    "op3": {
+      "accession": "0000093410-24-000021",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-150",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "cvx:CorporateAndEliminationsMember",
+        "srt:ProductOrServiceAxis": "us-gaap:OilAndGasMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/93410/000009341024000021/cvx-20240331.htm",
+        "name": "cvx-20240331.htm",
+        "sha256": "1c1dad818f8b854a22152558a11bf2192214726253916b1af4fafdb7e88faf6a",
+        "url": "https://www.sec.gov/Archives/edgar/data/93410/000009341024000021/cvx-20240331.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "b10659f96cb8281b5d672a0269987c99e66e50b4c0c24363e750f74837a0a480",
+        "png_scale": 1,
+        "png_sha256": "e5023af109844061ceea88ab8fe6e194be99ba618d1c6d64aec0bb9117f19f95",
+        "table": "0000093410-24-000021-1c1dad818f8b-t21"
+      },
+      "fact_id": "f-669",
+      "filing_date": "2024-05-02",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-03-31",
+        "start": "2024-01-01"
+      },
+      "raw": "27",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 27000000
+    },
+    "op4": {
+      "accession": "0000093410-24-000021",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-1",
+      "decimals": "-6",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/93410/000009341024000021/cvx-20240331.htm",
+        "name": "cvx-20240331.htm",
+        "sha256": "1c1dad818f8b854a22152558a11bf2192214726253916b1af4fafdb7e88faf6a",
+        "url": "https://www.sec.gov/Archives/edgar/data/93410/000009341024000021/cvx-20240331.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "85e9d6113d5bf7affd2cf655796257d5f0c78f9ed2984991f2fe10fd01f85960",
+        "png_scale": 1,
+        "png_sha256": "b989b278200c1c226e31ce9ea2c8519e9456492aedcacb46773ad4dc1e054ae0",
+        "table": "0000093410-24-000021-1c1dad818f8b-t7"
+      },
+      "fact_id": "f-30",
+      "filing_date": "2024-05-02",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-03-31",
+        "start": "2024-01-01"
+      },
+      "raw": "46,580",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 46580000000
+    }
+  },
+  "period_end": "2024-03-31",
+  "schema_version": 1,
+  "series": "Q",
+  "ticker": "CVX",
+  "total": {
+    "expression": [
+      {
+        "operand": "op4",
+        "weight": 1
+      }
+    ],
+    "value": 46580000000
+  },
+  "unit": "USD",
+  "view": "business_segment"
+}

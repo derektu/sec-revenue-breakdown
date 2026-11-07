@@ -1,0 +1,562 @@
+{
+  "categories": {
+    "All Other": {
+      "expression": [
+        {
+          "operand": "op9",
+          "weight": 1
+        },
+        {
+          "operand": "op10",
+          "weight": -1
+        }
+      ],
+      "value": 31000000
+    },
+    "Downstream": {
+      "expression": [
+        {
+          "operand": "op1",
+          "weight": 1
+        },
+        {
+          "operand": "op2",
+          "weight": -1
+        },
+        {
+          "operand": "op3",
+          "weight": 1
+        },
+        {
+          "operand": "op4",
+          "weight": -1
+        }
+      ],
+      "value": 30958000000
+    },
+    "Upstream": {
+      "expression": [
+        {
+          "operand": "op5",
+          "weight": 1
+        },
+        {
+          "operand": "op6",
+          "weight": -1
+        },
+        {
+          "operand": "op7",
+          "weight": 1
+        },
+        {
+          "operand": "op8",
+          "weight": -1
+        }
+      ],
+      "value": 14798000000
+    }
+  },
+  "checks": {
+    "structural": [
+      {
+        "check": "定義唯一",
+        "result": "pass"
+      },
+      {
+        "check": "fact 存在且唯一",
+        "result": "pass"
+      },
+      {
+        "check": "單位與精度",
+        "result": "pass"
+      },
+      {
+        "check": "地區成員完整",
+        "result": "pass"
+      },
+      {
+        "check": "Q4 期間",
+        "result": "pass"
+      },
+      {
+        "check": "加總",
+        "result": "pass"
+      },
+      {
+        "check": "證據完整",
+        "result": "pass"
+      }
+    ],
+    "sum": {
+      "categories": 45787000000,
+      "difference": 0,
+      "tolerance": "6000000",
+      "total": 45787000000
+    }
+  },
+  "filings": {
+    "nine_months": {
+      "accession": "0000093410-25-000108",
+      "filing_date": "2025-11-06",
+      "form": "10-Q",
+      "report_date": "2025-09-30"
+    },
+    "primary": {
+      "accession": "0000093410-26-000078",
+      "filing_date": "2026-02-24",
+      "form": "10-K",
+      "report_date": "2025-12-31"
+    }
+  },
+  "fiscal_quarter": 4,
+  "fiscal_year": 2025,
+  "operands": {
+    "op1": {
+      "accession": "0000093410-26-000078",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-182",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:StatementGeographicalAxis": "country:US",
+        "us-gaap:StatementBusinessSegmentsAxis": "cvx:DownstreamSegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/93410/000009341026000078/cvx-20251231.htm",
+        "name": "cvx-20251231.htm",
+        "sha256": "a0a17231799d359c6a44623f42016a3bb05900d08b3b23cb4d7281d81cb77404",
+        "url": "https://www.sec.gov/Archives/edgar/data/93410/000009341026000078/cvx-20251231.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "bee227c339e4304754b17bb8ee003088267a8ecbba8e8d3213ce9e17e0ced2eb",
+        "png_scale": 1,
+        "png_sha256": "7938381572bff4a3039e626d704fe49432b6ddffd4e5e88cd55ecbe35f46b931",
+        "table": "0000093410-26-000078-a0a17231799d-t193"
+      },
+      "fact_id": "f-1175",
+      "filing_date": "2026-02-24",
+      "form": "10-K",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-12-31",
+        "start": "2025-01-01"
+      },
+      "raw": "65,331",
+      "role": "annual",
+      "scale": "6",
+      "sign": null,
+      "value": 65331000000
+    },
+    "op10": {
+      "accession": "0000093410-25-000108",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-163",
+      "decimals": "-6",
+      "dimensions": {
+        "us-gaap:StatementBusinessSegmentsAxis": "us-gaap:AllOtherSegmentsMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/93410/000009341025000108/cvx-20250930.htm",
+        "name": "cvx-20250930.htm",
+        "sha256": "22ad9480c9e2d6a243ed53fdf05c148372f845955475c15c6549f810087c6e4f",
+        "url": "https://www.sec.gov/Archives/edgar/data/93410/000009341025000108/cvx-20250930.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "78218fc0e1fa4c5ff9d526f0dc63c80f003385857fd46330e0028ee0a52c50a0",
+        "png_scale": 1,
+        "png_sha256": "ec956ddcbbd15e20824896302f302cc0ca64310629d7cfaacaac3aa893b2e80b",
+        "table": "0000093410-25-000108-22ad9480c9e2-t21"
+      },
+      "fact_id": "f-1008",
+      "filing_date": "2025-11-06",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-09-30",
+        "start": "2025-01-01"
+      },
+      "raw": "73",
+      "role": "nine_months",
+      "scale": "6",
+      "sign": null,
+      "value": 73000000
+    },
+    "op11": {
+      "accession": "0000093410-26-000078",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-1",
+      "decimals": "-6",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/93410/000009341026000078/cvx-20251231.htm",
+        "name": "cvx-20251231.htm",
+        "sha256": "a0a17231799d359c6a44623f42016a3bb05900d08b3b23cb4d7281d81cb77404",
+        "url": "https://www.sec.gov/Archives/edgar/data/93410/000009341026000078/cvx-20251231.htm"
+      },
+      "duplicates": [
+        "f-81"
+      ],
+      "evidence": {
+        "html_sha256": "bee227c339e4304754b17bb8ee003088267a8ecbba8e8d3213ce9e17e0ced2eb",
+        "png_scale": 1,
+        "png_sha256": "7938381572bff4a3039e626d704fe49432b6ddffd4e5e88cd55ecbe35f46b931",
+        "table": "0000093410-26-000078-a0a17231799d-t193"
+      },
+      "fact_id": "f-1179",
+      "filing_date": "2026-02-24",
+      "form": "10-K",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-12-31",
+        "start": "2025-01-01"
+      },
+      "raw": "184,432",
+      "role": "annual",
+      "scale": "6",
+      "sign": null,
+      "value": 184432000000
+    },
+    "op12": {
+      "accession": "0000093410-25-000108",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-1",
+      "decimals": "-6",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/93410/000009341025000108/cvx-20250930.htm",
+        "name": "cvx-20250930.htm",
+        "sha256": "22ad9480c9e2d6a243ed53fdf05c148372f845955475c15c6549f810087c6e4f",
+        "url": "https://www.sec.gov/Archives/edgar/data/93410/000009341025000108/cvx-20250930.htm"
+      },
+      "duplicates": [
+        "f-32"
+      ],
+      "evidence": {
+        "html_sha256": "78218fc0e1fa4c5ff9d526f0dc63c80f003385857fd46330e0028ee0a52c50a0",
+        "png_scale": 1,
+        "png_sha256": "ec956ddcbbd15e20824896302f302cc0ca64310629d7cfaacaac3aa893b2e80b",
+        "table": "0000093410-25-000108-22ad9480c9e2-t21"
+      },
+      "fact_id": "f-1009",
+      "filing_date": "2025-11-06",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-09-30",
+        "start": "2025-01-01"
+      },
+      "raw": "138,645",
+      "role": "nine_months",
+      "scale": "6",
+      "sign": null,
+      "value": 138645000000
+    },
+    "op2": {
+      "accession": "0000093410-25-000108",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-160",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:StatementGeographicalAxis": "country:US",
+        "us-gaap:StatementBusinessSegmentsAxis": "cvx:DownstreamSegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/93410/000009341025000108/cvx-20250930.htm",
+        "name": "cvx-20250930.htm",
+        "sha256": "22ad9480c9e2d6a243ed53fdf05c148372f845955475c15c6549f810087c6e4f",
+        "url": "https://www.sec.gov/Archives/edgar/data/93410/000009341025000108/cvx-20250930.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "78218fc0e1fa4c5ff9d526f0dc63c80f003385857fd46330e0028ee0a52c50a0",
+        "png_scale": 1,
+        "png_sha256": "ec956ddcbbd15e20824896302f302cc0ca64310629d7cfaacaac3aa893b2e80b",
+        "table": "0000093410-25-000108-22ad9480c9e2-t21"
+      },
+      "fact_id": "f-1005",
+      "filing_date": "2025-11-06",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-09-30",
+        "start": "2025-01-01"
+      },
+      "raw": "50,211",
+      "role": "nine_months",
+      "scale": "6",
+      "sign": null,
+      "value": 50211000000
+    },
+    "op3": {
+      "accession": "0000093410-26-000078",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-183",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:StatementGeographicalAxis": "us-gaap:NonUsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cvx:DownstreamSegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/93410/000009341026000078/cvx-20251231.htm",
+        "name": "cvx-20251231.htm",
+        "sha256": "a0a17231799d359c6a44623f42016a3bb05900d08b3b23cb4d7281d81cb77404",
+        "url": "https://www.sec.gov/Archives/edgar/data/93410/000009341026000078/cvx-20251231.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "bee227c339e4304754b17bb8ee003088267a8ecbba8e8d3213ce9e17e0ced2eb",
+        "png_scale": 1,
+        "png_sha256": "7938381572bff4a3039e626d704fe49432b6ddffd4e5e88cd55ecbe35f46b931",
+        "table": "0000093410-26-000078-a0a17231799d-t193"
+      },
+      "fact_id": "f-1176",
+      "filing_date": "2026-02-24",
+      "form": "10-K",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-12-31",
+        "start": "2025-01-01"
+      },
+      "raw": "65,545",
+      "role": "annual",
+      "scale": "6",
+      "sign": null,
+      "value": 65545000000
+    },
+    "op4": {
+      "accession": "0000093410-25-000108",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-161",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:StatementGeographicalAxis": "us-gaap:NonUsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cvx:DownstreamSegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/93410/000009341025000108/cvx-20250930.htm",
+        "name": "cvx-20250930.htm",
+        "sha256": "22ad9480c9e2d6a243ed53fdf05c148372f845955475c15c6549f810087c6e4f",
+        "url": "https://www.sec.gov/Archives/edgar/data/93410/000009341025000108/cvx-20250930.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "78218fc0e1fa4c5ff9d526f0dc63c80f003385857fd46330e0028ee0a52c50a0",
+        "png_scale": 1,
+        "png_sha256": "ec956ddcbbd15e20824896302f302cc0ca64310629d7cfaacaac3aa893b2e80b",
+        "table": "0000093410-25-000108-22ad9480c9e2-t21"
+      },
+      "fact_id": "f-1006",
+      "filing_date": "2025-11-06",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-09-30",
+        "start": "2025-01-01"
+      },
+      "raw": "49,707",
+      "role": "nine_months",
+      "scale": "6",
+      "sign": null,
+      "value": 49707000000
+    },
+    "op5": {
+      "accession": "0000093410-26-000078",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-180",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:StatementGeographicalAxis": "country:US",
+        "us-gaap:StatementBusinessSegmentsAxis": "cvx:UpstreamSegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/93410/000009341026000078/cvx-20251231.htm",
+        "name": "cvx-20251231.htm",
+        "sha256": "a0a17231799d359c6a44623f42016a3bb05900d08b3b23cb4d7281d81cb77404",
+        "url": "https://www.sec.gov/Archives/edgar/data/93410/000009341026000078/cvx-20251231.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "bee227c339e4304754b17bb8ee003088267a8ecbba8e8d3213ce9e17e0ced2eb",
+        "png_scale": 1,
+        "png_sha256": "7938381572bff4a3039e626d704fe49432b6ddffd4e5e88cd55ecbe35f46b931",
+        "table": "0000093410-26-000078-a0a17231799d-t193"
+      },
+      "fact_id": "f-1173",
+      "filing_date": "2026-02-24",
+      "form": "10-K",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-12-31",
+        "start": "2025-01-01"
+      },
+      "raw": "19,608",
+      "role": "annual",
+      "scale": "6",
+      "sign": null,
+      "value": 19608000000
+    },
+    "op6": {
+      "accession": "0000093410-25-000108",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-158",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:StatementGeographicalAxis": "country:US",
+        "us-gaap:StatementBusinessSegmentsAxis": "cvx:UpstreamSegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/93410/000009341025000108/cvx-20250930.htm",
+        "name": "cvx-20250930.htm",
+        "sha256": "22ad9480c9e2d6a243ed53fdf05c148372f845955475c15c6549f810087c6e4f",
+        "url": "https://www.sec.gov/Archives/edgar/data/93410/000009341025000108/cvx-20250930.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "78218fc0e1fa4c5ff9d526f0dc63c80f003385857fd46330e0028ee0a52c50a0",
+        "png_scale": 1,
+        "png_sha256": "ec956ddcbbd15e20824896302f302cc0ca64310629d7cfaacaac3aa893b2e80b",
+        "table": "0000093410-25-000108-22ad9480c9e2-t21"
+      },
+      "fact_id": "f-1003",
+      "filing_date": "2025-11-06",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-09-30",
+        "start": "2025-01-01"
+      },
+      "raw": "14,090",
+      "role": "nine_months",
+      "scale": "6",
+      "sign": null,
+      "value": 14090000000
+    },
+    "op7": {
+      "accession": "0000093410-26-000078",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-181",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:StatementGeographicalAxis": "us-gaap:NonUsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cvx:UpstreamSegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/93410/000009341026000078/cvx-20251231.htm",
+        "name": "cvx-20251231.htm",
+        "sha256": "a0a17231799d359c6a44623f42016a3bb05900d08b3b23cb4d7281d81cb77404",
+        "url": "https://www.sec.gov/Archives/edgar/data/93410/000009341026000078/cvx-20251231.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "bee227c339e4304754b17bb8ee003088267a8ecbba8e8d3213ce9e17e0ced2eb",
+        "png_scale": 1,
+        "png_sha256": "7938381572bff4a3039e626d704fe49432b6ddffd4e5e88cd55ecbe35f46b931",
+        "table": "0000093410-26-000078-a0a17231799d-t193"
+      },
+      "fact_id": "f-1174",
+      "filing_date": "2026-02-24",
+      "form": "10-K",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-12-31",
+        "start": "2025-01-01"
+      },
+      "raw": "33,844",
+      "role": "annual",
+      "scale": "6",
+      "sign": null,
+      "value": 33844000000
+    },
+    "op8": {
+      "accession": "0000093410-25-000108",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-159",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:StatementGeographicalAxis": "us-gaap:NonUsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cvx:UpstreamSegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/93410/000009341025000108/cvx-20250930.htm",
+        "name": "cvx-20250930.htm",
+        "sha256": "22ad9480c9e2d6a243ed53fdf05c148372f845955475c15c6549f810087c6e4f",
+        "url": "https://www.sec.gov/Archives/edgar/data/93410/000009341025000108/cvx-20250930.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "78218fc0e1fa4c5ff9d526f0dc63c80f003385857fd46330e0028ee0a52c50a0",
+        "png_scale": 1,
+        "png_sha256": "ec956ddcbbd15e20824896302f302cc0ca64310629d7cfaacaac3aa893b2e80b",
+        "table": "0000093410-25-000108-22ad9480c9e2-t21"
+      },
+      "fact_id": "f-1004",
+      "filing_date": "2025-11-06",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-09-30",
+        "start": "2025-01-01"
+      },
+      "raw": "24,564",
+      "role": "nine_months",
+      "scale": "6",
+      "sign": null,
+      "value": 24564000000
+    },
+    "op9": {
+      "accession": "0000093410-26-000078",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-185",
+      "decimals": "-6",
+      "dimensions": {
+        "us-gaap:StatementBusinessSegmentsAxis": "us-gaap:AllOtherSegmentsMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/93410/000009341026000078/cvx-20251231.htm",
+        "name": "cvx-20251231.htm",
+        "sha256": "a0a17231799d359c6a44623f42016a3bb05900d08b3b23cb4d7281d81cb77404",
+        "url": "https://www.sec.gov/Archives/edgar/data/93410/000009341026000078/cvx-20251231.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "bee227c339e4304754b17bb8ee003088267a8ecbba8e8d3213ce9e17e0ced2eb",
+        "png_scale": 1,
+        "png_sha256": "7938381572bff4a3039e626d704fe49432b6ddffd4e5e88cd55ecbe35f46b931",
+        "table": "0000093410-26-000078-a0a17231799d-t193"
+      },
+      "fact_id": "f-1178",
+      "filing_date": "2026-02-24",
+      "form": "10-K",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-12-31",
+        "start": "2025-01-01"
+      },
+      "raw": "104",
+      "role": "annual",
+      "scale": "6",
+      "sign": null,
+      "value": 104000000
+    }
+  },
+  "period_end": "2025-12-31",
+  "schema_version": 1,
+  "series": "Q",
+  "ticker": "CVX",
+  "total": {
+    "expression": [
+      {
+        "operand": "op11",
+        "weight": 1
+      },
+      {
+        "operand": "op12",
+        "weight": -1
+      }
+    ],
+    "value": 45787000000
+  },
+  "unit": "USD",
+  "view": "business_segment"
+}
