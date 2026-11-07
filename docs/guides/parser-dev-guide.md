@@ -93,7 +93,7 @@ EOF
 - **範圍以前的上一份 10-K 也要組得出來**：判斷範圍內第一個 Q4 的口徑時，框架用 parser 從上一財年的 10-K 組出年度值（見 `parser.md` 的「Q4 口徑一致」）。那份 10-K 的寫法也要涵蓋；組不出來時口徑判斷為「無法判斷」，Q4 照常推算並註記，不會報錯，所以要自己確認。
 - **dimensions 要完全相同**：`find` 是精確比對，fact 多一個或少一個維度都不算。例如 NVDA 的分部 fact 另帶 `srt:ConsolidationItemsAxis=us-gaap:OperatingSegmentsMember`；UPS FY2025 10-K 的 `ups:SupplyChainSolutionsMember` 只出現在帶 `srt:ProductOrServiceAxis` 的細項 fact 上。
 - **分部 fact 的寫法每份申報都不同時，找穩定的同值 fact**：NEE 分部表的 FPL 至少有四種維度組合，但子公司的法律實體 fact（`dei:LegalEntityAxis`）每份申報都有且數值相同。可以選這個穩定的 fact，在 `parser.md` 寫明每份申報兩者相等的依據；其他分類與總營收都取各自的 fact、沒有以總營收倒算的分類時，法律實體值與分部值將來不同會讓加總檢核失敗。
-- **調節項的直接 fact 從某份申報起消失時，可以用相減組成**：XOM 的 Corporate and Financing 銷售在 FY2024 10-K 起沒有自己的 fact，改由合併銷售減 `ConsolidationItemsAxis=OperatingSegmentsMember` 的分部合計組成；有直接 fact 的申報仍取直接 fact（以 `isinstance(..., Missing)` 判斷）。`parser.md` 要列出兩種寫法在重疊期別逐一相等的證據（accession 與數值，通常是較晚申報比較欄的相減值對原申報的直接值）。用相減式的期別，加總檢核核對的是分類加總等於分部合計。
+- **同一項在不同申報的加數組成不同時，要有等值證據**：例如 CVX 的上下游到 2024 Q3 10-Q 為止取帶產品軸的合計，FY2024 10-K 起取美國＋非美國相加；XOM 的 Corporate and Financing 銷售在 FY2024 10-K 起沒有自己的 fact，由合併銷售減 `ConsolidationItemsAxis=OperatingSegmentsMember` 的分部合計組成。成員或 concept 不同用 `one_of`；加數組成不同時，以 `isinstance(..., Missing)` 判斷這份申報有沒有那個 fact。Q4 的年度與九個月累計、第一個 Q4 的口徑依據、比較欄，都可能跨兩種寫法。兩種寫法不相等時，Q4 口徑一致會讓 Q4 不推算，比較欄比對會留下差異標記，但都不擋上線，Q4 的相減本身也不核對兩種寫法。所以 `parser.md` 要列出兩種寫法在重疊期別逐一相等的證據（accession 與數值，通常是較晚申報的比較欄對原申報的值）；較晚的申報只作證據，不作運算元。相減組成的調節項，加總檢核核對的是分類加總等於分部合計。
 - **用表格編號對照原文**：同一個數字常在多張表各標一次；分類的 fact 與總營收的 fact 最好在同一張表，證據截圖較少。在 SEC 的 XBRL viewer（`revenue.json` 運算元的 `ixviewer_url`）可以看 fact 在原文中的位置。
 - **總營收用合併 fact**，通常是不帶維度的那個，不是只帶 `ConsolidationItemsAxis=OperatingSegmentsMember` 的分部合計；申報有分部以外的營收時兩者不同。分類採用特殊口徑時，總營收跟著分類的口徑走（例如 BAC 的 FTE），與 GAAP 的差額寫在 `parser.md`。分類只取銷售營收、合併營收另含權益法收益或其他收入時（XOM），可以在第 1 步提議總營收改用同口徑的合併銷售 fact，即使它帶 `srt:ProductOrServiceAxis` 之類的維度；它必須是合併數，不能是分部合計；與不帶維度的合併營收的差額寫在 `parser.md`。
 
@@ -140,7 +140,7 @@ EOF
 財年與季末日（52／53 週制要寫）；Q1–Q3、Q4、FY 各自怎麼來；哪些 Q4 不推算與原因。
 
 ## 數字在原文的位置
-10-Q、10-K 中是哪張表。同一個 fact 常標在多張表，框架選來當證據的表格（`data/revenue/` 各期 evidence 檔名的 `-t<編號>`）不一定是分部表；寫證據實際取自的表格，編號依正式輸出的 evidence 檔名，不寫「尚無截圖」這類暫時狀態。一張表跨頁時各段有不同的編號，寫明證據所在的各段含哪些列（例如 JNJ 2024 年 Q1 10-Q 的分部銷售表跨五頁，Innovative Medicine 的合計在 t62，MedTech 與總營收在 t64）。
+10-Q、10-K 中是哪張表。同一個 fact 常標在多張表，框架選來當證據的表格（`data/revenue/` 各期 evidence 檔名的 `-t<編號>`）不一定是分部表；寫證據實際取自的表格，編號依正式輸出的 evidence 檔名，不寫「尚無截圖」這類暫時狀態。必列的是正式證據的表格，以及作口徑依據的上一份 10-K；後者沒有證據檔，編號取第 2 步程式列出的表格編號。比較欄的表格不必逐一列出，等值證據引用比較欄時寫明表格編號。一張表跨頁時各段有不同的編號，寫明證據所在的各段含哪些列（例如 JNJ 2024 年 Q1 10-Q 的分部銷售表跨五頁，Innovative Medicine 的合計在 t62，MedTech 與總營收在 t64）。
 
 ## 已知的重複 fact（有的話）
 
@@ -239,7 +239,7 @@ npm run check                                                                   
 
 - [ ] 只改了這個 ticker 的目錄、自己新增的 utility 與測試，以及 `data/revenue/`、`data/snapshots/` 中這個 ticker 的產出。
 - [ ] 範圍內每一期都是 `published` 或有理由的 `not_derived`；`failed` 的期別在 `parser.md` 寫明原因並回報。
-- [ ] 每個分類、調節項與總營收在 `parser.md` 有 concept 與完整 dimensions；每個依日期的切換寫明從哪一份申報開始。
+- [ ] 每個分類、調節項與總營收在 `parser.md` 有 concept 與完整 dimensions；每個依日期的切換寫明從哪一份申報開始；同一項的加數組成在不同申報不同時，有重疊期別逐一相等的證據。
 - [ ] 不依後來的申報組早期期別；沒有寫死的 fact id、數值或特定期別例外。
 - [ ] 與採用的對照來源逐期比對，每一筆差異都有原因與證據；原因未確認的寫成未確認，不寫成一致。
 - [ ] 差異標記（`differences`）都在 `parser.md` 的「比較欄」說明。
