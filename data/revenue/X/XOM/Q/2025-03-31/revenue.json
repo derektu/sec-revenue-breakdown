@@ -1,0 +1,540 @@
+{
+  "categories": {
+    "Chemical Products": {
+      "expression": [
+        {
+          "operand": "op5",
+          "weight": 1
+        },
+        {
+          "operand": "op6",
+          "weight": 1
+        }
+      ],
+      "value": 5407000000
+    },
+    "Energy Products": {
+      "expression": [
+        {
+          "operand": "op1",
+          "weight": 1
+        },
+        {
+          "operand": "op2",
+          "weight": 1
+        }
+      ],
+      "value": 59962000000
+    },
+    "Specialty Products": {
+      "expression": [
+        {
+          "operand": "op7",
+          "weight": 1
+        },
+        {
+          "operand": "op8",
+          "weight": 1
+        }
+      ],
+      "value": 4392000000
+    },
+    "Upstream": {
+      "expression": [
+        {
+          "operand": "op3",
+          "weight": 1
+        },
+        {
+          "operand": "op4",
+          "weight": 1
+        }
+      ],
+      "value": 11278000000
+    }
+  },
+  "checks": {
+    "structural": [
+      {
+        "check": "定義唯一",
+        "result": "pass"
+      },
+      {
+        "check": "fact 存在且唯一",
+        "result": "pass"
+      },
+      {
+        "check": "單位與精度",
+        "result": "pass"
+      },
+      {
+        "check": "地區成員完整",
+        "result": "pass"
+      },
+      {
+        "check": "加總",
+        "result": "pass"
+      },
+      {
+        "check": "證據完整",
+        "result": "pass"
+      }
+    ],
+    "sum": {
+      "categories": 81058000000,
+      "difference": 0,
+      "tolerance": "5500000",
+      "total": 81058000000
+    }
+  },
+  "filings": {
+    "primary": {
+      "accession": "0000034088-25-000024",
+      "filing_date": "2025-05-05",
+      "form": "10-Q",
+      "report_date": "2025-03-31"
+    }
+  },
+  "fiscal_quarter": 1,
+  "fiscal_year": 2025,
+  "operands": {
+    "op1": {
+      "accession": "0000034088-25-000024",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-121",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "xom:SalesAndOtherOperatingRevenueMember",
+        "srt:StatementGeographicalAxis": "country:US",
+        "us-gaap:StatementBusinessSegmentsAxis": "xom:EnergyProductsMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/34088/000003408825000024/xom-20250331.htm",
+        "name": "xom-20250331.htm",
+        "sha256": "87b482e0088245e26e00451d0b8be66a3cb98f04c089a77f561e858d80866073",
+        "url": "https://www.sec.gov/Archives/edgar/data/34088/000003408825000024/xom-20250331.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "9b1e7cb85aee759a5d781ad2f92a662c1e7d80876c6eff1461c61f92132bc822",
+        "png_scale": 1,
+        "png_sha256": "226037fe1c50b9a8efc2e49205e1292f9c2e9315ff0eff5f34fa8c92d9966bb8",
+        "table": "0000034088-25-000024-87b482e00882-t31"
+      },
+      "fact_id": "f-568",
+      "filing_date": "2025-05-05",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-03-31",
+        "start": "2025-01-01"
+      },
+      "raw": "23,885",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 23885000000
+    },
+    "op10": {
+      "accession": "0000034088-25-000024",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-127",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "srt:ProductOrServiceAxis": "xom:SalesAndOtherOperatingRevenueMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/34088/000003408825000024/xom-20250331.htm",
+        "name": "xom-20250331.htm",
+        "sha256": "87b482e0088245e26e00451d0b8be66a3cb98f04c089a77f561e858d80866073",
+        "url": "https://www.sec.gov/Archives/edgar/data/34088/000003408825000024/xom-20250331.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "9b1e7cb85aee759a5d781ad2f92a662c1e7d80876c6eff1461c61f92132bc822",
+        "png_scale": 1,
+        "png_sha256": "226037fe1c50b9a8efc2e49205e1292f9c2e9315ff0eff5f34fa8c92d9966bb8",
+        "table": "0000034088-25-000024-87b482e00882-t31"
+      },
+      "fact_id": "f-574",
+      "filing_date": "2025-05-05",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-03-31",
+        "start": "2025-01-01"
+      },
+      "raw": "81,039",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 81039000000
+    },
+    "op11": {
+      "accession": "0000034088-25-000024",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-7",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "xom:SalesAndOtherOperatingRevenueMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/34088/000003408825000024/xom-20250331.htm",
+        "name": "xom-20250331.htm",
+        "sha256": "87b482e0088245e26e00451d0b8be66a3cb98f04c089a77f561e858d80866073",
+        "url": "https://www.sec.gov/Archives/edgar/data/34088/000003408825000024/xom-20250331.htm"
+      },
+      "duplicates": [
+        "f-947",
+        "f-954"
+      ],
+      "evidence": {
+        "html_sha256": "a39682cd227d6c75462f2405004183ba4c531ae7bc40cf887dda731b9a0a3471",
+        "png_scale": 1,
+        "png_sha256": "2297bc6a7574fc9096ea274e96bd49d43ddbf5c690f18f8965b5e5101edb1fe3",
+        "table": "0000034088-25-000024-87b482e00882-t7"
+      },
+      "fact_id": "f-39",
+      "filing_date": "2025-05-05",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-03-31",
+        "start": "2025-01-01"
+      },
+      "raw": "81,058",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 81058000000
+    },
+    "op2": {
+      "accession": "0000034088-25-000024",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-122",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "xom:SalesAndOtherOperatingRevenueMember",
+        "srt:StatementGeographicalAxis": "us-gaap:NonUsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "xom:EnergyProductsMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/34088/000003408825000024/xom-20250331.htm",
+        "name": "xom-20250331.htm",
+        "sha256": "87b482e0088245e26e00451d0b8be66a3cb98f04c089a77f561e858d80866073",
+        "url": "https://www.sec.gov/Archives/edgar/data/34088/000003408825000024/xom-20250331.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "9b1e7cb85aee759a5d781ad2f92a662c1e7d80876c6eff1461c61f92132bc822",
+        "png_scale": 1,
+        "png_sha256": "226037fe1c50b9a8efc2e49205e1292f9c2e9315ff0eff5f34fa8c92d9966bb8",
+        "table": "0000034088-25-000024-87b482e00882-t31"
+      },
+      "fact_id": "f-569",
+      "filing_date": "2025-05-05",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-03-31",
+        "start": "2025-01-01"
+      },
+      "raw": "36,077",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 36077000000
+    },
+    "op3": {
+      "accession": "0000034088-25-000024",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-119",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "xom:SalesAndOtherOperatingRevenueMember",
+        "srt:StatementGeographicalAxis": "country:US",
+        "us-gaap:StatementBusinessSegmentsAxis": "xom:UpstreamMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/34088/000003408825000024/xom-20250331.htm",
+        "name": "xom-20250331.htm",
+        "sha256": "87b482e0088245e26e00451d0b8be66a3cb98f04c089a77f561e858d80866073",
+        "url": "https://www.sec.gov/Archives/edgar/data/34088/000003408825000024/xom-20250331.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "9b1e7cb85aee759a5d781ad2f92a662c1e7d80876c6eff1461c61f92132bc822",
+        "png_scale": 1,
+        "png_sha256": "226037fe1c50b9a8efc2e49205e1292f9c2e9315ff0eff5f34fa8c92d9966bb8",
+        "table": "0000034088-25-000024-87b482e00882-t31"
+      },
+      "fact_id": "f-566",
+      "filing_date": "2025-05-05",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-03-31",
+        "start": "2025-01-01"
+      },
+      "raw": "7,318",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 7318000000
+    },
+    "op4": {
+      "accession": "0000034088-25-000024",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-120",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "xom:SalesAndOtherOperatingRevenueMember",
+        "srt:StatementGeographicalAxis": "us-gaap:NonUsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "xom:UpstreamMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/34088/000003408825000024/xom-20250331.htm",
+        "name": "xom-20250331.htm",
+        "sha256": "87b482e0088245e26e00451d0b8be66a3cb98f04c089a77f561e858d80866073",
+        "url": "https://www.sec.gov/Archives/edgar/data/34088/000003408825000024/xom-20250331.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "9b1e7cb85aee759a5d781ad2f92a662c1e7d80876c6eff1461c61f92132bc822",
+        "png_scale": 1,
+        "png_sha256": "226037fe1c50b9a8efc2e49205e1292f9c2e9315ff0eff5f34fa8c92d9966bb8",
+        "table": "0000034088-25-000024-87b482e00882-t31"
+      },
+      "fact_id": "f-567",
+      "filing_date": "2025-05-05",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-03-31",
+        "start": "2025-01-01"
+      },
+      "raw": "3,960",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 3960000000
+    },
+    "op5": {
+      "accession": "0000034088-25-000024",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-123",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "xom:SalesAndOtherOperatingRevenueMember",
+        "srt:StatementGeographicalAxis": "country:US",
+        "us-gaap:StatementBusinessSegmentsAxis": "xom:ChemicalProductsMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/34088/000003408825000024/xom-20250331.htm",
+        "name": "xom-20250331.htm",
+        "sha256": "87b482e0088245e26e00451d0b8be66a3cb98f04c089a77f561e858d80866073",
+        "url": "https://www.sec.gov/Archives/edgar/data/34088/000003408825000024/xom-20250331.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "9b1e7cb85aee759a5d781ad2f92a662c1e7d80876c6eff1461c61f92132bc822",
+        "png_scale": 1,
+        "png_sha256": "226037fe1c50b9a8efc2e49205e1292f9c2e9315ff0eff5f34fa8c92d9966bb8",
+        "table": "0000034088-25-000024-87b482e00882-t31"
+      },
+      "fact_id": "f-570",
+      "filing_date": "2025-05-05",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-03-31",
+        "start": "2025-01-01"
+      },
+      "raw": "2,022",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 2022000000
+    },
+    "op6": {
+      "accession": "0000034088-25-000024",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-124",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "xom:SalesAndOtherOperatingRevenueMember",
+        "srt:StatementGeographicalAxis": "us-gaap:NonUsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "xom:ChemicalProductsMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/34088/000003408825000024/xom-20250331.htm",
+        "name": "xom-20250331.htm",
+        "sha256": "87b482e0088245e26e00451d0b8be66a3cb98f04c089a77f561e858d80866073",
+        "url": "https://www.sec.gov/Archives/edgar/data/34088/000003408825000024/xom-20250331.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "9b1e7cb85aee759a5d781ad2f92a662c1e7d80876c6eff1461c61f92132bc822",
+        "png_scale": 1,
+        "png_sha256": "226037fe1c50b9a8efc2e49205e1292f9c2e9315ff0eff5f34fa8c92d9966bb8",
+        "table": "0000034088-25-000024-87b482e00882-t31"
+      },
+      "fact_id": "f-571",
+      "filing_date": "2025-05-05",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-03-31",
+        "start": "2025-01-01"
+      },
+      "raw": "3,385",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 3385000000
+    },
+    "op7": {
+      "accession": "0000034088-25-000024",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-125",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "xom:SalesAndOtherOperatingRevenueMember",
+        "srt:StatementGeographicalAxis": "country:US",
+        "us-gaap:StatementBusinessSegmentsAxis": "xom:SpecialtyProductsMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/34088/000003408825000024/xom-20250331.htm",
+        "name": "xom-20250331.htm",
+        "sha256": "87b482e0088245e26e00451d0b8be66a3cb98f04c089a77f561e858d80866073",
+        "url": "https://www.sec.gov/Archives/edgar/data/34088/000003408825000024/xom-20250331.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "9b1e7cb85aee759a5d781ad2f92a662c1e7d80876c6eff1461c61f92132bc822",
+        "png_scale": 1,
+        "png_sha256": "226037fe1c50b9a8efc2e49205e1292f9c2e9315ff0eff5f34fa8c92d9966bb8",
+        "table": "0000034088-25-000024-87b482e00882-t31"
+      },
+      "fact_id": "f-572",
+      "filing_date": "2025-05-05",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-03-31",
+        "start": "2025-01-01"
+      },
+      "raw": "1,367",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 1367000000
+    },
+    "op8": {
+      "accession": "0000034088-25-000024",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-126",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "xom:SalesAndOtherOperatingRevenueMember",
+        "srt:StatementGeographicalAxis": "us-gaap:NonUsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "xom:SpecialtyProductsMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/34088/000003408825000024/xom-20250331.htm",
+        "name": "xom-20250331.htm",
+        "sha256": "87b482e0088245e26e00451d0b8be66a3cb98f04c089a77f561e858d80866073",
+        "url": "https://www.sec.gov/Archives/edgar/data/34088/000003408825000024/xom-20250331.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "9b1e7cb85aee759a5d781ad2f92a662c1e7d80876c6eff1461c61f92132bc822",
+        "png_scale": 1,
+        "png_sha256": "226037fe1c50b9a8efc2e49205e1292f9c2e9315ff0eff5f34fa8c92d9966bb8",
+        "table": "0000034088-25-000024-87b482e00882-t31"
+      },
+      "fact_id": "f-573",
+      "filing_date": "2025-05-05",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-03-31",
+        "start": "2025-01-01"
+      },
+      "raw": "3,025",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 3025000000
+    },
+    "op9": {
+      "accession": "0000034088-25-000024",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-7",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "xom:SalesAndOtherOperatingRevenueMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/34088/000003408825000024/xom-20250331.htm",
+        "name": "xom-20250331.htm",
+        "sha256": "87b482e0088245e26e00451d0b8be66a3cb98f04c089a77f561e858d80866073",
+        "url": "https://www.sec.gov/Archives/edgar/data/34088/000003408825000024/xom-20250331.htm"
+      },
+      "duplicates": [
+        "f-947",
+        "f-954"
+      ],
+      "evidence": {
+        "html_sha256": "a39682cd227d6c75462f2405004183ba4c531ae7bc40cf887dda731b9a0a3471",
+        "png_scale": 1,
+        "png_sha256": "2297bc6a7574fc9096ea274e96bd49d43ddbf5c690f18f8965b5e5101edb1fe3",
+        "table": "0000034088-25-000024-87b482e00882-t7"
+      },
+      "fact_id": "f-39",
+      "filing_date": "2025-05-05",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-03-31",
+        "start": "2025-01-01"
+      },
+      "raw": "81,058",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 81058000000
+    }
+  },
+  "period_end": "2025-03-31",
+  "reconciling": {
+    "Corporate and Financing": {
+      "expression": [
+        {
+          "operand": "op9",
+          "weight": 1
+        },
+        {
+          "operand": "op10",
+          "weight": -1
+        }
+      ],
+      "value": 19000000
+    }
+  },
+  "schema_version": 1,
+  "series": "Q",
+  "ticker": "XOM",
+  "total": {
+    "expression": [
+      {
+        "operand": "op11",
+        "weight": 1
+      }
+    ],
+    "value": 81058000000
+  },
+  "unit": "USD",
+  "view": "business_segment"
+}
