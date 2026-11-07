@@ -1,9 +1,10 @@
-"""inline XBRL 主文件的 fact 索引：namespace、dei 與每個 `ix:nonFraction` fact。
+"""一份申報的 fact 索引：namespace、dei 與每個 `ix:nonFraction` fact。
 
-文件內容由 `extract.py` 從原文抽出，或由快照讀回；兩者都經過 `InlineDocument.load`，以目前的數字規則（`ixbrl.py`）
-算出數值、依 namespaces 解析 QName。證據元件（`evidence.TableLocator`）用同一棵 HTML 解析樹。
+預設只有 inline XBRL 主文件；公司 parser 宣告附件時另含附件的 fact（見 `ixds.py`）。文件內容由 `extract.py`（有附件時
+經 `ixds.py`）從原文抽出，或由快照讀回；兩者都經過 `InlineDocument.load`，以目前的數字規則（`ixbrl.py`）算出數值、
+依 namespaces 解析 QName。證據元件（`evidence.TableLocator`）用同一棵 HTML 解析樹，每份文件一個。
 
-公司 parser 指定的 concept 與 fact 在同一份文件內以 namespace URI 比對：公司 parser 的前綴與 fact 的 QName 都依文件
+公司 parser 指定的 concept 與 fact 在同一份申報內以 namespace URI 比對：公司 parser 的前綴與 fact 的 QName 都依文件
 宣告的 `xmlns:*` 解析成 `{URI}名稱`。不同申報之間不比 URI，因為公司與 us-gaap 的 namespace 每年都帶不同日期。
 """
 
@@ -91,6 +92,8 @@ class Fact:
     context_id: str
     table_index: int | None
     order: int
+    # fact 所在的文件：None 是主文件，否則是附件的檔名。`table_index` 是這份文件中的表格編號。
+    document: str | None = None
 
     def error_bound(self) -> Decimal | None:
         return error_bound(self.decimals)
@@ -100,11 +103,14 @@ class Fact:
 
 
 class InlineDocument:
-    """一份 inline XBRL HTML 文件的 fact 索引。
+    """一份申報的 fact 索引：inline XBRL 主文件，與公司 parser 宣告的附件。
 
-    由原文建立時，`extract` 抽出的內容與 HTML 解析樹交給證據元件（`locator`）；`from_snapshot` 由快照的同一份內容
-    重建索引，之後的查找（`resolve`、`facts`、`fiscal`）與原文的結果相同。快照沒有原文，`locator` 為 None，
-    不能找表格或產生證據。
+    由原文建立時，抽出的內容與每份文件的 HTML 解析樹交給證據元件（主文件是 `locator`，附件在 `attachment_locators`，
+    以 `locator_for` 依 `Fact.document` 取得）；`from_snapshot` 由快照的同一份內容重建索引，之後的查找（`resolve`、
+    `facts`、`fiscal`）與原文的結果相同。快照沒有原文，沒有證據元件，不能找表格或產生證據。
+
+    有附件時的合併：dei 取自主文件；namespaces 是各文件宣告的聯集，同一個前綴在不同文件對應不同 URI 時與文件內的
+    衝突一樣列為衝突；fact 依文件順序排列，主文件在前，附件依宣告順序接在後面，`order` 隨之接續編號。
     """
 
     def __init__(self, raw: bytes):
@@ -112,22 +118,48 @@ class InlineDocument:
         root = parse_html(raw)
         self.load(extract(root))
         self.locator = TableLocator.from_root(root)
+        self.attachment_locators = {}
+
+    @classmethod
+    def from_extracted(cls, content: dict, roots: dict) -> InlineDocument:
+        """由抽取內容與（文件名稱 → 解析樹）建立；主文件的名稱是 None（見 `filings.FilingSet.extract`）。"""
+        document = cls.__new__(cls)
+        document.load(content)
+        document.locator = TableLocator.from_root(roots[None])
+        document.attachment_locators = {name: TableLocator.from_root(root) for name, root in roots.items() if name is not None}
+        return document
 
     @classmethod
     def from_snapshot(cls, payload: dict) -> InlineDocument:
         document = cls.__new__(cls)
         document.locator = None
+        document.attachment_locators = {}
         document.load(payload)
         return document
 
+    def locator_for(self, name: str | None) -> TableLocator | None:
+        """`Fact.document` 所在文件的證據元件；快照建立的索引沒有證據元件，回傳 None。"""
+        return self.locator if name is None else self.attachment_locators.get(name)
+
     def load(self, content: dict):
-        """由 `extract` 的內容建立索引：`format` 正規化、數值換算依目前的數字規則，QName 依 namespaces 解析。"""
+        """由抽取內容建立索引：`format` 正規化、數值換算依目前的數字規則，QName 依合併後的 namespaces 解析。"""
         self.namespaces = dict(content["namespaces"])
         self.conflicts = set(content["conflicts"])
         self.dei = dict(content["dei"])
-        self.facts = [self.fact(row) for row in content["facts"]]
+        attachments = content.get("attachments", [])
+        for attachment in attachments:
+            self.conflicts |= set(attachment["conflicts"])
+            for prefix, uri in attachment["namespaces"].items():
+                if self.namespaces.setdefault(prefix, uri) != uri:
+                    self.conflicts.add(prefix)
+        # 每份文件的 order 自 0 起算；附件的 order 接在前一份文件最大的 order 之後，整份 fact 清單的順序因此唯一。
+        offsets, start = {}, 0
+        for name in [None] + [a["document"] for a in attachments]:
+            offsets[name] = start
+            start += max((row["order"] for row in content["facts"] if row.get("document") == name), default=-1) + 1
+        self.facts = [self.fact(row, offsets[row.get("document")]) for row in content["facts"]]
 
-    def fact(self, row: dict) -> Fact:
+    def fact(self, row: dict, offset: int = 0) -> Fact:
         transform = transform_name(row["format"])
         if row.get("nil"):
             value, error = None, "fact 為 nil"
@@ -152,7 +184,8 @@ class InlineDocument:
             value_error=error,
             context_id=row["context_id"],
             table_index=row["table_index"],
-            order=row["order"],
+            order=row["order"] + offset,
+            document=row.get("document"),
         )
 
     def resolve(self, qname: str) -> str | None:

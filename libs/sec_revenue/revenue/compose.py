@@ -446,19 +446,22 @@ class PeriodComposer:
 
     @staticmethod
     def choose(candidates: dict[str, list[Candidate]]) -> dict[str, list[Operand]]:
-        """重複 fact 中選精度最高者；同精度時選所在表格含最多其他項目者，再平手取文件順序第一個。其餘記為 duplicates。"""
-        tables: dict[tuple[str, int], set[str]] = {}
+        """重複 fact 中選精度最高者；同精度時選所在表格含最多其他項目者，再平手取文件順序第一個。其餘記為 duplicates。
+
+        表格以（申報, fact 所在的文件, 表格編號）識別：主文件與附件各自編號。
+        """
+        tables: dict[tuple[str, str | None, int], set[str]] = {}
         for name, group in candidates.items():
             for candidate in group:
                 for f in candidate.facts:
                     if f.table_index is not None:
-                        tables.setdefault((candidate.filing.accession, f.table_index), set()).add(name)
+                        tables.setdefault((candidate.filing.accession, f.document, f.table_index), set()).add(name)
         chosen = {}
         for name, group in candidates.items():
             operands = []
             for candidate in group:
                 def rank(f: Fact):
-                    others = tables.get((candidate.filing.accession, f.table_index), set()) if f.table_index is not None else set()
+                    others = tables.get((candidate.filing.accession, f.document, f.table_index), set()) if f.table_index is not None else set()
                     return (-decimals_rank(f.decimals), -len(others), f.order)
 
                 ordered = sorted(candidate.facts, key=rank)

@@ -74,17 +74,19 @@ ticker, accession, word = sys.argv[1:4]
 root = os.environ.get("SEC_DATA_DIR", "").strip()
 if not root:
     sys.exit("請設定 SEC_DATA_DIR：已下載 SEC 原文的資料根目錄")
+# 宣告 ATTACHMENTS 的公司要帶同樣的附件類型，例如 FilingSet(..., ticker, ("EX-13",))，才看得到附件中的 fact。
 filings = FilingSet(Path(root).expanduser(), ticker)
 filing = next(f for f in filings.filings if f.accession == accession)
 facts = [f for f in filings.document(filing).facts if word in f.concept and f.duration]
 for fact in sorted(facts, key=lambda f: (f.end != filing.report_date, f.end, f.start or "", f.order)):
     dims = " ".join(f"{a}={m}" for a, m in fact.dimensions) or "（無維度）"
     column = "本期" if fact.end == filing.report_date else "比較期"
-    print(column, f"{fact.start}~{fact.end}", fact.duration, fact.concept, dims, fact.value, f"表格 {fact.table_index}", sep="\t")
+    where = fact.document or "主文件"
+    print(column, f"{fact.start}~{fact.end}", fact.duration, fact.concept, dims, fact.value, where, f"表格 {fact.table_index}", sep="\t")
 EOF
 ```
 
-`SEC_DATA_DIR` 是 SEC 原文的資料根目錄，換成你 `.env` 中設定的路徑；程式不讀 `.env`，沒有設定時直接結束。
+`SEC_DATA_DIR` 是 SEC 原文的資料根目錄，換成你 `.env` 中設定的路徑；程式不讀 `.env`，沒有設定時直接結束。財報在附件的公司（例如 PGR 10-K 的 EX-13），`FilingSet` 帶上 `parser.py` 的 `ATTACHMENTS`；每一列印出 fact 所在的文件（主文件或附件檔名），表格編號屬於那份文件。
 
 每份申報的 accession、表單、期末日與申報日，可以把最後的迴圈換成 `for f in filings.filings: print(f.accession, f.form, f.report_date, f.filing_date)` 列出。
 
@@ -181,12 +183,13 @@ jq -r '.periods | to_entries[] | .key as $s | .value | to_entries[] | [$s, .key,
 
 | 檢核 | 訊息大意 | 多半是 | 怎麼查 |
 |---|---|---|---|
-| fact 存在且唯一 | 找不到某個分類或總營收（`put` 記在 `missing` 的項目） | dimensions 不完整、成員或 concept 在這份申報改名 | 用第 2 步的程式看這份申報的 fact |
+| fact 存在且唯一 | 找不到某個分類或總營收（`put` 記在 `missing` 的項目） | dimensions 不完整、成員或 concept 在這份申報改名；數字在附件的 inline XBRL，公司 parser 沒有以 `ATTACHMENTS` 宣告這類附件 | 用第 2 步的程式看這份申報的 fact |
 | 定義唯一 | 交回的分類順序或集合與 `categories(期末日)` 不同 | `categories` 的切換日期與 `compose` 不一致；漏列分類卻沒有記錄原因 | 對照 `categories` 與 `compose` 的切換條件 |
 | 加總 | 分類加總不等於總營收 | 漏了調節項（Corporate、Eliminations、All Other）；總營收選到分部合計；分類選到另一組分部 fact | 對照原文分部表的每一列 |
 | fact 存在且唯一 | 重複 fact 數值不一致，或前綴宣告衝突 | `one_of` 的兩種寫法其實是不同數字 | 看兩種寫法的 fact 各在哪張表 |
 | 地區成員完整 | 地區軸的成員沒有全部列入 | 運算式只列了部分地區成員 | 把該軸同 concept、同其他 dimensions 的全部成員列入運算式 |
 | 單位與精度 | decimals 缺漏或粗於百萬位 | 申報本身的標記 | 回報，不能在 parser 處理 |
+| fact 清單合併 | 主文件與附件有同一個 context、unit 或 fact id | 宣告的附件與主文件不是同一組 inline XBRL 標記 | 回報，不能在 parser 處理 |
 | Q4 期間、財年與季別、選申報 | 期間長度不合，或推不出財年 | 季度長度不在框架的預設範圍內（例如 COST 的 16 週 Q4）；自訂 `FISCAL_YEAR = "prior_annual"` 時，10-Q 之前沒有相接的上一財年 10-K | 期間長度：確認公司的季度長度，以 `DURATION_DAYS` 自訂（見 `parser.md` 的「預設與自訂」與「自訂點」），範圍多寬由這家公司決定，理由寫在 `parser.md`；缺 10-K 時下載後重跑 |
 
 `not_derived` 不是失敗：Q4 推算條件或 Q4 口徑一致不成立時，Q4 依規則留空，FY 照常輸出（規則見 `parser.md` 的「框架流程」）。你要做的是在 `parser.md` 寫明是哪一份申報、哪些分類造成的。
@@ -296,7 +299,7 @@ Refs #<issue>
 以下情況不要自己決定，停下來回報現況、選項與你的建議：
 
 - **觀點**：寫 parser 之前，觀點與分類一定由人決定（第 1 步）。
-- **要改框架或既有 utility**：例如需要同時讀兩份申報才組得出一期、數字在附件的 inline XBRL（PGR）。附件是公司不符合框架的預設、而框架還沒有對應的自訂點：建議的做法是新增自訂點、由這家公司的 parser 自訂，不放寬所有 ticker 共用的預設（見 [parser.md](../architecture/parser.md) 的「預設與自訂」）；同時讀兩份申報則是改變框架提供資料的方式，不能自訂。
+- **要改框架或既有 utility**：例如需要同時讀兩份申報才組得出一期。這是改變框架提供資料的方式，不能自訂。公司不符合框架的某個預設、而框架還沒有對應的自訂點時，建議的做法是新增自訂點、由這家公司的 parser 自訂，不放寬所有 ticker 共用的預設（見 [parser.md](../architecture/parser.md) 的「預設與自訂」）。數字在同一份申報附件的 inline XBRL（例如 PGR 10-K 的 EX-13）由自訂點 `ATTACHMENTS` 處理，不需要改框架。
 - **只能違反兩條硬原則才做得出來**：例如數字沒有 XBRL 標記（GOOGL 的避險損益列）、要用之後的申報決定早期期別怎麼組。不要繞過。
 - **差異解釋不了**：與對照來源的差異不是重編、也不是來源錯誤，或你無法確認是哪一種。
 - **已提交的輸出要改**：任何需要 `--republish` 的情況。

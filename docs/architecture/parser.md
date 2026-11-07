@@ -70,8 +70,7 @@ parser 分三層。每個 ticker 的 parser 各自獨立，新增或修改一個
 |---|---|---|
 | 期間分類的天數範圍 | `DURATION_DAYS` | COST 的 12／12／12／16 週季度 |
 | 財年取申報宣告的值 | `FISCAL_YEAR` | ORCL 在 10-Q 宣告錯一年的財年 |
-
-fact 清單只取主文件還沒有自訂點（見「待決定」的附件中的 fact）。
+| fact 清單只取主文件的 inline XBRL | `ATTACHMENTS` | PGR 10-K 的財報在附件 EX-13，主文件只有 Schedule III |
 
 ### utility
 
@@ -120,7 +119,7 @@ data/revenue/<首字母>/<TICKER>/
   status.json      兩個序列每一期的處理結果（含沒有輸出的期別與原因）與差異標記
   Q/<period_end>/  季度序列（Q1–Q4）
     revenue.json   正式數字、運算式、運算元、檢核結果
-    evidence/      每張用到的 SEC 表格：<accession>-<sha12>-t<n>.html 與 .png
+    evidence/      每張用到的 SEC 表格：<accession>-<sha12>-t<n>.html 與 .png（sha12 與表格編號 n 屬於表格所在的文件：主文件或附件）
   FY/<period_end>/ 年度序列，期末日與同財年的 Q4 相同
     revenue.json
     evidence/
@@ -147,6 +146,7 @@ TOTAL = "Total net sales"             # 組成中稱呼總營收的名稱
 # 選用的自訂點（見下方「自訂點」），沒有定義時用框架的預設，例如：
 # DURATION_DAYS = {"quarter": (84, 119), "six_months": (168, 189), "nine_months": (252, 280), "annual": (357, 378)}
 # FISCAL_YEAR = "prior_annual"
+# ATTACHMENTS = ("EX-13",)
 
 def compose(filing, request):
     """filing：一份申報的 fact 清單（FilingFacts）；request：要組的期間（Request）。
@@ -160,7 +160,7 @@ def categories(day):
 
 | 型別 | 內容 |
 |---|---|
-| `FilingFacts` | 申報的 `accession`、`form`、`report_date`，與主文件的 `facts`、`namespaces`、`dei`；沒有 HTML 原文與表格 |
+| `FilingFacts` | 申報的 `accession`、`form`、`report_date`，與 fact 清單的 `facts`、`namespaces`、`dei`（主文件，宣告 `ATTACHMENTS` 時另含附件，見「自訂點」）；沒有 HTML 原文與表格 |
 | `Request` | `end`（期末日）、`duration`（`quarter`、`nine_months`、`annual`）、選用的 `start`，與 `durations`（天數範圍，預設值是框架的預設範圍；框架建立 Request 時帶入這家公司的範圍，交給公司 parser 前核對它等於這家公司的範圍，不同時報錯）；`matches(fact)` 判斷 fact 的期間是否相符，期間長度依 `durations` 分類 |
 | `Term` | 運算式的一項：`facts`（這個數字在申報中的 fact，多種寫法時每種寫法各有）、`weight`（1 或 -1）、`label`（錯誤訊息用的描述） |
 | `Composition` | `categories`、`reconciling`（名稱 → 各項，依輸出順序，必須與 `categories(期末日)` 相同）、`total`（各項，組不出時為 None）、`missing`（申報中找不到的項目 → 原因）、`unparseable`（申報中有、但無法確定是哪些 fact 的項目 → 原因，例如前綴宣告衝突） |
@@ -181,9 +181,15 @@ def categories(day):
   |---|---|---|---|
   | `DURATION_DAYS` | `dict[str, tuple[int, int]]`：`quarter`、`six_months`、`nine_months`、`annual` → （最短天數, 最長天數），含首尾日 | 框架流程第 4 步的預設範圍 | 四種期間都有、沒有其他鍵；每個範圍是兩個正整數（不接受 bool）、最短不大於最長；依 `quarter`、`six_months`、`nine_months`、`annual` 由短到長，前一種的最長小於後一種的最短 |
   | `FISCAL_YEAR` | `str`：`declared` 或 `prior_annual` | `declared` | 只能是這兩個值 |
+  | `ATTACHMENTS` | `tuple[str, ...]`：fact 清單另外納入的附件類型，即申報包中附件的 `type`，例如 `("EX-13",)` | 沒有定義：fact 清單只取主文件 | 非空的 tuple；每一項是 `EX-<編號>` 形式的字串（例如 `EX-13`、`EX-99.1`），不重複 |
 
   - `DURATION_DAYS`：由短到長的範圍互不重疊，每個天數至多屬於一種期間。由短到長是框架保證的兩項期間結構之一（另一項是同一個期間要求的各項起日相同，見「結構檢核」的「fact 存在且唯一」），其餘數值由公司 parser 判斷：範圍要多寬由公司 parser 決定，`parser.md` 寫明公司的季度長度與範圍的理由；範圍太寬可能把不相干的期間認成單季、六個月等，由公司 parser 與 review 負責。
   - `FISCAL_YEAR = "prior_annual"`：10-Q 的財年由框架以前一份 10-K 推算（框架流程第 3 步）。推算要用到另一份申報，公司 parser 拿不到其他申報，所以只能宣告選用這個方式，推算由框架做。
+  - `ATTACHMENTS`：一份申報的 inline XBRL 可以分在主文件與附件中（inline XBRL 文件集），例如 PGR 10-K 的財報在 EX-13，context 與 unit 只定義在主文件。宣告後，每份申報的 fact 清單是主文件加上申報包中類型相符、來源是原始 HTML 的附件（依宣告順序，同類型依檔名），沒有這類附件的申報（例如 10-Q）只有主文件。附件與主文件是同一份申報，申報日相同，時點不受影響。框架以 `revenue/ixds.py` 合併，規則：
+    - 每份文件看得到整個文件集的 context 與 unit。同一個 context 或 unit 的 id 定義在兩份文件、或同一個 fact id 出現在兩份文件時，這份申報合不成 fact 清單，以「fact 清單合併」失敗。
+    - dei 取自主文件。namespaces 是各文件宣告的聯集；同一個前綴在不同文件對應不同 URI 時，與文件內的宣告衝突一樣處理。
+    - fact 依文件順序排列：主文件在前，附件接在後面；重複值同精度、同表格項目數時取文件順序第一個，所以主文件優先。表格編號屬於 fact 所在的文件。
+    - 申報中有沒有這類附件、附件裡的 fact 是否是要用的數字，由公司 parser 判斷，`parser.md` 寫明為什麼需要讀附件。
   - 期間範圍的自訂只改變期間分類，不改變輸出格式：`revenue.json` 的每個運算元都記錄期間起訖，期間長度可以由輸出本身核對。財年的自訂在推算值與宣告不同時記錄 `fiscal_year_basis`（框架流程第 3 步）。
 - **公司 parser 自己處理的事**，寫在自己的程式碼並記錄在 `parser.md`：
   - 用哪個 concept、哪些 dimensions。
@@ -201,8 +207,8 @@ def categories(day):
 
 一個 ticker 依期末日順序處理指定範圍內的每個期別。期末日的第一份原申報是 10-Q 時只有 Q 序列；是 10-K 時先處理 FY、再處理 Q4。每一期：
 
-1. **選申報**：該期的主申報是 reportDate 等於該期、申報日最早的 10-Q 或 10-K。修正申報（10-K/A、10-Q/A）在原申報之後才公開，不取代主申報，只參與差異標記的比對。框架不讀 8-K。主文件必須是 inline XBRL，讀取時核對 sha256。主申報的申報日是這一期的時點：之後的步驟只看申報日不晚於它的申報。
-2. **讀 facts**：解析主申報的 inline XBRL，建立 fact 清單：concept、dimensions、期間、單位、decimals、sign、scale、format 與所在表格。數值依 format（`num-dot-decimal`、`fixed-zero`、`zerodash`）、scale 與 sign 算成整數美元；正負號只由 `sign` 屬性決定，顯示文字帶負號或括號、或數值不是有限數時，這個 fact 視為無法解析。證據核對使用同一套規則（`evidence.ix_number`）。
+1. **選申報**：該期的主申報是 reportDate 等於該期、申報日最早的 10-Q 或 10-K。修正申報（10-K/A、10-Q/A）在原申報之後才公開，不取代主申報，只參與差異標記的比對。框架不讀 8-K。主文件必須是 inline XBRL，讀取時核對 sha256；公司 parser 宣告 `ATTACHMENTS` 時，同一份申報中宣告類型的附件也一併讀取、核對 sha256。主申報的申報日是這一期的時點：之後的步驟只看申報日不晚於它的申報。
+2. **讀 facts**：解析主申報的 inline XBRL（主文件，宣告 `ATTACHMENTS` 時另含附件，合併規則見「自訂點」），建立 fact 清單：concept、dimensions、期間、單位、decimals、sign、scale、format 與所在表格。數值依 format（`num-dot-decimal`、`fixed-zero`、`zerodash`）、scale 與 sign 算成整數美元；正負號只由 `sign` 屬性決定，顯示文字帶負號或括號、或數值不是有限數時，這個 fact 視為無法解析。證據核對使用同一套規則（`evidence.ix_number`）。
    - 公司 parser 交回的是 fact 清單中的 fact，框架核對它屬於這份申報，不以 QName 比對 fact。
 3. **財年與季別**：主申報必須宣告 `DocumentFiscalYearFocus` 與 `DocumentFiscalPeriodFocus`（Q1、Q2、Q3、FY）；Q1–Q3 必須是 10-Q，FY 必須是 10-K。季別取申報宣告的期別。
    - 預設：10-K 與 10-Q 的財年都取申報宣告的值。
@@ -224,12 +230,12 @@ def categories(day):
      - 先前申報的值：上一財年的 FY 已上線（運算元都來自申報日不晚於本年報的申報）時用已上線值；沒有時用公司 parser 從上一份 10-K 組出的年度值（起始日之前的 10-K 照常讀取，只讀 fact，不寫入）。
      - 任一分類（含調節項與總營收）不同：Q4 不推算，`status.json` 記為 `not_derived`，檢核名稱「Q4 口徑一致」，`basis_changes` 列出每個不同的分類、兩邊的值與加數、先前值的依據與 accession；FY 照常上線。
      - 無法判斷時 Q4 照常推算，`status.json` 的該期紀錄附 `q4_basis` 說明原因：上一財年沒有已上線的 FY、已下載的申報中也沒有申報日不晚於本年報的上一財年 10-K，上一份 10-K 組不出年度值（結構檢核不通過），年報沒有列示上一財年的總營收，或有分類無法比較（`unparseable` 或找不到列示值）。補下載較早的申報後，無法判斷的期別可能得到判斷結果（一致，或 `not_derived`），`--check` 因此報出差異屬預期。
-     - 上一份 10-K 的原文缺檔或 sha256 不符（「原文存在」不通過）是資料不完整，不當成無法判斷：Q4 失敗，原因指出那份 10-K。
+     - 上一份 10-K 的原文缺檔或 sha256 不符（「原文存在」不通過），或宣告 `ATTACHMENTS` 時主文件與附件合不成 fact 清單（「fact 清單合併」不通過），是資料不完整，不當成無法判斷：Q4 失敗，原因指出那份 10-K。
      - 只比對兩邊都有的分類：公司 parser 對年報沒有列出的分類不比對。分類在財年交界改名（新舊名稱是兩個分類）時，舊名只在上一財年、新名只在年報期別，兩側都不比對，口徑變更只能由總營收與其他分類的差異偵測。
      - 判斷只用本年報與更早的申報，數字只來自 fact 清單。上一財年在 Q1–Q3 的 10-Q 就已重編時，年報的上一財年數字同樣與先前申報不同，Q4 也不推算。
    - 公司 parser 指定的 fact 有重複值（同 concept、dimensions、期間）時，框架以精度最高（decimals 最大）的 fact 為準；其他重複值只需在自己的精度內與它一致。同精度時選所在表格含最多其他項目的 fact，再平手取文件順序第一個，其餘記在 `duplicates`。這讓同一期的運算元盡量落在同一張表，證據截圖較少。
 7. **結構檢核**：見下節。不通過就不寫入正式輸出，只在 `status.json` 記錄原因。
-8. **證據**：每個運算元找到所在的 SEC 表格，核對 fact 與運算元一致，存清理過的 HTML 片段與標示儲存格的截圖（1 倍解析度）。表格 HTML 與已提交的相同、PNG hash 與截圖倍率都相符時沿用舊 PNG，不重新截圖；同一期末日的 FY 與 Q4 互相沿用。
+8. **證據**：每個運算元在 fact 所在的文件（主文件或附件）找到所在的 SEC 表格，核對 fact 與運算元一致，存清理過的 HTML 片段與標示儲存格的截圖（1 倍解析度）。表格 HTML 與已提交的相同、PNG hash 與截圖倍率都相符時沿用舊 PNG，不重新截圖；同一期末日的 FY 與 Q4 互相沿用。
 9. **已上線保護**：該期已有上線輸出時，一般 parse 不改動它。
     - 重算結果與已上線輸出完全相同：不寫入。
     - 數值或依據（序列、分類、總營收、運算元、選用的申報、財年季別與財年推算依據、觀點）不同：不寫入，`status.json` 記錄 `differs_from_published`（差異的分類、舊值、新值，原因是選用的申報不同或規則與原文變更）。由人確認後以 `--republish TICKER SERIES PERIOD` 覆寫，覆寫時 `revenue.json` 的 `republished` 記錄原值與原因。
@@ -246,7 +252,8 @@ def categories(day):
 | 檢核 | 內容 |
 |---|---|
 | 選申報 | 該期有 10-Q 或 10-K；Q4 的九個月只看申報日不晚於 10-K 的申報 |
-| 原文存在 | 主文件在共用資料目錄中，sha256 與申報包紀錄一致 |
+| 原文存在 | 主文件與宣告的附件在共用資料目錄中，sha256 與申報包紀錄一致 |
+| fact 清單合併 | 宣告 `ATTACHMENTS` 時：主文件與附件之間沒有重複定義的 context、unit id，沒有重複的 fact id |
 | 財年與季別 | 申報宣告財年與季別，且與表單種類相符；FY 序列的主申報是 10-K；自訂 `FISCAL_YEAR = "prior_annual"` 時，10-Q 有申報日不晚於它、期末與它相接的上一財年 10-K，且那份 10-K 宣告財年 |
 | 定義唯一 | 公司 parser 對每個分類最多交回一個運算式，總營收剛好一個；權重都是 1 或 -1；向主申報要的運算式，交回的分類與 `categories(期末日)` 相同 |
 | fact 存在且唯一 | 每個運算元在該申報的 fact 清單中找得到、數值可解析；同一份申報、同一個期間要求的各項（分類、調節項、總營收）與各加數起日相同，Q1–Q3、FY 與 Q4 的年度和九個月累計都適用；重複出現時在各自精度內一致 |
@@ -349,6 +356,7 @@ Q4 推算條件（依據的各期都通過，但年度與 Q1–Q3 的分類集�
 - `expression` 依公司 parser 列出的加數順序列出運算元；多個加數的分類有多個運算元，Q4 依加數交錯列出年度與九個月累計。
 - 公司 parser 交回調節項時另有同格式的 `reconciling` 欄位。
 - 公司 parser 自訂 `FISCAL_YEAR = "prior_annual"`、10-Q 的財年推算值與申報宣告不同時另有 `fiscal_year_basis`（見框架流程的「財年與季別」）。
+- 運算元的 `document` 是 fact 所在的文件：主文件，或宣告 `ATTACHMENTS` 時的附件（檔名、sha256 與 URL 都是附件的；附件沒有 inline XBRL viewer 連結時 `ixviewer_url` 為 null）。證據表格鍵與證據 HTML 標示的 SEC 原文 URL 也取自同一份文件。
 - 證據圖上的編號就是運算元編號（`op3` 標成 3）；`evidence.png_scale` 是截圖倍率。
 - 以 `--republish` 覆寫過的期別有 `republished` 清單，每筆記錄原因與覆寫前的申報、分類數值與總營收。
 - 輸出不記錄程式版本。已上線保護讓內容相同的輸出不重寫，所以一份輸出最後由哪一版程式寫入，看 Git 中它最後一次改動的 commit；目前的程式是否仍算出相同的輸出，由 `--check` 確認。
@@ -456,12 +464,14 @@ npm run snapshot -- --all --check            # 核對已提交的快照與原文
   - 申報篩選用到的申報包欄位：表單、期末日、申報日、申報包是否完整，以及主文件的檔名、是否為 inline XBRL、sha256、URL。
   - 文件宣告的 namespaces 與衝突的前綴、全部 dei。
   - 主文件的全部數值 fact（`ix:nonFraction`），不依任何公司 parser 篩選。每個 fact 保留 XBRL 原始欄位（fact id、concept、dimensions、期間、unit、顯示文字 `raw`、`scale`、`decimals`、`sign`、`format` 屬性原文、context id），以及決定重複值選擇的 HTML 位置 `table_index` 與 `order`；nil fact 另有 `nil: true`。換算後的數值（`value`、`value_error`）不存，讀快照時以目前的數字規則算出。
+  - 公司 parser 宣告 `ATTACHMENTS` 時，快照另外涵蓋宣告的附件：表頭的 `ixds` 記錄宣告的附件類型、合併程式的 hash 與每份附件的申報包欄位（檔名、類型、sha256、URL），`attachments` 記錄每份附件宣告的 namespaces、衝突的前綴與 dei；附件的 fact 接在主文件的 fact 之後，多一個 `document`（附件檔名）。沒有宣告的公司，快照沒有這些欄位。
 
-  原文讀不到的申報記錄錯誤原因，快照模式重現同一個 `comparison_errors`。
+  原文讀不到或合不成 fact 清單的申報記錄錯誤原因，快照模式重現同一個 `comparison_errors`。
 - **格式**：一行一個 fact（JSON Lines）。縮排的 JSON 約大一倍，Git 壓縮後兩者相近，一行一個 fact 讓工作目錄小一半。
-- **快照只由申報與抽取程式決定**：一份申報公開後內容不會變，快照只隨從原文抽資料的程式（抽取程式，`revenue/extract.py`）的行為改變。
+- **快照只由申報與抽取程式決定**：一份申報公開後內容不會變，快照只隨從原文抽資料的程式（抽取程式，`revenue/extract.py`）的行為改變；宣告 `ATTACHMENTS` 的公司，快照另隨宣告的附件類型與合併程式改變。
   - 抽取程式涵蓋 HTML 解析與表格編號、xmlns 宣告與衝突的前綴、context 與 unit、dei、`ix:nonFraction` 的文字與屬性，以及申報篩選用到的申報包欄位。數字規則與 `format` 的正規化（`ixbrl.py`）、QName 解析、期間分類（`xbrl.py`）與申報篩選（`filings.py`）在讀快照時執行，不在其中。
   - 快照記錄抽取程式的 hash，依 `extract.py` 的語法樹計算，不含註解、docstring 與排版。hash 不同時快照模式直接報錯，不以過期的快照計算。`extract.py` 只 import lxml 與標準函式庫，不 import 本 repo 的模組，hash 才涵蓋全部抽取行為；測試檢查這一點。
+  - 涵蓋附件的快照另外依賴合併程式（`revenue/ixds.py`），表頭記錄它的 hash，算法與抽取程式相同。它只 import lxml、標準函式庫與 `extract.py`，測試檢查這一點。快照模式核對快照涵蓋的附件類型等於公司 parser 的 `ATTACHMENTS`（沒有宣告時快照不能涵蓋附件），涵蓋附件時合併程式的 hash 相同；不符時報錯，要重產這家公司的快照。沒有宣告附件的快照與合併程式無關。
   - 快照檔的編排由快照格式版本表示；版本不同時同樣報錯。
   - 抽取結果也取決於 lxml 的 HTML 解析，lxml 在 `requirements.txt` 鎖定確切版本，不在 hash 內。升級 lxml 時，在有原文的環境跑 `snapshot --all --check`；有差異就重產全部快照，與升級放在同一個 PR。
   - 快照與申報清單的申報不一致時直接報錯，包括快照檔名與記錄的 accession 不同、申報資訊（表單、日期）與清單不同。
@@ -478,11 +488,13 @@ npm run snapshot -- --all --check            # 核對已提交的快照與原文
 
   | 改動 | 是否重產快照 |
   |---|---|
-  | 公司 parser、utility | 不需要 |
+  | 公司 parser（`ATTACHMENTS` 除外）、utility | 不需要 |
+  | 公司 parser 的 `ATTACHMENTS` | 該 ticker |
   | 框架（組數值、流程、檢核、證據） | 不需要 |
   | 數字規則與 `format` 的正規化、QName 解析、期間分類、申報篩選 | 不需要；快照模式以新規則重算 |
   | 抽取程式的註解、docstring、排版 | 不需要 |
   | 抽取程式的行為 | 全部 ticker |
+  | 合併程式（`ixds.py`）的行為 | 宣告 `ATTACHMENTS` 的 ticker |
 - **容量**：以 18 個上線 ticker、243 份 10-K／10-Q 實測，每份申報平均約 1,900 個 fact（HD、AAPL 約 700，JPM、BAC 約 7,000），一個快照檔平均約 0.76 MB，zlib 壓縮後約 50 KB。每個 ticker 約 13 份申報、約 10 MB（壓縮後約 0.7 MB）；1500 個 ticker 的工作目錄約 15 GB，Git 壓縮後約 1 GB，每個 ticker 每年 4 份申報，每年新增約 4.6 GB（壓縮後約 0.3 GB）。
 
 ### 兩種 CI 環境
@@ -500,6 +512,7 @@ npm run snapshot -- --all --check            # 核對已提交的快照與原文
 
 - 框架：以合成的 inline XBRL 申報與合成的公司 parser，測試每個流程步驟與每項檢核，不連網、不啟動 Chromium。
 - 快照：測試快照往返等價、快照不存換算後的數值、快照模式不讀原文、數字規則在讀快照時套用、申報篩選與地區成員檢查走同一段程式、抽取程式 hash 不隨註解與排版改變且隨行為改變、申報清單一致性、新上線期別沒有快照與缺已提交證據會被抓到，以及改動快照中的一個值會被 `--check` 抓到。
+- 附件（`ATTACHMENTS`）：測試格式檢核、附件 fact 共用主文件的 context 與 unit、合併規則（重複的 id、跨文件的前綴衝突、dei 取主文件）、運算元與證據指向附件、涵蓋附件的快照往返與核對（宣告不符、合併程式 hash 不同），以及沒有宣告的公司只讀主文件。
 - utility：每個 utility 有自己的測試。既有 utility 的測試不修改，測試要改代表行為變了，等於修改框架。CI 以此判斷：PR 修改或刪除 `tests/sec_revenue/parser_utils/` 中既有的測試檔時，重跑全部上線 ticker；只新增測試檔時不在此限。
 - 每個 ticker：`data/revenue/` 中已提交的輸出就是回歸基準。`--check` 重跑 parser，與已提交的輸出逐欄比對。檢查範圍依改動而定：
 
@@ -511,7 +524,6 @@ npm run snapshot -- --all --check            # 核對已提交的快照與原文
 
 ## 待決定
 
-- **附件中的 fact**：PGR 10-K 的財報在 EX-13，主文件只有 Schedule III（#76）。依「預設與自訂」，讀附件是公司 parser 對「fact 清單只取主文件」的自訂；待決定的是這個自訂點的形式，以及證據怎麼找到附件中的表格。讀附件的公司，申報清單的範圍跟著擴大。
 - **沒有 XBRL 標記的數字**：GOOGL 2025-03-31 以前的「Hedging gains (losses)」列沒有 XBRL 標記（#73）。依「數字只來自 XBRL fact」，fact 清單不含這類數字，GOOGL 這些期別無法上線，除非原則另開例外。
 - **框架檔名**：預設起始日所在的 `revenue/engine.py` 等檔名，隨框架實作調整。
 - **申報清單的位置**：申報清單放在 `data/snapshots/` 下；快照不進 Git 時，清單仍要進 Git。

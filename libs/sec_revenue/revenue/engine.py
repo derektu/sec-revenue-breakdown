@@ -30,7 +30,7 @@ from typing import Callable
 from ..common.jsonio import JsonCodec
 from .evidence import TableScreenshotter
 from .compose import NotDerived, Operand, PeriodComposer, PeriodResult
-from .filings import FilingSet, ParseError
+from .filings import MERGE_CHECK, FilingSet, ParseError
 from .review import TOTAL_LABEL, comparatives
 from .snapshot import SnapshotFilingSet
 from .source import ParserSource
@@ -46,6 +46,8 @@ PERIOD_RE = re.compile(r"\d{4}-\d{2}-\d{2}")
 VALUE_FIELDS = (
     "series", "categories", "total", "reconciling", "operands", "filings", "fiscal_year", "fiscal_quarter", "fiscal_year_basis", "view",
 )
+# 上一份 10-K 以這些檢核失敗時是原文不完整，Q4 口徑一致不當成無法判斷（見 `prior_annual`）。
+INCOMPLETE_SOURCE = ("原文存在", MERGE_CHECK)
 # 差異標記：比較欄比對中這些結果寫到舊期別。
 MARKED_RESULTS = ("different", "unparseable")
 
@@ -56,6 +58,11 @@ def sha256(raw: bytes) -> str:
 
 def ticker_dir(root: Path, ticker: str) -> Path:
     return root / ticker[0].upper() / ticker
+
+
+def table_key(filing, name: str | None, index: int) -> str:
+    """證據表格鍵：accession、fact 所在文件（主文件或附件 `name`）的 sha256 前綴與該文件中的表格編號。"""
+    return f"{filing.accession}-{filing.source(name)['sha256'][:12]}-t{index}"
 
 
 class RevenueParser:
@@ -83,7 +90,7 @@ class RevenueParser:
         self.out = ticker_dir(out, self.source.ticker)
         self.reuse = ticker_dir(reuse or out, self.source.ticker)
         # 預設讀 `data` 下載的原文；`--check --snapshots` 改用快照建立的 FilingSet。
-        self.filings = filings or FilingSet(data, self.source.ticker)
+        self.filings = filings or FilingSet(data, self.source.ticker, self.source.attachments)
         self.composer = PeriodComposer(self.source, self.filings)
         self.screenshots = screenshots
         self.republish = set(republish)
@@ -384,7 +391,8 @@ class RevenueParser:
 
         依據是 `published`（已上線、且運算元都來自申報日不晚於 `as_of` 的申報的 FY 輸出）或 `filing`（沒有已上線
         輸出時，來源從上一份 10-K 組出的值，只讀 fact，不寫入）。兩者都拿不到、或上一份 10-K 組不出年度值時
-        回傳（None, 原因）。上一份 10-K 的原文缺檔或 sha256 不符是資料不完整，不是無法判斷：以 `ParseError` 結束，Q4 失敗。
+        回傳（None, 原因）。上一份 10-K 的原文缺檔、sha256 不符，或主文件與附件合不成 fact 清單，都是資料不完整，不是無法判斷：
+        以 `ParseError` 結束，Q4 失敗。
         """
         path = self.out / "FY" / prior / "revenue.json"
         if path.exists() and self.visible({("FY", prior): JsonCodec.read(path)}, as_of):
@@ -394,7 +402,7 @@ class RevenueParser:
         try:
             result = self.composer.compose_annual(prior)
         except ParseError as error:
-            if error.check == "原文存在":
+            if error.check in INCOMPLETE_SOURCE:
                 accession = self.filings.select(prior).accession
                 raise ParseError(error.check, f"Q4 口徑一致所需的上一財年 10-K {accession} 原文不完整：{error.message}") from error
             return None, f"上一財年（{prior} 止）沒有已上線的 FY，上一份 10-K 組不出年度值：[{error.check}] {error.message}"
@@ -435,7 +443,7 @@ class RevenueParser:
             "accession": operand.filing.accession,
             "form": operand.filing.form,
             "filing_date": operand.filing.filing_date,
-            "document": operand.filing.document_record(),
+            "document": operand.filing.document_record(fact.document),
             "fact_id": fact.fact_id,
             "duplicates": [d.fact_id for d in operand.duplicates],
             "context_id": fact.context_id,
@@ -453,14 +461,17 @@ class RevenueParser:
     # ---- 證據 ----
 
     def evidence(self, result: PeriodResult, operands: list[Operand]) -> tuple[dict, dict[str, bytes]]:
-        """每個運算元找到所在表格；同一張表的運算元一起標示，產生 HTML 與 PNG。"""
+        """每個運算元在 fact 所在的文件（主文件或附件）找到所在表格；同一張表的運算元一起標示，產生 HTML 與 PNG。
+
+        表格鍵、來源 URL 與截圖的原文都取自 fact 所在的文件。
+        """
         if self.filings.snapshot:
             return self.committed_evidence(result, operands)
         groups: dict[str, list[Operand]] = {}
         for operand in operands:
             document = self.filings.document(operand.filing)
-            locator = document.locator
             fact = operand.fact
+            locator = document.locator_for(fact.document)
             status, index = locator.locate(fact.fact_id)
             if status != "in_table" or index != fact.table_index:
                 raise ParseError("證據完整", f"{operand.id} {fact.fact_id}（{operand.filing.accession}）不在 HTML 表格內，沒有表格證據")
@@ -469,7 +480,7 @@ class RevenueParser:
             )
             if mismatch:
                 raise ParseError("證據完整", f"{operand.id} {fact.fact_id}：{mismatch}")
-            key = f"{operand.filing.accession}-{operand.filing.document['sha256'][:12]}-t{index}"
+            key = table_key(operand.filing, fact.document, index)
             groups.setdefault(key, []).append(operand)
         names = {}
         for line in result.lines:
@@ -478,7 +489,8 @@ class RevenueParser:
         records, files = {}, {}
         for key, members in sorted(groups.items()):
             filing = members[0].filing
-            locator = self.filings.document(filing).locator
+            name = members[0].fact.document
+            locator = self.filings.document(filing).locator_for(name)
             index = members[0].fact.table_index
             items = [
                 {
@@ -490,12 +502,12 @@ class RevenueParser:
                 }
                 for op in members
             ]
-            header = {"ticker": self.source.ticker, "form": filing.form, "accession": filing.accession, "source_url": filing.document["source_url"]}
+            header = {"ticker": self.source.ticker, "form": filing.form, "accession": filing.accession, "source_url": filing.source(name)["source_url"]}
             try:
                 page = locator.table_html(index, items, header)
             except ValueError as error:
                 raise ParseError("證據完整", f"{key}：{error}") from error
-            png = self.png(result.series, result.period_end, key, page, filing, items, locator, index)
+            png = self.png(result.series, result.period_end, key, page, filing, name, items, locator, index)
             files[f"{key}.html"] = page
             if png is not None:
                 files[f"{key}.png"] = png
@@ -518,7 +530,7 @@ class RevenueParser:
             fact = operand.fact
             if fact.table_index is None:
                 raise ParseError("證據完整", f"{operand.id} {fact.fact_id}（{operand.filing.accession}）不在 HTML 表格內，沒有表格證據")
-            key = f"{operand.filing.accession}-{operand.filing.document['sha256'][:12]}-t{fact.table_index}"
+            key = table_key(operand.filing, fact.document, fact.table_index)
             source = next(
                 (s for s in [result.series] + [s for s in SERIES if s != result.series]
                  if (self.reuse / s / result.period_end / "evidence" / f"{key}.html").is_file()),
@@ -541,7 +553,7 @@ class RevenueParser:
             }
         return records, files
 
-    def png(self, series, period, key, page, filing, items, locator, index) -> bytes | None:
+    def png(self, series, period, key, page, filing, name, items, locator, index) -> bytes | None:
         """HTML 與已提交的相同、PNG hash 與截圖倍率都相符時沿用舊 PNG；`screenshots=False` 時只沿用、不截圖。
 
         同一期末日的 FY 與 Q4 都用到 10-K 的表格，先找本序列、再找另一個序列的已提交證據。
@@ -561,7 +573,7 @@ class RevenueParser:
             except Exception as error:
                 raise ParseError("證據完整", f"Chromium 無法啟動：{type(error).__name__}: {error}") from error
         try:
-            png, _, text = self.active.capture(self.filings.raw(filing), items)
+            png, _, text = self.active.capture(self.filings.raw(filing, name), items)
         except Exception as error:
             raise ParseError("證據完整", f"{key} 截圖失敗：{type(error).__name__}: {error}") from error
         if text != locator.table_text(index):
@@ -689,7 +701,7 @@ def check_outputs(
     with tempfile.TemporaryDirectory() as temp:
         if committed.exists():
             shutil.copytree(committed, ticker_dir(Path(temp), source.ticker))
-        filings = SnapshotFilingSet(snapshots, source.ticker) if snapshots is not None else None
+        filings = SnapshotFilingSet(snapshots, source.ticker, source.attachments) if snapshots is not None else None
         parser = RevenueParser(
             data, Path(temp), source, screenshots=False, progress=progress, default_start=default_start, filings=filings
         )
