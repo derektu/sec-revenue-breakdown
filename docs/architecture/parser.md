@@ -73,7 +73,7 @@ parser 分三層。每個 ticker 的 parser 各自獨立，新增或修改一個
 
 ## 新增一個 ticker
 
-完整流程（選 ticker、列入 `tickers.csv`、下載、擷取對照資料、觀點、寫 parser、review、上線）與每一步由 agent 或人負責，見 [開發流程](../guides/dev-workflow.md)；寫 parser 的做法見 [Parser 開發指南](../guides/parser-dev-guide.md)。與本文件規則相關的幾點：
+完整流程（下載、列入 `tickers.csv`、擷取對照資料、評估、觀點、寫 parser、review、上線）與每一步由 agent 或人負責，見 [開發流程](../guides/dev-workflow.md)；寫 parser 的做法見 [Parser 開發指南](../guides/parser-dev-guide.md)。與本文件規則相關的幾點：
 
 - **觀點由人決定**：開發者（人或 agent）比較各對照來源的分類、對照 SEC 原文能重現哪些分類，提出建議與理由；人決定後才開始寫 parser。
 - **只寫這個 ticker 的目錄**：需要的 utility 不存在時新增一個，不改既有的 utility 與框架。

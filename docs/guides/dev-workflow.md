@@ -4,36 +4,31 @@
 
 寫 parser 的細節見 [Parser 開發指南](parser-dev-guide.md)；規則與輸出格式見 [Parser 與正式輸出](../architecture/parser.md)；研究約束見 [`AGENTS.md`](../../AGENTS.md)。
 
-指令都從 repo 根目錄執行。環境設定（`.venv`、`.env` 的 `SEC_USER_AGENT` 與 `SEC_DATA_DIR`）見 [README](../../README.md) 的 Setup。
+指令都從 repo 根目錄執行。環境設定（`.venv`、`.env` 的 `SEC_USER_AGENT` 與 `SEC_DATA_DIR`）見 [README](../../README.md) 的「上手」。
 
 ## 流程總覽
 
+流程從人決定要試做哪些 ticker 開始。評估要看申報的 fact，觀點建議要看對照資料，所以先下載，再評估。
+
 ```
-1 選 ticker ─→ 2 tickers.csv ─→ 3 下載 SEC 申報 ─→ 4 擷取對照資料 ─→ 5 觀點建議 ─→ 6 決定觀點
+1 下載 SEC 申報 ─→ 2 tickers.csv ─→ 3 擷取對照資料 ─→ 4 評估 ticker ─→ 5 觀點建議 ─→ 6 決定觀點
    ─→ 7 寫 parser ─→ 8 獨立 review ─→ 9 判斷上線 ─→ 10 上線之後
 ```
 
 | 步驟 | agent 做 | 人做 |
 |---|---|---|
-| 1. 選 ticker | 評估候選 ticker 做不做得出來 | 決定要做哪些 ticker |
-| 2. `tickers.csv` | 查 CIK 與正式名稱，新增 `wip` 列並驗證 | 核准列入；`ok`、`drop` 由人決定 |
-| 3. 下載 SEC 申報 | 下載、檢查缺漏 | 設定 `.env`（`SEC_USER_AGENT` 是人的聯絡資訊） |
-| 4. 擷取對照資料 | 執行擷取、驗證、回報結果 | 在專用瀏覽器登入三個網站 |
+| 1. 下載 SEC 申報 | 下載、檢查缺漏 | 決定要試做的 ticker；設定 `.env`（`SEC_USER_AGENT` 是人的聯絡資訊） |
+| 2. `tickers.csv` | 查 CIK 與正式名稱，新增 `wip` 列並驗證 | `ok`、`drop` 由人決定 |
+| 3. 擷取對照資料 | 執行擷取、驗證、回報結果 | 在專用瀏覽器登入三個網站 |
+| 4. 評估 ticker | 看申報的營收 fact，評估做不做得出來 | 決定繼續或放棄 |
 | 5. 觀點建議 | 比較各來源、對照 SEC 申報，提出建議 | |
 | 6. 決定觀點 | | 決定觀點與分類 |
 | 7. 寫 parser | 寫 `parser.py`、`parser.md`，驗證、比對 | 決定 agent 回報的待決事項 |
 | 8. 獨立 review | 另一個 agent review 還沒 commit 的改動；修完 review 的問題 | 在第 9 步一併決定需要人判斷的 review 問題 |
-| 9. 判斷上線 | 整理上線條件的證據、重跑檢查，請人核准；核准後寫入 `tickers.csv`，commit、開 PR、等 CI、合併 | 判斷能不能上線、核准 |
+| 9. 判斷上線 | 整理上線條件的證據、重跑檢查，在工作目錄開 viewer，請人核准；核准後寫入 `tickers.csv`，commit、開 PR、等 CI、合併 | 判斷能不能上線、核准 |
 | 10. 上線之後 | 下載新申報、產生快照、parse、回報結果 | 處理失敗與標記的後續決定 |
 
-交辦的例子：
-
-```text
-幫我新增 MSFT、ORCL：照 docs/guides/dev-workflow.md 做第 1–5 步，每個 ticker 回報觀點建議後停下來。
-MSFT 用 Stock Analysis 的觀點，照 docs/guides/dev-workflow.md 第 7 步寫 parser。
-幫 MSFT 整理第 9 步的上線條件，告訴我能不能上線。
-新一期財報出來了，照 docs/guides/dev-workflow.md 第 10 步更新全部上線的 ticker。
-```
+交辦的順序與範例見 [README](../../README.md) 的「新增 ticker」。新一期財報交辦第 10 步，指定要更新的 ticker。
 
 ## 從寫完到合併
 
@@ -57,39 +52,7 @@ MSFT 用 Stock Analysis 的觀點，照 docs/guides/dev-workflow.md 第 7 步寫
 - 任何改動從寫完到合併都照這個順序（[從寫完到合併](#從寫完到合併)）：寫完 → 獨立 review → 修完 → 人核准 → commit、開 PR、CI 通過、合併。
 - 每一步做完回報：做了什麼、結果、遇到的問題、需要人決定的事項（附選項與建議）。
 
-## 1. 選 ticker
-
-適合的 ticker：營收以產品或業務別組成，申報有對應的 XBRL 標記。營收只以地區揭露的 ticker 做不出來（觀點不收地區拆分）。
-
-**agent**：對每個候選 ticker，先下載申報（第 3 步），用 [開發指南](parser-dev-guide.md) 第 2 步的程式看最新 10-K 與 10-Q 的營收 fact，回報：
-
-- 申報中有哪些產品別或業務別的營收 fact，是不是地區。
-- 有沒有框架不支援的情形：單季不在 84–98 天（12–14 週）的季度、財報在附件、需要的數字沒有 XBRL 標記、申報宣告的財年錯誤。已知的例子見 [資料使用指南](data-guide.md) 的「目前狀態」。
-- 建議做或不做，與理由。
-
-**人**：決定要做哪些 ticker。
-
-## 2. `tickers.csv`
-
-`data/universe/tickers.csv` 的格式與驗證規則見 [ticker 清單與對照資料格式](../architecture/universe.md)。
-
-| 欄位 | 何時填 |
-|---|---|
-| `ticker`、`cik`、`name` | 列入時。有前身與繼受實體時 `cik` 列多個，以 `;` 分隔（例如 XOM 的 `2115436;34088`），下載會合併它們的申報 |
-| `status` | 列入時為 `wip`；判斷能上線時改為 `ok`；放棄時改為 `drop` |
-| `adopted_source`、`stability_score`、`stability_note` | 改為 `ok` 時必填：採用的對照來源與 1–5 的穩定度評分（5 最穩定） |
-
-下載、擷取、parse 都不需要 ticker 先列入 `tickers.csv`：`download --tickers` 接受任何 ticker（沒列入時由 SEC 的 ticker 對照表查 CIK），`capture` 不讀 `tickers.csv`，`parse` 只看這個 ticker 有沒有 parser。用到 `tickers.csv` 的是 `download --all`（下載清單中的全部 ticker）與 viewer（以 `status` 標示 ticker 是否上線）。
-
-**agent**：人核准列入後，新增 `wip` 列。CIK 取自下載結果的 `cik`（`source` 為 `sec_company_tickers` 時是由 SEC 對照表查到的），`name` 用申報封面的正式名稱。有前身或繼受實體時回報，由人決定是否列多個 CIK。改完執行驗證：
-
-```bash
-.venv/bin/python scripts/validate_universe.py
-```
-
-**人**：核准列入；`ok` 與 `drop` 由人決定（第 9 步）。
-
-## 3. 下載 SEC 申報
+## 1. 下載 SEC 申報
 
 **agent**：
 
@@ -107,27 +70,60 @@ MSFT 用 Stock Analysis 的觀點，照 docs/guides/dev-workflow.md 第 7 步寫
 
 下載規則與回傳碼見 [SEC 下載](../architecture/download.md)，其他參數見 [本機操作](local-workflow.md)。
 
-## 4. 擷取對照資料
+## 2. `tickers.csv`
+
+`data/universe/tickers.csv` 的格式與驗證規則見 [ticker 清單與對照資料格式](../architecture/universe.md)。
+
+| 欄位 | 何時填 |
+|---|---|
+| `ticker`、`cik`、`name` | 列入時。有前身與繼受實體時 `cik` 列多個，以 `;` 分隔（例如 XOM 的 `2115436;34088`），下載會合併它們的申報 |
+| `status` | 列入時為 `wip`；判斷能上線時改為 `ok`；放棄時改為 `drop` |
+| `adopted_source`、`stability_score`、`stability_note` | 改為 `ok` 時必填：採用的對照來源與 1–5 的穩定度評分（5 最穩定） |
+
+下載、擷取、parse 都不需要 ticker 先列入 `tickers.csv`：`download --tickers` 接受任何 ticker（沒列入時由 SEC 的 ticker 對照表查 CIK），`capture` 不讀 `tickers.csv`，`parse` 只看這個 ticker 有沒有 parser。用到 `tickers.csv` 的是 `download --all`（下載清單中的全部 ticker）與 viewer（以 `status` 標示 ticker 是否上線）。
+
+**agent**：下載完成後，新增 `wip` 列。CIK 取自下載結果的 `cik`（`source` 為 `sec_company_tickers` 時是由 SEC 對照表查到的），`name` 用申報封面的正式名稱。有前身或繼受實體時回報，由人決定是否列多個 CIK。改完執行驗證：
+
+```bash
+.venv/bin/python scripts/validate_universe.py
+```
+
+第 1 步還沒有 `tickers.csv` 的列時，下載只用 SEC 對照表查到的單一 CIK。人決定列多個 CIK 時，改完後重跑第 1 步的兩個指令，補齊前身或繼受實體的申報。
+
+**人**：`ok` 與 `drop` 由人決定（第 9 步）。
+
+## 3. 擷取對照資料
 
 對照資料（Stock Analysis、富途、TradingView）只用來選觀點、首次比對與解釋差異，不當作數字來源。
 
 **agent**：
 
 ```bash
-.venv/bin/python scripts/capture_references.py setup                                   # 開專用瀏覽器，逐站檢查登入
 .venv/bin/python scripts/capture_references.py capture --source stockanalysis --tickers MSFT
 .venv/bin/python scripts/capture_references.py capture --source futu --tickers MSFT
 .venv/bin/python scripts/capture_references.py capture --source tradingview --tickers MSFT
 ```
 
-- 先跑 `setup`；有網站未登入時，停下來請人在開啟的視窗中登入。
+- 有網站未登入時，停下來請人在自己的終端機執行 `npm run capture:setup` 並登入，完成後重跑擷取。`setup` 與未登入時的 `capture` 都會等人按 Enter，agent 的 shell 無法代替：看到「未登入，開啟瀏覽器視窗登入」時，先結束這個行程，專用 profile 才開得起來。
 - 三個來源依序擷取，不平行；多個 ticker 用 `--tickers MSFT,ORCL`，工具一次處理一個 ticker、兩檔之間預設間隔 10 秒。
 - 結果累積寫進 `data/universe/references/<首字母>/<TICKER>/`，結束時自動執行對照資料驗證。
 - 回報：每個 ticker 每個來源擷取到的期別與分類、失敗的來源與原因（例如頁面不存在、找不到表格）。來源本身沒有這家公司的資料（不是未登入或擷取失敗）時，第 5 步用現有的來源繼續，例如 XOM、CVX、NEE 沒有 Stock Analysis。
 
-**人**：在專用瀏覽器中登入三個網站。
+**人**：執行 `npm run capture:setup`，在專用瀏覽器中登入三個網站。
 
 登入判斷、證據與合併規則見 [對照資料擷取工具](../architecture/capture.md)。
+
+## 4. 評估 ticker
+
+適合的 ticker：營收以產品或業務別組成，申報有對應的 XBRL 標記。營收只以地區揭露的 ticker 做不出來（觀點不收地區拆分）。
+
+**agent**：對每個 ticker，用 [開發指南](parser-dev-guide.md) 第 2 步的程式看最新 10-K 與 10-Q 的營收 fact，回報：
+
+- 申報中有哪些產品別或業務別的營收 fact，是不是地區。
+- 有沒有框架不支援的情形：單季不在 84–98 天（12–14 週）的季度、財報在附件、需要的數字沒有 XBRL 標記、申報宣告的財年錯誤。已知的例子見 [資料使用指南](data-guide.md) 的「目前狀態」。
+- 建議做或不做，與理由。與第 5 步一併交辦時，合併回報。
+
+**人**：看評估結果，決定繼續或放棄。放棄的 ticker 由人決定改為 `drop` 或維持 `wip`（第 9 步）。
 
 ## 5. 觀點建議
 
@@ -144,7 +140,7 @@ MSFT 用 Stock Analysis 的觀點，照 docs/guides/dev-workflow.md 第 7 步寫
 
 ## 7. 寫 parser
 
-**agent**：照 [開發指南](parser-dev-guide.md) 的第 2–9 步寫 `parser.py` 與 `parser.md`、跑 parse、與對照資料逐期比對、產生快照、自我驗收。一個 ticker 一個 issue、一個分支。只改這個 ticker 的目錄；需要的 utility 可以新增，既有 utility 與框架不改。遇到開發指南「停下來交給人」的情況，停下來回報。
+**agent**：照 [開發指南](parser-dev-guide.md) 的第 2–9 步寫 `parser.py` 與 `parser.md`、跑 parse、與對照資料逐期比對、產生快照、自我驗收。一個 ticker 一個 issue（由 agent 開）、一個分支；第 2、3 步還沒 commit 的 `wip` 列與對照資料，帶到這個 ticker 的分支。只改這個 ticker 的目錄；需要的 utility 可以新增，既有 utility 與框架不改。遇到開發指南「停下來交給人」的情況，停下來回報。
 
 做完停在 commit 之前，回報：各期結果（`published`、`not_derived`、`failed` 的期別與原因）、與對照來源的比對與差異、差異標記、需要人決定的事項。
 
@@ -156,7 +152,7 @@ MSFT 用 Stock Analysis 的觀點，照 docs/guides/dev-workflow.md 第 7 步寫
 
 - `parser.md` 與程式一致；每個依日期的切換都能在那份申報裡看到。
 - 「時點與寫 parser 的人的知識」的三條規則（見 [parser.md](../architecture/parser.md)）。
-- 只改了這個 ticker 的目錄；新增的 utility 不含任何 ticker 的知識，既有 utility 沒有改。
+- 只改了這個 ticker 的目錄，以及第 2、3 步留下的這個 ticker 的 `wip` 列與對照資料；新增的 utility 不含任何 ticker 的知識，既有 utility 沒有改。
 - 開發指南的驗收清單。
 
 範圍外的較早期別可以用 `parse --tickers <TICKER> --check --start <較早日期>` 試跑，從輸出的 JSON 看各期的狀態，驗證切換日與 `not_derived`。較早期別沒有已提交的輸出，回報為差異是預期的；現行分類結構開始以前的期別失敗（例如找不到現行成員）也是預期的，結果不代表那些期別的正確組法。要看的是範圍內已提交的期別：它們出現差異時（例如第一個 Q4 的口徑依據改由較早的已上線 FY 提供），逐筆看原因。`--check` 不寫入輸出。
@@ -188,13 +184,15 @@ MSFT 用 Stock Analysis 的觀點，照 docs/guides/dev-workflow.md 第 7 步寫
 npm run check
 ```
 
-整理完停下來請人核准，附上改動摘要、review 結果、驗證結果與上表每一條的證據。人核准上線時，在 `tickers.csv` 把 `status` 改為 `ok`，填人決定的 `adopted_source`、`stability_score` 與 `stability_note`，執行 `validate_universe.py`；人決定先不上線時維持 `wip`。接著照[從寫完到合併](#從寫完到合併)的第 5 步完成：一個 ticker 一個 PR，parser 與 `tickers.csv` 在同一個 commit。寫入 `tickers.csv` 的是人決定的值，由 `validate_universe.py` 檢查，不另外 review。
-
-**人**：判斷能不能上線、核准。數字與證據可以在 viewer 檢視：
+這時 parser 與輸出都還沒 commit，只有 agent 的工作目錄裡看得到，所以由 agent 在工作目錄開 viewer，把這個 ticker 的網址給人（`wip` 不在搜尋清單上，網址加 `#ticker=MSFT&series=Q`）。7290 已被占用時用 `--port` 指定其他 port：
 
 ```bash
 .venv/bin/python scripts/sec_pipeline.py viewer --host 127.0.0.1 --port 7290
 ```
+
+整理完停下來請人核准，附上改動摘要、review 結果、驗證結果與上表每一條的證據。人核准上線時，在 `tickers.csv` 把 `status` 改為 `ok`，填人決定的 `adopted_source`、`stability_score` 與 `stability_note`，執行 `validate_universe.py`；人決定先不上線時維持 `wip`。接著照[從寫完到合併](#從寫完到合併)的第 5 步完成：一個 ticker 一個 PR，parser、`tickers.csv` 與這個 ticker 的對照資料在同一個 commit；`ok` 的 `adopted_source` 必須存在於對照資料，少了對照資料 CI 不會通過。寫入 `tickers.csv` 的是人決定的值，由 `validate_universe.py` 檢查，不另外 review。
+
+**人**：判斷能不能上線、核准。對照 agent 的回報和 viewer 的內容，看數字、缺格子、標記與 SEC 證據是否和回報一致。
 
 做不出來的 ticker（框架不支援、只能違反原則）由人決定改為 `drop` 或維持 `wip`，原因寫在 `notes` 或對應的 issue。
 
