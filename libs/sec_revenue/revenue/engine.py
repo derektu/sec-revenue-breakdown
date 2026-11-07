@@ -310,6 +310,10 @@ class RevenueParser:
         """回傳查詢函式：期間（`Request`）→ 來源從 `filing` 組出的組成。"""
         return lambda request: self.composer.request(filing, request)
 
+    def comparatives(self, document, filing, baselines: list[tuple[str, str, dict]]) -> list[dict]:
+        """`filing` 列示的期間與 `baselines` 的比較欄比對；期間長度依這家公司的天數範圍分類。Q4 口徑一致與差異標記都經過這裡。"""
+        return comparatives(document, filing.accession, baselines, self.compose_for(filing), self.source.total_name, self.source.durations)
+
     # ---- Q4 口徑 ----
 
     def check_basis(self, result: PeriodResult) -> dict | None:
@@ -341,7 +345,7 @@ class RevenueParser:
         active = set(self.source.categories(result.period_end)) | {TOTAL_LABEL}
         found = [
             c
-            for c in comparatives(document, primary.accession, [("FY", prior, baseline)], self.compose_for(primary), self.source.total_name)
+            for c in self.comparatives(document, primary, [("FY", prior, baseline)])
             if c["role"] == "annual" and c["category"] in active
         ]
         if not any(c["category"] == TOTAL_LABEL for c in found):
@@ -645,7 +649,7 @@ class RevenueParser:
             except ParseError as error:
                 errors.append({"accession": filing.accession, "check": error.check, "reason": error.message})
                 continue
-            for item in comparatives(document, filing.accession, baselines, self.compose_for(filing), self.source.total_name):
+            for item in self.comparatives(document, filing, baselines):
                 if item["result"] not in MARKED_RESULTS:
                     continue
                 markers.setdefault((item["series"], item["period_end"]), []).append(

@@ -17,15 +17,24 @@ from .evidence import TableLocator
 from .extract import extract, parse_html
 from .ixbrl import ix_number, transform_name
 
-# 期間長度（含首尾日）分類；不在任何範圍內的期間不使用。範圍以週計：單季 12–17 週，涵蓋 13 週季度、
-# 52／53 週制的 14 週季度，與 COST 的 12／12／12／16 週季度（53 週年度的 Q4 為 17 週）；六個月 24–27 週、
-# 九個月 36–40 週同理；年度 51–54 週。
-DURATIONS = (
-    ("quarter", 84, 119),
-    ("six_months", 168, 189),
-    ("nine_months", 252, 280),
+# 期間分類的預設天數範圍（含首尾日）：一般 13 週制的單季 12–14 週、六個月 25–27 週、九個月 38–40 週、年度 51–54 週，
+# 52／53 週制的 14 週季度也在範圍內。不在任何範圍內的期間不使用。公司的季度不在預設範圍內時，由公司 parser 以
+# `DURATION_DAYS` 自訂（見 `source.py` 與 parser.md 的「預設與自訂」）。
+DEFAULT_DURATIONS = (
+    ("quarter", 84, 98),
+    ("six_months", 175, 189),
+    ("nine_months", 266, 280),
     ("annual", 357, 378),
 )
+# 自訂範圍的合理界限（天數，含首尾日）。每種期間的界限是已知申報方式的最寬範圍，前後各加一週：單季 12–17 週
+# （COST 的 12 週季度與 53 週年度的 17 週 Q4）→ 11–18 週；六個月 24–27 週 → 23–28 週；九個月 36–40 週 → 35–41 週；
+# 年度 51–54 週 → 50–55 週。四個界限互不重疊，界限內的範圍不會把一種期間認成另一種。
+DURATION_LIMITS = {
+    "quarter": (11 * 7, 18 * 7),
+    "six_months": (23 * 7, 28 * 7),
+    "nine_months": (35 * 7, 41 * 7),
+    "annual": (50 * 7, 55 * 7),
+}
 USD = "iso4217:USD"
 
 
@@ -33,11 +42,12 @@ def duration_days(start: str, end: str) -> int:
     return (dt.date.fromisoformat(end) - dt.date.fromisoformat(start)).days + 1
 
 
-def classify_duration(start: str | None, end: str | None) -> str | None:
+def classify_duration(start: str | None, end: str | None, durations=DEFAULT_DURATIONS) -> str | None:
+    """期間的分類（`quarter`、`six_months`、`nine_months`、`annual`）；`durations` 是（分類, 最短天數, 最長天數）。"""
     if not start or not end:
         return None
     days = duration_days(start, end)
-    return next((name for name, low, high in DURATIONS if low <= days <= high), None)
+    return next((name for name, low, high in durations if low <= days <= high), None)
 
 
 def decimals_rank(decimals: str | None) -> float:
@@ -90,10 +100,6 @@ class Fact:
     context_id: str
     table_index: int | None
     order: int
-
-    @property
-    def duration(self) -> str | None:
-        return classify_duration(self.start, self.end)
 
     def error_bound(self) -> Decimal | None:
         return error_bound(self.decimals)

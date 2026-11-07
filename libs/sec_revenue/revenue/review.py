@@ -10,18 +10,23 @@ from decimal import Decimal
 
 from .contract import Composition, Request
 from .filings import ParseError
-from .xbrl import InlineDocument, classify_duration, comparison_bound, decimals_rank
+from .xbrl import DEFAULT_DURATIONS, InlineDocument, classify_duration, comparison_bound, decimals_rank
 
 TOTAL_LABEL = "總營收"
 # 已上線運算式中，九個月累計以負號參與 Q4；比對時換回定義本身的符號，與申報列示的九個月累計同號。
 ROLE_SIGN = {"nine_months": -1}
 
 
-def comparatives(document: InlineDocument, accession: str, baselines: list[tuple[str, str, dict]], compose_for, total_name: str | None = None) -> list[dict]:
+def comparatives(
+    document: InlineDocument, accession: str, baselines: list[tuple[str, str, dict]], compose_for, total_name: str | None = None,
+    durations=DEFAULT_DURATIONS,
+) -> list[dict]:
     """新申報涵蓋的已上線期間，逐一比對每個分類在每個角色的值，回傳比對清單。
 
     `baselines` 是 (序列, 期末日, 已上線的 revenue.json)；`compose_for(request)` 回傳新申報中該期間的組成
     （`Composition`），來源組不出來時丟出 `ParseError`。`total_name` 是組成中總營收的名稱（`unparseable` 的鍵）。
+    `durations` 是這家公司期間分類的天數範圍（`source.durations`，沒有指定時是預設範圍）；`compose_for` 交給公司 parser
+    之前核對 Request 帶的是這家公司的範圍（`compose.PeriodComposer.request`）。
 
     比對單位是「分類 × 角色」：角色是已上線運算元的 `role`（季、年度、九個月累計），已上線值是該角色運算元的加權和；
     申報列示值是來源從新申報組出的同一期間運算式的加權和。加數的個數、順序或成員可以與已上線不同，只比分類值。
@@ -41,11 +46,11 @@ def comparatives(document: InlineDocument, accession: str, baselines: list[tuple
     def composed(span: tuple[str, str]) -> tuple[Composition | None, str | None]:
         """（組成, 無法比較的原因）；兩者都是 None 代表新申報沒有涵蓋這段期間。"""
         if span not in compositions:
-            duration = classify_duration(*span)
+            duration = classify_duration(*span, durations)
             found, error = None, None
             if duration:
                 try:
-                    found = compose_for(Request(span[1], duration, span[0]))
+                    found = compose_for(Request(span[1], duration, span[0], durations=durations))
                 except ParseError as failure:
                     error = f"[{failure.check}] {failure.message}"
             if found is not None and found.total is not None:

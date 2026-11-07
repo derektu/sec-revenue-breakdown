@@ -157,9 +157,13 @@ class WorkflowCli:
 
     def snapshot(self, args) -> int:
         names = self.company_tickers(args)
-        results, differences = [], []
+        results, differences, broken = [], [], []
         for ticker in names:
-            companies.parser_source(ticker)
+            _, error = self.load(ticker)
+            if error is not None:
+                broken.append(f"{ticker}：{error}")
+                results.append({"ticker": ticker, "error": error})
+                continue
             if args.check:
                 found = snapshot.check(args.data, args.out, ticker)
                 differences += found
@@ -168,14 +172,14 @@ class WorkflowCli:
                 results.append(snapshot.write(args.data, args.out, ticker))
             self.progress({"ticker": ticker, "status": "snapshot_checked" if args.check else "snapshot_written"})
         print(json.dumps({"stage": "snapshot", "check": args.check, "companies": results}, ensure_ascii=False, indent=2))
+        if broken:
+            self.report_broken(broken)
         if differences:
             print("\n".join(["快照與原文重新產生的結果不同："] + differences), file=sys.stderr)
-            return 2
         unreadable = [f"{r['ticker']} {a}" for r in results for a in r.get("errors", [])]
         if unreadable:
             print("\n".join(["原文讀不到，快照記錄為錯誤："] + unreadable), file=sys.stderr)
-            return 2
-        return 0
+        return 2 if differences or broken or unreadable else 0
 
     def parse(self, args) -> int:
         PeriodSelection(args.start, args.end)
@@ -193,9 +197,13 @@ class WorkflowCli:
             republish.setdefault(ticker, set()).add((series, period))
         if args.check and republish:
             raise ValueError("--check 不寫入，不能與 --republish 同時使用")
-        reports, differences = [], []
+        reports, differences, broken = [], [], []
         for ticker in names:
-            source = companies.parser_source(ticker)
+            source, error = self.load(ticker)
+            if error is not None:
+                broken.append(f"{ticker}：{error}")
+                reports.append({"ticker": ticker, "complete": False, "error": error})
+                continue
             if args.check:
                 report, found = check_outputs(
                     args.data,
@@ -220,10 +228,25 @@ class WorkflowCli:
                 report = parser.run(periods)
             reports.append(report)
         print(json.dumps({"stage": "check" if args.check else "parse", "companies": reports}, ensure_ascii=False, indent=2))
+        if broken:
+            self.report_broken(broken)
         if differences:
             print("\n".join(["與已提交的輸出不同："] + differences), file=sys.stderr)
             return 2
         return 0 if all(r["complete"] for r in reports) else 2
+
+    def load(self, ticker: str):
+        """（公司 parser, None），或不合理時（None, 錯誤訊息）。檢核含 VIEW 與自訂點；不合理的 ticker 不處理，
+        同一次執行的其他 ticker 照常處理，指令以結束碼 2 結束。"""
+        try:
+            return companies.parser_source(ticker), None
+        except ValueError as error:
+            self.progress({"ticker": ticker, "status": "parser_invalid"})
+            return None, str(error)
+
+    @staticmethod
+    def report_broken(broken: list[str]):
+        print("\n".join(["公司 parser 不合理，這些 ticker 沒有處理："] + broken), file=sys.stderr)
 
     def progress(self, event: dict):
         print(

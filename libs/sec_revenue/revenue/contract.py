@@ -10,7 +10,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 
 from .filings import ParseError
-from .xbrl import Fact, InlineDocument
+from .xbrl import DEFAULT_DURATIONS, Fact, InlineDocument, classify_duration
 
 DURATIONS = ("quarter", "nine_months", "annual")
 
@@ -42,14 +42,22 @@ class Request:
     """要組的期間：期末日、期間長度（`quarter`、`nine_months`、`annual`），以及選用的起日。
 
     沒有起日時，期末日與長度相符的 fact 都算；有起日時起日也必須相同（Q4 的九個月累計、比較欄比對）。
+    fact 的期間長度依 `durations` 的天數範圍分類：框架帶入這家公司的範圍（預設範圍，或公司 parser 的 `DURATION_DAYS`，
+    見 `source.ParserSource.durations`）。沒有指定時是預設範圍；框架把 Request 交給公司 parser 前核對它帶的是這家公司的範圍
+    （`compose.PeriodComposer.request`）。
     """
 
     end: str
     duration: str
     start: str | None = None
+    durations: tuple[tuple[str, int, int], ...] = field(default=DEFAULT_DURATIONS, repr=False)
 
     def matches(self, fact: Fact) -> bool:
-        return fact.end == self.end and fact.duration == self.duration and (self.start is None or fact.start == self.start)
+        return (
+            fact.end == self.end
+            and classify_duration(fact.start, fact.end, self.durations) == self.duration
+            and (self.start is None or fact.start == self.start)
+        )
 
 
 @dataclass(frozen=True)
