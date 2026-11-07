@@ -2,9 +2,13 @@
 
 - 營收數字的擷取與計算輸入必須來自 SEC 申報文件，包括 10-K、10-Q 與 8-K 附件。公司 IR、Stock Analysis、富途、TradingView 可作參考與差異解釋，不能替代 SEC 原始數字來源。
 - 每筆程式輸出須保留 SEC 文件 URL、期間、單位、完整分類 scope，以及推算的所有運算元。保存實際來源格式及雜湊；頁面文字快照不可冒稱原始 HTML bytes，公司網站副本不可直接改標 SEC。
-- Parser 的兩條硬原則，細節見 [`docs/architecture/parser.md`](docs/architecture/parser.md)。做法只能靠違反其中一條才行得通時，停下來回報，不要繞過：
+- Parser 的兩條硬原則，細節見 [`docs/architecture/parser.md`](docs/architecture/parser.md)。是否對原則開例外由人決定：
   - 一期一期往下看，不偷看：處理一份申報只能用它申報日（含）之前已公開的申報。
   - 數字只來自公司 parser 指定的 XBRL fact，不解析 HTML 或其他文件的文字。
+- 做法只能靠違反上述原則才行得通時，不要繞過：先拿實際申報做實驗，再停下來回報。實驗可以違反原則，但實驗的程式與輸出不提交，也不寫入 `data/revenue/`。回報附上：
+  - 試過的做法，以及各做法在所有期別的結果和與對照資料的差異。
+  - 各做法違反哪條原則、影響哪些期別。
+  - 建議採用的做法與理由。
 - 新增 ticker 或受交辦其中任何一步（下載、擷取對照資料、評估 ticker、觀點建議、寫 parser、review、判斷上線、新一期財報）時，照 [`docs/guides/dev-workflow.md`](docs/guides/dev-workflow.md) 的對應步驟做，做到要人做的地方停下來回報；寫 parser 照 [`docs/guides/parser-dev-guide.md`](docs/guides/parser-dev-guide.md)。
 - 每家公司的 parser 各自獨立：開發一家公司只改該公司的目錄，需要時新增 utility；既有 utility 與框架不改，非改不可時停下來回報。分工見 `docs/architecture/parser.md` 的「架構」。
 - 上線狀態以 `data/universe/tickers.csv` 的 `status` 與 `data/revenue/` 的正式輸出為準。
