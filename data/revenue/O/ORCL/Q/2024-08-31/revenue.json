@@ -1,0 +1,231 @@
+{
+  "categories": {
+    "Cloud and license": {
+      "expression": [
+        {
+          "operand": "op1",
+          "weight": 1
+        }
+      ],
+      "value": 11389000000
+    },
+    "Hardware": {
+      "expression": [
+        {
+          "operand": "op3",
+          "weight": 1
+        }
+      ],
+      "value": 655000000
+    },
+    "Services": {
+      "expression": [
+        {
+          "operand": "op2",
+          "weight": 1
+        }
+      ],
+      "value": 1263000000
+    }
+  },
+  "checks": {
+    "structural": [
+      {
+        "check": "定義唯一",
+        "result": "pass"
+      },
+      {
+        "check": "fact 存在且唯一",
+        "result": "pass"
+      },
+      {
+        "check": "單位與精度",
+        "result": "pass"
+      },
+      {
+        "check": "加總",
+        "result": "pass"
+      },
+      {
+        "check": "證據完整",
+        "result": "pass"
+      }
+    ],
+    "sum": {
+      "categories": 13307000000,
+      "difference": 0,
+      "tolerance": "2000000",
+      "total": 13307000000
+    }
+  },
+  "filings": {
+    "primary": {
+      "accession": "0000950170-24-104905",
+      "filing_date": "2024-09-10",
+      "form": "10-Q",
+      "report_date": "2024-08-31"
+    }
+  },
+  "fiscal_quarter": 1,
+  "fiscal_year": 2025,
+  "operands": {
+    "op1": {
+      "accession": "0000950170-24-104905",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "C_1db4b846-6d84-48ee-a4e3-71fca0355ff6",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "orcl:CloudAndLicenseBusinessMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1341439/000095017024104905/orcl-20240831.htm",
+        "name": "orcl-20240831.htm",
+        "sha256": "94aa78558e4b7889699df7b4f8d9e5ffb7c5023c176bf9af91dea303e4b81e23",
+        "url": "https://www.sec.gov/Archives/edgar/data/1341439/000095017024104905/orcl-20240831.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "7589a21dc4b8d983a3ffe8b247f973daa5f04a8c8685a3a588825fdcf64754dd",
+        "png_scale": 1,
+        "png_sha256": "11da15c290161a466fa0aca0c32575b465c8adac2f2f417543ea81d38671c11b",
+        "table": "0000950170-24-104905-94aa78558e4b-t15"
+      },
+      "fact_id": "F_988df8ee-19d5-4c08-a560-cbf156921605",
+      "filing_date": "2024-09-10",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-08-31",
+        "start": "2024-06-01"
+      },
+      "raw": "11,389",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 11389000000
+    },
+    "op2": {
+      "accession": "0000950170-24-104905",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "C_89cdc211-e15e-4474-821d-efba8c7322c8",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "orcl:ServicesBusinessMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1341439/000095017024104905/orcl-20240831.htm",
+        "name": "orcl-20240831.htm",
+        "sha256": "94aa78558e4b7889699df7b4f8d9e5ffb7c5023c176bf9af91dea303e4b81e23",
+        "url": "https://www.sec.gov/Archives/edgar/data/1341439/000095017024104905/orcl-20240831.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "7589a21dc4b8d983a3ffe8b247f973daa5f04a8c8685a3a588825fdcf64754dd",
+        "png_scale": 1,
+        "png_sha256": "11da15c290161a466fa0aca0c32575b465c8adac2f2f417543ea81d38671c11b",
+        "table": "0000950170-24-104905-94aa78558e4b-t15"
+      },
+      "fact_id": "F_e5c5b297-8082-4f1b-a4b9-477c6b07a7e3",
+      "filing_date": "2024-09-10",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-08-31",
+        "start": "2024-06-01"
+      },
+      "raw": "1,263",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 1263000000
+    },
+    "op3": {
+      "accession": "0000950170-24-104905",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "C_0f0f8ec0-9038-404f-831d-398dab705b9d",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "orcl:HardwareBusinessMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1341439/000095017024104905/orcl-20240831.htm",
+        "name": "orcl-20240831.htm",
+        "sha256": "94aa78558e4b7889699df7b4f8d9e5ffb7c5023c176bf9af91dea303e4b81e23",
+        "url": "https://www.sec.gov/Archives/edgar/data/1341439/000095017024104905/orcl-20240831.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "7589a21dc4b8d983a3ffe8b247f973daa5f04a8c8685a3a588825fdcf64754dd",
+        "png_scale": 1,
+        "png_sha256": "11da15c290161a466fa0aca0c32575b465c8adac2f2f417543ea81d38671c11b",
+        "table": "0000950170-24-104905-94aa78558e4b-t15"
+      },
+      "fact_id": "F_3a2936c7-db27-4677-b02e-13c6947d380b",
+      "filing_date": "2024-09-10",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-08-31",
+        "start": "2024-06-01"
+      },
+      "raw": "655",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 655000000
+    },
+    "op4": {
+      "accession": "0000950170-24-104905",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "C_9acd4737-5fa8-4cd0-a7b2-f306f25f859d",
+      "decimals": "-6",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1341439/000095017024104905/orcl-20240831.htm",
+        "name": "orcl-20240831.htm",
+        "sha256": "94aa78558e4b7889699df7b4f8d9e5ffb7c5023c176bf9af91dea303e4b81e23",
+        "url": "https://www.sec.gov/Archives/edgar/data/1341439/000095017024104905/orcl-20240831.htm"
+      },
+      "duplicates": [
+        "F_6eda3f86-812e-4691-ba6c-d877c6f1fdc0"
+      ],
+      "evidence": {
+        "html_sha256": "06375396fa039fd4aec743186abb2eaa6753c646ec16fadb98a5719f7fe71088",
+        "png_scale": 1,
+        "png_sha256": "cb317a58021b9d8782e46d2d88da34a0b114ec4825aa89648f50e23fd936ac2e",
+        "table": "0000950170-24-104905-94aa78558e4b-t5"
+      },
+      "fact_id": "F_8098ba38-aec0-4b8d-995b-b943c1b6308f",
+      "filing_date": "2024-09-10",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-08-31",
+        "start": "2024-06-01"
+      },
+      "raw": "13,307",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 13307000000
+    }
+  },
+  "period_end": "2024-08-31",
+  "schema_version": 1,
+  "series": "Q",
+  "ticker": "ORCL",
+  "total": {
+    "expression": [
+      {
+        "operand": "op4",
+        "weight": 1
+      }
+    ],
+    "value": 13307000000
+  },
+  "unit": "USD",
+  "view": "business_segment"
+}

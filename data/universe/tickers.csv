@@ -2,7 +2,7 @@ ticker,cik,name,status,adopted_source,stability_score,stability_note,notes
 AAPL,320193,Apple Inc.,ok,stockanalysis,5,產品別五類的 tag 與 dimensions 在 FY2024–FY2026 共 12 季不變；SA、富途、TradingView 三來源一致,
 MSFT,789019,Microsoft Corporation,ok,stockanalysis,3,業務分部三類共 11 季，自 2026-07-01（FY2027）起改為 Agents and Infra、Devices and Consumer 兩類（分類照各期申報）；FY2025 同名分部範圍改變、年報重列 FY2024，FY2025 Q4 留空；SA 一致，2026-03-31 More Personal Computing 為 SA 錯值,
 NVDA,1045810,NVIDIA Corporation,ok,stockanalysis,4,分部 Compute & Networking、Graphics 共 12 季；FY2025 10-K 分部成員改名一次（Q4 跨定義已以較晚申報核對一致）；SA、富途、TradingView 三來源一致,
-ORCL,1341439,Oracle Corporation,wip,,,,
+ORCL,1341439,Oracle Corporation,ok,futu,4,業務分部 3 類（Cloud and license／Cloud and software、Services、Hardware）共 11 季與 3 個財年，沒有調節項；2025-06-01 起 Cloud and license 改名為 Cloud and software，名稱跟各期申報，重疊期別相等；FISCAL_YEAR 宣告 prior_annual：2026-08-31 的 10-Q 宣告財年 2026，推算為 2027；富途 11 季、TradingView 3 個財年一致,
 GOOGL,1652044,Alphabet Inc.,ok,stockanalysis,4,"營收類型 7 類（Google Search & other、Google Cloud、Google subscriptions, platforms, and devices、YouTube ads、Google Network、Other Bets、Hedging gains (losses)）共 11 季與 2 個財年；2025-06-30 起 Hedging 與總營收換 concept（GainLossOnOilAndGasHedgingActivity → RevenueNotFromContractWithCustomer、contract 營收 → Revenues），以 one_of 涵蓋，重疊期別相等；Stock Analysis 兩筆 Hedging 差異（2024-06-30 來源錯誤、2025-12-31 捨入 1M）已說明，富途一致",
 META,1326801,"Meta Platforms, Inc.",ok,futu,5,分部 Family of Apps、Reality Labs 共 12 季單一定義；富途、TradingView 一致,
 DIS,1744489,The Walt Disney Company,ok,stockanalysis,4,業務分部營收總額 Entertainment、Experiences、Sports 共 10 季，Eliminations 為調節項，範圍內單一定義；FY2023 Q4 起由兩分部改為三分部（範圍前）；52／53 週制（FY2026 為 53 週）；SA、富途一致，TradingView 為第三方營收口徑,
