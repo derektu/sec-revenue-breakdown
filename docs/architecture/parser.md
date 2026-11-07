@@ -118,7 +118,7 @@ data/snapshots/<首字母>/<TICKER>/
 ```python
 TICKER = "AAPL"
 VIEW = "product"                      # product 或 business_segment
-TOTAL = "Total net sales"             # 總營收的名稱
+TOTAL = "Total net sales"             # 組成中稱呼總營收的名稱
 
 def compose(filing, request):
     """filing：一份申報的 fact 清單（FilingFacts）；request：要組的期間（Request）。
@@ -138,6 +138,7 @@ def categories(day):
 | `Composition` | `categories`、`reconciling`（名稱 → 各項，依輸出順序，必須與 `categories(期末日)` 相同）、`total`（各項，組不出時為 None）、`missing`（申報中找不到的項目 → 原因）、`unparseable`（申報中有、但無法確定是哪些 fact 的項目 → 原因，例如前綴宣告衝突） |
 | `ParserFailure` | 組不出這份申報時丟出，帶檢核名稱與原因 |
 
+- **`TOTAL`**：總營收在 `missing`、`unparseable` 中的鍵，也是失敗訊息中稱呼總營收的名稱；取申報總額列的名稱即可，不能與分類重名。總營收沒有輸出名稱：`revenue.json` 的 `total` 只有運算式與數值，viewer 與差異標記一律稱「總營收」，所以申報改了總額列的名稱也不用跟著切換；「不用後來的名稱輸出早期的分類」管的是分類與調節項。
 - **`compose` 的回傳**：分類、調節項與總營收各一個運算式，每一項指定 fact 與權重，數值由框架依 fact 計算。權重只能是 1 或 -1，依公司 parser 列出的順序輸出。分類加總與總營收之間的合法差額（例如公司間抵銷、未分配項目）列為調節項：參與加總檢核，不輸出成分類；組成有調節項的期別，`revenue.json` 有 `reconciling` 欄位。
 - **框架核對交回的 fact**：交給公司 parser 的 fact 清單是唯讀副本；交回的每個 fact 必須在這份申報的 fact 清單中、期間與 `request` 相符；框架另外補上同 concept、同 dimensions、同期間的重複 fact，檢查數值一致後依重複值的規則選定運算元。
 - **沒有這個分類**：這份申報沒有某個分類時，回傳中不列出它，原因記在 `missing`。比較欄比對時記為 `not_found`。總營收一定要有。
