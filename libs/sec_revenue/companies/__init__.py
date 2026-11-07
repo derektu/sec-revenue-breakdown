@@ -25,12 +25,20 @@ def directories() -> list[Path]:
 
 
 def tickers() -> list[str]:
-    """有公司 parser 的 ticker，以各自宣告的 ticker 為準。"""
-    return sorted(load(directory).ticker for directory in directories())
+    """有公司 parser 的 ticker，以各自宣告的 ticker 為準。
+
+    只讀每個 `parser.py` 的 `TICKER`，不檢核 `VIEW` 與自訂點：一家公司宣告錯誤時，列出 ticker 與處理其他公司都不受
+    影響，錯誤在處理那家公司時（`parser_source`）才報出。
+    """
+    return sorted(module(directory).TICKER for directory in directories())
+
+
+def module(directory: Path):
+    return importlib.import_module(f"{__name__}.{directory.parent.name}.{directory.name}.parser")
 
 
 def load(directory: Path) -> ParserSource:
-    return ParserSource(importlib.import_module(f"{__name__}.{directory.parent.name}.{directory.name}.parser"))
+    return ParserSource(module(directory))
 
 
 def parser_source(ticker: str) -> ParserSource:

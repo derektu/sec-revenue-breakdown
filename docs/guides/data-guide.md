@@ -175,8 +175,8 @@ data/revenue/<首字母>/<TICKER>/
 
 | 欄位 | 內容 |
 |---|---|
-| `series`、`period_end`、`fiscal_year`、`fiscal_quarter` | 序列（`Q`／`FY`）、期末日、財年與季別（FY 沒有季別）。季別與 10-K 的財年取申報宣告的值；10-Q 的財年是前一份 10-K 的財年加 1 |
-| `fiscal_year_basis` | 10-Q 宣告的財年與推算值不同時才有：宣告值（`declared`）、採用的推算值（`derived`）與推算依據的 10-K（`prior_annual`）。例如 ORCL 2026-08-31 的 10-Q 宣告 2026，採用 2027 |
+| `series`、`period_end`、`fiscal_year`、`fiscal_quarter` | 序列（`Q`／`FY`）、期末日、財年與季別（FY 沒有季別）。財年與季別取申報宣告的值；在 10-Q 宣告錯財年的公司（例如 ORCL），10-Q 的財年是前一份 10-K 的財年加 1 |
+| `fiscal_year_basis` | 10-Q 的財年以前一份 10-K 推算、且與宣告值不同時才有：宣告值（`declared`）、採用的推算值（`derived`）與推算依據的 10-K（`prior_annual`）。例如 ORCL 2026-08-31 的 10-Q 宣告 2026，採用 2027 |
 | `view` | 觀點：`product`（產品別）或 `business_segment`（業務分部） |
 | `categories` | 各分類的值（`value`）與運算式（`expression`：運算元編號與正負號） |
 | `reconciling` | 調節項，格式同分類；公司沒有調節項時沒有這個欄位 |
@@ -270,9 +270,9 @@ data/revenue/<首字母>/<TICKER>/
 | 公司 | 狀態 |
 |---|---|
 | GOOGL | 卡住（#73）：2025 年 Q1 以前，分部表有一列避險損益沒有 XBRL 標記，分部加總對不上總營收 |
-| COST | 尚未寫 parser：季度是 12／12／12／16 週，在系統認得的期間長度內（#75） |
+| COST | 尚未寫 parser：季度是 12／12／12／16 週，不在系統預設的期間長度內，由 COST 的 parser 自訂期間長度（#173） |
 | PGR | 卡住（#76）：10-K 的財報在附件（EX-13）裡，系統只讀主文件 |
-| ORCL | 尚未寫 parser：2026-08-31 的 10-Q 宣告的財年錯了一年，系統以前一份 10-K 推算的財年為準（#75） |
+| ORCL | 尚未寫 parser：2026-08-31 的 10-Q 宣告的財年錯了一年，由 ORCL 的 parser 選用以前一份 10-K 推算財年（#173） |
 
 目前的 30 家是研究範例，用來把系統做完整。之後會改以台灣關注度高、營收偏產品組成的公司為主。
 

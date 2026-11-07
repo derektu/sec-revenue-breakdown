@@ -75,8 +75,7 @@ class RoundTripTest(SnapshotFixture):
         self.assertIn("dei:DocumentFiscalPeriodFocus", payload["dei"])
         # 公司 parser 沒用到的 concept 也在快照內，改公司 parser 不需要重產快照。
         filings = snapshot.SnapshotFilingSet(self.snapshots, "TEST")
-        filing = next(f for f in filings.filings if f.accession == "0000000001-25-000001")
-        self.assertIn("us-gaap:CostOfRevenue", [f.concept for f in filings.document(filing).facts])
+        self.assertIn("us-gaap:CostOfRevenue", [f.concept for f in filings.document(filings.filings[0]).facts])
 
     def test_json_lines_layout(self):
         self.standard_year()
@@ -213,7 +212,7 @@ class ConsistencyTest(SnapshotFixture):
         self.publish()
         filings = snapshot.SnapshotFilingSet(self.snapshots, "TEST")
         with patch("sec_revenue.revenue.xbrl.ix_number", return_value=(7, None)):
-            facts = filings.document(next(f for f in filings.filings if f.form == "10-Q")).facts
+            facts = filings.document(filings.filings[0]).facts
         self.assertTrue(facts)
         self.assertEqual({f.value for f in facts}, {7})
 
@@ -308,7 +307,7 @@ class ManifestTest(SnapshotFixture):
             [f.accession for f in FilingSet(self.data, "TEST").filings],
         )
         first = manifest["filings"][0]
-        package = JsonCodec.read(self.data / "pipeline" / "TEST" / "packages.json")["packages"][first["filing"]["accessionNumber"]]
+        package = self.packages[first["filing"]["accessionNumber"]]
         self.assertEqual({n: d["sha256"] for n, d in first["documents"].items()}, {n: d["sha256"] for n, d in package["documents"].items()})
 
     def test_check_detects_changed_snapshot_and_stale_files(self):

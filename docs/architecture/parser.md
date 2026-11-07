@@ -26,7 +26,7 @@ parser 的範圍：
 | 框架 | 所有 ticker 共用的處理流程：提供資料、檢核、寫入。不負責找數字 |
 | utility | 公司 parser 可以呼叫的小工具函式，例如依 concept 與 dimensions 查 fact |
 | 公司 parser | 一家公司自己的程式碼：決定這家公司的每個分類用哪些 fact |
-| fact 清單 | 一份申報主文件的全部數值 fact，加上 namespaces 與 dei；公司 parser 唯一的數字來源 |
+| fact 清單 | 一份申報的全部數值 fact（預設只取主文件的 inline XBRL，見「預設與自訂」），加上 namespaces 與 dei；公司 parser 唯一的數字來源 |
 
 ## 架構
 
@@ -34,19 +34,44 @@ parser 分三層。每個 ticker 的 parser 各自獨立，新增或修改一個
 
 | 層 | 負責 | 誰可以改 |
 |---|---|---|
-| 框架 | 提供資料（每次交出一份申報的 fact 清單）、檢核（加總、單位、精度、證據）、寫入（`revenue.json`、`status.json`、證據、已上線保護） | 改框架等於改所有 ticker 的處理規則，由人決定 |
+| 框架 | 提供資料（每次交出一份申報的 fact 清單）、檢核（加總、單位、精度、證據）、寫入（`revenue.json`、`status.json`、證據、已上線保護）；對申報方式的預設 | 改框架等於改所有 ticker 的處理規則，由人決定 |
 | utility | 查 fact、判斷期間長度、加總等小工具；不含任何一個 ticker 的知識 | 誰都可以新增；既有的 utility 只增不改 |
-| 公司 parser | 這家公司的分類、tag、成員、寫法切換、加總方式 | 寫這家公司的人 |
+| 公司 parser | 這家公司的分類、tag、成員、寫法切換、加總方式；不符合框架預設時的自訂 | 寫這家公司的人 |
 
 ### 框架
 
-框架只做三件事，與任何一個 ticker 的揭露方式無關：
+框架做三件事，不含任何一個 ticker 的知識；對公司申報方式的假設是預設，公司不符合時由公司 parser 自訂（見「預設與自訂」）：
 
 1. **提供資料**：框架每次只把一份申報的 fact 清單交給公司 parser，請它組出一段期間的運算式。公司 parser 拿不到 HTML 原文，也拿不到其他申報。交給它哪一份申報由框架依時點選定（見框架流程的選申報），所以每個運算元都出自框架選定的一份申報：不會用到之後申報的數字，也不會用到 XBRL fact 以外的數字。寫 parser 的人在動手前看過的申報與對照資料，資料限制擋不住，由「時點與寫 parser 的人的知識」的規則與 review 處理。
 2. **檢核**：公司 parser 交回的是「每個分類用了哪幾個 fact、權重多少」，不交數字。框架核對這些 fact 都在該申報的 fact 清單中，依 fact 自己算出數值，再做結構檢核。公司 parser 沒辦法交出 fact 清單以外的數字。
 3. **寫入**：證據、正式輸出、`status.json`、已上線保護與差異標記。HTML 原文只有框架讀，用來找出 fact 所在的表格、截圖存證。
 
-新增一個 ticker 永遠不需要改框架。開發一個 ticker 時覺得非改框架不可，代表要改的是所有 ticker 共用的規則：停下來回報，由人決定。
+### 預設與自訂
+
+框架對公司怎麼申報有幾個預設，依框架流程的順序：
+
+- fact 清單只取主文件的 inline XBRL（框架流程第 2 步）。
+- 財年與季別的決定方式（框架流程第 3 步）。
+- 期間分類的天數範圍（框架流程第 4 步）。
+
+預設由人決定，適用大多數公司。公司不符合某個預設時，由這家公司的 parser 自訂，框架對自訂的結果做合理性檢核（以期間範圍為例：各範圍互不重疊、落在合理界限內）。自訂只影響宣告它的公司，其他 ticker 的輸出不變；自訂不合理時也只有這家公司不處理，同一次執行的其他 ticker 照常處理。這樣一家公司的特殊申報方式留在它自己的目錄裡，預設維持適用大多數公司，不隨個別公司調整。
+
+自訂在硬原則之內：公司 parser 透過自訂拿不到其他申報、申報日之後的資料，也拿不到 XBRL fact 以外的數字。一期一期往下看、數字只來自 XBRL fact、結構檢核、證據與寫入，都不能自訂。
+
+開發一個 ticker 遇到不符合的預設時：
+
+- 框架已有對應的自訂點：在公司 parser 自訂，不改框架。
+- 框架還沒有對應的自訂點：這是框架改動，停下來回報，由人決定。框架改動的做法是新增自訂點、預設值不變；開發個別 ticker 時不以放寬預設來容納它，因為放寬預設等於改所有 ticker 的處理規則。
+- 只能違反硬原則才做得出來：照 [`AGENTS.md`](../../AGENTS.md)，先實驗，再附上做法、結果與建議回報。
+
+框架現有的自訂點（形式、預設值與檢核見「公司 parser 的介面」的「自訂點」）：
+
+| 預設 | 自訂點 | 需要自訂的例子 |
+|---|---|---|
+| 期間分類的天數範圍 | `DURATION_DAYS` | COST 的 12／12／12／16 週季度 |
+| 財年取申報宣告的值 | `FISCAL_YEAR` | ORCL 在 10-Q 宣告錯一年的財年 |
+
+fact 清單只取主文件還沒有自訂點（見「待決定」的附件中的 fact）。
 
 ### utility
 
@@ -76,7 +101,7 @@ parser 分三層。每個 ticker 的 parser 各自獨立，新增或修改一個
 完整流程（下載、列入 `tickers.csv`、擷取對照資料、評估、觀點、寫 parser、review、上線）與每一步由 agent 或人負責，見 [開發流程](../guides/dev-workflow.md)；寫 parser 的做法見 [Parser 開發指南](../guides/parser-dev-guide.md)。與本文件規則相關的幾點：
 
 - **觀點由人決定**：開發者（人或 agent）比較各對照來源的分類、對照 SEC 原文能重現哪些分類，提出建議與理由；人決定後才開始寫 parser。
-- **只寫這個 ticker 的目錄**：需要的 utility 不存在時新增一個，不改既有的 utility 與框架。
+- **只寫這個 ticker 的目錄**：需要的 utility 不存在時新增一個，不改既有的 utility 與框架。不符合框架預設時，照「預設與自訂」處理。
 - **與對照資料逐期比對**（#46），差異逐筆說明。
 - **獨立 review**：除了程式與 `parser.md`，必看「時點與寫 parser 的人的知識」的三條規則與 utility 只增不改；通過後由人核准，`tickers.csv` 標為 `ok`。
 
@@ -119,6 +144,9 @@ data/snapshots/<首字母>/<TICKER>/
 TICKER = "AAPL"
 VIEW = "product"                      # product 或 business_segment
 TOTAL = "Total net sales"             # 組成中稱呼總營收的名稱
+# 選用的自訂點（見下方「自訂點」），沒有定義時用框架的預設，例如：
+# DURATION_DAYS = {"quarter": (84, 119), "six_months": (168, 189), "nine_months": (252, 280), "annual": (357, 378)}
+# FISCAL_YEAR = "prior_annual"
 
 def compose(filing, request):
     """filing：一份申報的 fact 清單（FilingFacts）；request：要組的期間（Request）。
@@ -133,7 +161,7 @@ def categories(day):
 | 型別 | 內容 |
 |---|---|
 | `FilingFacts` | 申報的 `accession`、`form`、`report_date`，與主文件的 `facts`、`namespaces`、`dei`；沒有 HTML 原文與表格 |
-| `Request` | `end`（期末日）、`duration`（`quarter`、`nine_months`、`annual`）與選用的 `start`；`matches(fact)` 判斷 fact 的期間是否相符 |
+| `Request` | `end`（期末日）、`duration`（`quarter`、`nine_months`、`annual`）、選用的 `start`，與 `durations`（天數範圍，預設值是框架的預設範圍；框架建立 Request 時帶入這家公司的範圍，交給公司 parser 前核對它等於這家公司的範圍，不同時報錯）；`matches(fact)` 判斷 fact 的期間是否相符，期間長度依 `durations` 分類 |
 | `Term` | 運算式的一項：`facts`（這個數字在申報中的 fact，多種寫法時每種寫法各有）、`weight`（1 或 -1）、`label`（錯誤訊息用的描述） |
 | `Composition` | `categories`、`reconciling`（名稱 → 各項，依輸出順序，必須與 `categories(期末日)` 相同）、`total`（各項，組不出時為 None）、`missing`（申報中找不到的項目 → 原因）、`unparseable`（申報中有、但無法確定是哪些 fact 的項目 → 原因，例如前綴宣告衝突） |
 | `ParserFailure` | 組不出這份申報時丟出，帶檢核名稱與原因 |
@@ -146,6 +174,16 @@ def categories(day):
 - **utility**：`parser_utils` 的 `find`（一種寫法的 fact）、`one_of`（多種寫法）與 `put`（放進組成，找不到時記在 `missing`）涵蓋依 concept 與 dimensions 精確查找的寫法；比對以 namespace URI 進行，前綴沒有宣告的寫法視為不存在。
 - **依申報期末日切換寫法**：`FilingFacts.report_date` 是申報的期末日。依日期切換時，`parser.md` 寫明是哪一份申報開始改變（見「時點與寫 parser 的人的知識」）。
 - **`categories`**：框架用來判斷 Q4 推算條件（年度期末的分類集合是否等於財年起日到 Q3 期末之間每一天的分類集合），不需要 Q1、Q2 的申報。框架向主申報要運算式時（Q1–Q3 的單季、FY 與 Q4 的年度、Q4 的九個月累計），核對回傳的分類與 `categories(該運算式的期末日)` 相同，不同時該期失敗：不列出的分類也必須不在 `categories` 中。比較欄比對與 Q4 口徑一致以較晚申報的比較欄組較早的期間，較晚的申報可能已用新的分類結構重新列示，所以這兩種呼叫不核對；Q4 口徑一致沒有已上線的上一財年 FY、改以上一份 10-K 組年度值時，那份 10-K 是那一期的主申報，照常核對 `categories(上一財年期末日)`。核對只發生在各期的期末日，期間中間的日子與範圍內沒有申報的 Q1、Q2，`categories` 的回答沒有被核對到，由 review 檢查。新申報出現 parser 不認得的分類時，parser 不會列出它，通常是加總對不上而失敗，由人更新那個 ticker 的 parser。`categories` 本身依日期回答，每個分類集合改變的日期同樣要在 `parser.md` 寫明是哪一份申報開始改變（見「時點與寫 parser 的人的知識」）。
+- **自訂點**：`parser.py` 可以另外定義下列模組常數，自訂框架的預設（見「預設與自訂」）。沒有定義時用預設；定義了由框架在處理這家公司時做合理性檢核（`VIEW` 也在這時檢核；列出 ticker 只讀 `TICKER`）。不合理時這家公司不處理，`parse`、`snapshot` 的輸出把它記為這個 ticker 的錯誤並說明是哪一項；同一次執行的其他 ticker 照常處理，指令以結束碼 2 結束。自訂的值在 `parser.py` 裡、隨 Git 版本控制，`parser.md` 寫明為什麼需要自訂。
+
+  | 名稱 | 型別 | 預設 | 框架的檢核 |
+  |---|---|---|---|
+  | `DURATION_DAYS` | `dict[str, tuple[int, int]]`：`quarter`、`six_months`、`nine_months`、`annual` → （最短天數, 最長天數），含首尾日 | 框架流程第 4 步的預設範圍 | 四種期間都有、沒有其他鍵；每個範圍是兩個整數、最短不大於最長、落在合理界限內；範圍互不重疊 |
+  | `FISCAL_YEAR` | `str`：`declared` 或 `prior_annual` | `declared` | 只能是這兩個值 |
+
+  - `DURATION_DAYS` 的合理界限（天數）：單季 77–126（11–18 週）、六個月 161–196（23–28 週）、九個月 245–287（35–41 週）、年度 350–385（50–55 週）。每種期間的界限是已知申報方式的最寬範圍前後各加一週：單季最短是 COST 的 12 週、最長是 COST 53 週年度的 17 週 Q4；六個月 24–27 週、九個月 36–40 週、年度 51–54 週同理。四個界限互不重疊，界限內的範圍不會把一種期間認成另一種。
+  - `FISCAL_YEAR = "prior_annual"`：10-Q 的財年由框架以前一份 10-K 推算（框架流程第 3 步）。推算要用到另一份申報，公司 parser 拿不到其他申報，所以只能宣告選用這個方式，推算由框架做。
+  - 期間範圍的自訂只改變期間分類，不改變輸出格式：`revenue.json` 的每個運算元都記錄期間起訖，期間長度可以由輸出本身核對。財年的自訂在推算值與宣告不同時記錄 `fiscal_year_basis`（框架流程第 3 步）。
 - **公司 parser 自己處理的事**，寫在自己的程式碼並記錄在 `parser.md`：
   - 用哪個 concept、哪些 dimensions。
   - 同一個數字在不同申報用不同的 concept 或成員名稱，例如 AMZN 10-K 用 `us-gaap:AdvertisingMember`、10-Q 用 `amzn:AdvertisingServicesMember`；或在財年中途改名，例如 NVDA 的分部成員。
@@ -166,13 +204,13 @@ def categories(day):
 2. **讀 facts**：解析主申報的 inline XBRL，建立 fact 清單：concept、dimensions、期間、單位、decimals、sign、scale、format 與所在表格。數值依 format（`num-dot-decimal`、`fixed-zero`、`zerodash`）、scale 與 sign 算成整數美元；正負號只由 `sign` 屬性決定，顯示文字帶負號或括號、或數值不是有限數時，這個 fact 視為無法解析。證據核對使用同一套規則（`evidence.ix_number`）。
    - 公司 parser 交回的是 fact 清單中的 fact，框架核對它屬於這份申報，不以 QName 比對 fact。
 3. **財年與季別**：主申報必須宣告 `DocumentFiscalYearFocus` 與 `DocumentFiscalPeriodFocus`（Q1、Q2、Q3、FY）；Q1–Q3 必須是 10-Q，FY 必須是 10-K。季別取申報宣告的期別。
-   - 10-K 的財年取申報宣告的值。
-   - 10-Q 的財年 ＝ 前一份 10-K 宣告的財年 ＋ 1。公司會在 10-Q 宣告錯的財年：ORCL 2026-05-31 的 10-K 宣告 FY2026，下一季 2026-08-31 的 10-Q 也宣告 2026，實際是 2027。這條規則不看期末日的年份，所以財年以起始年命名的公司同樣成立（HD 的 FY2025 結束於 2026-02-01）。
-   - 前一份 10-K：申報日不晚於這份 10-Q、期末日早於它的原申報中，期末日最晚的 10-K。只用申報日較早的申報，符合 point in time。它的期末日隔天到 10-Q 期末必須是單季、六個月或九個月（見期間分類），確認它是上一財年的年報；找不到，或兩者不相接（例如中間的 10-K 沒有下載）時，該期以「財年與季別」失敗，不退回申報宣告的值。下載上一財年的 10-K 後重跑。
-   - 推算值與申報宣告不同時以推算值為準，`revenue.json` 與 `status.json` 的該期紀錄附 `fiscal_year_basis`：`declared`（宣告值）、`derived`（推算值）、`prior_annual`（前一份 10-K 的 `accession`、`period_end`、`fiscal_year`）。相同時沒有這個欄位。
-   - Q4 的九個月累計取自 Q3 10-Q，它的財年同樣依此推算。
-4. **期間分類**：依 context 天數（含首尾）判斷，範圍以整週計：單季 84–119 天（12–17 週）、六個月 168–189 天（24–27 週）、九個月 252–280 天（36–40 週）、年度 357–378 天（51–54 週）。單季的範圍涵蓋 13 週季度、52／53 週制 53 週年度的 14 週 Q4，以及 COST 的 12／12／12／16 週季度（單季 84 天、九個月 252 天、Q4 112 天；53 週年度的 Q4 為 17 週、119 天）。
-   - 範圍寬，一份 10-Q 可能有兩個期末相同、長度都在 12–17 週的欄位。這時同一個運算元有多個起日，以「fact 存在且唯一」失敗，不從中挑一個。
+   - 預設：10-K 與 10-Q 的財年都取申報宣告的值。
+   - 自訂（`FISCAL_YEAR = "prior_annual"`）：10-Q 的財年 ＝ 前一份 10-K 宣告的財年 ＋ 1，10-K 的財年取宣告值。供在 10-Q 宣告錯財年的公司使用：ORCL 2026-05-31 的 10-K 宣告 FY2026，下一季 2026-08-31 的 10-Q 也宣告 2026，實際是 2027。這條規則不看期末日的年份，所以財年以起始年命名的公司同樣成立（HD 的 FY2025 結束於 2026-02-01）。
+     - 前一份 10-K：申報日不晚於這份 10-Q、期末日早於它的原申報中，期末日最晚的 10-K。只用申報日較早的申報，符合 point in time。它的期末日隔天到 10-Q 期末必須是單季、六個月或九個月（見期間分類），確認它是上一財年的年報；找不到，或兩者不相接（例如中間的 10-K 沒有下載）時，該期以「財年與季別」失敗，不退回申報宣告的值。下載上一財年的 10-K 後重跑。
+     - 推算值與申報宣告不同時以推算值為準，`revenue.json` 與 `status.json` 的該期紀錄附 `fiscal_year_basis`：`declared`（宣告值）、`derived`（推算值）、`prior_annual`（前一份 10-K 的 `accession`、`period_end`、`fiscal_year`）。相同時沒有這個欄位。
+   - Q4 的九個月累計取自 Q3 10-Q，它的財年以同一個方式決定。
+4. **期間分類**：依 context 天數（含首尾）判斷。預設範圍是一般 13 週制：單季 84–98 天（12–14 週，含 52／53 週制的 14 週季度）、六個月 175–189 天（25–27 週）、九個月 266–280 天（38–40 週）、年度 357–378 天（51–54 週）。季度長度不在預設範圍內的公司以 `DURATION_DAYS` 自訂範圍，例如 COST 的 12／12／12／16 週季度（單季 84 天、六個月 168 天、九個月 252 天、Q4 112 天；53 週年度的 Q4 為 17 週、119 天）宣告單季 84–119、六個月 168–189、九個月 252–280、年度 357–378。
+   - 一份 10-Q 可能有兩個期末相同、長度都在單季範圍內的欄位（範圍越寬越容易發生）。這時同一個運算元有多個起日，以「fact 存在且唯一」失敗，不從中挑一個。
 5. **分類集合**：公司 parser 對主申報與該期間交回的分類與調節項，必須與 `categories(期末日)` 相同。Q4 推算條件用的是 `categories`。
 6. **組合數值**：
    - Q1–Q3：公司 parser 從主申報選出期末日為該期的單季 fact。
@@ -208,7 +246,7 @@ def categories(day):
 |---|---|
 | 選申報 | 該期有 10-Q 或 10-K；Q4 的九個月只看申報日不晚於 10-K 的申報 |
 | 原文存在 | 主文件在共用資料目錄中，sha256 與申報包紀錄一致 |
-| 財年與季別 | 申報宣告財年與季別，且與表單種類相符；FY 序列的主申報是 10-K；10-Q 有申報日不晚於它、期末與它相接的上一財年 10-K，且那份 10-K 宣告財年 |
+| 財年與季別 | 申報宣告財年與季別，且與表單種類相符；FY 序列的主申報是 10-K；自訂 `FISCAL_YEAR = "prior_annual"` 時，10-Q 有申報日不晚於它、期末與它相接的上一財年 10-K，且那份 10-K 宣告財年 |
 | 定義唯一 | 公司 parser 對每個分類最多交回一個運算式，總營收剛好一個；權重都是 1 或 -1；向主申報要的運算式，交回的分類與 `categories(期末日)` 相同 |
 | fact 存在且唯一 | 每個運算元在該申報的 fact 清單中找得到、數值可解析；同一份申報中各加數的起日相同；重複出現時在各自精度內一致 |
 | 地區成員完整 | 使用地區軸的加總：申報中同 concept、同其他 dimensions、同期間的地區成員都在運算式中（只在用到地區軸時檢查） |
@@ -309,7 +347,7 @@ Q4 推算條件（依據的各期都通過，但年度與 Q1–Q3 的分類集�
 - `role`：`quarter`、`annual` 或 `nine_months`。
 - `expression` 依公司 parser 列出的加數順序列出運算元；多個加數的分類有多個運算元，Q4 依加數交錯列出年度與九個月累計。
 - 公司 parser 交回調節項時另有同格式的 `reconciling` 欄位。
-- 10-Q 的財年推算值與申報宣告不同時另有 `fiscal_year_basis`（見框架流程的「財年與季別」）。
+- 公司 parser 自訂 `FISCAL_YEAR = "prior_annual"`、10-Q 的財年推算值與申報宣告不同時另有 `fiscal_year_basis`（見框架流程的「財年與季別」）。
 - 證據圖上的編號就是運算元編號（`op3` 標成 3）；`evidence.png_scale` 是截圖倍率。
 - 以 `--republish` 覆寫過的期別有 `republished` 清單，每筆記錄原因與覆寫前的申報、分類數值與總營收。
 - 輸出不記錄程式版本。已上線保護讓內容相同的輸出不重寫，所以一份輸出最後由哪一版程式寫入，看 Git 中它最後一次改動的 commit；目前的程式是否仍算出相同的輸出，由 `--check` 確認。
@@ -364,7 +402,7 @@ Q4 推算條件（依據的各期都通過，但年度與 Q1–Q3 的分類集�
 |---|---|
 | `status` | `published`、`failed`，或 Q 序列的 `not_derived`（Q4 推算條件或 Q4 口徑一致不成立） |
 | `fiscal_year`、`fiscal_quarter`、`accession` | 上線時：主申報的財年與季別（FY 序列沒有季別，財年見框架流程的「財年與季別」）及主申報；不推算時：財年與季別 |
-| `fiscal_year_basis` | 10-Q 的財年推算值與申報宣告不同時：`declared`、`derived`、`prior_annual`，與 `revenue.json` 的同名欄位相同 |
+| `fiscal_year_basis` | 自訂 `FISCAL_YEAR = "prior_annual"`、10-Q 的財年推算值與申報宣告不同時：`declared`、`derived`、`prior_annual`，與 `revenue.json` 的同名欄位相同 |
 | `check`、`reason` | 失敗或不推算時：檢核名稱與原因 |
 | `fy_categories`、`quarter_categories` | Q4 推算條件不成立時：年度的分類，以及財年起日到 Q3 期末之間依日期分段的分類 |
 | `basis_changes` | Q4 口徑一致不成立時：每個不同的分類一筆，`category`、`period`（上一財年）、`previous_value`、`listed_value`、`previous`（`basis` 為 `published` 或 `filing`，與 `accession`）、`listed`（年報的 `accession`）、`previous_addends`（依據為 `published` 時是上一財年 FY 的運算元：`operand`、concept、dimensions、`weight`、`value`；依據為 `filing` 時是上一份 10-K 中的 fact：`fact_id`、concept、dimensions、`weight`、`value`）、`listed_addends`（年報中的 fact，格式同差異標記） |
@@ -472,7 +510,7 @@ npm run snapshot -- --all --check            # 核對已提交的快照與原文
 
 ## 待決定
 
-- **附件中的 fact**：PGR 10-K 的財報在 EX-13，主文件只有 Schedule III（#76）。fact 清單是否納入附件的 inline XBRL；納入時，申報清單的範圍跟著擴大。
+- **附件中的 fact**：PGR 10-K 的財報在 EX-13，主文件只有 Schedule III（#76）。依「預設與自訂」，讀附件是公司 parser 對「fact 清單只取主文件」的自訂；待決定的是這個自訂點的形式，以及證據怎麼找到附件中的表格。讀附件的公司，申報清單的範圍跟著擴大。
 - **沒有 XBRL 標記的數字**：GOOGL 2025-03-31 以前的「Hedging gains (losses)」列沒有 XBRL 標記（#73）。依「數字只來自 XBRL fact」，fact 清單不含這類數字，GOOGL 這些期別無法上線，除非原則另開例外。
 - **框架檔名**：預設起始日所在的 `revenue/engine.py` 等檔名，隨框架實作調整。
 - **申報清單的位置**：申報清單放在 `data/snapshots/` 下；快照不進 Git 時，清單仍要進 Git。

@@ -1,7 +1,10 @@
 import importlib.util
+import io
+import json
 import os
 from pathlib import Path
 import tempfile
+import types
 import unittest
 from unittest import mock
 
@@ -9,6 +12,7 @@ SCRIPT = Path(__file__).resolve().parents[2] / "scripts" / "sec_pipeline.py"
 spec = importlib.util.spec_from_file_location("sec_pipeline_cli", SCRIPT)
 cli = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(cli)
+from sec_revenue.revenue.source import ParserSource  # noqa: E402
 
 
 class DataRootTest(unittest.TestCase):
@@ -43,6 +47,33 @@ class ParseArgumentsTest(unittest.TestCase):
                 code, message = self.run_cli(*common, "--republish", "AAPL", "Q", "2023-07-01")
             self.assertEqual(code, 1)
             self.assertIn("不在這次處理的期別中", message)
+
+    def test_invalid_parser_stops_only_that_ticker(self):
+        # BAD 的 DURATION_DAYS 不合理：BAD 記為錯誤、AAPL 照常處理，結束碼 2。
+        bad = types.ModuleType("bad")
+        bad.TICKER, bad.VIEW, bad.TOTAL, bad.DURATION_DAYS = "BAD", "product", "Total", {"quarter": (84, 119)}
+        real = cli.companies.parser_source
+
+        def parser_source(ticker):
+            return ParserSource(bad) if ticker == "BAD" else real(ticker)
+
+        with tempfile.TemporaryDirectory() as temp:
+            data, out = Path(temp) / "data", Path(temp) / "revenue"
+            (data / "pipeline" / "AAPL").mkdir(parents=True)
+            (data / "pipeline" / "AAPL" / "packages.json").write_text('{"packages": {}}')
+            with (
+                mock.patch.object(cli.companies, "tickers", return_value=["AAPL", "BAD"]),
+                mock.patch.object(cli.companies, "parser_source", parser_source),
+                mock.patch("sys.stdout", new_callable=io.StringIO) as stdout,
+            ):
+                code, message = self.run_cli("parse", "--tickers", "BAD", "AAPL", "--data", str(data), "--out", str(out))
+            reports = {r["ticker"]: r for r in json.loads(stdout.getvalue())["companies"]}
+            self.assertEqual(code, 2)
+            self.assertTrue(reports["AAPL"]["complete"])
+            self.assertTrue((out / "A" / "AAPL" / "status.json").exists())
+            self.assertFalse(reports["BAD"]["complete"])
+            self.assertIn("BAD 的 DURATION_DAYS", reports["BAD"]["error"])
+            self.assertIn("BAD：BAD 的 DURATION_DAYS", message)
 
 
 class SnapshotArgumentsTest(unittest.TestCase):
