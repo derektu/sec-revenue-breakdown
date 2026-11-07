@@ -1,5 +1,6 @@
 """Parser 框架：以合成的 inline XBRL 申報與合成的公司 parser 測試每個流程步驟與每項檢核，不連網、不啟動 Chromium。"""
 
+import datetime as dt
 import hashlib
 import json
 from pathlib import Path
@@ -197,6 +198,7 @@ class Fixture(unittest.TestCase):
         self.data = Path(self.temp.name) / "sec-data"
         self.out = Path(self.temp.name) / "revenue"
         self.packages = {}
+        self.auto_anchor = True
         self.shots = []
 
     def tearDown(self):
@@ -223,10 +225,62 @@ class Fixture(unittest.TestCase):
                 }
             },
         }
-        JsonCodec.write(self.data / "pipeline" / ticker / "packages.json", {"packages": self.packages})
+        self.write_packages(ticker)
 
-    def standard_year(self, values=None):
-        """Q1–Q3 10-Q 與 FY 10-K；FY 年度 = Q1+Q2+Q3+Q4。"""
+    def write_packages(self, ticker="TEST"):
+        """packages.json：測試加的申報，加上依它們算出的補上 10-K（`anchors`）。"""
+        anchors = {accession: self.anchor_package(accession, report, year, ticker) for accession, (report, year) in self.anchors().items()}
+        packages = dict(self.packages) | anchors
+        JsonCodec.write(self.data / "pipeline" / ticker / "packages.json", {"packages": packages})
+
+    def anchors(self) -> dict[str, tuple[str, int]]:
+        """10-Q 推算財年要有相接的上一財年 10-K。測試加的 10-Q 期末在 3、6、9 月、而測試加的 10-K 中沒有一份與它
+        相接（期末隔天到 10-Q 期末是單季、六個月或九個月）時，補一份上一年 12-31、只有 dei 的 10-K：accession →（期末, 財年）。
+
+        補上的 10-K 每次寫 packages.json 都依當時全部測試申報重算，與加入順序無關；`auto_anchor` 為 False 時不補。
+        它在該年 3 月 1 日申報，早於合成申報的 Q1 10-Q（4 月 15 日）。沒有 fact，所以作為主申報的 FY 與 Q4 會失敗，
+        `parser()` 的 `periods()` 不列它的期別。
+        """
+        if not self.auto_anchor:
+            return {}
+        annual = [p["filing"]["reportDate"] for p in self.packages.values() if p["filing"]["form"] == "10-K"]
+        found = {}
+        for package in self.packages.values():
+            filing = package["filing"]
+            report = filing["reportDate"]
+            if filing["form"] != "10-Q" or report[5:7] not in ("03", "06", "09"):
+                continue
+            if any(classify_duration(next_day(k), report) in ("quarter", "six_months", "nine_months") for k in annual):
+                continue
+            year = int(report[:4]) - 1
+            found[f"0000000009-{year % 100:02d}-000000"] = (f"{year}-12-31", year)
+        return found
+
+    def anchor_package(self, accession, report, year, ticker):
+        """補上 10-K 的申報包，並寫入它的主文件。"""
+        html = build_html(year, "FY", [])
+        relative = f"sec/{ticker}/{report}/{accession}/{hashlib.sha256(html).hexdigest()}.html"
+        (self.data / relative).parent.mkdir(parents=True, exist_ok=True)
+        (self.data / relative).write_bytes(html)
+        name = f"test-{report}.htm"
+        return {
+            "complete": True,
+            "filing": {"accessionNumber": accession, "form": "10-K", "reportDate": report, "filingDate": f"{int(report[:4]) + 1}-03-01"},
+            "documents": {
+                name: {
+                    "name": name,
+                    "path": relative,
+                    "sha256": hashlib.sha256(html).hexdigest(),
+                    "primary": True,
+                    "inline_xbrl": True,
+                    "source_url": f"https://www.sec.gov/Archives/edgar/data/1/{accession.replace('-', '')}/{name}",
+                    "ixviewer_url": f"https://www.sec.gov/ix?doc=/Archives/edgar/data/1/{accession.replace('-', '')}/{name}",
+                }
+            },
+        }
+
+    def standard_year(self, values=None, declared=2025):
+        """Q1–Q3 10-Q 與 FY 10-K；FY 年度 = Q1+Q2+Q3+Q4。`declared` 是 10-Q 宣告的財年（10-K 宣告 2025）。"""
         values = values or {"2025-03-31": (60, 40), "2025-06-30": (70, 30), "2025-09-30": (80, 20)}
         nine = [sum(v[i] for v in values.values()) for i in (0, 1)]
         for n, (end, pair) in enumerate(values.items(), 1):
@@ -238,7 +292,7 @@ class Fixture(unittest.TestCase):
                     item("nb", REVENUE, B, "2025-01-01", end, str(nine[1]), 1),
                     item("nt", REVENUE, None, "2025-01-01", end, str(sum(nine)), 1),
                 ]
-            self.add(f"0000000001-25-00000{n}", "10-Q", end, f"2025-{int(end[5:7]) + 1:02d}-15", build_html(2025, focus, items))
+            self.add(f"0000000001-25-00000{n}", "10-Q", end, f"2025-{int(end[5:7]) + 1:02d}-15", build_html(declared, focus, items))
         annual = [nine[0] + 90, nine[1] + 10]
         self.add(
             "0000000001-26-000001",
@@ -260,13 +314,23 @@ class Fixture(unittest.TestCase):
         return PeriodComposer(source, FilingSet(self.data, "TEST"))
 
     def parser(self, source=COMPANY, **options):
-        return RevenueParser(self.data, self.out, source, screenshotter=lambda: FakeShooter(self), **options)
+        """合成的 RevenueParser。`periods()` 換成不列補上 10-K（`anchors`）期別的版本：那些期別只有一份沒有 fact 的
+        10-K，處理了只會失敗；明確傳給 `run()` 的期別照常處理。"""
+        parser = RevenueParser(self.data, self.out, source, screenshotter=lambda: FakeShooter(self), **options)
+        periods = parser.periods
+        anchored = {report for report, _ in self.anchors().values()}
+        parser.periods = lambda start=None, end=None: [p for p in periods(start, end) if p not in anchored]
+        return parser
 
     def output(self, period, series="Q"):
         return JsonCodec.read(ticker_dir(self.out, "TEST") / series / period / "revenue.json")
 
     def status(self):
         return JsonCodec.read(ticker_dir(self.out, "TEST") / "status.json")
+
+
+def next_day(day):
+    return (dt.date.fromisoformat(day) + dt.timedelta(days=1)).isoformat()
 
 
 class FakeShooter:
@@ -336,6 +400,19 @@ class FactTest(Fixture):
         self.assertEqual(classify_duration("2025-01-01", "2025-12-31"), "annual")
         self.assertIsNone(classify_duration("2025-01-01", "2025-02-28"))
         self.assertIsNone(classify_duration(None, "2025-02-28"))
+
+    def test_duration_ranges_are_whole_weeks(self):
+        # 單季 12–17 週、六個月 24–27 週、九個月 36–40 週、年度 51–54 週；範圍外的天數不分類。
+        def days(n):
+            return classify_duration("2025-01-01", (dt.date(2025, 1, 1) + dt.timedelta(days=n - 1)).isoformat())
+
+        expected = {
+            83: None, 84: "quarter", 91: "quarter", 112: "quarter", 119: "quarter", 120: None,
+            167: None, 168: "six_months", 189: "six_months", 190: None,
+            251: None, 252: "nine_months", 280: "nine_months", 281: None,
+            356: None, 357: "annual", 378: "annual", 379: None,
+        }
+        self.assertEqual({n: days(n) for n in expected}, expected)
 
     def test_quarter_uses_three_month_fact_and_ignores_cumulative(self):
         items = quarter_items("2025-06-30", (70, 30)) + [
@@ -567,9 +644,138 @@ class FourthQuarterTest(Fixture):
     def test_q4_requires_third_quarter_of_same_fiscal_year(self):
         self.standard_year()
         self.packages.pop("0000000001-25-000003")
-        JsonCodec.write(self.data / "pipeline/TEST/packages.json", {"packages": self.packages})
+        self.write_packages()
         with self.assertRaisesRegex(ParseError, r"\[Q4 期間\] 2025-12-31 前一季應剛好有一個 10-Q 期別"):
             self.composer().compose("2025-12-31")
+
+
+def span(prefix, start, end, values, table=0):
+    """一段期間的 A、B 與總營收 fact；值以百萬美元表示。"""
+    a, b = values
+    return [
+        item(f"{prefix}a", REVENUE, A, start, end, str(a), table),
+        item(f"{prefix}b", REVENUE, B, start, end, str(b), table),
+        item(f"{prefix}t", REVENUE, None, start, end, str(a + b), table),
+    ]
+
+
+class WeeklyQuarterTest(Fixture):
+    """COST 型 12／12／12／16 週季度：單季 84 天、六個月 168 天、九個月 252 天，Q4 為 16 週或 17 週（53 週年度）。"""
+
+    # （期別, 起日, 期末, 申報日, 單季 A、B）；財年自 2024-09-02 起。
+    QUARTERS = (
+        ("Q1", "2024-09-02", "2024-11-24", "2024-12-15", (60, 40)),
+        ("Q2", "2024-11-25", "2025-02-16", "2025-03-10", (70, 30)),
+        ("Q3", "2025-02-17", "2025-05-11", "2025-06-01", (80, 20)),
+    )
+
+    def year(self, end):
+        """Q1–Q3 各 12 週，Q4 到 `end`；上一財年 10-K 只有 dei。回傳 run 的報告與 status.json 的期別。"""
+        self.add("0000000001-24-000009", "10-K", "2024-09-01", "2024-10-10", build_html(2024, "FY", []))
+        for n, (focus, start, stop, filed, values) in enumerate(self.QUARTERS, 1):
+            items = span("q", start, stop, values)
+            if n > 1:
+                done = [q[4] for q in self.QUARTERS[:n]]
+                items += span("c", "2024-09-02", stop, tuple(sum(v[i] for v in done) for i in (0, 1)), 1)
+            self.add(f"0000000001-25-00000{n}", "10-Q", stop, filed, build_html(2025, focus, items))
+        self.add("0000000001-25-000009", "10-K", end, "2025-10-15", build_html(2025, "FY", span("y", "2024-09-02", end, (300, 100))))
+        parser = self.parser(default_start="2024-09-02")
+        report = parser.run(parser.periods())
+        return report, self.status()["periods"]
+
+    def check_year(self, end):
+        report, status = self.year(end)
+        self.assertTrue(report["complete"], report)
+        self.assertEqual(sorted(status["Q"]), ["2024-11-24", "2025-02-16", "2025-05-11", end])
+        q4 = self.output(end)
+        self.assertEqual((q4["fiscal_year"], q4["fiscal_quarter"]), (2025, 4))
+        self.assertEqual({n: c["value"] for n, c in q4["categories"].items()}, {"A": 90_000_000, "B": 10_000_000})
+        self.assertEqual(q4["filings"]["nine_months"]["report_date"], "2025-05-11")
+        q2 = self.output("2025-02-16")
+        self.assertEqual(({n: c["value"] for n, c in q2["categories"].items()}, q2["fiscal_quarter"]), ({"A": 70_000_000, "B": 30_000_000}, 2))
+        self.assertNotIn("fiscal_year_basis", q2)
+
+    def test_sixteen_week_fourth_quarter(self):
+        self.check_year("2025-08-31")
+
+    def test_seventeen_week_fourth_quarter(self):
+        self.check_year("2025-09-07")
+
+    def test_two_quarter_columns_with_same_end_fail(self):
+        # 一份 10-Q 有兩個期末相同、長度都在 12–17 週的欄位：起日不唯一，報錯，不從中挑一個。
+        items = span("q", "2025-01-01", "2025-03-31", (60, 40)) + span("w", "2024-12-09", "2025-03-31", (70, 50), 1)
+        self.add("0000000001-25-000001", "10-Q", "2025-03-31", "2025-04-15", build_html(2025, "Q1", items))
+        with self.assertRaisesRegex(ParseError, r"\[fact 存在且唯一\].*有多個起日：\['2024-12-09', '2025-01-01'\]"):
+            self.composer().compose("2025-03-31")
+
+
+class FiscalYearTest(Fixture):
+    """10-Q 的財年是前一份 10-K 宣告的財年 + 1；與宣告不同時以推算值為準並記錄。"""
+
+    def test_wrong_declaration_uses_derived_year_and_is_recorded(self):
+        # ORCL 型：2026-05-31 的 10-K 宣告 FY2026，下一季 10-Q 宣告 2026（實為 2027）。
+        self.add("0000000001-26-000001", "10-K", "2026-05-31", "2026-06-20", build_html(2026, "FY", []))
+        self.add("0000000001-26-000002", "10-Q", "2026-08-31", "2026-09-11", build_html(2026, "Q1", span("q", "2026-06-01", "2026-08-31", (60, 40))))
+        self.parser().run(["2026-08-31"])
+        output = self.output("2026-08-31")
+        basis = {"declared": 2026, "derived": 2027, "prior_annual": {"accession": "0000000001-26-000001", "period_end": "2026-05-31", "fiscal_year": 2026}}
+        self.assertEqual((output["fiscal_year"], output["fiscal_quarter"], output["fiscal_year_basis"]), (2027, 1, basis))
+        entry = self.status()["periods"]["Q"]["2026-08-31"]
+        self.assertEqual((entry["status"], entry["fiscal_year"], entry["fiscal_year_basis"]), ("published", 2027, basis))
+
+    def test_q4_matches_third_quarter_by_derived_year(self):
+        # 10-Q 都宣告上一年（2024）、10-K 宣告 2025：Q3 推算為 2025，與年報同財年，Q4 照常推算。
+        self.standard_year(declared=2024)
+        result = self.composer().compose("2025-12-31")
+        self.assertEqual((result.fiscal_year, result.fiscal_quarter, result.fiscal_basis), (2025, 4, None))
+        q3 = self.composer().compose("2025-09-30")
+        self.assertEqual((q3.fiscal_year, q3.fiscal_basis["declared"]), (2025, 2024))
+
+    def test_matching_declaration_records_nothing(self):
+        self.standard_year()
+        self.parser().run(["2025-03-31"])
+        output = self.output("2025-03-31")
+        self.assertEqual(output["fiscal_year"], 2025)
+        self.assertNotIn("fiscal_year_basis", output)
+        self.assertNotIn("fiscal_year_basis", self.status()["periods"]["Q"]["2025-03-31"])
+
+    def test_year_named_by_start_year(self):
+        # HD 型：財年以起始年命名，FY2024 結束於 2025-02-02；FY2025 的 Q3 結束於 2025-11-02，推算為 2025。
+        self.add("0000000001-25-000001", "10-K", "2025-02-02", "2025-03-20", build_html(2024, "FY", []))
+        items = span("q", "2025-08-04", "2025-11-02", (80, 20)) + span("n", "2025-02-03", "2025-11-02", (210, 90), 1)
+        self.add("0000000001-25-000002", "10-Q", "2025-11-02", "2025-11-25", build_html(2025, "Q3", items))
+        result = self.composer().compose("2025-11-02")
+        self.assertEqual((result.fiscal_year, result.fiscal_quarter, result.fiscal_basis), (2025, 3, None))
+
+    def test_no_prior_annual_report_fails(self):
+        self.auto_anchor = False
+        self.add("0000000001-25-000001", "10-Q", "2025-03-31", "2025-04-15", build_html(2025, "Q1", quarter_items("2025-03-31", (60, 40))))
+        with self.assertRaisesRegex(ParseError, r"\[財年與季別\].*之前沒有申報日不晚於 2025-04-15 的 10-K，推不出財年"):
+            self.composer().compose("2025-03-31")
+        # 期末較早但申報日晚於 10-Q 的 10-K 看不到。
+        self.add("0000000001-25-000002", "10-K", "2024-12-31", "2025-05-01", build_html(2024, "FY", []))
+        with self.assertRaisesRegex(ParseError, r"\[財年與季別\].*推不出財年"):
+            self.composer().compose("2025-03-31")
+
+    def test_prior_annual_report_must_be_previous_fiscal_year(self):
+        # 最近的 10-K 是兩年前（中間的 10-K 沒有下載）：+1 會錯，報錯。
+        self.auto_anchor = False
+        self.add("0000000001-24-000001", "10-K", "2023-12-31", "2024-02-10", build_html(2023, "FY", []))
+        self.add("0000000001-25-000001", "10-Q", "2025-03-31", "2025-04-15", build_html(2025, "Q1", quarter_items("2025-03-31", (60, 40))))
+        with self.assertRaisesRegex(ParseError, r"\[財年與季別\].*0000000001-24-000001（2023-12-31）.*不是上一財年的年報"):
+            self.composer().compose("2025-03-31")
+
+    def test_prior_annual_report_without_fiscal_year_fails(self):
+        self.auto_anchor = False
+        self.add("0000000001-25-000000", "10-K", "2024-12-31", "2025-02-10", build_html(None, "FY", []))
+        self.add("0000000001-25-000001", "10-Q", "2025-03-31", "2025-04-15", build_html(2025, "Q1", quarter_items("2025-03-31", (60, 40))))
+        with self.assertRaisesRegex(ParseError, r"\[財年與季別\].*0000000001-25-000000 沒有宣告 DocumentFiscalYearFocus"):
+            self.composer().compose("2025-03-31")
+
+    def test_annual_report_keeps_declared_year(self):
+        self.standard_year()
+        result = self.composer().compose_annual("2025-12-31")
+        self.assertEqual((result.fiscal_year, result.fiscal_basis), (2025, None))
 
 
 class ComparisonBoundTest(unittest.TestCase):
@@ -684,12 +890,19 @@ class Q4BasisTest(Fixture):
         self.assertNotIn("q4_basis", q4)
 
     def test_undetermined_basis_derives_q4_with_note(self):
-        # 沒有上一份 10-K：無法判斷，Q4 照常推算並註記。
+        # 上一財年的 10-K 只有 dei、沒有 fact（fixture 補上、供 10-Q 推算財年的那份）：組不出年度值，無法判斷，
+        # Q4 照常推算並註記。
         self.annual_report((110, 90))
         q4 = self.run_all()["Q"]["2025-12-31"]
         self.assertEqual(q4["status"], "published")
-        self.assertEqual(q4["q4_basis"]["result"], "undetermined")
-        self.assertIn("沒有已上線的 FY", q4["q4_basis"]["reason"])
+        self.assertEqual(
+            q4["q4_basis"],
+            {
+                "result": "undetermined",
+                "reason": "上一財年（2024-12-31 止）沒有已上線的 FY，上一份 10-K 組不出年度值：[fact 存在且唯一] 找不到 A："
+                f"{REVENUE} [{AXIS}=x:AMember] annual 期末 2024-12-31（0000000009-24-000000）",
+            },
+        )
         # 年報沒有列示上一財年：同樣無法判斷。
         self.prior_report()
         self.standard_year()
@@ -775,7 +988,9 @@ class Q4BasisTest(Fixture):
         self.assertEqual((q4["status"], [c["category"] for c in q4["basis_changes"]]), ("not_derived", ["A", "B"]))
 
     def test_prior_report_filed_after_annual_report_is_not_used(self):
-        # Point in time：上一財年的 10-K 晚於本年報才申報。它的 FY 照常上線，但本年報判斷時看不到，也不讀那份 10-K。
+        # Point in time：上一財年的 10-K 晚於本年報才申報。它的 FY 照常上線；Q1–Q3 申報時看不到它，推不出財年，
+        # Q4 跟著失敗，也不以那份 10-K 判斷口徑。
+        self.auto_anchor = False
         self.add(
             self.PRIOR_10K, "10-K", "2024-12-31", "2026-03-01",
             build_html(2024, "FY", [
@@ -787,9 +1002,27 @@ class Q4BasisTest(Fixture):
         self.annual_report((110, 90))
         status = self.run_all()
         self.assertEqual(status["FY"]["2024-12-31"]["status"], "published")
+        self.assertEqual(status["FY"]["2025-12-31"]["status"], "published")
+        for period in ("2025-03-31", "2025-06-30", "2025-09-30"):
+            self.assertEqual((status["Q"][period]["status"], status["Q"][period]["check"]), ("failed", "財年與季別"))
         q4 = status["Q"]["2025-12-31"]
-        self.assertEqual((q4["status"], q4["q4_basis"]["result"]), ("published", "undetermined"))
-        self.assertIn("已下載的申報中也沒有申報日不晚於 2026-02-15 的上一財年 10-K", q4["q4_basis"]["reason"])
+        self.assertEqual((q4["status"], q4["check"]), ("failed", "財年與季別"))
+        self.assertNotIn("q4_basis", q4)
+
+    def test_prior_year_without_visible_annual_report_is_undetermined(self):
+        # 推算財年用的 10-K 期末是 2024-12-30（到 Q1 期末 91 天，相接），上一財年期末（年度起日前一天 2024-12-31）
+        # 沒有 10-K：無法判斷，Q4 照常推算。之後補上一份 2024-12-31 的 10-K，但申報日晚於年報：point in time，
+        # 判斷時看不到也不讀它（它的數字與年報列示的不同，讀了會是 Q4 口徑一致不成立）。
+        self.auto_anchor = False
+        self.add("0000000001-25-000000", "10-K", "2024-12-30", "2025-02-10", build_html(2024, "FY", []))
+        self.annual_report((110, 90))
+        reason = "上一財年（2024-12-31 止）沒有已上線的 FY，已下載的申報中也沒有申報日不晚於 2026-02-15 的上一財年 10-K"
+        q4 = self.run_all(default_start="2025-01-01")["Q"]["2025-12-31"]
+        self.assertEqual((q4["status"], q4["q4_basis"]), ("published", {"result": "undetermined", "reason": reason}))
+        self.add("0000000001-26-000009", "10-K", "2024-12-31", "2026-03-01", build_html(2024, "FY", span("y", "2024-01-01", "2024-12-31", (100, 100))))
+        shutil.rmtree(self.out)
+        q4 = self.run_all(default_start="2025-01-01")["Q"]["2025-12-31"]
+        self.assertEqual((q4["status"], q4["q4_basis"]), ("published", {"result": "undetermined", "reason": reason}))
 
     def test_only_total_differs(self):
         self.prior_report()
@@ -1738,7 +1971,7 @@ class StrictnessTest(Fixture):
         self.standard_year()
         self.packages.pop("0000000001-25-000003")
         self.add("0000000001-25-000003", "10-Q", "2025-09-30", "2025-10-15", build_html(2025, "Q2", quarter_items("2025-09-30", (80, 20))))
-        with self.assertRaisesRegex(ParseError, r"\[Q4 期間\] 0000000001-25-000003（2025-09-30）宣告 \(2025, 'Q2'\)"):
+        with self.assertRaisesRegex(ParseError, r"\[Q4 期間\] 0000000001-25-000003（2025-09-30）的財年與期別是 \(2025, 'Q2'\)"):
             self.composer().compose("2025-12-31")
 
     def test_png_is_recaptured_when_scale_differs(self):

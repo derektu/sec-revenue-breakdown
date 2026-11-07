@@ -17,11 +17,13 @@ from .evidence import TableLocator
 from .extract import extract, parse_html
 from .ixbrl import ix_number, transform_name
 
-# 期間長度（含首尾日）分類；不在任何範圍內的期間不使用。
+# 期間長度（含首尾日）分類；不在任何範圍內的期間不使用。範圍以週計：單季 12–17 週，涵蓋 13 週季度、
+# 52／53 週制的 14 週季度，與 COST 的 12／12／12／16 週季度（53 週年度的 Q4 為 17 週）；六個月 24–27 週、
+# 九個月 36–40 週同理；年度 51–54 週。
 DURATIONS = (
-    ("quarter", 84, 98),
-    ("six_months", 175, 189),
-    ("nine_months", 266, 280),
+    ("quarter", 84, 119),
+    ("six_months", 168, 189),
+    ("nine_months", 252, 280),
     ("annual", 357, 378),
 )
 USD = "iso4217:USD"

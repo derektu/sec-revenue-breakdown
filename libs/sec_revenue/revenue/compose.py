@@ -70,6 +70,8 @@ class PeriodResult:
     lines: list[Line]
     structural: list[dict] = field(default_factory=list)
     sum_check: dict = field(default_factory=dict)
+    # 財年推算值與主申報宣告不同時的紀錄（`PeriodComposer.fiscal`）；相同時為 None。
+    fiscal_basis: dict | None = None
 
     @property
     def operands(self) -> list[Operand]:
@@ -114,10 +116,10 @@ class PeriodComposer:
 
     def compose(self, period: str) -> PeriodResult:
         """Q 序列的一期：Q1–Q3 或推算的 Q4。"""
-        primary, year, quarter = self.primary(period)
+        primary, year, quarter, basis = self.primary(period)
         if quarter != 4:
             items = self.collect(primary, Request(period, "quarter"), "quarter")
-            return self.finish("Q", period, year, quarter, primary, None, items)
+            return self.finish("Q", period, year, quarter, primary, None, items, basis)
 
         # Point in time：九個月與 Q1–Q3 都來自申報日不晚於本期主申報的申報。
         nine_filing = self.third_quarter(period, year, primary.filing_date)
@@ -140,15 +142,15 @@ class PeriodComposer:
             for found in candidates + nine[name]:
                 self.check_q4(name, annual_start, found.facts[0], period)
             items.append((group, name, interleave(candidates, nine[name])))
-        return self.finish("Q", period, year, quarter, primary, nine_filing, items)
+        return self.finish("Q", period, year, quarter, primary, nine_filing, items, basis)
 
     def compose_annual(self, period: str) -> PeriodResult:
         """FY 序列的一期：10-K 的年度 fact。"""
-        primary, year, quarter = self.primary(period)
+        primary, year, quarter, basis = self.primary(period)
         if quarter != 4:
             raise ParseError("財年與季別", f"{primary.accession} 宣告的期別是 Q{quarter}，FY 序列只取 10-K")
         items = self.collect(primary, Request(period, "annual"), "annual")
-        return self.finish("FY", period, year, None, primary, None, items)
+        return self.finish("FY", period, year, None, primary, None, items, basis)
 
     def dependencies(self, period: str, as_of: str, nine_end: str) -> str:
         """Q4 依據的 FY 與同財年 Q1–Q3（範圍內有申報者）都必須通過結構檢核；不通過時 Q4 以該期的原因失敗。回傳財年起日。"""
@@ -165,16 +167,65 @@ class PeriodComposer:
                     raise ParseError(error.check, f"Q4 依據的 Q {quarter} 不通過：{error.message}") from error
         return start
 
-    def primary(self, period: str) -> tuple[Filing, int, int]:
+    def primary(self, period: str) -> tuple[Filing, int, int, dict | None]:
+        """該期的主申報、財年、季別，與財年推算值和宣告不同時的紀錄（見 `fiscal`）。"""
         primary = self.filings.select(period)
-        year, focus = self.filings.document(primary).fiscal()
-        if year is None or focus not in QUARTER_FOCUS:
-            raise ParseError("財年與季別", f"{primary.accession} 沒有宣告 DocumentFiscalYearFocus／DocumentFiscalPeriodFocus（{year}, {focus}）")
+        year, focus, basis = self.fiscal(primary)
         quarter = QUARTER_FOCUS[focus]
         expected_form = "10-K" if quarter == 4 else "10-Q"
         if not primary.form.startswith(expected_form):
             raise ParseError("財年與季別", f"{primary.accession} 是 {primary.form}，但宣告的期別是 {focus}")
-        return primary, year, quarter
+        return primary, year, quarter, basis
+
+    def fiscal(self, filing: Filing) -> tuple[int, str, dict | None]:
+        """申報的財年與期別（Q1、Q2、Q3、FY）。
+
+        期別取申報宣告的 `DocumentFiscalPeriodFocus`。10-K 的財年取宣告的 `DocumentFiscalYearFocus`；10-Q 的財年是
+        前一份 10-K 宣告的財年 + 1，因為有公司在 10-Q 宣告錯的財年（ORCL 2026-08-31 的 10-Q 宣告 2026，實為 2027）。
+        前一份 10-K 是申報日不晚於這份 10-Q、期末日早於它的原申報中期末日最晚的 10-K；它的期末日隔天到 10-Q 期末
+        必須是單季、六個月或九個月，確認它是上一財年的年報。找不到或不相接時報錯，不退回宣告值。推算值與宣告不同時
+        回傳紀錄（宣告值、推算值、前一份 10-K），以推算值為準；相同時紀錄為 None。
+        """
+        year, focus = self.filings.document(filing).fiscal()
+        if year is None or focus not in QUARTER_FOCUS:
+            raise ParseError("財年與季別", f"{filing.accession} 沒有宣告 DocumentFiscalYearFocus／DocumentFiscalPeriodFocus（{year}, {focus}）")
+        if not filing.form.startswith("10-Q"):
+            return year, focus, None
+        annual = self.prior_annual(filing)
+        try:
+            prior_year, _ = self.filings.document(annual).fiscal()
+        except ParseError as error:
+            raise ParseError(error.check, f"{filing.accession} 推算財年所需的上一財年 10-K {annual.accession}：{error.message}") from error
+        if prior_year is None:
+            raise ParseError("財年與季別", f"{filing.accession} 的前一份 10-K {annual.accession} 沒有宣告 DocumentFiscalYearFocus，推不出財年")
+        derived = prior_year + 1
+        if derived == year:
+            return year, focus, None
+        basis = {
+            "declared": year,
+            "derived": derived,
+            "prior_annual": {"accession": annual.accession, "period_end": annual.report_date, "fiscal_year": prior_year},
+        }
+        return derived, focus, basis
+
+    def prior_annual(self, filing: Filing) -> Filing:
+        """10-Q 推算財年依據的前一份 10-K：只看申報日不晚於這份 10-Q 的申報（見 `fiscal`）。"""
+        as_of = filing.filing_date
+        earlier = [p for p in self.filings.periods(as_of) if p < filing.report_date]
+        annual = [f for p in earlier if (f := self.filings.select(p, as_of)).form == "10-K"]
+        if not annual:
+            raise ParseError(
+                "財年與季別",
+                f"{filing.accession}（{filing.report_date}）之前沒有申報日不晚於 {as_of} 的 10-K，推不出財年；請下載上一財年的 10-K",
+            )
+        found = annual[-1]
+        if classify_duration(_next_day(found.report_date), filing.report_date) not in ("quarter", "six_months", "nine_months"):
+            raise ParseError(
+                "財年與季別",
+                f"{filing.accession}（{filing.report_date}）之前最近的 10-K 是 {found.accession}（{found.report_date}），"
+                "兩者期末之間不是單季、六個月或九個月，不是上一財年的年報；請下載上一財年的 10-K",
+            )
+        return found
 
     def collect(self, filing: Filing, request: Request, role: str, sign: int = 1) -> list[tuple[str, str, list[Candidate]]]:
         """主申報中一段期間的組成，依輸出順序回傳（群組, 名稱, 各運算元的候選 fact 群），總營收在最後。
@@ -236,7 +287,7 @@ class PeriodComposer:
                 {"fy_categories": annual, "quarter_categories": segments},
             )
 
-    def finish(self, series, period, year, quarter, primary, nine_filing, items) -> PeriodResult:
+    def finish(self, series, period, year, quarter, primary, nine_filing, items, basis=None) -> PeriodResult:
         structural = [
             {"check": "定義唯一", "result": "pass"},
             {"check": "fact 存在且唯一", "result": "pass"},
@@ -248,22 +299,22 @@ class PeriodComposer:
             structural.append({"check": "Q4 期間", "result": "pass"})
         chosen = self.choose({name: candidates for _, name, candidates in items})
         lines = [Line(name, group, [Term(c.weight, op) for c, op in zip(candidates, chosen[name])]) for group, name, candidates in items]
-        result = PeriodResult(series, period, year, quarter, primary, nine_filing, lines, structural)
+        result = PeriodResult(series, period, year, quarter, primary, nine_filing, lines, structural, fiscal_basis=basis)
         result.sum_check = self.check_sum(result)
         structural.append({"check": "加總", "result": "pass"})
         return result
 
     def third_quarter(self, period: str, year: int, as_of: str) -> Filing:
-        """Q4 的九個月累計來自前一季的 10-Q：期末日在年度期末前一個單季內，且宣告同財年 Q3；只看申報日不晚於 `as_of` 的申報。"""
+        """Q4 的九個月累計來自前一季的 10-Q：期末日在年度期末前一個單季內，且是同財年的 Q3（財年依 `fiscal`）；只看申報日不晚於 `as_of` 的申報。"""
         earlier = [
             p for p in self.filings.periods(as_of) if p < period and classify_duration(_next_day(p), period) == "quarter"
         ]
         if len(earlier) != 1:
             raise ParseError("Q4 期間", f"{period} 前一季應剛好有一個 10-Q 期別（申報日 {as_of} 以前），找到 {earlier}")
         filing = self.filings.select(earlier[0], as_of)
-        found = self.filings.document(filing).fiscal()
+        found = self.fiscal(filing)[:2]
         if found != (year, "Q3"):
-            raise ParseError("Q4 期間", f"{filing.accession}（{earlier[0]}）宣告 {found}，不是財年 {year} 的 Q3")
+            raise ParseError("Q4 期間", f"{filing.accession}（{earlier[0]}）的財年與期別是 {found}，不是財年 {year} 的 Q3")
         return filing
 
     def candidates(

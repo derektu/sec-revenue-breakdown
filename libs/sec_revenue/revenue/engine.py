@@ -43,7 +43,9 @@ SERIES = ("Q", "FY")
 PERIOD_RE = re.compile(r"\d{4}-\d{2}-\d{2}")
 # 輸出中描述數值與其依據的欄位；這些不同代表數值或來源改變。其餘欄位（檢核紀錄、運算元的證據 hash）
 # 不同只是中繼資料。
-VALUE_FIELDS = ("series", "categories", "total", "reconciling", "operands", "filings", "fiscal_year", "fiscal_quarter", "view")
+VALUE_FIELDS = (
+    "series", "categories", "total", "reconciling", "operands", "filings", "fiscal_year", "fiscal_quarter", "fiscal_year_basis", "view",
+)
 # 差異標記：比較欄比對中這些結果寫到舊期別。
 MARKED_RESULTS = ("different", "unparseable")
 
@@ -178,12 +180,12 @@ class RevenueParser:
         return {"status": "failed", "check": check, "reason": reason, **self.kept(series, period)}
 
     def not_derived(self, period: str, error: NotDerived) -> dict:
-        """Q4 不推算的紀錄；財年與季別取自主申報的宣告（不推算時主申報已通過財年與季別檢核）。"""
-        _, year, quarter = self.composer.primary(period)
-        return {
-            "status": "not_derived",
-            "fiscal_year": year,
-            "fiscal_quarter": quarter,
+        """Q4 不推算的紀錄；財年與季別取自主申報（不推算時主申報已通過財年與季別檢核）。"""
+        _, year, quarter, basis = self.composer.primary(period)
+        entry = {"status": "not_derived", "fiscal_year": year, "fiscal_quarter": quarter}
+        if basis:
+            entry["fiscal_year_basis"] = basis
+        return entry | {
             "check": error.check,
             "reason": error.message,
             **error.details,
@@ -254,6 +256,8 @@ class RevenueParser:
         found = {"status": "published", "fiscal_year": output["fiscal_year"]}
         if "fiscal_quarter" in output:
             found["fiscal_quarter"] = output["fiscal_quarter"]
+        if "fiscal_year_basis" in output:
+            found["fiscal_year_basis"] = output["fiscal_year_basis"]
         found["accession"] = output["filings"]["primary"]["accession"]
         return found
 
@@ -283,6 +287,8 @@ class RevenueParser:
         }
         if result.fiscal_quarter is not None:
             output["fiscal_quarter"] = result.fiscal_quarter
+        if result.fiscal_basis:
+            output["fiscal_year_basis"] = result.fiscal_basis
         output |= {
             "unit": "USD",
             "filings": self.filing_records(result),
