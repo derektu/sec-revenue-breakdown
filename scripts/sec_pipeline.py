@@ -35,6 +35,10 @@ def data_root() -> Path:
 
 
 class WorkflowCli:
+    def __init__(self):
+        # 這次要報出的載入失敗的 parser.py：（名稱, 含檔案路徑的錯誤訊息），由 `company_tickers` 填入。
+        self.failures: list[tuple[str, str]] = []
+
     def run(self):
         cli = argparse.ArgumentParser(description=__doc__)
         commands = cli.add_subparsers(dest="command", required=True)
@@ -105,8 +109,11 @@ class WorkflowCli:
         args = cli.parse_args()
         try:
             if args.command == "tickers":
-                names = companies.tickers()
+                names, failures = companies.scan()
                 print(json.dumps(names) if args.json else "\n".join(names))
+                if failures:
+                    self.report_broken([f"{error.ticker}：{error}" for error in failures])
+                    return 2
                 return 0
             if args.command == "viewer":
                 server = RevenueViewer(args.revenue).server(args.host, args.port)
@@ -144,20 +151,39 @@ class WorkflowCli:
             print(f"{args.command} 失敗：{error}", file=sys.stderr)
             return 1
 
-    @staticmethod
-    def company_tickers(args) -> list[str]:
+    def company_tickers(self, args) -> list[str]:
+        """這次處理的 ticker，以及要報出的載入失敗（`self.failures`，由 `unloaded` 記為錯誤）。
+
+        全部處理時報出每一個載入失敗的 `parser.py`；指定 ticker 時報出名稱（見 `companies.ParserLoadError`）與指定
+        ticker 相同的載入失敗，名稱與正常的 ticker 相同時也報出。指定的 ticker 有 `parser.py`、但載入失敗時的名稱
+        不是它（例如讀不到 `TICKER`），由 `load` 報出檔案與錯誤。
+        """
         names = parse_tickers(args.tickers)
         available = companies.tickers()
-        if args.all_tickers or not names:
+        everything = args.all_tickers or not names
+        if everything:
             names = list(dict.fromkeys(available + names))
-        unknown = [n for n in names if n not in available]
+        self.failures = [(e.ticker, str(e)) for e in companies.load_failures() if everything or e.ticker in names]
+        failed = {label for label, _ in self.failures}
+        unknown = [
+            n for n in names
+            if n not in available and n not in failed and not (companies.module_dir(n) / "parser.py").exists()
+        ]
         if unknown:
             raise ValueError("沒有公司 parser：" + ", ".join(unknown))
-        return names
+        return [n for n in names if n in available or n not in failed]
+
+    def unloaded(self, entries: list, broken: list[str], **fields):
+        """把 `self.failures` 記為錯誤：每筆一個輸出條目（另加 `fields`）與一行 `broken`。"""
+        for label, error in self.failures:
+            self.progress({"ticker": label, "status": "parser_invalid"})
+            broken.append(f"{label}：{error}")
+            entries.append({"ticker": label, **fields, "error": error})
 
     def snapshot(self, args) -> int:
         names = self.company_tickers(args)
         results, differences, broken = [], [], []
+        self.unloaded(results, broken)
         for ticker in names:
             _, error = self.load(ticker)
             if error is not None:
@@ -198,6 +224,7 @@ class WorkflowCli:
         if args.check and republish:
             raise ValueError("--check 不寫入，不能與 --republish 同時使用")
         reports, differences, broken = [], [], []
+        self.unloaded(reports, broken, complete=False)
         for ticker in names:
             source, error = self.load(ticker)
             if error is not None:
@@ -236,8 +263,9 @@ class WorkflowCli:
         return 0 if all(r["complete"] for r in reports) else 2
 
     def load(self, ticker: str):
-        """（公司 parser, None），或不合理時（None, 錯誤訊息）。檢核含 VIEW 與自訂點；不合理的 ticker 不處理，
-        同一次執行的其他 ticker 照常處理，指令以結束碼 2 結束。"""
+        """（公司 parser, None），或載入失敗、不合理時（None, 錯誤訊息）。載入失敗包括 `parser.py` 讀不進來與缺少
+        `TICKER`、`VIEW`、`TOTAL`，訊息含檔案路徑；檢核含 VIEW 與自訂點的格式。這樣的 ticker 不處理，同一次執行的
+        其他 ticker 照常處理，指令以結束碼 2 結束。"""
         try:
             return companies.parser_source(ticker), None
         except ValueError as error:
@@ -246,7 +274,7 @@ class WorkflowCli:
 
     @staticmethod
     def report_broken(broken: list[str]):
-        print("\n".join(["公司 parser 不合理，這些 ticker 沒有處理："] + broken), file=sys.stderr)
+        print("\n".join(["公司 parser 載入失敗或不合理，這些 ticker 沒有處理："] + broken), file=sys.stderr)
 
     def progress(self, event: dict):
         print(

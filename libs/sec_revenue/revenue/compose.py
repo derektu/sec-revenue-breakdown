@@ -154,9 +154,6 @@ class PeriodComposer:
         for group, name, candidates in annual:
             if name not in nine:
                 raise ParseError("定義唯一", f"{name} 在 {nine_filing.report_date} 沒有九個月累計的組成")
-            annual_start = candidates[0].facts[0].start
-            for found in candidates + nine[name]:
-                self.check_q4(name, annual_start, found.facts[0], period)
             items.append((group, name, interleave(candidates, nine[name])))
         return self.finish("Q", period, year, quarter, primary, nine_filing, items, basis)
 
@@ -248,7 +245,8 @@ class PeriodComposer:
     def collect(self, filing: Filing, request: Request, role: str, sign: int = 1) -> list[tuple[str, str, list[Candidate]]]:
         """主申報中一段期間的組成，依輸出順序回傳（群組, 名稱, 各運算元的候選 fact 群），總營收在最後。
 
-        分類與調節項的集合必須等於來源的 `categories(申報期末日)`；總營收一定要有。
+        分類與調節項的集合必須等於來源的 `categories(申報期末日)`；總營收一定要有。各項（分類、調節項、總營收）的
+        起日相同：同一個 Request 的組成是同一段期間，FY、Q1–Q3 與 Q4 的年度和九個月累計都適用。
         """
         composition = self.request(filing, request)
         document = self.filings.document(filing)
@@ -272,8 +270,12 @@ class PeriodComposer:
         if not composition.total:
             raise ParseError("定義唯一", f"{self.source.total_name}：{filing.accession} 的組成沒有任何運算元")
         total = self.candidates(document, filing, self.source.total_name, composition.total, request, role, sign)
-        ordered = [(groups[name], name, found[name]) for name in groups]
-        return ordered + [("total", self.source.total_name, total)]
+        ordered = [(groups[name], name, found[name]) for name in groups] + [("total", self.source.total_name, total)]
+        starts = {name: sorted({c.facts[0].start for c in candidates}) for _, name, candidates in ordered}
+        if len({start for found in starts.values() for start in found}) != 1:
+            listed = "、".join(f"{name} {'/'.join(found)}" for name, found in starts.items())
+            raise ParseError("fact 存在且唯一", f"{filing.accession} {request.duration} 期末 {request.end} 的各項起日不同：{listed}")
+        return ordered
 
     @staticmethod
     def absent(composition: Composition, name: str, filing: Filing, request: Request):
@@ -441,17 +443,6 @@ class PeriodComposer:
             kind = "多種寫法同時出現且數值不一致" if len(forms) > 1 else "重複 fact 的數值不一致"
             raise ParseError("fact 存在且唯一", f"{label} {kind}：{values}")
         return Candidate(filing, facts, role, weight)
-
-    def check_q4(self, name: str, annual_start: str, found: Fact, period: str):
-        """年度與九個月累計的每個加數都從年度起日開始；九個月累計迄日到年度期末是一個季度。
-
-        九個月累計取自 Q3 10-Q、迄日等於它的期末日，`third_quarter` 已確認那個期末到年度期末是一個單季；這裡的季度
-        檢查是防禦性檢查。
-        """
-        if found.start != annual_start:
-            raise ParseError("Q4 期間", f"{name}：{found.fact_id} 起日 {found.start} 不等於年度起日 {annual_start}")
-        if self.classify(found.start, found.end) == "nine_months" and self.classify(_next_day(found.end), period) != "quarter":
-            raise ParseError("Q4 期間", f"{name}：九個月迄日 {found.end} 到年度期末 {period} 不是一個季度")
 
     @staticmethod
     def choose(candidates: dict[str, list[Candidate]]) -> dict[str, list[Operand]]:
