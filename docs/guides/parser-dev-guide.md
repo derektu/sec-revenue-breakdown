@@ -6,7 +6,8 @@
 
 | 步驟 | 內容 | 本指南 |
 |---|---|---|
-| 1–4 | 選 ticker、`tickers.csv`、下載 SEC 申報、擷取對照資料 | |
+| 1–3 | 下載 SEC 申報、`tickers.csv`、擷取對照資料 | |
+| 4 | 評估 ticker | 第 2 步的程式 |
 | 5 | 觀點建議 | 第 1 步 |
 | 6 | 人決定觀點 | |
 | 7 | 寫 parser、驗證、比對、自我驗收 | 第 2–9 步 |
@@ -237,7 +238,7 @@ npm run check                                                                   
 
 驗收清單：
 
-- [ ] 只改了這個 ticker 的目錄、自己新增的 utility 與測試，以及 `data/revenue/`、`data/snapshots/` 中這個 ticker 的產出。
+- [ ] 只改了這個 ticker 的目錄、自己新增的 utility 與測試，`data/revenue/`、`data/snapshots/` 中這個 ticker 的產出，以及流程前段留下的這個 ticker 的 `wip` 列與對照資料。
 - [ ] 範圍內每一期都是 `published` 或有理由的 `not_derived`；`failed` 的期別在 `parser.md` 寫明原因並回報。
 - [ ] 每個分類、調節項與總營收在 `parser.md` 有 concept 與完整 dimensions；每個依日期的切換寫明從哪一份申報開始；同一項的加數組成在不同申報不同時，有重疊期別逐一相等的證據。
 - [ ] 不依後來的申報組早期期別；沒有寫死的 fact id、數值或特定期別例外。
@@ -272,7 +273,7 @@ Refs #<issue>
 - <核准前人決定的事項，或「無」>
 ```
 
-寫 parser 時不改 `tickers.csv`。`status` 等欄位的值由人在判斷能上線時決定，人核准後由 agent 寫入，與 parser 在同一個 commit（見 [開發流程](dev-workflow.md) 第 9 步）。
+寫 parser 時不改 `tickers.csv`。`status` 等欄位的值由人在判斷能上線時決定，人核准後由 agent 寫入，與 parser、這個 ticker 的對照資料在同一個 commit（見 [開發流程](dev-workflow.md) 第 9 步）。
 
 ## 常見陷阱
 
