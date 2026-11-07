@@ -23,7 +23,7 @@ from sec_revenue.revenue.filings import FilingSet, ParseError  # noqa: E402
 from sec_revenue.revenue.review import comparatives as review_comparatives  # noqa: E402
 from sec_revenue.revenue.contract import Composition, FilingFacts, ParserFailure  # noqa: E402
 from sec_revenue.revenue.source import ParserSource  # noqa: E402
-from sec_revenue.revenue.xbrl import DEFAULT_DURATIONS, DURATION_LIMITS, InlineDocument, classify_duration  # noqa: E402
+from sec_revenue.revenue.xbrl import DEFAULT_DURATIONS, InlineDocument, classify_duration  # noqa: E402
 
 REVENUE = "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax"
 AXIS = "srt:ProductOrServiceAxis"
@@ -489,6 +489,21 @@ class FourthQuarterTest(Fixture):
         ]
         self.add("0000000001-26-000001", "10-K", "2025-12-31", "2026-02-15", build_html(2025, "FY", annual))
 
+    def test_items_must_share_start(self):
+        # 10-K 的 A 年度 fact 起日 2025-01-02，總營收起日 2025-01-01：FY 與 Q4 都失敗。
+        self.standard_year()
+        annual = [
+            item("ya", REVENUE, A, "2025-01-02", "2025-12-31", "300"),
+            item("yb", REVENUE, B, "2025-01-01", "2025-12-31", "100"),
+            item("yt", REVENUE, None, "2025-01-01", "2025-12-31", "400"),
+        ]
+        self.add("0000000001-26-000001", "10-K", "2025-12-31", "2026-02-15", build_html(2025, "FY", annual))
+        message = r"\[fact 存在且唯一\] 0000000001-26-000001 annual 期末 2025-12-31 的各項起日不同：A 2025-01-02、B 2025-01-01、Total 2025-01-01"
+        with self.assertRaisesRegex(ParseError, message):
+            self.composer().compose_annual("2025-12-31")
+        with self.assertRaisesRegex(ParseError, r"\[fact 存在且唯一\]"):
+            self.composer().compose("2025-12-31")
+
     def test_q4_operands_follow_their_source_filing(self):
         # 10-K 起改用新成員，同財年 Q3 10-Q 仍是舊成員：同一個分類，Q4 照常推算，年度與九個月各依自己的申報組成。
         self.renamed_annual("x:ANewMember")
@@ -679,14 +694,6 @@ class WeeklyQuarterTest(Fixture):
         self.assertIn(("A", "nine_months", "different", 210_000_000, 215_000_000), found)
         self.assertEqual({d["period"]["start"] for d in marks}, {"2024-09-02"})
 
-    def test_nine_months_must_end_one_quarter_before_year_end(self):
-        # 依公司的範圍：九個月累計 252 天，迄日隔天到年度期末 120 天，不是一個季度。
-        html = build_html(2025, "Q3", span("n", "2024-09-02", "2025-05-11", (210, 90)))
-        self.add("0000000001-25-000003", "10-Q", "2025-05-11", "2025-06-01", html)
-        fact = InlineDocument(html).facts[0]
-        with self.assertRaisesRegex(ParseError, r"\[Q4 期間\] A：九個月迄日 2025-05-11 到年度期末 2025-09-08 不是一個季度"):
-            self.composer(WEEKLY).check_q4("A", "2024-09-02", fact, "2025-09-08")
-
     def test_prior_annual_uses_company_ranges(self):
         # 兩個自訂點同時使用：10-Q 都宣告 2024，前一份 10-K（2024-09-01 止）宣告 2024。Q2 與 10-K 期末相隔 168 天，
         # 依公司的範圍是六個月、相接，推算為 2025；Q4 與年報同財年，照常推算。
@@ -706,30 +713,39 @@ class WeeklyQuarterTest(Fixture):
 
 
 class DurationDaysTest(unittest.TestCase):
-    """自訂期間範圍的合理性檢核：四種期間都有、整數範圍、落在合理界限內、互不重疊。"""
+    """自訂期間範圍的檢查：剛好四種期間、每個範圍是正整數且最短不大於最長、由短到長且互不重疊。範圍多寬由公司 parser 決定。"""
 
     def test_default_without_declaration(self):
         self.assertEqual(COMPANY.durations, DEFAULT_DURATIONS)
         self.assertEqual(WEEKLY.durations, (("quarter", 84, 119), ("six_months", 168, 189), ("nine_months", 252, 280), ("annual", 357, 378)))
 
-    def test_unreasonable_declarations_fail(self):
+    def test_wide_ranges_are_accepted(self):
+        # 單季 70–130 天：格式正確即接受，範圍要多寬由公司 parser 決定。
+        wide = company(DURATION_DAYS=WEEKLY_DAYS | {"quarter": (70, 130)})
+        self.assertEqual(wide.durations[0], ("quarter", 70, 130))
+        self.assertEqual(classify_duration("2025-01-01", "2025-05-10", wide.durations), "quarter")
+
+    def test_malformed_declarations_fail(self):
         cases = {
             "缺少期間": ({k: v for k, v in WEEKLY_DAYS.items() if k != "six_months"}, r"必須是剛好含 quarter、six_months、nine_months、annual 的 dict"),
             "不是 dict": ([(84, 119)], r"必須是剛好含"),
             "不是整數": (WEEKLY_DAYS | {"quarter": (84.0, 119)}, r"的 quarter 必須是兩個整數的 tuple"),
-            "超出界限": (WEEKLY_DAYS | {"quarter": (84, 127)}, r"的 quarter 84–127 天不在合理界限 77–126 天內"),
-            "最短大於最長": (WEEKLY_DAYS | {"annual": (378, 357)}, r"的 annual 378–357 天不在合理界限"),
+            "布林值": (WEEKLY_DAYS | {"quarter": (True, 119)}, r"的 quarter 必須是兩個整數的 tuple"),
+            "最短大於最長": (WEEKLY_DAYS | {"annual": (378, 357)}, r"的 annual 378–357 天：最短須至少 1 天且不大於最長"),
+            "不是正數": (WEEKLY_DAYS | {"quarter": (0, 119)}, r"的 quarter 0–119 天：最短須至少 1 天"),
             "鍵的型別混雜": (WEEKLY_DAYS | {1: (84, 119)}, r"必須是剛好含 quarter、six_months、nine_months、annual 的 dict"),
         }
         for label, (declared, message) in cases.items():
             with self.subTest(label), self.assertRaisesRegex(ValueError, r"TEST 的 DURATION_DAYS ?" + message):
                 company(DURATION_DAYS=declared)
 
-    def test_overlapping_ranges_fail(self):
-        # 合理界限本身互不重疊，重疊只會在界限改寬時出現；以較寬的界限確認檢核擋得住。
-        wide = dict(DURATION_LIMITS) | {"quarter": (77, 170)}
-        with patch("sec_revenue.revenue.source.DURATION_LIMITS", wide), self.assertRaisesRegex(ValueError, r"quarter 與 six_months 範圍重疊"):
+    def test_ranges_must_increase_without_overlap(self):
+        with self.assertRaisesRegex(ValueError, r"TEST 的 DURATION_DAYS 的 quarter 最長 170 天必須小於 six_months 最短 168 天"):
             company(DURATION_DAYS=WEEKLY_DAYS | {"quarter": (84, 170)})
+        # 單季與年度互換：範圍互不重疊，但不是由短到長。
+        swapped = WEEKLY_DAYS | {"quarter": WEEKLY_DAYS["annual"], "annual": WEEKLY_DAYS["quarter"]}
+        with self.assertRaisesRegex(ValueError, r"TEST 的 DURATION_DAYS 的 quarter 最長 378 天必須小於 six_months 最短 168 天"):
+            company(DURATION_DAYS=swapped)
 
 
 PRIOR_ANNUAL = company(FISCAL_YEAR="prior_annual")

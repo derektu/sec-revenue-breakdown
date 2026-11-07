@@ -11,10 +11,12 @@ from types import MappingProxyType, ModuleType
 
 from .contract import Composition, FilingFacts, ParserFailure, Request
 from .filings import Filing
-from .xbrl import DEFAULT_DURATIONS, DURATION_LIMITS, InlineDocument
+from .xbrl import DEFAULT_DURATIONS, InlineDocument
 
 # 觀點只取產品或業務別的拆分；地區拆分不是觀點。
 VIEWS = ("product", "business_segment")
+# 期間分類的四種期間，也是公司 parser 的 `DURATION_DAYS` 的鍵。
+DURATIONS = tuple(name for name, _, _ in DEFAULT_DURATIONS)
 # 財年的決定方式（公司 parser 的 `FISCAL_YEAR`）：`declared` 取申報宣告的財年；`prior_annual` 的 10-Q 財年是前一份
 # 10-K 宣告的財年 + 1，由框架推算（`compose.PeriodComposer.fiscal`），10-K 的財年取宣告值。
 FISCAL_YEARS = ("declared", "prior_annual")
@@ -34,8 +36,9 @@ def facts_only(document: InlineDocument) -> InlineDocument:
 class ParserSource:
     """公司 parser：`parser.py` 定義 `TICKER`、`VIEW`、`TOTAL`、`compose(filing, request)` 與 `categories(day)`。
 
-    選用的自訂點 `DURATION_DAYS`、`FISCAL_YEAR` 沒有定義時用框架的預設；定義了就在這裡做合理性檢核。`VIEW` 或
-    自訂點不合理時丟出 `ValueError`，只有這個 ticker 不處理（`companies.parser_source` 在處理這家時才建立它）。
+    選用的自訂點 `DURATION_DAYS`、`FISCAL_YEAR` 沒有定義時用框架的預設；定義了就在這裡檢查格式。數值是否合理
+    （例如範圍要多寬）由公司 parser 決定，理由寫在該公司的 parser.md。`VIEW` 或自訂點的格式不對時丟出 `ValueError`，
+    只有這個 ticker 不處理（`companies.parser_source` 在處理這家時才建立它）。
     """
 
     def __init__(self, module: ModuleType):
@@ -51,26 +54,27 @@ class ParserSource:
             raise ValueError(f"{self.ticker} 的 FISCAL_YEAR 必須是 {'、'.join(FISCAL_YEARS)} 之一，收到 {self.fiscal_year!r}")
 
     def duration_ranges(self, declared) -> tuple[tuple[str, int, int], ...]:
-        """期間分類的天數範圍：沒有宣告時用預設；宣告時四種期間都要有，每個範圍是整數（最短, 最長）、落在
-        `DURATION_LIMITS` 內，且範圍互不重疊。"""
+        """期間分類的天數範圍：沒有宣告時用預設；宣告時檢查：剛好四種期間，每個範圍是兩個正整數（最短, 最長）、
+        最短不大於最長，且依單季、六個月、九個月、年度由短到長，前一種的最長小於後一種的最短。由短到長的範圍互不
+        重疊，每個天數至多屬於一種期間。範圍要多寬由公司 parser 決定。"""
         if declared is None:
             return DEFAULT_DURATIONS
         prefix = f"{self.ticker} 的 DURATION_DAYS"
-        if not isinstance(declared, dict) or set(declared) != set(DURATION_LIMITS):
+        if not isinstance(declared, dict) or set(declared) != set(DURATIONS):
             found = '、'.join(sorted(map(str, declared))) if isinstance(declared, dict) else type(declared).__name__
-            raise ValueError(f"{prefix} 必須是剛好含 {'、'.join(DURATION_LIMITS)} 的 dict，收到 {found}")
+            raise ValueError(f"{prefix} 必須是剛好含 {'、'.join(DURATIONS)} 的 dict，收到 {found}")
         ranges = []
-        for name, (floor, ceiling) in DURATION_LIMITS.items():
+        for name in DURATIONS:
             value = declared[name]
             if not (isinstance(value, tuple) and len(value) == 2 and all(type(v) is int for v in value)):
                 raise ValueError(f"{prefix} 的 {name} 必須是兩個整數的 tuple（最短天數, 最長天數），收到 {value!r}")
             low, high = value
-            if not floor <= low <= high <= ceiling:
-                raise ValueError(f"{prefix} 的 {name} {low}–{high} 天不在合理界限 {floor}–{ceiling} 天內（或最短大於最長）")
+            if not 1 <= low <= high:
+                raise ValueError(f"{prefix} 的 {name} {low}–{high} 天：最短須至少 1 天且不大於最長")
             ranges.append((name, low, high))
         for (name, _, high), (following, low, _) in zip(ranges, ranges[1:]):
             if high >= low:
-                raise ValueError(f"{prefix} 的 {name} 與 {following} 範圍重疊")
+                raise ValueError(f"{prefix} 的 {name} 最長 {high} 天必須小於 {following} 最短 {low} 天（由短到長、互不重疊）")
         return tuple(ranges)
 
     def compose(self, document: InlineDocument, filing: Filing, request: Request) -> Composition:

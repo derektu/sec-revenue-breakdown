@@ -1,6 +1,7 @@
 """公司目錄：`<首字母>/<ticker 小寫，非英數字元改為底線>/`。
 
 每家公司有公司 parser（`parser.py`，定義 `TICKER`、`VIEW`、`TOTAL`、`compose`、`categories`）與說明（`parser.md`）。
+一家公司的 `parser.py` 載入失敗只影響那一家：列出 ticker 時跳過並記錄（`scan`），其他公司照常處理。
 """
 
 from __future__ import annotations
@@ -13,6 +14,20 @@ from ..revenue.source import ParserSource
 ROOT = Path(__file__).resolve().parent
 # 業務分部軸常被公司用於地區分部（例如 AAPL 的 Americas、Europe），公司 parser 使用時 parser.md 必須說明為何是業務別。
 SEGMENT_AXIS = "us-gaap:StatementBusinessSegmentsAxis"
+# 公司 parser 必須定義的常數；缺少任何一個即載入失敗。
+REQUIRED = ("TICKER", "VIEW", "TOTAL")
+
+
+class ParserLoadError(ValueError):
+    """`parser.py` 載入失敗：讀不進來（語法錯誤、import 失敗、執行時丟出例外），或缺少 `REQUIRED` 的常數。
+
+    `ticker` 是記錄錯誤用的名稱：`parser.py` 讀得到字串 `TICKER` 時用它；讀不到時用目錄名稱轉大寫（例如 `brk_b` →
+    `BRK_B`），這時它不一定是實際的 ticker，訊息中的檔案路徑才是定位依據。
+    """
+
+    def __init__(self, ticker: str, message: str):
+        super().__init__(message)
+        self.ticker = ticker
 
 
 def module_dir(ticker: str) -> Path:
@@ -24,21 +39,59 @@ def directories() -> list[Path]:
     return sorted(p.parent for p in ROOT.glob("*/*/parser.py"))
 
 
-def tickers() -> list[str]:
-    """有公司 parser 的 ticker，以各自宣告的 ticker 為準。
+def scan() -> tuple[list[str], list[ParserLoadError]]:
+    """（有公司 parser 的 ticker, 每個載入失敗的 `parser.py` 的錯誤）；ticker 以各自宣告的 `TICKER` 為準。
 
-    只讀每個 `parser.py` 的 `TICKER`，不檢核 `VIEW` 與自訂點：一家公司宣告錯誤時，列出 ticker 與處理其他公司都不受
-    影響，錯誤在處理那家公司時（`parser_source`）才報出。
+    載入失敗依檔案各記一筆：名稱與正常的 ticker 或另一個載入失敗的檔案相同時，每一筆都保留（訊息含檔案路徑）。
+
+    只確認每個 `parser.py` 載入得了、定義了 `REQUIRED` 的常數，不檢核 `VIEW` 的值與自訂點：一家公司宣告錯誤或載入
+    失敗時，列出其他 ticker 與處理其他公司都不受影響。宣告的錯誤在處理那家公司時（`parser_source`）才報出。
     """
-    return sorted(module(directory).TICKER for directory in directories())
+    found, failures = [], []
+    for directory in directories():
+        try:
+            found.append(declared(directory).TICKER)
+        except ParserLoadError as error:
+            failures.append(error)
+    return sorted(found), failures
+
+
+def tickers() -> list[str]:
+    """有公司 parser 且載入成功的 ticker（見 `scan`）。"""
+    return scan()[0]
+
+
+def load_failures() -> list[ParserLoadError]:
+    """每個載入失敗的 `parser.py` 的錯誤，訊息含檔案路徑（見 `scan` 與 `ParserLoadError`）。"""
+    return scan()[1]
 
 
 def module(directory: Path):
     return importlib.import_module(f"{__name__}.{directory.parent.name}.{directory.name}.parser")
 
 
+def declared(directory: Path):
+    """載入 `parser.py` 並確認 `REQUIRED` 的常數都有定義、`TICKER` 是非空字串；失敗時丟出 `ParserLoadError`。"""
+    source = directory / "parser.py"
+    label = directory.name.upper()
+    try:
+        loaded = module(directory)
+    except Exception as error:  # noqa: BLE001 - 公司 parser 的任何載入錯誤都只停這一家
+        raise ParserLoadError(label, f"{source} 載入失敗：{type(error).__name__}: {error}") from error
+    ticker = getattr(loaded, "TICKER", None)
+    valid = isinstance(ticker, str) and bool(ticker)
+    if valid:
+        label = ticker
+    missing = [name for name in REQUIRED if not hasattr(loaded, name)]
+    if missing:
+        raise ParserLoadError(label, f"{source} 缺少 {'、'.join(missing)}")
+    if not valid:
+        raise ParserLoadError(label, f"{source} 的 TICKER 必須是非空字串，收到 {ticker!r}")
+    return loaded
+
+
 def load(directory: Path) -> ParserSource:
-    return ParserSource(module(directory))
+    return ParserSource(declared(directory))
 
 
 def parser_source(ticker: str) -> ParserSource:
