@@ -1,0 +1,272 @@
+{
+  "categories": {
+    "Client": {
+      "expression": [
+        {
+          "operand": "op3",
+          "weight": 1
+        }
+      ],
+      "value": 1881000000
+    },
+    "Data Center": {
+      "expression": [
+        {
+          "operand": "op1",
+          "weight": 1
+        }
+      ],
+      "value": 3549000000
+    },
+    "Embedded": {
+      "expression": [
+        {
+          "operand": "op2",
+          "weight": 1
+        }
+      ],
+      "value": 927000000
+    },
+    "Gaming": {
+      "expression": [
+        {
+          "operand": "op4",
+          "weight": 1
+        }
+      ],
+      "value": 462000000
+    }
+  },
+  "checks": {
+    "structural": [
+      {
+        "check": "定義唯一",
+        "result": "pass"
+      },
+      {
+        "check": "fact 存在且唯一",
+        "result": "pass"
+      },
+      {
+        "check": "單位與精度",
+        "result": "pass"
+      },
+      {
+        "check": "加總",
+        "result": "pass"
+      },
+      {
+        "check": "證據完整",
+        "result": "pass"
+      }
+    ],
+    "sum": {
+      "categories": 6819000000,
+      "difference": 0,
+      "tolerance": "2500000",
+      "total": 6819000000
+    }
+  },
+  "filings": {
+    "primary": {
+      "accession": "0000002488-24-000163",
+      "filing_date": "2024-10-30",
+      "form": "10-Q",
+      "report_date": "2024-09-28"
+    }
+  },
+  "fiscal_quarter": 3,
+  "fiscal_year": 2024,
+  "operands": {
+    "op1": {
+      "accession": "0000002488-24-000163",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-65",
+      "decimals": "-6",
+      "dimensions": {
+        "us-gaap:StatementBusinessSegmentsAxis": "amd:ClientMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/2488/000000248824000163/amd-20240928.htm",
+        "name": "amd-20240928.htm",
+        "sha256": "7f6bc28a53bc4a802d89759e91fa343beb468bfd6563e8a6d765e438fbfcf852",
+        "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248824000163/amd-20240928.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "bbbc05e0719a18597874757efc103e00a6b43c8d925dcf3818ef98bb52155152",
+        "png_scale": 1,
+        "png_sha256": "161b8f79d862407eca2e9181d43351298765251981d3a86cb54a97f6bd44ea4f",
+        "table": "0000002488-24-000163-7f6bc28a53bc-t18"
+      },
+      "fact_id": "f-396",
+      "filing_date": "2024-10-30",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-09-28",
+        "start": "2024-06-30"
+      },
+      "raw": "3,549",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 3549000000
+    },
+    "op2": {
+      "accession": "0000002488-24-000163",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-77",
+      "decimals": "-6",
+      "dimensions": {
+        "us-gaap:StatementBusinessSegmentsAxis": "amd:EmbeddedMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/2488/000000248824000163/amd-20240928.htm",
+        "name": "amd-20240928.htm",
+        "sha256": "7f6bc28a53bc4a802d89759e91fa343beb468bfd6563e8a6d765e438fbfcf852",
+        "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248824000163/amd-20240928.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "bbbc05e0719a18597874757efc103e00a6b43c8d925dcf3818ef98bb52155152",
+        "png_scale": 1,
+        "png_sha256": "161b8f79d862407eca2e9181d43351298765251981d3a86cb54a97f6bd44ea4f",
+        "table": "0000002488-24-000163-7f6bc28a53bc-t18"
+      },
+      "fact_id": "f-408",
+      "filing_date": "2024-10-30",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-09-28",
+        "start": "2024-06-30"
+      },
+      "raw": "927",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 927000000
+    },
+    "op3": {
+      "accession": "0000002488-24-000163",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-69",
+      "decimals": "-6",
+      "dimensions": {
+        "us-gaap:StatementBusinessSegmentsAxis": "amd:GamingMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/2488/000000248824000163/amd-20240928.htm",
+        "name": "amd-20240928.htm",
+        "sha256": "7f6bc28a53bc4a802d89759e91fa343beb468bfd6563e8a6d765e438fbfcf852",
+        "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248824000163/amd-20240928.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "bbbc05e0719a18597874757efc103e00a6b43c8d925dcf3818ef98bb52155152",
+        "png_scale": 1,
+        "png_sha256": "161b8f79d862407eca2e9181d43351298765251981d3a86cb54a97f6bd44ea4f",
+        "table": "0000002488-24-000163-7f6bc28a53bc-t18"
+      },
+      "fact_id": "f-400",
+      "filing_date": "2024-10-30",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-09-28",
+        "start": "2024-06-30"
+      },
+      "raw": "1,881",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 1881000000
+    },
+    "op4": {
+      "accession": "0000002488-24-000163",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-73",
+      "decimals": "-6",
+      "dimensions": {
+        "us-gaap:StatementBusinessSegmentsAxis": "amd:DataCenterMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/2488/000000248824000163/amd-20240928.htm",
+        "name": "amd-20240928.htm",
+        "sha256": "7f6bc28a53bc4a802d89759e91fa343beb468bfd6563e8a6d765e438fbfcf852",
+        "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248824000163/amd-20240928.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "bbbc05e0719a18597874757efc103e00a6b43c8d925dcf3818ef98bb52155152",
+        "png_scale": 1,
+        "png_sha256": "161b8f79d862407eca2e9181d43351298765251981d3a86cb54a97f6bd44ea4f",
+        "table": "0000002488-24-000163-7f6bc28a53bc-t18"
+      },
+      "fact_id": "f-404",
+      "filing_date": "2024-10-30",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-09-28",
+        "start": "2024-06-30"
+      },
+      "raw": "462",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 462000000
+    },
+    "op5": {
+      "accession": "0000002488-24-000163",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-3",
+      "decimals": "-6",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/2488/000000248824000163/amd-20240928.htm",
+        "name": "amd-20240928.htm",
+        "sha256": "7f6bc28a53bc4a802d89759e91fa343beb468bfd6563e8a6d765e438fbfcf852",
+        "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248824000163/amd-20240928.htm"
+      },
+      "duplicates": [
+        "f-30"
+      ],
+      "evidence": {
+        "html_sha256": "bbbc05e0719a18597874757efc103e00a6b43c8d925dcf3818ef98bb52155152",
+        "png_scale": 1,
+        "png_sha256": "161b8f79d862407eca2e9181d43351298765251981d3a86cb54a97f6bd44ea4f",
+        "table": "0000002488-24-000163-7f6bc28a53bc-t18"
+      },
+      "fact_id": "f-412",
+      "filing_date": "2024-10-30",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-09-28",
+        "start": "2024-06-30"
+      },
+      "raw": "6,819",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 6819000000
+    }
+  },
+  "period_end": "2024-09-28",
+  "schema_version": 1,
+  "series": "Q",
+  "ticker": "AMD",
+  "total": {
+    "expression": [
+      {
+        "operand": "op5",
+        "weight": 1
+      }
+    ],
+    "value": 6819000000
+  },
+  "unit": "USD",
+  "view": "business_segment"
+}

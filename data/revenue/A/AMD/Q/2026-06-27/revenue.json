@@ -1,0 +1,231 @@
+{
+  "categories": {
+    "Client and Gaming": {
+      "expression": [
+        {
+          "operand": "op2",
+          "weight": 1
+        }
+      ],
+      "value": 3841000000
+    },
+    "Data Center": {
+      "expression": [
+        {
+          "operand": "op1",
+          "weight": 1
+        }
+      ],
+      "value": 6718000000
+    },
+    "Embedded": {
+      "expression": [
+        {
+          "operand": "op3",
+          "weight": 1
+        }
+      ],
+      "value": 977000000
+    }
+  },
+  "checks": {
+    "structural": [
+      {
+        "check": "定義唯一",
+        "result": "pass"
+      },
+      {
+        "check": "fact 存在且唯一",
+        "result": "pass"
+      },
+      {
+        "check": "單位與精度",
+        "result": "pass"
+      },
+      {
+        "check": "加總",
+        "result": "pass"
+      },
+      {
+        "check": "證據完整",
+        "result": "pass"
+      }
+    ],
+    "sum": {
+      "categories": 11536000000,
+      "difference": 0,
+      "tolerance": "2000000",
+      "total": 11536000000
+    }
+  },
+  "filings": {
+    "primary": {
+      "accession": "0000002488-26-000123",
+      "filing_date": "2026-08-05",
+      "form": "10-Q",
+      "report_date": "2026-06-27"
+    }
+  },
+  "fiscal_quarter": 2,
+  "fiscal_year": 2026,
+  "operands": {
+    "op1": {
+      "accession": "0000002488-26-000123",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-63",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "amd:DataCenterMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/2488/000000248826000123/amd-20260627.htm",
+        "name": "amd-20260627.htm",
+        "sha256": "3ad706b74e715d14c1126228bbe33dc9b48366ae13a4419135d1d4b6bd099ae3",
+        "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000123/amd-20260627.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "9569c355d595257dde0d2dca29d19566ade6624511be0d311cf09c6d740b8894",
+        "png_scale": 1,
+        "png_sha256": "19334b7b613faa7b2e978b603f31b619864386eca0ff49ea9b4605e12d443dbc",
+        "table": "0000002488-26-000123-3ad706b74e71-t18"
+      },
+      "fact_id": "f-439",
+      "filing_date": "2026-08-05",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-06-27",
+        "start": "2026-03-29"
+      },
+      "raw": "6,718",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 6718000000
+    },
+    "op2": {
+      "accession": "0000002488-26-000123",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-75",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "amd:ClientAndGamingMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/2488/000000248826000123/amd-20260627.htm",
+        "name": "amd-20260627.htm",
+        "sha256": "3ad706b74e715d14c1126228bbe33dc9b48366ae13a4419135d1d4b6bd099ae3",
+        "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000123/amd-20260627.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "9569c355d595257dde0d2dca29d19566ade6624511be0d311cf09c6d740b8894",
+        "png_scale": 1,
+        "png_sha256": "19334b7b613faa7b2e978b603f31b619864386eca0ff49ea9b4605e12d443dbc",
+        "table": "0000002488-26-000123-3ad706b74e71-t18"
+      },
+      "fact_id": "f-451",
+      "filing_date": "2026-08-05",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-06-27",
+        "start": "2026-03-29"
+      },
+      "raw": "3,841",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 3841000000
+    },
+    "op3": {
+      "accession": "0000002488-26-000123",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-79",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "amd:EmbeddedMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/2488/000000248826000123/amd-20260627.htm",
+        "name": "amd-20260627.htm",
+        "sha256": "3ad706b74e715d14c1126228bbe33dc9b48366ae13a4419135d1d4b6bd099ae3",
+        "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000123/amd-20260627.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "9569c355d595257dde0d2dca29d19566ade6624511be0d311cf09c6d740b8894",
+        "png_scale": 1,
+        "png_sha256": "19334b7b613faa7b2e978b603f31b619864386eca0ff49ea9b4605e12d443dbc",
+        "table": "0000002488-26-000123-3ad706b74e71-t18"
+      },
+      "fact_id": "f-455",
+      "filing_date": "2026-08-05",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-06-27",
+        "start": "2026-03-29"
+      },
+      "raw": "977",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 977000000
+    },
+    "op4": {
+      "accession": "0000002488-26-000123",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-3",
+      "decimals": "-6",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/2488/000000248826000123/amd-20260627.htm",
+        "name": "amd-20260627.htm",
+        "sha256": "3ad706b74e715d14c1126228bbe33dc9b48366ae13a4419135d1d4b6bd099ae3",
+        "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000123/amd-20260627.htm"
+      },
+      "duplicates": [
+        "f-30"
+      ],
+      "evidence": {
+        "html_sha256": "9569c355d595257dde0d2dca29d19566ade6624511be0d311cf09c6d740b8894",
+        "png_scale": 1,
+        "png_sha256": "19334b7b613faa7b2e978b603f31b619864386eca0ff49ea9b4605e12d443dbc",
+        "table": "0000002488-26-000123-3ad706b74e71-t18"
+      },
+      "fact_id": "f-459",
+      "filing_date": "2026-08-05",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-06-27",
+        "start": "2026-03-29"
+      },
+      "raw": "11,536",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 11536000000
+    }
+  },
+  "period_end": "2026-06-27",
+  "schema_version": 1,
+  "series": "Q",
+  "ticker": "AMD",
+  "total": {
+    "expression": [
+      {
+        "operand": "op4",
+        "weight": 1
+      }
+    ],
+    "value": 11536000000
+  },
+  "unit": "USD",
+  "view": "business_segment"
+}
