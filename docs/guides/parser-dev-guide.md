@@ -68,6 +68,7 @@ SEC_DATA_DIR=~/sec-revenue-data .venv/bin/python - UPS 0001628280-26-008432 Reve
 import os, sys
 from pathlib import Path
 sys.path.insert(0, "libs")
+from datetime import date
 from sec_revenue.revenue.filings import FilingSet
 
 ticker, accession, word = sys.argv[1:4]
@@ -77,21 +78,25 @@ if not root:
 # 宣告 ATTACHMENTS 的公司要帶同樣的附件類型，例如 FilingSet(..., ticker, ("EX-13",))，才看得到附件中的 fact。
 filings = FilingSet(Path(root).expanduser(), ticker)
 filing = next(f for f in filings.filings if f.accession == accession)
-facts = [f for f in filings.document(filing).facts if word in f.concept and f.duration]
+facts = [f for f in filings.document(filing).facts if word in f.concept and f.start]
 for fact in sorted(facts, key=lambda f: (f.end != filing.report_date, f.end, f.start or "", f.order)):
     dims = " ".join(f"{a}={m}" for a, m in fact.dimensions) or "（無維度）"
     column = "本期" if fact.end == filing.report_date else "比較期"
     where = fact.document or "主文件"
-    print(column, f"{fact.start}~{fact.end}", fact.duration, fact.concept, dims, fact.value, where, f"表格 {fact.table_index}", sep="\t")
+    days = (date.fromisoformat(fact.end) - date.fromisoformat(fact.start)).days + 1
+    print(column, f"{fact.start}~{fact.end}", f"{days} 天", fact.concept, dims, fact.value, where, f"表格 {fact.table_index}", sep="\t")
 EOF
 ```
 
 `SEC_DATA_DIR` 是 SEC 原文的資料根目錄，換成你 `.env` 中設定的路徑；程式不讀 `.env`，沒有設定時直接結束。財報在附件的公司（例如 PGR 10-K 的 EX-13），`FilingSet` 帶上 `parser.py` 的 `ATTACHMENTS`；每一列印出 fact 所在的文件（主文件或附件檔名），表格編號屬於那份文件。
 
+worktree 中的 agent 以 heredoc（`<<'EOF'`）執行多行程式時常被權限規則擋下：把程式存成 scratchpad 中的檔案，以 `.venv/bin/python <檔案> UPS 0001628280-26-008432 Revenue` 執行。
+
 每份申報的 accession、表單、期末日與申報日，可以把最後的迴圈換成 `for f in filings.filings: print(f.accession, f.form, f.report_date, f.filing_date)` 列出。
 
 找 fact 的要點：
 
+- **對著原文表格逐列找，不只用 concept 名稱搜**：concept 名稱可能與列標籤不符。GOOGL 在期末 2025-06-30 的 10-Q 之前的申報中，Hedging gains (losses) 列標的是 `us-gaap:GainLossOnOilAndGasHedgingActivity`（油氣避險），用 `Revenue` 搜不到。以 `table_index` 或 XBRL viewer 找到營收表，表上每一列的數字都要對到一個 fact；對不到才是沒有標記。
 - **每一份申報都要看，包括 10-K**。只看最新一份 10-Q 選出的寫法，常在某一份 10-K 或較早的 10-Q 找不到。
 - **範圍以前的上一份 10-K 也要組得出來**：判斷範圍內第一個 Q4 的口徑時，框架用 parser 從上一財年的 10-K 組出年度值（見 `parser.md` 的「Q4 口徑一致」）。那份 10-K 的寫法也要涵蓋；組不出來時口徑判斷為「無法判斷」，Q4 照常推算並註記，不會報錯，所以要自己確認。
 - **dimensions 要完全相同**：`find` 是精確比對，fact 多一個或少一個維度都不算。例如 NVDA 的分部 fact 另帶 `srt:ConsolidationItemsAxis=us-gaap:OperatingSegmentsMember`；UPS FY2025 10-K 的 `ups:SupplyChainSolutionsMember` 只出現在帶 `srt:ProductOrServiceAxis` 的細項 fact 上。
@@ -165,6 +170,8 @@ EOF
 
 ### 5. 跑 parse，看每一期的結果
 
+載入公司 parser 時框架要求目錄中有 `parser.md`，沒有時整個 ticker 載入失敗、一期都不處理。第一次跑 parse 時 `parser.md` 還沒寫完，先放一份只有標題的檔案。用到 `us-gaap:StatementBusinessSegmentsAxis` 時，這份檔案也要先寫明這個軸的成員是業務別。
+
 ```bash
 .venv/bin/python scripts/sec_pipeline.py parse --tickers MSFT
 ```
@@ -212,7 +219,7 @@ rm -rf data/revenue/M/MSFT
 - **期別對齊**：Stock Analysis 用期末日（季底不是曆年季底的 ticker 會對齊到曆年季底）；富途用申報宣告的財年與季別；TradingView 用財年多數月份所在的曆年（NVDA FY2026 標 2025、ORCL FY2026 標 2025），財年在 6 月底結束、兩個曆年各占 6 個月時標結束的那一年（MSFT、PG 的 FY2026 標 2026）。
 - **分類改名有沒有改範圍**：拿較晚申報的比較欄（新名稱）與原申報（舊名稱）的同一期比；較晚申報沒有列那一季時，用累計相減推回（例如半年減 Q2 得 Q1）。各分類的值在雙方運算元的精度誤差內相同，就是純改名（LLY 2024 年的 Cardiometabolic Health）。這些較晚的申報只在 `parser.md` 當證據，不用來組數字，也不改早期期別的分類名稱；名稱仍跟各期申報。
 - **差異多半是重編**：對照來源常用事後重編的數字，我們用申報當時的原值。先查較晚的申報有沒有重列這一期（差異標記的申報列示值與對照來源相同，就是重編），再判斷是不是 parser 錯了。例子：UPS 2024 年 Q4、BAC 2025 年 Q1–Q3、CMCSA 2025 年各季。
-- **對照來源本身的錯**：富途的 Q4 偶有錯值（UPS 2024 年 Q4 是負數），Stock Analysis 偶有期別錯置（CMCSA 2026 年 Q1、Q2 對調）、單一數字錯值（MSFT 期末 2026-03-31 的 More Personal Computing）。判定為來源錯誤，三條都要成立：(a) 當期申報的表格中，這個分類那一列的值等於我們的值（列標籤、concept、完整 dimensions 都對得上），而且本期加總檢核通過；業績新聞稿有列時也要一致，但它與申報同源，只作補充。(b) 較晚的申報沒有重列這一期。(c) 來源本身前後矛盾，而且矛盾的差額就是這筆差異（分類加總與總營收、或四季加總與年度，正好差這個數）；或另一個對照來源與我們的值一致。成立時寫明是來源錯誤與上述證據，來源為什麼錯（例如誤取了哪個數字）不必追；不成立時是「原因未確認」。
+- **對照來源本身的錯**：富途的 Q4 偶有錯值（UPS 2024 年 Q4 是負數），Stock Analysis 偶有期別錯置（CMCSA 2026 年 Q1、Q2 對調；GOOGL 2024-06-30 的 Hedging gains (losses) 填了 2023 年 Q2 的值）、單一數字錯值（MSFT 期末 2026-03-31 的 More Personal Computing）。富途的 Q4 也可能在同一季混用兩種算法：PGR 2025 Q4 的一列是全年值，另兩列是 0 減前三季累計，三列相加才等於 Q4。判定為來源錯誤，三條都要成立：(a) 當期申報的表格中，這個分類那一列的值等於我們的值（列標籤、concept、完整 dimensions 都對得上），而且本期加總檢核通過；業績新聞稿有列時也要一致，但它與申報同源，只作補充。(b) 較晚的申報沒有重列這一期。(c) 來源本身前後矛盾，而且矛盾的差額就是這筆差異（分類加總與總營收、或四季加總與年度，正好差這個數）；或另一個對照來源與我們的值一致。成立時寫明是來源錯誤與上述證據，來源為什麼錯（例如誤取了哪個數字）不必追；不成立時是「原因未確認」。
 - **用其他 SEC 文件解釋差異**：差異的原因有時在業績新聞稿（8-K 附件 99.1）或同一份申報沒有 XBRL 標記的表格。`download` 不下載 8-K，直接在 sec.gov 讀原文。這些文件只用來解釋差異，不提供輸出的數字，也不存檔；在 `parser.md` 記 accession、附件與所列的數值。
 - **不要為了對上對照資料改 parser**：差異照實記錄。
 
@@ -243,7 +250,7 @@ npm run check                                                                   
 
 - [ ] 只改了這個 ticker 的目錄、自己新增的 utility 與測試，`data/revenue/`、`data/snapshots/` 中這個 ticker 的產出，以及流程前段留下的這個 ticker 的 `wip` 列與對照資料。
 - [ ] 範圍內每一期都是 `published` 或有理由的 `not_derived`；`failed` 的期別在 `parser.md` 寫明原因並回報。
-- [ ] 每個分類、調節項與總營收在 `parser.md` 有 concept 與完整 dimensions；每個依日期的切換寫明從哪一份申報開始；同一項的加數組成在不同申報不同時，有重疊期別逐一相等的證據。
+- [ ] 每個分類、調節項與總營收在 `parser.md` 有 concept 與完整 dimensions；每個依日期的切換寫明從哪一份申報開始；同一項的加數組成在不同申報不同時，有重疊期別逐一相等的證據；分類改名時，有重疊期別新舊名稱同值的證據（第 6 步）。框架不檢查改名與加數組成是否改變範圍，只靠這些證據。
 - [ ] 不依後來的申報組早期期別；沒有寫死的 fact id、數值或特定期別例外。
 - [ ] 與採用的對照來源逐期比對，每一筆差異都有原因與證據；原因未確認的寫成未確認，不寫成一致。
 - [ ] 差異標記（`differences`）都在 `parser.md` 的「比較欄」說明。
@@ -300,7 +307,7 @@ Refs #<issue>
 
 - **觀點**：寫 parser 之前，觀點與分類一定由人決定（第 1 步）。
 - **要改框架或既有 utility**：例如需要同時讀兩份申報才組得出一期。這是改變框架提供資料的方式，不能自訂。公司不符合框架的某個預設、而框架還沒有對應的自訂點時，建議的做法是新增自訂點、由這家公司的 parser 自訂，不放寬所有 ticker 共用的預設（見 [parser.md](../architecture/parser.md) 的「預設與自訂」）。數字在同一份申報附件的 inline XBRL（例如 PGR 10-K 的 EX-13）由自訂點 `ATTACHMENTS` 處理，不需要改框架。
-- **只能違反兩條硬原則才做得出來**：例如數字沒有 XBRL 標記（GOOGL 的避險損益列）、要用之後的申報決定早期期別怎麼組。不要繞過。
+- **只能違反兩條硬原則才做得出來**：例如需要的數字沒有 XBRL 標記、要用之後的申報決定早期期別怎麼組。判定沒有標記之前，先照第 2 步對著原文表格逐列找。不要繞過。
 - **差異解釋不了**：與對照來源的差異不是重編、也不是來源錯誤，或你無法確認是哪一種。
 - **已提交的輸出要改**：任何需要 `--republish` 的情況。
 - **上線**：`tickers.csv` 的 `status`、`adopted_source`、`stability_score` 的值由人決定。
