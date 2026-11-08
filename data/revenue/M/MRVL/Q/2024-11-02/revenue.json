@@ -1,0 +1,318 @@
+{
+  "categories": {
+    "Automotive/industrial": {
+      "expression": [
+        {
+          "operand": "op4",
+          "weight": 1
+        }
+      ],
+      "value": 82900000
+    },
+    "Carrier infrastructure": {
+      "expression": [
+        {
+          "operand": "op3",
+          "weight": 1
+        }
+      ],
+      "value": 84700000
+    },
+    "Consumer": {
+      "expression": [
+        {
+          "operand": "op5",
+          "weight": 1
+        }
+      ],
+      "value": 96500000
+    },
+    "Data center": {
+      "expression": [
+        {
+          "operand": "op1",
+          "weight": 1
+        }
+      ],
+      "value": 1101100000
+    },
+    "Enterprise networking": {
+      "expression": [
+        {
+          "operand": "op2",
+          "weight": 1
+        }
+      ],
+      "value": 150900000
+    }
+  },
+  "checks": {
+    "structural": [
+      {
+        "check": "定義唯一",
+        "result": "pass"
+      },
+      {
+        "check": "fact 存在且唯一",
+        "result": "pass"
+      },
+      {
+        "check": "單位與精度",
+        "result": "pass"
+      },
+      {
+        "check": "加總",
+        "result": "pass"
+      },
+      {
+        "check": "證據完整",
+        "result": "pass"
+      }
+    ],
+    "sum": {
+      "categories": 1516100000,
+      "difference": 0,
+      "tolerance": "300000",
+      "total": 1516100000
+    }
+  },
+  "filings": {
+    "primary": {
+      "accession": "0001835632-24-000200",
+      "filing_date": "2024-12-04",
+      "form": "10-Q",
+      "report_date": "2024-11-02"
+    }
+  },
+  "fiscal_quarter": 3,
+  "fiscal_year": 2025,
+  "operands": {
+    "op1": {
+      "accession": "0001835632-24-000200",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-74",
+      "decimals": "-5",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "mrvl:DataCenterMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1835632/000183563224000200/mrvl-20241102.htm",
+        "name": "mrvl-20241102.htm",
+        "sha256": "8a297348c8863979b46bfd9627fe135a68d3680b4b2bdc80aeb70283b867872c",
+        "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563224000200/mrvl-20241102.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "7282952fff65b2b382473951fcd0c9a010ed646ba19023ac681cb048a8a25156",
+        "png_scale": 1,
+        "png_sha256": "9936dd549953dbe446ecf8d81c17f7a0b525f6866a89085dc30de52ce0d11cf5",
+        "table": "0001835632-24-000200-8a297348c886-t12"
+      },
+      "fact_id": "f-393",
+      "filing_date": "2024-12-04",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-11-02",
+        "start": "2024-08-04"
+      },
+      "raw": "1,101.1",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 1101100000
+    },
+    "op2": {
+      "accession": "0001835632-24-000200",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-82",
+      "decimals": "-5",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "mrvl:EnterpriseNetworkingMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1835632/000183563224000200/mrvl-20241102.htm",
+        "name": "mrvl-20241102.htm",
+        "sha256": "8a297348c8863979b46bfd9627fe135a68d3680b4b2bdc80aeb70283b867872c",
+        "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563224000200/mrvl-20241102.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "7282952fff65b2b382473951fcd0c9a010ed646ba19023ac681cb048a8a25156",
+        "png_scale": 1,
+        "png_sha256": "9936dd549953dbe446ecf8d81c17f7a0b525f6866a89085dc30de52ce0d11cf5",
+        "table": "0001835632-24-000200-8a297348c886-t12"
+      },
+      "fact_id": "f-401",
+      "filing_date": "2024-12-04",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-11-02",
+        "start": "2024-08-04"
+      },
+      "raw": "150.9",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 150900000
+    },
+    "op3": {
+      "accession": "0001835632-24-000200",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-90",
+      "decimals": "-5",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "mrvl:CarrierInfrastructureMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1835632/000183563224000200/mrvl-20241102.htm",
+        "name": "mrvl-20241102.htm",
+        "sha256": "8a297348c8863979b46bfd9627fe135a68d3680b4b2bdc80aeb70283b867872c",
+        "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563224000200/mrvl-20241102.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "7282952fff65b2b382473951fcd0c9a010ed646ba19023ac681cb048a8a25156",
+        "png_scale": 1,
+        "png_sha256": "9936dd549953dbe446ecf8d81c17f7a0b525f6866a89085dc30de52ce0d11cf5",
+        "table": "0001835632-24-000200-8a297348c886-t12"
+      },
+      "fact_id": "f-409",
+      "filing_date": "2024-12-04",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-11-02",
+        "start": "2024-08-04"
+      },
+      "raw": "84.7",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 84700000
+    },
+    "op4": {
+      "accession": "0001835632-24-000200",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-106",
+      "decimals": "-5",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "mrvl:AutomotiveAndIndustrialMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1835632/000183563224000200/mrvl-20241102.htm",
+        "name": "mrvl-20241102.htm",
+        "sha256": "8a297348c8863979b46bfd9627fe135a68d3680b4b2bdc80aeb70283b867872c",
+        "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563224000200/mrvl-20241102.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "7282952fff65b2b382473951fcd0c9a010ed646ba19023ac681cb048a8a25156",
+        "png_scale": 1,
+        "png_sha256": "9936dd549953dbe446ecf8d81c17f7a0b525f6866a89085dc30de52ce0d11cf5",
+        "table": "0001835632-24-000200-8a297348c886-t12"
+      },
+      "fact_id": "f-425",
+      "filing_date": "2024-12-04",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-11-02",
+        "start": "2024-08-04"
+      },
+      "raw": "82.9",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 82900000
+    },
+    "op5": {
+      "accession": "0001835632-24-000200",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-98",
+      "decimals": "-5",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "mrvl:ConsumerMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1835632/000183563224000200/mrvl-20241102.htm",
+        "name": "mrvl-20241102.htm",
+        "sha256": "8a297348c8863979b46bfd9627fe135a68d3680b4b2bdc80aeb70283b867872c",
+        "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563224000200/mrvl-20241102.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "7282952fff65b2b382473951fcd0c9a010ed646ba19023ac681cb048a8a25156",
+        "png_scale": 1,
+        "png_sha256": "9936dd549953dbe446ecf8d81c17f7a0b525f6866a89085dc30de52ce0d11cf5",
+        "table": "0001835632-24-000200-8a297348c886-t12"
+      },
+      "fact_id": "f-417",
+      "filing_date": "2024-12-04",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-11-02",
+        "start": "2024-08-04"
+      },
+      "raw": "96.5",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 96500000
+    },
+    "op6": {
+      "accession": "0001835632-24-000200",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-5",
+      "decimals": "-5",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1835632/000183563224000200/mrvl-20241102.htm",
+        "name": "mrvl-20241102.htm",
+        "sha256": "8a297348c8863979b46bfd9627fe135a68d3680b4b2bdc80aeb70283b867872c",
+        "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563224000200/mrvl-20241102.htm"
+      },
+      "duplicates": [
+        "f-84",
+        "f-509",
+        "f-529"
+      ],
+      "evidence": {
+        "html_sha256": "7282952fff65b2b382473951fcd0c9a010ed646ba19023ac681cb048a8a25156",
+        "png_scale": 1,
+        "png_sha256": "9936dd549953dbe446ecf8d81c17f7a0b525f6866a89085dc30de52ce0d11cf5",
+        "table": "0001835632-24-000200-8a297348c886-t12"
+      },
+      "fact_id": "f-433",
+      "filing_date": "2024-12-04",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-11-02",
+        "start": "2024-08-04"
+      },
+      "raw": "1,516.1",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 1516100000
+    }
+  },
+  "period_end": "2024-11-02",
+  "schema_version": 1,
+  "series": "Q",
+  "ticker": "MRVL",
+  "total": {
+    "expression": [
+      {
+        "operand": "op6",
+        "weight": 1
+      }
+    ],
+    "value": 1516100000
+  },
+  "unit": "USD",
+  "view": "product"
+}
