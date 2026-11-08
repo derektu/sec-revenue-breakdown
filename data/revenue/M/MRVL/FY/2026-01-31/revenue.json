@@ -1,0 +1,185 @@
+{
+  "categories": {
+    "Communications and other": {
+      "expression": [
+        {
+          "operand": "op2",
+          "weight": 1
+        }
+      ],
+      "value": 2094300000
+    },
+    "Data center": {
+      "expression": [
+        {
+          "operand": "op1",
+          "weight": 1
+        }
+      ],
+      "value": 6100300000
+    }
+  },
+  "checks": {
+    "structural": [
+      {
+        "check": "定義唯一",
+        "result": "pass"
+      },
+      {
+        "check": "fact 存在且唯一",
+        "result": "pass"
+      },
+      {
+        "check": "單位與精度",
+        "result": "pass"
+      },
+      {
+        "check": "加總",
+        "result": "pass"
+      },
+      {
+        "check": "證據完整",
+        "result": "pass"
+      }
+    ],
+    "sum": {
+      "categories": 8194600000,
+      "difference": 0,
+      "tolerance": "150000",
+      "total": 8194600000
+    }
+  },
+  "filings": {
+    "primary": {
+      "accession": "0001835632-26-000011",
+      "filing_date": "2026-03-11",
+      "form": "10-K",
+      "report_date": "2026-01-31"
+    }
+  },
+  "fiscal_year": 2026,
+  "operands": {
+    "op1": {
+      "accession": "0001835632-26-000011",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-55",
+      "decimals": "-5",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "mrvl:DataCenterMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1835632/000183563226000011/mrvl-20260131.htm",
+        "name": "mrvl-20260131.htm",
+        "sha256": "ff9b4bde3967b630b311982c533d48a1a2553900e5fb4bc371ceddabd43d8371",
+        "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000011/mrvl-20260131.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "b48a73246416f6ed6c62bfd1da235f25c4d6d5a617bda8f9a7b54508204f8da7",
+        "png_scale": 1,
+        "png_sha256": "59d7f3f79b9c2027a12bdea04a36c31f8f08d11393ebaee62c4ecb1c9486f784",
+        "table": "0001835632-26-000011-ff9b4bde3967-t28"
+      },
+      "fact_id": "f-420",
+      "filing_date": "2026-03-11",
+      "form": "10-K",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-01-31",
+        "start": "2025-02-02"
+      },
+      "raw": "6,100.3",
+      "role": "annual",
+      "scale": "6",
+      "sign": null,
+      "value": 6100300000
+    },
+    "op2": {
+      "accession": "0001835632-26-000011",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-61",
+      "decimals": "-5",
+      "dimensions": {
+        "srt:ProductOrServiceAxis": "mrvl:CommunicationsAndOtherMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1835632/000183563226000011/mrvl-20260131.htm",
+        "name": "mrvl-20260131.htm",
+        "sha256": "ff9b4bde3967b630b311982c533d48a1a2553900e5fb4bc371ceddabd43d8371",
+        "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000011/mrvl-20260131.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "b48a73246416f6ed6c62bfd1da235f25c4d6d5a617bda8f9a7b54508204f8da7",
+        "png_scale": 1,
+        "png_sha256": "59d7f3f79b9c2027a12bdea04a36c31f8f08d11393ebaee62c4ecb1c9486f784",
+        "table": "0001835632-26-000011-ff9b4bde3967-t28"
+      },
+      "fact_id": "f-426",
+      "filing_date": "2026-03-11",
+      "form": "10-K",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-01-31",
+        "start": "2025-02-02"
+      },
+      "raw": "2,094.3",
+      "role": "annual",
+      "scale": "6",
+      "sign": null,
+      "value": 2094300000
+    },
+    "op3": {
+      "accession": "0001835632-26-000011",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-1",
+      "decimals": "-5",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1835632/000183563226000011/mrvl-20260131.htm",
+        "name": "mrvl-20260131.htm",
+        "sha256": "ff9b4bde3967b630b311982c533d48a1a2553900e5fb4bc371ceddabd43d8371",
+        "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000011/mrvl-20260131.htm"
+      },
+      "duplicates": [
+        "f-125",
+        "f-459",
+        "f-474"
+      ],
+      "evidence": {
+        "html_sha256": "b48a73246416f6ed6c62bfd1da235f25c4d6d5a617bda8f9a7b54508204f8da7",
+        "png_scale": 1,
+        "png_sha256": "59d7f3f79b9c2027a12bdea04a36c31f8f08d11393ebaee62c4ecb1c9486f784",
+        "table": "0001835632-26-000011-ff9b4bde3967-t28"
+      },
+      "fact_id": "f-432",
+      "filing_date": "2026-03-11",
+      "form": "10-K",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2026-01-31",
+        "start": "2025-02-02"
+      },
+      "raw": "8,194.6",
+      "role": "annual",
+      "scale": "6",
+      "sign": null,
+      "value": 8194600000
+    }
+  },
+  "period_end": "2026-01-31",
+  "schema_version": 1,
+  "series": "FY",
+  "ticker": "MRVL",
+  "total": {
+    "expression": [
+      {
+        "operand": "op3",
+        "weight": 1
+      }
+    ],
+    "value": 8194600000
+  },
+  "unit": "USD",
+  "view": "product"
+}
