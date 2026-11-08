@@ -31,7 +31,7 @@ from ..common.jsonio import JsonCodec
 from .evidence import TableScreenshotter
 from .compose import NotDerived, Operand, PeriodComposer, PeriodResult
 from .filings import MERGE_CHECK, FilingSet, ParseError
-from .review import TOTAL_LABEL, comparatives
+from .review import TOTAL_LABEL, comparatives, renamings
 from .snapshot import SnapshotFilingSet
 from .source import ParserSource
 
@@ -318,8 +318,12 @@ class RevenueParser:
         return lambda request: self.composer.request(filing, request)
 
     def comparatives(self, document, filing, baselines: list[tuple[str, str, dict]]) -> list[dict]:
-        """`filing` 列示的期間與 `baselines` 的比較欄比對；期間長度依這家公司的天數範圍分類。Q4 口徑一致與差異標記都經過這裡。"""
-        return comparatives(document, filing.accession, baselines, self.compose_for(filing), self.source.total_name, self.source.durations)
+        """`filing` 列示的期間與 `baselines` 的比較欄比對；期間長度依這家公司的天數範圍分類，改名的分類依這家公司宣告的
+        對應比對。Q4 口徑一致與差異標記都經過這裡。"""
+        return comparatives(
+            document, filing.accession, baselines, self.compose_for(filing), self.source.total_name, self.source.durations,
+            self.source.successors,
+        )
 
     # ---- Q4 口徑 ----
 
@@ -348,18 +352,23 @@ class RevenueParser:
                 for a in addends
             ]
 
+        def named(c):
+            return f"{c['category']}（年報稱 {c['listed_category']}）" if "listed_category" in c else c["category"]
+
         document = self.filings.document(primary)
+        # 只比兩邊都有的分類：上一財年的分類名稱，或它依公司宣告的改名對應後的名稱，在年報期別的分類中。
         active = set(self.source.categories(result.period_end)) | {TOTAL_LABEL}
         found = [
             c
             for c in self.comparatives(document, primary, [("FY", prior, baseline)])
-            if c["role"] == "annual" and c["category"] in active
+            if c["role"] == "annual" and active.intersection(renamings(c["category"], self.source.successors))
         ]
         if not any(c["category"] == TOTAL_LABEL for c in found):
             return {"result": "undetermined", "reason": f"{primary.accession} 沒有列示上一財年（{prior} 止）的總營收"}
         changes = [
             {
                 "category": c["category"],
+                **({"listed_category": c["listed_category"]} if "listed_category" in c else {}),
                 "period": c["period"],
                 "previous_value": c["published_value"],
                 "listed_value": c["listed_value"],
@@ -373,7 +382,7 @@ class RevenueParser:
         ]
         if changes:
             where = "已上線 FY" if basis == "published" else "上一份年報"
-            listed = "；".join(f"{c['category']} {where} {c['previous_value']}、年報 {c['listed_value']}" for c in changes)
+            listed = "；".join(f"{named(c)} {where} {c['previous_value']}、年報 {c['listed_value']}" for c in changes)
             raise NotDerived(
                 "Q4 口徑一致",
                 f"年報 {primary.accession} 列示的上一財年（{prior} 止）數字與先前申報（{where}，{previous['accession']}）不同："
@@ -382,7 +391,7 @@ class RevenueParser:
             )
         unknown = [c for c in found if c["result"] != "consistent"]
         if unknown:
-            listed = "；".join(f"{c['category']}：{c['result']}（{c.get('note', '')}）" for c in unknown)
+            listed = "；".join(f"{named(c)}：{c['result']}（{c.get('note', '')}）" for c in unknown)
             return {"result": "undetermined", "reason": f"年報 {primary.accession} 的上一財年數字有分類無法比較：{listed}"}
         return None
 
@@ -667,6 +676,7 @@ class RevenueParser:
                 markers.setdefault((item["series"], item["period_end"]), []).append(
                     {
                         "category": item["category"],
+                        **({"listed_category": item["listed_category"]} if "listed_category" in item else {}),
                         "role": item["role"],
                         "period": item["period"],
                         "result": item["result"],

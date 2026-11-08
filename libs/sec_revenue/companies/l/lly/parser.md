@@ -129,4 +129,4 @@ Q2 申報將 2023Q2 比較欄也稱為 Cardiometabolic Health，其全球合計 
 
 正式 `status.json` 各期均沒有 `differences`，沒有差異標記或比較錯誤紀錄。
 
-比較欄依每份申報自己的成員與名稱組成。較晚申報將第一類改稱 Cardiometabolic Health 時，不會倒過來將已發布的 2024Q1 Diabetes and obesity 改名；同名分類找不到比較值時屬於 `not_found`，依框架規則不寫差異標記。因此，沒有差異標記不代表每份較晚申報都能提供每個早期分類的同名比較值。
+比較欄依每份申報自己的成員與名稱組成。較晚申報將第一類改稱 Cardiometabolic Health 時，不會倒過來將已發布的 2024Q1 Diabetes and obesity 改名。`parser.py` 依「第一類改名與範圍」的證據宣告 `FORMER_NAMES = {"Cardiometabolic Health": ("Diabetes and obesity",)}`，比較欄比對以較晚申報的 Cardiometabolic Health 比對已發布的 Diabetes and obesity：2025Q1 10-Q（0000059478-25-000132）列示的 2024Q1 為 5,493.0，與已發布值相同。

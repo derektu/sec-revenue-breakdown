@@ -53,6 +53,7 @@ parser 分三層。每個 ticker 的 parser 各自獨立，新增或修改一個
 - fact 清單只取主文件的 inline XBRL（框架流程第 2 步）。
 - 財年與季別的決定方式（框架流程第 3 步）。
 - 期間分類的天數範圍（框架流程第 4 步）。
+- Q4 口徑一致與比較欄比對只比同名的分類（框架流程第 6 步、第 11 步）。
 
 預設由人決定，適用大多數公司。公司不符合某個預設時，由這家公司的 parser 自訂。各家公司的會計作法差異大，框架預先訂的數值界限擋不住實際的申報，所以框架只檢查自訂的格式（以期間範圍為例：四種期間都有、正整數、最短不大於最長、由短到長且互不重疊）；數值是否合理（例如範圍要多寬）由公司 parser 判斷，理由寫在這家公司的 `parser.md`。自訂只影響宣告它的公司，其他 ticker 的輸出不變；自訂的格式不對時也只有這家公司不處理，同一次執行的其他 ticker 照常處理。這樣一家公司的特殊申報方式留在它自己的目錄裡，預設維持適用大多數公司，不隨個別公司調整。
 
@@ -71,6 +72,7 @@ parser 分三層。每個 ticker 的 parser 各自獨立，新增或修改一個
 | 期間分類的天數範圍 | `DURATION_DAYS` | COST 的 12／12／12／16 週季度 |
 | 財年取申報宣告的值 | `FISCAL_YEAR` | ORCL 在 10-Q 宣告錯一年的財年 |
 | fact 清單只取主文件的 inline XBRL | `ATTACHMENTS` | PGR 10-K 的財報在附件 EX-13，主文件只有 Schedule III |
+| 比較欄與 Q4 口徑一致只比同名的分類 | `FORMER_NAMES` | ORCL 的 Cloud and license 改名 Cloud and software，範圍不變 |
 
 ### utility
 
@@ -147,6 +149,7 @@ TOTAL = "Total net sales"             # 組成中稱呼總營收的名稱
 # DURATION_DAYS = {"quarter": (84, 119), "six_months": (168, 189), "nine_months": (252, 280), "annual": (357, 378)}
 # FISCAL_YEAR = "prior_annual"
 # ATTACHMENTS = ("EX-13",)
+# FORMER_NAMES = {"Cloud and software": ("Cloud and license",)}
 
 def compose(filing, request):
     """filing：一份申報的 fact 清單（FilingFacts）；request：要組的期間（Request）。
@@ -170,7 +173,7 @@ def categories(day):
 - **`TOTAL`**：總營收在 `missing`、`unparseable` 中的鍵，也是失敗訊息中稱呼總營收的名稱；取申報總額列的名稱即可，不能與分類重名。總營收沒有輸出名稱：`revenue.json` 的 `total` 只有運算式與數值，viewer 與差異標記一律稱「總營收」，所以申報改了總額列的名稱也不用跟著切換；「不用後來的名稱輸出早期的分類」管的是分類與調節項。
 - **`compose` 的回傳**：分類、調節項與總營收各一個運算式，每一項指定 fact 與權重，數值由框架依 fact 計算。權重只能是 1 或 -1，依公司 parser 列出的順序輸出。分類加總與總營收之間的合法差額（例如公司間抵銷、未分配項目）列為調節項：參與加總檢核，不輸出成分類；組成有調節項的期別，`revenue.json` 有 `reconciling` 欄位。
 - **框架核對交回的 fact**：交給公司 parser 的 fact 清單是唯讀副本；交回的每個 fact 必須在這份申報的 fact 清單中、期間與 `request` 相符；框架另外補上同 concept、同 dimensions、同期間的重複 fact，檢查數值一致後依重複值的規則選定運算元。
-- **沒有這個分類**：這份申報沒有某個分類時，回傳中不列出它，原因記在 `missing`。比較欄比對時記為 `not_found`。總營收一定要有。
+- **沒有這個分類**：這份申報沒有某個分類時，回傳中不列出它，原因記在 `missing`。比較欄比對時記為 `not_found`（宣告了 `FORMER_NAMES` 時，先以改名後的分類比對，見「自訂點」）。總營收一定要有。
 - **無法確定是哪些 fact**：某一項在申報中有、但無法確定（例如前綴宣告衝突）時記在 `unparseable`；整份申報都組不出來時丟出 `ParserFailure(檢核名稱, 原因)`，檢核名稱用自我檢核表中的名稱，無法確定 fact 時用「fact 存在且唯一」。主申報的呼叫記為該期失敗，`status.json` 的格式與其他失敗相同；比較欄比對時，該項（`ParserFailure` 時為這段期間的每一項）記為 `unparseable`，寫成差異標記；申報沒有起訖相同的 fact、也就是沒有列示這段期間時，不比對。
 - **utility**：`parser_utils` 的 `find`（一種寫法的 fact）、`one_of`（多種寫法）與 `put`（放進組成，找不到時記在 `missing`）涵蓋依 concept 與 dimensions 精確查找的寫法；比對以 namespace URI 進行，前綴沒有宣告的寫法視為不存在。
 - **依申報期末日切換寫法**：`FilingFacts.report_date` 是申報的期末日。依日期切換時，`parser.md` 寫明是哪一份申報開始改變（見「時點與寫 parser 的人的知識」）。
@@ -182,6 +185,7 @@ def categories(day):
   | `DURATION_DAYS` | `dict[str, tuple[int, int]]`：`quarter`、`six_months`、`nine_months`、`annual` → （最短天數, 最長天數），含首尾日 | 框架流程第 4 步的預設範圍 | 四種期間都有、沒有其他鍵；每個範圍是兩個正整數（不接受 bool）、最短不大於最長；依 `quarter`、`six_months`、`nine_months`、`annual` 由短到長，前一種的最長小於後一種的最短 |
   | `FISCAL_YEAR` | `str`：`declared` 或 `prior_annual` | `declared` | 只能是這兩個值 |
   | `ATTACHMENTS` | `tuple[str, ...]`：fact 清單另外納入的附件類型，即申報包中附件的 `type`，例如 `("EX-13",)` | 沒有定義：fact 清單只取主文件 | 非空的 tuple；每一項是 `EX-<編號>` 形式的字串（例如 `EX-13`、`EX-99.1`），不重複 |
+  | `FORMER_NAMES` | `dict[str, tuple[str, ...]]`：新名稱 → 同一個分類改名前的各個舊名稱，例如 `{"Cloud and software": ("Cloud and license",)}` | 沒有定義：只比同名的分類 | 非空的 dict；新名稱是非空字串；舊名稱是非空的 tuple，每一項是非空字串、不等於自己的新名稱；新舊名稱都不是 `TOTAL` 或「總營收」；一個舊名稱只出現一次（只對應一個新名稱）；依對應從舊名稱往新名稱走不會繞回原處 |
 
   - `DURATION_DAYS`：由短到長的範圍互不重疊，每個天數至多屬於一種期間。由短到長是框架保證的兩項期間結構之一（另一項是同一個期間要求的各項起日相同，見「結構檢核」的「fact 存在且唯一」），其餘數值由公司 parser 判斷：範圍要多寬由公司 parser 決定，`parser.md` 寫明公司的季度長度與範圍的理由；範圍太寬可能把不相干的期間認成單季、六個月等，由公司 parser 與 review 負責。
   - `FISCAL_YEAR = "prior_annual"`：10-Q 的財年由框架以前一份 10-K 推算（框架流程第 3 步）。推算要用到另一份申報，公司 parser 拿不到其他申報，所以只能宣告選用這個方式，推算由框架做。
@@ -190,6 +194,12 @@ def categories(day):
     - dei 取自主文件。namespaces 是各文件宣告的聯集；同一個前綴在不同文件對應不同 URI 時，與文件內的宣告衝突一樣處理。
     - fact 依文件順序排列：主文件在前，附件接在後面；重複值同精度、同表格項目數時取文件順序第一個，所以主文件優先。表格編號屬於 fact 所在的文件。
     - 申報中有沒有這類附件、附件裡的 fact 是否是要用的數字，由公司 parser 判斷，`parser.md` 寫明為什麼需要讀附件。
+  - `FORMER_NAMES`：分類名稱跟各期申報（見「時點與寫 parser 的人的知識」），公司改名後，較晚申報以新名稱列示改名前的期別。宣告對應後，比較欄比對與 Q4 口徑一致把新名稱接上已上線的舊名稱（見「自我檢核」的比較欄比對與框架流程的 Q4 口徑一致）。對應只用在這兩項比對：每一期的分類名稱、`categories` 與 Q4 推算條件都不受影響：財年內改名時（LLY 2024 年 Q2 10-Q），那一年的 Q4 仍因分類集合不同而不推算；在財年起點改名時（ORCL FY2026 Q1 10-Q），同財年的各期都是新名稱，Q4 照常推算。
+    - 連續改名可以分段宣告（`{"B": ("A",), "C": ("B",)}`），比對時從已上線的名稱沿對應一路往後，取申報組成中第一個列出的名稱（分類、調節項或無法確定的項目）；鏈上都沒有列出時，取第一個記為找不到的名稱，結果是 `not_found`。組成同時有舊名稱與新名稱時，以舊名稱本身比對。
+    - 舊名稱的 tuple 只列同一個分類的歷代名稱，不表達合併：兩個分類併成一個不宣告。同一個已上線期別有兩個以上的分類對到申報中的同一個名稱時（例如 `{"C": ("A", "B")}` 而期別同時有 A 與 B，或期別同時有 A 與 A2、A 改名為 A2），無法判斷申報列示值屬於哪一個分類，這些分類都記為 `unparseable`，寫明原因；Q4 口徑一致因此無法判斷，Q4 照常推算並註記。
+    - 新名稱與舊名稱都不能是總營收的名稱（`TOTAL` 或「總營收」）：總營收不以名稱比對，不需要對應。
+    - 改名是否只是改名（範圍不變）由公司 parser 判斷：`parser.md` 列出重疊期別新舊名稱同值的證據（較晚申報的比較欄對原申報，見 [Parser 開發指南](../guides/parser-dev-guide.md) 第 6 步），`parser.py` 在常數旁註明哪一份申報開始改名。範圍有變的改名不宣告：新舊名稱是兩個分類，不比對。
+    - 宣告後，改名後的重編照常寫成舊期別的差異標記；改名那一年的年報重列上一財年時，改名的分類也參與 Q4 口徑一致，數字不同時 Q4 不推算。
   - 期間範圍的自訂只改變期間分類，不改變輸出格式：`revenue.json` 的每個運算元都記錄期間起訖，期間長度可以由輸出本身核對。財年的自訂在推算值與宣告不同時記錄 `fiscal_year_basis`（框架流程第 3 步）。
 - **公司 parser 自己處理的事**，寫在自己的程式碼並記錄在 `parser.md`：
   - 用哪個 concept、哪些 dimensions。
@@ -231,7 +241,7 @@ def categories(day):
      - 任一分類（含調節項與總營收）不同：Q4 不推算，`status.json` 記為 `not_derived`，檢核名稱「Q4 口徑一致」，`basis_changes` 列出每個不同的分類、兩邊的值與加數、先前值的依據與 accession；FY 照常上線。
      - 無法判斷時 Q4 照常推算，`status.json` 的該期紀錄附 `q4_basis` 說明原因：上一財年沒有已上線的 FY、已下載的申報中也沒有申報日不晚於本年報的上一財年 10-K，上一份 10-K 組不出年度值（結構檢核不通過），年報沒有列示上一財年的總營收，或有分類無法比較（`unparseable` 或找不到列示值）。補下載較早的申報後，無法判斷的期別可能得到判斷結果（一致，或 `not_derived`），`--check` 因此報出差異屬預期。
      - 上一份 10-K 的原文缺檔或 sha256 不符（「原文存在」不通過），或宣告 `ATTACHMENTS` 時主文件與附件合不成 fact 清單（「fact 清單合併」不通過），是資料不完整，不當成無法判斷：Q4 失敗，原因指出那份 10-K。
-     - 只比對兩邊都有的分類：公司 parser 對年報沒有列出的分類不比對。分類在財年交界改名（新舊名稱是兩個分類）時，舊名只在上一財年、新名只在年報期別，兩側都不比對，口徑變更只能由總營收與其他分類的差異偵測。
+     - 只比對兩邊都有的分類：上一財年的分類，或它依 `FORMER_NAMES` 改名後的分類，在年報期別的 `categories` 中才比對。分類在財年交界改名、公司 parser 宣告了對應時，上一財年的舊名稱與年報列示的新名稱比對，`basis_changes` 的 `category` 是舊名稱、`listed_category` 是新名稱；沒有宣告對應（例如改名同時改了範圍）時，新舊名稱是兩個分類，兩側都不比對，口徑變更只能由總營收與其他分類的差異偵測。
      - 判斷只用本年報與更早的申報，數字只來自 fact 清單。上一財年在 Q1–Q3 的 10-Q 就已重編時，年報的上一財年數字同樣與先前申報不同，Q4 也不推算。
    - 公司 parser 指定的 fact 有重複值（同 concept、dimensions、期間）時，框架以精度最高（decimals 最大）的 fact 為準；其他重複值只需在自己的精度內與它一致。同精度時選所在表格含最多其他項目的 fact，再平手取文件順序第一個，其餘記在 `duplicates`。這讓同一期的運算元盡量落在同一張表，證據截圖較少。
 7. **結構檢核**：見下節。不通過就不寫入正式輸出，只在 `status.json` 記錄原因。
@@ -272,9 +282,10 @@ Q4 推算條件（依據的各期都通過，但年度與 Q1–Q3 的分類集�
   - 已上線值：該角色運算元的加權和（九個月累計以運算式中的權重符號計，與申報列示的九個月累計同號）。
   - 申報列示值：公司 parser 從該申報組出的同一期間運算式的加權和。同一個加數有重複值時取精度最高者；數值彼此不一致時結果是 `unparseable`，`listed_addends` 列出該加數的每一個 fact（數值無法讀取時為 null）。
   - 只比分類值，不比個別加數：加數的個數、順序或成員與已上線不同都無妨（例如公司把兩個項目併成一個重新列示，和相同即一致）。單一加數的分類就是運算元對運算元。列示值由公司 parser 從該申報重新組出，不沿用已上線運算元的 QName，所以公司改 tag 或改成員名稱後仍比得到。
+  - 分類以名稱對應：已上線的分類名稱在該申報的組成中找申報列示值。組成沒有這個名稱、公司 parser 以 `FORMER_NAMES` 宣告了它改名後的名稱時，改用新名稱的分類比對（見「自訂點」）；比對結果的分類仍是已上線的舊名稱，另記申報中的新名稱。
 - 公司 parser 能從申報組出某段期間的總營收時，視為涵蓋該期間，已上線輸出中期間相同的角色都比對：單季欄對 Q 輸出的單季（去年同季，或修正申報的本期）；全年欄對 FY 與 Q4 的年度；九個月欄對 Q4 的九個月累計。運算元來自同一份申報時不比。
 - 已上線輸出沒有的期間長度（例如 10-Q 的六個月累計）不比對：把兩季相加再比屬於解讀。
-- 結果：`consistent`（差距不超過雙方所有運算元的誤差上限總和）、`different`（超出）、`unparseable`（有 fact 無法解析或缺 decimals）、`not_found`（公司 parser 對該申報沒有列出這個分類，或組不出該期間的運算式）。
+- 結果：`consistent`（差距不超過雙方所有運算元的誤差上限總和）、`different`（超出）、`unparseable`（有 fact 無法解析或缺 decimals）、`not_found`（公司 parser 對該申報沒有列出這個分類、也沒有列出它宣告的改名後分類，或組不出該期間的運算式）。
 - 誤差上限：每個 fact 取 `decimals` 與顯示文字本身精度中較粗者。顯示精度是 fact 文字小數點後的位數減 scale（`15,436.5`、scale 6 為十萬位，`15,437`、scale 6 為百萬位）。公司有時宣告的 decimals 比顯示的位數細，數值實際只到顯示的位數，以宣告值計會把四捨五入誤判成不同。組合數值與加總檢核仍以 `decimals` 計。
 - `different` 與 `unparseable` 寫成舊期別的差異標記（`status.json` 的 `differences`），列出分類、角色、期間、已上線值、申報列示值、來源申報，以及雙方各自的加數。`consistent` 與 `not_found` 不寫。
 - 已上線輸出在 `status.json` 沒有紀錄時（例如紀錄被手動刪除），由輸出補上該期的紀錄，標記照樣寫入。原文讀不到的申報不比對，列在 `status.json` 的 `comparison_errors`。
@@ -414,11 +425,11 @@ Q4 推算條件（依據的各期都通過，但年度與 Q1–Q3 的分類集�
 | `fiscal_year_basis` | 自訂 `FISCAL_YEAR = "prior_annual"`、10-Q 的財年推算值與申報宣告不同時：`declared`、`derived`、`prior_annual`，與 `revenue.json` 的同名欄位相同 |
 | `check`、`reason` | 失敗或不推算時：檢核名稱與原因 |
 | `fy_categories`、`quarter_categories` | Q4 推算條件不成立時：年度的分類，以及財年起日到 Q3 期末之間依日期分段的分類 |
-| `basis_changes` | Q4 口徑一致不成立時：每個不同的分類一筆，`category`、`period`（上一財年）、`previous_value`、`listed_value`、`previous`（`basis` 為 `published` 或 `filing`，與 `accession`）、`listed`（年報的 `accession`）、`previous_addends`（依據為 `published` 時是上一財年 FY 的運算元：`operand`、concept、dimensions、`weight`、`value`；依據為 `filing` 時是上一份 10-K 中的 fact：`fact_id`、concept、dimensions、`weight`、`value`）、`listed_addends`（年報中的 fact，格式同差異標記） |
+| `basis_changes` | Q4 口徑一致不成立時：每個不同的分類一筆，`category`（上一財年的分類名稱）、選用的 `listed_category`（依 `FORMER_NAMES` 以改名後的分類比對時，年報中的名稱）、`period`（上一財年）、`previous_value`、`listed_value`、`previous`（`basis` 為 `published` 或 `filing`，與 `accession`）、`listed`（年報的 `accession`）、`previous_addends`（依據為 `published` 時是上一財年 FY 的運算元：`operand`、concept、dimensions、`weight`、`value`；依據為 `filing` 時是上一份 10-K 中的 fact：`fact_id`、concept、dimensions、`weight`、`value`）、`listed_addends`（年報中的 fact，格式同差異標記） |
 | `q4_basis` | Q4 照常推算但無法判斷口徑時：`result`（`undetermined`）與 `reason` |
 | `published_output_kept` | 失敗或不推算時：該期是否仍有先前上線的輸出 |
 | `published_output` | 失敗或不推算而仍有先前上線的輸出時：它的申報、分類數值與總營收，說明已上線值保留不動 |
-| `differences` | 差異標記：較晚申報的比較欄與此期已上線的分類值不同（`different`）或無法解析（`unparseable`）。每筆一個分類 × 角色：`category`、`role`（`quarter`／`annual`／`nine_months`）、`period`、`result`、`published_value`、`listed_value`（無法解析時為 null）、`source`（申報的 accession、form、filing_date）、`published_addends`（已上線運算元：`operand`、concept、dimensions、`weight`、`value`）、`listed_addends`（申報中的 fact：`fact_id`、concept、dimensions、`weight`、`value`）、選用的 `note` |
+| `differences` | 差異標記：較晚申報的比較欄與此期已上線的分類值不同（`different`）或無法解析（`unparseable`）。每筆一個分類 × 角色：`category`（此期已上線的分類名稱）、選用的 `listed_category`（依 `FORMER_NAMES` 以改名後的分類比對時，申報中的名稱）、`role`（`quarter`／`annual`／`nine_months`）、`period`、`result`、`published_value`、`listed_value`（無法解析時為 null）、`source`（申報的 accession、form、filing_date）、`published_addends`（已上線運算元：`operand`、concept、dimensions、`weight`、`value`）、`listed_addends`（申報中的 fact：`fact_id`、concept、dimensions、`weight`、`value`）、選用的 `note` |
 | `differs_from_published` | 重算結果與已上線輸出的數值或依據不同：原因、差異的分類與新舊值、不同的欄位 |
 | `stale_fields` | 重算結果與已上線輸出只有中繼資料不同時，不同的欄位 |
 

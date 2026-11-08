@@ -20,6 +20,8 @@ OPERATING = "us-gaap:OperatingSegmentsMember"
 RENAMED_FROM = "2025-06-01"
 CLOUD_NEW = ("Cloud and software", "orcl:CloudAndSoftwareBusinessMember")
 CLOUD_OLD = ("Cloud and license", "orcl:CloudAndLicenseBusinessMember")
+# 改名的申報見 RENAMED_FROM 的註解；只改名、範圍不變，證據見 parser.md 的「Cloud and license 改名」。
+FORMER_NAMES = {CLOUD_NEW[0]: (CLOUD_OLD[0],)}
 OTHER_SEGMENTS = (
     ("Services", "orcl:ServicesBusinessMember"),
     ("Hardware", "orcl:HardwareBusinessMember"),
