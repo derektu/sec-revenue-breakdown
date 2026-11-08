@@ -1,0 +1,279 @@
+{
+  "categories": {
+    "Applied Global Services": {
+      "expression": [
+        {
+          "operand": "op2",
+          "weight": 1
+        }
+      ],
+      "value": 1580000000
+    },
+    "Corporate and Other": {
+      "expression": [
+        {
+          "operand": "op3",
+          "weight": 1
+        }
+      ],
+      "value": 23000000
+    },
+    "Display and Adjacent Markets": {
+      "expression": [
+        {
+          "operand": "op4",
+          "weight": 1
+        }
+      ],
+      "value": 251000000
+    },
+    "Semiconductor Systems": {
+      "expression": [
+        {
+          "operand": "op1",
+          "weight": 1
+        }
+      ],
+      "value": 4924000000
+    }
+  },
+  "checks": {
+    "structural": [
+      {
+        "check": "定義唯一",
+        "result": "pass"
+      },
+      {
+        "check": "fact 存在且唯一",
+        "result": "pass"
+      },
+      {
+        "check": "單位與精度",
+        "result": "pass"
+      },
+      {
+        "check": "加總",
+        "result": "pass"
+      },
+      {
+        "check": "證據完整",
+        "result": "pass"
+      }
+    ],
+    "sum": {
+      "categories": 6778000000,
+      "difference": 0,
+      "tolerance": "2500000",
+      "total": 6778000000
+    }
+  },
+  "filings": {
+    "primary": {
+      "accession": "0000006951-24-000032",
+      "filing_date": "2024-08-22",
+      "form": "10-Q",
+      "report_date": "2024-07-28"
+    }
+  },
+  "fiscal_quarter": 3,
+  "fiscal_year": 2024,
+  "operands": {
+    "op1": {
+      "accession": "0000006951-24-000032",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-320",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "amat:SemiconductorSystemsMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/6951/000000695124000032/amat-20240728.htm",
+        "name": "amat-20240728.htm",
+        "sha256": "979098308c62c0732ed0016edde502005f3c3f4f9ec07df700f1ce4611589e4a",
+        "url": "https://www.sec.gov/Archives/edgar/data/6951/000000695124000032/amat-20240728.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "1a212dc19aa5aeaf8f30afcff59d6132ab03a52835254140e5c90c6d6e17ddae",
+        "png_scale": 1,
+        "png_sha256": "1e88fd08b3db19ad751042d355c2526ad3a2baa6dbe1cddec336a3dcb623f7d4",
+        "table": "0000006951-24-000032-979098308c62-t45"
+      },
+      "fact_id": "f-1284",
+      "filing_date": "2024-08-22",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-07-28",
+        "start": "2024-04-29"
+      },
+      "raw": "4,924",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 4924000000
+    },
+    "op2": {
+      "accession": "0000006951-24-000032",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-322",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "amat:AppliedGlobalServicesMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/6951/000000695124000032/amat-20240728.htm",
+        "name": "amat-20240728.htm",
+        "sha256": "979098308c62c0732ed0016edde502005f3c3f4f9ec07df700f1ce4611589e4a",
+        "url": "https://www.sec.gov/Archives/edgar/data/6951/000000695124000032/amat-20240728.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "1a212dc19aa5aeaf8f30afcff59d6132ab03a52835254140e5c90c6d6e17ddae",
+        "png_scale": 1,
+        "png_sha256": "1e88fd08b3db19ad751042d355c2526ad3a2baa6dbe1cddec336a3dcb623f7d4",
+        "table": "0000006951-24-000032-979098308c62-t45"
+      },
+      "fact_id": "f-1288",
+      "filing_date": "2024-08-22",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-07-28",
+        "start": "2024-04-29"
+      },
+      "raw": "1,580",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 1580000000
+    },
+    "op3": {
+      "accession": "0000006951-24-000032",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-326",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "amat:CorporateAndReconcilingItemsMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/6951/000000695124000032/amat-20240728.htm",
+        "name": "amat-20240728.htm",
+        "sha256": "979098308c62c0732ed0016edde502005f3c3f4f9ec07df700f1ce4611589e4a",
+        "url": "https://www.sec.gov/Archives/edgar/data/6951/000000695124000032/amat-20240728.htm"
+      },
+      "duplicates": [
+        "f-1433"
+      ],
+      "evidence": {
+        "html_sha256": "1a212dc19aa5aeaf8f30afcff59d6132ab03a52835254140e5c90c6d6e17ddae",
+        "png_scale": 1,
+        "png_sha256": "1e88fd08b3db19ad751042d355c2526ad3a2baa6dbe1cddec336a3dcb623f7d4",
+        "table": "0000006951-24-000032-979098308c62-t45"
+      },
+      "fact_id": "f-1296",
+      "filing_date": "2024-08-22",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-07-28",
+        "start": "2024-04-29"
+      },
+      "raw": "23",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 23000000
+    },
+    "op4": {
+      "accession": "0000006951-24-000032",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-324",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "amat:DisplayandAdjacentMarketsMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/6951/000000695124000032/amat-20240728.htm",
+        "name": "amat-20240728.htm",
+        "sha256": "979098308c62c0732ed0016edde502005f3c3f4f9ec07df700f1ce4611589e4a",
+        "url": "https://www.sec.gov/Archives/edgar/data/6951/000000695124000032/amat-20240728.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "1a212dc19aa5aeaf8f30afcff59d6132ab03a52835254140e5c90c6d6e17ddae",
+        "png_scale": 1,
+        "png_sha256": "1e88fd08b3db19ad751042d355c2526ad3a2baa6dbe1cddec336a3dcb623f7d4",
+        "table": "0000006951-24-000032-979098308c62-t45"
+      },
+      "fact_id": "f-1292",
+      "filing_date": "2024-08-22",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-07-28",
+        "start": "2024-04-29"
+      },
+      "raw": "251",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 251000000
+    },
+    "op5": {
+      "accession": "0000006951-24-000032",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-3",
+      "decimals": "-6",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/6951/000000695124000032/amat-20240728.htm",
+        "name": "amat-20240728.htm",
+        "sha256": "979098308c62c0732ed0016edde502005f3c3f4f9ec07df700f1ce4611589e4a",
+        "url": "https://www.sec.gov/Archives/edgar/data/6951/000000695124000032/amat-20240728.htm"
+      },
+      "duplicates": [
+        "f-31",
+        "f-703",
+        "f-1405"
+      ],
+      "evidence": {
+        "html_sha256": "1a212dc19aa5aeaf8f30afcff59d6132ab03a52835254140e5c90c6d6e17ddae",
+        "png_scale": 1,
+        "png_sha256": "1e88fd08b3db19ad751042d355c2526ad3a2baa6dbe1cddec336a3dcb623f7d4",
+        "table": "0000006951-24-000032-979098308c62-t45"
+      },
+      "fact_id": "f-1300",
+      "filing_date": "2024-08-22",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-07-28",
+        "start": "2024-04-29"
+      },
+      "raw": "6,778",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 6778000000
+    }
+  },
+  "period_end": "2024-07-28",
+  "schema_version": 1,
+  "series": "Q",
+  "ticker": "AMAT",
+  "total": {
+    "expression": [
+      {
+        "operand": "op5",
+        "weight": 1
+      }
+    ],
+    "value": 6778000000
+  },
+  "unit": "USD",
+  "view": "business_segment"
+}

@@ -1,0 +1,411 @@
+{
+  "periods": {
+    "FY": {
+      "2024-10-27": {
+        "accession": "0000006951-24-000044",
+        "differences": [
+          {
+            "category": "Corporate and Other",
+            "listed_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "amat:CorporateAndReconcilingItemsMember"
+                },
+                "fact_id": "f-1441",
+                "value": 1040000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": 1040000000,
+            "period": {
+              "end": "2024-10-27",
+              "start": "2023-10-30"
+            },
+            "published_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "amat:CorporateAndReconcilingItemsMember"
+                },
+                "operand": "op3",
+                "value": 155000000,
+                "weight": 1
+              }
+            ],
+            "published_value": 155000000,
+            "result": "different",
+            "role": "annual",
+            "source": {
+              "accession": "0001628280-25-056742",
+              "filing_date": "2025-12-12",
+              "form": "10-K"
+            }
+          }
+        ],
+        "fiscal_year": 2024,
+        "status": "published"
+      },
+      "2025-10-26": {
+        "accession": "0001628280-25-056742",
+        "fiscal_year": 2025,
+        "status": "published"
+      }
+    },
+    "Q": {
+      "2024-01-28": {
+        "accession": "0000006951-24-000012",
+        "fiscal_quarter": 1,
+        "fiscal_year": 2024,
+        "status": "published"
+      },
+      "2024-04-28": {
+        "accession": "0000006951-24-000022",
+        "fiscal_quarter": 2,
+        "fiscal_year": 2024,
+        "status": "published"
+      },
+      "2024-07-28": {
+        "accession": "0000006951-24-000032",
+        "fiscal_quarter": 3,
+        "fiscal_year": 2024,
+        "status": "published"
+      },
+      "2024-10-27": {
+        "check": "Q4 推算條件",
+        "fiscal_quarter": 4,
+        "fiscal_year": 2024,
+        "fy_categories": [
+          "Semiconductor Systems",
+          "Applied Global Services",
+          "Corporate and Other",
+          "Display"
+        ],
+        "published_output_kept": false,
+        "quarter_categories": [
+          {
+            "categories": [
+              "Semiconductor Systems",
+              "Applied Global Services",
+              "Corporate and Other",
+              "Display and Adjacent Markets"
+            ],
+            "end": "2024-07-28",
+            "start": "2023-10-30"
+          }
+        ],
+        "reason": "年度 2024-10-27 的分類為 ['Semiconductor Systems', 'Applied Global Services', 'Corporate and Other', 'Display']，Q1–Q3 期間 2023-10-30～2024-07-28 為 ['Semiconductor Systems', 'Applied Global Services', 'Corporate and Other', 'Display and Adjacent Markets']；Q4 不推算",
+        "status": "not_derived"
+      },
+      "2025-01-26": {
+        "accession": "0000006951-25-000011",
+        "differences": [
+          {
+            "category": "Applied Global Services",
+            "listed_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "amat:AppliedGlobalServicesSegmentMember"
+                },
+                "fact_id": "f-918",
+                "value": 1353000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": 1353000000,
+            "period": {
+              "end": "2025-01-26",
+              "start": "2024-10-28"
+            },
+            "published_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "amat:AppliedGlobalServicesSegmentMember"
+                },
+                "operand": "op2",
+                "value": 1594000000,
+                "weight": 1
+              }
+            ],
+            "published_value": 1594000000,
+            "result": "different",
+            "role": "quarter",
+            "source": {
+              "accession": "0001628280-26-009694",
+              "filing_date": "2026-02-19",
+              "form": "10-Q"
+            }
+          },
+          {
+            "category": "Semiconductor Systems",
+            "listed_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "amat:SemiconductorSystemsSegmentMember"
+                },
+                "fact_id": "f-917",
+                "value": 5597000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": 5597000000,
+            "period": {
+              "end": "2025-01-26",
+              "start": "2024-10-28"
+            },
+            "published_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "amat:SemiconductorSystemsSegmentMember"
+                },
+                "operand": "op1",
+                "value": 5356000000,
+                "weight": 1
+              }
+            ],
+            "published_value": 5356000000,
+            "result": "different",
+            "role": "quarter",
+            "source": {
+              "accession": "0001628280-26-009694",
+              "filing_date": "2026-02-19",
+              "form": "10-Q"
+            }
+          }
+        ],
+        "fiscal_quarter": 1,
+        "fiscal_year": 2025,
+        "status": "published"
+      },
+      "2025-04-27": {
+        "accession": "0000006951-25-000024",
+        "differences": [
+          {
+            "category": "Applied Global Services",
+            "listed_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "amat:AppliedGlobalServicesSegmentMember"
+                },
+                "fact_id": "f-1160",
+                "value": 1420000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": 1420000000,
+            "period": {
+              "end": "2025-04-27",
+              "start": "2025-01-27"
+            },
+            "published_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "amat:AppliedGlobalServicesSegmentMember"
+                },
+                "operand": "op2",
+                "value": 1566000000,
+                "weight": 1
+              }
+            ],
+            "published_value": 1566000000,
+            "result": "different",
+            "role": "quarter",
+            "source": {
+              "accession": "0001628280-26-037227",
+              "filing_date": "2026-05-21",
+              "form": "10-Q"
+            }
+          },
+          {
+            "category": "Semiconductor Systems",
+            "listed_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "amat:SemiconductorSystemsSegmentMember"
+                },
+                "fact_id": "f-1159",
+                "value": 5401000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": 5401000000,
+            "period": {
+              "end": "2025-04-27",
+              "start": "2025-01-27"
+            },
+            "published_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "amat:SemiconductorSystemsSegmentMember"
+                },
+                "operand": "op1",
+                "value": 5255000000,
+                "weight": 1
+              }
+            ],
+            "published_value": 5255000000,
+            "result": "different",
+            "role": "quarter",
+            "source": {
+              "accession": "0001628280-26-037227",
+              "filing_date": "2026-05-21",
+              "form": "10-Q"
+            }
+          }
+        ],
+        "fiscal_quarter": 2,
+        "fiscal_year": 2025,
+        "status": "published"
+      },
+      "2025-07-27": {
+        "accession": "0000006951-25-000037",
+        "differences": [
+          {
+            "category": "Applied Global Services",
+            "listed_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "amat:AppliedGlobalServicesSegmentMember"
+                },
+                "fact_id": "f-1159",
+                "value": 1463000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": 1463000000,
+            "period": {
+              "end": "2025-07-27",
+              "start": "2025-04-28"
+            },
+            "published_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "amat:AppliedGlobalServicesSegmentMember"
+                },
+                "operand": "op2",
+                "value": 1600000000,
+                "weight": 1
+              }
+            ],
+            "published_value": 1600000000,
+            "result": "different",
+            "role": "quarter",
+            "source": {
+              "accession": "0001628280-26-058235",
+              "filing_date": "2026-08-20",
+              "form": "10-Q"
+            }
+          },
+          {
+            "category": "Semiconductor Systems",
+            "listed_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "amat:SemiconductorSystemsSegmentMember"
+                },
+                "fact_id": "f-1158",
+                "value": 5564000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": 5564000000,
+            "period": {
+              "end": "2025-07-27",
+              "start": "2025-04-28"
+            },
+            "published_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "amat:SemiconductorSystemsSegmentMember"
+                },
+                "operand": "op1",
+                "value": 5427000000,
+                "weight": 1
+              }
+            ],
+            "published_value": 5427000000,
+            "result": "different",
+            "role": "quarter",
+            "source": {
+              "accession": "0001628280-26-058235",
+              "filing_date": "2026-08-20",
+              "form": "10-Q"
+            }
+          }
+        ],
+        "fiscal_quarter": 3,
+        "fiscal_year": 2025,
+        "status": "published"
+      },
+      "2025-10-26": {
+        "check": "Q4 推算條件",
+        "fiscal_quarter": 4,
+        "fiscal_year": 2025,
+        "fy_categories": [
+          "Semiconductor Systems",
+          "Applied Global Services",
+          "Corporate and Other"
+        ],
+        "published_output_kept": false,
+        "quarter_categories": [
+          {
+            "categories": [
+              "Semiconductor Systems",
+              "Applied Global Services",
+              "Corporate and Other",
+              "Display"
+            ],
+            "end": "2025-07-27",
+            "start": "2024-10-28"
+          }
+        ],
+        "reason": "年度 2025-10-26 的分類為 ['Semiconductor Systems', 'Applied Global Services', 'Corporate and Other']，Q1–Q3 期間 2024-10-28～2025-07-27 為 ['Semiconductor Systems', 'Applied Global Services', 'Corporate and Other', 'Display']；Q4 不推算",
+        "status": "not_derived"
+      },
+      "2026-01-25": {
+        "accession": "0001628280-26-009694",
+        "fiscal_quarter": 1,
+        "fiscal_year": 2026,
+        "status": "published"
+      },
+      "2026-04-26": {
+        "accession": "0001628280-26-037227",
+        "fiscal_quarter": 2,
+        "fiscal_year": 2026,
+        "status": "published"
+      },
+      "2026-07-26": {
+        "accession": "0001628280-26-058235",
+        "fiscal_quarter": 3,
+        "fiscal_year": 2026,
+        "status": "published"
+      }
+    }
+  },
+  "ticker": "AMAT",
+  "view": "business_segment"
+}
