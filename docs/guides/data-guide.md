@@ -64,7 +64,7 @@
 
 所以序列上每一期都是申報當時的數字；公司事後的重編以標記揭露。外部資料商多半用事後重編的數字，所以和我們不同的地方，常常正好是有標記的格子。
 
-目前的限制：分類改名前後不比對（issue #89）。例如 CAT 把 Energy & Transportation 改名為 Power & Energy 後，2026 年申報重列 2025 年各季時，這個分類不會留下標記；其他沒改名的分類照常比對。
+分類改名：分類名稱跟各期申報，改名前的期別保留舊名稱。有證據顯示只改名、範圍不變的分類，改名前後照常比對，後來的申報以新名稱重列舊期別時，標記掛在舊名稱的那一期，並記下新名稱，例如 ORCL 的 Cloud and license → Cloud and software、LLY 的 Diabetes and obesity → Cardiometabolic Health。改名同時改了範圍、或沒有只改名的證據時，新舊名稱視為兩個分類、不互相比對，這個分類不會留下標記，其他分類照常比對。例如 CAT 把 Energy & Transportation 改名為 Power & Energy 後，2026 年申報重列 2025 年各季時，這個分類沒有標記。
 
 ## 用 viewer 看資料
 
@@ -197,7 +197,7 @@ data/revenue/<首字母>/<TICKER>/
 
 先前已發布的期別重算後變成 `not_derived` 或 `failed` 時，已發布的 `revenue.json` 保留不動，`published_output_kept` 為 `true`。
 
-已發布的期別可能帶 `differences`（差異標記），每筆是一個分類在一個角色的比對結果：已發布值（`published_value`）、後來申報列出的值（`listed_value`）、來源申報（`source`），以及雙方的加數明細。
+已發布的期別可能帶 `differences`（差異標記），每筆是一個分類在一個角色的比對結果：已發布值（`published_value`）、後來申報列出的值（`listed_value`）、來源申報（`source`），以及雙方的加數明細。`category` 是這一期發布時的分類名稱；後來的申報把這個分類改了名、以新名稱列出時，另有 `listed_category` 記錄新名稱（`basis_changes` 同理）。
 
 以下是 UPS（`data/revenue/U/UPS/status.json`）的兩筆節錄。2024 年 Q4 因年報重列上一年而留空（`basis_changes` 只列第一筆）：
 

@@ -1,8 +1,9 @@
 """框架取得公司組成的來源：公司 parser（`parser.py`）。
 
 `ParserSource` 對框架提供 `ticker`、`view`、`total_name`、`compose(document, filing, request)` 與 `categories(day)`，
-以及框架預設的自訂值 `durations`（期間分類的天數範圍）、`fiscal_year`（財年的決定方式）與 `attachments`（fact 清單
-納入的附件類型）。框架流程（`compose.py`、`engine.py`、`review.py`）只透過這組介面取得每份申報的組成與這家公司的自訂。
+以及框架預設的自訂值 `durations`（期間分類的天數範圍）、`fiscal_year`（財年的決定方式）、`attachments`（fact 清單
+納入的附件類型）與 `successors`（分類改名的對應：舊名稱 → 新名稱）。框架流程（`compose.py`、`engine.py`、`review.py`）
+只透過這組介面取得每份申報的組成與這家公司的自訂。
 """
 
 from __future__ import annotations
@@ -12,6 +13,7 @@ from types import MappingProxyType, ModuleType
 
 from .contract import Composition, FilingFacts, ParserFailure, Request
 from .filings import Filing
+from .review import TOTAL_LABEL
 from .xbrl import DEFAULT_DURATIONS, InlineDocument
 
 # 觀點只取產品或業務別的拆分；地區拆分不是觀點。
@@ -40,9 +42,9 @@ def facts_only(document: InlineDocument) -> InlineDocument:
 class ParserSource:
     """公司 parser：`parser.py` 定義 `TICKER`、`VIEW`、`TOTAL`、`compose(filing, request)` 與 `categories(day)`。
 
-    選用的自訂點 `DURATION_DAYS`、`FISCAL_YEAR`、`ATTACHMENTS` 沒有定義時用框架的預設；定義了就在這裡檢查格式。數值是否合理
-    （例如範圍要多寬）由公司 parser 決定，理由寫在該公司的 parser.md。`VIEW` 或自訂點的格式不對時丟出 `ValueError`，
-    只有這個 ticker 不處理（`companies.parser_source` 在處理這家時才建立它）。
+    選用的自訂點 `DURATION_DAYS`、`FISCAL_YEAR`、`ATTACHMENTS`、`FORMER_NAMES` 沒有定義時用框架的預設；定義了就在這裡檢查
+    格式。數值是否合理（例如範圍要多寬、改名是否只是改名）由公司 parser 決定，理由寫在該公司的 parser.md。`VIEW` 或自訂點的
+    格式不對時丟出 `ValueError`，只有這個 ticker 不處理（`companies.parser_source` 在處理這家時才建立它）。
     """
 
     def __init__(self, module: ModuleType):
@@ -57,6 +59,46 @@ class ParserSource:
         if not isinstance(self.fiscal_year, str) or self.fiscal_year not in FISCAL_YEARS:
             raise ValueError(f"{self.ticker} 的 FISCAL_YEAR 必須是 {'、'.join(FISCAL_YEARS)} 之一，收到 {self.fiscal_year!r}")
         self.attachments = self.attachment_types(getattr(module, "ATTACHMENTS", None))
+        self.successors = self.renamed(getattr(module, "FORMER_NAMES", None))
+
+    def renamed(self, declared) -> MappingProxyType:
+        """分類改名的對應，回傳「舊名稱 → 新名稱」：沒有宣告時是空的；宣告的形式是「新名稱 → 舊名稱的 tuple」，檢查：
+        非空的 dict，鍵是非空字串，值是非空的 tuple、每一項是非空字串；新舊名稱都不是總營收的名稱（`TOTAL` 或「總營收」）；
+        新名稱不出現在自己的舊名稱中；一個舊名稱只出現在一個新名稱之下；依對應一路往新名稱走不會回到起點（例如 A ← B 與
+        B ← A）。連續改名可以分段宣告（B ← A、C ← B），比對時一路走到申報中有的名稱。tuple 只列同一個分類的歷代名稱，
+        不表達合併。改名是否只是改名（範圍不變）由公司 parser 以證據判斷，寫在 parser.md。"""
+        if declared is None:
+            return MappingProxyType({})
+        prefix = f"{self.ticker} 的 FORMER_NAMES"
+        if not isinstance(declared, dict) or not declared:
+            raise ValueError(f"{prefix} 必須是非空的 dict（新名稱 → 舊名稱的 tuple），收到 {declared!r}")
+        successors: dict[str, str] = {}
+        totals = (self.total_name, TOTAL_LABEL)
+        for new, olds in declared.items():
+            if not isinstance(new, str) or not new:
+                raise ValueError(f"{prefix} 的新名稱必須是非空字串，收到 {new!r}")
+            if new in totals:
+                raise ValueError(f"{prefix} 的新名稱 {new!r} 是總營收的名稱；對應只用於分類與調節項")
+            if not isinstance(olds, tuple) or not olds:
+                raise ValueError(f"{prefix} 的 {new!r} 的舊名稱必須是非空的 tuple，收到 {olds!r}")
+            for old in olds:
+                if not isinstance(old, str) or not old:
+                    raise ValueError(f"{prefix} 的 {new!r} 的舊名稱必須是非空字串，收到 {old!r}")
+                if old in totals:
+                    raise ValueError(f"{prefix} 的舊名稱 {old!r} 是總營收的名稱；對應只用於分類與調節項")
+                if old == new:
+                    raise ValueError(f"{prefix} 的 {new!r} 不能對應到自己")
+                if old in successors:
+                    raise ValueError(f"{prefix} 的舊名稱 {old!r} 出現在 {successors[old]!r} 與 {new!r} 之下；一個舊名稱只能對應一個新名稱")
+                successors[old] = new
+        for start in successors:
+            name, seen = start, {start}
+            while name in successors:
+                name = successors[name]
+                if name in seen:
+                    raise ValueError(f"{prefix} 的對應從 {start!r} 一路往新名稱走會回到 {name!r}，形成循環")
+                seen.add(name)
+        return MappingProxyType(successors)
 
     def attachment_types(self, declared) -> tuple[str, ...]:
         """fact 清單納入的附件類型：沒有宣告時是空的（只取主文件）；宣告時檢查：非空的 tuple，每一項是 `EX-<編號>`

@@ -13,6 +13,8 @@ GEOGRAPHY = "srt:StatementGeographicalAxis"
 REGIONS = ("country:US", "us-gaap:NonUsMember")
 # 2024 Q2 10-Q（0000059478-24-000187，期末 2024-06-30）首次列 Cardiometabolic Health。
 RENAMED_FROM = "2024-04-01"
+# 改名的申報見 RENAMED_FROM 的註解；只改名、範圍不變，證據見 parser.md 的「第一類改名與範圍」。
+FORMER_NAMES = {"Cardiometabolic Health": ("Diabetes and obesity",)}
 PRODUCTS = (
     ("Oncology", ("lly:OncologyMember",)),
     ("Immunology", ("lly:ImmunologyMember",)),

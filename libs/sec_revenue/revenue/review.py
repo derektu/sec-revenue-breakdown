@@ -6,6 +6,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Mapping
 from decimal import Decimal
 
 from .contract import Composition, Request
@@ -17,16 +18,39 @@ TOTAL_LABEL = "總營收"
 ROLE_SIGN = {"nine_months": -1}
 
 
+def renamings(name: str, successors: Mapping[str, str]) -> list[str]:
+    """`name` 與它依改名對應（舊名稱 → 新名稱，`source.successors`）一路往後的各個名稱，依改名順序。"""
+    chain = [name]
+    while chain[-1] in successors and successors[chain[-1]] not in chain:
+        chain.append(successors[chain[-1]])
+    return chain
+
+
+def listed_name(name: str, composition: Composition, successors: Mapping[str, str]) -> str:
+    """已上線分類 `name` 在新申報組成中的名稱。沿改名鏈（`name` 本身在前，見 `renamings`）取第一個組成列出的名稱
+    （分類、調節項或無法確定的項目）；都沒有列出時，取鏈上第一個記為找不到（`missing`）的名稱，讓 `not_found` 帶出原因；
+    都沒有時仍是 `name`。"""
+    chain = renamings(name, successors)
+    for candidate in chain:
+        if candidate in composition.categories or candidate in composition.reconciling or candidate in composition.unparseable:
+            return candidate
+    return next((candidate for candidate in chain if candidate in composition.missing), name)
+
+
 def comparatives(
     document: InlineDocument, accession: str, baselines: list[tuple[str, str, dict]], compose_for, total_name: str | None = None,
-    durations=DEFAULT_DURATIONS,
+    durations=DEFAULT_DURATIONS, successors: Mapping[str, str] | None = None,
 ) -> list[dict]:
     """新申報涵蓋的已上線期間，逐一比對每個分類在每個角色的值，回傳比對清單。
 
     `baselines` 是 (序列, 期末日, 已上線的 revenue.json)；`compose_for(request)` 回傳新申報中該期間的組成
     （`Composition`），來源組不出來時丟出 `ParseError`。`total_name` 是組成中總營收的名稱（`unparseable` 的鍵）。
     `durations` 是這家公司期間分類的天數範圍（`source.durations`，沒有指定時是預設範圍）；`compose_for` 交給公司 parser
-    之前核對 Request 帶的是這家公司的範圍（`compose.PeriodComposer.request`）。
+    之前核對 Request 帶的是這家公司的範圍（`compose.PeriodComposer.request`）。`successors` 是公司 parser 宣告的分類改名
+    對應（舊名稱 → 新名稱，`source.successors`）：已上線的分類名稱不在新申報的組成中時，改用對應的新名稱比對。比對結果的
+    `category` 仍是已上線的名稱（標記掛在已上線的期別），以新名稱比對時另有 `listed_category`。同一個已上線期別有兩個
+    以上的分類對到新申報的同一個名稱時（例如 A、B 都對到 C，或 A 對到同期別也有的 A2），無法判斷申報列示值屬於哪一個，
+    這些分類都記為 `unparseable`。
 
     比對單位是「分類 × 角色」：角色是已上線運算元的 `role`（季、年度、九個月累計），已上線值是該角色運算元的加權和；
     申報列示值是來源從新申報組出的同一期間運算式的加權和。加數的個數、順序或成員可以與已上線不同，只比分類值。
@@ -35,7 +59,7 @@ def comparatives(
     來源能從新申報組出某段期間的總營收時，視為涵蓋該期間。結果是 `consistent`（差距不超過雙方所有運算元的
     誤差上限總和；每個 fact 的誤差上限取 decimals 與顯示文字精度中較粗者）、`different`（超出）、`unparseable`
     （新申報或已上線的 fact 無法比較，包括來源組不出這段期間、或無法確定某一項是哪些 fact）或 `not_found`
-    （組成中沒有這個分類）。沒有涵蓋的期間不列入；已上線輸出沒有的期間長度（例如六個月累計）因此不比對。
+    （組成中沒有這個分類，也沒有它改名後的分類）。沒有涵蓋的期間不列入；已上線輸出沒有的期間長度（例如六個月累計）因此不比對。
     """
     compositions: dict[tuple[str, str], tuple[Composition | None, str | None]] = {}
     spans_listed = {(f.start, f.end) for f in document.facts}
@@ -65,6 +89,7 @@ def comparatives(
     found = []
     for series, period, output in baselines:
         lines = list(output["categories"].items()) + list(output.get("reconciling", {}).items()) + [(None, output["total"])]
+        named = [name for name, _ in lines if name is not None]
         for name, line in lines:
             roles: dict[str, list[tuple[int, str, dict]]] = {}
             for term in line["expression"]:
@@ -93,12 +118,23 @@ def comparatives(
                     "published_value": sum(a["weight"] * a["value"] for a in published),
                     "published_addends": [{k: a[k] for k in ("operand", "concept", "dimensions", "weight", "value")} for a in published],
                 }
-                key = total_name if name is None else name
-                if error is not None or key in composition.unparseable:
+                if name is None:
+                    key = total_name
+                else:
+                    key = name if composition is None else listed_name(name, composition, successors or {})
+                if name is not None and key != name:
+                    entry["listed_category"] = key
+                claims = [] if name is None or composition is None else [
+                    other for other in named if listed_name(other, composition, successors or {}) == key
+                ]
+                if len(claims) > 1:
+                    reason = f"已上線的 {'、'.join(claims)} 在新申報都對到 {key}，無法判斷列示值屬於哪一個分類"
+                    entry.update({"result": "unparseable", "listed_value": None, "listed_addends": [], "note": f"無法比較：{reason}"})
+                elif error is not None or key in composition.unparseable:
                     reason = error if error is not None else composition.unparseable[key]
                     entry.update({"result": "unparseable", "listed_value": None, "listed_addends": [], "note": f"無法比較：{reason}"})
                 else:
-                    terms = composition.total if name is None else composition.categories.get(name, composition.reconciling.get(name))
+                    terms = composition.total if name is None else composition.categories.get(key, composition.reconciling.get(key))
                     entry.update(listed_value(document, terms, span, published, composition.missing.get(key)))
                 found.append(entry)
     return found

@@ -43,7 +43,7 @@
 - 財年在 5 月 31 日結束，季末為 8 月 31 日、11 月 30 日、2 月底與 5 月 31 日。財年以結束的年份命名：FY2026 是 2025-06-01 至 2026-05-31。
 - 季度長度 90–92 天、六個月 183 天、九個月 273–274 天、年度 365–366 天，都在框架的預設範圍內，不自訂 `DURATION_DAYS`。
 - Q1–Q3：10-Q 的單季 fact。
-- Q4：10-K 年度減同財年 Q3 10-Q 的九個月累計。範圍內每個財年的 Q1–Q3 與年度都是同一組分類，年報列示的上一財年數字與先前申報相同，FY2024、FY2025、FY2026 的 Q4 都推算。FY2024 Q4 的口徑依據是 FY2023 10-K（0000950170-23-028914）。FY2026 Q4 的口徑比對中，第一類在年報與上一財年的名稱不同（Cloud and software、Cloud and license），框架只比 Services、Hardware 與總營收；第一類相同的依據見「Cloud and license 改名」。
+- Q4：10-K 年度減同財年 Q3 10-Q 的九個月累計。範圍內每個財年的 Q1–Q3 與年度都是同一組分類，年報列示的上一財年數字與先前申報相同，FY2024、FY2025、FY2026 的 Q4 都推算。FY2024 Q4 的口徑依據是 FY2023 10-K（0000950170-23-028914）。FY2026 Q4 的口徑比對中，第一類在年報與上一財年的名稱不同（Cloud and software、Cloud and license），依 `FORMER_NAMES` 以年報的 Cloud and software 比對上一財年的 Cloud and license，與 Services、Hardware、總營收都相同（FY2026 10-K 0001193125-26-277521 t70 列示的 FY2025 Cloud and software 49,230，對已上線 FY2025 的 Cloud and license 49,230）；改名的依據見「Cloud and license 改名」。
 - FY：10-K 的年度 fact。
 
 ### 財年（`FISCAL_YEAR = "prior_annual"`）
@@ -99,6 +99,8 @@ FY2026 Q1 10-Q（0001193125-25-200095）的分部說明寫明三個業務為「c
 
 同期間的 Services、Hardware 與總營收也相同，所以這是純改名，範圍不變。名稱仍跟各期申報：FY2025 及更早的期別是 Cloud and license，FY2026 起是 Cloud and software。較晚的申報只作證據，不用來組早期期別。
 
+`parser.py` 依這些證據宣告 `FORMER_NAMES = {"Cloud and software": ("Cloud and license",)}`：比較欄比對與 Q4 口徑一致把較晚申報的 Cloud and software 接上已上線的 Cloud and license（見 `docs/architecture/parser.md` 的「自訂點」）。
+
 ## 驗證
 
 範圍是 11 季（2024-02-29 至 2026-08-31）與 3 個年度（FY2024 至 FY2026），每一期都是 `published`，沒有 `not_derived` 與 `failed`。
@@ -135,4 +137,4 @@ FY2026 Q1 10-Q（0001193125-25-200095）的分部說明寫明三個業務為「c
 
 ## 比較欄
 
-已下載的申報列示的較早期間數字（去年同季、九個月累計、上一財年全年），與已上線輸出都在精度內相同，沒有差異標記。較晚申報以 Cloud and software 列示的 FY2025 及更早期間，與已上線的 Cloud and license 名稱不同，框架不比對這一類；兩者相等的依據見「Cloud and license 改名」。
+已下載的申報列示的較早期間數字（去年同季、九個月累計、上一財年全年），與已上線輸出都在精度內相同，沒有差異標記。較晚申報以 Cloud and software 列示的 FY2025 及更早期間，依 `FORMER_NAMES` 與已上線的 Cloud and license 比對，都相同（逐期數字見「Cloud and license 改名」）。
