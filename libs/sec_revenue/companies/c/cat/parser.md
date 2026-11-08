@@ -59,8 +59,12 @@ CAT 的申報多次在分部之間重分類，並重列比較數字（單位百�
 | FY2025 10-K | FY2024 | Resource Industries 12,389 → 12,471、All Other 425 → 344 |
 | 2026 年 Q1–Q3 10-Q | 2025 年各季與九個月 | 每季約 800 由 Energy & Transportation（重列時稱 Power & Energy）移到 Resource Industries，例如 2025 年 Q1 6,568 → 5,783、Resource Industries 2,884 → 3,661 |
 
-- 已上線的各期保留申報當時的數字，重列寫成差異標記。2025 年各季 Energy & Transportation 的重列不寫標記：parser 對 2026 年的申報不列這個分類（比對結果是 `not_found`），只有 Resource Industries 等分類的變動寫成標記。
+- 已上線的各期保留申報當時的數字，重列寫成差異標記。2026 年申報以 Power & Energy 重列的 2025 年各季，依 `FORMER_NAMES` 與已上線的 Energy & Transportation 比對（見「Energy & Transportation 改名」），所以 2025 年 Q1–Q3 的 Energy & Transportation 與 Resource Industries 都有標記。
 - 2025 年 Q4 不推算：FY2025 的分類是 Power & Energy，2025 年 Q1–Q3 是 Energy & Transportation，分類不同。FY2025 10-K 也重列了 FY2024，口徑一致的條件同樣不成立。
+
+## Energy & Transportation 改名
+
+FY2025 10-K（0000018230-26-000008）起，Energy & Transportation 改名 Power & Energy（成員 `cat:EnergyandTransportationMember` → `cat:PowerEnergyMember`）。這份年報以新成員列示的 FY2024，與 FY2024 10-K（0000018230-25-000008）以舊成員列示的值相同：28,854（百萬美元，`decimals=-6`；FY2025 10-K t131、t134，`srt:ConsolidationItemsAxis=us-gaap:OperatingSegmentsMember`）。同一份年報重列 FY2024 時，變動的只有 Resource Industries 與 All Other（見「分部間的重分類」），所以改名當下範圍不變，parser 以 `FORMER_NAMES` 宣告 Power & Energy 的舊名稱是 Energy & Transportation。之後 2026 年 10-Q 把部分營收由 Power & Energy 移到 Resource Industries，是改名之後的重分類，以差異標記揭露。名稱仍跟各期申報；較晚的申報只作證據，不用來組早期期別。
 
 ## 驗證
 

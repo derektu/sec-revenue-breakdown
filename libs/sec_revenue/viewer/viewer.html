@@ -207,6 +207,11 @@
       wrap.append(table);
       return wrap;
     }
+    // 依 FORMER_NAMES 以改名後的分類比對時，標記另記申報中的名稱。
+    function withListed(item) {
+      return item.listed_category ? `${item.category}（申報稱 ${item.listed_category}）` : item.category;
+    }
+
     function differences(p) {
       const list = p.record?.differences;
       return Array.isArray(list) ? list : [];
@@ -635,7 +640,7 @@
           const dl = node("dl", "kv");
           for (const c of record.basis_changes)
             dl.append(
-              node("dt", "", `${c.category}（${span(c.period)}）`),
+              node("dt", "", `${withListed(c)}（${span(c.period)}）`),
               node("dd", "", `先前 ${amount(c.previous_value)}（${c.previous.basis === "published" ? "已上線 FY" : "上一份年報"} ${c.previous.accession}）→ 年報 ${amount(c.listed_value)}（${c.listed.accession}）`),
             );
           why.append(dl);
@@ -667,7 +672,7 @@
           const dl = node("dl", "kv");
           const source = d.source || {};
           const rows = [
-            ["分類", d.category],
+            ["分類", withListed(d)],
             ["期間", `${ROLE[d.role] ?? d.role ?? ""}（${span(d.period)}）`],
             ["結果", RESULT[d.result] ?? d.result],
             ["已上線值", amount(d.published_value)],
