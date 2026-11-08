@@ -1,0 +1,317 @@
+{
+  "categories": {
+    "All Other": {
+      "expression": [
+        {
+          "operand": "op5",
+          "weight": 1
+        }
+      ],
+      "value": 25000000
+    },
+    "CNBU": {
+      "expression": [
+        {
+          "operand": "op1",
+          "weight": 1
+        }
+      ],
+      "value": 2185000000
+    },
+    "EBU": {
+      "expression": [
+        {
+          "operand": "op3",
+          "weight": 1
+        }
+      ],
+      "value": 1111000000
+    },
+    "MBU": {
+      "expression": [
+        {
+          "operand": "op2",
+          "weight": 1
+        }
+      ],
+      "value": 1598000000
+    },
+    "SBU": {
+      "expression": [
+        {
+          "operand": "op4",
+          "weight": 1
+        }
+      ],
+      "value": 905000000
+    }
+  },
+  "checks": {
+    "structural": [
+      {
+        "check": "定義唯一",
+        "result": "pass"
+      },
+      {
+        "check": "fact 存在且唯一",
+        "result": "pass"
+      },
+      {
+        "check": "單位與精度",
+        "result": "pass"
+      },
+      {
+        "check": "加總",
+        "result": "pass"
+      },
+      {
+        "check": "證據完整",
+        "result": "pass"
+      }
+    ],
+    "sum": {
+      "categories": 5824000000,
+      "difference": 0,
+      "tolerance": "3000000",
+      "total": 5824000000
+    }
+  },
+  "filings": {
+    "primary": {
+      "accession": "0000723125-24-000007",
+      "filing_date": "2024-03-21",
+      "form": "10-Q",
+      "report_date": "2024-02-29"
+    }
+  },
+  "fiscal_quarter": 2,
+  "fiscal_year": 2024,
+  "operands": {
+    "op1": {
+      "accession": "0000723125-24-000007",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-236",
+      "decimals": "-6",
+      "dimensions": {
+        "us-gaap:StatementBusinessSegmentsAxis": "mu:CNBUMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/723125/000072312524000007/mu-20240229.htm",
+        "name": "mu-20240229.htm",
+        "sha256": "d70f233a954154382a3ba01d7655d5ecc38ea8348fc535b1f4a82c34db2d2a0d",
+        "url": "https://www.sec.gov/Archives/edgar/data/723125/000072312524000007/mu-20240229.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "7c2cbba523f5ebd64bd8d12c6606bd6c00d2246fd980fe6b746c0a6fd0102543",
+        "png_scale": 1,
+        "png_sha256": "773920ae3e124ca6c32a2a7c044a6630f10add96bd89f04d14819ce2f2facaf9",
+        "table": "0000723125-24-000007-d70f233a9541-t35"
+      },
+      "fact_id": "f-1071",
+      "filing_date": "2024-03-21",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-02-29",
+        "start": "2023-12-01"
+      },
+      "raw": "2,185",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 2185000000
+    },
+    "op2": {
+      "accession": "0000723125-24-000007",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-240",
+      "decimals": "-6",
+      "dimensions": {
+        "us-gaap:StatementBusinessSegmentsAxis": "mu:MBUMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/723125/000072312524000007/mu-20240229.htm",
+        "name": "mu-20240229.htm",
+        "sha256": "d70f233a954154382a3ba01d7655d5ecc38ea8348fc535b1f4a82c34db2d2a0d",
+        "url": "https://www.sec.gov/Archives/edgar/data/723125/000072312524000007/mu-20240229.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "7c2cbba523f5ebd64bd8d12c6606bd6c00d2246fd980fe6b746c0a6fd0102543",
+        "png_scale": 1,
+        "png_sha256": "773920ae3e124ca6c32a2a7c044a6630f10add96bd89f04d14819ce2f2facaf9",
+        "table": "0000723125-24-000007-d70f233a9541-t35"
+      },
+      "fact_id": "f-1075",
+      "filing_date": "2024-03-21",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-02-29",
+        "start": "2023-12-01"
+      },
+      "raw": "1,598",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 1598000000
+    },
+    "op3": {
+      "accession": "0000723125-24-000007",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-244",
+      "decimals": "-6",
+      "dimensions": {
+        "us-gaap:StatementBusinessSegmentsAxis": "mu:EBUMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/723125/000072312524000007/mu-20240229.htm",
+        "name": "mu-20240229.htm",
+        "sha256": "d70f233a954154382a3ba01d7655d5ecc38ea8348fc535b1f4a82c34db2d2a0d",
+        "url": "https://www.sec.gov/Archives/edgar/data/723125/000072312524000007/mu-20240229.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "7c2cbba523f5ebd64bd8d12c6606bd6c00d2246fd980fe6b746c0a6fd0102543",
+        "png_scale": 1,
+        "png_sha256": "773920ae3e124ca6c32a2a7c044a6630f10add96bd89f04d14819ce2f2facaf9",
+        "table": "0000723125-24-000007-d70f233a9541-t35"
+      },
+      "fact_id": "f-1079",
+      "filing_date": "2024-03-21",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-02-29",
+        "start": "2023-12-01"
+      },
+      "raw": "1,111",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 1111000000
+    },
+    "op4": {
+      "accession": "0000723125-24-000007",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-248",
+      "decimals": "-6",
+      "dimensions": {
+        "us-gaap:StatementBusinessSegmentsAxis": "mu:SBUMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/723125/000072312524000007/mu-20240229.htm",
+        "name": "mu-20240229.htm",
+        "sha256": "d70f233a954154382a3ba01d7655d5ecc38ea8348fc535b1f4a82c34db2d2a0d",
+        "url": "https://www.sec.gov/Archives/edgar/data/723125/000072312524000007/mu-20240229.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "7c2cbba523f5ebd64bd8d12c6606bd6c00d2246fd980fe6b746c0a6fd0102543",
+        "png_scale": 1,
+        "png_sha256": "773920ae3e124ca6c32a2a7c044a6630f10add96bd89f04d14819ce2f2facaf9",
+        "table": "0000723125-24-000007-d70f233a9541-t35"
+      },
+      "fact_id": "f-1083",
+      "filing_date": "2024-03-21",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-02-29",
+        "start": "2023-12-01"
+      },
+      "raw": "905",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 905000000
+    },
+    "op5": {
+      "accession": "0000723125-24-000007",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-252",
+      "decimals": "-6",
+      "dimensions": {
+        "us-gaap:StatementBusinessSegmentsAxis": "us-gaap:AllOtherSegmentsMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/723125/000072312524000007/mu-20240229.htm",
+        "name": "mu-20240229.htm",
+        "sha256": "d70f233a954154382a3ba01d7655d5ecc38ea8348fc535b1f4a82c34db2d2a0d",
+        "url": "https://www.sec.gov/Archives/edgar/data/723125/000072312524000007/mu-20240229.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "7c2cbba523f5ebd64bd8d12c6606bd6c00d2246fd980fe6b746c0a6fd0102543",
+        "png_scale": 1,
+        "png_sha256": "773920ae3e124ca6c32a2a7c044a6630f10add96bd89f04d14819ce2f2facaf9",
+        "table": "0000723125-24-000007-d70f233a9541-t35"
+      },
+      "fact_id": "f-1087",
+      "filing_date": "2024-03-21",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-02-29",
+        "start": "2023-12-01"
+      },
+      "raw": "25",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 25000000
+    },
+    "op6": {
+      "accession": "0000723125-24-000007",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-3",
+      "decimals": "-6",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/723125/000072312524000007/mu-20240229.htm",
+        "name": "mu-20240229.htm",
+        "sha256": "d70f233a954154382a3ba01d7655d5ecc38ea8348fc535b1f4a82c34db2d2a0d",
+        "url": "https://www.sec.gov/Archives/edgar/data/723125/000072312524000007/mu-20240229.htm"
+      },
+      "duplicates": [
+        "f-30",
+        "f-973"
+      ],
+      "evidence": {
+        "html_sha256": "7c2cbba523f5ebd64bd8d12c6606bd6c00d2246fd980fe6b746c0a6fd0102543",
+        "png_scale": 1,
+        "png_sha256": "773920ae3e124ca6c32a2a7c044a6630f10add96bd89f04d14819ce2f2facaf9",
+        "table": "0000723125-24-000007-d70f233a9541-t35"
+      },
+      "fact_id": "f-1091",
+      "filing_date": "2024-03-21",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2024-02-29",
+        "start": "2023-12-01"
+      },
+      "raw": "5,824",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 5824000000
+    }
+  },
+  "period_end": "2024-02-29",
+  "schema_version": 1,
+  "series": "Q",
+  "ticker": "MU",
+  "total": {
+    "expression": [
+      {
+        "operand": "op6",
+        "weight": 1
+      }
+    ],
+    "value": 5824000000
+  },
+  "unit": "USD",
+  "view": "business_segment"
+}

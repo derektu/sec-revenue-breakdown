@@ -1,0 +1,155 @@
+{
+  "periods": {
+    "FY": {
+      "2024-08-29": {
+        "accession": "0000723125-24-000027",
+        "fiscal_year": 2024,
+        "status": "published"
+      },
+      "2025-08-28": {
+        "accession": "0000723125-25-000028",
+        "fiscal_year": 2025,
+        "status": "published"
+      },
+      "2026-09-03": {
+        "accession": "0000723125-26-000023",
+        "fiscal_year": 2026,
+        "status": "published"
+      }
+    },
+    "Q": {
+      "2024-02-29": {
+        "accession": "0000723125-24-000007",
+        "fiscal_quarter": 2,
+        "fiscal_year": 2024,
+        "status": "published"
+      },
+      "2024-05-30": {
+        "accession": "0000723125-24-000019",
+        "fiscal_quarter": 3,
+        "fiscal_year": 2024,
+        "status": "published"
+      },
+      "2024-08-29": {
+        "accession": "0000723125-24-000027",
+        "fiscal_quarter": 4,
+        "fiscal_year": 2024,
+        "status": "published"
+      },
+      "2024-11-28": {
+        "accession": "0000723125-24-000047",
+        "fiscal_quarter": 1,
+        "fiscal_year": 2025,
+        "status": "published"
+      },
+      "2025-02-27": {
+        "accession": "0000723125-25-000009",
+        "differences": [
+          {
+            "category": "All Other",
+            "listed_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "us-gaap:AllOtherSegmentsMember"
+                },
+                "fact_id": "f-929",
+                "value": 6000000,
+                "weight": 1
+              }
+            ],
+            "listed_value": 6000000,
+            "period": {
+              "end": "2025-02-27",
+              "start": "2024-11-29"
+            },
+            "published_addends": [
+              {
+                "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "dimensions": {
+                  "us-gaap:StatementBusinessSegmentsAxis": "us-gaap:AllOtherSegmentsMember"
+                },
+                "operand": "op5",
+                "value": 4000000,
+                "weight": 1
+              }
+            ],
+            "published_value": 4000000,
+            "result": "different",
+            "role": "quarter",
+            "source": {
+              "accession": "0000723125-26-000006",
+              "filing_date": "2026-03-19",
+              "form": "10-Q"
+            }
+          }
+        ],
+        "fiscal_quarter": 2,
+        "fiscal_year": 2025,
+        "status": "published"
+      },
+      "2025-05-29": {
+        "accession": "0000723125-25-000021",
+        "fiscal_quarter": 3,
+        "fiscal_year": 2025,
+        "status": "published"
+      },
+      "2025-08-28": {
+        "check": "Q4 推算條件",
+        "fiscal_quarter": 4,
+        "fiscal_year": 2025,
+        "fy_categories": [
+          "CMBU",
+          "CDBU",
+          "MCBU",
+          "AEBU",
+          "All Other",
+          "Unallocated"
+        ],
+        "published_output_kept": false,
+        "quarter_categories": [
+          {
+            "categories": [
+              "CNBU",
+              "MBU",
+              "EBU",
+              "SBU",
+              "All Other"
+            ],
+            "end": "2025-05-29",
+            "start": "2024-08-30"
+          }
+        ],
+        "reason": "年度 2025-08-28 的分類為 ['CMBU', 'CDBU', 'MCBU', 'AEBU', 'All Other', 'Unallocated']，Q1–Q3 期間 2024-08-30～2025-05-29 為 ['CNBU', 'MBU', 'EBU', 'SBU', 'All Other']；Q4 不推算",
+        "status": "not_derived"
+      },
+      "2025-11-27": {
+        "accession": "0000723125-25-000046",
+        "fiscal_quarter": 1,
+        "fiscal_year": 2026,
+        "status": "published"
+      },
+      "2026-02-26": {
+        "accession": "0000723125-26-000006",
+        "fiscal_quarter": 2,
+        "fiscal_year": 2026,
+        "status": "published"
+      },
+      "2026-05-28": {
+        "accession": "0000723125-26-000015",
+        "fiscal_quarter": 3,
+        "fiscal_year": 2026,
+        "status": "published"
+      },
+      "2026-09-03": {
+        "accession": "0000723125-26-000023",
+        "fiscal_quarter": 4,
+        "fiscal_year": 2026,
+        "status": "published"
+      }
+    }
+  },
+  "ticker": "MU",
+  "view": "business_segment"
+}
