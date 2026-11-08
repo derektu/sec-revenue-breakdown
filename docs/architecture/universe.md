@@ -133,7 +133,7 @@ BRK-B,1067983,Berkshire Hathaway Inc.,ok,stockanalysis,4,分部 tag 八季一致
 | 擷取 | `display_unit` | 選填；`K`、`M`、`B`、`萬`、`億` | 表格表頭標示的單位，例如表頭寫「Millions」、儲存格只有 `57,583` 時填 `M` |
 | 擷取 | `files` | `{png, html, txt}`，各為 `{path, sha256}` | 證據檔；`browser_dom` 必填且三個都要，`manual` 不得有 |
 | 期間 | `label` | 非空字串 | 來源上的期間標籤原文，例如 `Q3 2026`、`2026/Q3` |
-| 期間 | `period_end` | 選填；`YYYY-MM-DD` | 來源顯示的日期，不保證是公司的期末日（例如 Stock Analysis 把非曆年季底的公司對齊到曆年季底）；來源沒有日期時省略，不自行推算。與 SEC 期間的對齊由比對工具處理 |
+| 期間 | `period_end` | 選填；`YYYY-MM-DD` | 來源顯示的日期，不保證是公司的期末日（例如 Stock Analysis 把非曆年季底的公司對齊到曆年季底）；來源沒有日期時省略，不自行推算。比對時由開發者對齊到 SEC 期間 |
 | 期間 | `kind` | `Q`、`FY` | 單季或會計年度 |
 | 期間 | `capture` | 同來源 `captures` 的鍵 | 數值來自哪一次擷取 |
 | 期間 | `values` | 非空物件 | 鍵為分類名稱，值為 `{display, usd}` |
@@ -162,8 +162,8 @@ capture_id 是擷取時間取到秒的 UTC 時間 `YYYYMMDDTHHMMSSZ`，例如 `2
 
 ### 分類與期間
 
-- 分類名稱保留來源原文，例如富途的「汽車分部」。與 SEC 分類的對應由比對工具處理，不寫進對照檔。
-- 期間保留來源的標籤與日期。與 SEC `reportDate`（含 52/53 週制）的對齊由比對工具處理。
+- 分類名稱保留來源原文，例如富途的「汽車分部」。與 SEC 分類的對應寫在各公司的 `parser.md`，不寫進對照檔。
+- 期間保留來源的標籤與日期。與 SEC `reportDate`（含 52/53 週制）的對齊由開發者比對時處理。
 - 同一來源內 `label` 不可重複；有 `period_end` 的期別，`(kind, period_end)` 也不可重複。不同來源可有相同期間。
 
 ### 數值
