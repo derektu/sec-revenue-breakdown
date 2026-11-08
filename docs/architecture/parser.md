@@ -524,6 +524,5 @@ npm run snapshot -- --all --check            # 核對已提交的快照與原文
 
 ## 待決定
 
-- **沒有 XBRL 標記的數字**：GOOGL 2025-03-31 以前的「Hedging gains (losses)」列沒有 XBRL 標記（#73）。依「數字只來自 XBRL fact」，fact 清單不含這類數字，GOOGL 這些期別無法上線，除非原則另開例外。
 - **框架檔名**：預設起始日所在的 `revenue/engine.py` 等檔名，隨框架實作調整。
 - **申報清單的位置**：申報清單放在 `data/snapshots/` 下；快照不進 Git 時，清單仍要進 Git。
