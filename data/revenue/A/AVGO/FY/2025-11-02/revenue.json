@@ -1,0 +1,184 @@
+{
+  "categories": {
+    "Infrastructure software": {
+      "expression": [
+        {
+          "operand": "op2",
+          "weight": 1
+        }
+      ],
+      "value": 27029000000
+    },
+    "Semiconductor solutions": {
+      "expression": [
+        {
+          "operand": "op1",
+          "weight": 1
+        }
+      ],
+      "value": 36858000000
+    }
+  },
+  "checks": {
+    "structural": [
+      {
+        "check": "定義唯一",
+        "result": "pass"
+      },
+      {
+        "check": "fact 存在且唯一",
+        "result": "pass"
+      },
+      {
+        "check": "單位與精度",
+        "result": "pass"
+      },
+      {
+        "check": "加總",
+        "result": "pass"
+      },
+      {
+        "check": "證據完整",
+        "result": "pass"
+      }
+    ],
+    "sum": {
+      "categories": 63887000000,
+      "difference": 0,
+      "tolerance": "1500000",
+      "total": 63887000000
+    }
+  },
+  "filings": {
+    "primary": {
+      "accession": "0001730168-25-000121",
+      "filing_date": "2025-12-18",
+      "form": "10-K",
+      "report_date": "2025-11-02"
+    }
+  },
+  "fiscal_year": 2025,
+  "operands": {
+    "op1": {
+      "accession": "0001730168-25-000121",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-113",
+      "decimals": "-6",
+      "dimensions": {
+        "us-gaap:StatementBusinessSegmentsAxis": "avgo:SemiconductorSolutionsMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1730168/000173016825000121/avgo-20251102.htm",
+        "name": "avgo-20251102.htm",
+        "sha256": "84ac6a6b2ba43dafaef55723fac77683302abdec2b99d61a9686147c2ee3974a",
+        "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016825000121/avgo-20251102.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "1cdc4347a8ffd0aa8d3d07caf9b16ae8594c5ae5a5e41d78b4933ef1f5baddc9",
+        "png_scale": 1,
+        "png_sha256": "d4daaa70b426f2dd5483c8b6709e44a31dc41f0c2a09461b77d474b2ef5b54e4",
+        "table": "0001730168-25-000121-84ac6a6b2ba4-t73"
+      },
+      "fact_id": "f-1655",
+      "filing_date": "2025-12-18",
+      "form": "10-K",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-11-02",
+        "start": "2024-11-04"
+      },
+      "raw": "36,858",
+      "role": "annual",
+      "scale": "6",
+      "sign": null,
+      "value": 36858000000
+    },
+    "op2": {
+      "accession": "0001730168-25-000121",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-114",
+      "decimals": "-6",
+      "dimensions": {
+        "us-gaap:StatementBusinessSegmentsAxis": "avgo:InfrastructureSoftwareMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1730168/000173016825000121/avgo-20251102.htm",
+        "name": "avgo-20251102.htm",
+        "sha256": "84ac6a6b2ba43dafaef55723fac77683302abdec2b99d61a9686147c2ee3974a",
+        "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016825000121/avgo-20251102.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "1cdc4347a8ffd0aa8d3d07caf9b16ae8594c5ae5a5e41d78b4933ef1f5baddc9",
+        "png_scale": 1,
+        "png_sha256": "d4daaa70b426f2dd5483c8b6709e44a31dc41f0c2a09461b77d474b2ef5b54e4",
+        "table": "0001730168-25-000121-84ac6a6b2ba4-t73"
+      },
+      "fact_id": "f-1670",
+      "filing_date": "2025-12-18",
+      "form": "10-K",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-11-02",
+        "start": "2024-11-04"
+      },
+      "raw": "27,029",
+      "role": "annual",
+      "scale": "6",
+      "sign": null,
+      "value": 27029000000
+    },
+    "op3": {
+      "accession": "0001730168-25-000121",
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "context_id": "c-1",
+      "decimals": "-6",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1730168/000173016825000121/avgo-20251102.htm",
+        "name": "avgo-20251102.htm",
+        "sha256": "84ac6a6b2ba43dafaef55723fac77683302abdec2b99d61a9686147c2ee3974a",
+        "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016825000121/avgo-20251102.htm"
+      },
+      "duplicates": [
+        "f-129",
+        "f-494"
+      ],
+      "evidence": {
+        "html_sha256": "1cdc4347a8ffd0aa8d3d07caf9b16ae8594c5ae5a5e41d78b4933ef1f5baddc9",
+        "png_scale": 1,
+        "png_sha256": "d4daaa70b426f2dd5483c8b6709e44a31dc41f0c2a09461b77d474b2ef5b54e4",
+        "table": "0001730168-25-000121-84ac6a6b2ba4-t73"
+      },
+      "fact_id": "f-1685",
+      "filing_date": "2025-12-18",
+      "form": "10-K",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-11-02",
+        "start": "2024-11-04"
+      },
+      "raw": "63,887",
+      "role": "annual",
+      "scale": "6",
+      "sign": null,
+      "value": 63887000000
+    }
+  },
+  "period_end": "2025-11-02",
+  "schema_version": 1,
+  "series": "FY",
+  "ticker": "AVGO",
+  "total": {
+    "expression": [
+      {
+        "operand": "op3",
+        "weight": 1
+      }
+    ],
+    "value": 63887000000
+  },
+  "unit": "USD",
+  "view": "business_segment"
+}
