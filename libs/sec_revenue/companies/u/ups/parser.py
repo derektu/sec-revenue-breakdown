@@ -23,9 +23,10 @@ OTHER = "Other revenues"
 SUPPLY_CHAIN_MEMBER = "ups:SupplyChainSolutionsMember"
 # FY2023 10-K（期末 2023-12-31）的包裹分部 fact 另帶 OperatingSegmentsMember；更早與 2024 年的申報只帶分部軸。
 FY2023_10K = ("2023-10-01", "2023-12-31")
-# 期末 2025-01-01 起的申報：包裹分部改用新成員並帶 OperatingSegmentsMember；Supply Chain Solutions 不再是報告分部，
-# 分部表的營收調節列為 Other revenues。
+# 期末 2025-01-01 起的申報：包裹分部改用新成員並帶 OperatingSegmentsMember；第三類只以分部表營收調節的 Other revenues 列示。
 NEW_MEMBERS_FROM = "2025-01-01"
+# Other revenues 與 Supply Chain Solutions 是同一塊非報告分部營收；證據見 parser.md 的「Supply Chain Solutions 與 Other revenues」。
+FORMER_NAMES = {OTHER: (SUPPLY_CHAIN,)}
 
 
 def categories(day):

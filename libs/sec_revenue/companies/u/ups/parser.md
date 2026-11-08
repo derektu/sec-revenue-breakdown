@@ -22,7 +22,7 @@ UPS 另有兩種營收拆分，都不採用：
 concept 是 `us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax`。
 
 2025 年起 UPS 的分部標記不同：
-- Supply Chain Solutions 不再是報告分部，分部表的營收調節把它列為 `Other revenues`。
+- 第三類只以營收調節的 `Other revenues` 列示，不再有 `ups:SupplyChainSolutionsMember` 的分部合計列。Supply Chain Solutions 一直是非報告營運分部的合計，FY2024 10-K 的分部表營收調節已稱它為 Other revenues（見「Supply Chain Solutions 與 Other revenues」）。
 - 兩個包裹分部改用新的成員。
 
 parser 依申報期末日（`filing.report_date`）切換寫法，分界在 2025 財年起點：
@@ -69,6 +69,15 @@ parser 依申報期末日（`filing.report_date`）切換寫法，分界在 2025
 - 新歸類的九個月累計最早出現在 2025 年 Q3 10-Q 的比較欄（申報日 2025-11-05），晚於 2024 年度 10-K，不能回頭用來推算。
 - 2025 年各 10-Q 的比較欄與 2024 年 Q1–Q3 的差異，都寫成差異標記（見比較欄）。
 
+## Supply Chain Solutions 與 Other revenues
+
+Supply Chain Solutions 是非報告營運分部的合計（2024 年各申報寫明 UPS 有兩個報告分部，SCS 由非報告營運分部組成）。FY2024 10-K（0001090727-25-000019）同時以兩種方式列示它：營收拆分表以 `ups:SupplyChainSolutionsMember` 列為 Supply Chain Solutions，分部表的營收調節以 `srt:ConsolidationItemsAxis=us-gaap:CorporateNonSegmentMember` 列為 Other revenues。2025 年起的申報只用後者。兩者是同一塊營收，parser 以 `FORMER_NAMES` 宣告 Other revenues 的舊名稱是 Supply Chain Solutions。依據（百萬美元，`decimals=-6`）：
+
+- FY2024 10-K 中兩種列法逐年相同：FY2024 為 12,734（t36 對 t76），FY2023 為 12,922（t36 對 t77），FY2022 為 16,029（t36 對 t78）。
+- FY2025 10-K（0001628280-26-008432）列示的 FY2024 Other revenues（t40、t77）是 12,734；同一份年報的營收拆分表（t40）仍以 `ups:SupplyChainSolutionsMember` 列出 Forwarding 4,728、Logistics 6,437、Other 1,569，合計 12,734。
+
+名稱仍跟各期申報：2024 年及更早的期別是 Supply Chain Solutions，2025 年起是 Other revenues。較晚的申報只作證據，不用來組早期期別。
+
 ## 驗證
 
 11 季（2024-03-31 至 2026-09-30，2024 年 Q4 不推算）與 2 個年度，與對照資料逐期比對。下表數值單位為百萬美元：
@@ -92,5 +101,5 @@ parser 依申報期末日（`filing.report_date`）切換寫法，分界在 2025
 | 2024-06-30 | 單季 | 14,119 → 14,201 | 3,329 → 3,247 | 2025 年 Q2 10-Q |
 | 2024-09-30 | 單季 | 14,450 → 14,597 | 3,384 → 3,237 | 2025 年 Q3 10-Q |
 
-- 只有 U.S. Domestic Package 寫成差異標記。2025 年申報期別沒有 Supply Chain Solutions 這一類（第三類是 Other revenues），比對結果是 `not_found`，不寫標記；表中 Supply Chain Solutions 的變動取自同一批 10-Q 的 `ups:SupplyChainSolutionsMember` fact，供對照。
+- U.S. Domestic Package 與 Supply Chain Solutions 都寫成差異標記。2025 年申報的第三類是 Other revenues，依 `FORMER_NAMES` 與已上線的 Supply Chain Solutions 比對（見「Supply Chain Solutions 與 Other revenues」），標記記下申報中的名稱 Other revenues。
 - 其他申報的比較欄與已上線輸出都在精度內相同。

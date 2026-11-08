@@ -19,6 +19,8 @@ POWER_ENERGY = "Power & Energy"
 # 期末 2025-09-30 的 10-Q 是最後一份列 Energy & Transportation 的申報；FY2025 10-K（期末 2025-12-31）起改名 Power & Energy。
 LAST_ENERGY_TRANSPORTATION = "2025-09-30"
 POWER_ENERGY_FROM = "2025-10-01"
+# 只改名、範圍不變，證據見 parser.md 的「Energy & Transportation 改名」。
+FORMER_NAMES = {POWER_ENERGY: (ENERGY_TRANSPORTATION,)}
 SEGMENTS = (
     ("Construction Industries", "cat:ConstructionIndustriesMember", None, None),
     ("Resource Industries", "cat:ResourceIndustriesMember", None, None),
