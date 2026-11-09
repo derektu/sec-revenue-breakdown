@@ -57,7 +57,7 @@ parser 目錄名是 ticker 小寫、非英數字元改為底線，例如 `b/brk_
 
 交辦時已指定觀點，就直接確認它能從申報重現；不能時同樣回報。
 
-分類名稱以 SEC 原文的列標籤或欄標題為準（去掉 `Total`、`(SCS)` 這類修飾）；10-K 的列標籤全大寫時，用 10-Q 的寫法。名稱可以讀原文表格的文字確認：「數字只來自 XBRL fact」管的是數值，不管名稱。分類的輸出順序照採用的對照來源。名稱與對照來源的對應寫在 `parser.md`。
+分類名稱以 SEC 原文的列標籤或欄標題為準（去掉 `Total`、`(SCS)` 這類修飾）；10-K 的列標籤全大寫時，用 10-Q 的寫法。名稱只差大小寫時是同一個名稱：各期輸出同一種寫法，不宣告 `FORMER_NAMES`（MU FY2025 Q3 的 10-Q 寫 `All other`，其他申報寫 `All Other`，各期都輸出 `All Other`）。名稱可以讀原文表格的文字確認：「數字只來自 XBRL fact」管的是數值，不管名稱。分類的輸出順序照採用的對照來源。名稱與對照來源的對應寫在 `parser.md`。
 
 ### 2. 在申報裡找 fact
 
@@ -78,6 +78,8 @@ if not root:
 # 宣告 ATTACHMENTS 的公司要帶同樣的附件類型，例如 FilingSet(..., ticker, ("EX-13",))，才看得到附件中的 fact。
 filings = FilingSet(Path(root).expanduser(), ticker)
 filing = next(f for f in filings.filings if f.accession == accession)
+dei = filings.document(filing).dei
+print(filing.form, "宣告財年", dei.get("dei:DocumentFiscalYearFocus"), "宣告季別", dei.get("dei:DocumentFiscalPeriodFocus"), sep="\t")
 facts = [f for f in filings.document(filing).facts if word in f.concept and f.start]
 for fact in sorted(facts, key=lambda f: (f.end != filing.report_date, f.end, f.start or "", f.order)):
     dims = " ".join(f"{a}={m}" for a, m in fact.dimensions) or "（無維度）"
@@ -92,11 +94,14 @@ EOF
 
 worktree 中的 agent 以 heredoc（`<<'EOF'`）執行多行程式時常被權限規則擋下：把程式存成 scratchpad 中的檔案，以 `.venv/bin/python <檔案> UPS 0001628280-26-008432 Revenue` 執行。
 
+第一行是申報宣告的財年與季別，框架以它們決定期別（見 `parser.md` 框架流程的「財年與季別」）。10-Q 的季別應該是 Q1–Q3、10-K 是 FY；宣告錯誤時在第 4 步回報，例如 DELL FY2024 Q1、Q2 的 10-Q 宣告為 `FY`。
+
 每份申報的 accession、表單、期末日與申報日，可以把最後的迴圈換成 `for f in filings.filings: print(f.accession, f.form, f.report_date, f.filing_date)` 列出。
 
 找 fact 的要點：
 
 - **對著原文表格逐列找，不只用 concept 名稱搜**：concept 名稱可能與列標籤不符。GOOGL 在期末 2025-06-30 的 10-Q 之前的申報中，Hedging gains (losses) 列標的是 `us-gaap:GainLossOnOilAndGasHedgingActivity`（油氣避險），用 `Revenue` 搜不到。以 `table_index` 或 XBRL viewer 找到營收表，表上每一列的數字都要對到一個 fact；對不到才是沒有標記。
+- **分部成員可能與列標籤錯位，加總照樣對得上**：AMD 2024 Q1–Q3 的 10-Q 中，Data Center 那一列標成 `amd:ClientMember`、Client 標成 `amd:GamingMember`、Gaming 標成 `amd:DataCenterMember`，四類加總仍等於總營收，結構檢核看不出來。每個分類都要對著原文那一列的列標籤與數字確認是哪一個成員，不能只看成員名稱；錯位時依原文列標籤寫死對應，`parser.md` 列出每份申報的表格編號與數字作證據。
 - **每一份申報都要看，包括 10-K**。只看最新一份 10-Q 選出的寫法，常在某一份 10-K 或較早的 10-Q 找不到。
 - **範圍以前的上一份 10-K 也要組得出來**：判斷範圍內第一個 Q4 的口徑時，框架用 parser 從上一財年的 10-K 組出年度值（見 `parser.md` 的「Q4 口徑一致」）。那份 10-K 的寫法也要涵蓋；組不出來時口徑判斷為「無法判斷」，Q4 照常推算並註記，不會報錯，所以要自己確認。
 - **dimensions 要完全相同**：`find` 是精確比對，fact 多一個或少一個維度都不算。例如 NVDA 的分部 fact 另帶 `srt:ConsolidationItemsAxis=us-gaap:OperatingSegmentsMember`；UPS FY2025 10-K 的 `ups:SupplyChainSolutionsMember` 只出現在帶 `srt:ProductOrServiceAxis` 的細項 fact 上。
@@ -216,7 +221,7 @@ rm -rf data/revenue/M/MSFT
 
 - **在顯示精度內**：對照來源只顯示到某一位（例如 `7.39B` 到 0.01B、`202M` 到 1M）。我們的值與來源的 `usd` 相差不超過該顯示單位的一半，加上我們運算元的精度誤差（每個運算元 decimals 單位的一半；Q4 的每個加數有年度與九個月兩個運算元），就是一致；超過就是差異，要寫原因。
 
-- **期別對齊**：Stock Analysis 用期末日（季底不是曆年季底的 ticker 會對齊到曆年季底）；富途用申報宣告的財年與季別；TradingView 用財年多數月份所在的曆年（NVDA FY2026 標 2025、ORCL FY2026 標 2025），財年在 6 月底結束、兩個曆年各占 6 個月時標結束的那一年（MSFT、PG 的 FY2026 標 2026）。
+- **期別對齊**：先把來源的期別對到 SEC 的財年與季別，再用 SEC 的期末日判斷在不在範圍內，不能直接拿來源標示的日期與起始日比。Stock Analysis 用期末日（季底不是曆年季底的 ticker 會對齊到曆年季底：AVGO 期末 2024-02-04 的一季標為 `2023-12-31`，仍在範圍內，直接以標示日期篩選會漏掉）；富途用申報宣告的財年與季別；TradingView 用財年多數月份所在的曆年（NVDA FY2026 標 2025、ORCL FY2026 標 2025），財年在 6 月底結束、兩個曆年各占 6 個月時標結束的那一年（MSFT、PG 的 FY2026 標 2026）。
 - **分類改名有沒有改範圍**：拿較晚申報的比較欄（新名稱）與原申報（舊名稱）的同一期比；較晚申報沒有列那一季時，用累計相減推回（例如半年減 Q2 得 Q1）。各分類的值在雙方運算元的精度誤差內相同，就是純改名（LLY 2024 年的 Cardiometabolic Health）。這些較晚的申報只在 `parser.md` 當證據，不用來組數字，也不改早期期別的分類名稱；名稱仍跟各期申報。
   - 純改名：在 `parser.py` 宣告 `FORMER_NAMES = {新名稱: (舊名稱,)}`，常數旁註明哪一份申報開始改名（accession 與期末日），證據寫在 `parser.md`。比較欄比對與 Q4 口徑一致因此把新名稱接上已上線的舊名稱：改名後的重編寫成舊期別的差異標記，改名那一年的年報重列上一財年時，改名的分類也參與口徑比對。格式與檢核見 `parser.md` 的「自訂點」。
   - 範圍有變（新名稱多了或少了某些業務），或找不到同值的證據：不宣告，新舊名稱是兩個分類；在 `parser.md` 寫明不宣告的理由與找到的數字。
