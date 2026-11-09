@@ -125,10 +125,10 @@ review 的深度依改動能影響的範圍而定：只改一個 ticker 的改�
 
 適合的 ticker：營收以產品或業務別組成，申報有對應的 XBRL 標記。營收只以地區揭露的 ticker 做不出來（觀點不收地區拆分）。
 
-**agent**：對每個 ticker，用 [開發指南](parser-dev-guide.md) 第 2 步的程式看最新 10-K 與 10-Q 的營收 fact，回報：
+**agent**：對每個 ticker，用 [開發指南](parser-dev-guide.md) 第 2 步的程式看查核範圍內每一份申報的營收 fact（範圍見開發指南第 1 步）。從最新的 10-K 與 10-Q 開始初篩，但結論要涵蓋每一份：分類改名、合併與 tag 寫法常在範圍中途改變，例如 AMAT 在範圍內先把 Display and Adjacent Markets 改名為 Display、再把 Display 併入 Corporate and Other，TXN 2024 年的 10-Q 與 2025 年的 10-Q 用不同的分部成員。回報：
 
 - 申報中有哪些產品別或業務別的營收 fact，是不是地區。
-- 有沒有不符合框架預設的地方（見 [parser.md](../architecture/parser.md) 的「預設與自訂」）：期間長度不在預設範圍（單季 12–14 週、六個月 25–27 週、九個月 38–40 週、年度 51–54 週），例如 COST 的 12／12／12／16 週季度；10-Q 宣告的財年與「前一份 10-K 宣告的財年 ＋ 1」不同，例如 ORCL 2026-08-31 的 10-Q；財報在附件的 inline XBRL，例如 PGR 10-K 的 EX-13。這些都有自訂點（期間長度 `DURATION_DAYS`、財年 `FISCAL_YEAR`、附件 `ATTACHMENTS`），由公司 parser 自訂，回報要自訂什麼（期間長度要寫出各範圍與理由，範圍多寬由公司 parser 決定；附件要寫出附件類型與哪些分類的數字在附件）；不符合的預設還沒有自訂點時回報，由人決定。
+- 有沒有不符合框架預設的地方（見 [parser.md](../architecture/parser.md) 的「預設與自訂」）：期間長度不在預設範圍（單季 12–14 週、六個月 25–27 週、九個月 38–40 週、年度 51–54 週），例如 COST 的 12／12／12／16 週季度；10-Q 宣告的財年與「前一份 10-K 宣告的財年 ＋ 1」不同，例如 ORCL 2026-08-31 的 10-Q；財報在附件的 inline XBRL，例如 PGR 10-K 的 EX-13。這些都有自訂點（期間長度 `DURATION_DAYS`、財年 `FISCAL_YEAR`、附件 `ATTACHMENTS`），由公司 parser 自訂，回報要自訂什麼（期間長度要寫出各範圍與理由，範圍多寬由公司 parser 決定；附件要寫出附件類型與哪些分類的數字在附件）；不符合的預設還沒有自訂點時回報，由人決定，例如 10-Q 宣告的季別錯誤：DELL FY2024 Q1、Q2 的 10-Q 宣告 `DocumentFiscalPeriodFocus` 為 `FY`，季別沒有自訂點，那一年的 Q4 無法推算。財年與季別的宣告值由第 2 步的程式印出。
 - 有沒有只能違反硬原則才做得出來的地方，例如需要的數字沒有 XBRL 標記。判定沒有標記之前，照 [開發指南](parser-dev-guide.md) 第 2 步對著原文表格逐列找：concept 名稱可能與列標籤不符（GOOGL 的 Hedging gains (losses) 曾標為 `us-gaap:GainLossOnOilAndGasHedgingActivity`）。
 - 建議做或不做，與理由。與第 5 步一併交辦時，合併回報。
 
