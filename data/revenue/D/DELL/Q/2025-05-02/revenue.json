@@ -1,0 +1,234 @@
+{
+  "categories": {
+    "Client Solutions Group": {
+      "expression": [
+        {
+          "operand": "op2",
+          "weight": 1
+        }
+      ],
+      "value": 12509000000
+    },
+    "Corporate and other": {
+      "expression": [
+        {
+          "operand": "op3",
+          "weight": 1
+        }
+      ],
+      "value": 552000000
+    },
+    "Infrastructure Solutions Group": {
+      "expression": [
+        {
+          "operand": "op1",
+          "weight": 1
+        }
+      ],
+      "value": 10317000000
+    }
+  },
+  "checks": {
+    "structural": [
+      {
+        "check": "定義唯一",
+        "result": "pass"
+      },
+      {
+        "check": "fact 存在且唯一",
+        "result": "pass"
+      },
+      {
+        "check": "單位與精度",
+        "result": "pass"
+      },
+      {
+        "check": "加總",
+        "result": "pass"
+      },
+      {
+        "check": "證據完整",
+        "result": "pass"
+      }
+    ],
+    "sum": {
+      "categories": 23378000000,
+      "difference": 0,
+      "tolerance": "2000000",
+      "total": 23378000000
+    }
+  },
+  "filings": {
+    "primary": {
+      "accession": "0001571996-25-000063",
+      "filing_date": "2025-06-10",
+      "form": "10-Q",
+      "report_date": "2025-05-02"
+    }
+  },
+  "fiscal_quarter": 1,
+  "fiscal_year": 2026,
+  "operands": {
+    "op1": {
+      "accession": "0001571996-25-000063",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-261",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "dell:InfrastructureSolutionsGroupMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1571996/000157199625000063/dell-20250502.htm",
+        "name": "dell-20250502.htm",
+        "sha256": "b7c9a8715dd6d2dedf226aee51373e68af37c8643811c09bb1c57dc242b79ceb",
+        "url": "https://www.sec.gov/Archives/edgar/data/1571996/000157199625000063/dell-20250502.htm"
+      },
+      "duplicates": [
+        "f-1186"
+      ],
+      "evidence": {
+        "html_sha256": "2f29ae7596b62cf66eabfecc6acd587f143cc4a3145247a76d521dc1c76fbac2",
+        "png_scale": 1,
+        "png_sha256": "811b05aa8c4f4734e19bd9a25d8b0b3a3f7befef17300ba47cfa8dbaa223f18e",
+        "table": "0001571996-25-000063-b7c9a8715dd6-t49"
+      },
+      "fact_id": "f-1142",
+      "filing_date": "2025-06-10",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-05-02",
+        "start": "2025-02-01"
+      },
+      "raw": "10,317",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 10317000000
+    },
+    "op2": {
+      "accession": "0001571996-25-000063",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-262",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "dell:ClientSolutionsMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1571996/000157199625000063/dell-20250502.htm",
+        "name": "dell-20250502.htm",
+        "sha256": "b7c9a8715dd6d2dedf226aee51373e68af37c8643811c09bb1c57dc242b79ceb",
+        "url": "https://www.sec.gov/Archives/edgar/data/1571996/000157199625000063/dell-20250502.htm"
+      },
+      "duplicates": [
+        "f-1192"
+      ],
+      "evidence": {
+        "html_sha256": "2f29ae7596b62cf66eabfecc6acd587f143cc4a3145247a76d521dc1c76fbac2",
+        "png_scale": 1,
+        "png_sha256": "811b05aa8c4f4734e19bd9a25d8b0b3a3f7befef17300ba47cfa8dbaa223f18e",
+        "table": "0001571996-25-000063-b7c9a8715dd6-t49"
+      },
+      "fact_id": "f-1144",
+      "filing_date": "2025-06-10",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-05-02",
+        "start": "2025-02-01"
+      },
+      "raw": "12,509",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 12509000000
+    },
+    "op3": {
+      "accession": "0001571996-25-000063",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-317",
+      "decimals": "-6",
+      "dimensions": {
+        "srt:ConsolidationItemsAxis": "us-gaap:CorporateNonSegmentMember"
+      },
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1571996/000157199625000063/dell-20250502.htm",
+        "name": "dell-20250502.htm",
+        "sha256": "b7c9a8715dd6d2dedf226aee51373e68af37c8643811c09bb1c57dc242b79ceb",
+        "url": "https://www.sec.gov/Archives/edgar/data/1571996/000157199625000063/dell-20250502.htm"
+      },
+      "duplicates": [],
+      "evidence": {
+        "html_sha256": "2f29ae7596b62cf66eabfecc6acd587f143cc4a3145247a76d521dc1c76fbac2",
+        "png_scale": 1,
+        "png_sha256": "811b05aa8c4f4734e19bd9a25d8b0b3a3f7befef17300ba47cfa8dbaa223f18e",
+        "table": "0001571996-25-000063-b7c9a8715dd6-t49"
+      },
+      "fact_id": "f-1148",
+      "filing_date": "2025-06-10",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-05-02",
+        "start": "2025-02-01"
+      },
+      "raw": "552",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 552000000
+    },
+    "op4": {
+      "accession": "0001571996-25-000063",
+      "concept": "us-gaap:Revenues",
+      "context_id": "c-1",
+      "decimals": "-6",
+      "dimensions": {},
+      "document": {
+        "ixviewer_url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1571996/000157199625000063/dell-20250502.htm",
+        "name": "dell-20250502.htm",
+        "sha256": "b7c9a8715dd6d2dedf226aee51373e68af37c8643811c09bb1c57dc242b79ceb",
+        "url": "https://www.sec.gov/Archives/edgar/data/1571996/000157199625000063/dell-20250502.htm"
+      },
+      "duplicates": [
+        "f-110"
+      ],
+      "evidence": {
+        "html_sha256": "2f29ae7596b62cf66eabfecc6acd587f143cc4a3145247a76d521dc1c76fbac2",
+        "png_scale": 1,
+        "png_sha256": "811b05aa8c4f4734e19bd9a25d8b0b3a3f7befef17300ba47cfa8dbaa223f18e",
+        "table": "0001571996-25-000063-b7c9a8715dd6-t49"
+      },
+      "fact_id": "f-1150",
+      "filing_date": "2025-06-10",
+      "form": "10-Q",
+      "kind": "xbrl_fact",
+      "period": {
+        "end": "2025-05-02",
+        "start": "2025-02-01"
+      },
+      "raw": "23,378",
+      "role": "quarter",
+      "scale": "6",
+      "sign": null,
+      "value": 23378000000
+    }
+  },
+  "period_end": "2025-05-02",
+  "schema_version": 1,
+  "series": "Q",
+  "ticker": "DELL",
+  "total": {
+    "expression": [
+      {
+        "operand": "op4",
+        "weight": 1
+      }
+    ],
+    "value": 23378000000
+  },
+  "unit": "USD",
+  "view": "business_segment"
+}
